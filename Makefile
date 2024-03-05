@@ -1,3 +1,5 @@
+.PHONY: format-lint format lint install
+
 format-lint: format lint				##@Style: run all the style steps
 
 format:													##@Style: format the code style
