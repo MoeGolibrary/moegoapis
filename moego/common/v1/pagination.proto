@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package moego.common.v1;
+
+import "google/api/field_behavior.proto";
+import "validate/validate.proto";
+
+// Pagination represents the pagination information.
+// It is used to control the page size and page token,
+// must be declared in the request of the List APIs.
+// The page size must be between 1 and 500, and the page token
+// must be a non-empty string with a maximum length of 64.
+// The Response of the List APIs will contain the next page token
+// if there are more results.
+message Pagination {
+  // The page size.
+  int32 page_size = 1 [
+    (google.api.field_behavior) = INPUT_ONLY,
+    (validate.rules).int32 = {
+      lte: 1,
+      gte: 500
+    }
+  ];
+  // The page token.
+  string page_token = 2 [
+    (google.api.field_behavior) = INPUT_ONLY,
+    (validate.rules).string = {
+      min_len: 1,
+      max_len: 64
+    }
+  ];
+}

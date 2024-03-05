@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package moego.business.online_booking.v1;
+
+import "business/appointment/v1/pet_service_detail.proto";
+import "business/customer/v1/customer.proto";
+import "common/v1/address.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/interval.proto";
+
+// OnlineBooking
+message OnlineBooking {
+  // Status
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    NORMAL = 1;
+    IN_WAIT_LIST = 2;
+    ABANDONED = 3;
+  }
+
+  // ID
+  string id = 1;
+  string business_id = 2;
+  // 这里是给 id 还是直接给 Customer?
+  string customer_id = 3;
+  moego.common.v1.Address address = 4;
+  google.type.Interval duration = 5;
+  repeated moego.business.appointment.v1.PetServiceDetail pet_service_details = 6;
+  Status status = 7;
+  string color_code = 8;
+  google.protobuf.Timestamp created_timestamp = 9;
+}

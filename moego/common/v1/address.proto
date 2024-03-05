@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package moego.common.v1;
+
+import "google/type/latlng.proto";
+import "google/type/postal_address.proto";
+
+// Address represents a physical address
+message Address {
+  // Type of address
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    PRIMARY = 1;
+    SECONDARY = 2;
+  }
+
+  // Street address
+  string street = 1;
+  string city = 2;
+  string state = 3;
+  string postal_code = 4;
+  string country = 5;
+  google.type.LatLng coordinate = 6;
+  Type type = 7;
+}

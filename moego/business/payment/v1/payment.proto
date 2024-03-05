@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package moego.business.payment.v1;
+
+// Payment
+message Payment {
+  // Status
+  enum Status {
+    // PAYMENT_STATUS_UNSPECIFIED
+    PAYMENT_STATUS_UNSPECIFIED = 0;
+    // UNPAID
+    UNPAID = 1;
+    // PARTIAL_PAID
+    PARTIAL_PAID = 2;
+    // FULL_PAID
+    FULL_PAID = 3;
+  }
+
+  // ID
+  string id = 1;
+}

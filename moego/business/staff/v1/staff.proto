@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package moego.business.staff.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Staff
+message Staff {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string avatar = 4;
+  string phone = 5;
+  string email = 6;
+  Role role = 7;
+  google.protobuf.Timestamp hired_timestamp = 8;
+  repeated string working_business_ids = 9;
+  string mobile_van_ids = 10;
+}
+
+// Role
+message Role {
+  string name = 1;
+  repeated Permission permissions = 2;
+}
+
+// Permission
+enum Permission {
+  PERMISSION_UNSPECIFIED = 0;
+}

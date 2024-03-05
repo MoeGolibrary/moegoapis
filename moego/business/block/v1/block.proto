@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package moego.business.block.v1;
+
+import "google/type/interval.proto";
+
+// Block
+message Block {
+  string id = 1;
+  string staff_id = 2;
+  google.type.Interval duration = 3;
+  string description = 4;
+  string color_code = 5;
+}

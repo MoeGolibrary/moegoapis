@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "google/protobuf/timestamp.proto";
+
+// Note is a note
+message Note {
+  string content = 1;
+  string last_updated_by = 2;
+  google.protobuf.Timestamp last_updated_timestamp = 3;
+}

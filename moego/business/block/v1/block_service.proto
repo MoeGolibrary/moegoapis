@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package moego.business.block.v1;
+
+import "business/block/v1/block.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
+
+// BlockService openapi definitions for operate block
+service BlockService {
+  // CreateBlock
+  rpc CreateBlock(CreateBlockRequest) returns (Block) {
+    option (google.api.http) = {
+      post: "/v1/blocks",
+      body: "*"
+    };
+  }
+
+  // GetBlock
+  rpc GetBlock(GetBlockRequest) returns (Block) {
+    option (google.api.http) = {get: "/v1/blocks/{id}"};
+  }
+}
+
+// CreateBlockRequest create block request
+message CreateBlockRequest {
+  string staff_id = 1 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval duration = 2 [(google.api.field_behavior) = REQUIRED];
+  string description = 3;
+  string color_code = 4;
+}
+
+// GetBlockRequest get block request
+message GetBlockRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}

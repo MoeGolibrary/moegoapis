@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package moego.business.staff.v1;
+
+import "business/staff/v1/staff.proto";
+import "common/v1/pagination.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+// StaffService openapi definitions for operate staff
+service StaffService {
+  // GetStaff
+  rpc GetStaff(GetStaffRequest) returns (Staff) {
+    option (google.api.http) = {get: "/v1/staffs/{id}"};
+  }
+
+  // ListStaffs
+  rpc ListStaffs(ListStaffsRequest) returns (ListStaffsResponse) {
+    option (google.api.http) = {get: "/v1/staffs"};
+  }
+}
+
+// GetStaffRequest is the request message for StaffAPI.GetStaff
+message GetStaffRequest {
+  // The id of the Staff to retrieve
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListStaffsRequest is the request message for StaffAPI.ListStaffs
+message ListStaffsRequest {
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListStaffsResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The Staffs
+  repeated Staff staffs = 2;
+}

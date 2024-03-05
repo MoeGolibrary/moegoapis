@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "business/customer/v1/note.proto";
+import "common/v1/weight.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+
+// Pet is a pet
+message Pet {
+  // PetType is the type of a pet
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    OTHER = 1;
+    DOG = 2;
+    CAT = 3;
+    BIRD = 4;
+    RABBIT = 5;
+    GUINEA_PIG = 6;
+    HORSE = 7;
+    HAMSTER = 8;
+    RAT = 9;
+    MOUSE = 10;
+    CHINCHILLA = 11;
+  }
+
+  // Status is the status of a pet
+  enum Status {
+    STATUS_UNSPECIFIED = 0;
+    ALIVE = 1;
+    PASSED_AWAY = 2;
+  }
+
+  // ID is the unique identifier of a pet
+  string id = 1;
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp birthday = 3;
+  Status status = 4;
+  Type type = 5 [(google.api.field_behavior) = REQUIRED];
+  string breed = 6 [(google.api.field_behavior) = REQUIRED];
+  string gender = 7;
+  moego.common.v1.Weight weight = 8;
+  string fixed = 9;
+  string coat = 10;
+  string behavior = 11;
+  repeated string pet_codes = 12;
+  repeated Note notes = 13;
+  repeated Vaccination vaccinations = 14;
+}
+
+message Vaccination {
+  string name = 1;
+  google.protobuf.Timestamp expired_at = 2;
+}

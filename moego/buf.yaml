@@ -1,0 +1,24 @@
+version: v1
+lint:
+  allow_comment_ignores: true
+  use:
+    - DEFAULT
+    - COMMENT_ENUM
+    - COMMENT_ENUM_VALUE
+    - COMMENT_FIELD
+    - COMMENT_MESSAGE
+    - COMMENT_ONEOF
+    - COMMENT_RPC
+    - COMMENT_SERVICE
+    - PACKAGE_NO_IMPORT_CYCLE
+  except:
+    - RPC_REQUEST_RESPONSE_UNIQUE
+    - RPC_REQUEST_STANDARD_NAME
+    - RPC_RESPONSE_STANDARD_NAME
+    - ENUM_VALUE_PREFIX
+    - PACKAGE_DIRECTORY_MATCH
+  ignore:
+    - grpc
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/googleapis/googleapis

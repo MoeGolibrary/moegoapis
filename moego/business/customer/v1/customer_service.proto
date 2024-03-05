@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "business/customer/v1/customer.proto";
+import "business/customer/v1/pet.proto";
+import "common/v1/address.proto";
+import "common/v1/pagination.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+// CustomerService openapi definitions for operate customer
+service CustomerService {
+  // Create a customer
+  rpc CreateCustomer(CreateCustomerRequest) returns (Customer) {
+    option (google.api.http) = {
+      post: "/v1/customers"
+      body: "*"
+    };
+  }
+
+  // Get a customer
+  rpc GetCustomer(GetCustomerRequest) returns (Customer) {
+    option (google.api.http) = {get: "/v1/customers/{id}"};
+  }
+
+  // List customers
+  rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {
+    option (google.api.http) = {get: "/v1/customers"};
+  }
+}
+
+// CreateCustomerRequest is the request message for CustomerAPI.CreateCustomer
+message CreateCustomerRequest {
+  string first_name = 1 [(google.api.field_behavior) = REQUIRED];
+  string last_name = 2 [(google.api.field_behavior) = REQUIRED];
+  string phone = 3 [(google.api.field_behavior) = REQUIRED];
+  string email = 4;
+  moego.common.v1.Address address = 5;
+  repeated Pet pets = 6 [(google.api.field_behavior) = REQUIRED];
+  CustomerPreference preference = 7;
+}
+
+// GetCustomerRequest is the request message for CustomerAPI.GetCustomer
+message GetCustomerRequest {
+  // The id of the customer to retrieve
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListCustomersRequest is the request message for CustomerAPI.ListCustomers
+message ListCustomersRequest {
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListCustomersResponse is the response message for CustomerAPI.ListCustomers
+message ListCustomersResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The customers
+  repeated Customer customers = 2;
+}

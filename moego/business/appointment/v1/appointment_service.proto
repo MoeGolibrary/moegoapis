@@ -1,0 +1,6 @@
+syntax = "proto3";
+
+package moego.business.appointment.v1;
+
+// AppointmentService openapi definitions for operate appointments
+service AppointmentService {}

@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "business/customer/v1/note.proto";
+import "business/customer/v1/pet.proto";
+import "common/v1/address.proto";
+import "google/protobuf/timestamp.proto";
+
+// Customer is a customer
+message Customer {
+  // Status is the status of a customer
+  enum Status {
+    // The customer status is the default value
+    STATUS_UNSPECIFIED = 0;
+    // The customer is active
+    ACTIVE = 1;
+    // The customer is inactive
+    INACTIVE = 2;
+  }
+
+  // ID is the unique identifier of a customer
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string avatar = 4;
+  string phone = 5;
+  string email = 6;
+  repeated moego.common.v1.Address address = 7;
+  Status status = 8;
+  repeated string tags = 9;
+  bool has_card_on_file = 10;
+  string color_code = 11;
+  string source = 12;
+  repeated Note notes = 13;
+  google.protobuf.Timestamp last_appointment_date = 14;
+  google.protobuf.Timestamp next_appointment_date = 15;
+  repeated Pet pets = 16;
+  string created_by = 17;
+  google.protobuf.Timestamp created_timestamp = 18;
+  string last_updated_by = 19;
+  google.protobuf.Timestamp last_updated_timestamp = 20;
+}
+
+// CustomerPreference is the preference of a customer
+message CustomerPreference {
+  bool receive_auto_message = 1;
+  bool receive_auto_email = 2;
+  bool subscribe_to_marketing_emails = 3;
+  bool receive_appointment_reminder = 4;
+}

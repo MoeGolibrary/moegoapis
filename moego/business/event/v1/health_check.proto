@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package moego.business.event.v1;
+
+// HealthCheck is the health check event payload
+message HealthCheck {
+  // validation is a simple string that the webhook will echo back to the client
+  string validation = 1;
+}

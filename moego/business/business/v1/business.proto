@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package moego.business.business.v1;
+
+import "common/v1/address.proto";
+
+// Business business information
+message Business {
+  string id = 1;
+  string name = 2;
+  string avatar = 3;
+  string phone = 4;
+  string business_phone = 5;
+  string email = 6;
+  moego.common.v1.Address address = 7;
+  string website = 8;
+  string facebook = 9;
+  string instagram = 10;
+  string yelp = 11;
+  string google = 12;
+}

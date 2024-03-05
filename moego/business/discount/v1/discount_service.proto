@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package moego.business.discount.v1;
+
+import "business/discount/v1/discount.proto";
+import "common/v1/pagination.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/type/money.proto";
+
+// DiscountService openapi definitions for operate discount
+service DiscountService {
+  // CreateDiscount
+  rpc CreateDiscount(CreateDiscountRequest) returns (Discount) {
+    option (google.api.http) = {
+      post: "/v1/discount"
+      body: "discount"
+    };
+  }
+
+  // GetDiscount
+  rpc GetDiscount(GetDiscountRequest) returns (Discount) {
+    option (google.api.http) = {get: "/v1/discount/{code}"};
+  }
+
+  // ListDiscounts
+  rpc ListDiscounts(ListDiscountsRequest) returns (ListDiscountsResponse) {
+    option (google.api.http) = {
+      get: "/v1/discounts"
+      body: "discount"
+    };
+  }
+}
+
+// CreateDiscountRequest
+message CreateDiscountRequest {
+  // The discount to be created
+  Discount discount = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// GetDiscountRequest
+message GetDiscountRequest {
+  string code = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListDiscountsRequest is the request message for DiscountAPI.ListDiscounts
+message ListDiscountsRequest {
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListDiscountsResponse is the response message for DiscountAPI.ListDiscounts
+message ListDiscountsResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The Discounts
+  repeated Discount Discounts = 2;
+}

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package moego.business.appointment.v1;
+
+import "moego/business/customer/v1/pet.proto";
+import "google/type/money.proto";
+import "google/protobuf/duration.proto";
+
+// PetServiceDetail
+message PetServiceDetail {
+  moego.business.customer.v1.Pet pet = 1;
+  repeated ServiceDetail service_details = 2;
+}
+
+// ServiceDetail
+message ServiceDetail {
+  string id = 1;
+  string name = 2;
+  google.type.Money price = 3;
+  google.protobuf.Duration duration = 4;
+  repeated string staff_ids = 5;
+}
