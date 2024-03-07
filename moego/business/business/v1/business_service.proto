@@ -7,6 +7,11 @@ import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/business/business/v1/businesspb;businesspb";
+option java_multiple_files = true;
+option java_outer_classname = "BusinessServiceProto";
+option java_package = "com.moego.api.business.business.v1";
+
 // BusinessService openapi definitions for operate business
 service BusinessService {
   // GetBusiness get a business

@@ -7,6 +7,11 @@ import "moego/business/event/v1/health_check.proto";
 import "moego/business/online_booking/v1/online_booking.proto";
 import "google/protobuf/timestamp.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/business/event/v1/eventpb;eventpb";
+option java_multiple_files = true;
+option java_outer_classname = "EventProto";
+option java_package = "com.moego.api.business.event.v1";
+
 // Event
 message Event {
   // Type is the type of the event

@@ -2,6 +2,11 @@ syntax = "proto3";
 
 package moego.common.v1;
 
+option go_package = "api.moego.pet/genproto/moegoapis/common/v1/commonpb;commonpb";
+option java_multiple_files = true;
+option java_outer_classname = "WeightProto";
+option java_package = "com.moego.api.common.v1";
+
 // Weight represents a weight value and its unit.
 message Weight {
   // Unit represents a weight unit.

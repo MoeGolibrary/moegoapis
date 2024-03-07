@@ -7,6 +7,11 @@ import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/business/staff/v1/staffpb;staffpb";
+option java_multiple_files = true;
+option java_outer_classname = "StaffServiceProto";
+option java_package = "com.moego.api.business.staff.v1";
+
 // StaffService openapi definitions for operate staff
 service StaffService {
   // GetStaff

@@ -6,6 +6,11 @@ import "moego/business/customer/v1/pet.proto";
 import "google/type/money.proto";
 import "google/protobuf/duration.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/business/appointment/v1/appointmentpb;appointmentpb";
+option java_multiple_files = true;
+option java_outer_classname = "PetServiceDetailProto";
+option java_package = "com.moego.api.business.appointment.v1";
+
 // PetServiceDetail
 message PetServiceDetail {
   moego.business.customer.v1.Pet pet = 1;

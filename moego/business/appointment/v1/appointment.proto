@@ -11,6 +11,11 @@ import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 import "google/type/money.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/business/appointment/v1/appointmentpb;appointmentpb";
+option java_multiple_files = true;
+option java_outer_classname = "AppointmentProto";
+option java_package = "com.moego.api.business.appointment.v1";
+
 // Appointment
 message Appointment {
   // Status

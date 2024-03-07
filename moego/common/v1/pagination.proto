@@ -5,6 +5,11 @@ package moego.common.v1;
 import "google/api/field_behavior.proto";
 import "validate/validate.proto";
 
+option go_package = "api.moego.pet/genproto/moegoapis/common/v1/commonpb;commonpb";
+option java_multiple_files = true;
+option java_outer_classname = "PaginationProto";
+option java_package = "com.moego.api.common.v1";
+
 // Pagination represents the pagination information.
 // It is used to control the page size and page token,
 // must be declared in the request of the List APIs.
