@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "business/customer/v1/note.proto";
-import "common/v1/weight.proto";
+import "moego/business/customer/v1/note.proto";
+import "moego/common/v1/weight.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 

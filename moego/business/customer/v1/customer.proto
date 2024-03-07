@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "business/customer/v1/note.proto";
-import "business/customer/v1/pet.proto";
-import "common/v1/address.proto";
+import "moego/business/customer/v1/note.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/address.proto";
 import "google/protobuf/timestamp.proto";
 
 // Customer is a customer

@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package moego.business.discount.v1;
 
-import "business/discount/v1/discount.proto";
-import "common/v1/pagination.proto";
+import "moego/business/discount/v1/discount.proto";
+import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/money.proto";

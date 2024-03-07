@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package moego.business.business.v1;
 
-import "common/v1/address.proto";
+import "moego/common/v1/address.proto";
 
 // Business business information
 message Business {

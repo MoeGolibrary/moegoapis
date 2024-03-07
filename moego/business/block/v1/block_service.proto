@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package moego.business.block.v1;
 
-import "business/block/v1/block.proto";
+import "moego/business/block/v1/block.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";

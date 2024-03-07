@@ -13,5 +13,5 @@ lint: 													##@Style: lint the code style
 install:												##@Tools: link buf modules to local, you should run this again after add new dependencies in buf.yaml
 	@rm -rf third_party
 	@mkdir -p third_party
-	@yq -r '.deps[]' moego/buf.yaml | xargs -I % buf export % -o third_party
+	@yq -r '.deps[]' buf.yaml | xargs -I % buf export % -o third_party
 	@echo "Generate deps directory done!"

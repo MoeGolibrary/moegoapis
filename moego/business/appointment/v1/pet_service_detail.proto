@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package moego.business.appointment.v1;
 
-import "business/customer/v1/pet.proto";
+import "moego/business/customer/v1/pet.proto";
 import "google/type/money.proto";
 import "google/protobuf/duration.proto";
 

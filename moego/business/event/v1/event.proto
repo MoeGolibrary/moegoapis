@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package moego.business.event.v1;
 
-import "business/appointment/v1/appointment.proto";
-import "business/event/v1/health_check.proto";
-import "business/online_booking/v1/online_booking.proto";
+import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/event/v1/health_check.proto";
+import "moego/business/online_booking/v1/online_booking.proto";
 import "google/protobuf/timestamp.proto";
 
 // Event

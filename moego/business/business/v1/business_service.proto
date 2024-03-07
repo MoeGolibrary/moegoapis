@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package moego.business.business.v1;
 
-import "business/business/v1/business.proto";
-import "common/v1/pagination.proto";
+import "moego/business/business/v1/business.proto";
+import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 

@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "business/customer/v1/customer.proto";
-import "business/customer/v1/pet.proto";
-import "common/v1/address.proto";
-import "common/v1/pagination.proto";
+import "moego/business/customer/v1/customer.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/address.proto";
+import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
