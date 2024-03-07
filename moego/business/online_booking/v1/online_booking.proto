@@ -26,7 +26,6 @@ message OnlineBooking {
   // ID
   string id = 1;
   string business_id = 2;
-  // 这里是给 id 还是直接给 Customer?
   string customer_id = 3;
   moego.common.v1.Address address = 4;
   google.type.Interval duration = 5;
