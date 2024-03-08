@@ -52,9 +52,9 @@ message GetDiscountRequest {
 
 // ListDiscountsRequest is the request message for DiscountAPI.ListDiscounts
 message ListDiscountsRequest {
-  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // The pagination information
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListDiscountsResponse is the response message for DiscountAPI.ListDiscounts
