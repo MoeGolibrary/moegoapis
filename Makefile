@@ -8,6 +8,7 @@ format:													##@Style: format the code style
 
 lint: 													##@Style: lint the code style
 	@buf lint moego
+	@buf breaking --against '.git#branch=origin/production,subdir=moego' moego
 	@echo "Lint done!"
 
 install:												##@Tools: link buf modules to local, you should run this again after add new dependencies in buf.yaml
