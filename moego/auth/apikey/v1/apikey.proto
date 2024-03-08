@@ -45,5 +45,11 @@ message Restrictions {
 message ServerRestrictions {
   // The IP address (IPv4 or IPv6) of the client that issued the HTTP
   // request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
-  repeated string allowed_ips = 1 [(validate.rules).string = { ip: true }];
+  repeated string allowed_ips = 1 [(validate.rules).repeated = {
+    items:{
+      string: {
+        ip: true
+      }
+    }
+  }];
 }
