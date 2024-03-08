@@ -1,0 +1,12 @@
+version: v1
+plugins:
+  - name: go
+    out: genproto/go
+  - name: go-grpc
+    out: genproto/go
+    opt:
+      - require_unimplemented_servers=true
+  - name: validate
+    out: genproto/go
+    opt:
+      - lang=go

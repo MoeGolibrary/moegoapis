@@ -4,7 +4,7 @@ package moego.business.business.v1;
 
 import "moego/common/v1/address.proto";
 
-option go_package = "api.moego.pet/genproto/moegoapis/business/business/v1/businesspb;businesspb";
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/businesspb;businesspb";
 option java_multiple_files = true;
 option java_outer_classname = "BusinessProto";
 option java_package = "com.moego.api.business.business.v1";

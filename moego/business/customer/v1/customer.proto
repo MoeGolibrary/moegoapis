@@ -7,7 +7,7 @@ import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/address.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "api.moego.pet/genproto/moegoapis/business/customer/v1/customerpb;customerpb";
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
 option java_outer_classname = "CustomerProto";
 option java_package = "com.moego.api.business.customer.v1";

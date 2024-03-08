@@ -4,7 +4,7 @@ package moego.business.staff.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "api.moego.pet/genproto/moegoapis/business/staff/v1/staffpb;staffpb";
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/staff/v1/staffpb;staffpb";
 option java_multiple_files = true;
 option java_outer_classname = "StaffProto";
 option java_package = "com.moego.api.business.staff.v1";

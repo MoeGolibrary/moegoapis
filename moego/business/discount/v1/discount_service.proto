@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/money.proto";
 
-option go_package = "api.moego.pet/genproto/moegoapis/business/discount/v1/discountpb;discountpb";
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/discount/v1/discountpb;discountpb";
 option java_multiple_files = true;
 option java_outer_classname = "DiscountServiceProto";
 option java_package = "com.moego.api.business.discount.v1";
