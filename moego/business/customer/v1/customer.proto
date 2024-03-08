@@ -45,6 +45,7 @@ message Customer {
   google.protobuf.Timestamp created_timestamp = 18;
   string last_updated_by = 19;
   google.protobuf.Timestamp last_updated_timestamp = 20;
+  string preferred_business_id = 21;
 }
 
 // CustomerPreference is the preference of a customer

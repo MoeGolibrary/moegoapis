@@ -33,8 +33,9 @@ message GetStaffRequest {
 
 // ListStaffsRequest is the request message for StaffAPI.ListStaffs
 message ListStaffsRequest {
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // The pagination information
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListStaffsResponse {
