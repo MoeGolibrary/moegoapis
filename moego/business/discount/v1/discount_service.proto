@@ -19,7 +19,7 @@ service DiscountService {
   rpc CreateDiscount(CreateDiscountRequest) returns (Discount) {
     option (google.api.http) = {
       post: "/v1/discount"
-      body: "discount"
+      body: "*"
     };
   }
 
@@ -32,7 +32,6 @@ service DiscountService {
   rpc ListDiscounts(ListDiscountsRequest) returns (ListDiscountsResponse) {
     option (google.api.http) = {
       get: "/v1/discounts"
-      body: "discount"
     };
   }
 }

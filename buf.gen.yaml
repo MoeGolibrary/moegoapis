@@ -10,3 +10,5 @@ plugins:
     out: out/go
     opt:
       - lang=go
+  - plugin: grpc-gateway
+    out: out/go
