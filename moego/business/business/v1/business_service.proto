@@ -33,9 +33,10 @@ message GetBusinessRequest {
 
 // ListBusinessRequest request for ListBusiness
 message ListBusinessRequest {
-  string company_id = 1[(google.api.field_behavior) = REQUIRED];
   // The pagination information
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // The company id
+  string company_id = 1[(google.api.field_behavior) = REQUIRED];
 }
 
 // ListBusinessResponse response for ListBusiness
