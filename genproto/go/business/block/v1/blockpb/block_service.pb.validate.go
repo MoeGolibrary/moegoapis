@@ -57,6 +57,8 @@ func (m *CreateBlockRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for BusinessId
+
 	// no validation rules for StaffId
 
 	if all {

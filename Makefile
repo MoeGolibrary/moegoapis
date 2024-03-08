@@ -1,4 +1,4 @@
-.PHONY: format-lint format lint install
+.PHONY: format-lint format lint install pb
 
 format-lint: format lint				##@Style: run all the style steps
 
@@ -15,3 +15,10 @@ install:												##@Tools: link buf modules to local, you should run this aga
 	@mkdir -p third_party
 	@yq -r '.deps[]' buf.yaml | xargs -I % buf export % -o third_party
 	@echo "Generate deps directory done!"
+
+pb:														##@Build steps: generate protobuf
+	@buf generate
+	@rm -rf genproto
+	@mv out/go/github.com/MoeGolibrary/moegoapis/genproto genproto
+	@rm -rf out
+	@echo "Generate language specific files done!"
