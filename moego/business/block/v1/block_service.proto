@@ -30,10 +30,11 @@ service BlockService {
 
 // CreateBlockRequest create block request
 message CreateBlockRequest {
-  string staff_id = 1 [(google.api.field_behavior) = REQUIRED];
-  google.type.Interval duration = 2 [(google.api.field_behavior) = REQUIRED];
-  string description = 3;
-  string color_code = 4;
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string staff_id = 2 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval duration = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
+  string color_code = 5;
 }
 
 // GetBlockRequest get block request
