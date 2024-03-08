@@ -57,6 +57,10 @@ func (m *CreateCustomerRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for CompanyId
+
+	// no validation rules for PreferredBusinessId
+
 	// no validation rules for FirstName
 
 	// no validation rules for LastName

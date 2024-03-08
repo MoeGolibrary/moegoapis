@@ -299,6 +299,8 @@ func (m *Customer) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for PreferredBusinessId
+
 	if len(errors) > 0 {
 		return CustomerMultiError(errors)
 	}

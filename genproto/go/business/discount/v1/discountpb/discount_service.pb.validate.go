@@ -57,6 +57,8 @@ func (m *CreateDiscountRequest) validate(all bool) error {
 
 	var errors []error
 
+	// no validation rules for CompanyId
+
 	if all {
 		switch v := interface{}(m.GetDiscount()).(type) {
 		case interface{ ValidateAll() error }:
@@ -187,6 +189,8 @@ func (m *GetDiscountRequest) validate(all bool) error {
 	}
 
 	var errors []error
+
+	// no validation rules for CompanyId
 
 	// no validation rules for Code
 
@@ -320,6 +324,8 @@ func (m *ListDiscountsRequest) validate(all bool) error {
 			}
 		}
 	}
+
+	// no validation rules for CompanyId
 
 	if len(errors) > 0 {
 		return ListDiscountsRequestMultiError(errors)
