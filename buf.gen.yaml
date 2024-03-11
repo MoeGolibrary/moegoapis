@@ -1,14 +1,14 @@
 version: v1
 plugins:
   - name: go
-    out: out/go
+    out: tmp/go
   - name: go-grpc
-    out: out/go
+    out: tmp/go
     opt:
       - require_unimplemented_servers=true
   - name: validate
-    out: out/go
+    out: tmp/go
     opt:
       - lang=go
   - plugin: grpc-gateway
-    out: out/go
+    out: tmp/go
