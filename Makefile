@@ -19,9 +19,8 @@ install:												##@Tools: link buf modules to local, you should run this aga
 
 pb:														##@Build steps: generate protobuf
 	@buf generate
-	@buf build -o tmp/moego.bin --as-file-descriptor-set
+	@rm -rf genproto
+	@mv out/go/github.com/MoeGolibrary/moegoapis/genproto genproto
 	@rm -rf out
-	@mv tmp/go/github.com/MoeGolibrary/moegoapis/genproto out
-	@mv tmp/moego.bin out/moego.bin
-	@rm -rf tmp
+	@buf build -o genproto/moego.bin --as-file-descriptor-set
 	@echo "Generate protobuf files done!"
