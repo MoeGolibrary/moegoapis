@@ -18,7 +18,7 @@ message Staff {
   string phone = 5;
   string email = 6;
   Role role = 7;
-  google.protobuf.Timestamp hired_timestamp = 8;
+  google.protobuf.Timestamp hired_time = 8;
   repeated string working_business_ids = 9;
   string mobile_van_ids = 10;
 }

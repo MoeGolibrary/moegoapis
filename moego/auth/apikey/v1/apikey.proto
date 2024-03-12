@@ -22,11 +22,11 @@ message Key {
   // Key restrictions
   Restrictions restrictions = 4;
   // Key created timestamp
-  google.protobuf.Timestamp created_timestamp = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp created_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
   // Key updated timestamp
-  google.protobuf.Timestamp updated_timestamp = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp updated_time = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
   // Key expired timestamp
-  google.protobuf.Timestamp expired_timestamp = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+  google.protobuf.Timestamp expired_time = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // Restrictions are restrictions that are applied to a key.
