@@ -92,11 +92,11 @@ func (m *Key) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetCreatedTimestamp()).(type) {
+		switch v := interface{}(m.GetCreatedTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -104,16 +104,16 @@ func (m *Key) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetCreatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetCreatedTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return KeyValidationError{
-				field:  "CreatedTimestamp",
+				field:  "CreatedTime",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -121,11 +121,11 @@ func (m *Key) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetUpdatedTimestamp()).(type) {
+		switch v := interface{}(m.GetUpdatedTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "UpdatedTimestamp",
+					field:  "UpdatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -133,16 +133,16 @@ func (m *Key) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "UpdatedTimestamp",
+					field:  "UpdatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetUpdatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetUpdatedTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return KeyValidationError{
-				field:  "UpdatedTimestamp",
+				field:  "UpdatedTime",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -150,11 +150,11 @@ func (m *Key) validate(all bool) error {
 	}
 
 	if all {
-		switch v := interface{}(m.GetExpiredTimestamp()).(type) {
+		switch v := interface{}(m.GetExpiredTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "ExpiredTimestamp",
+					field:  "ExpiredTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -162,16 +162,16 @@ func (m *Key) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, KeyValidationError{
-					field:  "ExpiredTimestamp",
+					field:  "ExpiredTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetExpiredTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetExpiredTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return KeyValidationError{
-				field:  "ExpiredTimestamp",
+				field:  "ExpiredTime",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}

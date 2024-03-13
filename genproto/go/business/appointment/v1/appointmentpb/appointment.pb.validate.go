@@ -259,11 +259,11 @@ func (m *Appointment) validate(all bool) error {
 	// no validation rules for CreatedBy
 
 	if all {
-		switch v := interface{}(m.GetCreatedTimestamp()).(type) {
+		switch v := interface{}(m.GetCreatedTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, AppointmentValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -271,16 +271,16 @@ func (m *Appointment) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, AppointmentValidationError{
-					field:  "CreatedTimestamp",
+					field:  "CreatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetCreatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetCreatedTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return AppointmentValidationError{
-				field:  "CreatedTimestamp",
+				field:  "CreatedTime",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
@@ -290,11 +290,11 @@ func (m *Appointment) validate(all bool) error {
 	// no validation rules for LastUpdatedBy
 
 	if all {
-		switch v := interface{}(m.GetLastUpdatedTimestamp()).(type) {
+		switch v := interface{}(m.GetLastUpdatedTime()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
 				errors = append(errors, AppointmentValidationError{
-					field:  "LastUpdatedTimestamp",
+					field:  "LastUpdatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
@@ -302,16 +302,16 @@ func (m *Appointment) validate(all bool) error {
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
 				errors = append(errors, AppointmentValidationError{
-					field:  "LastUpdatedTimestamp",
+					field:  "LastUpdatedTime",
 					reason: "embedded message failed validation",
 					cause:  err,
 				})
 			}
 		}
-	} else if v, ok := interface{}(m.GetLastUpdatedTimestamp()).(interface{ Validate() error }); ok {
+	} else if v, ok := interface{}(m.GetLastUpdatedTime()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
 			return AppointmentValidationError{
-				field:  "LastUpdatedTimestamp",
+				field:  "LastUpdatedTime",
 				reason: "embedded message failed validation",
 				cause:  err,
 			}
