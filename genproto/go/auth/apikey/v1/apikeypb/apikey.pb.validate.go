@@ -438,6 +438,22 @@ func (m *ServerRestrictions) validate(all bool) error {
 
 	}
 
+	for idx, item := range m.GetTestIds() {
+		_, _ = idx, item
+
+		if _, ok := _ServerRestrictions_TestIds_NotInLookup[item]; ok {
+			err := ServerRestrictionsValidationError{
+				field:  fmt.Sprintf("TestIds[%v]", idx),
+				reason: "value must not be in list [123 456 789]",
+			}
+			if !all {
+				return err
+			}
+			errors = append(errors, err)
+		}
+
+	}
+
 	if len(errors) > 0 {
 		return ServerRestrictionsMultiError(errors)
 	}
