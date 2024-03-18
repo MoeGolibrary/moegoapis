@@ -52,11 +52,4 @@ message ServerRestrictions {
       }
     }
   }];
-  repeated int32 test_ids = 2 [(validate.rules).repeated = {
-    items:{
-      int32: {
-        not_in: [123, 456, 789]
-      }
-    }
-  }];
 }
