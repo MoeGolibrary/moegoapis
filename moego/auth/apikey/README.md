@@ -31,7 +31,7 @@ For example:
 
 ```https
 GET /v1/endpoint HTTP/1.1
-Host: api.moego.pet
+Host: openapi.moego.pet
 Authorization: Basic <API_KEY_BASE64>
 ```
 
