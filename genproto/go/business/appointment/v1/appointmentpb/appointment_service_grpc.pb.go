@@ -7,7 +7,10 @@
 package appointmentpb
 
 import (
+	context "context"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -15,12 +18,16 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-const ()
+const (
+	AppointmentService_GetAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
+)
 
 // AppointmentServiceClient is the client API for AppointmentService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppointmentServiceClient interface {
+	// GetAppointment
+	GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 }
 
 type appointmentServiceClient struct {
@@ -31,10 +38,21 @@ func NewAppointmentServiceClient(cc grpc.ClientConnInterface) AppointmentService
 	return &appointmentServiceClient{cc}
 }
 
+func (c *appointmentServiceClient) GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
+	out := new(Appointment)
+	err := c.cc.Invoke(ctx, AppointmentService_GetAppointment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility
 type AppointmentServiceServer interface {
+	// GetAppointment
+	GetAppointment(context.Context, *GetAppointmentRequest) (*Appointment, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -42,6 +60,9 @@ type AppointmentServiceServer interface {
 type UnimplementedAppointmentServiceServer struct {
 }
 
+func (UnimplementedAppointmentServiceServer) GetAppointment(context.Context, *GetAppointmentRequest) (*Appointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAppointment not implemented")
+}
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 
 // UnsafeAppointmentServiceServer may be embedded to opt out of forward compatibility for this service.
@@ -55,13 +76,36 @@ func RegisterAppointmentServiceServer(s grpc.ServiceRegistrar, srv AppointmentSe
 	s.RegisterService(&AppointmentService_ServiceDesc, srv)
 }
 
+func _AppointmentService_GetAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).GetAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_GetAppointment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).GetAppointment(ctx, req.(*GetAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppointmentService_ServiceDesc is the grpc.ServiceDesc for AppointmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "moego.business.appointment.v1.AppointmentService",
 	HandlerType: (*AppointmentServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
-	Streams:     []grpc.StreamDesc{},
-	Metadata:    "moego/business/appointment/v1/appointment_service.proto",
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetAppointment",
+			Handler:    _AppointmentService_GetAppointment_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "moego/business/appointment/v1/appointment_service.proto",
 }
