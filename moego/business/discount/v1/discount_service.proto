@@ -18,14 +18,14 @@ service DiscountService {
   // CreateDiscount
   rpc CreateDiscount(CreateDiscountRequest) returns (Discount) {
     option (google.api.http) = {
-      post: "/v1/discount"
+      post: "/v1/discounts"
       body: "*"
     };
   }
 
   // GetDiscount
   rpc GetDiscount(GetDiscountRequest) returns (Discount) {
-    option (google.api.http) = {get: "/v1/discount/{code}"};
+    option (google.api.http) = {get: "/v1/discounts/{code}"};
   }
 
   // ListDiscounts
