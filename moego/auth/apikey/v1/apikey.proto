@@ -4,7 +4,7 @@ package moego.auth.apikey.v1;
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
-import "validate/validate.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/auth/apikey/v1/apikeypb;apikeypb";
 option java_multiple_files = true;
@@ -45,7 +45,7 @@ message Restrictions {
 message ServerRestrictions {
   // The IP address (IPv4 or IPv6) of the client that issued the HTTP
   // request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
-  repeated string allowed_ips = 1 [(validate.rules).repeated = {
+  repeated string allowed_ips = 1 [(buf.validate.field).repeated = {
     items:{
       string: {
         ip: true

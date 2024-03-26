@@ -1,4 +1,4 @@
-.PHONY: format-lint format lint install pb
+.PHONY: deps pb
 
 format-lint: format lint				##@Style: run all the style steps
 
@@ -11,10 +11,10 @@ lint: 													##@Style: lint the code style
 	@buf breaking --against '.git#branch=origin/production,subdir=moego' moego
 	@echo "Lint done!"
 
-install:												##@Tools: link buf modules to local, you should run this again after add new dependencies in buf.yaml
-	@rm -rf third_party
-	@mkdir -p third_party
-	@yq -r '.deps[]' buf.yaml | xargs -I % buf export % -o third_party
+deps:												##@Tools: link buf modules to local, you should run this again after add new dependencies in buf.yaml
+	@rm -rf deps
+	@mkdir -p deps
+	@yq -r '.deps[]' buf.yaml | xargs -I % buf export % -o deps
 	@echo "Generate deps directory done!"
 
 pb:														##@Build steps: generate protobuf

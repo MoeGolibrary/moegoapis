@@ -3,7 +3,7 @@ syntax = "proto3";
 package moego.common.v1;
 
 import "google/api/field_behavior.proto";
-import "validate/validate.proto";
+import "buf/validate/validate.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb;commonpb";
 option java_multiple_files = true;
@@ -21,7 +21,7 @@ message Pagination {
   // The page size.
   int32 page_size = 1 [
     (google.api.field_behavior) = INPUT_ONLY,
-    (validate.rules).int32 = {
+    (buf.validate.field).int32 = {
       lte: 1,
       gte: 500
     }
@@ -29,7 +29,7 @@ message Pagination {
   // The page token.
   string page_token = 2 [
     (google.api.field_behavior) = INPUT_ONLY,
-    (validate.rules).string = {
+    (buf.validate.field).string = {
       min_len: 1,
       max_len: 64
     }

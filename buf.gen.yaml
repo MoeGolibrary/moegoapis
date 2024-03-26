@@ -1,12 +1,8 @@
 version: v1
 plugins:
-  - name: go
+  - plugin: buf.build/protocolbuffers/go
     out: out/go
-  - name: go-grpc
+  - plugin: buf.build/grpc/go
     out: out/go
     opt:
       - require_unimplemented_servers=true
-  - name: validate
-    out: out/go
-    opt:
-      - lang=go

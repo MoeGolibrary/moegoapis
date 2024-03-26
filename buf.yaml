@@ -1,5 +1,8 @@
 version: v1
 name: buf.build/moegoapis/moegoapis
+build:
+  excludes:
+    - deps
 breaking:
   use:
     - FILE
@@ -24,5 +27,5 @@ lint:
   ignore:
     - grpc
 deps:
-  - buf.build/envoyproxy/protoc-gen-validate
+  - buf.build/bufbuild/protovalidate
   - buf.build/googleapis/googleapis
