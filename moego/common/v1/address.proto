@@ -19,12 +19,12 @@ message Address {
     SECONDARY = 2;
   }
 
-  // Street address
-  string street = 1;
-  string city = 2;
-  string state = 3;
-  string postal_code = 4;
-  string country = 5;
-  google.type.LatLng coordinate = 6;
-  Type type = 7;
+  string address1 = 1;
+  string address2 = 2;
+  string city = 3;
+  string state = 4;
+  string postal_code = 5;
+  string country = 6;
+  google.type.LatLng coordinate = 7;
+  Type type = 8;
 }
