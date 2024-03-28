@@ -26,8 +26,9 @@ message Discount {
 // DiscountLimitation
 message DiscountLimitation {
   uint32 max_redeem_times = 1;
-  bool redeem_once_per_customer = 2;
-  repeated string customer_ids = 3;
+  repeated string business_ids = 2;
+  bool redeem_once_per_customer = 3;
+  repeated string customer_ids = 4;
 }
 
 // DiscountSettings
