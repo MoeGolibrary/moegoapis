@@ -22,4 +22,5 @@ service AppointmentService {
 // GetAppointmentRequest get appointment request
 message GetAppointmentRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }

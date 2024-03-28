@@ -22,8 +22,8 @@ message Pagination {
   int32 page_size = 1 [
     (google.api.field_behavior) = INPUT_ONLY,
     (buf.validate.field).int32 = {
-      lte: 1,
-      gte: 500
+      gte: 1,
+      lte: 500
     }
   ];
   // The page token.
