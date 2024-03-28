@@ -21,6 +21,7 @@ message Staff {
   google.protobuf.Timestamp hired_time = 8;
   repeated string working_business_ids = 9;
   string mobile_van_id = 10;
+  string company_id =11;
 }
 
 // Role

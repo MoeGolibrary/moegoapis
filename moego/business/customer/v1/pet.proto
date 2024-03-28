@@ -52,6 +52,7 @@ message Pet {
   repeated string pet_codes = 12;
   repeated Note notes = 13;
   repeated Vaccination vaccinations = 14;
+  string customer_id =15;
 }
 
 message Vaccination {

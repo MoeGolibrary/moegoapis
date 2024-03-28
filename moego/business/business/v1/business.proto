@@ -23,4 +23,5 @@ message Business {
   string instagram = 10;
   string yelp = 11;
   string google = 12;
+  string company_id = 13;
 }
