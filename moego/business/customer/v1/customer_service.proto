@@ -58,6 +58,8 @@ message GetCustomerRequest {
 message ListCustomersRequest {
   // The pagination information
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // The company id
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListCustomersResponse is the response message for CustomerAPI.ListCustomers
