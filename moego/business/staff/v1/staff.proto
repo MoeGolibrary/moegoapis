@@ -20,7 +20,7 @@ message Staff {
   Role role = 7;
   google.protobuf.Timestamp hired_time = 8;
   repeated string working_business_ids = 9;
-  repeated string mobile_van_ids = 10;
+  string mobile_van_id = 10;
 }
 
 // Role
