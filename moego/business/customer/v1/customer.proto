@@ -33,20 +33,16 @@ message Customer {
   string email = 6;
   repeated moego.common.v1.Address address = 7;
   Status status = 8;
-  repeated string tags = 9;
-  bool has_card_on_file = 10;
-  string color_code = 11;
-  string source = 12;
-  repeated Note notes = 13;
-  google.protobuf.Timestamp last_appointment_date = 14;
-  google.protobuf.Timestamp next_appointment_date = 15;
-  repeated Pet pets = 16;
-  string created_by = 17;
-  google.protobuf.Timestamp created_time = 18;
-  string last_updated_by = 19;
-  google.protobuf.Timestamp last_updated_time = 20;
-  string preferred_business_id = 21;
-  string company_id =22;
+  string color_code = 9;
+  string source = 10;
+  google.protobuf.Timestamp last_appointment_date = 11;
+  google.protobuf.Timestamp next_appointment_date = 12;
+  string created_by = 13;
+  google.protobuf.Timestamp created_time = 14;
+  string last_updated_by = 15;
+  google.protobuf.Timestamp last_updated_time = 16;
+  string preferred_business_id = 17;
+  string company_id =18;
 }
 
 // CustomerPreference is the preference of a customer
