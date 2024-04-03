@@ -21,13 +21,12 @@ message Appointment {
   // Status
   enum Status {
     STATUS_UNSPECIFIED = 0;
-    PENDING = 1;
-    UNCONFIRMED = 2;
+    UNCONFIRMED = 1;
+    CONFIRMED = 2;
     CHECKED_IN = 3;
     READY = 4;
     FINISHED = 5;
-    DELETED = 6;
-    CANCELED = 7;
+    CANCELED = 6;
   }
 
   // id of the appointment
