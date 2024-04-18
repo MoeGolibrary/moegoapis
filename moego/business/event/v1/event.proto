@@ -17,7 +17,7 @@ message Event {
   // Type is the type of the event
   enum Type {
     // EVENT_TYPE_UNSPECIFIED can never be used in a message. It is used as the default value in enums.
-    EVENT_TYPE_UNSPECIFIED = 0;
+    TYPE_UNSPECIFIED = 0;
     // From 1-99 are reserved for system events
     // HEALTH_CHECK is an event type for health check
     HEALTH_CHECK = 1;
