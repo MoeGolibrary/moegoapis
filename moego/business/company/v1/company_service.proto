@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package moego.business.company.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/company/v1/company.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/company/v1/companypb;companypb";
+option java_multiple_files = true;
+option java_outer_classname = "CompanyProto";
+option java_package = "com.moego.api.business.company.v1";
+
+
+// CompanyService openapi definitions for operate company
+service CompanyService {
+    // GetCompany get a company
+    rpc GetCompany(GetCompanyRequest) returns (Company) {
+        option (google.api.http) = {get: "/v1/companies/{id}"};
+    }
+
+    // ListCompany list businesses
+    rpc ListCompany(ListCompanyRequest) returns (ListCompanyResponse) {
+        option (google.api.http) = {get: "/v1/companies"};
+    }
+}
+
+// GetCompanyRequest request for GetCompany
+message GetCompanyRequest {
+    // id of business
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListCompanyRequest request for ListCompany
+message ListCompanyRequest {
+    // The pagination information
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListCompanyResponse response for ListCompany
+message ListCompanyResponse {
+    // The next page token
+    string next_page_token = 1;
+    // The businesses
+    repeated Company companies = 2;
+}
