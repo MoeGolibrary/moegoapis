@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CompanyService_GetCompany_FullMethodName  = "/moego.business.company.v1.CompanyService/GetCompany"
-	CompanyService_ListCompany_FullMethodName = "/moego.business.company.v1.CompanyService/ListCompany"
+	CompanyService_GetCompany_FullMethodName    = "/moego.business.company.v1.CompanyService/GetCompany"
+	CompanyService_ListCompanies_FullMethodName = "/moego.business.company.v1.CompanyService/ListCompanies"
 )
 
 // CompanyServiceClient is the client API for CompanyService service.
@@ -29,8 +29,8 @@ const (
 type CompanyServiceClient interface {
 	// GetCompany get a company
 	GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*Company, error)
-	// ListCompany list businesses
-	ListCompany(ctx context.Context, in *ListCompanyRequest, opts ...grpc.CallOption) (*ListCompanyResponse, error)
+	// ListCompanies list companies
+	ListCompanies(ctx context.Context, in *ListCompaniesRequest, opts ...grpc.CallOption) (*ListCompaniesResponse, error)
 }
 
 type companyServiceClient struct {
@@ -50,9 +50,9 @@ func (c *companyServiceClient) GetCompany(ctx context.Context, in *GetCompanyReq
 	return out, nil
 }
 
-func (c *companyServiceClient) ListCompany(ctx context.Context, in *ListCompanyRequest, opts ...grpc.CallOption) (*ListCompanyResponse, error) {
-	out := new(ListCompanyResponse)
-	err := c.cc.Invoke(ctx, CompanyService_ListCompany_FullMethodName, in, out, opts...)
+func (c *companyServiceClient) ListCompanies(ctx context.Context, in *ListCompaniesRequest, opts ...grpc.CallOption) (*ListCompaniesResponse, error) {
+	out := new(ListCompaniesResponse)
+	err := c.cc.Invoke(ctx, CompanyService_ListCompanies_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,8 +65,8 @@ func (c *companyServiceClient) ListCompany(ctx context.Context, in *ListCompanyR
 type CompanyServiceServer interface {
 	// GetCompany get a company
 	GetCompany(context.Context, *GetCompanyRequest) (*Company, error)
-	// ListCompany list businesses
-	ListCompany(context.Context, *ListCompanyRequest) (*ListCompanyResponse, error)
+	// ListCompanies list companies
+	ListCompanies(context.Context, *ListCompaniesRequest) (*ListCompaniesResponse, error)
 	mustEmbedUnimplementedCompanyServiceServer()
 }
 
@@ -77,8 +77,8 @@ type UnimplementedCompanyServiceServer struct {
 func (UnimplementedCompanyServiceServer) GetCompany(context.Context, *GetCompanyRequest) (*Company, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompany not implemented")
 }
-func (UnimplementedCompanyServiceServer) ListCompany(context.Context, *ListCompanyRequest) (*ListCompanyResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListCompany not implemented")
+func (UnimplementedCompanyServiceServer) ListCompanies(context.Context, *ListCompaniesRequest) (*ListCompaniesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCompanies not implemented")
 }
 func (UnimplementedCompanyServiceServer) mustEmbedUnimplementedCompanyServiceServer() {}
 
@@ -111,20 +111,20 @@ func _CompanyService_GetCompany_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CompanyService_ListCompany_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListCompanyRequest)
+func _CompanyService_ListCompanies_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCompaniesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CompanyServiceServer).ListCompany(ctx, in)
+		return srv.(CompanyServiceServer).ListCompanies(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CompanyService_ListCompany_FullMethodName,
+		FullMethod: CompanyService_ListCompanies_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CompanyServiceServer).ListCompany(ctx, req.(*ListCompanyRequest))
+		return srv.(CompanyServiceServer).ListCompanies(ctx, req.(*ListCompaniesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -141,8 +141,8 @@ var CompanyService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CompanyService_GetCompany_Handler,
 		},
 		{
-			MethodName: "ListCompany",
-			Handler:    _CompanyService_ListCompany_Handler,
+			MethodName: "ListCompanies",
+			Handler:    _CompanyService_ListCompanies_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

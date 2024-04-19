@@ -20,8 +20,8 @@ service CompanyService {
         option (google.api.http) = {get: "/v1/companies/{id}"};
     }
 
-    // ListCompany list businesses
-    rpc ListCompany(ListCompanyRequest) returns (ListCompanyResponse) {
+    // ListCompanies list companies
+    rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {
         option (google.api.http) = {get: "/v1/companies"};
     }
 }
@@ -32,14 +32,14 @@ message GetCompanyRequest {
     string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListCompanyRequest request for ListCompany
-message ListCompanyRequest {
+// ListCompaniesRequest request for ListCompanies
+message ListCompaniesRequest {
     // The pagination information
     moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListCompanyResponse response for ListCompany
-message ListCompanyResponse {
+// ListCompaniesResponse response for ListCompanies
+message ListCompaniesResponse {
     // The next page token
     string next_page_token = 1;
     // The businesses
