@@ -5,6 +5,8 @@ package moego.business.appointment.v1;
 import "moego/business/appointment/v1/appointment.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "moego/common/v1/pagination.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -17,10 +19,29 @@ service AppointmentService {
   rpc GetAppointment(GetAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {get: "/v1/appointments/{id}"};
   }
+  // ListStaffs
+  rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
+    option (google.api.http) = {get: "/v1/appointments"};
+  }
 }
 
 // GetAppointmentRequest get appointment request
 message GetAppointmentRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListAppointmentsRequest{
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp start_time = 4[(google.api.field_behavior) = REQUIRED];
+  google.protobuf.Timestamp end_time = 5[(google.api.field_behavior) = REQUIRED];
+}
+
+message ListAppointmentsResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The Appointments
+  repeated Appointment appointments = 2;
 }
