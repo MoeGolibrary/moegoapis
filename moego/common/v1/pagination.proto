@@ -27,7 +27,7 @@ message Pagination {
     }
   ];
   // The page token.
-  string page_token = 2 [
+  optional string page_token = 2 [
     (google.api.field_behavior) = INPUT_ONLY,
     (buf.validate.field).string = {
       min_len: 1,

@@ -16,12 +16,12 @@ option java_package = "com.moego.api.business.business.v1";
 service BusinessService {
   // GetBusiness get a business
   rpc GetBusiness(GetBusinessRequest) returns (Business) {
-    option (google.api.http) = {get: "/v1/business/{id}"};
+    option (google.api.http) = {get: "/v1/businesses/{id}"};
   }
 
   // ListBusiness list businesses
   rpc ListBusiness(ListBusinessRequest) returns (ListBusinessResponse) {
-    option (google.api.http) = {get: "/v1/business"};
+    option (google.api.http) = {get: "/v1/businesses"};
   }
 }
 
