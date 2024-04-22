@@ -20,7 +20,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Company company information
+// Company information
 type Company struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

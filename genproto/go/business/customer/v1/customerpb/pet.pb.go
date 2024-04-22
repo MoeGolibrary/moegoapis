@@ -23,7 +23,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// PetType is the type of a pet
+// PetType is the type of pet
 type Pet_Type int32
 
 const (

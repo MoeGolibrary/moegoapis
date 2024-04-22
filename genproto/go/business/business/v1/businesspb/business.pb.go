@@ -21,7 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Business business information
+// Business information
 type Business struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
