@@ -19,6 +19,10 @@ message Payment {
     PARTIAL_PAID = 2;
     // FULL_PAID
     FULL_PAID = 3;
+    // PARTIAL REFUNDED
+    PARTIAL_REFUNDED = 4;
+    // FULL REFUNDED
+    FULL_REFUNDED = 5;
   }
 
   // ID
