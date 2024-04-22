@@ -14,7 +14,7 @@ option java_package = "com.moego.api.business.customer.v1";
 
 // Pet is a pet
 message Pet {
-  // PetType is the type of a pet
+  // PetType is the type of pet
   enum Type {
     TYPE_UNSPECIFIED = 0;
     OTHER = 1;
