@@ -35,14 +35,14 @@ message GetAppointmentRequest {
 message ListAppointmentsRequest{
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
   message Filter {
-    repeated string business_ids = 1 [(google.api.field_behavior) = OPTIONAL];
-    google.type.Interval start_time = 2[(google.api.field_behavior) = OPTIONAL];
-    google.type.Interval end_time = 3[(google.api.field_behavior) = OPTIONAL];
-    google.type.Interval last_updated_time = 4[(google.api.field_behavior) = OPTIONAL];
-    repeated Appointment.Status statuses = 5[(google.api.field_behavior) = OPTIONAL];
+    google.type.Interval start_time = 1[(google.api.field_behavior) = OPTIONAL];
+    google.type.Interval end_time = 2[(google.api.field_behavior) = OPTIONAL];
+    google.type.Interval last_updated_time = 3[(google.api.field_behavior) = OPTIONAL];
+    repeated Appointment.Status statuses = 4[(google.api.field_behavior) = OPTIONAL];
   }
-  Filter filter = 3[(google.api.field_behavior) = OPTIONAL];
+  Filter filter = 4;
 }
 
 message ListAppointmentsResponse {
