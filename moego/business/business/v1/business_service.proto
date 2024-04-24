@@ -21,7 +21,10 @@ service BusinessService {
 
   // ListBusiness list businesses
   rpc ListBusiness(ListBusinessRequest) returns (ListBusinessResponse) {
-    option (google.api.http) = {get: "/v1/businesses"};
+    option (google.api.http) = {
+      post: "/v1/businesses:list",
+      body: "*"
+    };
   }
 }
 

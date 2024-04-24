@@ -15,33 +15,36 @@ option java_package = "com.moego.api.business.company.v1";
 
 // CompanyService openapi definitions for operate company
 service CompanyService {
-    // GetCompany get a company
-    rpc GetCompany(GetCompanyRequest) returns (Company) {
-        option (google.api.http) = {get: "/v1/companies/{id}"};
-    }
+  // GetCompany get a company
+  rpc GetCompany(GetCompanyRequest) returns (Company) {
+    option (google.api.http) = {get: "/v1/companies/{id}"};
+  }
 
-    // ListCompanies list companies
-    rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {
-        option (google.api.http) = {get: "/v1/companies"};
-    }
+  // ListCompanies list companies
+  rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {
+    option (google.api.http) = {
+      post: "/v1/companies:list",
+      body: "*"
+    };
+  }
 }
 
 // GetCompanyRequest request for GetCompany
 message GetCompanyRequest {
-    // id of business
-    string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of business
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListCompaniesRequest request for ListCompanies
 message ListCompaniesRequest {
-    // The pagination information
-    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListCompaniesResponse response for ListCompanies
 message ListCompaniesResponse {
-    // The next page token
-    string next_page_token = 1;
-    // The businesses
-    repeated Company companies = 2;
+  // The next page token
+  string next_page_token = 1;
+  // The businesses
+  repeated Company companies = 2;
 }

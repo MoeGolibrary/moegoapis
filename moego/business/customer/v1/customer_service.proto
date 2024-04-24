@@ -31,7 +31,10 @@ service CustomerService {
 
   // List customers
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {
-    option (google.api.http) = {get: "/v1/customers"};
+    option (google.api.http) = {
+      post: "/v1/customers:list",
+      body: "*"
+    };
   }
 }
 

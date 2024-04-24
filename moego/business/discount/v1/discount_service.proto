@@ -30,7 +30,8 @@ service DiscountService {
   // ListDiscounts
   rpc ListDiscounts(ListDiscountsRequest) returns (ListDiscountsResponse) {
     option (google.api.http) = {
-      get: "/v1/discounts"
+      post: "/v1/discounts:list",
+      body: "*"
     };
   }
 }

@@ -22,7 +22,10 @@ service AppointmentService {
   }
   // ListStaffs
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
-    option (google.api.http) = {get: "/v1/appointments"};
+    option (google.api.http) = {
+        post: "/v1/appointments:list",
+        body: "*"
+    };
   }
 }
 

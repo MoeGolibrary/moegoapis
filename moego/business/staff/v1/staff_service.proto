@@ -21,7 +21,10 @@ service StaffService {
 
   // ListStaffs
   rpc ListStaffs(ListStaffsRequest) returns (ListStaffsResponse) {
-    option (google.api.http) = {get: "/v1/staffs"};
+    option (google.api.http) = {
+      post: "/v1/staffs:list",
+      body: "*"
+    };
   }
 }
 
