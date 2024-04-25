@@ -27,7 +27,7 @@ service AgreementService {
     };
   }
   // GetUnsignedAgreementLink
-  rpc GetUnsignedAgreementsLink(UnsignedAgreementRequest) returns (UnsignedAgreementResponse) {
+  rpc GetUnsignedAgreementLink(UnsignedAgreementRequest) returns (UnsignedAgreementResponse) {
     option (google.api.http) = {get: "/v1/agreements/sign_url/{id}"};
   }
 }
