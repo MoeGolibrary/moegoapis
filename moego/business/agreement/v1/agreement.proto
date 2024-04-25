@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package moego.business.agreement.v1;
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb;agreementpb";
+option java_multiple_files = true;
+option java_outer_classname = "AgreementProto";
+option java_package = "com.moego.api.business.agreement.v1";
+
+// Agreement
+message Agreement {
+  // Status
+  enum Status {
+    // unspecified
+    STATUS_UNSPECIFIED = 0;
+    // normal
+    STATUS_NORMAL = 1;
+    // deleted
+    STATUS_DELETED = 2;
+  }
+
+  // policy requirement for signed an agreement
+  enum SignedPolicy {
+    // unspecified
+    SIGNED_POLICY_UNSP_ECIFIED = 0;
+    // sign for first
+    SIGNED_POLICY_FOR_FIRST = 1;
+    // sign for each
+    SIGNED_POLICY_FOR_EACH = 2;
+    // allow not to sign
+    SIGNED_POLICY_OPTIONAL = 3;
+  }
+
+  // agreement id
+  int64 id = 1;
+  // business id
+  int64 business_id = 2;
+  // creator id
+  int64 creator_id = 3;
+  // status: normal, deleted
+  Status status = 4;
+  // signed policy, see definition in SignedPolicy
+  SignedPolicy signed_policy = 5;
+  // apply for services type, see the enum definition in ServiceType
+  // notes: service_types is a combined value, For example:
+  //   if you want to apply the agreement to grooming and boarding services,
+  //   the service_types value is 3, logical OR result of enumeration values for grooming(1) and boarding(2)
+  // include ob available
+  int32 service_types = 6;
+  // agreement title
+  string agreement_title = 7;
+  // agreement content
+  string agreement_content = 8;
+  // sms template
+  string sms_template = 9;
+  // email template title
+  string email_template_title = 10;
+  // email template body
+  string email_template_body = 11;
+  // last requested time: exceed this time will need to be re-signed
+  int64 last_required_time = 12;
+  // last edit time: milliseconds
+  int64 last_edit_time = 13;
+  // create time: milliseconds
+  int64 create_time = 14;
+  // update time: milliseconds
+  int64 update_time = 15;
+}
