@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package moego.business.appointment.v1;
+package moego.business.agreement.v1;
 
 import "moego/business/agreement/v1/agreement.proto";
 import "google/api/annotations.proto";
@@ -22,35 +22,45 @@ service AgreementService {
   // ListAgreement
   rpc ListAgreements(ListAgreementsRequest) returns (ListAgreementsResponse) {
     option (google.api.http) = {
-      post: "/v1/agreement:list",
+      post: "/v1/agreements:list",
       body: "*"
     };
   }
   // GetUnsignedAgreementLink
   rpc GetUnsignedAgreementsLink(UnsignedAgreementRequest) returns (UnsignedAgreementResponse) {
-    option (google.api.http) = {get: "/v1/agreements/unsigned/{customerId}/{agreementId}"};
+    option (google.api.http) = {get: "/v1/agreements/sign_url/{id}"};
   }
 }
 
 // GetAppointmentRequest get appointment request
 message GetAgreementRequest {
+  // id
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // business_id
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListAppointmentsRequest get appointment request
 message ListAgreementsRequest {
+  // Pagination
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // company_id
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // business_ids
   repeated string business_ids = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // UnsignedAgreementRequest get unsignedAgreement request
 message UnsignedAgreementRequest {
-  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-  string agreement_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // id
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // customer_id
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // business_id
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
+// ListAgreementsResponse
 message ListAgreementsResponse {
   // The next page token
   string next_page_token = 1;
@@ -58,6 +68,7 @@ message ListAgreementsResponse {
   repeated Agreement agreement = 2;
 }
 
+// UnsignedAgreementResponse
 message UnsignedAgreementResponse {
   // agreement_record_id
   string agreement_record_id = 1;
