@@ -160,7 +160,7 @@ type UnsignedAgreementRequest struct {
 	// customer_id
 	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// business_id
-	BusinessId string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"` //todo check customer 是否在business下 agreement是否在business下面
+	BusinessId string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 }
 
 func (x *UnsignedAgreementRequest) Reset() {
