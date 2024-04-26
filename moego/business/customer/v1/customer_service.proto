@@ -38,7 +38,7 @@ service CustomerService {
   }
 
   // Generate a link to add customer card on file
-  rpc GenCustomerCOFLink(GenCustomerCOFLinkRequest) returns (GenCustomerCOFLinkResponse) {
+  rpc GenCustomerCofLink(GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
     option (google.api.http) = {get: "/v1/customers/cof/link"};
   }
 }
@@ -78,13 +78,13 @@ message ListCustomersResponse {
   repeated Customer customers = 2;
 }
 
-// GenCustomerCOFLinkRequest is the request message for CustomerAPI.GenCustomerCOFLink
-message GenCustomerCOFLinkRequest{
+// GenCustomerCofLinkRequest is the request message for CustomerAPI.GenCustomerCofLink
+message GenCustomerCofLinkRequest{
   // The id of the customer to retrieve
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
-// GenCustomerCOFLinkResponse is the response message for CustomerAPI.GenCustomerCOFLink
-message GenCustomerCOFLinkResponse{
+// GenCustomerCofLinkResponse is the response message for CustomerAPI.GenCustomerCofLink
+message GenCustomerCofLinkResponse{
   // The link of the customer cof
   string link = 1;
 }

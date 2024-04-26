@@ -299,8 +299,8 @@ func (x *ListCustomersResponse) GetCustomers() []*Customer {
 	return nil
 }
 
-// GenCustomerCOFLinkRequest is the request message for CustomerAPI.GenCustomerCOFLink
-type GenCustomerCOFLinkRequest struct {
+// GenCustomerCofLinkRequest is the request message for CustomerAPI.GenCustomerCofLink
+type GenCustomerCofLinkRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -309,8 +309,8 @@ type GenCustomerCOFLinkRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 }
 
-func (x *GenCustomerCOFLinkRequest) Reset() {
-	*x = GenCustomerCOFLinkRequest{}
+func (x *GenCustomerCofLinkRequest) Reset() {
+	*x = GenCustomerCofLinkRequest{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -318,13 +318,13 @@ func (x *GenCustomerCOFLinkRequest) Reset() {
 	}
 }
 
-func (x *GenCustomerCOFLinkRequest) String() string {
+func (x *GenCustomerCofLinkRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GenCustomerCOFLinkRequest) ProtoMessage() {}
+func (*GenCustomerCofLinkRequest) ProtoMessage() {}
 
-func (x *GenCustomerCOFLinkRequest) ProtoReflect() protoreflect.Message {
+func (x *GenCustomerCofLinkRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -336,20 +336,20 @@ func (x *GenCustomerCOFLinkRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GenCustomerCOFLinkRequest.ProtoReflect.Descriptor instead.
-func (*GenCustomerCOFLinkRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use GenCustomerCofLinkRequest.ProtoReflect.Descriptor instead.
+func (*GenCustomerCofLinkRequest) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *GenCustomerCOFLinkRequest) GetId() string {
+func (x *GenCustomerCofLinkRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// GenCustomerCOFLinkResponse is the response message for CustomerAPI.GenCustomerCOFLink
-type GenCustomerCOFLinkResponse struct {
+// GenCustomerCofLinkResponse is the response message for CustomerAPI.GenCustomerCofLink
+type GenCustomerCofLinkResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
@@ -358,8 +358,8 @@ type GenCustomerCOFLinkResponse struct {
 	Link string `protobuf:"bytes,1,opt,name=link,proto3" json:"link,omitempty"`
 }
 
-func (x *GenCustomerCOFLinkResponse) Reset() {
-	*x = GenCustomerCOFLinkResponse{}
+func (x *GenCustomerCofLinkResponse) Reset() {
+	*x = GenCustomerCofLinkResponse{}
 	if protoimpl.UnsafeEnabled {
 		mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -367,13 +367,13 @@ func (x *GenCustomerCOFLinkResponse) Reset() {
 	}
 }
 
-func (x *GenCustomerCOFLinkResponse) String() string {
+func (x *GenCustomerCofLinkResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GenCustomerCOFLinkResponse) ProtoMessage() {}
+func (*GenCustomerCofLinkResponse) ProtoMessage() {}
 
-func (x *GenCustomerCOFLinkResponse) ProtoReflect() protoreflect.Message {
+func (x *GenCustomerCofLinkResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -385,12 +385,12 @@ func (x *GenCustomerCOFLinkResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GenCustomerCOFLinkResponse.ProtoReflect.Descriptor instead.
-func (*GenCustomerCOFLinkResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use GenCustomerCofLinkResponse.ProtoReflect.Descriptor instead.
+func (*GenCustomerCofLinkResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *GenCustomerCOFLinkResponse) GetLink() string {
+func (x *GenCustomerCofLinkResponse) GetLink() string {
 	if x != nil {
 		return x.Link
 	}
@@ -464,10 +464,10 @@ var file_moego_business_customer_v1_customer_service_proto_rawDesc = []byte{
 	0x67, 0x6f, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x63, 0x75, 0x73, 0x74,
 	0x6f, 0x6d, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
 	0x52, 0x09, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x22, 0x30, 0x0a, 0x19, 0x47,
-	0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x4f, 0x46, 0x4c, 0x69, 0x6e,
+	0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x6f, 0x66, 0x4c, 0x69, 0x6e,
 	0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x13, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01,
 	0x20, 0x01, 0x28, 0x09, 0x42, 0x03, 0xe0, 0x41, 0x02, 0x52, 0x02, 0x69, 0x64, 0x22, 0x30, 0x0a,
-	0x1a, 0x47, 0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x4f, 0x46, 0x4c,
+	0x1a, 0x47, 0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x6f, 0x66, 0x4c,
 	0x69, 0x6e, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6c,
 	0x69, 0x6e, 0x6b, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6c, 0x69, 0x6e, 0x6b, 0x32,
 	0xd4, 0x04, 0x0a, 0x0f, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x53, 0x65, 0x72, 0x76,
@@ -498,13 +498,13 @@ var file_moego_business_customer_v1_customer_service_proto_rawDesc = []byte{
 	0x65, 0x22, 0x1d, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x17, 0x3a, 0x01, 0x2a, 0x22, 0x12, 0x2f, 0x76,
 	0x31, 0x2f, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x3a, 0x6c, 0x69, 0x73, 0x74,
 	0x12, 0xa3, 0x01, 0x0a, 0x12, 0x47, 0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
-	0x43, 0x4f, 0x46, 0x4c, 0x69, 0x6e, 0x6b, 0x12, 0x35, 0x2e, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e,
+	0x43, 0x6f, 0x66, 0x4c, 0x69, 0x6e, 0x6b, 0x12, 0x35, 0x2e, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e,
 	0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65,
 	0x72, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x6e, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72,
-	0x43, 0x4f, 0x46, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x36,
+	0x43, 0x6f, 0x66, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x36,
 	0x2e, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e,
 	0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x6e, 0x43,
-	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x4f, 0x46, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65,
+	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x43, 0x6f, 0x66, 0x4c, 0x69, 0x6e, 0x6b, 0x52, 0x65,
 	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1e, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x18, 0x12, 0x16,
 	0x2f, 0x76, 0x31, 0x2f, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x65, 0x72, 0x73, 0x2f, 0x63, 0x6f,
 	0x66, 0x2f, 0x6c, 0x69, 0x6e, 0x6b, 0x42, 0x96, 0x01, 0x0a, 0x22, 0x63, 0x6f, 0x6d, 0x2e, 0x6d,
@@ -538,8 +538,8 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []interface
 	(*GetCustomerRequest)(nil),         // 1: moego.business.customer.v1.GetCustomerRequest
 	(*ListCustomersRequest)(nil),       // 2: moego.business.customer.v1.ListCustomersRequest
 	(*ListCustomersResponse)(nil),      // 3: moego.business.customer.v1.ListCustomersResponse
-	(*GenCustomerCOFLinkRequest)(nil),  // 4: moego.business.customer.v1.GenCustomerCOFLinkRequest
-	(*GenCustomerCOFLinkResponse)(nil), // 5: moego.business.customer.v1.GenCustomerCOFLinkResponse
+	(*GenCustomerCofLinkRequest)(nil),  // 4: moego.business.customer.v1.GenCustomerCofLinkRequest
+	(*GenCustomerCofLinkResponse)(nil), // 5: moego.business.customer.v1.GenCustomerCofLinkResponse
 	(*commonpb.Address)(nil),           // 6: moego.common.v1.Address
 	(*Pet)(nil),                        // 7: moego.business.customer.v1.Pet
 	(*CustomerPreference)(nil),         // 8: moego.business.customer.v1.CustomerPreference
@@ -555,11 +555,11 @@ var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	0,  // 5: moego.business.customer.v1.CustomerService.CreateCustomer:input_type -> moego.business.customer.v1.CreateCustomerRequest
 	1,  // 6: moego.business.customer.v1.CustomerService.GetCustomer:input_type -> moego.business.customer.v1.GetCustomerRequest
 	2,  // 7: moego.business.customer.v1.CustomerService.ListCustomers:input_type -> moego.business.customer.v1.ListCustomersRequest
-	4,  // 8: moego.business.customer.v1.CustomerService.GenCustomerCOFLink:input_type -> moego.business.customer.v1.GenCustomerCOFLinkRequest
+	4,  // 8: moego.business.customer.v1.CustomerService.GenCustomerCofLink:input_type -> moego.business.customer.v1.GenCustomerCofLinkRequest
 	10, // 9: moego.business.customer.v1.CustomerService.CreateCustomer:output_type -> moego.business.customer.v1.Customer
 	10, // 10: moego.business.customer.v1.CustomerService.GetCustomer:output_type -> moego.business.customer.v1.Customer
 	3,  // 11: moego.business.customer.v1.CustomerService.ListCustomers:output_type -> moego.business.customer.v1.ListCustomersResponse
-	5,  // 12: moego.business.customer.v1.CustomerService.GenCustomerCOFLink:output_type -> moego.business.customer.v1.GenCustomerCOFLinkResponse
+	5,  // 12: moego.business.customer.v1.CustomerService.GenCustomerCofLink:output_type -> moego.business.customer.v1.GenCustomerCofLinkResponse
 	9,  // [9:13] is the sub-list for method output_type
 	5,  // [5:9] is the sub-list for method input_type
 	5,  // [5:5] is the sub-list for extension type_name
@@ -624,7 +624,7 @@ func file_moego_business_customer_v1_customer_service_proto_init() {
 			}
 		}
 		file_moego_business_customer_v1_customer_service_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GenCustomerCOFLinkRequest); i {
+			switch v := v.(*GenCustomerCofLinkRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -636,7 +636,7 @@ func file_moego_business_customer_v1_customer_service_proto_init() {
 			}
 		}
 		file_moego_business_customer_v1_customer_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GenCustomerCOFLinkResponse); i {
+			switch v := v.(*GenCustomerCofLinkResponse); i {
 			case 0:
 				return &v.state
 			case 1:

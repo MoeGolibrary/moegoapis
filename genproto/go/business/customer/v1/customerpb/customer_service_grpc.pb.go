@@ -22,7 +22,7 @@ const (
 	CustomerService_CreateCustomer_FullMethodName     = "/moego.business.customer.v1.CustomerService/CreateCustomer"
 	CustomerService_GetCustomer_FullMethodName        = "/moego.business.customer.v1.CustomerService/GetCustomer"
 	CustomerService_ListCustomers_FullMethodName      = "/moego.business.customer.v1.CustomerService/ListCustomers"
-	CustomerService_GenCustomerCOFLink_FullMethodName = "/moego.business.customer.v1.CustomerService/GenCustomerCOFLink"
+	CustomerService_GenCustomerCofLink_FullMethodName = "/moego.business.customer.v1.CustomerService/GenCustomerCofLink"
 )
 
 // CustomerServiceClient is the client API for CustomerService service.
@@ -36,7 +36,7 @@ type CustomerServiceClient interface {
 	// List customers
 	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
 	// Generate a link to add customer card on file
-	GenCustomerCOFLink(ctx context.Context, in *GenCustomerCOFLinkRequest, opts ...grpc.CallOption) (*GenCustomerCOFLinkResponse, error)
+	GenCustomerCofLink(ctx context.Context, in *GenCustomerCofLinkRequest, opts ...grpc.CallOption) (*GenCustomerCofLinkResponse, error)
 }
 
 type customerServiceClient struct {
@@ -74,9 +74,9 @@ func (c *customerServiceClient) ListCustomers(ctx context.Context, in *ListCusto
 	return out, nil
 }
 
-func (c *customerServiceClient) GenCustomerCOFLink(ctx context.Context, in *GenCustomerCOFLinkRequest, opts ...grpc.CallOption) (*GenCustomerCOFLinkResponse, error) {
-	out := new(GenCustomerCOFLinkResponse)
-	err := c.cc.Invoke(ctx, CustomerService_GenCustomerCOFLink_FullMethodName, in, out, opts...)
+func (c *customerServiceClient) GenCustomerCofLink(ctx context.Context, in *GenCustomerCofLinkRequest, opts ...grpc.CallOption) (*GenCustomerCofLinkResponse, error) {
+	out := new(GenCustomerCofLinkResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GenCustomerCofLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ type CustomerServiceServer interface {
 	// List customers
 	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
 	// Generate a link to add customer card on file
-	GenCustomerCOFLink(context.Context, *GenCustomerCOFLinkRequest) (*GenCustomerCOFLinkResponse, error)
+	GenCustomerCofLink(context.Context, *GenCustomerCofLinkRequest) (*GenCustomerCofLinkResponse, error)
 	mustEmbedUnimplementedCustomerServiceServer()
 }
 
@@ -111,8 +111,8 @@ func (UnimplementedCustomerServiceServer) GetCustomer(context.Context, *GetCusto
 func (UnimplementedCustomerServiceServer) ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCustomers not implemented")
 }
-func (UnimplementedCustomerServiceServer) GenCustomerCOFLink(context.Context, *GenCustomerCOFLinkRequest) (*GenCustomerCOFLinkResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GenCustomerCOFLink not implemented")
+func (UnimplementedCustomerServiceServer) GenCustomerCofLink(context.Context, *GenCustomerCofLinkRequest) (*GenCustomerCofLinkResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GenCustomerCofLink not implemented")
 }
 func (UnimplementedCustomerServiceServer) mustEmbedUnimplementedCustomerServiceServer() {}
 
@@ -181,20 +181,20 @@ func _CustomerService_ListCustomers_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerService_GenCustomerCOFLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenCustomerCOFLinkRequest)
+func _CustomerService_GenCustomerCofLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenCustomerCofLinkRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerServiceServer).GenCustomerCOFLink(ctx, in)
+		return srv.(CustomerServiceServer).GenCustomerCofLink(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CustomerService_GenCustomerCOFLink_FullMethodName,
+		FullMethod: CustomerService_GenCustomerCofLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerServiceServer).GenCustomerCOFLink(ctx, req.(*GenCustomerCOFLinkRequest))
+		return srv.(CustomerServiceServer).GenCustomerCofLink(ctx, req.(*GenCustomerCofLinkRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -219,8 +219,8 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CustomerService_ListCustomers_Handler,
 		},
 		{
-			MethodName: "GenCustomerCOFLink",
-			Handler:    _CustomerService_GenCustomerCOFLink_Handler,
+			MethodName: "GenCustomerCofLink",
+			Handler:    _CustomerService_GenCustomerCofLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
