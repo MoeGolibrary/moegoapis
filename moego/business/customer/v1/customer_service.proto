@@ -39,7 +39,7 @@ service CustomerService {
 
   // Generate a link to add customer card on file
   rpc GenCustomerCofLink(GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
-    option (google.api.http) = {get: "/v1/customers/cof/link"};
+    option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
   }
 }
 
