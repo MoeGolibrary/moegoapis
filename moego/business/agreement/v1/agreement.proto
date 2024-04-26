@@ -32,11 +32,11 @@ message Agreement {
   }
 
   // agreement id
-  int64 id = 1;
+  string id = 1;
   // business id
-  int64 business_id = 2;
+  string business_id = 2;
   // creator id
-  int64 creator_id = 3;
+  string creator_id = 3;
   // status: normal, deleted
   Status status = 4;
   // signed policy, see definition in SignedPolicy
