@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package moego.business.agreement.v1;
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementrecordpb;agreementrecordpb";
+option java_multiple_files = true;
+option java_outer_classname = "AgreementRecordProto";
+option java_package = "com.moego.api.business.agreement.v1";
+
+message AgreementRecord {
+
+  // signing status of agreement
+  enum SignedStatus {
+    // unspecified
+    SIGNED_STATUS_UNSPECIFIED = 0;
+    // unsigned
+    SIGNED_STATUS_UNSIGNED = 1;
+    // signed
+    SIGNED_STATUS_SIGNED = 2;
+  }
+
+  // signed an agreement type
+  enum SignedType {
+    // unspecified
+    SIGNED_TYPE_UNSPECIFIED = 0;
+    // customer signature
+    SIGNED_TYPE_BY_CUSTOMER_SIGNED = 1;
+    // business upload file
+    SIGNED_TYPE_BY_BUSINESS_UPLOAD = 2;
+  }
+
+  // agreement source type
+  enum SourceType {
+    // unspecified
+    SOURCE_TYPE_UNSPECIFIED = 0;
+    // from web url
+    SOURCE_TYPE_URL = 1;
+    // from mobile app
+    SOURCE_TYPE_MOBILE = 2;
+    // from online booking
+    SOURCE_TYPE_ONLINE_BOOKING = 3;
+    // from intake form
+    SOURCE_TYPE_INTAKE_FORM = 4;
+  }
+
+  // agreement record id
+  int64 id = 1;
+  // agreement record uuid
+  string uuid = 2;
+  // agreement id
+  optional int64 agreement_id = 3;
+  // business id
+  int64 business_id = 4;
+  // customer id
+  int64 customer_id = 5;
+  // associated target id
+  optional int64 target_id = 6;
+  // status: normal, deleted
+//  Agreement.Status status = 7;
+  // associated services type, see the enum definition in ServiceType
+  int32 service_types = 8;
+  // signed status: unsigned, signed
+  SignedStatus signed_status = 9;
+  // signed type, see definition in SignedType
+  optional SignedType signed_type = 10;
+  // source type, see definition in SourceType
+  SourceType source_type = 11;
+  // agreement record link
+  string agreement_link = 12;
+  // agreement title
+  string agreement_title = 13;
+  // agreement content
+  optional string agreement_content = 14;
+  // uploaded files: json array
+  repeated string upload_files = 15;
+  // customer signature
+  optional string signature = 16;
+  // signed time: milliseconds
+  optional int64 signed_time = 17;
+  // create time: milliseconds
+  int64 create_time = 18;
+  // update time: milliseconds
+  int64 update_time = 19;
+  // company id
+  int64 company_id = 20;
+}
