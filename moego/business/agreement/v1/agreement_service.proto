@@ -32,7 +32,7 @@ service AgreementService {
   }
 }
 
-// GetAppointmentRequest get appointment request
+// GetAgreementRequest get agreement request
 message GetAgreementRequest {
   // id
   string id = 1 [(google.api.field_behavior) = REQUIRED];
@@ -42,7 +42,7 @@ message GetAgreementRequest {
   string company_id = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
-// ListAppointmentsRequest get appointment request
+// ListAgreementsRequest get agreements request
 message ListAgreementsRequest {
   // Pagination
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];

@@ -24,7 +24,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetAppointmentRequest get appointment request
+// GetAgreementRequest get agreement request
 type GetAgreementRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -91,7 +91,7 @@ func (x *GetAgreementRequest) GetCompanyId() string {
 	return ""
 }
 
-// ListAppointmentsRequest get appointment request
+// ListAgreementsRequest get agreements request
 type ListAgreementsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
