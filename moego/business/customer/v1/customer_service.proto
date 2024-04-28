@@ -36,6 +36,11 @@ service CustomerService {
       body: "*"
     };
   }
+
+  // Generate a link to add customer card on file
+  rpc GenCustomerCofLink(GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
+    option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
+  }
 }
 
 // CreateCustomerRequest is the request message for CustomerAPI.CreateCustomer
@@ -71,4 +76,15 @@ message ListCustomersResponse {
   string next_page_token = 1;
   // The customers
   repeated Customer customers = 2;
+}
+
+// GenCustomerCofLinkRequest is the request message for CustomerAPI.GenCustomerCofLink
+message GenCustomerCofLinkRequest{
+  // The id of the customer to retrieve
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+// GenCustomerCofLinkResponse is the response message for CustomerAPI.GenCustomerCofLink
+message GenCustomerCofLinkResponse{
+  // The link of the customer cof
+  string link = 1;
 }

@@ -2,9 +2,9 @@ syntax = "proto3";
 
 package moego.business.appointment.v1;
 
+import "google/type/interval.proto";
 import "moego/business/customer/v1/pet.proto";
 import "google/type/money.proto";
-import "google/protobuf/duration.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -22,6 +22,6 @@ message ServiceDetail {
   string id = 1;
   string name = 2;
   google.type.Money price = 3;
-  google.protobuf.Duration duration = 4;
+  google.type.Interval duration = 4;
   repeated string staff_ids = 5;
 }
