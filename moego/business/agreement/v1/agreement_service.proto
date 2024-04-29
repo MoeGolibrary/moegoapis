@@ -36,10 +36,8 @@ service AgreementService {
 message GetAgreementRequest {
   // id
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  // business_id
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
   // company_id
-  string company_id = 3 [(google.api.field_behavior) = OPTIONAL];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListAgreementsRequest get agreements request
