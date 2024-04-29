@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package moego.business.agreement.v1;
 
+import "moego/business/agreement/v1/agreement.proto";
+
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementrecordpb;agreementrecordpb";
 option java_multiple_files = true;
 option java_outer_classname = "AgreementRecordProto";
@@ -44,19 +46,19 @@ message AgreementRecord {
   }
 
   // agreement record id
-  int64 id = 1;
+  string id = 1;
   // agreement record uuid
   string uuid = 2;
   // agreement id
-  optional int64 agreement_id = 3;
+  optional string agreement_id = 3;
   // business id
-  int64 business_id = 4;
+  string business_id = 4;
   // customer id
-  int64 customer_id = 5;
+  string customer_id = 5;
   // associated target id
-  optional int64 target_id = 6;
+  optional string target_id = 6;
   // status: normal, deleted
-//  Agreement.Status status = 7;
+  Agreement.Status status = 7;
   // associated services type, see the enum definition in ServiceType
   int32 service_types = 8;
   // signed status: unsigned, signed
@@ -82,5 +84,5 @@ message AgreementRecord {
   // update time: milliseconds
   int64 update_time = 19;
   // company id
-  int64 company_id = 20;
+  string company_id = 20;
 }
