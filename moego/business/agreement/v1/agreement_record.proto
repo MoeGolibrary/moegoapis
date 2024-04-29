@@ -44,6 +44,15 @@ message AgreementRecord {
     // from intake form
     SOURCE_TYPE_INTAKE_FORM = 4;
   }
+  // Status
+  enum Status {
+    // unspecified
+    STATUS_UNSPECIFIED = 0;
+    // normal
+    STATUS_NORMAL = 1;
+    // deleted
+    STATUS_DELETED = 2;
+  }
 
   // agreement record id
   string id = 1;
@@ -58,7 +67,7 @@ message AgreementRecord {
   // associated target id
   optional string target_id = 6;
   // status: normal, deleted
-  Agreement.Status status = 7;
+  Status status = 7;
   // associated services type, see the enum definition in ServiceType
   int32 service_types = 8;
   // signed status: unsigned, signed
