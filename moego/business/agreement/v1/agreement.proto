@@ -31,6 +31,30 @@ message Agreement {
     SIGNED_POLICY_OPTIONAL = 3;
   }
 
+
+  // service type
+  enum ServiceType {
+    // unspecified
+    SERVICE_TYPE_UNSPECIFIED = 0;
+    // online booking
+    SERVICE_TYPE_ONLINE_BOOKING = 1;
+    // intake form
+    SERVICE_TYPE_INTAKE_FORM = 2;
+    // grooming
+    SERVICE_TYPE_GROOMING = 4;
+    // boarding
+    SERVICE_TYPE_BOARDING = 8;
+    // daycare
+    SERVICE_TYPE_DAYCARE = 16;
+    // training
+    SERVICE_TYPE_TRAINING = 32;
+    // platform care
+    SERVICE_TYPE_PLATFORM_CARE = 64;
+    // platform sales
+    SERVICE_TYPE_PLATFORM_SALES = 128;
+  }
+
+
   // agreement id
   string id = 1;
   // business id
@@ -46,7 +70,7 @@ message Agreement {
   //   if you want to apply the agreement to grooming and boarding services,
   //   the service_types value is 3, logical OR result of enumeration values for grooming(1) and boarding(2)
   // include ob available
-  int32 service_types = 6;
+  repeated ServiceType service_types = 6;
   // agreement title
   string agreement_title = 7;
   // agreement content

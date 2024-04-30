@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AgreementService_GetAgreement_FullMethodName             = "/moego.business.agreement.v1.AgreementService/GetAgreement"
-	AgreementService_ListAgreements_FullMethodName           = "/moego.business.agreement.v1.AgreementService/ListAgreements"
-	AgreementService_GetUnsignedAgreementLink_FullMethodName = "/moego.business.agreement.v1.AgreementService/GetUnsignedAgreementLink"
+	AgreementService_GetAgreement_FullMethodName         = "/moego.business.agreement.v1.AgreementService/GetAgreement"
+	AgreementService_ListAgreements_FullMethodName       = "/moego.business.agreement.v1.AgreementService/ListAgreements"
+	AgreementService_GetAgreementSignLink_FullMethodName = "/moego.business.agreement.v1.AgreementService/GetAgreementSignLink"
 )
 
 // AgreementServiceClient is the client API for AgreementService service.
@@ -33,7 +33,7 @@ type AgreementServiceClient interface {
 	// ListAgreement
 	ListAgreements(ctx context.Context, in *ListAgreementsRequest, opts ...grpc.CallOption) (*ListAgreementsResponse, error)
 	// GetUnsignedAgreementLink
-	GetUnsignedAgreementLink(ctx context.Context, in *UnsignedAgreementRequest, opts ...grpc.CallOption) (*UnsignedAgreementResponse, error)
+	GetAgreementSignLink(ctx context.Context, in *GetAgreementSignURLRequest, opts ...grpc.CallOption) (*GetAgreementSignURLResponse, error)
 }
 
 type agreementServiceClient struct {
@@ -62,9 +62,9 @@ func (c *agreementServiceClient) ListAgreements(ctx context.Context, in *ListAgr
 	return out, nil
 }
 
-func (c *agreementServiceClient) GetUnsignedAgreementLink(ctx context.Context, in *UnsignedAgreementRequest, opts ...grpc.CallOption) (*UnsignedAgreementResponse, error) {
-	out := new(UnsignedAgreementResponse)
-	err := c.cc.Invoke(ctx, AgreementService_GetUnsignedAgreementLink_FullMethodName, in, out, opts...)
+func (c *agreementServiceClient) GetAgreementSignLink(ctx context.Context, in *GetAgreementSignURLRequest, opts ...grpc.CallOption) (*GetAgreementSignURLResponse, error) {
+	out := new(GetAgreementSignURLResponse)
+	err := c.cc.Invoke(ctx, AgreementService_GetAgreementSignLink_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ type AgreementServiceServer interface {
 	// ListAgreement
 	ListAgreements(context.Context, *ListAgreementsRequest) (*ListAgreementsResponse, error)
 	// GetUnsignedAgreementLink
-	GetUnsignedAgreementLink(context.Context, *UnsignedAgreementRequest) (*UnsignedAgreementResponse, error)
+	GetAgreementSignLink(context.Context, *GetAgreementSignURLRequest) (*GetAgreementSignURLResponse, error)
 	mustEmbedUnimplementedAgreementServiceServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedAgreementServiceServer) GetAgreement(context.Context, *GetAgr
 func (UnimplementedAgreementServiceServer) ListAgreements(context.Context, *ListAgreementsRequest) (*ListAgreementsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAgreements not implemented")
 }
-func (UnimplementedAgreementServiceServer) GetUnsignedAgreementLink(context.Context, *UnsignedAgreementRequest) (*UnsignedAgreementResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUnsignedAgreementLink not implemented")
+func (UnimplementedAgreementServiceServer) GetAgreementSignLink(context.Context, *GetAgreementSignURLRequest) (*GetAgreementSignURLResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAgreementSignLink not implemented")
 }
 func (UnimplementedAgreementServiceServer) mustEmbedUnimplementedAgreementServiceServer() {}
 
@@ -146,20 +146,20 @@ func _AgreementService_ListAgreements_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AgreementService_GetUnsignedAgreementLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UnsignedAgreementRequest)
+func _AgreementService_GetAgreementSignLink_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAgreementSignURLRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AgreementServiceServer).GetUnsignedAgreementLink(ctx, in)
+		return srv.(AgreementServiceServer).GetAgreementSignLink(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AgreementService_GetUnsignedAgreementLink_FullMethodName,
+		FullMethod: AgreementService_GetAgreementSignLink_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AgreementServiceServer).GetUnsignedAgreementLink(ctx, req.(*UnsignedAgreementRequest))
+		return srv.(AgreementServiceServer).GetAgreementSignLink(ctx, req.(*GetAgreementSignURLRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -180,8 +180,8 @@ var AgreementService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AgreementService_ListAgreements_Handler,
 		},
 		{
-			MethodName: "GetUnsignedAgreementLink",
-			Handler:    _AgreementService_GetUnsignedAgreementLink_Handler,
+			MethodName: "GetAgreementSignLink",
+			Handler:    _AgreementService_GetAgreementSignLink_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

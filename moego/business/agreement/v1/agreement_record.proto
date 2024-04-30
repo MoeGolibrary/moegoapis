@@ -54,6 +54,29 @@ message AgreementRecord {
     STATUS_DELETED = 2;
   }
 
+  // service type
+  enum ServiceType {
+    // unspecified
+    SERVICE_TYPE_UNSPECIFIED = 0;
+    // online booking
+    SERVICE_TYPE_ONLINE_BOOKING = 1;
+    // intake form
+    SERVICE_TYPE_INTAKE_FORM = 2;
+    // grooming
+    SERVICE_TYPE_GROOMING = 4;
+    // boarding
+    SERVICE_TYPE_BOARDING = 8;
+    // daycare
+    SERVICE_TYPE_DAYCARE = 16;
+    // training
+    SERVICE_TYPE_TRAINING = 32;
+    // platform care
+    SERVICE_TYPE_PLATFORM_CARE = 64;
+    // platform sales
+    SERVICE_TYPE_PLATFORM_SALES = 128;
+  }
+
+
   // agreement record id
   string id = 1;
   // agreement record uuid
@@ -69,7 +92,7 @@ message AgreementRecord {
   // status: normal, deleted
   Status status = 7;
   // associated services type, see the enum definition in ServiceType
-  int32 service_types = 8;
+  repeated ServiceType service_types = 8;
   // signed status: unsigned, signed
   SignedStatus signed_status = 9;
   // signed type, see definition in SignedType
