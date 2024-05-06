@@ -72,6 +72,6 @@ message ListAgreementsResponse {
 message GetAgreementSignURLResponse {
   // agreement_record_id
   string agreement_record_id = 1;
-  // The send_url
-  string send_url = 2;
+  // The sign_url
+  string sign_url = 2;
 }

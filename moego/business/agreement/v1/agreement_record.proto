@@ -2,7 +2,8 @@ syntax = "proto3";
 
 package moego.business.agreement.v1;
 
-import "moego/business/agreement/v1/agreement.proto";
+import "google/protobuf/timestamp.proto";
+
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementrecordpb;agreementrecordpb";
 option java_multiple_files = true;
@@ -16,9 +17,9 @@ message AgreementRecord {
     // unspecified
     SIGNED_STATUS_UNSPECIFIED = 0;
     // unsigned
-    SIGNED_STATUS_UNSIGNED = 1;
+    UNSIGNED = 1;
     // signed
-    SIGNED_STATUS_SIGNED = 2;
+    SIGNED = 2;
   }
 
   // signed an agreement type
@@ -26,9 +27,9 @@ message AgreementRecord {
     // unspecified
     SIGNED_TYPE_UNSPECIFIED = 0;
     // customer signature
-    SIGNED_TYPE_BY_CUSTOMER_SIGNED = 1;
+    CUSTOMER_SIGNED = 1;
     // business upload file
-    SIGNED_TYPE_BY_BUSINESS_UPLOAD = 2;
+    BY_BUSINESS_UPLOAD = 2;
   }
 
   // agreement source type
@@ -36,45 +37,24 @@ message AgreementRecord {
     // unspecified
     SOURCE_TYPE_UNSPECIFIED = 0;
     // from web url
-    SOURCE_TYPE_URL = 1;
+    URL = 1;
     // from mobile app
-    SOURCE_TYPE_MOBILE = 2;
+    MOBILE = 2;
     // from online booking
-    SOURCE_TYPE_ONLINE_BOOKING = 3;
+    ONLINE_BOOKING = 3;
     // from intake form
-    SOURCE_TYPE_INTAKE_FORM = 4;
+    INTAKE_FORM = 4;
   }
   // Status
   enum Status {
     // unspecified
     STATUS_UNSPECIFIED = 0;
     // normal
-    STATUS_NORMAL = 1;
+    NORMAL = 1;
     // deleted
-    STATUS_DELETED = 2;
+    DELETED = 2;
   }
 
-  // service type
-  enum ServiceType {
-    // unspecified
-    SERVICE_TYPE_UNSPECIFIED = 0;
-    // online booking
-    SERVICE_TYPE_ONLINE_BOOKING = 1;
-    // intake form
-    SERVICE_TYPE_INTAKE_FORM = 2;
-    // grooming
-    SERVICE_TYPE_GROOMING = 4;
-    // boarding
-    SERVICE_TYPE_BOARDING = 8;
-    // daycare
-    SERVICE_TYPE_DAYCARE = 16;
-    // training
-    SERVICE_TYPE_TRAINING = 32;
-    // platform care
-    SERVICE_TYPE_PLATFORM_CARE = 64;
-    // platform sales
-    SERVICE_TYPE_PLATFORM_SALES = 128;
-  }
 
 
   // agreement record id
@@ -91,30 +71,28 @@ message AgreementRecord {
   optional string target_id = 6;
   // status: normal, deleted
   Status status = 7;
-  // associated services type, see the enum definition in ServiceType
-  repeated ServiceType service_types = 8;
+
   // signed status: unsigned, signed
-  SignedStatus signed_status = 9;
+  SignedStatus signed_status = 8;
   // signed type, see definition in SignedType
-  optional SignedType signed_type = 10;
+  optional SignedType signed_type = 9;
   // source type, see definition in SourceType
-  SourceType source_type = 11;
+  SourceType source_type = 10;
   // agreement record link
-  string agreement_link = 12;
+  string link = 11;
   // agreement title
-  string agreement_title = 13;
+  string title = 12;
   // agreement content
-  optional string agreement_content = 14;
-  // uploaded files: json array
-  repeated string upload_files = 15;
+  optional string content = 13;
+
   // customer signature
-  optional string signature = 16;
+  optional string signature = 14;
   // signed time: milliseconds
-  optional int64 signed_time = 17;
+  google.protobuf.Timestamp  signed_time = 15;
   // create time: milliseconds
-  int64 create_time = 18;
+  google.protobuf.Timestamp create_time = 16;
   // update time: milliseconds
-  int64 update_time = 19;
+  google.protobuf.Timestamp update_time = 17;
   // company id
-  string company_id = 20;
+  string company_id = 18;
 }

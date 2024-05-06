@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package moego.business.agreement.v1;
 
+import "google/protobuf/timestamp.proto";
+
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb;agreementpb";
 option java_multiple_files = true;
 option java_outer_classname = "AgreementProto";
@@ -14,46 +16,22 @@ message Agreement {
     // unspecified
     STATUS_UNSPECIFIED = 0;
     // normal
-    STATUS_NORMAL = 1;
+    NORMAL = 1;
     // deleted
-    STATUS_DELETED = 2;
+    DELETED = 2;
   }
 
   // policy requirement for signed an agreement
   enum SignedPolicy {
     // unspecified
-    SIGNED_POLICY_UNSP_ECIFIED = 0;
+    SIGNED_POLICY_UNSPECIFIED = 0;
     // sign for first
-    SIGNED_POLICY_FOR_FIRST = 1;
+    FOR_FIRST = 1;
     // sign for each
-    SIGNED_POLICY_FOR_EACH = 2;
+    FOR_EACH = 2;
     // allow not to sign
-    SIGNED_POLICY_OPTIONAL = 3;
+    OPTIONAL = 3;
   }
-
-
-  // service type
-  enum ServiceType {
-    // unspecified
-    SERVICE_TYPE_UNSPECIFIED = 0;
-    // online booking
-    SERVICE_TYPE_ONLINE_BOOKING = 1;
-    // intake form
-    SERVICE_TYPE_INTAKE_FORM = 2;
-    // grooming
-    SERVICE_TYPE_GROOMING = 4;
-    // boarding
-    SERVICE_TYPE_BOARDING = 8;
-    // daycare
-    SERVICE_TYPE_DAYCARE = 16;
-    // training
-    SERVICE_TYPE_TRAINING = 32;
-    // platform care
-    SERVICE_TYPE_PLATFORM_CARE = 64;
-    // platform sales
-    SERVICE_TYPE_PLATFORM_SALES = 128;
-  }
-
 
   // agreement id
   string id = 1;
@@ -65,28 +43,23 @@ message Agreement {
   Status status = 4;
   // signed policy, see definition in SignedPolicy
   SignedPolicy signed_policy = 5;
-  // apply for services type, see the enum definition in ServiceType
-  // notes: service_types is a combined value, For example:
-  //   if you want to apply the agreement to grooming and boarding services,
-  //   the service_types value is 3, logical OR result of enumeration values for grooming(1) and boarding(2)
-  // include ob available
-  repeated ServiceType service_types = 6;
+
   // agreement title
-  string agreement_title = 7;
+  string title = 6;
   // agreement content
-  string agreement_content = 8;
+  string content = 7;
   // sms template
-  string sms_template = 9;
+  string sms_template = 8;
   // email template title
-  string email_template_title = 10;
+  string email_template_title = 9;
   // email template body
-  string email_template_body = 11;
+  string email_template_body = 10;
   // last requested time: exceed this time will need to be re-signed
-  int64 last_required_time = 12;
+  google.protobuf.Timestamp last_required_time = 11;
   // last edit time: milliseconds
-  int64 last_edit_time = 13;
+  google.protobuf.Timestamp last_edit_time = 12;
   // create time: milliseconds
-  int64 create_time = 14;
+  google.protobuf.Timestamp create_time = 13;
   // update time: milliseconds
-  int64 update_time = 15;
+  google.protobuf.Timestamp update_time = 14;
 }
