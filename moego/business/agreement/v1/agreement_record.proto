@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package moego.business.agreement.v1;
+
+import "google/protobuf/timestamp.proto";
+
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementrecordpb;agreementrecordpb";
+option java_multiple_files = true;
+option java_outer_classname = "AgreementRecordProto";
+option java_package = "com.moego.api.business.agreement.v1";
+
+message AgreementRecord {
+
+  // signing status of agreement
+  enum SignedStatus {
+    // unspecified
+    SIGNED_STATUS_UNSPECIFIED = 0;
+    // unsigned
+    UNSIGNED = 1;
+    // signed
+    SIGNED = 2;
+  }
+
+  // signed an agreement type
+  enum SignedType {
+    // unspecified
+    SIGNED_TYPE_UNSPECIFIED = 0;
+    // customer signature
+    CUSTOMER_SIGNED = 1;
+    // business upload file
+    BY_BUSINESS_UPLOAD = 2;
+  }
+
+  // agreement source type
+  enum SourceType {
+    // unspecified
+    SOURCE_TYPE_UNSPECIFIED = 0;
+    // from web url
+    URL = 1;
+    // from mobile app
+    MOBILE = 2;
+    // from online booking
+    ONLINE_BOOKING = 3;
+    // from intake form
+    INTAKE_FORM = 4;
+  }
+  // Status
+  enum Status {
+    // unspecified
+    STATUS_UNSPECIFIED = 0;
+    // normal
+    NORMAL = 1;
+    // deleted
+    DELETED = 2;
+  }
+
+
+
+  // agreement record id
+  string id = 1;
+  // agreement record uuid
+  string uuid = 2;
+  // agreement id
+  optional string agreement_id = 3;
+  // business id
+  string business_id = 4;
+  // customer id
+  string customer_id = 5;
+  // associated target id
+  optional string target_id = 6;
+  // status: normal, deleted
+  Status status = 7;
+
+  // signed status: unsigned, signed
+  SignedStatus signed_status = 8;
+  // signed type, see definition in SignedType
+  optional SignedType signed_type = 9;
+  // source type, see definition in SourceType
+  SourceType source_type = 10;
+  // agreement record link
+  string link = 11;
+  // agreement title
+  string title = 12;
+  // agreement content
+  optional string content = 13;
+
+  // customer signature
+  optional string signature = 14;
+  // signed time: milliseconds
+  google.protobuf.Timestamp  signed_time = 15;
+  // create time: milliseconds
+  google.protobuf.Timestamp create_time = 16;
+  // update time: milliseconds
+  google.protobuf.Timestamp update_time = 17;
+  // company id
+  string company_id = 18;
+}

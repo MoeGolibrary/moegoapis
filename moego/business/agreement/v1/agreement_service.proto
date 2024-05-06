@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package moego.business.agreement.v1;
+
+import "moego/business/agreement/v1/agreement.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/interval.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb;agreementpb";
+option java_multiple_files = true;
+option java_outer_classname = "AgreementServiceProto";
+option java_package = "com.moego.api.business.agreement.v1";
+
+service AgreementService {
+  // GetAgreement
+  rpc GetAgreement(GetAgreementRequest) returns (Agreement) {
+    option (google.api.http) = {get: "/v1/agreements/{id}"};
+  }
+  // ListAgreement
+  rpc ListAgreements(ListAgreementsRequest) returns (ListAgreementsResponse) {
+    option (google.api.http) = {
+      post: "/v1/agreements:list",
+      body: "*"
+    };
+  }
+  // GetAgreementSignLink
+  rpc GetAgreementSignLink(GetAgreementSignURLRequest) returns (GetAgreementSignURLResponse) {
+    option (google.api.http) = {get: "/v1/agreements/{id}/sign_link"};
+  }
+}
+
+// GetAgreementRequest get agreement request
+message GetAgreementRequest {
+  // id
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // company_id
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListAgreementsRequest get agreements request
+message ListAgreementsRequest {
+  // Pagination
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // company_id
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // business_ids
+  repeated string business_ids = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// UnsignedAgreementRequest get unsignedAgreement request
+message GetAgreementSignURLRequest {
+  // id
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // customer_id
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // business_id
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListAgreementsResponse
+message ListAgreementsResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The Agreements
+  repeated Agreement agreement = 2;
+}
+
+// UnsignedAgreementResponse
+message GetAgreementSignURLResponse {
+  // agreement_record_id
+  string agreement_record_id = 1;
+  // The sign_url
+  string sign_url = 2;
+}
