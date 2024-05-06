@@ -6,7 +6,6 @@ import "moego/business/appointment/v1/appointment.proto";
 import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";

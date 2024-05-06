@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package moego.business.appointment.v1;
 
-import "google/type/interval.proto";
 import "moego/business/customer/v1/pet.proto";
+import "google/type/interval.proto";
 import "google/type/money.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -19,9 +19,18 @@ message PetServiceDetail {
 
 // ServiceDetail
 message ServiceDetail {
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    GROOMING = 1;
+    BOARDING = 2;
+    DAYCARE = 3;
+    ADDON = 4;
+  }
   string id = 1;
   string name = 2;
-  google.type.Money price = 3;
-  google.type.Interval duration = 4;
-  repeated string staff_ids = 5;
+  Type type = 3;
+  string category = 4;
+  google.type.Money price = 5;
+  google.type.Interval duration = 6;
+  repeated string staff_ids = 7;
 }
