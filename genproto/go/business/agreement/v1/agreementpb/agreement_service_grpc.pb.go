@@ -32,7 +32,7 @@ type AgreementServiceClient interface {
 	GetAgreement(ctx context.Context, in *GetAgreementRequest, opts ...grpc.CallOption) (*Agreement, error)
 	// ListAgreement
 	ListAgreements(ctx context.Context, in *ListAgreementsRequest, opts ...grpc.CallOption) (*ListAgreementsResponse, error)
-	// GetUnsignedAgreementLink
+	// GetAgreementSignLink
 	GetAgreementSignLink(ctx context.Context, in *GetAgreementSignURLRequest, opts ...grpc.CallOption) (*GetAgreementSignURLResponse, error)
 }
 
@@ -79,7 +79,7 @@ type AgreementServiceServer interface {
 	GetAgreement(context.Context, *GetAgreementRequest) (*Agreement, error)
 	// ListAgreement
 	ListAgreements(context.Context, *ListAgreementsRequest) (*ListAgreementsResponse, error)
-	// GetUnsignedAgreementLink
+	// GetAgreementSignLink
 	GetAgreementSignLink(context.Context, *GetAgreementSignURLRequest) (*GetAgreementSignURLResponse, error)
 	mustEmbedUnimplementedAgreementServiceServer()
 }
