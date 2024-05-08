@@ -41,7 +41,7 @@ message ListOrdersRequest{
 message ListOrdersResponse {
   // The next page token
   string next_page_token = 1;
-  // The Appointments
+  // The orders
   repeated Order orders = 2;
 }
 
