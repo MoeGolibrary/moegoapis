@@ -33,7 +33,7 @@ message ListOrdersRequest{
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
   message Filter {
-    repeated string order_ids = 1[(google.api.field_behavior) = OPTIONAL];
+    repeated string ids = 1[(google.api.field_behavior) = OPTIONAL];
   }
   Filter filter = 4;
 }

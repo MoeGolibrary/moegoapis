@@ -9,7 +9,9 @@ option java_multiple_files = true;
 option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
-// Agreement
+import "google/type/money.proto";
+
+// Order
 message Order {
   // Status
   enum Status {
@@ -33,25 +35,25 @@ message Order {
   // order status
   Status status = 4;
   // tips amount
-  double tips_amount = 5;
+  google.type.Money tips_amount = 5;
   // tax amount
-  double tax_amount = 6;
+  google.type.Money tax_amount = 6;
   // discount amount
-  double discount_amount = 7;
+  google.type.Money discount_amount = 7;
   // extra fee amount
-  double extra_fee_amount = 8;
+  google.type.Money extra_fee_amount = 8;
   // subTotal amount
-  double sub_total_amount = 9;
+  google.type.Money sub_total_amount = 9;
   // amount of tips based on
-  double tips_based_amount = 10;
+  google.type.Money tips_based_amount = 10;
   // total amount
-  double total_amount = 11;
+  google.type.Money total_amount = 11;
   // paid amount
-  double paid_amount = 12;
+  google.type.Money paid_amount = 12;
   // remain amount to pay
-  double remain_amount = 13;
+  google.type.Money remain_amount = 13;
   // refunded amount
-  double refunded_amount = 14;
+  google.type.Money refunded_amount = 14;
   // order title
   string title = 15;
   // staff id of creating this order
