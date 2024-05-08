@@ -34,37 +34,37 @@ message Order {
   string customer_id = 3;
   // order status
   Status status = 4;
-  // tips amount
-  google.type.Money tips_amount = 5;
-  // tax amount
-  google.type.Money tax_amount = 6;
-  // discount amount
-  google.type.Money discount_amount = 7;
-  // extra fee amount
-  google.type.Money extra_fee_amount = 8;
-  // subTotal amount
-  google.type.Money sub_total_amount = 9;
-  // amount of tips based on
-  google.type.Money tips_based_amount = 10;
-  // total amount
-  google.type.Money total_amount = 11;
-  // paid amount
-  google.type.Money paid_amount = 12;
-  // remain amount to pay
-  google.type.Money remain_amount = 13;
-  // refunded amount
-  google.type.Money refunded_amount = 14;
   // order title
-  string title = 15;
+  string title = 5;
+  // description
+  string description = 6;
+  // tips amount
+  google.type.Money tips_amount = 7;
+  // tax amount
+  google.type.Money tax_amount = 8;
+  // discount amount
+  google.type.Money discount_amount = 9;
+  // extra fee amount
+  google.type.Money extra_fee_amount = 10;
+  // subTotal amount
+  google.type.Money sub_total_amount = 11;
+  // amount of tips based on
+  google.type.Money tips_based_amount = 12;
+  // total amount
+  google.type.Money total_amount = 13;
+  // paid amount
+  google.type.Money paid_amount = 14;
+  // remain amount to pay
+  google.type.Money remain_amount = 15;
+  // refunded amount
+  google.type.Money refunded_amount = 16;
   // staff id of creating this order
-  google.protobuf.Timestamp  create_by = 16;
-  // staff id of last updating this order
-  google.protobuf.Timestamp  update_by = 17;
+  string  create_by = 17;
   // create time
   google.protobuf.Timestamp  create_time = 18;
+  // staff id of last updating this order
+  string  update_by = 19;
   // update time
-  google.protobuf.Timestamp  update_time = 19;
-  // description
-  string description = 20;
+  google.protobuf.Timestamp  update_time = 20;
 
 }

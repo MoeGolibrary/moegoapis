@@ -102,7 +102,7 @@ type ListOrdersResponse struct {
 
 	// The next page token
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Appointments
+	// The orders
 	Orders []*Order `protobuf:"bytes,2,rep,name=orders,proto3" json:"orders,omitempty"`
 }
 
