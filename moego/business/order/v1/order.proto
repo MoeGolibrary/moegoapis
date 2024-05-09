@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package moego.business.order.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
+option java_multiple_files = true;
+option java_outer_classname = "OrderProto";
+option java_package = "com.moego.api.business.order.v1";
+
+import "google/type/money.proto";
+
+// Order
+message Order {
+  // Status
+  enum Status {
+    // UNSPECIFIED
+    STATUS_UNSPECIFIED = 0;
+    // CREATED
+    CREATED = 1;
+    // PROCESSING
+    PROCESSING = 2;
+    // COMPLETED
+    COMPLETED = 3;
+    // REMOVED
+    REMOVED = 4;
+  }
+  // id
+  string id = 1;
+  // business id
+  string business_id = 2;
+  // customer id
+  string customer_id = 3;
+  // order status
+  Status status = 4;
+  // order title
+  string title = 5;
+  // description
+  string description = 6;
+  // tips amount
+  google.type.Money tips_amount = 7;
+  // tax amount
+  google.type.Money tax_amount = 8;
+  // discount amount
+  google.type.Money discount_amount = 9;
+  // extra fee amount
+  google.type.Money extra_fee_amount = 10;
+  // subTotal amount
+  google.type.Money sub_total_amount = 11;
+  // amount of tips based on
+  google.type.Money tips_based_amount = 12;
+  // total amount
+  google.type.Money total_amount = 13;
+  // paid amount
+  google.type.Money paid_amount = 14;
+  // remain amount to pay
+  google.type.Money remain_amount = 15;
+  // refunded amount
+  google.type.Money refunded_amount = 16;
+  // staff id of creating this order
+  string  create_by = 17;
+  // create time
+  google.protobuf.Timestamp  create_time = 18;
+  // staff id of last updating this order
+  string  update_by = 19;
+  // update time
+  google.protobuf.Timestamp  update_time = 20;
+
+}
