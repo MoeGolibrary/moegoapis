@@ -59,12 +59,11 @@ message Order {
   // refunded amount
   google.type.Money refunded_amount = 16;
   // staff id of creating this order
-  string  create_by = 17;
+  string created_by = 17;
   // create time
-  google.protobuf.Timestamp  create_time = 18;
+  google.protobuf.Timestamp created_time = 18;
   // staff id of last updating this order
-  string  update_by = 19;
+  string last_updated_by = 19;
   // update time
-  google.protobuf.Timestamp  update_time = 20;
-
+  google.protobuf.Timestamp last_updated_time = 20;
 }

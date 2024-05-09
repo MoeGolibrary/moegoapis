@@ -58,8 +58,8 @@ message Agreement {
   google.protobuf.Timestamp last_required_time = 11;
   // last edit time: milliseconds
   google.protobuf.Timestamp last_edit_time = 12;
-  // create time: milliseconds
-  google.protobuf.Timestamp create_time = 13;
-  // update time: milliseconds
-  google.protobuf.Timestamp update_time = 14;
+  // created time: milliseconds
+  google.protobuf.Timestamp created_time = 13;
+  // last updated time: milliseconds
+  google.protobuf.Timestamp last_updated_time = 14;
 }
