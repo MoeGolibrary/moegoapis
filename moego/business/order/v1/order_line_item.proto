@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package moego.business.order.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
+option java_multiple_files = true;
+option java_outer_classname = "OrderProto";
+option java_package = "com.moego.api.business.order.v1";
+
+import "google/type/money.proto";
+
+// Order line item
+message OrderLineItem {
+  // id
+  string id = 1;
+  // order id
+  string order_id = 2;
+  // object id
+  string object_id = 3;
+  // item type
+  string type = 4;
+  // item name
+  string name = 5;
+  // item description
+  string description = 6;
+  // item unit price
+  double unit_price = 7;
+  // total quantity
+  int32 quantity = 8;
+  // create time
+  google.protobuf.Timestamp created_time = 9;
+  // update time
+  google.protobuf.Timestamp last_updated_time = 10;
+}

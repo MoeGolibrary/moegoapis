@@ -3,6 +3,9 @@ syntax = "proto3";
 package moego.business.order.v1;
 
 import "moego/business/order/v1/order.proto";
+import "moego/business/order/v1/order_line_item.proto";
+import "buf/validate/validate.proto";
+
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
@@ -26,6 +29,14 @@ service OrderService {
       body: "*"
     };
   }
+
+  // List Order line items
+  rpc ListOrdersLineItems(ListOrderLineItemsRequest) returns (ListOrdersLineItemsResponse) {
+    option (google.api.http) = {
+      post: "/v1/orders:list/order_line_items",
+      body: "*"
+    };
+  }
 }
 
 message ListOrdersRequest{
@@ -34,6 +45,7 @@ message ListOrdersRequest{
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
   message Filter {
     repeated string ids = 1[(google.api.field_behavior) = OPTIONAL];
+    repeated Order.Status statuses = 2[(google.api.field_behavior) = OPTIONAL];
   }
   Filter filter = 4;
 }
@@ -49,4 +61,25 @@ message ListOrdersResponse {
 message GetOrderRequest {
   // order id
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// GetOrderRequest get order request
+message ListOrderLineItemsRequest {
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // order id
+  repeated string id = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (buf.validate.field).repeated = {
+      min_items: 1,
+      max_items: 20,
+    }
+  ];
+
+}
+
+
+// GetOrderLineItemResponse
+message ListOrdersLineItemsResponse {
+  // The order line item
+  repeated OrderLineItem orderLineItems = 1;
 }
