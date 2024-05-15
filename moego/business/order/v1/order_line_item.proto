@@ -15,7 +15,7 @@ import "google/type/money.proto";
 message OrderLineItem {
   // ObjectType
   enum ObjectType {
-    OBJECT_TYPE_Unspecified = 0;
+    OBJECT_TYPE_UNSPECIFIED = 0;
     SERVICE = 1;
     PRODUCT = 2;
     PACKAGE = 3;
