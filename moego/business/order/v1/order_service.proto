@@ -30,7 +30,7 @@ service OrderService {
     };
   }
 
-  // List Order line items
+  // ListOrderLineItems
   rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
     option (google.api.http) = {
       post: "/v1/orders/items:list",
@@ -63,8 +63,9 @@ message GetOrderRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// GetOrderRequest get order request
+// ListOrderLineItemsRequest get order request
 message ListOrderLineItemsRequest {
+  // company id
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // order id
   repeated string id = 2 [
@@ -78,7 +79,7 @@ message ListOrderLineItemsRequest {
 }
 
 
-// GetOrderLineItemResponse
+// ListOrderLineItemsResponse
 message ListOrderLineItemsResponse {
   // The order line item
   repeated OrderLineItem orderLineItems = 1;

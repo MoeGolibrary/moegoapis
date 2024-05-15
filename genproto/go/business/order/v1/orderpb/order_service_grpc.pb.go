@@ -32,7 +32,7 @@ type OrderServiceClient interface {
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error)
 	// ListOrders
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
-	// List Order line items
+	// ListOrderLineItems
 	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrderLineItemsResponse, error)
 }
 
@@ -79,7 +79,7 @@ type OrderServiceServer interface {
 	GetOrder(context.Context, *GetOrderRequest) (*Order, error)
 	// ListOrders
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
-	// List Order line items
+	// ListOrderLineItems
 	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }

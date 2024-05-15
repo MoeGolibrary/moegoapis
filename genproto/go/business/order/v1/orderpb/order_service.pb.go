@@ -202,12 +202,13 @@ func (x *GetOrderRequest) GetId() string {
 	return ""
 }
 
-// GetOrderRequest get order request
+// ListOrderLineItemsRequest get order request
 type ListOrderLineItemsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
+	// company id
 	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// order id
 	Id []string `protobuf:"bytes,2,rep,name=id,proto3" json:"id,omitempty"`
@@ -259,7 +260,7 @@ func (x *ListOrderLineItemsRequest) GetId() []string {
 	return nil
 }
 
-// GetOrderLineItemResponse
+// ListOrderLineItemsResponse
 type ListOrderLineItemsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
