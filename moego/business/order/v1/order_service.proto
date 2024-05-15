@@ -31,9 +31,9 @@ service OrderService {
   }
 
   // List Order line items
-  rpc ListOrdersLineItems(ListOrderLineItemsRequest) returns (ListOrdersLineItemsResponse) {
+  rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrdersLineItemsResponse) {
     option (google.api.http) = {
-      post: "/v1/orders:list/order_line_items",
+      post: "/v1/orders/items:list",
       body: "*"
     };
   }

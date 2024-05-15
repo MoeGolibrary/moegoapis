@@ -19,9 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	OrderService_GetOrder_FullMethodName            = "/moego.business.order.v1.OrderService/GetOrder"
-	OrderService_ListOrders_FullMethodName          = "/moego.business.order.v1.OrderService/ListOrders"
-	OrderService_ListOrdersLineItems_FullMethodName = "/moego.business.order.v1.OrderService/ListOrdersLineItems"
+	OrderService_GetOrder_FullMethodName           = "/moego.business.order.v1.OrderService/GetOrder"
+	OrderService_ListOrders_FullMethodName         = "/moego.business.order.v1.OrderService/ListOrders"
+	OrderService_ListOrderLineItems_FullMethodName = "/moego.business.order.v1.OrderService/ListOrderLineItems"
 )
 
 // OrderServiceClient is the client API for OrderService service.
@@ -33,7 +33,7 @@ type OrderServiceClient interface {
 	// ListOrders
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	// List Order line items
-	ListOrdersLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error)
+	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error)
 }
 
 type orderServiceClient struct {
@@ -62,9 +62,9 @@ func (c *orderServiceClient) ListOrders(ctx context.Context, in *ListOrdersReque
 	return out, nil
 }
 
-func (c *orderServiceClient) ListOrdersLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error) {
+func (c *orderServiceClient) ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error) {
 	out := new(ListOrdersLineItemsResponse)
-	err := c.cc.Invoke(ctx, OrderService_ListOrdersLineItems_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, OrderService_ListOrderLineItems_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ type OrderServiceServer interface {
 	// ListOrders
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	// List Order line items
-	ListOrdersLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error)
+	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -94,8 +94,8 @@ func (UnimplementedOrderServiceServer) GetOrder(context.Context, *GetOrderReques
 func (UnimplementedOrderServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
 }
-func (UnimplementedOrderServiceServer) ListOrdersLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListOrdersLineItems not implemented")
+func (UnimplementedOrderServiceServer) ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrderLineItems not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 
@@ -146,20 +146,20 @@ func _OrderService_ListOrders_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_ListOrdersLineItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _OrderService_ListOrderLineItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListOrderLineItemsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).ListOrdersLineItems(ctx, in)
+		return srv.(OrderServiceServer).ListOrderLineItems(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: OrderService_ListOrdersLineItems_FullMethodName,
+		FullMethod: OrderService_ListOrderLineItems_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).ListOrdersLineItems(ctx, req.(*ListOrderLineItemsRequest))
+		return srv.(OrderServiceServer).ListOrderLineItems(ctx, req.(*ListOrderLineItemsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -180,8 +180,8 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _OrderService_ListOrders_Handler,
 		},
 		{
-			MethodName: "ListOrdersLineItems",
-			Handler:    _OrderService_ListOrdersLineItems_Handler,
+			MethodName: "ListOrderLineItems",
+			Handler:    _OrderService_ListOrderLineItems_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

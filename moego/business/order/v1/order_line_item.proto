@@ -13,6 +13,16 @@ import "google/type/money.proto";
 
 // Order line item
 message OrderLineItem {
+  // ObjectType
+  enum ObjectType {
+    OBJECT_TYPE_Unspecified = 0;
+    SERVICE = 1;
+    PRODUCT = 2;
+    PACKAGE = 3;
+    NO_SHOW = 4;
+    SERVICE_CHARGE = 5;
+    EVALUATION_SERVICE = 6;
+  }
   // id
   string id = 1;
   // order id
@@ -20,13 +30,13 @@ message OrderLineItem {
   // object id
   string object_id = 3;
   // item type
-  string type = 4;
+  ObjectType object_type = 4;
   // item name
   string name = 5;
   // item description
   string description = 6;
   // item unit price
-  double unit_price = 7;
+  google.type.Money unit_price = 7;
   // total quantity
   int32 quantity = 8;
   // create time
