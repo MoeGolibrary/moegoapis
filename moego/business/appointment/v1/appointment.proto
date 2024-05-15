@@ -37,7 +37,7 @@ message Appointment {
   Status status = 7;
   string ticket_comment = 8;
   string color_code = 9;
-  string invoice_id = 10;
+  string order_id = 10;
   google.type.Money total_amount = 11;
   google.type.Money paid_amount = 12;
   google.type.Money refund_amount = 13;
