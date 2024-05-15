@@ -33,7 +33,7 @@ type OrderServiceClient interface {
 	// ListOrders
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
 	// List Order line items
-	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error)
+	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrderLineItemsResponse, error)
 }
 
 type orderServiceClient struct {
@@ -62,8 +62,8 @@ func (c *orderServiceClient) ListOrders(ctx context.Context, in *ListOrdersReque
 	return out, nil
 }
 
-func (c *orderServiceClient) ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrdersLineItemsResponse, error) {
-	out := new(ListOrdersLineItemsResponse)
+func (c *orderServiceClient) ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrderLineItemsResponse, error) {
+	out := new(ListOrderLineItemsResponse)
 	err := c.cc.Invoke(ctx, OrderService_ListOrderLineItems_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -80,7 +80,7 @@ type OrderServiceServer interface {
 	// ListOrders
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
 	// List Order line items
-	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error)
+	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -94,7 +94,7 @@ func (UnimplementedOrderServiceServer) GetOrder(context.Context, *GetOrderReques
 func (UnimplementedOrderServiceServer) ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrders not implemented")
 }
-func (UnimplementedOrderServiceServer) ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrdersLineItemsResponse, error) {
+func (UnimplementedOrderServiceServer) ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrderLineItems not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}

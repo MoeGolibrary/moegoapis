@@ -31,7 +31,7 @@ service OrderService {
   }
 
   // List Order line items
-  rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrdersLineItemsResponse) {
+  rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
     option (google.api.http) = {
       post: "/v1/orders/items:list",
       body: "*"
@@ -79,7 +79,7 @@ message ListOrderLineItemsRequest {
 
 
 // GetOrderLineItemResponse
-message ListOrdersLineItemsResponse {
+message ListOrderLineItemsResponse {
   // The order line item
   repeated OrderLineItem orderLineItems = 1;
 }
