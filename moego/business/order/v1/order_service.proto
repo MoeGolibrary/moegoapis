@@ -68,7 +68,7 @@ message ListOrderLineItemsRequest {
   // company id
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // order id
-  repeated string id = 2 [
+  repeated string ids = 2 [
     (google.api.field_behavior) = REQUIRED,
     (buf.validate.field).repeated = {
       min_items: 1,
