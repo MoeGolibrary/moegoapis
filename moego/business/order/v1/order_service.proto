@@ -46,6 +46,7 @@ message ListOrdersRequest{
   message Filter {
     repeated string ids = 1[(google.api.field_behavior) = OPTIONAL];
     repeated Order.Status statuses = 2[(google.api.field_behavior) = OPTIONAL];
+    google.type.Interval last_updated_time = 3[(google.api.field_behavior) = OPTIONAL];
   }
   Filter filter = 4;
 }
