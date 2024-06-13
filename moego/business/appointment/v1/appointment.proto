@@ -46,4 +46,5 @@ message Appointment {
   google.protobuf.Timestamp created_time = 16;
   string last_updated_by = 17;
   google.protobuf.Timestamp last_updated_time = 18;
+  google.type.Interval datetime = 19;
 }
