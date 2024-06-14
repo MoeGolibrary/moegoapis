@@ -66,4 +66,6 @@ message Order {
   string last_updated_by = 19;
   // update time
   google.protobuf.Timestamp last_updated_time = 20;
+  // sales datetime
+  google.protobuf.Timestamp sales_datetime = 21;
 }
