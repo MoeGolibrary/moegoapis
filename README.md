@@ -13,7 +13,7 @@ libraries, documentation, and other artifacts.
 
 When you click the `Run in Postman` button, you can try out the MoeGo APIs in Postman. Postman is a popular API client that makes it easy to explore and test APIs. You can use the MoeGo APIs in Postman without writing any code.
 
-**Note**: replace the collection Authorization `${Base_64_API_Key}` with your own API Key.
+**Note**: replace the collection Authorization `${Base_64_API_Key}` with your own API Key encoded with Base64.
 
 ## Domain
 
