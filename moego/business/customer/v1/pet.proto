@@ -36,7 +36,13 @@ message Pet {
     ALIVE = 1;
     PASSED_AWAY = 2;
   }
-
+  // Gender
+  enum Gender{
+    GENDER_UNSPECIFIED = 0;
+    MALE = 1;
+    FEMALE =2;
+    UNKNOWN =3 ;
+  }
   // ID is the unique identifier of a pet
   string id = 1;
   string name = 2 [(google.api.field_behavior) = REQUIRED];
@@ -44,7 +50,7 @@ message Pet {
   Status status = 4;
   Type type = 5 [(google.api.field_behavior) = REQUIRED];
   string breed = 6 [(google.api.field_behavior) = REQUIRED];
-  string gender = 7;
+  Gender gender = 7;
   moego.common.v1.Weight weight = 8;
   string fixed = 9;
   string coat = 10;
