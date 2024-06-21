@@ -52,8 +52,7 @@ message CreateCustomerRequest {
   string phone = 5 [(google.api.field_behavior) = REQUIRED];
   string email = 6;
   moego.common.v1.Address address = 7;
-  repeated Pet pets = 8 [(google.api.field_behavior) = REQUIRED];
-  CustomerPreference preference = 9;
+  CustomerPreference preference = 8;
 }
 
 // GetCustomerRequest is the request message for CustomerAPI.GetCustomer

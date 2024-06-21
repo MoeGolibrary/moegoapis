@@ -57,8 +57,8 @@ message Pet {
   string behavior = 11;
   repeated string pet_codes = 12;
   repeated Note notes = 13;
-  repeated Vaccination vaccinations = 14;
-  string customer_id =15;
+  repeated Vaccination vaccinations = 14;// This field is not supported when creating a pet.
+  string customer_id =15[(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message Vaccination {
