@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "moego/business/customer/v1/note.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/address.proto";
+import "moego/common/v1/pagination.proto";
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
+option java_multiple_files = true;
+option java_outer_classname = "CustomerServiceProto";
+option java_package = "com.moego.api.business.customer.v1";
+
+message CreatePetNoteRequest {
+//    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+//    Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
+}
+message CreatePetNoteResponse {
+//    Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+
+message PetNoteListRequest {
+
+  optional int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
+
+  // The pagination information
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+
+  int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
+
+}
+message PetNoteListResponse {
+        // The next page token
+        string next_page_token = 1;
+
+        //Note
+        repeated Note notes = 2;
+}
+
+service PetNoteService {
+    //TODO： Create a petNote
+    rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/pets"
+            body: "*"
+        };
+    }
+    //PetNoteList
+    rpc PetNoteList(PetNoteListRequest) returns (PetNoteListResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/petNote:list"
+            body: "*"
+        };
+    }
+}
