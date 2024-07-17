@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/note.proto";
+import "moego/business/customer/v1/petCode.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
@@ -14,45 +14,46 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
-message CreatePetNoteRequest {
-//    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-//    Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
+message CreatePetCodeRequest {
+  int64 business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  PetCode petCode = 3 [(google.api.field_behavior) = REQUIRED];
 }
-message CreatePetNoteResponse {
-//    Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+message CreatePetCodeResponse {
+  PetCode petCode = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 
-message PetNoteListRequest {
+message PetCodeListRequest {
 
-  optional int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
+  int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
 
   // The pagination information
   moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 
-  int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
+  optional int64 business_id = 3 [(google.api.field_behavior) = REQUIRED];
 
 }
-message PetNoteListResponse {
+message PetCodeListResponse {
         // The next page token
         string next_page_token = 1;
 
-        //Note
-        repeated Note notes = 2;
+        //Code
+        repeated PetCode petCodeList = 2;
 }
 
-service PetNoteService {
-    //TODO： Create a petNote
-    rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
+service PetCodeService {
+    //Create a petCode
+    rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
         option (google.api.http) = {
             post: "/v1/customers/petCode/addPetCode"
             body: "*"
         };
     }
-    //PetNoteList
-    rpc PetNoteList(PetNoteListRequest) returns (PetNoteListResponse) {
+    //PetCodeList
+    rpc PetCodeList(PetCodeListRequest) returns (PetCodeListResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/petNote:list"
+            post: "/v1/customers/petCode/petCodeList"
             body: "*"
         };
     }
