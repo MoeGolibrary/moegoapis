@@ -15,11 +15,16 @@ option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
 message CreatePetNoteRequest {
-//    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-//    Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
+  // created by staff id
+  optional int64 created_by = 1 ;
+  // pet id
+  int64 pet_id = 2;
+  // pet note
+  Note note =3;
 }
 message CreatePetNoteResponse {
-//    Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // pet note
+  Note note =1;
 }
 
 
@@ -42,7 +47,6 @@ message PetNoteListResponse {
 }
 
 service PetNoteService {
-    //TODO： Create a petNote
     rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
             post: "/v1/customers/petCode/addPetCode"
@@ -52,7 +56,7 @@ service PetNoteService {
     //PetNoteList
     rpc PetNoteList(PetNoteListRequest) returns (PetNoteListResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/petNote:list"
+            post: "/v1/customers/petNote/PetNoteList"
             body: "*"
         };
     }

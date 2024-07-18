@@ -14,5 +14,11 @@ message Note {
   string id =1;
   string content = 2;
   string last_updated_by = 3;
-  google.protobuf.Timestamp last_updated_time = 4;
+  google.protobuf.Timestamp updated_at = 4;
+
+  //NoteResp(additional need)
+  int64 pet_id = 5;
+  string note = 6;
+  int64 updated_by = 7;
+  google.protobuf.Timestamp created_at =8;
 }
