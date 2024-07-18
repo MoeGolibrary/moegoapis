@@ -15,8 +15,6 @@ option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
 message CreatePetNoteRequest {
-  // created by staff id
-  optional int64 created_by = 1 ;
   // pet id
   int64 pet_id = 2;
   // pet note
@@ -28,35 +26,29 @@ message CreatePetNoteResponse {
 }
 
 
-message PetNoteListRequest {
-
-  optional int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
-
+message ListPetNoteRequest {
   // The pagination information
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
-  int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
-
+  int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
-message PetNoteListResponse {
-        // The next page token
-        string next_page_token = 1;
-
-        //Note
-        repeated Note notes = 2;
+message ListPetNoteResponse {
+  // The next page token
+  string next_page_token = 1;
+  //Note
+  repeated Note notes = 2;
 }
 
 service PetNoteService {
     rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/petCode/addPetCode"
+            post: "/v1/customers/pets/{pet_id}/notes"
             body: "*"
         };
     }
-    //PetNoteList
-    rpc PetNoteList(PetNoteListRequest) returns (PetNoteListResponse) {
+    rpc ListPetNotes(ListPetNoteRequest) returns (ListPetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/petNote/PetNoteList"
+            post: "/v1/customers/pets/note:list"
             body: "*"
         };
     }

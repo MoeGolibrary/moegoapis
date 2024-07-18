@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.34.2
 // 	protoc        (unknown)
-// source: moego/business/customer/v1/petCode.proto
+// source: moego/business/customer/v1/code.proto
 
 package customerpb
 
@@ -32,7 +32,7 @@ type PetCode struct {
 	Abbreviation string `protobuf:"bytes,2,opt,name=abbreviation,proto3" json:"abbreviation,omitempty"`
 	// same as 'abbreviation', just for compatibility, will be removed in the future
 	//
-	// Deprecated: Marked as deprecated in moego/business/customer/v1/petCode.proto.
+	// Deprecated: Marked as deprecated in moego/business/customer/v1/code.proto.
 	CodeNumber string `protobuf:"bytes,3,opt,name=code_number,json=codeNumber,proto3" json:"code_number,omitempty"`
 	// pet code description
 	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
@@ -90,7 +90,7 @@ func (x *PetCode) GetAbbreviation() string {
 	return ""
 }
 
-// Deprecated: Marked as deprecated in moego/business/customer/v1/petCode.proto.
+// Deprecated: Marked as deprecated in moego/business/customer/v1/code.proto.
 func (x *PetCode) GetCodeNumber() string {
 	if x != nil {
 		return x.CodeNumber

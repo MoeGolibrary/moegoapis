@@ -9,25 +9,16 @@ option java_multiple_files = true;
 option java_outer_classname = "PetNoteProto";
 option java_package = "com.moego.api.business.customer.v1";
 
-message PetCode {
+message Code {
   // pet code id
   int64 id = 1;
 
   // pet code abbreviation
   string abbreviation = 2;
 
-  // same as 'abbreviation', just for compatibility, will be removed in the future
-  string code_number = 3 [deprecated = true];
-
   // pet code description
-  string description = 4;
+  string description = 3;
 
   // pet code color
-  string color = 5;
-
-  // pet code sort. The larger the sort number, the higher the priority.
-  int32 sort = 6;
-
-  // if the pet code is deleted
-  bool deleted = 7;
+  string color = 4;
 }
