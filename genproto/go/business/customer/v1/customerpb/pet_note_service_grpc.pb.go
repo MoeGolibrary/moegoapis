@@ -20,17 +20,15 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	PetNoteService_CreatePetNote_FullMethodName = "/moego.business.customer.v1.PetNoteService/CreatePetNote"
-	PetNoteService_PetNoteList_FullMethodName   = "/moego.business.customer.v1.PetNoteService/PetNoteList"
+	PetNoteService_ListPetNotes_FullMethodName  = "/moego.business.customer.v1.PetNoteService/ListPetNotes"
 )
 
 // PetNoteServiceClient is the client API for PetNoteService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PetNoteServiceClient interface {
-	// TODO： Create a petNote
 	CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error)
-	// PetNoteList
-	PetNoteList(ctx context.Context, in *PetNoteListRequest, opts ...grpc.CallOption) (*PetNoteListResponse, error)
+	ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error)
 }
 
 type petNoteServiceClient struct {
@@ -51,10 +49,10 @@ func (c *petNoteServiceClient) CreatePetNote(ctx context.Context, in *CreatePetN
 	return out, nil
 }
 
-func (c *petNoteServiceClient) PetNoteList(ctx context.Context, in *PetNoteListRequest, opts ...grpc.CallOption) (*PetNoteListResponse, error) {
+func (c *petNoteServiceClient) ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(PetNoteListResponse)
-	err := c.cc.Invoke(ctx, PetNoteService_PetNoteList_FullMethodName, in, out, cOpts...)
+	out := new(ListPetNoteResponse)
+	err := c.cc.Invoke(ctx, PetNoteService_ListPetNotes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -65,10 +63,8 @@ func (c *petNoteServiceClient) PetNoteList(ctx context.Context, in *PetNoteListR
 // All implementations must embed UnimplementedPetNoteServiceServer
 // for forward compatibility
 type PetNoteServiceServer interface {
-	// TODO： Create a petNote
 	CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error)
-	// PetNoteList
-	PetNoteList(context.Context, *PetNoteListRequest) (*PetNoteListResponse, error)
+	ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error)
 	mustEmbedUnimplementedPetNoteServiceServer()
 }
 
@@ -79,8 +75,8 @@ type UnimplementedPetNoteServiceServer struct {
 func (UnimplementedPetNoteServiceServer) CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePetNote not implemented")
 }
-func (UnimplementedPetNoteServiceServer) PetNoteList(context.Context, *PetNoteListRequest) (*PetNoteListResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method PetNoteList not implemented")
+func (UnimplementedPetNoteServiceServer) ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPetNotes not implemented")
 }
 func (UnimplementedPetNoteServiceServer) mustEmbedUnimplementedPetNoteServiceServer() {}
 
@@ -113,20 +109,20 @@ func _PetNoteService_CreatePetNote_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PetNoteService_PetNoteList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PetNoteListRequest)
+func _PetNoteService_ListPetNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetNoteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PetNoteServiceServer).PetNoteList(ctx, in)
+		return srv.(PetNoteServiceServer).ListPetNotes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PetNoteService_PetNoteList_FullMethodName,
+		FullMethod: PetNoteService_ListPetNotes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetNoteServiceServer).PetNoteList(ctx, req.(*PetNoteListRequest))
+		return srv.(PetNoteServiceServer).ListPetNotes(ctx, req.(*ListPetNoteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -143,8 +139,8 @@ var PetNoteService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PetNoteService_CreatePetNote_Handler,
 		},
 		{
-			MethodName: "PetNoteList",
-			Handler:    _PetNoteService_PetNoteList_Handler,
+			MethodName: "ListPetNotes",
+			Handler:    _PetNoteService_ListPetNotes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
