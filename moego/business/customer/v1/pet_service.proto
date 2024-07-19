@@ -41,7 +41,6 @@ service PetService {
 
 //Pet Code
 message CreatePetCodeRequest {
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
     Code pet_code = 3 [(google.api.field_behavior) = REQUIRED];
 }
@@ -51,7 +50,6 @@ message CreatePetCodeResponse {
 
 
 message ListPetCodeRequest {
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     int64 company_id = 2[(google.api.field_behavior) = REQUIRED];
 }
 message ListPetCodeResponse {
@@ -63,14 +61,14 @@ service PetCodeService {
     //Create a petCode
     rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{customer_id}/codes"
+            post: "/v1/customers/pets/{company_id}/codes"
             body: "*"
         };
     }
     //ListPetCodes
     rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{customer_id}/code:list"
+            post: "/v1/customers/pets/{company_id}/code:list"
             body: "*"
         };
     }
@@ -78,9 +76,6 @@ service PetCodeService {
 
 //Pet Note
 message CreatePetNoteRequest {
-    //customer_id
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-
     // pet id
     int64 pet_id = 2;
     // pet note
@@ -93,10 +88,6 @@ message CreatePetNoteResponse {
 
 
 message ListPetNoteRequest {
-
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-
-
     moego.common.v1.PaginationRequest pagination = 2;
 
     int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
@@ -111,13 +102,13 @@ message ListPetNoteResponse {
 service PetNoteService {
     rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{customer_id}/notes"
+            post: "/v1/customers/pets/{pet_id}/notes"
             body: "*"
         };
     }
     rpc ListPetNotes(ListPetNoteRequest) returns (ListPetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{customer_id}/note:list"
+            post: "/v1/customers/pets/{pet_id}/note:list"
             body: "*"
         };
     }
