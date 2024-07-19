@@ -2,14 +2,12 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/code.proto";
 import "moego/business/customer/v1/note.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
-import "moego/common/v1/pagination_messages.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
@@ -42,33 +40,36 @@ service PetService {
 //Pet Code
 message CreatePetCodeRequest {
     int64 company_id = 1 [(google.api.field_behavior) = REQUIRED];
-    Code pet_code = 2 [(google.api.field_behavior) = REQUIRED];
+    int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
+    Code code = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message CreatePetCodeResponse {
-    Code pet_code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+    Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 
 message ListPetCodeRequest {
     int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
+    int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
+
 message ListPetCodeResponse {
     //pet_codes
-    repeated Code pet_codes = 1;
+    repeated Code codes = 1;
 }
 
 service PetCodeService {
     //Create a petCode
     rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{company_id}/codes"
+            post: "/v1/customers/pets/{pet_id}/codes"
             body: "*"
         };
     }
     //ListPetCodes
     rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{company_id}/code:list"
+            post: "/v1/customers/pets/{pet_id}/code:list"
             body: "*"
         };
     }
@@ -88,13 +89,15 @@ message CreatePetNoteResponse {
 
 
 message ListPetNoteRequest {
-    moego.common.v1.PaginationRequest pagination = 1;
+    // The pagination information
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
     int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
 
-    moego.common.v1.PaginationResponse pagination = 1;
+    // The next page token
+    string next_page_token = 1;
     //Note
     repeated Note notes = 2;
 }
