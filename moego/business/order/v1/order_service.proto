@@ -2,14 +2,12 @@ syntax = "proto3";
 
 package moego.business.order.v1;
 
-import "moego/business/order/v1/order.proto";
-import "moego/business/order/v1/order_line_item.proto";
 import "buf/validate/validate.proto";
-
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
+import "moego/business/order/v1/order.proto";
+import "moego/business/order/v1/order_line_item.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
@@ -18,70 +16,70 @@ option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
 service OrderService {
-  // GetOrder
-  rpc GetOrder(GetOrderRequest) returns (Order) {
-    option (google.api.http) = {get: "/v1/orders/{id}"};
-  }
-  // ListOrders
-  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
-    option (google.api.http) = {
-      post: "/v1/orders:list",
-      body: "*"
-    };
-  }
+    // GetOrder
+    rpc GetOrder (GetOrderRequest) returns (Order) {
+        option (google.api.http) = {get: "/v1/orders/{id}"};
+    }
+    // ListOrders
+    rpc ListOrders (ListOrdersRequest) returns (ListOrdersResponse) {
+        option (google.api.http) = {
+            post: "/v1/orders:list",
+            body: "*"
+        };
+    }
 
-  // ListOrderLineItems
-  rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
-    option (google.api.http) = {
-      post: "/v1/orders/items:list",
-      body: "*"
-    };
-  }
+    // ListOrderLineItems
+    rpc ListOrderLineItems (ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
+        option (google.api.http) = {
+            post: "/v1/orders/items:list",
+            body: "*"
+        };
+    }
 }
 
-message ListOrdersRequest{
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
-  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
-  message Filter {
-    repeated string ids = 1[(google.api.field_behavior) = OPTIONAL];
-    repeated Order.Status statuses = 2[(google.api.field_behavior) = OPTIONAL];
-    google.type.Interval last_updated_time = 3[(google.api.field_behavior) = OPTIONAL];
-  }
-  Filter filter = 4;
+message ListOrdersRequest {
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+    message Filter {
+        repeated string ids = 1 [(google.api.field_behavior) = OPTIONAL];
+        repeated Order.Status statuses = 2 [(google.api.field_behavior) = OPTIONAL];
+        google.type.Interval last_updated_time = 3 [(google.api.field_behavior) = OPTIONAL];
+    }
+    Filter filter = 4;
 }
 
 message ListOrdersResponse {
-  // The next page token
-  string next_page_token = 1;
-  // The orders
-  repeated Order orders = 2;
+    // The next page token
+    string next_page_token = 1;
+    // The orders
+    repeated Order orders = 2;
 }
 
 // GetOrderRequest get order request
 message GetOrderRequest {
-  // order id
-  string id = 1 [(google.api.field_behavior) = REQUIRED];
+    // order id
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListOrderLineItemsRequest get order request
 message ListOrderLineItemsRequest {
-  // company id
-  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // order id
-  repeated string ids = 2 [
-    (google.api.field_behavior) = REQUIRED,
-    (buf.validate.field).repeated = {
-      min_items: 1,
-      max_items: 20,
-    }
-  ];
+    // company id
+    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+    // order id
+    repeated string ids = 2 [
+        (google.api.field_behavior) = REQUIRED,
+        (buf.validate.field).repeated = {
+            min_items: 1,
+            max_items: 20,
+        }
+    ];
 
 }
 
 
 // ListOrderLineItemsResponse
 message ListOrderLineItemsResponse {
-  // The order line item
-  repeated OrderLineItem orderLineItems = 1;
+    // The order line item
+    repeated OrderLineItem orderLineItems = 1;
 }

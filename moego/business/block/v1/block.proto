@@ -11,10 +11,10 @@ option java_package = "com.moego.api.business.block.v1";
 
 // Block
 message Block {
-  string id = 1;
-  string staff_id = 2;
-  google.type.Interval duration = 3;
-  string description = 4;
-  string color_code = 5;
-  string business_id = 6;
+    string id = 1;
+    string staff_id = 2;
+    google.type.Interval duration = 3;
+    string description = 4;
+    string color_code = 5;
+    string business_id = 6;
 }

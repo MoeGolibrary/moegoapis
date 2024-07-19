@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/pet.proto";
-import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -14,35 +14,35 @@ option java_package = "com.moego.api.business.customer.v1";
 
 service PetService {
     // Create a pet
-    rpc CreatePet(CreatePetRequest) returns (CreatePetResponse) {
+    rpc CreatePet (CreatePetRequest) returns (CreatePetResponse) {
         option (google.api.http) = {
             post: "/v1/customers/{customer_id}/pets"
             body: "*"
         };
     }
     // Create a pet code
-    rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
+    rpc CreatePetCode (CreatePetCodeRequest) returns (CreatePetCodeResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/codes"
             body: "*"
         };
     }
     // List Pet Codes
-    rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
+    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/code:list"
             body: "*"
         };
     }
     // Create a pet note
-    rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
+    rpc CreatePetNote (CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/notes"
             body: "*"
         };
     }
     // List Pet Notes
-    rpc ListPetNotes(ListPetNoteRequest) returns (ListPetNoteResponse) {
+    rpc ListPetNotes (ListPetNoteRequest) returns (ListPetNoteResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/note:list"
             body: "*"
@@ -79,12 +79,12 @@ message CreatePetNoteRequest {
     // pet id
     int64 pet_id = 1;
     // pet note
-    Pet.Note note =2;
+    Pet.Note note = 2;
 }
 
 message CreatePetNoteResponse {
     // pet note
-    Pet.Note note =1;
+    Pet.Note note = 1;
 }
 
 message ListPetNoteRequest {
