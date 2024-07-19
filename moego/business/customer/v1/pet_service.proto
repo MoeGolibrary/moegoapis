@@ -2,13 +2,10 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/code.proto";
-import "moego/business/customer/v1/note.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -64,10 +61,10 @@ message CreatePetResponse {
 
 message CreatePetCodeRequest {
     int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-    Code code = 2 [(google.api.field_behavior) = REQUIRED];
+    Pet.Code code = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message CreatePetCodeResponse {
-    Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+    Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message ListPetCodeRequest {
@@ -75,19 +72,19 @@ message ListPetCodeRequest {
 }
 
 message ListPetCodeResponse {
-    repeated Code codes = 1;
+    repeated Pet.Code codes = 1;
 }
 
 message CreatePetNoteRequest {
     // pet id
     int64 pet_id = 1;
     // pet note
-    Note note =2;
+    Pet.Note note =2;
 }
 
 message CreatePetNoteResponse {
     // pet note
-    Note note =1;
+    Pet.Note note =1;
 }
 
 message ListPetNoteRequest {
@@ -100,5 +97,5 @@ message ListPetNoteResponse {
     // The next page token
     string next_page_token = 1;
     // Note
-    repeated Note notes = 2;
+    repeated Pet.Note notes = 2;
 }

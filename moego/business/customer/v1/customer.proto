@@ -2,8 +2,6 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/note.proto";
-import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/address.proto";
 import "google/protobuf/timestamp.proto";
 
@@ -23,7 +21,6 @@ message Customer {
     // The customer is inactive
     INACTIVE = 2;
   }
-
   // ID is the unique identifier of a customer
   string id = 1;
   string first_name = 2;
