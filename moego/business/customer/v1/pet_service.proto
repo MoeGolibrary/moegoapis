@@ -14,6 +14,8 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
+
+//Pet
 message CreatePetRequest {
     string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
@@ -31,3 +33,9 @@ service PetService {
         };
     }
 }
+
+//Pet Code
+
+//Pet Note
+
+

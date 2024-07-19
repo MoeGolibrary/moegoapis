@@ -10,10 +10,14 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
 message CreatePetNoteRequest {
+
+  //
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
   // pet id
-  int64 pet_id = 1;
+  int64 pet_id = 2;
   // pet note
-  Note note =2;
+  Note note =3;
 }
 message CreatePetNoteResponse {
   // pet note
@@ -23,9 +27,11 @@ message CreatePetNoteResponse {
 
 message ListPetNoteRequest {
 
-  PaginationRequest pagination = 1;
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
+  PaginationRequest pagination = 2;
+
+  int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
 
@@ -37,13 +43,13 @@ message ListPetNoteResponse {
 service PetNoteService {
     rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{pet_id}/notes"
+            post: "/v1/customers/pets/{customer_id}/notes"
             body: "*"
         };
     }
     rpc ListPetNotes(ListPetNoteRequest) returns (ListPetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{pet_id}/note:list"
+            post: "/v1/customers/pets/{customer_id}/note:list"
             body: "*"
         };
     }
