@@ -2,12 +2,17 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
+
 import "moego/business/customer/v1/customer.proto";
+import "moego/business/customer/v1/code.proto";
+import "moego/business/customer/v1/note.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
+import "moego/common/v1/pagination_messages.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -35,7 +40,86 @@ service PetService {
 }
 
 //Pet Code
+message CreatePetCodeRequest {
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    Code pet_code = 3 [(google.api.field_behavior) = REQUIRED];
+}
+message CreatePetCodeResponse {
+    Code pet_code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+
+message ListPetCodeRequest {
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 2[(google.api.field_behavior) = REQUIRED];
+}
+message ListPetCodeResponse {
+    //pet_codes
+    repeated Code pet_codes = 2;
+}
+
+service PetCodeService {
+    //Create a petCode
+    rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/pets/{customer_id}/codes"
+            body: "*"
+        };
+    }
+    //ListPetCodes
+    rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/pets/{customer_id}/code:list"
+            body: "*"
+        };
+    }
+}
 
 //Pet Note
+message CreatePetNoteRequest {
+    //customer_id
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
+    // pet id
+    int64 pet_id = 2;
+    // pet note
+    Note note =3;
+}
+message CreatePetNoteResponse {
+    // pet note
+    Note note =1;
+}
+
+
+message ListPetNoteRequest {
+
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+
+    moego.common.v1.PaginationRequest pagination = 2;
+
+    int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
+}
+message ListPetNoteResponse {
+
+    moego.common.v1.PaginationResponse pagination = 1;
+    //Note
+    repeated Note notes = 2;
+}
+
+service PetNoteService {
+    rpc CreatePetNote(CreatePetNoteRequest) returns (CreatePetNoteResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/pets/{customer_id}/notes"
+            body: "*"
+        };
+    }
+    rpc ListPetNotes(ListPetNoteRequest) returns (ListPetNoteResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/pets/{customer_id}/note:list"
+            body: "*"
+        };
+    }
+}
 
