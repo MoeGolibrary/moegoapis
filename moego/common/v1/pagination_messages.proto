@@ -1,0 +1,25 @@
+syntax = "proto3";
+import "google/api/field_behavior.proto";
+import "buf/validate/validate.proto";
+import "validate/validate.proto";
+
+
+message PaginationRequest {
+  // page size, allow 0
+  optional int32 page_size = 1 [(validate.rules).int32 = {
+    lte: 1000,
+    gte: 0
+  }];
+  // page number, start from 1
+  optional int32 page_num = 2 [(validate.rules).int32 = {gte: 1}];
+}
+
+// pagination response
+message PaginationResponse {
+  // the total count
+  int32 total = 1;
+  // the page size from request
+  int32 page_size = 2;
+  // the page num from request
+  int32 page_num = 3;
+}

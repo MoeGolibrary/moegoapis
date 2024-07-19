@@ -25,16 +25,9 @@ message CreatePetCodeResponse {
 
 
 message ListPetCodeRequest {
-
   int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
-
-  // The pagination information
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetCodeResponse {
-  // next_page_token
-  string next_page_token = 1;
-
   //pet_codes
   repeated Code pet_codes = 2;
 }
@@ -43,11 +36,11 @@ service PetCodeService {
     //Create a petCode
     rpc CreatePetCode(CreatePetCodeRequest) returns (CreatePetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/code"
+            post: "/v1/customers/pets/codes"
             body: "*"
         };
     }
-    //PetCodeList
+    //ListPetCodes
     rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/code:list"
