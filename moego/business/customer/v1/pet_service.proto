@@ -95,7 +95,6 @@ message ListPetNoteRequest {
     int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
-
     // The next page token
     string next_page_token = 1;
     //Note
