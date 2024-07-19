@@ -22,6 +22,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Pet
 type CreatePetRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

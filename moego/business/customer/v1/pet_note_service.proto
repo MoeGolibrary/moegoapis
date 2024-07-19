@@ -9,6 +9,12 @@ import "moego/common/v1/pagination_messages.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
+option java_multiple_files = true;
+option java_outer_classname = "CustomerServiceProto";
+option java_package = "com.moego.api.business.customer.v1";
+
+
 message CreatePetNoteRequest {
 
   //
@@ -29,13 +35,14 @@ message ListPetNoteRequest {
 
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  PaginationRequest pagination = 2;
+
+  moego.common.v1.PaginationRequest pagination = 2;
 
   int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
 
-  PaginationResponse pagination = 1;
+  moego.common.v1.PaginationResponse pagination = 1;
   //Note
   repeated Note notes = 2;
 }

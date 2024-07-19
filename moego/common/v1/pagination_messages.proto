@@ -1,17 +1,19 @@
 syntax = "proto3";
+package moego.common.v1;
+
 import "google/api/field_behavior.proto";
 import "buf/validate/validate.proto";
-import "validate/validate.proto";
 
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb;commonpb";
+option java_multiple_files = true;
+option java_outer_classname = "PaginationProto";
+option java_package = "com.moego.api.common.v1";
 
 message PaginationRequest {
   // page size, allow 0
-  optional int32 page_size = 1 [(validate.rules).int32 = {
-    lte: 1000,
-    gte: 0
-  }];
+  optional int32 page_size = 1;
   // page number, start from 1
-  optional int32 page_num = 2 [(validate.rules).int32 = {gte: 1}];
+  optional int32 page_num = 2 ;
 }
 
 // pagination response

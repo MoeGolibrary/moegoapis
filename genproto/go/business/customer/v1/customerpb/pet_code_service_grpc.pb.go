@@ -29,7 +29,7 @@ const (
 type PetCodeServiceClient interface {
 	// Create a petCode
 	CreatePetCode(ctx context.Context, in *CreatePetCodeRequest, opts ...grpc.CallOption) (*CreatePetCodeResponse, error)
-	// PetCodeList
+	// ListPetCodes
 	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
 }
 
@@ -67,7 +67,7 @@ func (c *petCodeServiceClient) ListPetCodes(ctx context.Context, in *ListPetCode
 type PetCodeServiceServer interface {
 	// Create a petCode
 	CreatePetCode(context.Context, *CreatePetCodeRequest) (*CreatePetCodeResponse, error)
-	// PetCodeList
+	// ListPetCodes
 	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
 	mustEmbedUnimplementedPetCodeServiceServer()
 }
