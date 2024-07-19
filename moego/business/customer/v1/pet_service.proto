@@ -41,8 +41,8 @@ service PetService {
 
 //Pet Code
 message CreatePetCodeRequest {
-    int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
-    Code pet_code = 3 [(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 1 [(google.api.field_behavior) = REQUIRED];
+    Code pet_code = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message CreatePetCodeResponse {
     Code pet_code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
@@ -50,11 +50,11 @@ message CreatePetCodeResponse {
 
 
 message ListPetCodeRequest {
-    int64 company_id = 2[(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 1[(google.api.field_behavior) = REQUIRED];
 }
 message ListPetCodeResponse {
     //pet_codes
-    repeated Code pet_codes = 2;
+    repeated Code pet_codes = 1;
 }
 
 service PetCodeService {
@@ -77,9 +77,9 @@ service PetCodeService {
 //Pet Note
 message CreatePetNoteRequest {
     // pet id
-    int64 pet_id = 2;
+    int64 pet_id = 1;
     // pet note
-    Note note =3;
+    Note note =2;
 }
 message CreatePetNoteResponse {
     // pet note
@@ -88,9 +88,9 @@ message CreatePetNoteResponse {
 
 
 message ListPetNoteRequest {
-    moego.common.v1.PaginationRequest pagination = 2;
+    moego.common.v1.PaginationRequest pagination = 1;
 
-    int64 pet_id = 3 [(google.api.field_behavior) = REQUIRED];
+    int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
 
