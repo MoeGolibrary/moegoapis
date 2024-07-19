@@ -2,12 +2,12 @@ syntax = "proto3";
 
 package moego.business.appointment.v1;
 
-import "moego/business/appointment/v1/pet_service_detail.proto";
-import "moego/business/payment/v1/payment.proto";
-import "moego/common/v1/address.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 import "google/type/money.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
+import "moego/business/payment/v1/payment.proto";
+import "moego/common/v1/address.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -16,34 +16,34 @@ option java_package = "com.moego.api.business.appointment.v1";
 
 // Appointment
 message Appointment {
-  // Status
-  enum Status {
-    STATUS_UNSPECIFIED = 0;
-    UNCONFIRMED = 1;
-    CONFIRMED = 2;
-    CHECKED_IN = 3;
-    READY = 4;
-    FINISHED = 5;
-    CANCELED = 6;
-  }
+    // Status
+    enum Status {
+        STATUS_UNSPECIFIED = 0;
+        UNCONFIRMED = 1;
+        CONFIRMED = 2;
+        CHECKED_IN = 3;
+        READY = 4;
+        FINISHED = 5;
+        CANCELED = 6;
+    }
 
-  // id of the appointment
-  string id = 1;
-  string business_id = 2;
-  string customer_id = 3;
-  moego.common.v1.Address address = 4;
-  google.type.Interval duration = 5;
-  repeated PetServiceDetail pet_service_details = 6;
-  Status status = 7;
-  string ticket_comment = 8;
-  string color_code = 9;
-  string order_id = 10;
-  google.type.Money total_amount = 11;
-  google.type.Money paid_amount = 12;
-  google.type.Money refund_amount = 13;
-  moego.business.payment.v1.Payment.Status payment_status = 14;
-  string created_by = 15;
-  google.protobuf.Timestamp created_time = 16;
-  string last_updated_by = 17;
-  google.protobuf.Timestamp last_updated_time = 18;
+    // id of the appointment
+    string id = 1;
+    string business_id = 2;
+    string customer_id = 3;
+    moego.common.v1.Address address = 4;
+    google.type.Interval duration = 5;
+    repeated PetServiceDetail pet_service_details = 6;
+    Status status = 7;
+    string ticket_comment = 8;
+    string color_code = 9;
+    string order_id = 10;
+    google.type.Money total_amount = 11;
+    google.type.Money paid_amount = 12;
+    google.type.Money refund_amount = 13;
+    moego.business.payment.v1.Payment.Status payment_status = 14;
+    string created_by = 15;
+    google.protobuf.Timestamp created_time = 16;
+    string last_updated_by = 17;
+    google.protobuf.Timestamp last_updated_time = 18;
 }

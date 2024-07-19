@@ -2,12 +2,11 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/customer.proto";
-import "moego/business/customer/v1/pet.proto";
-import "moego/common/v1/address.proto";
-import "moego/common/v1/pagination.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "moego/business/customer/v1/customer.proto";
+import "moego/common/v1/address.proto";
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -16,74 +15,74 @@ option java_package = "com.moego.api.business.customer.v1";
 
 // CustomerService openapi definitions for operate customer
 service CustomerService {
-  // Create a customer
-  rpc CreateCustomer(CreateCustomerRequest) returns (Customer) {
-    option (google.api.http) = {
-      post: "/v1/customers"
-      body: "*"
-    };
-  }
+    // Create a customer
+    rpc CreateCustomer (CreateCustomerRequest) returns (Customer) {
+        option (google.api.http) = {
+            post: "/v1/customers"
+            body: "*"
+        };
+    }
 
-  // Get a customer
-  rpc GetCustomer(GetCustomerRequest) returns (Customer) {
-    option (google.api.http) = {get: "/v1/customers/{id}"};
-  }
+    // Get a customer
+    rpc GetCustomer (GetCustomerRequest) returns (Customer) {
+        option (google.api.http) = {get: "/v1/customers/{id}"};
+    }
 
-  // List customers
-  rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {
-    option (google.api.http) = {
-      post: "/v1/customers:list",
-      body: "*"
-    };
-  }
+    // List customers
+    rpc ListCustomers (ListCustomersRequest) returns (ListCustomersResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers:list",
+            body: "*"
+        };
+    }
 
-  // Generate a link to add customer card on file
-  rpc GenCustomerCofLink(GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
-    option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
-  }
+    // Generate a link to add customer card on file
+    rpc GenCustomerCofLink (GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
+        option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
+    }
 }
 
 // CreateCustomerRequest is the request message for CustomerAPI.CreateCustomer
 message CreateCustomerRequest {
-  string company_id =1 [(google.api.field_behavior) = REQUIRED];
-  string preferred_business_id = 2 [(google.api.field_behavior) = REQUIRED];
-  string first_name = 3 [(google.api.field_behavior) = REQUIRED];
-  string last_name = 4 [(google.api.field_behavior) = REQUIRED];
-  string phone = 5 [(google.api.field_behavior) = REQUIRED];
-  string email = 6;
-  moego.common.v1.Address address = 7;
-  CustomerPreference preference = 8;
+    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+    string preferred_business_id = 2 [(google.api.field_behavior) = REQUIRED];
+    string first_name = 3 [(google.api.field_behavior) = REQUIRED];
+    string last_name = 4 [(google.api.field_behavior) = REQUIRED];
+    string phone = 5 [(google.api.field_behavior) = REQUIRED];
+    string email = 6;
+    moego.common.v1.Address address = 7;
+    CustomerPreference preference = 8;
 }
 
 // GetCustomerRequest is the request message for CustomerAPI.GetCustomer
 message GetCustomerRequest {
-  // The id of the customer to retrieve
-  string id = 1 [(google.api.field_behavior) = REQUIRED];
+    // The id of the customer to retrieve
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListCustomersRequest is the request message for CustomerAPI.ListCustomers
 message ListCustomersRequest {
-  // The pagination information
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // The company id
-  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    // The pagination information
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+    // The company id
+    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListCustomersResponse is the response message for CustomerAPI.ListCustomers
 message ListCustomersResponse {
-  // The next page token
-  string next_page_token = 1;
-  // The customers
-  repeated Customer customers = 2;
+    // The next page token
+    string next_page_token = 1;
+    // The customers
+    repeated Customer customers = 2;
 }
 
 // GenCustomerCofLinkRequest is the request message for CustomerAPI.GenCustomerCofLink
-message GenCustomerCofLinkRequest{
-  // The id of the customer to retrieve
-  string id = 1 [(google.api.field_behavior) = REQUIRED];
+message GenCustomerCofLinkRequest {
+    // The id of the customer to retrieve
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 // GenCustomerCofLinkResponse is the response message for CustomerAPI.GenCustomerCofLink
-message GenCustomerCofLinkResponse{
-  // The link of the customer cof
-  string link = 1;
+message GenCustomerCofLinkResponse {
+    // The link of the customer cof
+    string link = 1;
 }

@@ -11,55 +11,55 @@ option java_package = "com.moego.api.business.agreement.v1";
 
 // Agreement
 message Agreement {
-  // Status
-  enum Status {
-    // unspecified
-    STATUS_UNSPECIFIED = 0;
-    // normal
-    NORMAL = 1;
-    // deleted
-    DELETED = 2;
-  }
+    // Status
+    enum Status {
+        // unspecified
+        STATUS_UNSPECIFIED = 0;
+        // normal
+        NORMAL = 1;
+        // deleted
+        DELETED = 2;
+    }
 
-  // policy requirement for signed an agreement
-  enum SignedPolicy {
-    // unspecified
-    SIGNED_POLICY_UNSPECIFIED = 0;
-    // sign for first
-    FOR_FIRST = 1;
-    // sign for each
-    FOR_EACH = 2;
-    // allow not to sign
-    OPTIONAL = 3;
-  }
+    // policy requirement for signed an agreement
+    enum SignedPolicy {
+        // unspecified
+        SIGNED_POLICY_UNSPECIFIED = 0;
+        // sign for first
+        FOR_FIRST = 1;
+        // sign for each
+        FOR_EACH = 2;
+        // allow not to sign
+        OPTIONAL = 3;
+    }
 
-  // agreement id
-  string id = 1;
-  // business id
-  string business_id = 2;
-  // creator id
-  string creator_id = 3;
-  // status: normal, deleted
-  Status status = 4;
-  // signed policy, see definition in SignedPolicy
-  SignedPolicy signed_policy = 5;
+    // agreement id
+    string id = 1;
+    // business id
+    string business_id = 2;
+    // creator id
+    string creator_id = 3;
+    // status: normal, deleted
+    Status status = 4;
+    // signed policy, see definition in SignedPolicy
+    SignedPolicy signed_policy = 5;
 
-  // agreement title
-  string title = 6;
-  // agreement content
-  string content = 7;
-  // sms template
-  string sms_template = 8;
-  // email template title
-  string email_template_title = 9;
-  // email template body
-  string email_template_body = 10;
-  // last requested time: exceed this time will need to be re-signed
-  google.protobuf.Timestamp last_required_time = 11;
-  // last edit time: milliseconds
-  google.protobuf.Timestamp last_edit_time = 12;
-  // created time: milliseconds
-  google.protobuf.Timestamp created_time = 13;
-  // last updated time: milliseconds
-  google.protobuf.Timestamp last_updated_time = 14;
+    // agreement title
+    string title = 6;
+    // agreement content
+    string content = 7;
+    // sms template
+    string sms_template = 8;
+    // email template title
+    string email_template_title = 9;
+    // email template body
+    string email_template_body = 10;
+    // last requested time: exceed this time will need to be re-signed
+    google.protobuf.Timestamp last_required_time = 11;
+    // last edit time: milliseconds
+    google.protobuf.Timestamp last_edit_time = 12;
+    // created time: milliseconds
+    google.protobuf.Timestamp created_time = 13;
+    // last updated time: milliseconds
+    google.protobuf.Timestamp last_updated_time = 14;
 }

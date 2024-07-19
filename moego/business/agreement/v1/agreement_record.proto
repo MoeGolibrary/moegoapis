@@ -11,81 +11,81 @@ option java_outer_classname = "AgreementRecordProto";
 option java_package = "com.moego.api.business.agreement.v1";
 
 message AgreementRecord {
-  // signing status of agreement
-  enum SignedStatus {
-    // unspecified
-    SIGNED_STATUS_UNSPECIFIED = 0;
-    // unsigned
-    UNSIGNED = 1;
-    // signed
-    SIGNED = 2;
-  }
-  // signed an agreement type
-  enum SignedType {
-    // unspecified
-    SIGNED_TYPE_UNSPECIFIED = 0;
-    // customer signature
-    CUSTOMER_SIGNED = 1;
-    // business upload file
-    BY_BUSINESS_UPLOAD = 2;
-  }
-  // agreement source type
-  enum SourceType {
-    // unspecified
-    SOURCE_TYPE_UNSPECIFIED = 0;
-    // from web url
-    URL = 1;
-    // from mobile app
-    MOBILE = 2;
-    // from online booking
-    ONLINE_BOOKING = 3;
-    // from intake form
-    INTAKE_FORM = 4;
-  }
-  // Status
-  enum Status {
-    // unspecified
-    STATUS_UNSPECIFIED = 0;
-    // normal
-    NORMAL = 1;
-    // deleted
-    DELETED = 2;
-  }
+    // signing status of agreement
+    enum SignedStatus {
+        // unspecified
+        SIGNED_STATUS_UNSPECIFIED = 0;
+        // unsigned
+        UNSIGNED = 1;
+        // signed
+        SIGNED = 2;
+    }
+    // signed an agreement type
+    enum SignedType {
+        // unspecified
+        SIGNED_TYPE_UNSPECIFIED = 0;
+        // customer signature
+        CUSTOMER_SIGNED = 1;
+        // business upload file
+        BY_BUSINESS_UPLOAD = 2;
+    }
+    // agreement source type
+    enum SourceType {
+        // unspecified
+        SOURCE_TYPE_UNSPECIFIED = 0;
+        // from web url
+        URL = 1;
+        // from mobile app
+        MOBILE = 2;
+        // from online booking
+        ONLINE_BOOKING = 3;
+        // from intake form
+        INTAKE_FORM = 4;
+    }
+    // Status
+    enum Status {
+        // unspecified
+        STATUS_UNSPECIFIED = 0;
+        // normal
+        NORMAL = 1;
+        // deleted
+        DELETED = 2;
+    }
 
-  // agreement record id
-  string id = 1;
-  // agreement record uuid
-  string uuid = 2;
-  // agreement id
-  string agreement_id = 3;
-  // business id
-  string business_id = 4;
-  // company id
-  string company_id = 5;
-  // customer id
-  string customer_id = 6;
-  // associated target id
-  string target_id = 7;
-  // status: normal, deleted
-  Status status = 8;
-  // signed status: unsigned, signed
-  SignedStatus signed_status = 9;
-  // signed type, see definition in SignedType
-  SignedType signed_type = 10;
-  // source type, see definition in SourceType
-  SourceType source_type = 11;
-  // agreement record link
-  string link = 12;
-  // agreement title
-  string title = 13;
-  // agreement content
-  string content = 14;
-  // customer signature
-  string signature = 15;
-  // signed time: milliseconds
-  google.protobuf.Timestamp  signed_time = 16;
-  // create time: milliseconds
-  google.protobuf.Timestamp created_time = 17;
-  // update time: milliseconds
-  google.protobuf.Timestamp updated_time = 18;
+    // agreement record id
+    string id = 1;
+    // agreement record uuid
+    string uuid = 2;
+    // agreement id
+    string agreement_id = 3;
+    // business id
+    string business_id = 4;
+    // company id
+    string company_id = 5;
+    // customer id
+    string customer_id = 6;
+    // associated target id
+    string target_id = 7;
+    // status: normal, deleted
+    Status status = 8;
+    // signed status: unsigned, signed
+    SignedStatus signed_status = 9;
+    // signed type, see definition in SignedType
+    SignedType signed_type = 10;
+    // source type, see definition in SourceType
+    SourceType source_type = 11;
+    // agreement record link
+    string link = 12;
+    // agreement title
+    string title = 13;
+    // agreement content
+    string content = 14;
+    // customer signature
+    string signature = 15;
+    // signed time: milliseconds
+    google.protobuf.Timestamp signed_time = 16;
+    // create time: milliseconds
+    google.protobuf.Timestamp created_time = 17;
+    // update time: milliseconds
+    google.protobuf.Timestamp updated_time = 18;
 }

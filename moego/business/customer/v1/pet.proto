@@ -2,10 +2,9 @@ syntax = "proto3";
 
 package moego.business.customer.v1;
 
-import "moego/business/customer/v1/note.proto";
-import "moego/common/v1/weight.proto";
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -14,54 +13,68 @@ option java_package = "com.moego.api.business.customer.v1";
 
 // Pet is a pet
 message Pet {
-  // PetType is the type of pet
-  enum Type {
-    TYPE_UNSPECIFIED = 0;
-    OTHER = 1;
-    DOG = 2;
-    CAT = 3;
-    BIRD = 4;
-    RABBIT = 5;
-    GUINEA_PIG = 6;
-    HORSE = 7;
-    HAMSTER = 8;
-    RAT = 9;
-    MOUSE = 10;
-    CHINCHILLA = 11;
-  }
-
-  // Status is the status of a pet
-  enum Status {
-    STATUS_UNSPECIFIED = 0;
-    ALIVE = 1;
-    PASSED_AWAY = 2;
-  }
-  // Gender
-  enum Gender{
-    GENDER_UNSPECIFIED = 0;
-    MALE = 1;
-    FEMALE =2;
-    UNKNOWN =3 ;
-  }
-  // ID is the unique identifier of a pet
-  string id = 1;
-  string name = 2 [(google.api.field_behavior) = REQUIRED];
-  google.protobuf.Timestamp birthday = 3;
-  Status status = 4;
-  Type type = 5 [(google.api.field_behavior) = REQUIRED];
-  string breed = 6 [(google.api.field_behavior) = REQUIRED];
-  Gender gender = 7;
-  moego.common.v1.Weight weight = 8;
-  string fixed = 9;
-  string coat = 10;
-  string behavior = 11;
-  repeated string pet_codes = 12;
-  repeated Note notes = 13;
-  repeated Vaccination vaccinations = 14;// This field is not supported when creating a pet.
-  string customer_id =15[(google.api.field_behavior) = OUTPUT_ONLY];
-}
-
-message Vaccination {
-  string name = 1;
-  google.protobuf.Timestamp expired_at = 2;
+    // PetType is the type of pet
+    enum Type {
+        TYPE_UNSPECIFIED = 0;
+        OTHER = 1;
+        DOG = 2;
+        CAT = 3;
+        BIRD = 4;
+        RABBIT = 5;
+        GUINEA_PIG = 6;
+        HORSE = 7;
+        HAMSTER = 8;
+        RAT = 9;
+        MOUSE = 10;
+        CHINCHILLA = 11;
+    }
+    // Status is the status of a pet
+    enum Status {
+        STATUS_UNSPECIFIED = 0;
+        ALIVE = 1;
+        PASSED_AWAY = 2;
+    }
+    // Gender
+    enum Gender {
+        GENDER_UNSPECIFIED = 0;
+        MALE = 1;
+        FEMALE = 2;
+        UNKNOWN = 3;
+    }
+    // Code
+    message Code {
+        int64 id = 1;
+        string abbreviation = 2;
+        string description = 3;
+        string color = 4;
+    }
+    // Note
+    message Note {
+        string id = 1;
+        string content = 2;
+        string last_updated_by = 3;
+        google.protobuf.Timestamp last_updated_time = 4;
+    }
+    // Vaccination
+    message Vaccination {
+        string name = 1;
+        google.protobuf.Timestamp expired_at = 2;
+    }
+    // ID is the unique identifier of a pet
+    string id = 1;
+    string name = 2 [(google.api.field_behavior) = REQUIRED];
+    google.protobuf.Timestamp birthday = 3;
+    Status status = 4;
+    Type type = 5 [(google.api.field_behavior) = REQUIRED];
+    string breed = 6 [(google.api.field_behavior) = REQUIRED];
+    Gender gender = 7;
+    moego.common.v1.Weight weight = 8;
+    string fixed = 9;
+    string coat = 10;
+    string behavior = 11;
+    repeated Code pet_codes = 12;
+    repeated Note notes = 13;
+    // This field is not supported when creating a pet.
+    repeated Vaccination vaccinations = 14;
+    string customer_id = 15 [(google.api.field_behavior) = OUTPUT_ONLY];
 }

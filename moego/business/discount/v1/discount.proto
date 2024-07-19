@@ -12,27 +12,27 @@ option java_package = "com.moego.api.business.discount.v1";
 
 // Discount
 message Discount {
-  string code = 1;
-  string description = 2;
-  oneof value {
-    google.type.Money amount = 3;
-    uint32 percentage = 4;
-  }
-  google.type.Interval valid_period = 5;
-  DiscountLimitation limitation = 6;
-  DiscountSettings settings = 7;
+    string code = 1;
+    string description = 2;
+    oneof value {
+        google.type.Money amount = 3;
+        uint32 percentage = 4;
+    }
+    google.type.Interval valid_period = 5;
+    DiscountLimitation limitation = 6;
+    DiscountSettings settings = 7;
 }
 
 // DiscountLimitation
 message DiscountLimitation {
-  uint32 max_redeem_times = 1;
-  repeated string business_ids = 2;
-  bool redeem_once_per_customer = 3;
-  repeated string customer_ids = 4;
+    uint32 max_redeem_times = 1;
+    repeated string business_ids = 2;
+    bool redeem_once_per_customer = 3;
+    repeated string customer_ids = 4;
 }
 
 // DiscountSettings
 message DiscountSettings {
-  bool auto_apply_on_eligible_appointment = 1;
-  bool allow_for_online_booking = 2;
+    bool auto_apply_on_eligible_appointment = 1;
+    bool allow_for_online_booking = 2;
 }

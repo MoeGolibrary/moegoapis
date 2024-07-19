@@ -11,27 +11,27 @@ option java_package = "com.moego.api.business.staff.v1";
 
 // Staff
 message Staff {
-  string id = 1;
-  string first_name = 2;
-  string last_name = 3;
-  string avatar = 4;
-  string phone = 5;
-  string email = 6;
-  Role role = 7;
-  google.protobuf.Timestamp hired_time = 8;
-  repeated string working_business_ids = 9;
-  string mobile_van_id = 10;
-  string company_id =11;
+    string id = 1;
+    string first_name = 2;
+    string last_name = 3;
+    string avatar = 4;
+    string phone = 5;
+    string email = 6;
+    Role role = 7;
+    google.protobuf.Timestamp hired_time = 8;
+    repeated string working_business_ids = 9;
+    string mobile_van_id = 10;
+    string company_id = 11;
 }
 
 // Role
 message Role {
-  string id = 1;
-  string name = 2;
-  repeated Permission permissions = 3;
+    string id = 1;
+    string name = 2;
+    repeated Permission permissions = 3;
 }
 
 // Permission
 enum Permission {
-  PERMISSION_UNSPECIFIED = 0;
+    PERMISSION_UNSPECIFIED = 0;
 }
