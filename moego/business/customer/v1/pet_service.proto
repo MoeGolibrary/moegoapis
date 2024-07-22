@@ -34,6 +34,7 @@ service PetService {
             body: "*"
         };
     }
+
     // Create a pet note
     rpc CreatePetNote (CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
