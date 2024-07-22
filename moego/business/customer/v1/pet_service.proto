@@ -61,7 +61,7 @@ message CreatePetResponse {
 
 message CreatePetCodeRequest {
     int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-    Pet.Code code = 2 [(google.api.field_behavior) = REQUIRED];
+    repeated Pet.Code code = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message CreatePetCodeResponse {
     Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
