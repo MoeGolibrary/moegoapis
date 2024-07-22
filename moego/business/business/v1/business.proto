@@ -11,17 +11,17 @@ option java_package = "com.moego.api.business.business.v1";
 
 // Business information
 message Business {
-  string id = 1;
-  string name = 2;
-  string avatar = 3;
-  string phone = 4;
-  string business_phone = 5;
-  string email = 6;
-  moego.common.v1.Address address = 7;
-  string website = 8;
-  string facebook = 9;
-  string instagram = 10;
-  string yelp = 11;
-  string google = 12;
-  string company_id = 13;
+    string id = 1;
+    string name = 2;
+    string avatar = 3;
+    string phone = 4;
+    string business_phone = 5;
+    string email = 6;
+    moego.common.v1.Address address = 7;
+    string website = 8;
+    string facebook = 9;
+    string instagram = 10;
+    string yelp = 11;
+    string google = 12;
+    string company_id = 13;
 }

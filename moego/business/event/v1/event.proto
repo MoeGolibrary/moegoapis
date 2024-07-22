@@ -2,10 +2,10 @@ syntax = "proto3";
 
 package moego.business.event.v1;
 
+import "google/protobuf/timestamp.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/event/v1/health_check.proto";
 import "moego/business/online_booking/v1/online_booking.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/event/v1/eventpb;eventpb";
 option java_multiple_files = true;
@@ -14,35 +14,35 @@ option java_package = "com.moego.api.business.event.v1";
 
 // Event
 message Event {
-  // Type is the type of the event
-  enum Type {
-    // EVENT_TYPE_UNSPECIFIED can never be used in a message. It is used as the default value in enums.
-    TYPE_UNSPECIFIED = 0;
-    // From 1-99 are reserved for system events
-    // HEALTH_CHECK is an event type for health check
-    HEALTH_CHECK = 1;
-    // From 100-199 are reserved for appointment events
-    // APPOINTMENT_CREATED is an event type for appointment created
-    APPOINTMENT_CREATED = 100;
-    // APPOINTMENT_UPDATED is an event type for appointment updated
-    APPOINTMENT_UPDATED = 101;
-    APPOINTMENT_FINISHED = 102;
-    APPOINTMENT_CANCELED = 103;
-    APPOINTMENT_DELETED = 104;
-    APPOINTMENT_FULLY_PAID = 105;
-    // From 200-299 are reserved for online booking events
-    // ONLINE_BOOKING_RECEIVED is an event type for online booking received
-    ONLINE_BOOKING_RECEIVED = 200;
-  }
+    // Type is the type of the event
+    enum Type {
+        // EVENT_TYPE_UNSPECIFIED can never be used in a message. It is used as the default value in enums.
+        TYPE_UNSPECIFIED = 0;
+        // From 1-99 are reserved for system events
+        // HEALTH_CHECK is an event type for health check
+        HEALTH_CHECK = 1;
+        // From 100-199 are reserved for appointment events
+        // APPOINTMENT_CREATED is an event type for appointment created
+        APPOINTMENT_CREATED = 100;
+        // APPOINTMENT_UPDATED is an event type for appointment updated
+        APPOINTMENT_UPDATED = 101;
+        APPOINTMENT_FINISHED = 102;
+        APPOINTMENT_CANCELED = 103;
+        APPOINTMENT_DELETED = 104;
+        APPOINTMENT_FULLY_PAID = 105;
+        // From 200-299 are reserved for online booking events
+        // ONLINE_BOOKING_RECEIVED is an event type for online booking received
+        ONLINE_BOOKING_RECEIVED = 200;
+    }
 
-  // id is the unique identifier of the event
-  string id = 1;
-  Type type = 2;
-  google.protobuf.Timestamp timestamp = 3;
-  string company_id = 4;
-  oneof payload {
-    HealthCheck health_check = 5;
-    moego.business.appointment.v1.Appointment appointment = 6;
-    moego.business.online_booking.v1.OnlineBooking online_booking = 7;
-  }
+    // id is the unique identifier of the event
+    string id = 1;
+    Type type = 2;
+    google.protobuf.Timestamp timestamp = 3;
+    string company_id = 4;
+    oneof payload {
+        HealthCheck health_check = 5;
+        moego.business.appointment.v1.Appointment appointment = 6;
+        moego.business.online_booking.v1.OnlineBooking online_booking = 7;
+    }
 }

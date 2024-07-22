@@ -9,18 +9,18 @@ option java_package = "com.moego.api.common.v1";
 
 // Weight represents a weight value and its unit.
 message Weight {
-  // Unit represents a weight unit.
-  enum Unit {
-    // Unspecified weight unit.
-    UNIT_UNSPECIFIED = 0;
-    // Kilogram.
-    KILOGRAM = 1;
-    // Pound.
-    POUND = 2;
-  }
+    // Unit represents a weight unit.
+    enum Unit {
+        // Unspecified weight unit.
+        UNIT_UNSPECIFIED = 0;
+        // Kilogram.
+        KILOGRAM = 1;
+        // Pound.
+        POUND = 2;
+    }
 
-  // The weight value.
-  uint32 value = 1;
-  // The weight unit.
-  Unit unit = 2;
+    // The weight value.
+    uint32 value = 1;
+    // The weight unit.
+    Unit unit = 2;
 }

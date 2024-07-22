@@ -2,11 +2,10 @@ syntax = "proto3";
 
 package moego.business.online_booking.v1;
 
-import "moego/business/appointment/v1/pet_service_detail.proto";
-import "moego/business/customer/v1/customer.proto";
-import "moego/common/v1/address.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
+import "moego/common/v1/address.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
 option java_multiple_files = true;
@@ -15,22 +14,22 @@ option java_package = "com.moego.api.business.online_booking.v1";
 
 // OnlineBooking
 message OnlineBooking {
-  // Status
-  enum Status {
-    STATUS_UNSPECIFIED = 0;
-    NORMAL = 1;
-    IN_WAIT_LIST = 2;
-    ABANDONED = 3;
-  }
+    // Status
+    enum Status {
+        STATUS_UNSPECIFIED = 0;
+        NORMAL = 1;
+        IN_WAIT_LIST = 2;
+        ABANDONED = 3;
+    }
 
-  // ID
-  string id = 1;
-  string business_id = 2;
-  string customer_id = 3;
-  moego.common.v1.Address address = 4;
-  google.type.Interval duration = 5;
-  repeated moego.business.appointment.v1.PetServiceDetail pet_service_details = 6;
-  Status status = 7;
-  string color_code = 8;
-  google.protobuf.Timestamp created_time = 9;
+    // ID
+    string id = 1;
+    string business_id = 2;
+    string customer_id = 3;
+    moego.common.v1.Address address = 4;
+    google.type.Interval duration = 5;
+    repeated moego.business.appointment.v1.PetServiceDetail pet_service_details = 6;
+    Status status = 7;
+    string color_code = 8;
+    google.protobuf.Timestamp created_time = 9;
 }
