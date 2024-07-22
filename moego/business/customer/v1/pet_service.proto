@@ -30,7 +30,7 @@ service PetService {
     // List Pet Codes
     rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/pets/{pet_id}/code:list"
+            post: "/v1/customers/pets/{company_id}/code:list"
             body: "*"
         };
     }
@@ -68,7 +68,7 @@ message CreatePetCodeResponse {
 }
 
 message ListPetCodeRequest {
-    int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListPetCodeResponse {
