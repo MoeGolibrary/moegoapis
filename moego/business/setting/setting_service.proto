@@ -24,8 +24,8 @@ service SettingService {
 
 
 message AppendPetCodeRequest {
-    int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-    int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
     repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message AppendPetCodeResponse {
