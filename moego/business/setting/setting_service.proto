@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
+option java_multiple_files = true;
+option java_outer_classname = "CustomerServiceProto";
+option java_package = "com.moego.api.business.customer.v1";
+
+service SettingService {
+    // Create a pet code
+    rpc AppendPetCode (AppendPetCodeRequest) returns (AppendPetCodeResponse) {
+        option (google.api.http) = {
+            post: "/v1/setting/pets/{pet_id}/codes"
+            body: "*"
+        };
+    }
+}
+
+
+message AppendPetCodeRequest {
+    int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
+}
+message AppendPetCodeResponse {
+    Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
