@@ -60,8 +60,8 @@ message CreatePetResponse {
 }
 
 message CreatePetCodeRequest {
-    int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-    int64 company_id = 2 [(google.api.field_behavior) = REQUIRED];
+    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
     repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message CreatePetCodeResponse {
@@ -78,7 +78,7 @@ message ListPetCodeResponse {
 
 message CreatePetNoteRequest {
     // pet id
-    int64 pet_id = 1;
+    string pet_id = 1;
     // pet note
     Pet.Note note = 2;
 }
@@ -92,7 +92,7 @@ message ListPetNoteRequest {
     // The pagination information
     moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
     // The pet id
-    int64 pet_id = 2 [(google.api.field_behavior) = REQUIRED];
+    string pet_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 message ListPetNoteResponse {
     // The next page token
