@@ -19,15 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
-	SettingService_AppendPetCode_FullMethodName = "/moego.business.customer.v1.SettingService/AppendPetCode"
+	SettingService_ListPetCodes_FullMethodName = "/moego.business.customer.v1.SettingService/ListPetCodes"
 )
 
 // SettingServiceClient is the client API for SettingService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SettingServiceClient interface {
-	// Create a pet code
-	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
+	// List Pet Codes
+	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
 }
 
 type settingServiceClient struct {
@@ -38,10 +38,10 @@ func NewSettingServiceClient(cc grpc.ClientConnInterface) SettingServiceClient {
 	return &settingServiceClient{cc}
 }
 
-func (c *settingServiceClient) AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error) {
+func (c *settingServiceClient) ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(AppendPetCodeResponse)
-	err := c.cc.Invoke(ctx, SettingService_AppendPetCode_FullMethodName, in, out, cOpts...)
+	out := new(ListPetCodeResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListPetCodes_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -52,8 +52,8 @@ func (c *settingServiceClient) AppendPetCode(ctx context.Context, in *AppendPetC
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility
 type SettingServiceServer interface {
-	// Create a pet code
-	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
+	// List Pet Codes
+	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -61,8 +61,8 @@ type SettingServiceServer interface {
 type UnimplementedSettingServiceServer struct {
 }
 
-func (UnimplementedSettingServiceServer) AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method AppendPetCode not implemented")
+func (UnimplementedSettingServiceServer) ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPetCodes not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 
@@ -77,20 +77,20 @@ func RegisterSettingServiceServer(s grpc.ServiceRegistrar, srv SettingServiceSer
 	s.RegisterService(&SettingService_ServiceDesc, srv)
 }
 
-func _SettingService_AppendPetCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AppendPetCodeRequest)
+func _SettingService_ListPetCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetCodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SettingServiceServer).AppendPetCode(ctx, in)
+		return srv.(SettingServiceServer).ListPetCodes(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: SettingService_AppendPetCode_FullMethodName,
+		FullMethod: SettingService_ListPetCodes_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingServiceServer).AppendPetCode(ctx, req.(*AppendPetCodeRequest))
+		return srv.(SettingServiceServer).ListPetCodes(ctx, req.(*ListPetCodeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -103,8 +103,8 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SettingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "AppendPetCode",
-			Handler:    _SettingService_AppendPetCode_Handler,
+			MethodName: "ListPetCodes",
+			Handler:    _SettingService_ListPetCodes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

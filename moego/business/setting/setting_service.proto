@@ -13,20 +13,20 @@ option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
 service SettingService {
-    // Create a pet code
-    rpc AppendPetCode (AppendPetCodeRequest) returns (AppendPetCodeResponse) {
+    // List Pet Codes
+    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/setting/pets/{pet_id}/codes"
+            post: "/v1/setting/{company_id}/code:list"
             body: "*"
         };
     }
 }
 
+message ListPetCodeRequest {
+    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
 
-message AppendPetCodeRequest {
-    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-    repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
+message ListPetCodeResponse {
+    repeated Pet.Code codes = 1;
 }
-message AppendPetCodeResponse {
-    Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
-}
+

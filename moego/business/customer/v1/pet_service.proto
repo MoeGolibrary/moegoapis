@@ -27,13 +27,13 @@ service PetService {
             body: "*"
         };
     }
-    // List Pet Codes
-    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
-        option (google.api.http) = {
-            post: "/v1/customers/pets/{company_id}/code:list"
-            body: "*"
-        };
-    }
+//    // List Pet Codes
+//    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
+//        option (google.api.http) = {
+//            post: "/v1/customers/pets/{company_id}/code:list"
+//            body: "*"
+//        };
+//    }
     // Create a pet note
     rpc CreatePetNote (CreatePetNoteRequest) returns (CreatePetNoteResponse) {
         option (google.api.http) = {
@@ -68,13 +68,13 @@ message CreatePetCodeResponse {
     Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-message ListPetCodeRequest {
-    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-}
-
-message ListPetCodeResponse {
-    repeated Pet.Code codes = 1;
-}
+//message ListPetCodeRequest {
+//    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+//}
+//
+//message ListPetCodeResponse {
+//    repeated Pet.Code codes = 1;
+//}
 
 message CreatePetNoteRequest {
     // pet id
