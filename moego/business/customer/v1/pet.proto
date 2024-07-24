@@ -43,7 +43,7 @@ message Pet {
     }
     // Code
     message Code {
-        string id = 1;
+        int64 id = 1;
         string abbreviation = 2;
         string description = 3;
         string color = 4;
