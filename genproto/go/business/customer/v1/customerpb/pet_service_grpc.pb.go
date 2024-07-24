@@ -33,14 +33,6 @@ type PetServiceClient interface {
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
 	// Create a pet code
 	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
-	//	// List Pet Codes
-	//	rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
-	//	    option (google.api.http) = {
-	//	        post: "/v1/customers/pets/{company_id}/code:list"
-	//	        body: "*"
-	//	    };
-	//	}
-	//
 	// Create a pet note
 	CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error)
 	// List Pet Notes
@@ -103,14 +95,6 @@ type PetServiceServer interface {
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
 	// Create a pet code
 	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
-	//	// List Pet Codes
-	//	rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
-	//	    option (google.api.http) = {
-	//	        post: "/v1/customers/pets/{company_id}/code:list"
-	//	        body: "*"
-	//	    };
-	//	}
-	//
 	// Create a pet note
 	CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error)
 	// List Pet Notes

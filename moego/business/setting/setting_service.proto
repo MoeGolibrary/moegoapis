@@ -16,7 +16,8 @@ service SettingService {
     // List Pet Codes
     rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/setting/{company_id}/code:list"
+            //todo: 业务含义：期望得到 petCode(petCode->pet)的一个配置list资源 通过company_id
+            post: "/v1/setting/pets/pet_codes/{company_id}/code:list"
             body: "*"
         };
     }
