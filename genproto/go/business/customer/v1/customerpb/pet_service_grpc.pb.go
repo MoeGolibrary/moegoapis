@@ -31,9 +31,9 @@ const (
 type PetServiceClient interface {
 	// Create a pet
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
-	// Create a pet code
+	// Append a pet code to a pet
 	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
-	// Create a pet note
+	// Append a note to a pet
 	AppendPetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error)
@@ -93,9 +93,9 @@ func (c *petServiceClient) ListPetNotes(ctx context.Context, in *ListPetNoteRequ
 type PetServiceServer interface {
 	// Create a pet
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
-	// Create a pet code
+	// Append a pet code to a pet
 	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
-	// Create a pet note
+	// Append a note to a pet
 	AppendPetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error)
