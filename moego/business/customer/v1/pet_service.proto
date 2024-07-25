@@ -23,14 +23,14 @@ service PetService {
     // Append a pet code to a pet
     rpc AppendPetCode (AppendPetCodeRequest) returns (AppendPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/{customer_id}pets/{pet_id}/codes"
+            post: "/v1/customers/{customer_id}/pets/{pet_id}/codes"
             body: "*"
         };
     }
     // Append a note to a pet
     rpc AppendPetNote (AppendPetNoteRequest) returns (AppendPetNoteResponse) {
         option (google.api.http) = {
-            post: "/v1/customers/{customer_id}pets/{pet_id}/notes"
+            post: "/v1/customers/{customer_id}/pets/{pet_id}/notes"
             body: "*"
         };
     }
