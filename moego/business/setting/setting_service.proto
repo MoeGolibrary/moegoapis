@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
+option java_multiple_files = true;
+option java_outer_classname = "SettingProto";
+option java_package = "com.moego.api.business.setting.v1";
+
+service SettingService {
+    // List Pet Codes
+    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
+        option (google.api.http) = {
+            post: "/v1/setting/companies/{company_id}/pet/code:list"
+            body: "*"
+        };
+    }
+}
+
+message ListPetCodeRequest {
+    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListPetCodeResponse {
+    repeated Pet.Code codes = 1;
+}
+

@@ -20,8 +20,7 @@ const _ = grpc.SupportPackageIsVersion8
 
 const (
 	PetService_CreatePet_FullMethodName     = "/moego.business.customer.v1.PetService/CreatePet"
-	PetService_CreatePetCode_FullMethodName = "/moego.business.customer.v1.PetService/CreatePetCode"
-	PetService_ListPetCodes_FullMethodName  = "/moego.business.customer.v1.PetService/ListPetCodes"
+	PetService_AppendPetCode_FullMethodName = "/moego.business.customer.v1.PetService/AppendPetCode"
 	PetService_CreatePetNote_FullMethodName = "/moego.business.customer.v1.PetService/CreatePetNote"
 	PetService_ListPetNotes_FullMethodName  = "/moego.business.customer.v1.PetService/ListPetNotes"
 )
@@ -33,11 +32,9 @@ type PetServiceClient interface {
 	// Create a pet
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
 	// Create a pet code
-	CreatePetCode(ctx context.Context, in *CreatePetCodeRequest, opts ...grpc.CallOption) (*CreatePetCodeResponse, error)
-	// List Pet Codes
-	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
+	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
 	// Create a pet note
-	CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error)
+	CreatePetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error)
 }
@@ -60,29 +57,19 @@ func (c *petServiceClient) CreatePet(ctx context.Context, in *CreatePetRequest, 
 	return out, nil
 }
 
-func (c *petServiceClient) CreatePetCode(ctx context.Context, in *CreatePetCodeRequest, opts ...grpc.CallOption) (*CreatePetCodeResponse, error) {
+func (c *petServiceClient) AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatePetCodeResponse)
-	err := c.cc.Invoke(ctx, PetService_CreatePetCode_FullMethodName, in, out, cOpts...)
+	out := new(AppendPetCodeResponse)
+	err := c.cc.Invoke(ctx, PetService_AppendPetCode_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *petServiceClient) ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error) {
+func (c *petServiceClient) CreatePetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListPetCodeResponse)
-	err := c.cc.Invoke(ctx, PetService_ListPetCodes_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *petServiceClient) CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatePetNoteResponse)
+	out := new(AppendPetNoteResponse)
 	err := c.cc.Invoke(ctx, PetService_CreatePetNote_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -107,11 +94,9 @@ type PetServiceServer interface {
 	// Create a pet
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
 	// Create a pet code
-	CreatePetCode(context.Context, *CreatePetCodeRequest) (*CreatePetCodeResponse, error)
-	// List Pet Codes
-	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
+	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
 	// Create a pet note
-	CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error)
+	CreatePetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error)
 	mustEmbedUnimplementedPetServiceServer()
@@ -124,13 +109,10 @@ type UnimplementedPetServiceServer struct {
 func (UnimplementedPetServiceServer) CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePet not implemented")
 }
-func (UnimplementedPetServiceServer) CreatePetCode(context.Context, *CreatePetCodeRequest) (*CreatePetCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CreatePetCode not implemented")
+func (UnimplementedPetServiceServer) AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AppendPetCode not implemented")
 }
-func (UnimplementedPetServiceServer) ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListPetCodes not implemented")
-}
-func (UnimplementedPetServiceServer) CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error) {
+func (UnimplementedPetServiceServer) CreatePetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePetNote not implemented")
 }
 func (UnimplementedPetServiceServer) ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error) {
@@ -167,44 +149,26 @@ func _PetService_CreatePet_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PetService_CreatePetCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePetCodeRequest)
+func _PetService_AppendPetCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AppendPetCodeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PetServiceServer).CreatePetCode(ctx, in)
+		return srv.(PetServiceServer).AppendPetCode(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PetService_CreatePetCode_FullMethodName,
+		FullMethod: PetService_AppendPetCode_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).CreatePetCode(ctx, req.(*CreatePetCodeRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _PetService_ListPetCodes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListPetCodeRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(PetServiceServer).ListPetCodes(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: PetService_ListPetCodes_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).ListPetCodes(ctx, req.(*ListPetCodeRequest))
+		return srv.(PetServiceServer).AppendPetCode(ctx, req.(*AppendPetCodeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _PetService_CreatePetNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePetNoteRequest)
+	in := new(AppendPetNoteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -216,7 +180,7 @@ func _PetService_CreatePetNote_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: PetService_CreatePetNote_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).CreatePetNote(ctx, req.(*CreatePetNoteRequest))
+		return srv.(PetServiceServer).CreatePetNote(ctx, req.(*AppendPetNoteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -251,12 +215,8 @@ var PetService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _PetService_CreatePet_Handler,
 		},
 		{
-			MethodName: "CreatePetCode",
-			Handler:    _PetService_CreatePetCode_Handler,
-		},
-		{
-			MethodName: "ListPetCodes",
-			Handler:    _PetService_ListPetCodes_Handler,
+			MethodName: "AppendPetCode",
+			Handler:    _PetService_AppendPetCode_Handler,
 		},
 		{
 			MethodName: "CreatePetNote",
