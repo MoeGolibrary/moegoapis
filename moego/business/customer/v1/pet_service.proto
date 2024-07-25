@@ -20,22 +20,22 @@ service PetService {
             body: "*"
         };
     }
-    // Append a pet code to a pet
-    rpc AppendPetCode (AppendPetCodeRequest) returns (AppendPetCodeResponse) {
+    // Append pet codes to a pet
+    rpc AppendPetCodes (AppendPetCodesRequest) returns (AppendPetCodesResponse) {
         option (google.api.http) = {
             post: "/v1/customers/{customer_id}/pets/{pet_id}/codes"
             body: "*"
         };
     }
-    // Append a note to a pet
-    rpc AppendPetNote (AppendPetNoteRequest) returns (AppendPetNoteResponse) {
+    // Append notes to a pet
+    rpc AppendPetNotes (AppendPetNotesRequest) returns (AppendPetNotesResponse) {
         option (google.api.http) = {
             post: "/v1/customers/{customer_id}/pets/{pet_id}/notes"
             body: "*"
         };
     }
     // List Pet Notes
-    rpc ListPetNotes (ListPetNoteRequest) returns (ListPetNoteResponse) {
+    rpc ListPetNotes (ListPetNotesRequest) returns (ListPetNotesResponse) {
         option (google.api.http) = {
             post: "/v1/customers/{customer_id}/pets/{pet_id}/note:list"
             body: "*"
@@ -52,32 +52,32 @@ message CreatePetResponse {
     Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-message AppendPetCodeRequest {
+message AppendPetCodesRequest {
     string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     string pet_id = 2 [(google.api.field_behavior) = REQUIRED];
     repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
-message AppendPetCodeResponse {
-    Pet.Code code = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+message AppendPetCodesResponse {
+    repeated Pet.Code codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
-message AppendPetNoteRequest {
+message AppendPetNotesRequest {
     string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     string pet_id = 2 [(google.api.field_behavior) = REQUIRED];
-    Pet.Note note = 3;
+    repeated Pet.Note notes = 3;
 }
 
-message AppendPetNoteResponse {
-    Pet.Note note = 1;
+message AppendPetNotesResponse {
+    repeated Pet.Note notes = 1;
 }
 
-message ListPetNoteRequest {
+message ListPetNotesRequest {
     moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
     string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
     string pet_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-message ListPetNoteResponse {
+message ListPetNotesResponse {
     string next_page_token = 1;
     repeated Pet.Note notes = 2;
 }
