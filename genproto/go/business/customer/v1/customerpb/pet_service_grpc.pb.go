@@ -34,7 +34,7 @@ type PetServiceClient interface {
 	// Create a pet code
 	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
 	// Create a pet note
-	CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error)
+	CreatePetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error)
 }
@@ -67,9 +67,9 @@ func (c *petServiceClient) AppendPetCode(ctx context.Context, in *AppendPetCodeR
 	return out, nil
 }
 
-func (c *petServiceClient) CreatePetNote(ctx context.Context, in *CreatePetNoteRequest, opts ...grpc.CallOption) (*CreatePetNoteResponse, error) {
+func (c *petServiceClient) CreatePetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreatePetNoteResponse)
+	out := new(AppendPetNoteResponse)
 	err := c.cc.Invoke(ctx, PetService_CreatePetNote_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -96,7 +96,7 @@ type PetServiceServer interface {
 	// Create a pet code
 	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
 	// Create a pet note
-	CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error)
+	CreatePetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error)
 	mustEmbedUnimplementedPetServiceServer()
@@ -112,7 +112,7 @@ func (UnimplementedPetServiceServer) CreatePet(context.Context, *CreatePetReques
 func (UnimplementedPetServiceServer) AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AppendPetCode not implemented")
 }
-func (UnimplementedPetServiceServer) CreatePetNote(context.Context, *CreatePetNoteRequest) (*CreatePetNoteResponse, error) {
+func (UnimplementedPetServiceServer) CreatePetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePetNote not implemented")
 }
 func (UnimplementedPetServiceServer) ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error) {
@@ -168,7 +168,7 @@ func _PetService_AppendPetCode_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _PetService_CreatePetNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreatePetNoteRequest)
+	in := new(AppendPetNoteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -180,7 +180,7 @@ func _PetService_CreatePetNote_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: PetService_CreatePetNote_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PetServiceServer).CreatePetNote(ctx, req.(*CreatePetNoteRequest))
+		return srv.(PetServiceServer).CreatePetNote(ctx, req.(*AppendPetNoteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

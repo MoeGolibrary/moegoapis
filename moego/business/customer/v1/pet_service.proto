@@ -28,7 +28,7 @@ service PetService {
         };
     }
     // Create a pet note
-    rpc CreatePetNote (CreatePetNoteRequest) returns (CreatePetNoteResponse) {
+    rpc CreatePetNote (AppendPetNoteRequest) returns (AppendPetNoteResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/notes"
             body: "*"
@@ -61,14 +61,14 @@ message AppendPetCodeResponse {
 }
 
 
-message CreatePetNoteRequest {
+message AppendPetNoteRequest {
     // pet id
     string pet_id = 1;
     // pet note
     Pet.Note note = 2;
 }
 
-message CreatePetNoteResponse {
+message AppendPetNoteResponse {
     // pet note
     Pet.Note note = 1;
 }
