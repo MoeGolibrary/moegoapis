@@ -27,7 +27,7 @@ service PetService {
             body: "*"
         };
     }
-    // Append a pet note
+    // Create a pet note
     rpc AppendPetNote (AppendPetNoteRequest) returns (AppendPetNoteResponse) {
         option (google.api.http) = {
             post: "/v1/customers/pets/{pet_id}/notes"

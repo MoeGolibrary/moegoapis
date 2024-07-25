@@ -33,7 +33,7 @@ type PetServiceClient interface {
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
 	// Create a pet code
 	AppendPetCode(ctx context.Context, in *AppendPetCodeRequest, opts ...grpc.CallOption) (*AppendPetCodeResponse, error)
-	// Append a pet note
+	// Create a pet note
 	AppendPetNote(ctx context.Context, in *AppendPetNoteRequest, opts ...grpc.CallOption) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(ctx context.Context, in *ListPetNoteRequest, opts ...grpc.CallOption) (*ListPetNoteResponse, error)
@@ -95,7 +95,7 @@ type PetServiceServer interface {
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
 	// Create a pet code
 	AppendPetCode(context.Context, *AppendPetCodeRequest) (*AppendPetCodeResponse, error)
-	// Append a pet note
+	// Create a pet note
 	AppendPetNote(context.Context, *AppendPetNoteRequest) (*AppendPetNoteResponse, error)
 	// List Pet Notes
 	ListPetNotes(context.Context, *ListPetNoteRequest) (*ListPetNoteResponse, error)
