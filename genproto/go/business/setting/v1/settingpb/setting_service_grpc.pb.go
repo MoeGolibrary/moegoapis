@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: moego/business/setting/setting_service.proto
 
-package customerpb
+package settingpb
 
 import (
 	context "context"
