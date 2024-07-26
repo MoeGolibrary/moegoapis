@@ -55,6 +55,21 @@ service CustomerService {
             body: "*"
         };
     }
+
+    //Batch Append tags to a Customer
+    rpc AppendCustomerTags (AppendCustomerTagsRequest) returns (AppendCustomerTagsResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/tags"
+            body: "*"
+        };
+    }
+    // List Customer Tags
+    rpc ListCustomerTags (ListCustomerTagsRequest) returns (ListCustomerTagsResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/tags:list"
+            body: "*"
+        };
+    }
 }
 
 // CreateCustomerRequest is the request message for CustomerAPI.CreateCustomer
@@ -67,6 +82,8 @@ message CreateCustomerRequest {
     string email = 6;
     moego.common.v1.Address address = 7;
     CustomerPreference preference = 8;
+    repeated Customer.Tag tags=9;
+    repeated Customer.Note notes=10;
 }
 
 // GetCustomerRequest is the request message for CustomerAPI.GetCustomer
@@ -120,3 +137,21 @@ message ListCustomerNotesResponse {
     repeated Customer.Note notes = 2;
 }
 
+//Append Tags
+message AppendCustomerTagsRequest {
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated Customer.Tag notes = 3;
+}
+
+message AppendCustomerTagsResponse {
+    repeated Customer.Tag tags = 1;
+}
+
+//List Tags
+message ListCustomerTagsRequest {
+    string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListCustomerTagsResponse {
+    repeated Customer.Tag tags = 2;
+}
