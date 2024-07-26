@@ -22,12 +22,18 @@ message Customer {
         INACTIVE = 2;
     }
 
-    // Note
+    // Customer Note
     message Note {
         string id = 1;
         string note = 2;
         string last_updated_by = 3;
         google.protobuf.Timestamp last_updated_time = 4;
+    }
+
+    // Customer Tag
+    message Tag {
+        string id = 1;
+        string name = 2;
     }
 
     // ID is the unique identifier of a customer
@@ -50,6 +56,7 @@ message Customer {
     string preferred_business_id = 17;
     string company_id = 18;
     repeated Note notes = 19;
+    repeated Tag tags = 20;
 }
 
 // CustomerPreference is the preference of a customer
