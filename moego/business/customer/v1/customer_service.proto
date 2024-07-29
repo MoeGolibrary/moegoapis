@@ -141,7 +141,7 @@ message ListCustomerNotesResponse {
 message AppendCustomerTagsRequest {
     string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
     string company_id = 2 [(google.api.field_behavior) = REQUIRED];
-    repeated Customer.Tag notes = 3;
+    repeated Customer.Tag tags = 3;
 }
 
 message AppendCustomerTagsResponse {
