@@ -34,6 +34,8 @@ message Customer {
     message Tag {
         string id = 1;
         string name = 2;
+        string last_updated_by = 3;
+        google.protobuf.Timestamp last_updated_time = 4;
     }
 
     // ID is the unique identifier of a customer
