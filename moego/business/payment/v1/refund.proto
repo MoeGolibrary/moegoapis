@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package moego.business.payment.v1;
+
+import "google/type/money.proto";
+import "google/protobuf/timestamp.proto";
+
+
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/payment/v1/refundpb;refundpb";
+option java_multiple_files = true;
+option java_outer_classname = "RefundProto";
+option java_package = "com.moego.api.business.payment.v1";
+
+// Refund
+message Refund {
+    // ID
+    string id = 1;
+    // origin payment id
+    string payment_id = 2;
+    // amount
+    google.type.Money amount = 3;
+    google.protobuf.Timestamp created_time = 4;
+    google.protobuf.Timestamp last_updated_time = 5;
+}

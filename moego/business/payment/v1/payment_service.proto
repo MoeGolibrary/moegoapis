@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package moego.business.payment.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/payment/v1/payment.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/payment/v1/paymentpb;paymentpb";
+option java_multiple_files = true;
+option java_outer_classname = "PaymentProto";
+option java_package = "com.moego.api.business.payment.v1";
+
+
+// CompanyService openapi definitions for operate company
+service PaymentService {
+    // ListPayments list payment
+    rpc ListPayments (ListPaymentsRequest) returns (ListPaymentsResponse) {
+        option (google.api.http) = {
+            post: "/v1/payments:list",
+            body: "*"
+        };
+    }
+}
+
+
+// ListCompaniesRequest request for ListCompanies
+message ListPaymentsRequest {
+    // The pagination information
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+    message Filter {
+        repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    }
+    Filter filter = 2;
+}
+
+// ListCompaniesResponse response for ListCompanies
+message ListPaymentsResponse {
+    // The next page token
+    string next_page_token = 1;
+    // The businesses
+    repeated Payment payments = 2;
+}
