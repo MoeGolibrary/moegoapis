@@ -135,6 +135,7 @@ message ListCustomerNotesRequest {
 }
 
 message ListCustomerNotesResponse {
+    string next_page_token = 1;
     repeated Customer.Note notes = 2;
 }
 
