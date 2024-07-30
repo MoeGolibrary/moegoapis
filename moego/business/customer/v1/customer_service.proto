@@ -130,6 +130,7 @@ message AppendCustomerNotesResponse {
 }
 
 message ListCustomerNotesRequest {
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
     string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
