@@ -38,10 +38,8 @@ message Payment {
         GROOMING = 1;
         // RETAIL
         RETAIL = 2;
-        // PREATUH
-        PREATUH= 3;
         // MEMBERSHIP
-        MEMBERSHIP = 4;
+        MEMBERSHIP = 3;
     }
 
     // ID
