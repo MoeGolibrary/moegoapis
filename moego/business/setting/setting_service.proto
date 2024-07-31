@@ -17,15 +17,15 @@ service SettingService {
     // List Pet Codes
     rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
         option (google.api.http) = {
-            post: "/v1/setting/companies/{company_id}/pet/code:list"
+            post: "/v1/setting/companies/{company_id}/pet/codes:list"
             body: "*"
         };
     }
 
-    // List Pet Codes
+    // List Customer Tags
     rpc ListCustomerTags (ListCustomerTagRequest) returns (ListCustomerTagResponse) {
         option (google.api.http) = {
-            post: "/v1/setting/companies/{company_id}/customer/tag:list"
+            post: "/v1/setting/companies/{company_id}/customer/tags:list"
             body: "*"
         };
     }
