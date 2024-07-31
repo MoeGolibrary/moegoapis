@@ -40,6 +40,37 @@ service CustomerService {
     rpc GenCustomerCofLink (GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
         option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
     }
+
+    //Batch Append notes to a Customer
+    rpc AppendCustomerNotes (AppendCustomerNotesRequest) returns (AppendCustomerNotesResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/notes"
+            body: "*"
+        };
+    }
+    // List Customer Notes
+    rpc ListCustomerNotes (ListCustomerNotesRequest) returns (ListCustomerNotesResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/notes:list"
+            body: "*"
+        };
+    }
+
+
+    //Batch Append tags to a Customer
+    rpc AppendCustomerTags (AppendCustomerTagsRequest) returns (AppendCustomerTagsResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/tags"
+            body: "*"
+        };
+    }
+    // List Customer Tags
+    rpc ListCustomerTags (ListCustomerTagsRequest) returns (ListCustomerTagsResponse) {
+        option (google.api.http) = {
+            post: "/v1/customers/{customer_id}/tags:list"
+            body: "*"
+        };
+    }
 }
 
 // CreateCustomerRequest is the request message for CustomerAPI.CreateCustomer
@@ -52,6 +83,8 @@ message CreateCustomerRequest {
     string email = 6;
     moego.common.v1.Address address = 7;
     CustomerPreference preference = 8;
+    repeated Customer.Tag tags=9;
+    repeated Customer.Note notes=10;
 }
 
 // GetCustomerRequest is the request message for CustomerAPI.GetCustomer
@@ -85,4 +118,43 @@ message GenCustomerCofLinkRequest {
 message GenCustomerCofLinkResponse {
     // The link of the customer cof
     string link = 1;
+}
+
+
+message AppendCustomerNotesRequest {
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated Customer.Note notes = 3;
+}
+
+message AppendCustomerNotesResponse {
+    repeated Customer.Note notes = 1;
+}
+
+message ListCustomerNotesRequest {
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+    string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListCustomerNotesResponse {
+    string next_page_token = 1;
+    repeated Customer.Note notes = 2;
+}
+
+//Append Tags
+message AppendCustomerTagsRequest {
+    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated Customer.Tag tags = 3;
+}
+
+message AppendCustomerTagsResponse {
+    repeated Customer.Tag tags = 1;
+}
+
+//List Tags
+message ListCustomerTagsRequest {
+    string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListCustomerTagsResponse {
+    repeated Customer.Tag tags = 2;
 }

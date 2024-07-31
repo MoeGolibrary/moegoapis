@@ -5,6 +5,7 @@ package moego.business.customer.v1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "moego/business/customer/v1/pet.proto";
+import "moego/business/customer/v1/customer.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
@@ -20,6 +21,14 @@ service SettingService {
             body: "*"
         };
     }
+
+    // List Pet Codes
+    rpc ListCustomerTags (ListCustomerTagRequest) returns (ListCustomerTagResponse) {
+        option (google.api.http) = {
+            post: "/v1/setting/companies/{company_id}/customer/tag:list"
+            body: "*"
+        };
+    }
 }
 
 message ListPetCodeRequest {
@@ -30,3 +39,10 @@ message ListPetCodeResponse {
     repeated Pet.Code codes = 1;
 }
 
+message ListCustomerTagRequest {
+    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListCustomerTagResponse {
+    repeated Customer.Tag tags = 2;
+}
