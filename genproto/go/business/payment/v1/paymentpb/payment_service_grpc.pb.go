@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion8
 
 const (
+	PaymentService_GetPayment_FullMethodName   = "/moego.business.payment.v1.PaymentService/GetPayment"
 	PaymentService_ListPayments_FullMethodName = "/moego.business.payment.v1.PaymentService/ListPayments"
 )
 
@@ -28,6 +29,7 @@ const (
 //
 // CompanyService openapi definitions for operate company
 type PaymentServiceClient interface {
+	GetPayment(ctx context.Context, in *GetPaymentRequest, opts ...grpc.CallOption) (*Payment, error)
 	// ListPayments list payment
 	ListPayments(ctx context.Context, in *ListPaymentsRequest, opts ...grpc.CallOption) (*ListPaymentsResponse, error)
 }
@@ -38,6 +40,16 @@ type paymentServiceClient struct {
 
 func NewPaymentServiceClient(cc grpc.ClientConnInterface) PaymentServiceClient {
 	return &paymentServiceClient{cc}
+}
+
+func (c *paymentServiceClient) GetPayment(ctx context.Context, in *GetPaymentRequest, opts ...grpc.CallOption) (*Payment, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Payment)
+	err := c.cc.Invoke(ctx, PaymentService_GetPayment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *paymentServiceClient) ListPayments(ctx context.Context, in *ListPaymentsRequest, opts ...grpc.CallOption) (*ListPaymentsResponse, error) {
@@ -56,6 +68,7 @@ func (c *paymentServiceClient) ListPayments(ctx context.Context, in *ListPayment
 //
 // CompanyService openapi definitions for operate company
 type PaymentServiceServer interface {
+	GetPayment(context.Context, *GetPaymentRequest) (*Payment, error)
 	// ListPayments list payment
 	ListPayments(context.Context, *ListPaymentsRequest) (*ListPaymentsResponse, error)
 	mustEmbedUnimplementedPaymentServiceServer()
@@ -65,6 +78,9 @@ type PaymentServiceServer interface {
 type UnimplementedPaymentServiceServer struct {
 }
 
+func (UnimplementedPaymentServiceServer) GetPayment(context.Context, *GetPaymentRequest) (*Payment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPayment not implemented")
+}
 func (UnimplementedPaymentServiceServer) ListPayments(context.Context, *ListPaymentsRequest) (*ListPaymentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPayments not implemented")
 }
@@ -79,6 +95,24 @@ type UnsafePaymentServiceServer interface {
 
 func RegisterPaymentServiceServer(s grpc.ServiceRegistrar, srv PaymentServiceServer) {
 	s.RegisterService(&PaymentService_ServiceDesc, srv)
+}
+
+func _PaymentService_GetPayment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPaymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PaymentServiceServer).GetPayment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PaymentService_GetPayment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PaymentServiceServer).GetPayment(ctx, req.(*GetPaymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _PaymentService_ListPayments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -106,6 +140,10 @@ var PaymentService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "moego.business.payment.v1.PaymentService",
 	HandlerType: (*PaymentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GetPayment",
+			Handler:    _PaymentService_GetPayment_Handler,
+		},
 		{
 			MethodName: "ListPayments",
 			Handler:    _PaymentService_ListPayments_Handler,

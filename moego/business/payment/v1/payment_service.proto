@@ -15,6 +15,9 @@ option java_package = "com.moego.api.business.payment.v1";
 
 // CompanyService openapi definitions for operate company
 service PaymentService {
+    rpc GetPayment (GetPaymentRequest) returns (Payment) {
+        option (google.api.http) = {get: "/v1/payment/{id}"};
+    }
     // ListPayments list payment
     rpc ListPayments (ListPaymentsRequest) returns (ListPaymentsResponse) {
         option (google.api.http) = {
@@ -22,6 +25,10 @@ service PaymentService {
             body: "*"
         };
     }
+}
+
+message GetPaymentRequest{
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 
