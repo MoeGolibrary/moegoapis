@@ -21,6 +21,23 @@ message Customer {
         // The customer is inactive
         INACTIVE = 2;
     }
+
+    // Customer Note
+    message Note {
+        string id = 1;
+        string note = 2;
+        string last_updated_by = 3;
+        google.protobuf.Timestamp last_updated_time = 4;
+    }
+
+    // Customer Tag
+    message Tag {
+        string id = 1;
+        string name = 2;
+        string last_updated_by = 3;
+        google.protobuf.Timestamp last_updated_time = 4;
+    }
+
     // ID is the unique identifier of a customer
     string id = 1;
     string first_name = 2;
@@ -40,6 +57,8 @@ message Customer {
     google.protobuf.Timestamp last_updated_time = 16;
     string preferred_business_id = 17;
     string company_id = 18;
+    repeated Note notes = 19;
+    repeated Tag tags = 20;
 }
 
 // CustomerPreference is the preference of a customer
