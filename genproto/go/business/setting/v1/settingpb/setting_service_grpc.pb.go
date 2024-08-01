@@ -29,7 +29,7 @@ const (
 type SettingServiceClient interface {
 	// List Pet Codes
 	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
-	// List Pet Codes
+	// List Customer Tags
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagRequest, opts ...grpc.CallOption) (*ListCustomerTagResponse, error)
 }
 
@@ -67,7 +67,7 @@ func (c *settingServiceClient) ListCustomerTags(ctx context.Context, in *ListCus
 type SettingServiceServer interface {
 	// List Pet Codes
 	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
-	// List Pet Codes
+	// List Customer Tags
 	ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
