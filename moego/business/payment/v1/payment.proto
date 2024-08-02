@@ -3,7 +3,6 @@ syntax = "proto3";
 package moego.business.payment.v1;
 
 import "google/protobuf/timestamp.proto";
-import "moego/business/payment/v1/refund.proto";
 import "google/type/money.proto";
 
 
@@ -54,7 +53,6 @@ message Payment {
     google.type.Money amount = 9;
     google.type.Money processing_fee = 10;
     google.type.Money refund_amount = 11;
-    repeated Refund refunds = 12;
-    google.protobuf.Timestamp created_time = 13;
-    google.protobuf.Timestamp last_updated_time = 14;
+    google.protobuf.Timestamp created_time = 12;
+    google.protobuf.Timestamp last_updated_time = 13;
 }
