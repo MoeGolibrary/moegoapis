@@ -17,19 +17,18 @@ message Payment {
     enum Status {
         // PAYMENT_STATUS_UNSPECIFIED
         STATUS_UNSPECIFIED = 0;
-        // UNPAID
-        UNPAID = 1;
-        // PARTIAL_PAID
-        PARTIAL_PAID = 2;
-        // FULL_PAID
-        FULL_PAID = 3;
-        // PARTIAL REFUNDED
-        PARTIAL_REFUNDED = 4;
-        // FULL REFUNDED
-        FULL_REFUNDED = 5;
+        // CREATED
+        CREATED = 1;
+        // PROCESSING
+        PROCESSING = 2;
+        // PAID
+        PAID = 3;
+        // COMPLETED
+        COMPLETED = 4;
+        // FAILED
+        FAILED = 5;
     }
-
-    // module
+    // Module
     enum Module {
         // PAYMENT_MODULE_UNSPECIFIED
         MODULE_UNSPECIFIED = 0;
@@ -40,7 +39,6 @@ message Payment {
         // MEMBERSHIP
         MEMBERSHIP = 3;
     }
-
     // ID
     string id = 1;
     string business_id = 2;
