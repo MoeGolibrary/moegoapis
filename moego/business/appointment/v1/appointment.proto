@@ -36,10 +36,6 @@ message Appointment {
         PARTIAL_PAID = 2;
         // FULL_PAID
         FULL_PAID = 3;
-        // PARTIAL REFUNDED
-        PARTIAL_REFUNDED = 4;
-        // FULL REFUNDED
-        FULL_REFUNDED = 5;
     }
     // id of the appointment
     string id = 1;
