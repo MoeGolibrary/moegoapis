@@ -26,7 +26,21 @@ message Appointment {
         FINISHED = 5;
         CANCELED = 6;
     }
-
+    // PaymentStatus
+    enum PaymentStatus {
+        // PAYMENT_STATUS_UNSPECIFIED
+        PAYMENT_STATUS_UNSPECIFIED = 0;
+        // CREATED
+        CREATED = 1;
+        // PARTIAL_PAID
+        PARTIAL_PAID = 2;
+        // FULL_PAID
+        FULL_PAID = 3;
+        // PARTIAL REFUNDED
+        PARTIAL_REFUNDED = 4;
+        // FULL REFUNDED
+        FULL_REFUNDED = 5;
+    }
     // id of the appointment
     string id = 1;
     string business_id = 2;
@@ -41,7 +55,7 @@ message Appointment {
     google.type.Money total_amount = 11;
     google.type.Money paid_amount = 12;
     google.type.Money refund_amount = 13;
-    moego.business.payment.v1.Payment.Status payment_status = 14;
+    PaymentStatus payment_status = 14;
     string created_by = 15;
     google.protobuf.Timestamp created_time = 16;
     string last_updated_by = 17;
