@@ -30,8 +30,8 @@ message Appointment {
     enum PaymentStatus {
         // PAYMENT_STATUS_UNSPECIFIED
         PAYMENT_STATUS_UNSPECIFIED = 0;
-        // CREATED
-        CREATED = 1;
+        // UNPAID
+        UNPAID = 1;
         // PARTIAL_PAID
         PARTIAL_PAID = 2;
         // FULL_PAID
