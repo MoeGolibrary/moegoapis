@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package moego.business.order.v1;
 
-import "buf/validate/validate.proto";
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
@@ -27,7 +26,6 @@ service OrderService {
             body: "*"
         };
     }
-
     // ListOrderLineItems
     rpc ListOrderLineItems (ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
         option (google.api.http) = {
@@ -66,20 +64,15 @@ message GetOrderRequest {
 message ListOrderLineItemsRequest {
     // company id
     string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-    // order id
-    repeated string ids = 2 [
-        (google.api.field_behavior) = REQUIRED,
-        (buf.validate.field).repeated = {
-            min_items: 1,
-            max_items: 20,
-        }
-    ];
-
+    message Filter {
+        repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    }
+    Filter filter = 2;
 }
 
 
 // ListOrderLineItemsResponse
 message ListOrderLineItemsResponse {
     // The order line item
-    repeated OrderLineItem orderLineItems = 1;
+    repeated OrderLineItem order_line_items = 1;
 }
