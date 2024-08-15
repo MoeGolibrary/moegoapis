@@ -24,7 +24,7 @@ message Review {
     }
     string id = 1;
     string customer_id = 2;
-    optional string appointment_id = 4;
+    string appointment_id = 4;
     repeated string staff_ids = 3;
     repeated string pet_ids = 5;
     Source source = 6;
