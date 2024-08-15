@@ -5,7 +5,6 @@ package moego.business.payment.v1;
 import "google/protobuf/timestamp.proto";
 import "google/type/money.proto";
 
-
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/payment/v1/paymentpb;paymentpb";
 option java_multiple_files = true;
 option java_outer_classname = "PaymentProto";

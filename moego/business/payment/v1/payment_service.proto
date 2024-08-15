@@ -27,7 +27,7 @@ service PaymentService {
     }
 }
 
-message GetPaymentRequest{
+message GetPaymentRequest {
     string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 

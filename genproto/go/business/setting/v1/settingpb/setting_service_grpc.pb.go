@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             (unknown)
-// source: moego/business/setting/setting_service.proto
+// source: moego/business/setting/v1/setting_service.proto
 
 package settingpb
 
@@ -19,17 +19,19 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	SettingService_ListPetCodes_FullMethodName     = "/moego.business.customer.v1.SettingService/ListPetCodes"
-	SettingService_ListCustomerTags_FullMethodName = "/moego.business.customer.v1.SettingService/ListCustomerTags"
+	SettingService_ListPetCodes_FullMethodName     = "/moego.business.setting.v1.SettingService/ListPetCodes"
+	SettingService_ListCustomerTags_FullMethodName = "/moego.business.setting.v1.SettingService/ListCustomerTags"
 )
 
 // SettingServiceClient is the client API for SettingService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// SettingService openapi definitions for operate setting
 type SettingServiceClient interface {
-	// List Pet Codes
+	// List Pet Codes Setting
 	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
-	// List Customer Tags
+	// List Customer Tags Setting
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagRequest, opts ...grpc.CallOption) (*ListCustomerTagResponse, error)
 }
 
@@ -64,10 +66,12 @@ func (c *settingServiceClient) ListCustomerTags(ctx context.Context, in *ListCus
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
+//
+// SettingService openapi definitions for operate setting
 type SettingServiceServer interface {
-	// List Pet Codes
+	// List Pet Codes Setting
 	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
-	// List Customer Tags
+	// List Customer Tags Setting
 	ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
@@ -146,7 +150,7 @@ func _SettingService_ListCustomerTags_Handler(srv interface{}, ctx context.Conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var SettingService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "moego.business.customer.v1.SettingService",
+	ServiceName: "moego.business.setting.v1.SettingService",
 	HandlerType: (*SettingServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -159,5 +163,5 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "moego/business/setting/setting_service.proto",
+	Metadata: "moego/business/setting/v1/setting_service.proto",
 }

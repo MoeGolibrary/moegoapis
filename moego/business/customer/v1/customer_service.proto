@@ -83,8 +83,8 @@ message CreateCustomerRequest {
     string email = 6;
     moego.common.v1.Address address = 7;
     CustomerPreference preference = 8;
-    repeated Customer.Tag tags=9;
-    repeated Customer.Note notes=10;
+    repeated Customer.Tag tags = 9;
+    repeated Customer.Note notes = 10;
 }
 
 // GetCustomerRequest is the request message for CustomerAPI.GetCustomer

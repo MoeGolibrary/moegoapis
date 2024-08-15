@@ -6,7 +6,6 @@ import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 import "google/type/money.proto";
 import "moego/business/appointment/v1/pet_service_detail.proto";
-import "moego/business/payment/v1/payment.proto";
 import "moego/common/v1/address.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";

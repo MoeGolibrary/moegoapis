@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package moego.business.review.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/review/v1/review.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/reviewpb;reviewpb";
+option java_multiple_files = true;
+option java_outer_classname = "ReviewServiceProto";
+option java_package = "com.moego.api.business.review.v1";
+
+// ReviewService openapi definitions for operate review
+service ReviewService {
+    // ListReviews list reviews
+    rpc ListReviews (ListReviewsRequest) returns (ListReviewsResponse) {
+        option (google.api.http) = {
+            post: "/v1/reviews:list",
+            body: "*"
+        };
+    }
+}
+
+// ListReviewsRequest request for ListReviews
+message ListReviewsRequest {
+    // The pagination information
+    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+    // The business id
+    string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+    // Filter for the reviews
+    message Filter {
+        repeated Review.Source sources = 1 [(google.api.field_behavior) = OPTIONAL];
+        repeated string staff_ids = 2 [(google.api.field_behavior) = OPTIONAL];
+    }
+    // The filter
+    Filter filter = 3;
+}
+
+// ListReviewsResponse response for ListReviews
+message ListReviewsResponse {
+    // The next page token
+    string next_page_token = 1;
+    // The reviews
+    repeated Review reviews = 2;
+}
