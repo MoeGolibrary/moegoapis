@@ -4,6 +4,7 @@ package moego.business.customer.v1;
 
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
+import "google/type/date.proto";
 import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
@@ -69,7 +70,7 @@ message Pet {
   // ID is the unique identifier of a pet
   string id = 1;
   string name = 2 [(google.api.field_behavior) = REQUIRED];
-  google.protobuf.Timestamp birthday = 3;
+  google.type.Date birthday = 3;
   Status status = 4;
   Type type = 5 [(google.api.field_behavior) = REQUIRED];
   string breed = 6 [(google.api.field_behavior) = REQUIRED];
