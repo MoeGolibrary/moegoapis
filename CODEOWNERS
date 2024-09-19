@@ -1,2 +1,16 @@
+# This is a comment.
+# Each line below is a pattern followed by one or more owners.
+
+# Code owners for everything in the repository.
+# *       @username1 @team-name
 
 * ark@moego.pet haozhi@moego.pet
+
+# Code owners for specific directories or files.
+# /docs/  @doc-maintainer
+# src/    @dev-lead
+# src/api @api-team
+
+# Code owners for specific file types.
+# *.js    @js-expert
+# *.md    @writer
