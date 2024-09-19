@@ -11,19 +11,19 @@ option java_package = "com.moego.api.common.v1";
 
 // Address represents a physical address
 message Address {
-    // Type of address
-    enum Type {
-        TYPE_UNSPECIFIED = 0;
-        PRIMARY = 1;
-        SECONDARY = 2;
-    }
-    string id = 1;
-    string address1 = 2;
-    string address2 = 3;
-    string city = 4;
-    string state = 5;
-    string postal_code = 6;
-    string country = 7;
-    google.type.LatLng coordinate = 8;
-    Type type = 9;
+  // Type of address
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    PRIMARY = 1;
+    SECONDARY = 2;
+  }
+  string id = 1;
+  string address1 = 2;
+  string address2 = 3;
+  string city = 4;
+  string state = 5;
+  string postal_code = 6;
+  string country = 7;
+  google.type.LatLng coordinate = 8;
+  Type type = 9;
 }

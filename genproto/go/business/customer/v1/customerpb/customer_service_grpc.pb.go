@@ -43,11 +43,11 @@ type CustomerServiceClient interface {
 	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
 	// Generate a link to add customer card on file
 	GenCustomerCofLink(ctx context.Context, in *GenCustomerCofLinkRequest, opts ...grpc.CallOption) (*GenCustomerCofLinkResponse, error)
-	// Batch Append notes to a Customer
+	// Append notes to a Customer
 	AppendCustomerNotes(ctx context.Context, in *AppendCustomerNotesRequest, opts ...grpc.CallOption) (*AppendCustomerNotesResponse, error)
 	// List Customer Notes
 	ListCustomerNotes(ctx context.Context, in *ListCustomerNotesRequest, opts ...grpc.CallOption) (*ListCustomerNotesResponse, error)
-	// Batch Append tags to a Customer
+	// Append tags to a Customer
 	AppendCustomerTags(ctx context.Context, in *AppendCustomerTagsRequest, opts ...grpc.CallOption) (*AppendCustomerTagsResponse, error)
 	// List Customer Tags
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagsRequest, opts ...grpc.CallOption) (*ListCustomerTagsResponse, error)
@@ -155,11 +155,11 @@ type CustomerServiceServer interface {
 	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
 	// Generate a link to add customer card on file
 	GenCustomerCofLink(context.Context, *GenCustomerCofLinkRequest) (*GenCustomerCofLinkResponse, error)
-	// Batch Append notes to a Customer
+	// Append notes to a Customer
 	AppendCustomerNotes(context.Context, *AppendCustomerNotesRequest) (*AppendCustomerNotesResponse, error)
 	// List Customer Notes
 	ListCustomerNotes(context.Context, *ListCustomerNotesRequest) (*ListCustomerNotesResponse, error)
-	// Batch Append tags to a Customer
+	// Append tags to a Customer
 	AppendCustomerTags(context.Context, *AppendCustomerTagsRequest) (*AppendCustomerTagsResponse, error)
 	// List Customer Tags
 	ListCustomerTags(context.Context, *ListCustomerTagsRequest) (*ListCustomerTagsResponse, error)

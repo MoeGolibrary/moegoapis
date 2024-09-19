@@ -12,34 +12,34 @@ option java_package = "com.moego.api.business.order.v1";
 
 // Order line item
 message OrderLineItem {
-    // ObjectType
-    enum ObjectType {
-        OBJECT_TYPE_UNSPECIFIED = 0;
-        SERVICE = 1;
-        PRODUCT = 2;
-        PACKAGE = 3;
-        NO_SHOW = 4;
-        SERVICE_CHARGE = 5;
-        EVALUATION_SERVICE = 6;
-    }
-    // id
-    string id = 1;
-    // order id
-    string order_id = 2;
-    // object id
-    string object_id = 3;
-    // item type
-    ObjectType object_type = 4;
-    // item name
-    string name = 5;
-    // item description
-    string description = 6;
-    // item unit price
-    google.type.Money unit_price = 7;
-    // total quantity
-    int32 quantity = 8;
-    // create time
-    google.protobuf.Timestamp created_time = 9;
-    // update time
-    google.protobuf.Timestamp last_updated_time = 10;
+  // ObjectType
+  enum ObjectType {
+    OBJECT_TYPE_UNSPECIFIED = 0;
+    SERVICE = 1;
+    PRODUCT = 2;
+    PACKAGE = 3;
+    NO_SHOW = 4;
+    SERVICE_CHARGE = 5;
+    EVALUATION_SERVICE = 6;
+  }
+  // id
+  string id = 1;
+  // order id
+  string order_id = 2;
+  // object id
+  string object_id = 3;
+  // item type
+  ObjectType object_type = 4;
+  // item name
+  string name = 5;
+  // item description
+  string description = 6;
+  // item unit price
+  google.type.Money unit_price = 7;
+  // total quantity
+  int32 quantity = 8;
+  // create time
+  google.protobuf.Timestamp created_time = 9;
+  // update time
+  google.protobuf.Timestamp last_updated_time = 10;
 }

@@ -18,20 +18,20 @@ option java_package = "com.moego.api.common.v1";
 // The Response of the List APIs will contain the next page token
 // if there are more results.
 message Pagination {
-    // The page size.
-    int32 page_size = 1 [
-        (google.api.field_behavior) = INPUT_ONLY,
-        (buf.validate.field).int32 = {
-            gte: 1,
-            lte: 500
-        }
-    ];
-    // The page token.
-    optional string page_token = 2 [
-        (google.api.field_behavior) = INPUT_ONLY,
-        (buf.validate.field).string = {
-            min_len: 1,
-            max_len: 64
-        }
-    ];
+  // The page size.
+  int32 page_size = 1 [
+    (google.api.field_behavior) = INPUT_ONLY,
+    (buf.validate.field).int32 = {
+      gte: 1
+      lte: 500
+    }
+  ];
+  // The page token.
+  optional string page_token = 2 [
+    (google.api.field_behavior) = INPUT_ONLY,
+    (buf.validate.field).string = {
+      min_len: 1
+      max_len: 64
+    }
+  ];
 }

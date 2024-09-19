@@ -11,27 +11,27 @@ option java_package = "com.moego.api.business.review.v1";
 
 // Review includes the review information
 message Review {
-    // review received via source
-    enum Source {
-        // UNSPECIFIED
-        SOURCE_UNSPECIFIED = 0;
-        // via SMS
-        SMS = 1;
-        // via Grooming report
-        GROOMING_REPORT = 2;
-        // via Pet Parent Portal
-        PET_PARENT_PORTAL = 3;
-    }
-    string id = 1;
-    string customer_id = 2;
-    string appointment_id = 3;
-    repeated string staff_ids = 4;
-    repeated string pet_ids = 5;
-    Source source = 6;
-    // From 1 to 5, 5 is the best
-    uint32 score = 7;
-    string content = 8;
-    google.protobuf.Timestamp review_time = 9;
-    google.protobuf.Timestamp created_time = 10;
-    google.protobuf.Timestamp last_updated_time = 11;
+  // review received via source
+  enum Source {
+    // UNSPECIFIED
+    SOURCE_UNSPECIFIED = 0;
+    // via SMS
+    SMS = 1;
+    // via Grooming report
+    GROOMING_REPORT = 2;
+    // via Pet Parent Portal
+    PET_PARENT_PORTAL = 3;
+  }
+  string id = 1;
+  string customer_id = 2;
+  string appointment_id = 3;
+  repeated string staff_ids = 4;
+  repeated string pet_ids = 5;
+  Source source = 6;
+  // From 1 to 5, 5 is the best
+  uint32 score = 7;
+  string content = 8;
+  google.protobuf.Timestamp review_time = 9;
+  google.protobuf.Timestamp created_time = 10;
+  google.protobuf.Timestamp last_updated_time = 11;
 }

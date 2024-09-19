@@ -69,7 +69,6 @@ func (x *GetPaymentRequest) GetId() string {
 	return ""
 }
 
-// ListCompaniesRequest request for ListCompanies
 type ListPaymentsRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -134,7 +133,6 @@ func (x *ListPaymentsRequest) GetFilter() *ListPaymentsRequest_Filter {
 	return nil
 }
 
-// ListCompaniesResponse response for ListCompanies
 type ListPaymentsResponse struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

@@ -11,8 +11,8 @@ option java_package = "com.moego.api.business.company.v1";
 
 // Company information
 message Company {
-    string id = 1;
-    string name = 3;
-    string country = 4;
-    google.type.TimeZone timezone = 5;
+  string id = 1;
+  string name = 3;
+  string country = 4;
+  google.type.TimeZone timezone = 5;
 }

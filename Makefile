@@ -3,11 +3,11 @@
 format-lint: format lint				##@Style: run all the style steps
 
 format:													##@Style: format the code style
-	@buf format -w moego
+	@buf format -w .
 	@echo "Format done!"
 
 lint: 													##@Style: lint the code style
-	@buf lint moego
+	@buf lint .
 	@buf breaking --against '.git#branch=origin/production,subdir=moego' moego
 	@echo "Lint done!"
 

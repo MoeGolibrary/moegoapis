@@ -13,24 +13,24 @@ option java_package = "com.moego.api.business.appointment.v1";
 
 // PetServiceDetail
 message PetServiceDetail {
-    moego.business.customer.v1.Pet pet = 1;
-    repeated ServiceDetail service_details = 2;
+  moego.business.customer.v1.Pet pet = 1;
+  repeated ServiceDetail service_details = 2;
 }
 
 // ServiceDetail
 message ServiceDetail {
-    enum Type {
-        TYPE_UNSPECIFIED = 0;
-        GROOMING = 1;
-        BOARDING = 2;
-        DAYCARE = 3;
-        ADDON = 4;
-    }
-    string id = 1;
-    string name = 2;
-    Type type = 3;
-    string category = 4;
-    google.type.Money price = 5;
-    google.type.Interval duration = 6;
-    repeated string staff_ids = 7;
+  enum Type {
+    TYPE_UNSPECIFIED = 0;
+    GROOMING = 1;
+    BOARDING = 2;
+    DAYCARE = 3;
+    ADDON = 4;
+  }
+  string id = 1;
+  string name = 2;
+  Type type = 3;
+  string category = 4;
+  google.type.Money price = 5;
+  google.type.Interval duration = 6;
+  repeated string staff_ids = 7;
 }

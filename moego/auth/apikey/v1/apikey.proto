@@ -13,71 +13,68 @@ option java_package = "com.moego.api.auth.apikey.v1";
 
 // Key is the representation of a key that can be used to access a resource.
 message Key {
-    // Unique id in UUID4 format
-    string id = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
-    // The name of API key
-    string name = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
-    // The Secret Key string
-    string secret = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
-    // Key restrictions
-    Restrictions restrictions = 4;
-    // Key created timestamp
-    google.protobuf.Timestamp created_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
-    // Key updated timestamp
-    google.protobuf.Timestamp updated_time = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
-    // Key expired timestamp
-    google.protobuf.Timestamp expired_time = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // Unique id in UUID4 format
+  string id = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // The name of API key
+  string name = 2 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // The Secret Key string
+  string secret = 3 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // Key restrictions
+  Restrictions restrictions = 4;
+  // Key created timestamp
+  google.protobuf.Timestamp created_time = 5 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // Key updated timestamp
+  google.protobuf.Timestamp updated_time = 6 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // Key expired timestamp
+  google.protobuf.Timestamp expired_time = 7 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // Restrictions are restrictions that are applied to a key.
 message Restrictions {
-    // The scopes that are allowed to be requested by the key.
-    repeated string scopes = 1;
-    // The client-side restrictions that are allowed to use the key.
-    // You can specify only one type of client restrictions per key.
-    oneof client_restrictions {
-        // The IP addresses of callers that are allowed to use the key.
-        ServerRestrictions server_restrictions = 2;
-        // The organizations that are allowed to be requested by the key.
-        OrganizationRestrictions organization_restrictions = 3;
-    }
+  // The scopes that are allowed to be requested by the key.
+  repeated string scopes = 1;
+  // The client-side restrictions that are allowed to use the key.
+  // You can specify only one type of client restrictions per key.
+  oneof client_restrictions {
+    // The IP addresses of callers that are allowed to use the key.
+    ServerRestrictions server_restrictions = 2;
+    // The organizations that are allowed to be requested by the key.
+    OrganizationRestrictions organization_restrictions = 3;
+  }
 }
 
 // ServerRestrictions
 message ServerRestrictions {
-    // The IP address (IPv4 or IPv6) of the client that issued the HTTP
-    // request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
-    repeated string allowed_ips = 1 [(buf.validate.field).repeated = {
-        items: {
-            string: {
-                ip: true
-            }
-        }
-    }];
+  // The IP address (IPv4 or IPv6) of the client that issued the HTTP
+  // request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
+  repeated string allowed_ips = 1 [(buf.validate.field).repeated = {
+    items: {
+      string: {ip: true}
+    }
+  }];
 }
-
 
 // OrganizationRestrictions
 message OrganizationRestrictions {
-    // The organizations that are allowed to be requested by the key.
-    repeated Organization organizations = 1;
+  // The organizations that are allowed to be requested by the key.
+  repeated Organization organizations = 1;
 }
 
 // Organization represents a MoeGo organization.
 message Organization {
-    // Type
-    enum Type {
-        // unspecified
-        TYPE_UNSPECIFIED = 0;
-        // business
-        BUSINESS = 1;
-        // company
-        COMPANY = 2;
-        // enterprise
-        ENTERPRISE = 3;
-    }
-    // ID represents the unique identifier of an organization.
-    string id = 1;
-    // Type represents the type of organization.
-    Type type = 2;
+  // Type
+  enum Type {
+    // unspecified
+    TYPE_UNSPECIFIED = 0;
+    // business
+    BUSINESS = 1;
+    // company
+    COMPANY = 2;
+    // enterprise
+    ENTERPRISE = 3;
+  }
+  // ID represents the unique identifier of an organization.
+  string id = 1;
+  // Type represents the type of organization.
+  Type type = 2;
 }

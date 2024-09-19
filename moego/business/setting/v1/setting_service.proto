@@ -14,35 +14,35 @@ option java_package = "com.moego.api.business.setting.v1";
 
 // SettingService openapi definitions for operate setting
 service SettingService {
-    // List Pet Codes Setting
-    rpc ListPetCodes (ListPetCodeRequest) returns (ListPetCodeResponse) {
-        option (google.api.http) = {
-            post: "/v1/setting/companies/{company_id}/pet/codes:list"
-            body: "*"
-        };
-    }
+  // List Pet Codes Setting
+  rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/codes:list"
+      body: "*"
+    };
+  }
 
-    // List Customer Tags Setting
-    rpc ListCustomerTags (ListCustomerTagRequest) returns (ListCustomerTagResponse) {
-        option (google.api.http) = {
-            post: "/v1/setting/companies/{company_id}/customer/tags:list"
-            body: "*"
-        };
-    }
+  // List Customer Tags Setting
+  rpc ListCustomerTags(ListCustomerTagRequest) returns (ListCustomerTagResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/customer/tags:list"
+      body: "*"
+    };
+  }
 }
 
 message ListPetCodeRequest {
-    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListPetCodeResponse {
-    repeated customer.v1.Pet.Code codes = 1;
+  repeated customer.v1.Pet.Code codes = 1;
 }
 
 message ListCustomerTagRequest {
-    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListCustomerTagResponse {
-    repeated customer.v1.Customer.Tag tags = 2;
+  repeated customer.v1.Customer.Tag tags = 2;
 }

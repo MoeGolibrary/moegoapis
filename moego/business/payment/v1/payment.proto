@@ -12,44 +12,44 @@ option java_package = "com.moego.api.business.payment.v1";
 
 // Payment
 message Payment {
-    // Status
-    enum Status {
-        // PAYMENT_STATUS_UNSPECIFIED
-        STATUS_UNSPECIFIED = 0;
-        // CREATED
-        CREATED = 1;
-        // PROCESSING
-        PROCESSING = 2;
-        // PAID
-        PAID = 3;
-        // COMPLETED
-        COMPLETED = 4;
-        // FAILED
-        FAILED = 5;
-    }
-    // Module
-    enum Module {
-        // PAYMENT_MODULE_UNSPECIFIED
-        MODULE_UNSPECIFIED = 0;
-        // GROOMING
-        GROOMING = 1;
-        // RETAIL
-        RETAIL = 2;
-        // MEMBERSHIP
-        MEMBERSHIP = 3;
-    }
-    // ID
-    string id = 1;
-    string business_id = 2;
-    string order_id = 3;
-    string customer_id = 4;
-    string customer_name = 5;
-    string method = 6;
-    Status status = 7;
-    Module module = 8;
-    google.type.Money amount = 9;
-    google.type.Money processing_fee = 10;
-    google.type.Money refund_amount = 11;
-    google.protobuf.Timestamp created_time = 12;
-    google.protobuf.Timestamp last_updated_time = 13;
+  // Status
+  enum Status {
+    // PAYMENT_STATUS_UNSPECIFIED
+    STATUS_UNSPECIFIED = 0;
+    // CREATED
+    CREATED = 1;
+    // PROCESSING
+    PROCESSING = 2;
+    // PAID
+    PAID = 3;
+    // COMPLETED
+    COMPLETED = 4;
+    // FAILED
+    FAILED = 5;
+  }
+  // Module
+  enum Module {
+    // PAYMENT_MODULE_UNSPECIFIED
+    MODULE_UNSPECIFIED = 0;
+    // GROOMING
+    GROOMING = 1;
+    // RETAIL
+    RETAIL = 2;
+    // MEMBERSHIP
+    MEMBERSHIP = 3;
+  }
+  // ID
+  string id = 1;
+  string business_id = 2;
+  string order_id = 3;
+  string customer_id = 4;
+  string customer_name = 5;
+  string method = 6;
+  Status status = 7;
+  Module module = 8;
+  google.type.Money amount = 9;
+  google.type.Money processing_fee = 10;
+  google.type.Money refund_amount = 11;
+  google.protobuf.Timestamp created_time = 12;
+  google.protobuf.Timestamp last_updated_time = 13;
 }
