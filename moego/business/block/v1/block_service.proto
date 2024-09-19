@@ -14,30 +14,30 @@ option java_package = "com.moego.api.business.block.v1";
 
 // BlockService openapi definitions for operate block
 service BlockService {
-    // CreateBlock
-    rpc CreateBlock (CreateBlockRequest) returns (Block) {
-        option (google.api.http) = {
-            post: "/v1/blocks",
-            body: "*"
-        };
-    }
+  // CreateBlock
+  rpc CreateBlock(CreateBlockRequest) returns (Block) {
+    option (google.api.http) = {
+      post: "/v1/blocks"
+      body: "*"
+    };
+  }
 
-    // GetBlock
-    rpc GetBlock (GetBlockRequest) returns (Block) {
-        option (google.api.http) = {get: "/v1/blocks/{id}"};
-    }
+  // GetBlock
+  rpc GetBlock(GetBlockRequest) returns (Block) {
+    option (google.api.http) = {get: "/v1/blocks/{id}"};
+  }
 }
 
 // CreateBlockRequest create block request
 message CreateBlockRequest {
-    string business_id = 1 [(google.api.field_behavior) = REQUIRED];
-    string staff_id = 2 [(google.api.field_behavior) = REQUIRED];
-    google.type.Interval duration = 3 [(google.api.field_behavior) = REQUIRED];
-    string description = 4;
-    string color_code = 5;
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string staff_id = 2 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval duration = 3 [(google.api.field_behavior) = REQUIRED];
+  string description = 4;
+  string color_code = 5;
 }
 
 // GetBlockRequest get block request
 message GetBlockRequest {
-    string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }

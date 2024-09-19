@@ -1,15 +1,14 @@
-version: v1
-name: buf.build/moegoapis/moegoapis
-build:
-  excludes:
-    - deps
-breaking:
-  use:
-    - FILE
+version: v2
+modules:
+  - path: .
+    name: buf.build/moegoapis/moegoapis
+    excludes:
+      - deps
+deps:
+  - buf.build/bufbuild/protovalidate
+  - buf.build/googleapis/googleapis
 lint:
-  allow_comment_ignores: true
   use:
-    - DEFAULT
     - COMMENT_ENUM
     - COMMENT_ENUM_VALUE
     - COMMENT_FIELD
@@ -17,15 +16,18 @@ lint:
     - COMMENT_ONEOF
     - COMMENT_RPC
     - COMMENT_SERVICE
+    - DEFAULT
     - PACKAGE_NO_IMPORT_CYCLE
   except:
+    - ENUM_VALUE_PREFIX
+    - FIELD_NOT_REQUIRED
+    - PACKAGE_DIRECTORY_MATCH
     - RPC_REQUEST_RESPONSE_UNIQUE
     - RPC_REQUEST_STANDARD_NAME
     - RPC_RESPONSE_STANDARD_NAME
-    - ENUM_VALUE_PREFIX
-    - PACKAGE_DIRECTORY_MATCH
-  ignore:
-    - grpc
-deps:
-  - buf.build/bufbuild/protovalidate
-  - buf.build/googleapis/googleapis
+breaking:
+  use:
+    - FILE
+  except:
+    - EXTENSION_NO_DELETE
+    - FIELD_SAME_DEFAULT

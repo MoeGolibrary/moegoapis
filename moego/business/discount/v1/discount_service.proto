@@ -14,52 +14,52 @@ option java_package = "com.moego.api.business.discount.v1";
 
 // DiscountService openapi definitions for operate discount
 service DiscountService {
-    // CreateDiscount
-    rpc CreateDiscount (CreateDiscountRequest) returns (Discount) {
-        option (google.api.http) = {
-            post: "/v1/discounts"
-            body: "*"
-        };
-    }
+  // CreateDiscount
+  rpc CreateDiscount(CreateDiscountRequest) returns (Discount) {
+    option (google.api.http) = {
+      post: "/v1/discounts"
+      body: "*"
+    };
+  }
 
-    // GetDiscount
-    rpc GetDiscount (GetDiscountRequest) returns (Discount) {
-        option (google.api.http) = {get: "/v1/discounts/{code}"};
-    }
+  // GetDiscount
+  rpc GetDiscount(GetDiscountRequest) returns (Discount) {
+    option (google.api.http) = {get: "/v1/discounts/{code}"};
+  }
 
-    // ListDiscounts
-    rpc ListDiscounts (ListDiscountsRequest) returns (ListDiscountsResponse) {
-        option (google.api.http) = {
-            post: "/v1/discounts:list",
-            body: "*"
-        };
-    }
+  // ListDiscounts
+  rpc ListDiscounts(ListDiscountsRequest) returns (ListDiscountsResponse) {
+    option (google.api.http) = {
+      post: "/v1/discounts:list"
+      body: "*"
+    };
+  }
 }
 
 // CreateDiscountRequest
 message CreateDiscountRequest {
-    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-    // The discount to be created
-    Discount discount = 2 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // The discount to be created
+  Discount discount = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // GetDiscountRequest
 message GetDiscountRequest {
-    string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-    string code = 2 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string code = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListDiscountsRequest is the request message for DiscountAPI.ListDiscounts
 message ListDiscountsRequest {
-    // The pagination information
-    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListDiscountsResponse is the response message for DiscountAPI.ListDiscounts
 message ListDiscountsResponse {
-    // The next page token
-    string next_page_token = 1;
-    // The Discounts
-    repeated Discount discounts = 2;
+  // The next page token
+  string next_page_token = 1;
+  // The Discounts
+  repeated Discount discounts = 2;
 }

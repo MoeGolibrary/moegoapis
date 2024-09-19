@@ -13,71 +13,115 @@ option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
 service PetService {
-    // Create a pet
-    rpc CreatePet (CreatePetRequest) returns (CreatePetResponse) {
-        option (google.api.http) = {
-            post: "/v1/customers/{customer_id}/pets"
-            body: "*"
-        };
-    }
-    // Append pet codes to a pet
-    rpc AppendPetCodes (AppendPetCodesRequest) returns (AppendPetCodesResponse) {
-        option (google.api.http) = {
-            post: "/v1/customers/{customer_id}/pets/{pet_id}/codes"
-            body: "*"
-        };
-    }
-    // Append notes to a pet
-    rpc AppendPetNotes (AppendPetNotesRequest) returns (AppendPetNotesResponse) {
-        option (google.api.http) = {
-            post: "/v1/customers/{customer_id}/pets/{pet_id}/notes"
-            body: "*"
-        };
-    }
-    // List Pet Notes
-    rpc ListPetNotes (ListPetNotesRequest) returns (ListPetNotesResponse) {
-        option (google.api.http) = {
-            post: "/v1/customers/{customer_id}/pets/{pet_id}/note:list"
-            body: "*"
-        };
-    }
+  // Create a pet
+  rpc CreatePet(CreatePetRequest) returns (CreatePetResponse) {
+    option (google.api.http) = {
+      post: "/v1/customers/{customer_id}/pets"
+      body: "*"
+    };
+  }
+  // Get a Pet
+  rpc GetPet(GetPetRequest) returns (Pet) {
+    option (google.api.http) = {get: "/v1/customers/{customer_id}/pets/{id}"};
+  }
+  // List Pets
+  rpc ListPets(ListPetsRequest) returns (ListPetsResponse) {
+    option (google.api.http) = {
+      post: "/v1/customers/{customer_id}/pets:list"
+      body: "*"
+    };
+  }
+  // Append pet codes to a pet
+  rpc AppendPetCodes(AppendPetCodesRequest) returns (AppendPetCodesResponse) {
+    option (google.api.http) = {
+      post: "/v1/customers/{customer_id}/pets/{id}/codes"
+      body: "*"
+    };
+  }
+  // Append notes to a pet
+  rpc AppendPetNotes(AppendPetNotesRequest) returns (AppendPetNotesResponse) {
+    option (google.api.http) = {
+      post: "/v1/customers/{customer_id}/pets/{id}/notes"
+      body: "*"
+    };
+  }
+  // List Pet Notes
+  rpc ListPetNotes(ListPetNotesRequest) returns (ListPetNotesResponse) {
+    option (google.api.http) = {
+      post: "/v1/customers/{customer_id}/pets/{id}/note:list"
+      body: "*"
+    };
+  }
 }
 
 message CreatePetRequest {
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-    Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
+  // id of pet owner
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // pet to create
+  Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 message CreatePetResponse {
-    Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // pet created
+  Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+}
+
+message GetPetRequest {
+  // id of pet owner
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of pet
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListPetsRequest {
+  // id of pet owner
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListPetsResponse {
+  // The pets of the customer
+  repeated Pet pets = 1;
 }
 
 message AppendPetCodesRequest {
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-    string pet_id = 2 [(google.api.field_behavior) = REQUIRED];
-    repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
+  // id of pet owner
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of pet
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+  // pet_code_ids to append
+  repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
 message AppendPetCodesResponse {
-    repeated Pet.Code codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+  // pet codes appended
+  repeated Pet.Code codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 message AppendPetNotesRequest {
-    string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-    string pet_id = 2 [(google.api.field_behavior) = REQUIRED];
-    repeated Pet.Note notes = 3;
+  // id of pet owner
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of pet
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+  // notes to append
+  repeated Pet.Note notes = 3;
 }
 
 message AppendPetNotesResponse {
-    repeated Pet.Note notes = 1;
+  // pet notes appended
+  repeated Pet.Note notes = 1;
 }
 
 message ListPetNotesRequest {
-    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-    string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
-    string pet_id = 3 [(google.api.field_behavior) = REQUIRED];
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of pet owner
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // id of pet
+  string id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListPetNotesResponse {
-    string next_page_token = 1;
-    repeated Pet.Note notes = 2;
+  // The next page token
+  string next_page_token = 1;
+  // The notes
+  repeated Pet.Note notes = 2;
 }

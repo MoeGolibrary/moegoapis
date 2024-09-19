@@ -9,6 +9,6 @@ option java_package = "com.moego.api.business.event.v1";
 
 // HealthCheck is the health check event payload
 message HealthCheck {
-    // validation is a simple string that the webhook will echo back to the client
-    string validation = 1;
+  // validation is a simple string that the webhook will echo back to the client
+  string validation = 1;
 }

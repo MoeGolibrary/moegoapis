@@ -14,38 +14,38 @@ option java_package = "com.moego.api.business.business.v1";
 
 // BusinessService openapi definitions for operate business
 service BusinessService {
-    // GetBusiness get a business
-    rpc GetBusiness (GetBusinessRequest) returns (Business) {
-        option (google.api.http) = {get: "/v1/businesses/{id}"};
-    }
+  // GetBusiness get a business
+  rpc GetBusiness(GetBusinessRequest) returns (Business) {
+    option (google.api.http) = {get: "/v1/businesses/{id}"};
+  }
 
-    // ListBusiness list businesses
-    rpc ListBusiness (ListBusinessRequest) returns (ListBusinessResponse) {
-        option (google.api.http) = {
-            post: "/v1/businesses:list",
-            body: "*"
-        };
-    }
+  // ListBusiness list businesses
+  rpc ListBusiness(ListBusinessRequest) returns (ListBusinessResponse) {
+    option (google.api.http) = {
+      post: "/v1/businesses:list"
+      body: "*"
+    };
+  }
 }
 
 // GetBusinessRequest request for GetBusiness
 message GetBusinessRequest {
-    // id of business
-    string id = 1 [(google.api.field_behavior) = REQUIRED];
+  // id of business
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListBusinessRequest request for ListBusiness
 message ListBusinessRequest {
-    // The pagination information
-    moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-    // The company id
-    string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // The company id
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListBusinessResponse response for ListBusiness
 message ListBusinessResponse {
-    // The next page token
-    string next_page_token = 1;
-    // The businesses
-    repeated Business businesses = 2;
+  // The next page token
+  string next_page_token = 1;
+  // The businesses
+  repeated Business businesses = 2;
 }

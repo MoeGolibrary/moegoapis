@@ -1,8 +1,7 @@
-version: v1
+version: v2
 plugins:
-  - plugin: buf.build/protocolbuffers/go
+  - remote: buf.build/protocolbuffers/go
     out: out/go
-  - plugin: buf.build/grpc/go
+  - remote: buf.build/grpc/go
     out: out/go
-    opt:
-      - require_unimplemented_servers=true
+    opt: require_unimplemented_servers=true
