@@ -38,6 +38,8 @@ message Restrictions {
     oneof client_restrictions {
         // The IP addresses of callers that are allowed to use the key.
         ServerRestrictions server_restrictions = 2;
+        // The organizations that are allowed to be requested by the key.
+        OrganizationRestrictions organization_restrictions = 3;
     }
 }
 
@@ -52,4 +54,30 @@ message ServerRestrictions {
             }
         }
     }];
+}
+
+
+// OrganizationRestrictions
+message OrganizationRestrictions {
+    // The organizations that are allowed to be requested by the key.
+    repeated Organization organizations = 1;
+}
+
+// Organization represents a MoeGo organization.
+message Organization {
+    // Type
+    enum Type {
+        // unspecified
+        TYPE_UNSPECIFIED = 0;
+        // business
+        BUSINESS = 1;
+        // company
+        COMPANY = 2;
+        // enterprise
+        ENTERPRISE = 3;
+    }
+    // ID represents the unique identifier of an organization.
+    string id = 1;
+    // Type represents the type of organization.
+    Type type = 2;
 }

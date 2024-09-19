@@ -53,8 +53,9 @@ or range of IP addresses, or only from a specific website.
 
 The following restrictions are available:
 
-| Restriction  | Description                                                               |
-|--------------|---------------------------------------------------------------------------|
-| None         | No restrictions. The API key can be used from any server.                 |
-| Scopes       | The API key can only access the APIs that require the scopes.             |
-| IP addresses | The API key can only be used from an IP address or range of IP addresses. |
+| Restriction   | Description                                                               |
+|---------------|---------------------------------------------------------------------------|
+| None          | No restrictions. The API key can be used from any server.                 |
+| Scopes        | The API key can only access the APIs that require the scopes.             |
+| IP addresses  | The API key can only be used from an IP address or range of IP addresses. |
+| Organizations | The API key can only be used for some specific organizations.             |
