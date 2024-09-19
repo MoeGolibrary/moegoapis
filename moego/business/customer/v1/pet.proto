@@ -60,6 +60,12 @@ message Pet {
     string name = 1;
     google.protobuf.Timestamp expired_at = 2;
   }
+  // Vet
+  message Vet {
+    string name = 2;
+    string phone_number = 3;
+    string address = 4;
+  }
   // ID is the unique identifier of a pet
   string id = 1;
   string name = 2 [(google.api.field_behavior) = REQUIRED];
@@ -77,4 +83,5 @@ message Pet {
   // This field is not supported when creating a pet.
   repeated Vaccination vaccinations = 14;
   string customer_id = 15 [(google.api.field_behavior) = OUTPUT_ONLY];
+  Vet vet = 16;
 }
