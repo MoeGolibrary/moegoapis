@@ -48,7 +48,7 @@ service PetService {
   // List Pet Notes
   rpc ListPetNotes(ListPetNotesRequest) returns (ListPetNotesResponse) {
     option (google.api.http) = {
-      post: "/v1/customers/{customer_id}/pets/{id}/note:list"
+      post: "/v1/customers/{customer_id}/pets/{id}/notes:list"
       body: "*"
     };
   }
