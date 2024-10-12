@@ -39,9 +39,10 @@ message ServiceDetail {
   ServiceItemType service_item_type = 3;
   string category = 4;
   google.type.Money price = 5;
-  google.type.Interval duration = 6;
+  google.type.Interval duration = 6;  // the service start start && end time
   repeated string staff_ids = 7;
   ServiceType service_type = 8;
+  int32 service_time = 9;  // the service provision time
 }
 
 

@@ -82,7 +82,7 @@ message ListPetServicesRequest {
 message ListPetServicesResponse {
   // The next page token
   string next_page_token = 1;
-  // The Appointments
+  // The PetService
   repeated ServiceDetail services = 2;
 }
 

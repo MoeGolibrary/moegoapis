@@ -269,7 +269,7 @@ type ListPetServicesResponse struct {
 
 	// The next page token
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Appointments
+	// The PetService
 	Services []*ServiceDetail `protobuf:"bytes,2,rep,name=services,proto3" json:"services,omitempty"`
 }
 
