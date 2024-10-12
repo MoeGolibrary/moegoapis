@@ -194,7 +194,7 @@ type ServiceDetail struct {
 	ServiceItemType ServiceDetail_ServiceItemType `protobuf:"varint,3,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.appointment.v1.ServiceDetail_ServiceItemType" json:"service_item_type,omitempty"`
 	Category        string                        `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
 	Price           *money.Money                  `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
-	Duration        *interval.Interval            `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"` // the service start start && end time
+	Duration        *interval.Interval            `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"` // the service start time && end time
 	StaffIds        []string                      `protobuf:"bytes,7,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
 	ServiceType     ServiceDetail_ServiceType     `protobuf:"varint,8,opt,name=service_type,json=serviceType,proto3,enum=moego.business.appointment.v1.ServiceDetail_ServiceType" json:"service_type,omitempty"`
 	ServiceTime     int32                         `protobuf:"varint,9,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"` // the service provision time
