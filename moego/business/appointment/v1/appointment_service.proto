@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -23,6 +24,20 @@ service AppointmentService {
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:list"
+      body: "*"
+    };
+  }
+  // ListPetServices
+  rpc ListPetServices(ListPetServicesRequest) returns (ListPetServicesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/business/{business_id}/pet-services:list"
+      body: "*"
+    };
+  }
+  // CreateAppointment
+  rpc CreateAppointment(CreateAppointmentRequest) returns (CreateAppointmentResponse) {
+    option (google.api.http) = {
+      post: "/v1/appointment"
       body: "*"
     };
   }
@@ -52,4 +67,41 @@ message ListAppointmentsResponse {
   string next_page_token = 1;
   // The Appointments
   repeated Appointment appointments = 2;
+}
+
+message ListPetServicesRequest {
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
+  message Filter {
+    ServiceDetail.ServiceItemType service_item_type = 1 [(google.api.field_behavior) = OPTIONAL];
+    ServiceDetail.ServiceType service_type = 2 [(google.api.field_behavior) = OPTIONAL];
+  }
+}
+
+message ListPetServicesResponse {
+  // The next page pagination
+  moego.common.v1.Pagination pagination = 1;
+  // The Appointments
+  repeated ServiceDetail services = 2;
+}
+
+message CreateAppointmentRequest {
+  // Account Info
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  int64 customer_id = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // PetService info
+  repeated PetService pet_services = 7 [(google.api.field_behavior) = REQUIRED];;
+}
+
+// the appointment pet detail definitions, contains the selected pets and services.
+message PetService {
+  int64 pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+  repeated ServiceDetail service_details = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message CreateAppointmentResponse {
+  string appointment_id = 1;
 }

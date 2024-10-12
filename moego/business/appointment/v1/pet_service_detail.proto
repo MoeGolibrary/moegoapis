@@ -19,18 +19,29 @@ message PetServiceDetail {
 
 // ServiceDetail
 message ServiceDetail {
-  enum Type {
-    TYPE_UNSPECIFIED = 0;
+  // ServiceItemType
+  enum ServiceItemType {
+    SERVICE_ITEM_TYPE_UNSPECIFIED = 0;
     GROOMING = 1;
     BOARDING = 2;
     DAYCARE = 3;
-    ADDON = 4;
+    EVALUATION = 4;
+  }
+
+  // ServiceType
+  enum ServiceType {
+    SERVICE_TYPE_UNSPECIFIED = 0;
+    SERVICE = 1;
+    ADDON = 2;
   }
   string id = 1;
   string name = 2;
-  Type type = 3;
+  ServiceItemType service_item_type = 3;
   string category = 4;
   google.type.Money price = 5;
   google.type.Interval duration = 6;
   repeated string staff_ids = 7;
+  ServiceType service_type = 8;
 }
+
+
