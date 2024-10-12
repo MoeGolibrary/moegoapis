@@ -80,8 +80,8 @@ message ListPetServicesRequest {
 }
 
 message ListPetServicesResponse {
-  // The next page pagination
-  moego.common.v1.Pagination pagination = 1;
+  // The next page token
+  string next_page_token = 1;
   // The Appointments
   repeated ServiceDetail services = 2;
 }
