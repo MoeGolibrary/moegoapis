@@ -74,7 +74,7 @@ message CreateAppointmentRequest {
 // for create appointment
 message PetService {
   string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-  repeated ServiceDetail services = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated ServiceDetail service_details = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 
