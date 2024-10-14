@@ -64,7 +64,6 @@ message ListAppointmentsResponse {
 
 message CreateAppointmentRequest {
   // Account Info
-  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
   string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
 
@@ -72,7 +71,7 @@ message CreateAppointmentRequest {
   repeated PetService pet_services = 7 [(google.api.field_behavior) = REQUIRED];;
 }
 
-// the appointment pet detail definitions, contains the selected pets and services.
+// for create appointment
 message PetService {
   string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
   repeated ServiceDetail service_details = 2 [(google.api.field_behavior) = REQUIRED];

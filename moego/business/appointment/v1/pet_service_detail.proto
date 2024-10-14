@@ -28,7 +28,7 @@ message ServiceDetail {
   google.type.Interval duration = 6;  // the service start time && end time
   repeated string staff_ids = 7;
   setting.v1.ServiceType service_type = 8;
-  int32 service_time = 9;  // the service provision time
+  int32 service_time = 9;  // the service provision time, minutes
 }
 
 
