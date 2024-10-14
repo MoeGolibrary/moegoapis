@@ -74,15 +74,9 @@ message CreateAppointmentRequest {
 // for create appointment
 message PetService {
   string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-  repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated ServiceDetail services = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// for create appointment
-message Service {
-  string service_id = 1 [(google.api.field_behavior) = REQUIRED];
-  google.type.Interval duration = 2;  // the service start time && end time
-  repeated string staff_ids = 3;  // the service provider
-}
 
 message CreateAppointmentResponse {
   string appointment_id = 1;
