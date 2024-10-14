@@ -59,8 +59,6 @@ message ListCustomerTagResponse {
 message ListServicesRequest {
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
-  ServiceType service_type = 3 [(google.api.field_behavior) = REQUIRED];
-  ServiceItemType service_item_type = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListServicesResponse {
