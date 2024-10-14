@@ -18,8 +18,7 @@ message Service {
   string category = 4;
   google.type.Money price = 5;
   ServiceType service_type = 6;
-  int32 service_time = 7;  // the service provision time
-  repeated string staff_ids = 8;
+  int32 service_time = 7;  // the service provision time, minutes
 }
 
 // ServiceItemType
