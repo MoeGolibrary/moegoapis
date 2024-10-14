@@ -27,13 +27,6 @@ service AppointmentService {
       body: "*"
     };
   }
-  // ListPetServices
-  rpc ListPetServices(ListPetServicesRequest) returns (ListPetServicesResponse) {
-    option (google.api.http) = {
-      post: "/v1/setting/business/{business_id}/pet-services:list"
-      body: "*"
-    };
-  }
   // CreateAppointment
   rpc CreateAppointment(CreateAppointmentRequest) returns (CreateAppointmentResponse) {
     option (google.api.http) = {
@@ -67,23 +60,6 @@ message ListAppointmentsResponse {
   string next_page_token = 1;
   // The Appointments
   repeated Appointment appointments = 2;
-}
-
-message ListPetServicesRequest {
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
-  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
-  message Filter {
-    ServiceDetail.ServiceItemType service_item_type = 1 [(google.api.field_behavior) = OPTIONAL];
-    ServiceDetail.ServiceType service_type = 2 [(google.api.field_behavior) = OPTIONAL];
-  }
-}
-
-message ListPetServicesResponse {
-  // The next page token
-  string next_page_token = 1;
-  // The PetService
-  repeated ServiceDetail services = 2;
 }
 
 message CreateAppointmentRequest {
