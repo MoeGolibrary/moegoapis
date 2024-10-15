@@ -30,7 +30,7 @@ service AppointmentService {
   // CreateAppointment
   rpc CreateAppointment(CreateAppointmentRequest) returns (CreateAppointmentResponse) {
     option (google.api.http) = {
-      post: "/v1/appointment"
+      post: "/v1/appointments"
       body: "*"
     };
   }
@@ -63,6 +63,16 @@ message ListAppointmentsResponse {
 }
 
 message CreateAppointmentRequest {
+  message PetService {
+    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
+  }
+  message Service {
+    string id = 1;
+    google.type.Interval duration = 2;  // the service start time && end time
+    repeated string staff_ids = 3;  // only support first staff
+  }
+
   // Account Info
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
   string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
@@ -71,18 +81,7 @@ message CreateAppointmentRequest {
   repeated PetService pet_services = 7 [(google.api.field_behavior) = REQUIRED];
 }
 
-// for create appointment
-message PetService {
-  string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
-  repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
-}
 
-// for create appointment
-message Service {
-  string id = 1;
-  google.type.Interval duration = 2;  // the service start time && end time
-  repeated string staff_ids = 3;  // only support first staff
-}
 
 
 message CreateAppointmentResponse {
