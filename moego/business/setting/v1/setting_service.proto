@@ -59,7 +59,7 @@ message ListCustomerTagResponse {
 message ListServicesRequest {
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
-  repeated string business_id = 3;
+  repeated string business_ids = 3;
 }
 
 message ListServicesResponse {
