@@ -34,7 +34,7 @@ service SettingService {
   // ListServices
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
-      post: "/v1/setting/business/{business_id}/services:list"
+      post: "/v1/setting/companies/{company_id}/services:list"
       body: "*"
     };
   }
@@ -57,8 +57,9 @@ message ListCustomerTagResponse {
 }
 
 message ListServicesRequest {
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated string business_id = 3;
 }
 
 message ListServicesResponse {
