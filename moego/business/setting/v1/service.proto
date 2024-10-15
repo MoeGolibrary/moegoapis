@@ -31,7 +31,12 @@ message Service {
   google.type.Money price = 5;
   Type service_type = 6;
   int32 service_time = 7;  // the service provision time, minutes
-  repeated string available_business_ids = 8;
+
+  // limit scope
+  bool available_all_business = 8;
+  repeated string available_business_ids = 9;
+  bool available_all_staff = 10;
+  repeated string available_staff_ids = 11;
 }
 
 
