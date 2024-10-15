@@ -28,7 +28,7 @@ service AppointmentService {
     };
   }
   // CreateAppointment
-  rpc CreateAppointment(CreateAppointmentRequest) returns (CreateAppointmentResponse) {
+  rpc CreateAppointment(CreateAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {
       post: "/v1/appointments"
       body: "*"
@@ -79,11 +79,4 @@ message CreateAppointmentRequest {
 
   // PetService info
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
-}
-
-
-
-
-message CreateAppointmentResponse {
-  string appointment_id = 1;
 }

@@ -35,7 +35,7 @@ type AppointmentServiceClient interface {
 	// ListStaffs
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// CreateAppointment
-	CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*CreateAppointmentResponse, error)
+	CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 }
 
 type appointmentServiceClient struct {
@@ -66,9 +66,9 @@ func (c *appointmentServiceClient) ListAppointments(ctx context.Context, in *Lis
 	return out, nil
 }
 
-func (c *appointmentServiceClient) CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*CreateAppointmentResponse, error) {
+func (c *appointmentServiceClient) CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateAppointmentResponse)
+	out := new(Appointment)
 	err := c.cc.Invoke(ctx, AppointmentService_CreateAppointment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -87,7 +87,7 @@ type AppointmentServiceServer interface {
 	// ListStaffs
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// CreateAppointment
-	CreateAppointment(context.Context, *CreateAppointmentRequest) (*CreateAppointmentResponse, error)
+	CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -104,7 +104,7 @@ func (UnimplementedAppointmentServiceServer) GetAppointment(context.Context, *Ge
 func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAppointments not implemented")
 }
-func (UnimplementedAppointmentServiceServer) CreateAppointment(context.Context, *CreateAppointmentRequest) (*CreateAppointmentResponse, error) {
+func (UnimplementedAppointmentServiceServer) CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAppointment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
