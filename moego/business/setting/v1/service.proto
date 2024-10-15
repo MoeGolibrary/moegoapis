@@ -12,24 +12,24 @@ option java_package = "com.moego.api.business.setting.v1";
 
 // Service
 message Service {
-  enum ServiceItemType {
+  enum ItemType {
     SERVICE_ITEM_TYPE_UNSPECIFIED = 0;
     GROOMING = 1;
     BOARDING = 2;
     DAYCARE = 3;
     EVALUATION = 4;
   }
-  enum ServiceType {
+  enum Type {
     SERVICE_TYPE_UNSPECIFIED = 0;
     SERVICE = 1;
     ADDON = 2;
   }
   string id = 1;
   string name = 2;
-  ServiceItemType service_item_type = 3;
+  ItemType service_item_type = 3;
   string category = 4;
   google.type.Money price = 5;
-  ServiceType service_type = 6;
+  Type service_type = 6;
   int32 service_time = 7;  // the service provision time, minutes
 }
 

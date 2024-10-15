@@ -74,11 +74,11 @@ message CreateAppointmentRequest {
   }
 
   // Account Info
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
-  string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // PetService info
-  repeated PetService pet_services = 7 [(google.api.field_behavior) = REQUIRED];
+  repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 
