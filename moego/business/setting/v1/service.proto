@@ -30,7 +30,8 @@ message Service {
   string category = 4;
   google.type.Money price = 5;
   Type service_type = 6;
-  int32 service_time = 7;  // the service provision time, minutes
+  // the service provision time, minutes
+  int32 service_time = 7;
 
   // limit scope
   bool available_all_business = 8;

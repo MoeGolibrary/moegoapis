@@ -138,7 +138,8 @@ type Service struct {
 	Category        string           `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
 	Price           *money.Money     `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
 	ServiceType     Service_Type     `protobuf:"varint,6,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
-	ServiceTime     int32            `protobuf:"varint,7,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"` // the service provision time, minutes
+	// the service provision time, minutes
+	ServiceTime int32 `protobuf:"varint,7,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
 	// limit scope
 	AvailableAllBusiness bool     `protobuf:"varint,8,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
 	AvailableBusinessIds []string `protobuf:"bytes,9,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`

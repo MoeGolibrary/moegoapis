@@ -89,10 +89,12 @@ type ServiceDetail struct {
 	ServiceItemType settingpb.Service_ItemType `protobuf:"varint,3,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
 	Category        string                     `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
 	Price           *money.Money               `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
-	Duration        *interval.Interval         `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"` // the service start time && end time
-	StaffIds        []string                   `protobuf:"bytes,7,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
-	ServiceType     settingpb.Service_Type     `protobuf:"varint,8,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
-	ServiceTime     int32                      `protobuf:"varint,9,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"` // the service provision time, minutes
+	// the service start time && end time
+	Duration    *interval.Interval     `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"`
+	StaffIds    []string               `protobuf:"bytes,7,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	ServiceType settingpb.Service_Type `protobuf:"varint,8,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
+	// the service provision time, minutes
+	ServiceTime int32 `protobuf:"varint,9,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
 }
 
 func (x *ServiceDetail) Reset() {

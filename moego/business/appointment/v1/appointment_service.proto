@@ -69,8 +69,10 @@ message CreateAppointmentRequest {
   }
   message Service {
     string id = 1;
-    google.type.Interval duration = 2;  // the service start time && end time
-    repeated string staff_ids = 3;  // only support first staff
+    // the service start time && end time
+    google.type.Interval duration = 2;
+    // only support first staff
+    repeated string staff_ids = 3;
   }
 
   // Account Info

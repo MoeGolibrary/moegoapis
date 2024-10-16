@@ -391,9 +391,11 @@ type CreateAppointmentRequest_Service struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string             `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Duration *interval.Interval `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`                 // the service start time && end time
-	StaffIds []string           `protobuf:"bytes,3,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"` // only support first staff
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// the service start time && end time
+	Duration *interval.Interval `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`
+	// only support first staff
+	StaffIds []string `protobuf:"bytes,3,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
 }
 
 func (x *CreateAppointmentRequest_Service) Reset() {
