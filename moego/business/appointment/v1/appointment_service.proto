@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -23,6 +24,13 @@ service AppointmentService {
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:list"
+      body: "*"
+    };
+  }
+  // CreateAppointment
+  rpc CreateAppointment(CreateAppointmentRequest) returns (Appointment) {
+    option (google.api.http) = {
+      post: "/v1/appointments"
       body: "*"
     };
   }
@@ -52,4 +60,25 @@ message ListAppointmentsResponse {
   string next_page_token = 1;
   // The Appointments
   repeated Appointment appointments = 2;
+}
+
+message CreateAppointmentRequest {
+  message PetService {
+    string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+    repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
+  }
+  message Service {
+    string id = 1;
+    // the service start time && end time
+    google.type.Interval duration = 2;
+    // only support first staff
+    repeated string staff_ids = 3;
+  }
+
+  // Account Info
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // PetService info
+  repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
 }

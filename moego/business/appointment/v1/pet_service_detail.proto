@@ -5,6 +5,7 @@ package moego.business.appointment.v1;
 import "google/type/interval.proto";
 import "google/type/money.proto";
 import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/service.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -19,18 +20,17 @@ message PetServiceDetail {
 
 // ServiceDetail
 message ServiceDetail {
-  enum Type {
-    TYPE_UNSPECIFIED = 0;
-    GROOMING = 1;
-    BOARDING = 2;
-    DAYCARE = 3;
-    ADDON = 4;
-  }
   string id = 1;
   string name = 2;
-  Type type = 3;
+  setting.v1.Service.ItemType service_item_type = 3;
   string category = 4;
   google.type.Money price = 5;
+  // the service start time && end time
   google.type.Interval duration = 6;
   repeated string staff_ids = 7;
+  setting.v1.Service.Type service_type = 8;
+  // the service provision time, minutes
+  int32 service_time = 9;
 }
+
+

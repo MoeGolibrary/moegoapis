@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	SettingService_ListPetCodes_FullMethodName     = "/moego.business.setting.v1.SettingService/ListPetCodes"
 	SettingService_ListCustomerTags_FullMethodName = "/moego.business.setting.v1.SettingService/ListCustomerTags"
+	SettingService_ListServices_FullMethodName     = "/moego.business.setting.v1.SettingService/ListServices"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -33,6 +34,8 @@ type SettingServiceClient interface {
 	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
 	// List Customer Tags Setting
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagRequest, opts ...grpc.CallOption) (*ListCustomerTagResponse, error)
+	// ListServices
+	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
 }
 
 type settingServiceClient struct {
@@ -63,6 +66,16 @@ func (c *settingServiceClient) ListCustomerTags(ctx context.Context, in *ListCus
 	return out, nil
 }
 
+func (c *settingServiceClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListServicesResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListServices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -73,6 +86,8 @@ type SettingServiceServer interface {
 	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
 	// List Customer Tags Setting
 	ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error)
+	// ListServices
+	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -88,6 +103,9 @@ func (UnimplementedSettingServiceServer) ListPetCodes(context.Context, *ListPetC
 }
 func (UnimplementedSettingServiceServer) ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCustomerTags not implemented")
+}
+func (UnimplementedSettingServiceServer) ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListServices not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -146,6 +164,24 @@ func _SettingService_ListCustomerTags_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_ListServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListServicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListServices_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListServices(ctx, req.(*ListServicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -160,6 +196,10 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCustomerTags",
 			Handler:    _SettingService_ListCustomerTags_Handler,
+		},
+		{
+			MethodName: "ListServices",
+			Handler:    _SettingService_ListServices_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
