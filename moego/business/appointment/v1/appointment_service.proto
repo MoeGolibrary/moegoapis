@@ -99,9 +99,11 @@ message CreateAppointmentRequest {
 
 message UpdateAppointmentRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  google.type.Interval duration = 2;
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval duration = 3;
 }
 
 message CancelAppointmentRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
