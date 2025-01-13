@@ -4,6 +4,7 @@ package moego.business.discount.v1;
 
 import "google/type/interval.proto";
 import "google/type/money.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/discount/v1/discountpb;discountpb";
 option java_multiple_files = true;
@@ -21,6 +22,8 @@ message Discount {
   google.type.Interval valid_period = 5;
   DiscountLimitation limitation = 6;
   DiscountSettings settings = 7;
+  // discount will never expire if expiry_time is not set
+  google.protobuf.Timestamp expiry_time = 8;
 }
 
 // DiscountLimitation
