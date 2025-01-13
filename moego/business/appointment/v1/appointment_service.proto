@@ -35,9 +35,9 @@ service AppointmentService {
     };
   }
 
-  rpc UpdateAppointment(UpdateAppointmentRequest) returns (Appointment) {
+  rpc RescheduleAppointment(RescheduleAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {
-      put: "/v1/appointments/{id}"
+      post: "/v1/appointments/{id}:reschedule"
       body: "*"
     };
   }
@@ -97,7 +97,7 @@ message CreateAppointmentRequest {
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-message UpdateAppointmentRequest {
+message RescheduleAppointmentRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
   google.type.Interval duration = 3;

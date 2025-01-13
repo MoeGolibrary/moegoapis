@@ -19,11 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AppointmentService_GetAppointment_FullMethodName    = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
-	AppointmentService_ListAppointments_FullMethodName  = "/moego.business.appointment.v1.AppointmentService/ListAppointments"
-	AppointmentService_CreateAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
-	AppointmentService_UpdateAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/UpdateAppointment"
-	AppointmentService_CancelAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
+	AppointmentService_GetAppointment_FullMethodName        = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
+	AppointmentService_ListAppointments_FullMethodName      = "/moego.business.appointment.v1.AppointmentService/ListAppointments"
+	AppointmentService_CreateAppointment_FullMethodName     = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
+	AppointmentService_RescheduleAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/RescheduleAppointment"
+	AppointmentService_CancelAppointment_FullMethodName     = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -38,7 +38,7 @@ type AppointmentServiceClient interface {
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// CreateAppointment
 	CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
-	UpdateAppointment(ctx context.Context, in *UpdateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	RescheduleAppointment(ctx context.Context, in *RescheduleAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 	CancelAppointment(ctx context.Context, in *CancelAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 }
 
@@ -80,10 +80,10 @@ func (c *appointmentServiceClient) CreateAppointment(ctx context.Context, in *Cr
 	return out, nil
 }
 
-func (c *appointmentServiceClient) UpdateAppointment(ctx context.Context, in *UpdateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
+func (c *appointmentServiceClient) RescheduleAppointment(ctx context.Context, in *RescheduleAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Appointment)
-	err := c.cc.Invoke(ctx, AppointmentService_UpdateAppointment_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, AppointmentService_RescheduleAppointment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ type AppointmentServiceServer interface {
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// CreateAppointment
 	CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error)
-	UpdateAppointment(context.Context, *UpdateAppointmentRequest) (*Appointment, error)
+	RescheduleAppointment(context.Context, *RescheduleAppointmentRequest) (*Appointment, error)
 	CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
@@ -133,8 +133,8 @@ func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *
 func (UnimplementedAppointmentServiceServer) CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAppointment not implemented")
 }
-func (UnimplementedAppointmentServiceServer) UpdateAppointment(context.Context, *UpdateAppointmentRequest) (*Appointment, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method UpdateAppointment not implemented")
+func (UnimplementedAppointmentServiceServer) RescheduleAppointment(context.Context, *RescheduleAppointmentRequest) (*Appointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RescheduleAppointment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelAppointment not implemented")
@@ -214,20 +214,20 @@ func _AppointmentService_CreateAppointment_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppointmentService_UpdateAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(UpdateAppointmentRequest)
+func _AppointmentService_RescheduleAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RescheduleAppointmentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppointmentServiceServer).UpdateAppointment(ctx, in)
+		return srv.(AppointmentServiceServer).RescheduleAppointment(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppointmentService_UpdateAppointment_FullMethodName,
+		FullMethod: AppointmentService_RescheduleAppointment_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).UpdateAppointment(ctx, req.(*UpdateAppointmentRequest))
+		return srv.(AppointmentServiceServer).RescheduleAppointment(ctx, req.(*RescheduleAppointmentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -270,8 +270,8 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppointmentService_CreateAppointment_Handler,
 		},
 		{
-			MethodName: "UpdateAppointment",
-			Handler:    _AppointmentService_UpdateAppointment_Handler,
+			MethodName: "RescheduleAppointment",
+			Handler:    _AppointmentService_RescheduleAppointment_Handler,
 		},
 		{
 			MethodName: "CancelAppointment",
