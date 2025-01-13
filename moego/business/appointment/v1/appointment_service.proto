@@ -34,6 +34,20 @@ service AppointmentService {
       body: "*"
     };
   }
+
+  rpc UpdateAppointment(UpdateAppointmentRequest) returns (Appointment) {
+    option (google.api.http) = {
+      put: "/v1/appointments/{id}"
+      body: "*"
+    };
+  }
+
+  rpc CancelAppointment(CancelAppointmentRequest) returns (Appointment) {
+    option (google.api.http) = {
+      post: "/v1/appointments/{id}:cancel"
+      body: "*"
+    };
+  }
 }
 
 // GetAppointmentRequest get appointment request
@@ -81,4 +95,13 @@ message CreateAppointmentRequest {
 
   // PetService info
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+message UpdateAppointmentRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval duration = 2;
+}
+
+message CancelAppointmentRequest {
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }

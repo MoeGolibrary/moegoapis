@@ -22,6 +22,8 @@ const (
 	AppointmentService_GetAppointment_FullMethodName    = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
 	AppointmentService_ListAppointments_FullMethodName  = "/moego.business.appointment.v1.AppointmentService/ListAppointments"
 	AppointmentService_CreateAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
+	AppointmentService_UpdateAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/UpdateAppointment"
+	AppointmentService_CancelAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -36,6 +38,8 @@ type AppointmentServiceClient interface {
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// CreateAppointment
 	CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	UpdateAppointment(ctx context.Context, in *UpdateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	CancelAppointment(ctx context.Context, in *CancelAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 }
 
 type appointmentServiceClient struct {
@@ -76,6 +80,26 @@ func (c *appointmentServiceClient) CreateAppointment(ctx context.Context, in *Cr
 	return out, nil
 }
 
+func (c *appointmentServiceClient) UpdateAppointment(ctx context.Context, in *UpdateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Appointment)
+	err := c.cc.Invoke(ctx, AppointmentService_UpdateAppointment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appointmentServiceClient) CancelAppointment(ctx context.Context, in *CancelAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Appointment)
+	err := c.cc.Invoke(ctx, AppointmentService_CancelAppointment_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility.
@@ -88,6 +112,8 @@ type AppointmentServiceServer interface {
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// CreateAppointment
 	CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error)
+	UpdateAppointment(context.Context, *UpdateAppointmentRequest) (*Appointment, error)
+	CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -106,6 +132,12 @@ func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *
 }
 func (UnimplementedAppointmentServiceServer) CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAppointment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) UpdateAppointment(context.Context, *UpdateAppointmentRequest) (*Appointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAppointment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CancelAppointment not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 func (UnimplementedAppointmentServiceServer) testEmbeddedByValue()                            {}
@@ -182,6 +214,42 @@ func _AppointmentService_CreateAppointment_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_UpdateAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).UpdateAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_UpdateAppointment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).UpdateAppointment(ctx, req.(*UpdateAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppointmentService_CancelAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CancelAppointmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).CancelAppointment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_CancelAppointment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).CancelAppointment(ctx, req.(*CancelAppointmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppointmentService_ServiceDesc is the grpc.ServiceDesc for AppointmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -200,6 +268,14 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateAppointment",
 			Handler:    _AppointmentService_CreateAppointment_Handler,
+		},
+		{
+			MethodName: "UpdateAppointment",
+			Handler:    _AppointmentService_UpdateAppointment_Handler,
+		},
+		{
+			MethodName: "CancelAppointment",
+			Handler:    _AppointmentService_CancelAppointment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
