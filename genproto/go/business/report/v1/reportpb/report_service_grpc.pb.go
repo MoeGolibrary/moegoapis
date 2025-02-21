@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	Service_ListReports_FullMethodName     = "/moego.business.report.v1.Service/ListReports"
 	Service_FetchReportData_FullMethodName = "/moego.business.report.v1.Service/FetchReportData"
 )
 
@@ -28,6 +29,8 @@ const (
 //
 // reportService openapi definitions for operate report
 type ServiceClient interface {
+	// ListReports
+	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
 	// FetchReportData
 	FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error)
 }
@@ -38,6 +41,16 @@ type serviceClient struct {
 
 func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
 	return &serviceClient{cc}
+}
+
+func (c *serviceClient) ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListReportsResponse)
+	err := c.cc.Invoke(ctx, Service_ListReports_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *serviceClient) FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error) {
@@ -56,6 +69,8 @@ func (c *serviceClient) FetchReportData(ctx context.Context, in *FetchReportData
 //
 // reportService openapi definitions for operate report
 type ServiceServer interface {
+	// ListReports
+	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
 	// FetchReportData
 	FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error)
 	mustEmbedUnimplementedServiceServer()
@@ -68,6 +83,9 @@ type ServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedServiceServer struct{}
 
+func (UnimplementedServiceServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListReports not implemented")
+}
 func (UnimplementedServiceServer) FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FetchReportData not implemented")
 }
@@ -90,6 +108,24 @@ func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&Service_ServiceDesc, srv)
+}
+
+func _Service_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceServer).ListReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Service_ListReports_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceServer).ListReports(ctx, req.(*ListReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Service_FetchReportData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -117,6 +153,10 @@ var Service_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "moego.business.report.v1.Service",
 	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "ListReports",
+			Handler:    _Service_ListReports_Handler,
+		},
 		{
 			MethodName: "FetchReportData",
 			Handler:    _Service_FetchReportData_Handler,
