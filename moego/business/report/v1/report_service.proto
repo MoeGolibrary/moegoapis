@@ -56,8 +56,6 @@ message FetchReportDataRequest{
 message FetchReportDataResponse {
   // The next page token
   string next_page_token = 1;
-  // The fields of the table
-  repeated Field fields = 2;
   // table data
-  TableData table_data = 3;
+  TableData table_data = 2;
 }
