@@ -20,27 +20,26 @@ message Report {
 }
 
 message Field {
-  // Field type enumeration, deprecated by Chris, use common_model#FieldType instead
   enum Type {
     // Unspecified field type
     TYPE_UNSPECIFIED = 0;
-    // A money field type
+    // A money field type, value will be Money
     MONEY = 1;
-    // A text field type
+    // A text field type, value will be string
     TEXT = 2;
-    // A date field type
+    // A date field type, value will be Timestamp
     DATE = 3;
-    // A time field type
+    // A time field type, value will be Timestamp
     TIME = 4;
-    // A number field type
+    // A number field type, value will be int64
     NUMBER = 5;
-    // A decimal number field type
+    // A decimal number field type, value will be double
     DECIMAL_NUMBER = 6;
-    // A percentage field type
+    // A percentage field type, value will be double
     PERCENTAGE = 7;
-    // A duration field type, in minutes
+    // A duration field type, in minutes, value will be double
     DURATION = 8;
-    // With both date and time info
+    // With both date and time info, value will be Timestamp
     DATETIME = 9;
   }
 
