@@ -42,4 +42,6 @@ message OrderLineItem {
   google.protobuf.Timestamp created_time = 9;
   // update time
   google.protobuf.Timestamp last_updated_time = 10;
+  // paid amount
+  google.type.Money paid_amount = 11;
 }
