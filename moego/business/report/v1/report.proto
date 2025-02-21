@@ -12,11 +12,14 @@ option java_package = "com.moego.api.business.report.v1";
 
 // Report
 message Report {
-  enum Name {
-    NAME_UNSPECIFIED = 0;
-    PAYMENT_SUMMARY_REPORT = 1;
-  }
-  Name name = 1;
+  // id
+  string id = 1;
+  // name
+  string name = 2;
+  // description
+  string description = 3;
+  // Fields
+  repeated Field fields = 4;
 }
 
 message Field {
@@ -49,6 +52,8 @@ message Field {
   Type type = 2;
   // The key of the field
   string key = 3;
+  // Whether the field can be grouped by
+  bool group_by_enable = 4;
 }
 
 // Table data

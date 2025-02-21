@@ -4,6 +4,7 @@ package moego.business.report.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
 import "moego/business/report/v1/report.proto";
 import "moego/common/v1/pagination.proto";
 
@@ -14,6 +15,13 @@ option java_package = "com.moego.api.business.report.v1";
 
 // reportService openapi definitions for operate report
 service Service {
+  // ListReports
+  rpc ListReports(ListReportsRequest) returns (ListReportsResponse) {
+    option (google.api.http) = {
+      post: "/v1/reports:list"
+      body: "*"
+    };
+  }
   // FetchReportData
   rpc FetchReportData(FetchReportDataRequest) returns (FetchReportDataResponse) {
     option (google.api.http) = {
@@ -23,14 +31,29 @@ service Service {
   }
 }
 
+message ListReportsRequest{
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+message ListReportsResponse{
+  // The next page token
+  string next_page_token = 1;
+  // reports
+  repeated Report reports = 2;
+}
+
 message FetchReportDataRequest{
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
-  message Filter {
-    Report.Name name = 1 [(google.api.field_behavior) = REQUIRED];
+  message Condition {
+    // report id
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
+    google.type.Interval query_period = 2 [(google.api.field_behavior) = REQUIRED];
+    repeated string group_by_field_keys = 3[(google.api.field_behavior) = OPTIONAL];
   }
-  Filter filter = 4;
+  Condition condition = 4;
 }
 
 message FetchReportDataResponse {
