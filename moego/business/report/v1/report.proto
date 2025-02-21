@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package moego.business.report.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb;reportpb";
+option java_multiple_files = true;
+option java_outer_classname = "reportProto";
+option java_package = "com.moego.api.business.report.v1";
+
+// Report
+message Report {
+  enum Name {
+    NAME_UNSPECIFIED = 0;
+    PAYMENT_SUMMARY_REPORT = 1;
+  }
+  Name name = 1;
+}
+
+message Field {
+  // Field type enumeration, deprecated by Chris, use common_model#FieldType instead
+  enum Type {
+    // Unspecified field type
+    TYPE_UNSPECIFIED = 0;
+    // A money field type
+    MONEY = 1;
+    // A text field type
+    TEXT = 2;
+    // A date field type
+    DATE = 3;
+    // A time field type
+    TIME = 4;
+    // A number field type
+    NUMBER = 5;
+    // A decimal number field type
+    DECIMAL_NUMBER = 6;
+    // A percentage field type
+    PERCENTAGE = 7;
+    // A duration field type, in minutes
+    DURATION = 8;
+    // With both date and time info
+    DATETIME = 9;
+  }
+
+  // The label of the field for display
+  string label = 1;
+  // The type of the field
+  Type type = 2;
+  // The key of the field
+  string key = 3;
+}
+
+// Table data
+message TableData {
+  // The title of the table
+  repeated TableRowData rows = 1;
+  // Fields of the table, fields from TableMeta or Dynamic generated fields
+  repeated Field fields = 2;
+}
+
+// Table row data
+message TableRowData {
+  // The column data of one row, key is field key
+  map<string, Data> data = 1;
+}
+
+// data of a column in one row
+message Data {
+  // The field_key of the big number
+  string field_key = 1;
+  // The type of the field
+  Field.Type field_type = 2;
+  // The value of the big number
+  Value value = 3;
+}
+
+// A value of any type
+message Value {
+  // The value
+  oneof value {
+    // The string value
+    string string = 2;
+    // The double value
+    double double = 3;
+    // The int64 value
+    int64 int64 = 4;
+    // The bool value
+    bool bool = 6;
+    // The money value
+    google.type.Money money = 7;
+    // The timestamp value
+    google.protobuf.Timestamp timestamp = 8;
+  }
+}

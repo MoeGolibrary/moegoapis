@@ -18,6 +18,7 @@ message Service {
     BOARDING = 2;
     DAYCARE = 3;
     EVALUATION = 4;
+    TRAINING = 5;
   }
   enum Type {
     SERVICE_TYPE_UNSPECIFIED = 0;
@@ -39,6 +40,3 @@ message Service {
   bool available_all_staff = 10;
   repeated string available_staff_ids = 11;
 }
-
-
-

@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package moego.business.report.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/report/v1/report.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb;reportpb";
+option java_multiple_files = true;
+option java_outer_classname = "reportServiceProto";
+option java_package = "com.moego.api.business.report.v1";
+
+// reportService openapi definitions for operate report
+service Service {
+  // FetchReportData
+  rpc FetchReportData(FetchReportDataRequest) returns (FetchReportDataResponse) {
+    option (google.api.http) = {
+      post: "/v1/reports/data:fetch"
+      body: "*"
+    };
+  }
+}
+
+message FetchReportDataRequest{
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+  message Filter {
+    Report.Name name = 1 [(google.api.field_behavior) = REQUIRED];
+  }
+  Filter filter = 4;
+}
+
+message FetchReportDataResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The fields of the table
+  repeated Field fields = 2;
+  // table data
+  TableData table_data = 3;
+}
