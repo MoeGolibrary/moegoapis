@@ -32,15 +32,12 @@ service Service {
 }
 
 message ListReportsRequest{
-  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 message ListReportsResponse{
-  // The next page token
-  string next_page_token = 1;
   // reports
-  repeated Report reports = 2;
+  repeated Report reports = 1;
 }
 
 message FetchReportDataRequest{
