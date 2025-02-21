@@ -13,8 +13,8 @@ option java_multiple_files = true;
 option java_outer_classname = "reportServiceProto";
 option java_package = "com.moego.api.business.report.v1";
 
-// reportService openapi definitions for operate report
-service Service {
+// ReportService openapi definitions for operate report
+service ReportService {
   // ListReports
   rpc ListReports(ListReportsRequest) returns (ListReportsResponse) {
     option (google.api.http) = {

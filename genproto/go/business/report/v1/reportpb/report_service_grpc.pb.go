@@ -19,147 +19,147 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Service_ListReports_FullMethodName     = "/moego.business.report.v1.Service/ListReports"
-	Service_FetchReportData_FullMethodName = "/moego.business.report.v1.Service/FetchReportData"
+	ReportService_ListReports_FullMethodName     = "/moego.business.report.v1.ReportService/ListReports"
+	ReportService_FetchReportData_FullMethodName = "/moego.business.report.v1.ReportService/FetchReportData"
 )
 
-// ServiceClient is the client API for Service service.
+// ReportServiceClient is the client API for ReportService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// reportService openapi definitions for operate report
-type ServiceClient interface {
+// ReportService openapi definitions for operate report
+type ReportServiceClient interface {
 	// ListReports
 	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
 	// FetchReportData
 	FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error)
 }
 
-type serviceClient struct {
+type reportServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
-	return &serviceClient{cc}
+func NewReportServiceClient(cc grpc.ClientConnInterface) ReportServiceClient {
+	return &reportServiceClient{cc}
 }
 
-func (c *serviceClient) ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
+func (c *reportServiceClient) ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListReportsResponse)
-	err := c.cc.Invoke(ctx, Service_ListReports_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ReportService_ListReports_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *serviceClient) FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error) {
+func (c *reportServiceClient) FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(FetchReportDataResponse)
-	err := c.cc.Invoke(ctx, Service_FetchReportData_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, ReportService_FetchReportData_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ServiceServer is the server API for Service service.
-// All implementations must embed UnimplementedServiceServer
+// ReportServiceServer is the server API for ReportService service.
+// All implementations must embed UnimplementedReportServiceServer
 // for forward compatibility.
 //
-// reportService openapi definitions for operate report
-type ServiceServer interface {
+// ReportService openapi definitions for operate report
+type ReportServiceServer interface {
 	// ListReports
 	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
 	// FetchReportData
 	FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error)
-	mustEmbedUnimplementedServiceServer()
+	mustEmbedUnimplementedReportServiceServer()
 }
 
-// UnimplementedServiceServer must be embedded to have
+// UnimplementedReportServiceServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedServiceServer struct{}
+type UnimplementedReportServiceServer struct{}
 
-func (UnimplementedServiceServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
+func (UnimplementedReportServiceServer) ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListReports not implemented")
 }
-func (UnimplementedServiceServer) FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error) {
+func (UnimplementedReportServiceServer) FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FetchReportData not implemented")
 }
-func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
-func (UnimplementedServiceServer) testEmbeddedByValue()                 {}
+func (UnimplementedReportServiceServer) mustEmbedUnimplementedReportServiceServer() {}
+func (UnimplementedReportServiceServer) testEmbeddedByValue()                       {}
 
-// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ServiceServer will
+// UnsafeReportServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ReportServiceServer will
 // result in compilation errors.
-type UnsafeServiceServer interface {
-	mustEmbedUnimplementedServiceServer()
+type UnsafeReportServiceServer interface {
+	mustEmbedUnimplementedReportServiceServer()
 }
 
-func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
-	// If the following call pancis, it indicates UnimplementedServiceServer was
+func RegisterReportServiceServer(s grpc.ServiceRegistrar, srv ReportServiceServer) {
+	// If the following call pancis, it indicates UnimplementedReportServiceServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Service_ServiceDesc, srv)
+	s.RegisterService(&ReportService_ServiceDesc, srv)
 }
 
-func _Service_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ReportService_ListReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListReportsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).ListReports(ctx, in)
+		return srv.(ReportServiceServer).ListReports(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_ListReports_FullMethodName,
+		FullMethod: ReportService_ListReports_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).ListReports(ctx, req.(*ListReportsRequest))
+		return srv.(ReportServiceServer).ListReports(ctx, req.(*ListReportsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Service_FetchReportData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ReportService_FetchReportData_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(FetchReportDataRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceServer).FetchReportData(ctx, in)
+		return srv.(ReportServiceServer).FetchReportData(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Service_FetchReportData_FullMethodName,
+		FullMethod: ReportService_FetchReportData_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceServer).FetchReportData(ctx, req.(*FetchReportDataRequest))
+		return srv.(ReportServiceServer).FetchReportData(ctx, req.(*FetchReportDataRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
+// ReportService_ServiceDesc is the grpc.ServiceDesc for ReportService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Service_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "moego.business.report.v1.Service",
-	HandlerType: (*ServiceServer)(nil),
+var ReportService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "moego.business.report.v1.ReportService",
+	HandlerType: (*ReportServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "ListReports",
-			Handler:    _Service_ListReports_Handler,
+			Handler:    _ReportService_ListReports_Handler,
 		},
 		{
 			MethodName: "FetchReportData",
-			Handler:    _Service_FetchReportData_Handler,
+			Handler:    _ReportService_FetchReportData_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
