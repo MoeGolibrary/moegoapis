@@ -20,6 +20,7 @@ message PetServiceDetail {
 
 // ServiceDetail
 message ServiceDetail {
+  // service ID
   string id = 1;
   string name = 2;
   setting.v1.Service.ItemType service_item_type = 3;
@@ -31,6 +32,6 @@ message ServiceDetail {
   setting.v1.Service.Type service_type = 8;
   // the service provision time, minutes
   int32 service_time = 9;
+  // ID of a pet's service item of appointment
+  string pet_service_detail_id = 10;
 }
-
-
