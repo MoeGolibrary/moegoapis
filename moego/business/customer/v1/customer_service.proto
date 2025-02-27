@@ -4,6 +4,7 @@ package moego.business.customer.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
@@ -90,6 +91,10 @@ message ListCustomersRequest {
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
   // The company id
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  message Filter {
+    google.type.Interval last_updated_time = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+  Filter filter = 3;
 }
 
 message ListCustomersResponse {
