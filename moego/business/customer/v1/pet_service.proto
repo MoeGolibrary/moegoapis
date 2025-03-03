@@ -52,6 +52,13 @@ service PetService {
       body: "*"
     };
   }
+  // List All Pets
+  rpc ListAllPets(ListAllPetsRequest) returns (ListAllPetsResponse) {
+    option (google.api.http) = {
+      post: "/v1/pets:list"
+      body: "*"
+    };
+  }
 }
 
 message CreatePetRequest {
@@ -124,4 +131,22 @@ message ListPetNotesResponse {
   string next_page_token = 1;
   // The notes
   repeated Pet.Note notes = 2;
+}
+
+message ListAllPetsRequest {
+  // The pagination information
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+  // The company id
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  message Filter {
+    repeated int64 customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+  Filter filter = 3;
+}
+
+message ListAllPetsResponse {
+  // The next page token
+  string next_page_token = 1;
+  // The pets
+  repeated Pet pets = 2;
 }
