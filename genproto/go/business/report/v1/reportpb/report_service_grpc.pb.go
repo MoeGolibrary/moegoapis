@@ -27,11 +27,28 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// ReportService openapi definitions for operate report
+// ReportService provides APIs for managing and retrieving business reports.
+// This service handles operations for listing available reports and fetching
+// report data with various filtering and grouping options. It supports
+// customizable data views for business analytics and decision making.
 type ReportServiceClient interface {
-	// ListReports
+	// ListReports retrieves all available report definitions for a company.
+	// Returns a list of report configurations that can be used to generate
+	// specific data views.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if company_id is invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListReports(ctx context.Context, in *ListReportsRequest, opts ...grpc.CallOption) (*ListReportsResponse, error)
-	// FetchReportData
+	// FetchReportData generates and retrieves data for a specific report.
+	// Supports pagination, filtering by business units, and custom grouping
+	// options. Data is returned in a structured format defined by the report's
+	// field configuration.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if request parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
+	// - NOT_FOUND if the report definition doesn't exist
 	FetchReportData(ctx context.Context, in *FetchReportDataRequest, opts ...grpc.CallOption) (*FetchReportDataResponse, error)
 }
 
@@ -67,11 +84,28 @@ func (c *reportServiceClient) FetchReportData(ctx context.Context, in *FetchRepo
 // All implementations must embed UnimplementedReportServiceServer
 // for forward compatibility.
 //
-// ReportService openapi definitions for operate report
+// ReportService provides APIs for managing and retrieving business reports.
+// This service handles operations for listing available reports and fetching
+// report data with various filtering and grouping options. It supports
+// customizable data views for business analytics and decision making.
 type ReportServiceServer interface {
-	// ListReports
+	// ListReports retrieves all available report definitions for a company.
+	// Returns a list of report configurations that can be used to generate
+	// specific data views.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if company_id is invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListReports(context.Context, *ListReportsRequest) (*ListReportsResponse, error)
-	// FetchReportData
+	// FetchReportData generates and retrieves data for a specific report.
+	// Supports pagination, filtering by business units, and custom grouping
+	// options. Data is returned in a structured format defined by the report's
+	// field configuration.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if request parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
+	// - NOT_FOUND if the report definition doesn't exist
 	FetchReportData(context.Context, *FetchReportDataRequest) (*FetchReportDataResponse, error)
 	mustEmbedUnimplementedReportServiceServer()
 }

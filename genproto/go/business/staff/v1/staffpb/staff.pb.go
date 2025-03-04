@@ -22,10 +22,13 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Permission
+// Permission represents a specific action that can be performed in the system.
+// Permissions are grouped into roles and assigned to staff members.
 type Permission int32
 
 const (
+	// Unknown or invalid permission
+	// Should not be used when assigning permissions
 	Permission_PERMISSION_UNSPECIFIED Permission = 0
 )
 
@@ -66,22 +69,46 @@ func (Permission) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_staff_v1_staff_proto_rawDescGZIP(), []int{0}
 }
 
-// Staff
+// Staff represents an employee or contractor who provides services in your business.
+// Staff members can be assigned to appointments, manage customer relationships,
+// and perform various administrative tasks based on their role and permissions.
 type Staff struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	Id                 string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	FirstName          string                 `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName           string                 `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	Avatar             string                 `protobuf:"bytes,4,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	Phone              string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Email              string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
-	Role               *Role                  `protobuf:"bytes,7,opt,name=role,proto3" json:"role,omitempty"`
-	HiredTime          *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=hired_time,json=hiredTime,proto3" json:"hired_time,omitempty"`
-	WorkingBusinessIds []string               `protobuf:"bytes,9,rep,name=working_business_ids,json=workingBusinessIds,proto3" json:"working_business_ids,omitempty"`
-	MobileVanId        string                 `protobuf:"bytes,10,opt,name=mobile_van_id,json=mobileVanId,proto3" json:"mobile_van_id,omitempty"`
-	CompanyId          string                 `protobuf:"bytes,11,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the staff member
+	// Format: "stf_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Staff member's first name
+	// Required. Max length: 100 characters
+	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	// Staff member's last name
+	// Required. Max length: 100 characters
+	LastName string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	// URL to the staff member's profile picture
+	// Optional. Must be a valid HTTPS URL
+	Avatar string `protobuf:"bytes,4,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	// Staff member's phone number
+	// Format: E.164 format (e.g., +12125551234)
+	Phone string `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	// Staff member's email address
+	// Format: Must be a valid email address
+	Email string `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	// Staff member's role and associated permissions
+	// Determines what actions they can perform in the system
+	Role *Role `protobuf:"bytes,7,opt,name=role,proto3" json:"role,omitempty"`
+	// When this staff member was hired
+	// Used for reporting and service history
+	HiredTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=hired_time,json=hiredTime,proto3" json:"hired_time,omitempty"`
+	// IDs of business locations where this staff member works
+	// Staff can only be assigned to appointments at these locations
+	WorkingBusinessIds []string `protobuf:"bytes,9,rep,name=working_business_ids,json=workingBusinessIds,proto3" json:"working_business_ids,omitempty"`
+	// ID of the mobile van assigned to this staff member
+	// Only applicable for mobile service providers
+	MobileVanId string `protobuf:"bytes,10,opt,name=mobile_van_id,json=mobileVanId,proto3" json:"mobile_van_id,omitempty"`
+	// ID of the company this staff member belongs to
+	// Used for access control and data segregation
+	CompanyId     string `protobuf:"bytes,11,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Staff) Reset() {
@@ -191,12 +218,19 @@ func (x *Staff) GetCompanyId() string {
 	return ""
 }
 
-// Role
+// Role defines a set of permissions and capabilities assigned to staff members.
+// Roles help manage access control and determine what actions staff can perform.
 type Role struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Permissions   []Permission           `protobuf:"varint,3,rep,packed,name=permissions,proto3,enum=moego.business.staff.v1.Permission" json:"permissions,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the role
+	// Format: "rol_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Display name of the role
+	// Example: "Administrator", "Groomer", "Receptionist"
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// List of permissions granted to this role
+	// Determines what actions can be performed
+	Permissions   []Permission `protobuf:"varint,3,rep,packed,name=permissions,proto3,enum=moego.business.staff.v1.Permission" json:"permissions,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

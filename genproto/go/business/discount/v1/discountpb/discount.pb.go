@@ -24,20 +24,37 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Discount
+// Discount represents a promotional offer that reduces the price of services.
+// Discounts can be applied automatically or manually to appointments and can
+// be limited by various criteria such as usage count, validity period, and
+// eligible customers or business locations.
 type Discount struct {
-	state       protoimpl.MessageState `protogen:"open.v1"`
-	Code        string                 `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
-	Description string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the discount
+	// Format: Alphanumeric code, case-sensitive
+	Code string `protobuf:"bytes,1,opt,name=code,proto3" json:"code,omitempty"`
+	// Human-readable explanation of the discount
+	// Used in customer communications and UI
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// The discount value, either a fixed amount or percentage
+	// Only one field will be set
+	//
 	// Types that are valid to be assigned to Value:
 	//
 	//	*Discount_Amount
 	//	*Discount_Percentage
-	Value       isDiscount_Value    `protobuf_oneof:"value"`
-	ValidPeriod *interval.Interval  `protobuf:"bytes,5,opt,name=valid_period,json=validPeriod,proto3" json:"valid_period,omitempty"`
-	Limitation  *DiscountLimitation `protobuf:"bytes,6,opt,name=limitation,proto3" json:"limitation,omitempty"`
-	Settings    *DiscountSettings   `protobuf:"bytes,7,opt,name=settings,proto3" json:"settings,omitempty"`
-	// discount will never expire if expiry_time is not set
+	Value isDiscount_Value `protobuf_oneof:"value"`
+	// Time period during which the discount is valid
+	// Used to control seasonal or promotional offers
+	ValidPeriod *interval.Interval `protobuf:"bytes,5,opt,name=valid_period,json=validPeriod,proto3" json:"valid_period,omitempty"`
+	// Usage restrictions and eligibility criteria
+	// Controls who can use the discount and how often
+	Limitation *DiscountLimitation `protobuf:"bytes,6,opt,name=limitation,proto3" json:"limitation,omitempty"`
+	// Configuration options for discount application
+	// Controls how the discount behaves in different contexts
+	Settings *DiscountSettings `protobuf:"bytes,7,opt,name=settings,proto3" json:"settings,omitempty"`
+	// When this discount becomes invalid
+	// Optional. If not set, discount never expires
 	ExpiryTime    *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=expiry_time,json=expiryTime,proto3" json:"expiry_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -145,10 +162,14 @@ type isDiscount_Value interface {
 }
 
 type Discount_Amount struct {
+	// Fixed amount to deduct from the service price
+	// Must be in the same currency as the service
 	Amount *money.Money `protobuf:"bytes,3,opt,name=amount,proto3,oneof"`
 }
 
 type Discount_Percentage struct {
+	// Percentage to deduct from the service price
+	// Range: 1-100
 	Percentage uint32 `protobuf:"varint,4,opt,name=percentage,proto3,oneof"`
 }
 
@@ -156,15 +177,25 @@ func (*Discount_Amount) isDiscount_Value() {}
 
 func (*Discount_Percentage) isDiscount_Value() {}
 
-// DiscountLimitation
+// DiscountLimitation defines usage restrictions for a discount.
+// These limitations help control discount usage and target specific
+// customer segments or business locations.
 type DiscountLimitation struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	MaxRedeemTimes        uint32                 `protobuf:"varint,1,opt,name=max_redeem_times,json=maxRedeemTimes,proto3" json:"max_redeem_times,omitempty"`
-	BusinessIds           []string               `protobuf:"bytes,2,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
-	RedeemOncePerCustomer bool                   `protobuf:"varint,3,opt,name=redeem_once_per_customer,json=redeemOncePerCustomer,proto3" json:"redeem_once_per_customer,omitempty"`
-	CustomerIds           []string               `protobuf:"bytes,4,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Maximum number of times this discount can be used
+	// Set to 0 for unlimited usage
+	MaxRedeemTimes uint32 `protobuf:"varint,1,opt,name=max_redeem_times,json=maxRedeemTimes,proto3" json:"max_redeem_times,omitempty"`
+	// Business locations where this discount is valid
+	// Empty list means valid at all locations
+	BusinessIds []string `protobuf:"bytes,2,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Whether each customer can use this discount only once
+	// Helps prevent discount abuse
+	RedeemOncePerCustomer bool `protobuf:"varint,3,opt,name=redeem_once_per_customer,json=redeemOncePerCustomer,proto3" json:"redeem_once_per_customer,omitempty"`
+	// Specific customers eligible for this discount
+	// Empty list means all customers are eligible
+	CustomerIds   []string `protobuf:"bytes,4,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *DiscountLimitation) Reset() {
@@ -225,13 +256,19 @@ func (x *DiscountLimitation) GetCustomerIds() []string {
 	return nil
 }
 
-// DiscountSettings
+// DiscountSettings configures how the discount is applied and presented.
+// These settings control the discount's behavior in different booking
+// channels and scenarios.
 type DiscountSettings struct {
-	state                          protoimpl.MessageState `protogen:"open.v1"`
-	AutoApplyOnEligibleAppointment bool                   `protobuf:"varint,1,opt,name=auto_apply_on_eligible_appointment,json=autoApplyOnEligibleAppointment,proto3" json:"auto_apply_on_eligible_appointment,omitempty"`
-	AllowForOnlineBooking          bool                   `protobuf:"varint,2,opt,name=allow_for_online_booking,json=allowForOnlineBooking,proto3" json:"allow_for_online_booking,omitempty"`
-	unknownFields                  protoimpl.UnknownFields
-	sizeCache                      protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Whether to apply the discount automatically when conditions are met
+	// Used for promotional campaigns and loyalty rewards
+	AutoApplyOnEligibleAppointment bool `protobuf:"varint,1,opt,name=auto_apply_on_eligible_appointment,json=autoApplyOnEligibleAppointment,proto3" json:"auto_apply_on_eligible_appointment,omitempty"`
+	// Whether this discount can be used in online bookings
+	// Controls discount visibility in customer portal
+	AllowForOnlineBooking bool `protobuf:"varint,2,opt,name=allow_for_online_booking,json=allowForOnlineBooking,proto3" json:"allow_for_online_booking,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *DiscountSettings) Reset() {

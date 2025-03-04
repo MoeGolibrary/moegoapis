@@ -22,17 +22,23 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// review received via source
+// Source identifies the channel through which the review was submitted.
+// This helps track engagement across different feedback collection methods
+// and analyze response patterns.
 type Review_Source int32
 
 const (
-	// UNSPECIFIED
+	// Unknown or invalid source
+	// Should not be used when creating new reviews
 	Review_SOURCE_UNSPECIFIED Review_Source = 0
-	// via SMS
+	// Review submitted via SMS message
+	// Typically sent after service completion
 	Review_SMS Review_Source = 1
-	// via Grooming report
+	// Review submitted through grooming report
+	// Collected during service documentation
 	Review_GROOMING_REPORT Review_Source = 2
-	// via Pet Parent Portal
+	// Review submitted through customer portal
+	// Direct customer feedback channel
 	Review_PET_PARENT_PORTAL Review_Source = 3
 )
 
@@ -79,20 +85,44 @@ func (Review_Source) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_review_v1_review_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Review includes the review information
+// Review represents customer feedback for services provided.
+// Each review is associated with a specific appointment and can include
+// ratings and comments about multiple staff members and pets. Reviews
+// help track customer satisfaction and service quality.
 type Review struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	CustomerId    string                 `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	AppointmentId string                 `protobuf:"bytes,3,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
-	StaffIds      []string               `protobuf:"bytes,4,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
-	PetIds        []string               `protobuf:"bytes,5,rep,name=pet_ids,json=petIds,proto3" json:"pet_ids,omitempty"`
-	Source        Review_Source          `protobuf:"varint,6,opt,name=source,proto3,enum=moego.business.review.v1.Review_Source" json:"source,omitempty"`
-	// From 1 to 5, 5 is the best
-	Score           uint32                 `protobuf:"varint,7,opt,name=score,proto3" json:"score,omitempty"`
-	Content         string                 `protobuf:"bytes,8,opt,name=content,proto3" json:"content,omitempty"`
-	ReviewTime      *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=review_time,json=reviewTime,proto3" json:"review_time,omitempty"`
-	CreatedTime     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the review
+	// Format: "rev_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the customer who submitted the review
+	// Required. Must be a valid customer ID
+	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// ID of the appointment being reviewed
+	// Required. Must be a valid appointment ID
+	AppointmentId string `protobuf:"bytes,3,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
+	// IDs of staff members included in the review
+	// May include multiple staff for team services
+	StaffIds []string `protobuf:"bytes,4,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	// IDs of pets involved in the reviewed service
+	// May include multiple pets for group appointments
+	PetIds []string `protobuf:"bytes,5,rep,name=pet_ids,json=petIds,proto3" json:"pet_ids,omitempty"`
+	// Channel through which the review was submitted
+	// Used for tracking feedback collection methods
+	Source Review_Source `protobuf:"varint,6,opt,name=source,proto3,enum=moego.business.review.v1.Review_Source" json:"source,omitempty"`
+	// Customer satisfaction rating
+	// Scale: 1 to 5, where 5 represents highest satisfaction
+	Score uint32 `protobuf:"varint,7,opt,name=score,proto3" json:"score,omitempty"`
+	// Detailed feedback from the customer
+	// Optional. Max length: 2000 characters
+	Content string `protobuf:"bytes,8,opt,name=content,proto3" json:"content,omitempty"`
+	// When the review was submitted by the customer
+	// Used for tracking feedback timeliness
+	ReviewTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=review_time,json=reviewTime,proto3" json:"review_time,omitempty"`
+	// When this review was created in the system
+	// System-generated timestamp
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	// When this review was last modified
+	// Updated on any review changes
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

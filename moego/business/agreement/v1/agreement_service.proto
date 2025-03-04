@@ -12,64 +12,83 @@ option java_multiple_files = true;
 option java_outer_classname = "AgreementServiceProto";
 option java_package = "com.moego.api.business.agreement.v1";
 
+// The agreement service manages the lifecycle of legal agreements and their
+// associated signing records. It provides methods for retrieving agreements,
+// generating signing links, and tracking customer consent. This service helps
+// businesses maintain compliance and manage their legal documentation.
 service AgreementService {
-  // GetAgreement
+  // Retrieves a specific agreement by its ID.
+  //
+  // Returns: The complete agreement object including content and templates.
   rpc GetAgreement(GetAgreementRequest) returns (Agreement) {
     option (google.api.http) = {get: "/v1/agreements/{id}"};
   }
-  // ListAgreement
+
+  // Lists agreements matching the specified criteria.
+  //
+  // Returns: A paginated list of agreements ordered by creation time.
   rpc ListAgreements(ListAgreementsRequest) returns (ListAgreementsResponse) {
     option (google.api.http) = {
       post: "/v1/agreements:list"
       body: "*"
     };
   }
-  // GetAgreementSignLink
+
+  // Generates a signing URL for a specific agreement and customer.
+  //
+  // Returns: A unique URL where the customer can view and sign the agreement.
   rpc GetAgreementSignLink(GetAgreementSignURLRequest) returns (GetAgreementSignURLResponse) {
     option (google.api.http) = {get: "/v1/agreements/{id}/sign_link"};
   }
 }
 
-// GetAgreementRequest get agreement request
+// Request to retrieve a specific agreement.
 message GetAgreementRequest {
-  // id
+  // string, Unique identifier of the agreement
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  // company_id
+
+  // string, Company identifier for access control
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListAgreementsRequest get agreements request
+// Request to list agreements matching specified criteria.
 message ListAgreementsRequest {
-  // Pagination
+  // object(Pagination), Pagination parameters for the request
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // company_id
+
+  // string, Company identifier for access control
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
-  // business_ids
+
+  // array(string), Optional filter by business locations
   repeated string business_ids = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
-// UnsignedAgreementRequest get unsignedAgreement request
+// Request to generate a signing URL for an agreement.
 message GetAgreementSignURLRequest {
-  // id
+  // string, Agreement to be signed
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  // customer_id
+
+  // string, Customer who will sign
   string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
-  // business_id
+
+  // string, Business location context
   string business_id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListAgreementsResponse
+// Response containing agreements matching the list criteria.
 message ListAgreementsResponse {
-  // The next page token
+  // string, Token for retrieving the next page
   string next_page_token = 1;
-  // The Agreements
+
+  // array(Agreement), List of matching agreements
   repeated Agreement agreement = 2;
 }
 
-// UnsignedAgreementResponse
+// Response containing the generated signing URL.
 message GetAgreementSignURLResponse {
-  // agreement_record_id
+  // string, Identifier of the agreement record created
   string agreement_record_id = 1;
-  // The sign_url
+
+  // string, URL where the agreement can be signed
   string sign_url = 2;
 }

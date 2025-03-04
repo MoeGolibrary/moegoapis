@@ -23,14 +23,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// ListReviewsRequest request for ListReviews
+// ListReviewsRequest encapsulates parameters for retrieving customer reviews.
+// Supports pagination and filtering to customize the result set based on
+// business needs and analysis requirements.
 type ListReviewsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for handling large result sets
+	// Required to manage data volume efficiently
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// The business id
+	// Business location identifier for scoping reviews
+	// Required to ensure reviews are accessed within proper context
 	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// The filter
+	// Filter criteria to apply to the review list
+	// Optional. If not provided, returns all reviews
 	Filter        *ListReviewsRequest_Filter `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -87,12 +92,14 @@ func (x *ListReviewsRequest) GetFilter() *ListReviewsRequest_Filter {
 	return nil
 }
 
-// ListReviewsResponse response for ListReviews
+// ListReviewsResponse contains the paginated list of reviews and metadata.
 type ListReviewsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The reviews
+	// List of reviews matching the request criteria
+	// May be empty if no reviews match the filters
 	Reviews       []*Review `protobuf:"bytes,2,rep,name=reviews,proto3" json:"reviews,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -142,11 +149,16 @@ func (x *ListReviewsResponse) GetReviews() []*Review {
 	return nil
 }
 
-// Filter for the reviews
+// Filter specifies criteria for filtering the review list.
+// Allows targeting specific feedback sources and staff members.
 type ListReviewsRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Sources       []Review_Source        `protobuf:"varint,1,rep,packed,name=sources,proto3,enum=moego.business.review.v1.Review_Source" json:"sources,omitempty"`
-	StaffIds      []string               `protobuf:"bytes,2,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Feedback channels to include in results
+	// Optional. If empty, includes reviews from all sources
+	Sources []Review_Source `protobuf:"varint,1,rep,packed,name=sources,proto3,enum=moego.business.review.v1.Review_Source" json:"sources,omitempty"`
+	// Staff members to filter reviews by
+	// Optional. If empty, includes reviews for all staff
+	StaffIds      []string `protobuf:"bytes,2,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

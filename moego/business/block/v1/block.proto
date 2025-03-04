@@ -9,12 +9,28 @@ option java_multiple_files = true;
 option java_outer_classname = "BlockProto";
 option java_package = "com.moego.api.business.block.v1";
 
-// Block
+// Block represents a time period that is blocked off in a staff member's schedule.
+// This can be used for breaks, meetings, or any other time when the staff member
+// is not available for appointments.
 message Block {
+  // Unique identifier for the block.
   string id = 1;
+
+  // ID of the staff member whose schedule is being blocked.
   string staff_id = 2;
+
+  // The time interval during which the staff member is unavailable.
+  // Uses Google's standard Interval type to represent the start and end times.
   google.type.Interval duration = 3;
+
+  // Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting").
   string description = 4;
+
+  // Color code used to visually distinguish this block in the calendar UI.
+  // Should be a valid hex color code (e.g., "#FF0000" for red).
   string color_code = 5;
+
+  // ID of the business where this block is created.
+  // Used for access control and filtering blocks by business.
   string business_id = 6;
 }

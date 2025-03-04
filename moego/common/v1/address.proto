@@ -9,21 +9,55 @@ option java_multiple_files = true;
 option java_outer_classname = "AddressProto";
 option java_package = "com.moego.api.common.v1";
 
-// Address represents a physical address
+// The address object represents a physical location used throughout the system.
+// It provides a standardized way to store and validate address information for
+// businesses, customers, and service locations. The address format follows
+// common postal standards and includes geocoding information for mapping.
 message Address {
-  // Type of address
+  // Possible values are `primary`, `secondary`.
+  // Type represents the importance of the address
   enum Type {
+    // Not intended for direct use. Indicates a system anomaly.
     TYPE_UNSPECIFIED = 0;
+
+    // Primary Address, which will be used as first address choice.
     PRIMARY = 1;
+
+    // Secondary Address, an optional address saved as back-up
     SECONDARY = 2;
   }
+
+  // string, Unique identifier for the address.
   string id = 1;
+
+  // string, Street address including house number and street name.
+  // Example: "123 Main Street", "Unit 4B, 567 Park Avenue"
   string address1 = 2;
+
+  // string, Additional address details like apartment, suite, or unit number.
+  // Example: "Floor 3", "Building B"
   string address2 = 3;
+
+  // string, City or locality name.
+  // Example: "San Francisco", "New York City"
   string city = 4;
+
+  // string, State, province, or region.
+  // Example: "CA", "NY"
   string state = 5;
+
+  // string, Postal or ZIP code.
+  // Example: "94105", "10001"
   string postal_code = 6;
+
+  // string, Country name or ISO country code.
+  // Example: "US", "United States"
   string country = 7;
+
+  // object(LatLng), Latitude and Longitude coordinate for mapping.
+  // Latitude Range: -90 to 90. Longitude Range: -180 to 180.
   google.type.LatLng coordinate = 8;
+
+  // enum(Type), represents the importance of the address
   Type type = 9;
 }

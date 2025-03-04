@@ -28,13 +28,37 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// SettingService openapi definitions for operate setting
+// SettingService provides methods for managing business configuration settings.
+// This includes pet codes, customer tags, and service definitions that are used
+// throughout the system. These settings help standardize data entry and ensure
+// consistent service delivery across all business locations.
 type SettingServiceClient interface {
-	// List Pet Codes Setting
+	// Lists all available pet codes for a company.
+	//
+	// Pet codes are used to flag special handling requirements or medical conditions
+	// that staff need to be aware of when providing services. These codes are
+	// displayed prominently in pet profiles and during service delivery.
+	//
+	// Returns all active codes for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListPetCodes(ctx context.Context, in *ListPetCodeRequest, opts ...grpc.CallOption) (*ListPetCodeResponse, error)
-	// List Customer Tags Setting
+	// Lists all available customer tags for a company.
+	//
+	// Customer tags help categorize clients and can be used for marketing,
+	// reporting, and service customization. Tags can indicate preferences,
+	// loyalty status, or special handling requirements.
+	//
+	// Returns all active tags for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagRequest, opts ...grpc.CallOption) (*ListCustomerTagResponse, error)
-	// ListServices
+	// Lists available services based on specified criteria.
+	//
+	// Services can be filtered by business location and service type.
+	// Results are paginated and can be used for service menu display,
+	// appointment booking, and pricing calculations.
+	//
+	// Returns services matching the filter criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
 }
 
@@ -80,13 +104,37 @@ func (c *settingServiceClient) ListServices(ctx context.Context, in *ListService
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
 //
-// SettingService openapi definitions for operate setting
+// SettingService provides methods for managing business configuration settings.
+// This includes pet codes, customer tags, and service definitions that are used
+// throughout the system. These settings help standardize data entry and ensure
+// consistent service delivery across all business locations.
 type SettingServiceServer interface {
-	// List Pet Codes Setting
+	// Lists all available pet codes for a company.
+	//
+	// Pet codes are used to flag special handling requirements or medical conditions
+	// that staff need to be aware of when providing services. These codes are
+	// displayed prominently in pet profiles and during service delivery.
+	//
+	// Returns all active codes for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListPetCodes(context.Context, *ListPetCodeRequest) (*ListPetCodeResponse, error)
-	// List Customer Tags Setting
+	// Lists all available customer tags for a company.
+	//
+	// Customer tags help categorize clients and can be used for marketing,
+	// reporting, and service customization. Tags can indicate preferences,
+	// loyalty status, or special handling requirements.
+	//
+	// Returns all active tags for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error)
-	// ListServices
+	// Lists available services based on specified criteria.
+	//
+	// Services can be filtered by business location and service type.
+	// Results are paginated and can be used for service menu display,
+	// appointment booking, and pricing calculations.
+	//
+	// Returns services matching the filter criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }

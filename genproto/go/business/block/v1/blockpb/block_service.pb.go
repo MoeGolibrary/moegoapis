@@ -23,14 +23,25 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// CreateBlockRequest create block request
+// CreateBlockRequest contains the information needed to create a new block
+// in a staff member's schedule.
 type CreateBlockRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	BusinessId    string                 `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	StaffId       string                 `protobuf:"bytes,2,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
-	Duration      *interval.Interval     `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	ColorCode     string                 `protobuf:"bytes,5,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the business where the block will be created.
+	// Required for access control and proper block organization.
+	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// ID of the staff member whose schedule will be blocked.
+	// Must be a valid staff member ID within the specified business.
+	StaffId string `protobuf:"bytes,2,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
+	// The time interval during which the staff member will be unavailable.
+	// Must be a valid time interval with both start and end times specified.
+	Duration *interval.Interval `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
+	// Optional description explaining why the time is being blocked off.
+	// Examples: "Lunch break", "Team meeting", "Training session"
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// Optional color code for visual distinction in the calendar UI.
+	// Should be a valid hex color code (e.g., "#FF0000" for red).
+	ColorCode     string `protobuf:"bytes,5,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -100,10 +111,12 @@ func (x *CreateBlockRequest) GetColorCode() string {
 	return ""
 }
 
-// GetBlockRequest get block request
+// GetBlockRequest contains the ID of the block to retrieve.
 type GetBlockRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier of the block to retrieve.
+	// Must be a valid block ID that exists in the system.
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

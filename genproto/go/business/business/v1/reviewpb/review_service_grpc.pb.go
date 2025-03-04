@@ -26,9 +26,19 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// ReviewService openapi definitions for operate review
+// ReviewService provides APIs for managing customer reviews and feedback.
+// This service handles operations for retrieving and analyzing customer
+// reviews across different feedback channels. It supports filtering by
+// staff members and feedback sources for targeted analysis.
 type ReviewServiceClient interface {
-	// ListReviews list reviews
+	// ListReviews retrieves a paginated list of customer reviews based on specified criteria.
+	// Supports filtering by feedback source and staff members to facilitate
+	// targeted analysis of customer satisfaction and service quality.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
+	// - NOT_FOUND if the business ID doesn't exist
 	ListReviews(ctx context.Context, in *ListReviewsRequest, opts ...grpc.CallOption) (*ListReviewsResponse, error)
 }
 
@@ -54,9 +64,19 @@ func (c *reviewServiceClient) ListReviews(ctx context.Context, in *ListReviewsRe
 // All implementations must embed UnimplementedReviewServiceServer
 // for forward compatibility.
 //
-// ReviewService openapi definitions for operate review
+// ReviewService provides APIs for managing customer reviews and feedback.
+// This service handles operations for retrieving and analyzing customer
+// reviews across different feedback channels. It supports filtering by
+// staff members and feedback sources for targeted analysis.
 type ReviewServiceServer interface {
-	// ListReviews list reviews
+	// ListReviews retrieves a paginated list of customer reviews based on specified criteria.
+	// Supports filtering by feedback source and staff members to facilitate
+	// targeted analysis of customer satisfaction and service quality.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
+	// - NOT_FOUND if the business ID doesn't exist
 	ListReviews(context.Context, *ListReviewsRequest) (*ListReviewsResponse, error)
 	mustEmbedUnimplementedReviewServiceServer()
 }

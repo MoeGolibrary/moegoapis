@@ -12,26 +12,66 @@ option java_multiple_files = true;
 option java_outer_classname = "PetServiceDetailProto";
 option java_package = "com.moego.api.business.appointment.v1";
 
-// PetServiceDetail
+// The pet service detail object represents the services booked for a specific pet in an appointment.
+// Each appointment can include multiple pets, and each pet can receive multiple services.
+// This object links pets with their scheduled services and maintains the service-specific details
+// such as pricing, duration, and assigned staff.
 message PetServiceDetail {
+  // object(Pet), The pet receiving the services.
+  // Contains pet's basic information, health records, and preferences.
   moego.business.customer.v1.Pet pet = 1;
+
+  // array(ServiceDetail), List of services scheduled for this pet.
+  // Each service includes timing, pricing, and staff assignments.
   repeated ServiceDetail service_details = 2;
 }
 
-// ServiceDetail
+// The service detail object represents a specific service booked for a pet.
+// It contains all the information needed to perform the service, including
+// timing, pricing, staff assignments, and service-specific parameters.
 message ServiceDetail {
-  // service ID
+  // string, Unique identifier for the service.
+  // Format: "svc_" followed by random characters
+  // Example: "svc_1234567890abcdef"
   string id = 1;
+
+  // string, Display name of the service.
+  // Example: "Premium Grooming", "Basic Wash"
   string name = 2;
+
+  // enum(ItemType), Category of service item.
+  // References the standardized service types defined in settings.
   setting.v1.Service.ItemType service_item_type = 3;
+
+  // string, Service category for grouping and filtering.
+  // Example: "Grooming", "Boarding", "Daycare"
   string category = 4;
+
+  // object(Money), Price for this service instance.
+  // May differ from standard price due to customizations or special offers.
   google.type.Money price = 5;
-  // the service start time && end time
+
+  // object(Interval), Scheduled time window for the service.
+  // Includes both start and end time.
+  // Used for staff scheduling and customer notifications.
   google.type.Interval duration = 6;
+
+  // array(string), IDs of staff members assigned to this service.
+  // Multiple staff may be assigned for complex services.
+  // Format: Each ID starts with "staff_"
   repeated string staff_ids = 7;
+
+  // enum(Type), The type of service being provided.
+  // Determines service flow and required resources.
   setting.v1.Service.Type service_type = 8;
-  // the service provision time, minutes
+
+  // integer, Expected duration of the service in minutes.
+  // Used for scheduling and resource allocation.
+  // Minimum: 1, Maximum: 1440 (24 hours)
   int32 service_time = 9;
-  // ID of a pet's service item of appointment
+
+  // string, Unique identifier for this specific pet's service booking.
+  // Links this service to a specific pet in a multi-pet appointment.
+  // Format: "psd_" followed by random characters
   string pet_service_detail_id = 10;
 }

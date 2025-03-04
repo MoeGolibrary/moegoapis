@@ -23,28 +23,40 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Type specifies the data type and formatting rules for a field.
+// This determines how values are stored, displayed, and processed.
 type Field_Type int32
 
 const (
-	// Unspecified field type
+	// Default value when type is not specified
+	// Should not be used when creating new fields
 	Field_TYPE_UNSPECIFIED Field_Type = 0
-	// A money field type, value will be Money
+	// Represents monetary values with currency information
+	// Uses google.type.Money for storage
 	Field_MONEY Field_Type = 1
-	// A text field type, value will be string
+	// Represents text or string values
+	// Used for names, descriptions, and other textual data
 	Field_TEXT Field_Type = 2
-	// A date field type, value will be Timestamp
+	// Represents date values without time
+	// Stored as Timestamp with time set to midnight
 	Field_DATE Field_Type = 3
-	// A time field type, value will be Timestamp
+	// Represents time values without date
+	// Stored as Timestamp with date set to epoch
 	Field_TIME Field_Type = 4
-	// A number field type, value will be int64
+	// Represents whole numbers
+	// Used for counts and integer quantities
 	Field_NUMBER Field_Type = 5
-	// A decimal number field type, value will be double
+	// Represents numbers with decimal points
+	// Used for precise numerical values
 	Field_DECIMAL_NUMBER Field_Type = 6
-	// A percentage field type, value will be double
+	// Represents percentage values
+	// Stored as decimal (e.g., 0.75 for 75%)
 	Field_PERCENTAGE Field_Type = 7
-	// A duration field type, in minutes, value will be double
+	// Represents time duration in minutes
+	// Used for service times and intervals
 	Field_DURATION Field_Type = 8
-	// With both date and time info, value will be Timestamp
+	// Represents full date and time values
+	// Used for exact temporal data points
 	Field_DATETIME Field_Type = 9
 )
 
@@ -103,16 +115,23 @@ func (Field_Type) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_report_v1_report_proto_rawDescGZIP(), []int{1, 0}
 }
 
-// Report
+// Report represents a customizable business report definition.
+// Reports are used to generate structured data views with configurable fields
+// and formatting options. Each report can be used to analyze different aspects
+// of business operations.
 type Report struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id
+	// Unique identifier for the report
+	// Format: "rpt_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// name
+	// Display name of the report
+	// Used in UI and exported documents
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// description
+	// Detailed description of the report's purpose and contents
+	// Helps users understand what data is included
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Fields
+	// List of fields included in the report
+	// Defines the structure and data types of the report
 	Fields        []*Field `protobuf:"bytes,4,rep,name=fields,proto3" json:"fields,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -176,15 +195,22 @@ func (x *Report) GetFields() []*Field {
 	return nil
 }
 
+// Field defines a single data column in a report.
+// Each field has a specific data type and display properties.
+// Fields can be used for grouping data and determining how values are formatted.
 type Field struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The label of the field for display
+	// Display label for the field
+	// Used in report headers and UI elements
 	Label string `protobuf:"bytes,1,opt,name=label,proto3" json:"label,omitempty"`
-	// The type of the field
+	// Data type of the field
+	// Determines value formatting and validation
 	Type Field_Type `protobuf:"varint,2,opt,name=type,proto3,enum=moego.business.report.v1.Field_Type" json:"type,omitempty"`
-	// The key of the field
+	// Unique identifier for the field within the report
+	// Used to reference field values in data structures
 	Key string `protobuf:"bytes,3,opt,name=key,proto3" json:"key,omitempty"`
-	// Whether the field can be grouped by
+	// Whether this field can be used as a grouping criterion
+	// Affects report aggregation options
 	GroupByEnable bool `protobuf:"varint,4,opt,name=group_by_enable,json=groupByEnable,proto3" json:"group_by_enable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -248,12 +274,15 @@ func (x *Field) GetGroupByEnable() bool {
 	return false
 }
 
-// Table data
+// TableData represents a complete data set for a report.
+// Contains both the structure (fields) and content (rows) of the report.
 type TableData struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The title of the table
+	// Individual data rows in the table
+	// Each row contains values for all defined fields
 	Rows []*TableRowData `protobuf:"bytes,1,rep,name=rows,proto3" json:"rows,omitempty"`
-	// Fields of the table, fields from TableMeta or Dynamic generated fields
+	// Field definitions for the table
+	// Can be from TableMeta or dynamically generated
 	Fields        []*Field `protobuf:"bytes,2,rep,name=fields,proto3" json:"fields,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -303,10 +332,12 @@ func (x *TableData) GetFields() []*Field {
 	return nil
 }
 
-// Table row data
+// TableRowData represents a single row of data in a report.
+// Contains values for each field defined in the table structure.
 type TableRowData struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The column data of one row, key is field key
+	// Map of field values indexed by field key
+	// Each entry corresponds to a column in the report
 	Data          map[string]*Data `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -349,14 +380,18 @@ func (x *TableRowData) GetData() map[string]*Data {
 	return nil
 }
 
-// data of a column in one row
+// Data represents a single cell value in a report table.
+// Includes both the field metadata and the actual value.
 type Data struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The field_key of the big number
+	// Reference to the field definition
+	// Must match a field key in the table structure
 	FieldKey string `protobuf:"bytes,1,opt,name=field_key,json=fieldKey,proto3" json:"field_key,omitempty"`
-	// The type of the field
+	// Data type of the value
+	// Must match the field definition
 	FieldType Field_Type `protobuf:"varint,2,opt,name=field_type,json=fieldType,proto3,enum=moego.business.report.v1.Field_Type" json:"field_type,omitempty"`
-	// The value of the big number
+	// Actual value of the cell
+	// Type must match field_type
 	Value         *Value `protobuf:"bytes,3,opt,name=value,proto3" json:"value,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -413,10 +448,11 @@ func (x *Data) GetValue() *Value {
 	return nil
 }
 
-// A value of any type
+// Value represents a typed data value used in reports.
+// Supports multiple data types through a oneof field.
 type Value struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The value
+	// The actual value in its appropriate type
 	//
 	// Types that are valid to be assigned to Value:
 	//
@@ -527,32 +563,32 @@ type isValue_Value interface {
 }
 
 type Value_String_ struct {
-	// The string value
+	// Text value for string fields
 	String_ string `protobuf:"bytes,2,opt,name=string,proto3,oneof"`
 }
 
 type Value_Double struct {
-	// The double value
+	// Decimal value for numerical fields
 	Double float64 `protobuf:"fixed64,3,opt,name=double,proto3,oneof"`
 }
 
 type Value_Int64 struct {
-	// The int64 value
+	// Integer value for whole number fields
 	Int64 int64 `protobuf:"varint,4,opt,name=int64,proto3,oneof"`
 }
 
 type Value_Bool struct {
-	// The bool value
+	// Boolean value for true/false fields
 	Bool bool `protobuf:"varint,6,opt,name=bool,proto3,oneof"`
 }
 
 type Value_Money struct {
-	// The money value
+	// Monetary value with currency information
 	Money *money.Money `protobuf:"bytes,7,opt,name=money,proto3,oneof"`
 }
 
 type Value_Timestamp struct {
-	// The timestamp value
+	// Date/time value for temporal fields
 	Timestamp *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=timestamp,proto3,oneof"`
 }
 

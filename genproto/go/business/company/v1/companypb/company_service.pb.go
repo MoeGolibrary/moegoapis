@@ -23,10 +23,11 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetCompanyRequest request for GetCompany
+// GetCompanyRequest represents a request to retrieve a specific company.
 type GetCompanyRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of business
+	// Unique identifier of the company to retrieve
+	// Required. Must be a valid company ID
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -69,10 +70,11 @@ func (x *GetCompanyRequest) GetId() string {
 	return ""
 }
 
-// ListCompaniesRequest request for ListCompanies
+// ListCompaniesRequest encapsulates parameters for retrieving companies.
 type ListCompaniesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for handling large result sets
+	// Required to manage data volume efficiently
 	Pagination    *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -115,12 +117,14 @@ func (x *ListCompaniesRequest) GetPagination() *commonpb.Pagination {
 	return nil
 }
 
-// ListCompaniesResponse response for ListCompanies
+// ListCompaniesResponse contains the paginated list of companies.
 type ListCompaniesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The businesses
+	// List of companies matching the request criteria
+	// May be empty if no companies match
 	Companies     []*Company `protobuf:"bytes,2,rep,name=companies,proto3" json:"companies,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

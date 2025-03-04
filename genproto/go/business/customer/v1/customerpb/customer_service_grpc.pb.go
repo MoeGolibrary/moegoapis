@@ -33,23 +33,55 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// CustomerService openapi definitions for operate customer
+// CustomerService provides methods for managing customer data, including creation,
+// retrieval, and management of customer-related information such as notes and tags.
+// All operations require appropriate authentication and authorization.
 type CustomerServiceClient interface {
-	// Create a customer
+	// Creates a new customer in the system.
+	//
+	// This method validates and stores customer information, including basic details,
+	// preferences, and any initial tags or notes. A unique customer ID is generated
+	// and returned in the response.
+	//
+	// Returns the created Customer object with all fields populated.
+	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreateCustomer(ctx context.Context, in *CreateCustomerRequest, opts ...grpc.CallOption) (*Customer, error)
-	// Get a customer
+	// Retrieves detailed information about a specific customer.
+	//
+	// Returns all customer data including preferences, notes, tags, and appointment history.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	GetCustomer(ctx context.Context, in *GetCustomerRequest, opts ...grpc.CallOption) (*Customer, error)
-	// List customers
+	// Lists customers matching the specified criteria.
+	//
+	// Results are paginated and can be filtered by last update time.
+	// Returns an empty list if no customers match the criteria.
 	ListCustomers(ctx context.Context, in *ListCustomersRequest, opts ...grpc.CallOption) (*ListCustomersResponse, error)
-	// Generate a link to add customer card on file
+	// Generates a secure link for adding customer card-on-file information.
+	//
+	// The generated link is valid for 24 hours and can only be used once.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	GenCustomerCofLink(ctx context.Context, in *GenCustomerCofLinkRequest, opts ...grpc.CallOption) (*GenCustomerCofLinkResponse, error)
-	// Append notes to a Customer
+	// Adds new notes to a customer's profile.
+	//
+	// Notes are timestamped and attributed to the staff member who created them.
+	// Returns the newly created notes with generated IDs.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	AppendCustomerNotes(ctx context.Context, in *AppendCustomerNotesRequest, opts ...grpc.CallOption) (*AppendCustomerNotesResponse, error)
-	// List Customer Notes
+	// Retrieves a paginated list of notes for a specific customer.
+	//
+	// Notes are returned in reverse chronological order (newest first).
+	// Returns an empty list if the customer has no notes.
 	ListCustomerNotes(ctx context.Context, in *ListCustomerNotesRequest, opts ...grpc.CallOption) (*ListCustomerNotesResponse, error)
-	// Append tags to a Customer
+	// Adds new tags to a customer's profile.
+	//
+	// Tags help categorize customers and can be used for filtering and reporting.
+	// Returns the newly created tags with generated IDs.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	AppendCustomerTags(ctx context.Context, in *AppendCustomerTagsRequest, opts ...grpc.CallOption) (*AppendCustomerTagsResponse, error)
-	// List Customer Tags
+	// Retrieves all tags associated with a specific customer.
+	//
+	// Returns an empty list if the customer has no tags.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagsRequest, opts ...grpc.CallOption) (*ListCustomerTagsResponse, error)
 }
 
@@ -145,23 +177,55 @@ func (c *customerServiceClient) ListCustomerTags(ctx context.Context, in *ListCu
 // All implementations must embed UnimplementedCustomerServiceServer
 // for forward compatibility.
 //
-// CustomerService openapi definitions for operate customer
+// CustomerService provides methods for managing customer data, including creation,
+// retrieval, and management of customer-related information such as notes and tags.
+// All operations require appropriate authentication and authorization.
 type CustomerServiceServer interface {
-	// Create a customer
+	// Creates a new customer in the system.
+	//
+	// This method validates and stores customer information, including basic details,
+	// preferences, and any initial tags or notes. A unique customer ID is generated
+	// and returned in the response.
+	//
+	// Returns the created Customer object with all fields populated.
+	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreateCustomer(context.Context, *CreateCustomerRequest) (*Customer, error)
-	// Get a customer
+	// Retrieves detailed information about a specific customer.
+	//
+	// Returns all customer data including preferences, notes, tags, and appointment history.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	GetCustomer(context.Context, *GetCustomerRequest) (*Customer, error)
-	// List customers
+	// Lists customers matching the specified criteria.
+	//
+	// Results are paginated and can be filtered by last update time.
+	// Returns an empty list if no customers match the criteria.
 	ListCustomers(context.Context, *ListCustomersRequest) (*ListCustomersResponse, error)
-	// Generate a link to add customer card on file
+	// Generates a secure link for adding customer card-on-file information.
+	//
+	// The generated link is valid for 24 hours and can only be used once.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	GenCustomerCofLink(context.Context, *GenCustomerCofLinkRequest) (*GenCustomerCofLinkResponse, error)
-	// Append notes to a Customer
+	// Adds new notes to a customer's profile.
+	//
+	// Notes are timestamped and attributed to the staff member who created them.
+	// Returns the newly created notes with generated IDs.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	AppendCustomerNotes(context.Context, *AppendCustomerNotesRequest) (*AppendCustomerNotesResponse, error)
-	// List Customer Notes
+	// Retrieves a paginated list of notes for a specific customer.
+	//
+	// Notes are returned in reverse chronological order (newest first).
+	// Returns an empty list if the customer has no notes.
 	ListCustomerNotes(context.Context, *ListCustomerNotesRequest) (*ListCustomerNotesResponse, error)
-	// Append tags to a Customer
+	// Adds new tags to a customer's profile.
+	//
+	// Tags help categorize customers and can be used for filtering and reporting.
+	// Returns the newly created tags with generated IDs.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	AppendCustomerTags(context.Context, *AppendCustomerTagsRequest) (*AppendCustomerTagsResponse, error)
-	// List Customer Tags
+	// Retrieves all tags associated with a specific customer.
+	//
+	// Returns an empty list if the customer has no tags.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
 	ListCustomerTags(context.Context, *ListCustomerTagsRequest) (*ListCustomerTagsResponse, error)
 	mustEmbedUnimplementedCustomerServiceServer()
 }

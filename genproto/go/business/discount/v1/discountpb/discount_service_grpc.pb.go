@@ -28,13 +28,40 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// DiscountService openapi definitions for operate discount
+// DiscountService provides APIs for managing promotional discounts and offers.
+// This service handles the creation, retrieval, and listing of discounts that
+// can be applied to services. It supports various discount types and
+// configurations to meet different promotional needs.
 type DiscountServiceClient interface {
-	// CreateDiscount
+	// Creates a new discount with the specified configuration.
+	//
+	// The created discount can be immediately used for appointments and
+	// online bookings based on its settings and limitations.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if the discount configuration is invalid
+	// - ALREADY_EXISTS if the discount code is already in use
+	// - PERMISSION_DENIED if the caller lacks access rights
 	CreateDiscount(ctx context.Context, in *CreateDiscountRequest, opts ...grpc.CallOption) (*Discount, error)
-	// GetDiscount
+	// Retrieves detailed information about a specific discount.
+	//
+	// Returns the complete discount object including all settings
+	// and limitations. This information is used for discount validation
+	// and application.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the discount code doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetDiscount(ctx context.Context, in *GetDiscountRequest, opts ...grpc.CallOption) (*Discount, error)
-	// ListDiscounts
+	// Lists available discounts based on specified criteria.
+	//
+	// Results are paginated and can be used to display active promotions
+	// or manage existing discounts. Expired discounts are included in
+	// the results for historical reference.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListDiscounts(ctx context.Context, in *ListDiscountsRequest, opts ...grpc.CallOption) (*ListDiscountsResponse, error)
 }
 
@@ -80,13 +107,40 @@ func (c *discountServiceClient) ListDiscounts(ctx context.Context, in *ListDisco
 // All implementations must embed UnimplementedDiscountServiceServer
 // for forward compatibility.
 //
-// DiscountService openapi definitions for operate discount
+// DiscountService provides APIs for managing promotional discounts and offers.
+// This service handles the creation, retrieval, and listing of discounts that
+// can be applied to services. It supports various discount types and
+// configurations to meet different promotional needs.
 type DiscountServiceServer interface {
-	// CreateDiscount
+	// Creates a new discount with the specified configuration.
+	//
+	// The created discount can be immediately used for appointments and
+	// online bookings based on its settings and limitations.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if the discount configuration is invalid
+	// - ALREADY_EXISTS if the discount code is already in use
+	// - PERMISSION_DENIED if the caller lacks access rights
 	CreateDiscount(context.Context, *CreateDiscountRequest) (*Discount, error)
-	// GetDiscount
+	// Retrieves detailed information about a specific discount.
+	//
+	// Returns the complete discount object including all settings
+	// and limitations. This information is used for discount validation
+	// and application.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the discount code doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetDiscount(context.Context, *GetDiscountRequest) (*Discount, error)
-	// ListDiscounts
+	// Lists available discounts based on specified criteria.
+	//
+	// Results are paginated and can be used to display active promotions
+	// or manage existing discounts. Expired discounts are included in
+	// the results for historical reference.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListDiscounts(context.Context, *ListDiscountsRequest) (*ListDiscountsResponse, error)
 	mustEmbedUnimplementedDiscountServiceServer()
 }

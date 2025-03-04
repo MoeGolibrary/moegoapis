@@ -25,11 +25,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// PetServiceDetail
+// The pet service detail object represents the services booked for a specific pet in an appointment.
+// Each appointment can include multiple pets, and each pet can receive multiple services.
+// This object links pets with their scheduled services and maintains the service-specific details
+// such as pricing, duration, and assigned staff.
 type PetServiceDetail struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Pet            *customerpb.Pet        `protobuf:"bytes,1,opt,name=pet,proto3" json:"pet,omitempty"`
-	ServiceDetails []*ServiceDetail       `protobuf:"bytes,2,rep,name=service_details,json=serviceDetails,proto3" json:"service_details,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// object(Pet), The pet receiving the services.
+	// Contains pet's basic information, health records, and preferences.
+	Pet *customerpb.Pet `protobuf:"bytes,1,opt,name=pet,proto3" json:"pet,omitempty"`
+	// array(ServiceDetail), List of services scheduled for this pet.
+	// Each service includes timing, pricing, and staff assignments.
+	ServiceDetails []*ServiceDetail `protobuf:"bytes,2,rep,name=service_details,json=serviceDetails,proto3" json:"service_details,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -78,22 +85,45 @@ func (x *PetServiceDetail) GetServiceDetails() []*ServiceDetail {
 	return nil
 }
 
-// ServiceDetail
+// The service detail object represents a specific service booked for a pet.
+// It contains all the information needed to perform the service, including
+// timing, pricing, staff assignments, and service-specific parameters.
 type ServiceDetail struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// service ID
-	Id              string                     `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name            string                     `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// string, Unique identifier for the service.
+	// Format: "svc_" followed by random characters
+	// Example: "svc_1234567890abcdef"
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, Display name of the service.
+	// Example: "Premium Grooming", "Basic Wash"
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// enum(ItemType), Category of service item.
+	// References the standardized service types defined in settings.
 	ServiceItemType settingpb.Service_ItemType `protobuf:"varint,3,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
-	Category        string                     `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
-	Price           *money.Money               `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
-	// the service start time && end time
-	Duration    *interval.Interval     `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"`
-	StaffIds    []string               `protobuf:"bytes,7,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	// string, Service category for grouping and filtering.
+	// Example: "Grooming", "Boarding", "Daycare"
+	Category string `protobuf:"bytes,4,opt,name=category,proto3" json:"category,omitempty"`
+	// object(Money), Price for this service instance.
+	// May differ from standard price due to customizations or special offers.
+	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
+	// object(Interval), Scheduled time window for the service.
+	// Includes both start and end time.
+	// Used for staff scheduling and customer notifications.
+	Duration *interval.Interval `protobuf:"bytes,6,opt,name=duration,proto3" json:"duration,omitempty"`
+	// array(string), IDs of staff members assigned to this service.
+	// Multiple staff may be assigned for complex services.
+	// Format: Each ID starts with "staff_"
+	StaffIds []string `protobuf:"bytes,7,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	// enum(Type), The type of service being provided.
+	// Determines service flow and required resources.
 	ServiceType settingpb.Service_Type `protobuf:"varint,8,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
-	// the service provision time, minutes
+	// integer, Expected duration of the service in minutes.
+	// Used for scheduling and resource allocation.
+	// Minimum: 1, Maximum: 1440 (24 hours)
 	ServiceTime int32 `protobuf:"varint,9,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
-	// ID of a pet's service item of appointment
+	// string, Unique identifier for this specific pet's service booking.
+	// Links this service to a specific pet in a multi-pet appointment.
+	// Format: "psd_" followed by random characters
 	PetServiceDetailId string `protobuf:"bytes,10,opt,name=pet_service_detail_id,json=petServiceDetailId,proto3" json:"pet_service_detail_id,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache

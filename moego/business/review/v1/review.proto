@@ -9,29 +9,73 @@ option java_multiple_files = true;
 option java_outer_classname = "ReviewServiceProto";
 option java_package = "com.moego.api.business.review.v1";
 
-// Review includes the review information
+// Review represents customer feedback for services provided.
+// Each review is associated with a specific appointment and can include
+// ratings and comments about multiple staff members and pets. Reviews
+// help track customer satisfaction and service quality.
 message Review {
-  // review received via source
+  // Source identifies the channel through which the review was submitted.
+  // This helps track engagement across different feedback collection methods
+  // and analyze response patterns.
   enum Source {
-    // UNSPECIFIED
+    // Unknown or invalid source
+    // Should not be used when creating new reviews
     SOURCE_UNSPECIFIED = 0;
-    // via SMS
+
+    // Review submitted via SMS message
+    // Typically sent after service completion
     SMS = 1;
-    // via Grooming report
+
+    // Review submitted through grooming report
+    // Collected during service documentation
     GROOMING_REPORT = 2;
-    // via Pet Parent Portal
+
+    // Review submitted through customer portal
+    // Direct customer feedback channel
     PET_PARENT_PORTAL = 3;
   }
+
+  // Unique identifier for the review
+  // Format: "rev_" followed by random characters
   string id = 1;
+
+  // ID of the customer who submitted the review
+  // Required. Must be a valid customer ID
   string customer_id = 2;
+
+  // ID of the appointment being reviewed
+  // Required. Must be a valid appointment ID
   string appointment_id = 3;
+
+  // IDs of staff members included in the review
+  // May include multiple staff for team services
   repeated string staff_ids = 4;
+
+  // IDs of pets involved in the reviewed service
+  // May include multiple pets for group appointments
   repeated string pet_ids = 5;
+
+  // Channel through which the review was submitted
+  // Used for tracking feedback collection methods
   Source source = 6;
-  // From 1 to 5, 5 is the best
+
+  // Customer satisfaction rating
+  // Scale: 1 to 5, where 5 represents highest satisfaction
   uint32 score = 7;
+
+  // Detailed feedback from the customer
+  // Optional. Max length: 2000 characters
   string content = 8;
+
+  // When the review was submitted by the customer
+  // Used for tracking feedback timeliness
   google.protobuf.Timestamp review_time = 9;
+
+  // When this review was created in the system
+  // System-generated timestamp
   google.protobuf.Timestamp created_time = 10;
+
+  // When this review was last modified
+  // Updated on any review changes
   google.protobuf.Timestamp last_updated_time = 11;
 }

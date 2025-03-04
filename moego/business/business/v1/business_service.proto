@@ -12,14 +12,32 @@ option java_multiple_files = true;
 option java_outer_classname = "BusinessServiceProto";
 option java_package = "com.moego.api.business.business.v1";
 
-// BusinessService openapi definitions for operate business
+// BusinessService provides APIs for managing business locations and their profiles.
+// This service handles operations related to business location retrieval and
+// listing. Business locations are the physical or virtual places where services
+// are provided to customers, operating under a parent company.
 service BusinessService {
-  // GetBusiness get a business
+  // Retrieves detailed information about a specific business location.
+  //
+  // Returns the complete business profile including contact information,
+  // address, and social media links. This information is used for customer
+  // communications and service delivery.
+  //
+  // Possible errors:
+  // - NOT_FOUND if the business ID doesn't exist
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc GetBusiness(GetBusinessRequest) returns (Business) {
     option (google.api.http) = {get: "/v1/businesses/{id}"};
   }
 
-  // ListBusiness list businesses
+  // Lists business locations based on specified criteria.
+  //
+  // Results are paginated and filtered by company ID. This method is typically
+  // used for business management and customer-facing location directories.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListBusiness(ListBusinessRequest) returns (ListBusinessResponse) {
     option (google.api.http) = {
       post: "/v1/businesses:list"
@@ -28,24 +46,31 @@ service BusinessService {
   }
 }
 
-// GetBusinessRequest request for GetBusiness
+// GetBusinessRequest represents a request to retrieve a specific business location.
 message GetBusinessRequest {
-  // id of business
+  // Unique identifier of the business to retrieve
+  // Required. Must be a valid business ID
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListBusinessRequest request for ListBusiness
+// ListBusinessRequest encapsulates parameters for retrieving business locations.
 message ListBusinessRequest {
-  // The pagination information
+  // Pagination parameters for handling large result sets
+  // Required to manage data volume efficiently
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // The company id
+
+  // ID of the company to list business locations for
+  // Required to ensure businesses are accessed within proper context
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListBusinessResponse response for ListBusiness
+// ListBusinessResponse contains the paginated list of business locations.
 message ListBusinessResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The businesses
+
+  // List of business locations matching the request criteria
+  // May be empty if no businesses match
   repeated Business businesses = 2;
 }

@@ -27,11 +27,30 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// CompanyService openapi definitions for operate company
+// CompanyService provides APIs for managing company information and settings.
+// This service handles operations related to company profile retrieval and
+// listing. Companies are the top-level organizational units in the system,
+// containing multiple business locations and staff members.
 type CompanyServiceClient interface {
-	// GetCompany get a company
+	// Retrieves detailed information about a specific company.
+	//
+	// Returns the complete company profile including configuration settings
+	// and operational parameters. This information is used for company
+	// management and system configuration.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the company ID doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetCompany(ctx context.Context, in *GetCompanyRequest, opts ...grpc.CallOption) (*Company, error)
-	// ListCompanies list companies
+	// Lists companies based on specified criteria.
+	//
+	// Results are paginated and can be used for system administration
+	// and multi-company management scenarios. Companies are returned
+	// in alphabetical order by name.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListCompanies(ctx context.Context, in *ListCompaniesRequest, opts ...grpc.CallOption) (*ListCompaniesResponse, error)
 }
 
@@ -67,11 +86,30 @@ func (c *companyServiceClient) ListCompanies(ctx context.Context, in *ListCompan
 // All implementations must embed UnimplementedCompanyServiceServer
 // for forward compatibility.
 //
-// CompanyService openapi definitions for operate company
+// CompanyService provides APIs for managing company information and settings.
+// This service handles operations related to company profile retrieval and
+// listing. Companies are the top-level organizational units in the system,
+// containing multiple business locations and staff members.
 type CompanyServiceServer interface {
-	// GetCompany get a company
+	// Retrieves detailed information about a specific company.
+	//
+	// Returns the complete company profile including configuration settings
+	// and operational parameters. This information is used for company
+	// management and system configuration.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the company ID doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetCompany(context.Context, *GetCompanyRequest) (*Company, error)
-	// ListCompanies list companies
+	// Lists companies based on specified criteria.
+	//
+	// Results are paginated and can be used for system administration
+	// and multi-company management scenarios. Companies are returned
+	// in alphabetical order by name.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListCompanies(context.Context, *ListCompaniesRequest) (*ListCompaniesResponse, error)
 	mustEmbedUnimplementedCompanyServiceServer()
 }

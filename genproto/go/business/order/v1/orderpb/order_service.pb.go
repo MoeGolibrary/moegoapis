@@ -24,11 +24,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Request message for listing orders.
 type ListOrdersRequest struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Pagination    *commonpb.Pagination      `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string                    `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	BusinessIds   []string                  `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// ID of the company to list orders for
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// List of business locations to filter orders by
+	// Required. Must be valid business IDs within the company
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Optional filters to apply to the order list
 	Filter        *ListOrdersRequest_Filter `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -92,11 +100,14 @@ func (x *ListOrdersRequest) GetFilter() *ListOrdersRequest_Filter {
 	return nil
 }
 
+// Response message for listing orders.
 type ListOrdersResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The orders
+	// List of orders matching the request criteria
+	// May be empty if no orders match
 	Orders        []*Order `protobuf:"bytes,2,rep,name=orders,proto3" json:"orders,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -146,10 +157,11 @@ func (x *ListOrdersResponse) GetOrders() []*Order {
 	return nil
 }
 
-// GetOrderRequest get order request
+// Request message for retrieving a specific order.
 type GetOrderRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// order id
+	// Unique identifier of the order to retrieve
+	// Required. Format: "ord_" followed by random characters
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -192,11 +204,13 @@ func (x *GetOrderRequest) GetId() string {
 	return ""
 }
 
-// ListOrderLineItemsRequest get order request
+// Request message for listing order line items.
 type ListOrderLineItemsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// company id
-	CompanyId     string                            `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the company to list line items for
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Optional filters to apply to the line item list
 	Filter        *ListOrderLineItemsRequest_Filter `protobuf:"bytes,2,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -246,10 +260,11 @@ func (x *ListOrderLineItemsRequest) GetFilter() *ListOrderLineItemsRequest_Filte
 	return nil
 }
 
-// ListOrderLineItemsResponse
+// Response message for listing order line items.
 type ListOrderLineItemsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The order line item
+	// List of line items matching the request criteria
+	// May be empty if no items match
 	OrderLineItems []*OrderLineItem `protobuf:"bytes,1,rep,name=order_line_items,json=orderLineItems,proto3" json:"order_line_items,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
@@ -292,11 +307,18 @@ func (x *ListOrderLineItemsResponse) GetOrderLineItems() []*OrderLineItem {
 	return nil
 }
 
+// Filter parameters for the order list
 type ListOrdersRequest_Filter struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Ids             []string               `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`
-	Statuses        []Order_Status         `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=moego.business.order.v1.Order_Status" json:"statuses,omitempty"`
-	LastUpdatedTime *interval.Interval     `protobuf:"bytes,3,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Specific order IDs to retrieve
+	// Optional. If provided, other filters are ignored
+	Ids []string `protobuf:"bytes,1,rep,name=ids,proto3" json:"ids,omitempty"`
+	// Order statuses to include in results
+	// Optional. If empty, returns orders in all statuses
+	Statuses []Order_Status `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=moego.business.order.v1.Order_Status" json:"statuses,omitempty"`
+	// Time range for filtering orders by last update time
+	// Optional. If not provided, returns all orders
+	LastUpdatedTime *interval.Interval `protobuf:"bytes,3,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -352,9 +374,12 @@ func (x *ListOrdersRequest_Filter) GetLastUpdatedTime() *interval.Interval {
 	return nil
 }
 
+// Filter parameters for the line item list
 type ListOrderLineItemsRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderIds      []string               `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Specific order IDs to retrieve line items for
+	// Optional. If empty, returns items from all orders
+	OrderIds      []string `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

@@ -27,12 +27,23 @@ const (
 // AgreementServiceClient is the client API for AgreementService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// The agreement service manages the lifecycle of legal agreements and their
+// associated signing records. It provides methods for retrieving agreements,
+// generating signing links, and tracking customer consent. This service helps
+// businesses maintain compliance and manage their legal documentation.
 type AgreementServiceClient interface {
-	// GetAgreement
+	// Retrieves a specific agreement by its ID.
+	//
+	// Returns: The complete agreement object including content and templates.
 	GetAgreement(ctx context.Context, in *GetAgreementRequest, opts ...grpc.CallOption) (*Agreement, error)
-	// ListAgreement
+	// Lists agreements matching the specified criteria.
+	//
+	// Returns: A paginated list of agreements ordered by creation time.
 	ListAgreements(ctx context.Context, in *ListAgreementsRequest, opts ...grpc.CallOption) (*ListAgreementsResponse, error)
-	// GetAgreementSignLink
+	// Generates a signing URL for a specific agreement and customer.
+	//
+	// Returns: A unique URL where the customer can view and sign the agreement.
 	GetAgreementSignLink(ctx context.Context, in *GetAgreementSignURLRequest, opts ...grpc.CallOption) (*GetAgreementSignURLResponse, error)
 }
 
@@ -77,12 +88,23 @@ func (c *agreementServiceClient) GetAgreementSignLink(ctx context.Context, in *G
 // AgreementServiceServer is the server API for AgreementService service.
 // All implementations must embed UnimplementedAgreementServiceServer
 // for forward compatibility.
+//
+// The agreement service manages the lifecycle of legal agreements and their
+// associated signing records. It provides methods for retrieving agreements,
+// generating signing links, and tracking customer consent. This service helps
+// businesses maintain compliance and manage their legal documentation.
 type AgreementServiceServer interface {
-	// GetAgreement
+	// Retrieves a specific agreement by its ID.
+	//
+	// Returns: The complete agreement object including content and templates.
 	GetAgreement(context.Context, *GetAgreementRequest) (*Agreement, error)
-	// ListAgreement
+	// Lists agreements matching the specified criteria.
+	//
+	// Returns: A paginated list of agreements ordered by creation time.
 	ListAgreements(context.Context, *ListAgreementsRequest) (*ListAgreementsResponse, error)
-	// GetAgreementSignLink
+	// Generates a signing URL for a specific agreement and customer.
+	//
+	// Returns: A unique URL where the customer can view and sign the agreement.
 	GetAgreementSignLink(context.Context, *GetAgreementSignURLRequest) (*GetAgreementSignURLResponse, error)
 	mustEmbedUnimplementedAgreementServiceServer()
 }

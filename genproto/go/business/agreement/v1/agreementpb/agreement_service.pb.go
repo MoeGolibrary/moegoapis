@@ -23,12 +23,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetAgreementRequest get agreement request
+// Request to retrieve a specific agreement.
 type GetAgreementRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id
+	// string, Unique identifier of the agreement
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// company_id
+	// string, Company identifier for access control
 	CompanyId     string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -78,14 +78,14 @@ func (x *GetAgreementRequest) GetCompanyId() string {
 	return ""
 }
 
-// ListAgreementsRequest get agreements request
+// Request to list agreements matching specified criteria.
 type ListAgreementsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Pagination
+	// object(Pagination), Pagination parameters for the request
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// company_id
+	// string, Company identifier for access control
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// business_ids
+	// array(string), Optional filter by business locations
 	BusinessIds   []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -142,14 +142,14 @@ func (x *ListAgreementsRequest) GetBusinessIds() []string {
 	return nil
 }
 
-// UnsignedAgreementRequest get unsignedAgreement request
+// Request to generate a signing URL for an agreement.
 type GetAgreementSignURLRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id
+	// string, Agreement to be signed
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// customer_id
+	// string, Customer who will sign
 	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// business_id
+	// string, Business location context
 	BusinessId    string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -206,12 +206,12 @@ func (x *GetAgreementSignURLRequest) GetBusinessId() string {
 	return ""
 }
 
-// ListAgreementsResponse
+// Response containing agreements matching the list criteria.
 type ListAgreementsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// string, Token for retrieving the next page
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Agreements
+	// array(Agreement), List of matching agreements
 	Agreement     []*Agreement `protobuf:"bytes,2,rep,name=agreement,proto3" json:"agreement,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -261,12 +261,12 @@ func (x *ListAgreementsResponse) GetAgreement() []*Agreement {
 	return nil
 }
 
-// UnsignedAgreementResponse
+// Response containing the generated signing URL.
 type GetAgreementSignURLResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// agreement_record_id
+	// string, Identifier of the agreement record created
 	AgreementRecordId string `protobuf:"bytes,1,opt,name=agreement_record_id,json=agreementRecordId,proto3" json:"agreement_record_id,omitempty"`
-	// The sign_url
+	// string, URL where the agreement can be signed
 	SignUrl       string `protobuf:"bytes,2,opt,name=sign_url,json=signUrl,proto3" json:"sign_url,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

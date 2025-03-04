@@ -23,21 +23,28 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status
+// Status represents the current state of the payment in its lifecycle.
+// This determines what actions can be taken and affects reporting.
 type Payment_Status int32
 
 const (
-	// PAYMENT_STATUS_UNSPECIFIED
+	// Unknown or invalid status
+	// Should not be used when creating new payments
 	Payment_STATUS_UNSPECIFIED Payment_Status = 0
-	// CREATED
+	// Payment has been initiated but not processed
+	// Initial state for new payments
 	Payment_CREATED Payment_Status = 1
-	// PROCESSING
+	// Payment is being processed by the payment provider
+	// Temporary state during processing
 	Payment_PROCESSING Payment_Status = 2
-	// PAID
+	// Funds have been successfully transferred
+	// Awaiting final reconciliation
 	Payment_PAID Payment_Status = 3
-	// COMPLETED
+	// Payment has been fully reconciled
+	// Final state for successful payments
 	Payment_COMPLETED Payment_Status = 4
-	// FAILED
+	// Payment processing encountered an error
+	// May be retried depending on the error
 	Payment_FAILED Payment_Status = 5
 )
 
@@ -88,17 +95,22 @@ func (Payment_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_payment_v1_payment_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Module
+// Module identifies the business area associated with the payment.
+// This affects accounting categorization and reporting.
 type Payment_Module int32
 
 const (
-	// PAYMENT_MODULE_UNSPECIFIED
+	// Unknown or invalid module
+	// Should not be used when creating new payments
 	Payment_MODULE_UNSPECIFIED Payment_Module = 0
-	// GROOMING
+	// Payment for pet grooming services
+	// Includes all grooming-related charges
 	Payment_GROOMING Payment_Module = 1
-	// RETAIL
+	// Payment for retail product purchases
+	// Includes all product sales
 	Payment_RETAIL Payment_Module = 2
-	// MEMBERSHIP
+	// Payment for membership fees or subscriptions
+	// Includes recurring and one-time membership charges
 	Payment_MEMBERSHIP Payment_Module = 3
 )
 
@@ -145,22 +157,49 @@ func (Payment_Module) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_payment_v1_payment_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// Payment
+// Payment represents a financial transaction that processes funds for an order.
+// Each payment tracks the amount, processing status, and associated fees. Payments
+// can be made for various business modules and support multiple payment methods.
 type Payment struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId      string                 `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	OrderId         string                 `protobuf:"bytes,3,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	CustomerId      string                 `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	CustomerName    string                 `protobuf:"bytes,5,opt,name=customer_name,json=customerName,proto3" json:"customer_name,omitempty"`
-	Method          string                 `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty"`
-	Status          Payment_Status         `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.payment.v1.Payment_Status" json:"status,omitempty"`
-	Module          Payment_Module         `protobuf:"varint,8,opt,name=module,proto3,enum=moego.business.payment.v1.Payment_Module" json:"module,omitempty"`
-	Amount          *money.Money           `protobuf:"bytes,9,opt,name=amount,proto3" json:"amount,omitempty"`
-	ProcessingFee   *money.Money           `protobuf:"bytes,10,opt,name=processing_fee,json=processingFee,proto3" json:"processing_fee,omitempty"`
-	RefundAmount    *money.Money           `protobuf:"bytes,11,opt,name=refund_amount,json=refundAmount,proto3" json:"refund_amount,omitempty"`
-	CreatedTime     *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	// Unique identifier for the payment
+	// Format: "py_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the business location processing the payment
+	// Required. Must be a valid business ID
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// ID of the order being paid for
+	// Required. Must be a valid order ID
+	OrderId string `protobuf:"bytes,3,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// ID of the customer making the payment
+	// Required. Must be a valid customer ID
+	CustomerId string `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// Display name of the customer
+	// Used for receipts and reporting
+	CustomerName string `protobuf:"bytes,5,opt,name=customer_name,json=customerName,proto3" json:"customer_name,omitempty"`
+	// Payment method used
+	// Example: "credit_card", "cash", "check"
+	Method string `protobuf:"bytes,6,opt,name=method,proto3" json:"method,omitempty"`
+	// Current status of the payment
+	// Determines available actions and processing flow
+	Status Payment_Status `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.payment.v1.Payment_Status" json:"status,omitempty"`
+	// Business module associated with the payment
+	// Used for revenue categorization
+	Module Payment_Module `protobuf:"varint,8,opt,name=module,proto3,enum=moego.business.payment.v1.Payment_Module" json:"module,omitempty"`
+	// Amount being processed
+	// Must be greater than zero
+	Amount *money.Money `protobuf:"bytes,9,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Fees charged by payment processor
+	// Deducted from the payment amount
+	ProcessingFee *money.Money `protobuf:"bytes,10,opt,name=processing_fee,json=processingFee,proto3" json:"processing_fee,omitempty"`
+	// Amount that has been refunded
+	// Updated when refunds are processed
+	RefundAmount *money.Money `protobuf:"bytes,11,opt,name=refund_amount,json=refundAmount,proto3" json:"refund_amount,omitempty"`
+	// When this payment was created
+	// System-generated timestamp
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	// When this payment was last modified
+	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

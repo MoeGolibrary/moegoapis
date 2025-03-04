@@ -24,9 +24,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// ListReportsRequest represents a request to retrieve available reports.
 type ListReportsRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Company identifier for scoping available reports
+	// Required to ensure reports are accessed within proper context
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,9 +71,11 @@ func (x *ListReportsRequest) GetCompanyId() string {
 	return ""
 }
 
+// ListReportsResponse contains the list of available reports.
 type ListReportsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// reports
+	// List of report definitions available to the company
+	// May be empty if no reports are configured
 	Reports       []*Report `protobuf:"bytes,1,rep,name=reports,proto3" json:"reports,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -113,11 +118,21 @@ func (x *ListReportsResponse) GetReports() []*Report {
 	return nil
 }
 
+// FetchReportDataRequest encapsulates parameters for generating report data.
+// Supports pagination, business unit filtering, and custom data grouping.
 type FetchReportDataRequest struct {
-	state         protoimpl.MessageState            `protogen:"open.v1"`
-	Pagination    *commonpb.Pagination              `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string                            `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	BusinessIds   []string                          `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pagination parameters for handling large result sets
+	// Required to manage data volume efficiently
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Company identifier for data access control
+	// Required to ensure data is scoped to proper context
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// List of business units to include in the report
+	// Required to specify data scope
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Report configuration and filtering parameters
+	// Controls the structure and content of the results
 	Condition     *FetchReportDataRequest_Condition `protobuf:"bytes,4,opt,name=condition,proto3" json:"condition,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -181,11 +196,14 @@ func (x *FetchReportDataRequest) GetCondition() *FetchReportDataRequest_Conditio
 	return nil
 }
 
+// FetchReportDataResponse contains the generated report data.
 type FetchReportDataResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// table data
+	// Structured report data including fields and rows
+	// Contains the actual report content
 	TableData     *TableData `protobuf:"bytes,2,opt,name=table_data,json=tableData,proto3" json:"table_data,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -235,12 +253,19 @@ func (x *FetchReportDataResponse) GetTableData() *TableData {
 	return nil
 }
 
+// Condition specifies the report configuration and filtering criteria.
+// Controls what data is included and how it's organized.
 type FetchReportDataRequest_Condition struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// report id
-	Id               string             `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	QueryPeriod      *interval.Interval `protobuf:"bytes,2,opt,name=query_period,json=queryPeriod,proto3" json:"query_period,omitempty"`
-	GroupByFieldKeys []string           `protobuf:"bytes,3,rep,name=group_by_field_keys,json=groupByFieldKeys,proto3" json:"group_by_field_keys,omitempty"`
+	// Identifier of the report definition to use
+	// Must reference an existing report configuration
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Time period for data collection
+	// Defines the date range for included data
+	QueryPeriod *interval.Interval `protobuf:"bytes,2,opt,name=query_period,json=queryPeriod,proto3" json:"query_period,omitempty"`
+	// Fields to group data by
+	// Optional. If provided, results will be aggregated by these fields
+	GroupByFieldKeys []string `protobuf:"bytes,3,rep,name=group_by_field_keys,json=groupByFieldKeys,proto3" json:"group_by_field_keys,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }

@@ -12,84 +12,232 @@ option java_multiple_files = true;
 option java_outer_classname = "PetProto";
 option java_package = "com.moego.api.business.customer.v1";
 
-// Pet is a pet
+// Pet represents a customer's pet that receives services at your business.
+// Each pet has its own profile containing essential information for providing
+// appropriate care, including health records, behavior notes, and service preferences.
 message Pet {
-  // PetType is the type of pet
+  // Type defines the species of the pet.
+  // This helps determine appropriate services, care requirements, and pricing.
   enum Type {
+    // Unknown or unspecified pet type
     TYPE_UNSPECIFIED = 0;
+
+    // Pet type not listed in standard categories
+    // Requires special handling and service customization
     OTHER = 1;
+
+    // Canine companion
+    // Common breeds include Labrador, German Shepherd, Golden Retriever
     DOG = 2;
+
+    // Feline companion
+    // Includes all domestic cat breeds
     CAT = 3;
+
+    // Avian pet
+    // Includes parrots, canaries, finches, etc.
     BIRD = 4;
+
+    // Domestic rabbit
+    // Requires specific grooming and handling techniques
     RABBIT = 5;
+
+    // Guinea pig
+    // Small rodent requiring gentle handling
     GUINEA_PIG = 6;
+
+    // Equine
+    // Requires specialized facilities and care
     HORSE = 7;
+
+    // Hamster
+    // Small rodent with specific handling needs
     HAMSTER = 8;
+
+    // Rat
+    // Intelligent rodent requiring social interaction
     RAT = 9;
+
+    // Mouse
+    // Small rodent needing careful handling
     MOUSE = 10;
+
+    // Chinchilla
+    // Requires special dust baths and temperature control
     CHINCHILLA = 11;
   }
-  // Status is the status of a pet
+
+  // Status indicates whether the pet is currently receiving services.
+  // This affects appointment scheduling and service availability.
   enum Status {
+    // Unknown or unspecified status
     STATUS_UNSPECIFIED = 0;
+
+    // Pet is currently receiving services
+    // Default status for new pets
     ALIVE = 1;
+
+    // Pet is no longer receiving services
+    // Historical records are maintained
     PASSED_AWAY = 2;
   }
-  // Gender
+
+  // Gender of the pet
+  // Used for appropriate service assignment and medical considerations
   enum Gender {
+    // Unknown or unspecified gender
     GENDER_UNSPECIFIED = 0;
+
+    // Male pet
+    // May require specific handling or service modifications
     MALE = 1;
+
+    // Female pet
+    // May require specific handling or service modifications
     FEMALE = 2;
+
+    // Gender not determined or disclosed
     UNKNOWN = 3;
   }
-  // Code
+
+  // Code represents special handling instructions or medical alerts
+  // These codes are visible to staff during service delivery
   message Code {
+    // Unique identifier for this code
     string id = 1;
+
+    // Short form of the code for quick reference
+    // Example: "AG" for "Aggressive"
     string abbreviation = 2;
+
+    // Detailed explanation of the code
+    // Max length: 500 characters
     string description = 3;
+
+    // Color used to highlight this code in the UI
+    // Format: Hex color code (e.g., "#FF0000")
     string color = 4;
   }
-  // Note
+
+  // Note contains observations about the pet's behavior,
+  // preferences, or special requirements
   message Note {
+    // Unique identifier for this note
     string id = 1;
+
+    // The content of the note
+    // Max length: 1000 characters
     string content = 2;
+
+    // ID of the staff member who last modified this note
     string last_updated_by = 3;
+
+    // When this note was last modified
     google.protobuf.Timestamp last_updated_time = 4;
   }
-  // Vaccination
+
+  // Vaccination record for the pet
+  // Used to ensure compliance with service requirements
   message Vaccination {
+    // Name of the vaccination
+    // Example: "Rabies", "DHPP", "Bordetella"
     string name = 1;
+
+    // When this vaccination expires
+    // Staff are notified before expiration
     google.protobuf.Timestamp expired_at = 2;
   }
-  // Vet
+
+  // Veterinary care provider information
+  // Used for emergencies and health verifications
   message Vet {
+    // Name of the veterinary practice or doctor
     string name = 2;
+
+    // Contact number for the veterinarian
+    // Format: E.164 format (e.g., +12125551234)
     string phone_number = 3;
+
+    // Physical location of the veterinary practice
     string address = 4;
   }
-  // Status is the status of a pet
+
+  // Status of the pet's evaluation for services
+  // Determines which services can be provided
   enum EvaluationStatus {
+    // Evaluation status not yet determined
     EVALUATION_STATUS_UNSPECIFIED = 0;
+
+    // Pet has passed evaluation and can receive services
     PASS = 1;
+
+    // Pet requires modifications to receive services
     FAIL = 2;
   }
-  // ID is the unique identifier of a pet
+
+  // Unique identifier for the pet
+  // Format: "pet_" followed by random characters
   string id = 1;
+
+  // Pet's given name
+  // Required. Max length: 100 characters
   string name = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Pet's date of birth
+  // Used for age-appropriate service modifications
   google.type.Date birthday = 3;
+
+  // Current status of the pet
   Status status = 4;
+
+  // Species of the pet
+  // Required. Determines available services
   Type type = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Specific breed within the pet type
+  // Required. Helps determine grooming requirements
   string breed = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // Pet's gender
+  // Used for service assignments
   Gender gender = 7;
+
+  // Pet's current weight
+  // Used for equipment selection and health monitoring
   moego.common.v1.Weight weight = 8;
+
+  // Spay/neuter status
+  // Values: "yes", "no", "unknown"
   string fixed = 9;
+
+  // Description of the pet's coat
+  // Example: "long double coat", "short hair"
   string coat = 10;
+
+  // General temperament and behavior notes
+  // Example: "friendly", "nervous with new people"
   string behavior = 11;
+
+  // Special handling codes for this pet
+  // Displayed prominently during service
   repeated Code pet_codes = 12;
+
+  // Staff observations and special instructions
   repeated Note notes = 13;
-  // This field is not supported when creating a pet.
+
+  // Current vaccination records
+  // Required for certain services
   repeated Vaccination vaccinations = 14;
+
+  // ID of the pet's owner
+  // System-managed, do not set manually
   string customer_id = 15 [(google.api.field_behavior) = OUTPUT_ONLY];
+
+  // Primary veterinary care provider
+  // Used for emergencies and health verifications
   Vet vet = 16;
+
+  // Current evaluation status for services
+  // Determines service availability
   EvaluationStatus evaluation_status = 17;
 }

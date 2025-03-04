@@ -16,7 +16,7 @@ lint:
     - COMMENT_ONEOF
     - COMMENT_RPC
     - COMMENT_SERVICE
-    - DEFAULT
+    - STANDARD
     - PACKAGE_NO_IMPORT_CYCLE
   except:
     - ENUM_VALUE_PREFIX

@@ -30,15 +30,43 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// AppointmentService openapi definitions for operate appointments
+// The appointment service provides methods for managing pet service appointments.
+// This includes creating new appointments, retrieving appointment details,
+// rescheduling appointments, and handling cancellations.
+//
+// Typical appointment lifecycle:
+// 1. Create appointment with CreateAppointment
+// 2. Retrieve details with GetAppointment
+// 3. Optionally reschedule using RescheduleAppointment
+// 4. Cancel if needed with CancelAppointment
+//
+// All methods require authentication and proper business_id.
+// Rate limit: 100 requests per minute per API key.
 type AppointmentServiceClient interface {
-	// GetAppointment
+	// Retrieves a single appointment by its ID.
+	//
+	// Returns a detailed appointment object including all services, pet information,
+	// and current status. Returns 404 if appointment is not found.
 	GetAppointment(ctx context.Context, in *GetAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
-	// ListStaffs
+	// Lists appointments matching the specified criteria.
+	//
+	// Returns a paginated list of appointments. Use filters to narrow results
+	// by date range, status, or last update time. Maximum page size: 100.
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
-	// CreateAppointment
+	// Creates a new appointment.
+	//
+	// Schedules one or more services for specified pets. The appointment will
+	// initially be in UNCONFIRMED status. Staff assignments are optional.
 	CreateAppointment(ctx context.Context, in *CreateAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	// Reschedules an existing appointment.
+	//
+	// Updates the appointment's time slot. All services within the appointment
+	// will be moved to the new time. Staff assignments may change based on availability.
 	RescheduleAppointment(ctx context.Context, in *RescheduleAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	// Cancels an appointment.
+	//
+	// Sets the appointment status to CANCELED. This action cannot be undone.
+	// Notifications will be sent to affected customers and staff.
 	CancelAppointment(ctx context.Context, in *CancelAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
 }
 
@@ -104,15 +132,43 @@ func (c *appointmentServiceClient) CancelAppointment(ctx context.Context, in *Ca
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility.
 //
-// AppointmentService openapi definitions for operate appointments
+// The appointment service provides methods for managing pet service appointments.
+// This includes creating new appointments, retrieving appointment details,
+// rescheduling appointments, and handling cancellations.
+//
+// Typical appointment lifecycle:
+// 1. Create appointment with CreateAppointment
+// 2. Retrieve details with GetAppointment
+// 3. Optionally reschedule using RescheduleAppointment
+// 4. Cancel if needed with CancelAppointment
+//
+// All methods require authentication and proper business_id.
+// Rate limit: 100 requests per minute per API key.
 type AppointmentServiceServer interface {
-	// GetAppointment
+	// Retrieves a single appointment by its ID.
+	//
+	// Returns a detailed appointment object including all services, pet information,
+	// and current status. Returns 404 if appointment is not found.
 	GetAppointment(context.Context, *GetAppointmentRequest) (*Appointment, error)
-	// ListStaffs
+	// Lists appointments matching the specified criteria.
+	//
+	// Returns a paginated list of appointments. Use filters to narrow results
+	// by date range, status, or last update time. Maximum page size: 100.
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
-	// CreateAppointment
+	// Creates a new appointment.
+	//
+	// Schedules one or more services for specified pets. The appointment will
+	// initially be in UNCONFIRMED status. Staff assignments are optional.
 	CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error)
+	// Reschedules an existing appointment.
+	//
+	// Updates the appointment's time slot. All services within the appointment
+	// will be moved to the new time. Staff assignments may change based on availability.
 	RescheduleAppointment(context.Context, *RescheduleAppointmentRequest) (*Appointment, error)
+	// Cancels an appointment.
+	//
+	// Sets the appointment status to CANCELED. This action cannot be undone.
+	// Notifications will be sent to affected customers and staff.
 	CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }

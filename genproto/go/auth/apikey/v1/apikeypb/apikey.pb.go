@@ -24,17 +24,24 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Type
+// Possible values are `business`, `company`, or `enterprise`.
+// The type determines available features and API capabilities:
+// * `business` - Basic features for single-location businesses
+// * `company` - Advanced features for multi-location businesses
+// * `enterprise` - Full platform access with custom integrations
 type Organization_Type int32
 
 const (
-	// unspecified
+	// Reserved value. Do not use.
 	Organization_TYPE_UNSPECIFIED Organization_Type = 0
-	// business
+	// Single-location business with standard features.
+	// Suitable for individual pet service providers.
 	Organization_BUSINESS Organization_Type = 1
-	// company
+	// Multi-location business with advanced features.
+	// Includes location management and roll-up reporting.
 	Organization_COMPANY Organization_Type = 2
-	// enterprise
+	// Enterprise organization with full platform access.
+	// Includes custom integrations and priority support.
 	Organization_ENTERPRISE Organization_Type = 3
 )
 
@@ -81,22 +88,60 @@ func (Organization_Type) EnumDescriptor() ([]byte, []int) {
 	return file_moego_auth_apikey_v1_apikey_proto_rawDescGZIP(), []int{4, 0}
 }
 
-// Key is the representation of a key that can be used to access a resource.
+// Authentication to the MoeGo API is performed via API keys. Each key has its own set of permissions
+// and restrictions that determine what actions it can perform and what resources it can access.
+//
+// To authenticate, provide your API key in the Authorization header:
+// 'Authorization: Bearer YOUR_API_KEY'
+//
+// Security requirements:
+// * All API requests must use HTTPS
+// * Keep your API keys secure and never share them
+// * Rotate keys periodically and upon team member departures
+// * Use restrictions to limit key access to required resources only
+//
+// Example request:
+// ```bash
+//
+//	curl https://api.moego.pet/v1/appointments \
+//	  -H "Authorization: Bearer YOUR_API_KEY" \
+//	  -H "Content-Type: application/json"
+//
+// ```
+//
+// Best practices:
+// * Create separate API keys for different applications or services
+// * Use meaningful names to easily identify keys
+// * Apply appropriate restrictions based on the key's intended use
+// * Monitor and audit key usage regularly
 type Key struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique id in UUID4 format
+	// string, Unique identifier for the API key.
+	// This ID is visible in the dashboard and can be used for auditing.
+	// Example: "key_1234567890abcdef"
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// The name of API key
+	// string, Display name for the API key.
+	// Use descriptive names like "Production Server Key" or "Development Testing Key".
+	// Maximum length: 100 characters
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// The Secret Key string
+	// string, The secret key value used for authentication.
+	// This value is only shown once when the key is created.
+	// Format: A Base64 encoded string starting with "sk_"
+	// Example: "sk_test_1234567890abcdef"
 	Secret string `protobuf:"bytes,3,opt,name=secret,proto3" json:"secret,omitempty"`
-	// Key restrictions
+	// object(Restrictions), Constraints that limit what this key can do.
+	// Use restrictions to implement the principle of least privilege.
+	// At least one type of restriction must be specified.
 	Restrictions *Restrictions `protobuf:"bytes,4,opt,name=restrictions,proto3" json:"restrictions,omitempty"`
-	// Key created timestamp
+	// timestamp, Time at which the key was created.
+	// Automatically set by the system.
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	// Key updated timestamp
+	// timestamp, Time of the key's last modification.
+	// Updates when key properties or restrictions change.
 	UpdatedTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_time,json=updatedTime,proto3" json:"updated_time,omitempty"`
-	// Key expired timestamp
+	// timestamp, Time after which the key becomes invalid.
+	// Set this to implement automatic key rotation.
+	// Optional: If not set, the key never expires.
 	ExpiredTime   *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -181,13 +226,19 @@ func (x *Key) GetExpiredTime() *timestamppb.Timestamp {
 	return nil
 }
 
-// Restrictions are restrictions that are applied to a key.
+// Defines access control rules for an API key. Each key must have at least one restriction
+// to ensure proper security boundaries. Restrictions are evaluated using AND logic - all
+// specified restrictions must be satisfied for a request to be authorized.
 type Restrictions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The scopes that are allowed to be requested by the key.
+	// array(string), Permission scopes for the key.
+	// Each scope allows specific API operations.
+	// Example scopes: "appointments:read", "appointments:write"
+	// At least one scope is required.
 	Scopes []string `protobuf:"bytes,1,rep,name=scopes,proto3" json:"scopes,omitempty"`
-	// The client-side restrictions that are allowed to use the key.
-	// You can specify only one type of client restrictions per key.
+	// object, Network or organizational access rules.
+	// Only one type can be active for a key.
+	// Required: Choose either server_restrictions or organization_restrictions.
 	//
 	// Types that are valid to be assigned to ClientRestrictions:
 	//
@@ -265,12 +316,14 @@ type isRestrictions_ClientRestrictions interface {
 }
 
 type Restrictions_ServerRestrictions struct {
-	// The IP addresses of callers that are allowed to use the key.
+	// object(ServerRestrictions), Limit access to specific IP addresses.
+	// Use for server-side applications with known IP ranges.
 	ServerRestrictions *ServerRestrictions `protobuf:"bytes,2,opt,name=server_restrictions,json=serverRestrictions,proto3,oneof"`
 }
 
 type Restrictions_OrganizationRestrictions struct {
-	// The organizations that are allowed to be requested by the key.
+	// object(OrganizationRestrictions), Limit access to specific organizations.
+	// Use for multi-tenant applications.
 	OrganizationRestrictions *OrganizationRestrictions `protobuf:"bytes,3,opt,name=organization_restrictions,json=organizationRestrictions,proto3,oneof"`
 }
 
@@ -278,11 +331,14 @@ func (*Restrictions_ServerRestrictions) isRestrictions_ClientRestrictions() {}
 
 func (*Restrictions_OrganizationRestrictions) isRestrictions_ClientRestrictions() {}
 
-// ServerRestrictions
+// Controls which IP addresses can use this API key. Use this to ensure the key can only
+// be used from your authorized servers or networks. IPv4 and IPv6 addresses are supported.
 type ServerRestrictions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The IP address (IPv4 or IPv6) of the client that issued the HTTP
-	// request. Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
+	// array(string), Allowed IP addresses or CIDR ranges.
+	// IPv4 format: "192.168.1.1" or "192.168.1.0/24"
+	// IPv6 format: "2001:db8::1" or "2001:db8::/32"
+	// Maximum entries: 100
 	AllowedIps    []string `protobuf:"bytes,1,rep,name=allowed_ips,json=allowedIps,proto3" json:"allowed_ips,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -325,10 +381,13 @@ func (x *ServerRestrictions) GetAllowedIps() []string {
 	return nil
 }
 
-// OrganizationRestrictions
+// Controls which organizations can be accessed using this API key. Use this when your
+// application needs to manage multiple organizations but should be restricted to specific ones.
 type OrganizationRestrictions struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The organizations that are allowed to be requested by the key.
+	// array(Organization), Allowed organizations for this key.
+	// The key can only access data within these organizations.
+	// Maximum entries: 50
 	Organizations []*Organization `protobuf:"bytes,1,rep,name=organizations,proto3" json:"organizations,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -371,12 +430,16 @@ func (x *OrganizationRestrictions) GetOrganizations() []*Organization {
 	return nil
 }
 
-// Organization represents a MoeGo organization.
+// Represents a MoeGo organization entity. Organizations are the top-level grouping
+// for resources and determine available features and capabilities.
 type Organization struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID represents the unique identifier of an organization.
+	// string, Unique identifier for the organization.
+	// Format: "org_" followed by random characters
+	// Example: "org_1234567890abcdef"
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Type represents the type of organization.
+	// enum(Type), Organization's service tier.
+	// Determines feature availability and API capabilities.
 	Type          Organization_Type `protobuf:"varint,2,opt,name=type,proto3,enum=moego.auth.apikey.v1.Organization_Type" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

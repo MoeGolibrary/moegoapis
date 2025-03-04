@@ -7,20 +7,32 @@ option java_multiple_files = true;
 option java_outer_classname = "WeightProto";
 option java_package = "com.moego.api.common.v1";
 
-// Weight represents a weight value and its unit.
+// The weight object provides a standardized way to represent and convert
+// weight measurements throughout the system. It supports multiple units
+// and ensures consistent weight tracking for pets, products, and other
+// resources that require weight measurements.
 message Weight {
-  // Unit represents a weight unit.
+  // Supported weight units. Each unit can be converted to others
+  // using standard conversion factors.
   enum Unit {
-    // Unspecified weight unit.
+    // Not intended for direct use
     UNIT_UNSPECIFIED = 0;
-    // Kilogram.
+
+    // Kilograms, base unit for weight
+    // 1 kg = 2.20462 lbs
     KILOGRAM = 1;
-    // Pound.
+
+    // Pounds, common in US and some other regions
+    // 1 lb = 0.453592 kg
     POUND = 2;
   }
 
-  // The weight value.
-  uint32 value = 1;
-  // The weight unit.
+  // double, The numeric value of the weight.
+  // Must be positive.
+  // Example: 5.4, 10.0
+  double value = 1;
+
+  // enum(Unit), The unit of measurement.
+  // Default: KILOGRAM if not specified
   Unit unit = 2;
 }

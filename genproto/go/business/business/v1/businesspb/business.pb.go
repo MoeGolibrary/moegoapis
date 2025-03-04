@@ -22,22 +22,51 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Business information
+// Business represents a physical or virtual location where services are provided.
+// Each business location operates under a parent company and maintains its own
+// staff, services, and operational settings. Business profiles include contact
+// information and social media presence for customer engagement.
 type Business struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Avatar        string                 `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	Phone         string                 `protobuf:"bytes,4,opt,name=phone,proto3" json:"phone,omitempty"`
-	BusinessPhone string                 `protobuf:"bytes,5,opt,name=business_phone,json=businessPhone,proto3" json:"business_phone,omitempty"`
-	Email         string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
-	Address       *commonpb.Address      `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
-	Website       string                 `protobuf:"bytes,8,opt,name=website,proto3" json:"website,omitempty"`
-	Facebook      string                 `protobuf:"bytes,9,opt,name=facebook,proto3" json:"facebook,omitempty"`
-	Instagram     string                 `protobuf:"bytes,10,opt,name=instagram,proto3" json:"instagram,omitempty"`
-	Yelp          string                 `protobuf:"bytes,11,opt,name=yelp,proto3" json:"yelp,omitempty"`
-	Google        string                 `protobuf:"bytes,12,opt,name=google,proto3" json:"google,omitempty"`
-	CompanyId     string                 `protobuf:"bytes,13,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the business location
+	// Format: "bus_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Display name of the business location
+	// Used in customer communications and UI
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// URL to the business location's logo or image
+	// Optional. Must be a valid HTTPS URL
+	Avatar string `protobuf:"bytes,3,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	// Primary contact phone number
+	// Format: E.164 format (e.g., +12125551234)
+	Phone string `protobuf:"bytes,4,opt,name=phone,proto3" json:"phone,omitempty"`
+	// Public business phone number
+	// Format: E.164 format (e.g., +12125551234)
+	BusinessPhone string `protobuf:"bytes,5,opt,name=business_phone,json=businessPhone,proto3" json:"business_phone,omitempty"`
+	// Business contact email address
+	// Format: Must be a valid email address
+	Email string `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	// Physical location details
+	// Required for in-person services
+	Address *commonpb.Address `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	// Business website URL
+	// Optional. Must be a valid HTTPS URL
+	Website string `protobuf:"bytes,8,opt,name=website,proto3" json:"website,omitempty"`
+	// Facebook page URL
+	// Optional. Must be a valid Facebook page URL
+	Facebook string `protobuf:"bytes,9,opt,name=facebook,proto3" json:"facebook,omitempty"`
+	// Instagram profile URL
+	// Optional. Must be a valid Instagram profile URL
+	Instagram string `protobuf:"bytes,10,opt,name=instagram,proto3" json:"instagram,omitempty"`
+	// Yelp business page URL
+	// Optional. Must be a valid Yelp business URL
+	Yelp string `protobuf:"bytes,11,opt,name=yelp,proto3" json:"yelp,omitempty"`
+	// Google Business Profile URL
+	// Optional. Must be a valid Google Business URL
+	Google string `protobuf:"bytes,12,opt,name=google,proto3" json:"google,omitempty"`
+	// ID of the parent company
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,13,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

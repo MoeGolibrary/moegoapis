@@ -24,20 +24,41 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Request message for creating a new customer.
 type CreateCustomerRequest struct {
-	state               protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId           string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	PreferredBusinessId string                 `protobuf:"bytes,2,opt,name=preferred_business_id,json=preferredBusinessId,proto3" json:"preferred_business_id,omitempty"`
-	FirstName           string                 `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName            string                 `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	Phone               string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Email               string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
-	Address             *commonpb.Address      `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
-	Preference          *CustomerPreference    `protobuf:"bytes,8,opt,name=preference,proto3" json:"preference,omitempty"`
-	Tags                []*Customer_Tag        `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
-	Notes               []*Customer_Note       `protobuf:"bytes,10,rep,name=notes,proto3" json:"notes,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company creating the customer
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the business location preferred by the customer
+	// Required. Must be a valid business ID within the company
+	PreferredBusinessId string `protobuf:"bytes,2,opt,name=preferred_business_id,json=preferredBusinessId,proto3" json:"preferred_business_id,omitempty"`
+	// Customer's first name
+	// Required. Max length: 100 characters
+	FirstName string `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	// Customer's last name
+	// Required. Max length: 100 characters
+	LastName string `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	// Customer's phone number
+	// Required. Must be in E.164 format (e.g., +12125551234)
+	Phone string `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	// Customer's email address
+	// Optional. Must be a valid email address if provided
+	Email string `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	// Customer's primary address
+	// Optional. Must be a valid address if provided
+	Address *commonpb.Address `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
+	// Customer's communication and marketing preferences
+	// Optional. System defaults will be used if not provided
+	Preference *CustomerPreference `protobuf:"bytes,8,opt,name=preference,proto3" json:"preference,omitempty"`
+	// Initial tags to apply to the customer
+	// Optional. Empty list if not provided
+	Tags []*Customer_Tag `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Initial notes about the customer
+	// Optional. Empty list if not provided
+	Notes         []*Customer_Note `protobuf:"bytes,10,rep,name=notes,proto3" json:"notes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateCustomerRequest) Reset() {
@@ -140,9 +161,11 @@ func (x *CreateCustomerRequest) GetNotes() []*Customer_Note {
 	return nil
 }
 
+// Request message for retrieving a specific customer.
 type GetCustomerRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The id of the customer to retrieve
+	// Unique identifier of the customer to retrieve
+	// Required. Format: "cus_" followed by random characters
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -185,12 +208,16 @@ func (x *GetCustomerRequest) GetId() string {
 	return ""
 }
 
+// Request message for listing customers.
 type ListCustomersRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// The company id
-	CompanyId     string                       `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the company to list customers for
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Optional filters to apply to the customer list
 	Filter        *ListCustomersRequest_Filter `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -247,11 +274,14 @@ func (x *ListCustomersRequest) GetFilter() *ListCustomersRequest_Filter {
 	return nil
 }
 
+// Response message for listing customers.
 type ListCustomersResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// customers belong to the company
+	// List of customers matching the request criteria
+	// May be empty if no customers match
 	Customers     []*Customer `protobuf:"bytes,2,rep,name=customers,proto3" json:"customers,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -301,9 +331,11 @@ func (x *ListCustomersResponse) GetCustomers() []*Customer {
 	return nil
 }
 
+// Request message for generating a card-on-file link.
 type GenCustomerCofLinkRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of customer
+	// Unique identifier of the customer
+	// Required. Format: "cus_" followed by random characters
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -346,9 +378,11 @@ func (x *GenCustomerCofLinkRequest) GetId() string {
 	return ""
 }
 
+// Response message for generating a card-on-file link.
 type GenCustomerCofLinkResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// link of the customer cof
+	// Secure URL for adding card-on-file information
+	// Valid for 24 hours from generation
 	Link          string `protobuf:"bytes,1,opt,name=link,proto3" json:"link,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -391,11 +425,14 @@ func (x *GenCustomerCofLinkResponse) GetLink() string {
 	return ""
 }
 
+// Request message for adding notes to a customer.
 type AppendCustomerNotesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of customer
+	// Unique identifier of the customer
+	// Required. Format: "cus_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// notes to append
+	// Notes to add to the customer's profile
+	// Required. At least one note must be provided
 	Notes         []*Customer_Note `protobuf:"bytes,3,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -445,9 +482,11 @@ func (x *AppendCustomerNotesRequest) GetNotes() []*Customer_Note {
 	return nil
 }
 
+// Response message for adding notes to a customer.
 type AppendCustomerNotesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// notes appended
+	// Notes that were successfully added
+	// Includes generated IDs and timestamps
 	Notes         []*Customer_Note `protobuf:"bytes,1,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -490,11 +529,14 @@ func (x *AppendCustomerNotesResponse) GetNotes() []*Customer_Note {
 	return nil
 }
 
+// Request message for listing customer notes.
 type ListCustomerNotesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// pagination information
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// id of customer
+	// Unique identifier of the customer
+	// Required. Format: "cus_" followed by random characters
 	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -544,11 +586,14 @@ func (x *ListCustomerNotesRequest) GetId() string {
 	return ""
 }
 
+// Response message for listing customer notes.
 type ListCustomerNotesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// notes of the customer
+	// List of notes for the customer
+	// May be empty if the customer has no notes
 	Notes         []*Customer_Note `protobuf:"bytes,2,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -598,11 +643,14 @@ func (x *ListCustomerNotesResponse) GetNotes() []*Customer_Note {
 	return nil
 }
 
+// Request message for adding tags to a customer.
 type AppendCustomerTagsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of customer
+	// Unique identifier of the customer
+	// Required. Format: "cus_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// tags to append
+	// Tags to add to the customer's profile
+	// Required. At least one tag must be provided
 	Tags          []*Customer_Tag `protobuf:"bytes,3,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -652,9 +700,11 @@ func (x *AppendCustomerTagsRequest) GetTags() []*Customer_Tag {
 	return nil
 }
 
+// Response message for adding tags to a customer.
 type AppendCustomerTagsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// tags appended
+	// Tags that were successfully added
+	// Includes generated IDs and timestamps
 	Tags          []*Customer_Tag `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -697,9 +747,11 @@ func (x *AppendCustomerTagsResponse) GetTags() []*Customer_Tag {
 	return nil
 }
 
+// Request message for listing customer tags.
 type ListCustomerTagsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of customer
+	// Unique identifier of the customer
+	// Required. Format: "cus_" followed by random characters
 	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -742,9 +794,11 @@ func (x *ListCustomerTagsRequest) GetId() string {
 	return ""
 }
 
+// Response message for listing customer tags.
 type ListCustomerTagsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// next page token
+	// List of tags associated with the customer
+	// May be empty if the customer has no tags
 	Tags          []*Customer_Tag `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -787,9 +841,12 @@ func (x *ListCustomerTagsResponse) GetTags() []*Customer_Tag {
 	return nil
 }
 
+// Filter parameters for the customer list
 type ListCustomersRequest_Filter struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	LastUpdatedTime *interval.Interval     `protobuf:"bytes,1,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Time range for filtering customers by last update time
+	// Optional. If not provided, returns all customers
+	LastUpdatedTime *interval.Interval `protobuf:"bytes,1,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }

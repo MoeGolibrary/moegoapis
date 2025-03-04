@@ -12,9 +12,19 @@ option java_multiple_files = true;
 option java_outer_classname = "ReviewServiceProto";
 option java_package = "com.moego.api.business.review.v1";
 
-// ReviewService openapi definitions for operate review
+// ReviewService provides APIs for managing customer reviews and feedback.
+// This service handles operations for retrieving and analyzing customer
+// reviews across different feedback channels. It supports filtering by
+// staff members and feedback sources for targeted analysis.
 service ReviewService {
-  // ListReviews list reviews
+  // ListReviews retrieves a paginated list of customer reviews based on specified criteria.
+  // Supports filtering by feedback source and staff members to facilitate
+  // targeted analysis of customer satisfaction and service quality.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  // - NOT_FOUND if the business ID doesn't exist
   rpc ListReviews(ListReviewsRequest) returns (ListReviewsResponse) {
     option (google.api.http) = {
       post: "/v1/reviews:list"
@@ -23,25 +33,42 @@ service ReviewService {
   }
 }
 
-// ListReviewsRequest request for ListReviews
+// ListReviewsRequest encapsulates parameters for retrieving customer reviews.
+// Supports pagination and filtering to customize the result set based on
+// business needs and analysis requirements.
 message ListReviewsRequest {
-  // The pagination information
+  // Pagination parameters for handling large result sets
+  // Required to manage data volume efficiently
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // The business id
+
+  // Business location identifier for scoping reviews
+  // Required to ensure reviews are accessed within proper context
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
-  // Filter for the reviews
+
+  // Filter specifies criteria for filtering the review list.
+  // Allows targeting specific feedback sources and staff members.
   message Filter {
+    // Feedback channels to include in results
+    // Optional. If empty, includes reviews from all sources
     repeated Review.Source sources = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // Staff members to filter reviews by
+    // Optional. If empty, includes reviews for all staff
     repeated string staff_ids = 2 [(google.api.field_behavior) = OPTIONAL];
   }
-  // The filter
+
+  // Filter criteria to apply to the review list
+  // Optional. If not provided, returns all reviews
   Filter filter = 3;
 }
 
-// ListReviewsResponse response for ListReviews
+// ListReviewsResponse contains the paginated list of reviews and metadata.
 message ListReviewsResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The reviews
+
+  // List of reviews matching the request criteria
+  // May be empty if no reviews match the filters
   repeated Review reviews = 2;
 }

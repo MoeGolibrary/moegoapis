@@ -4,87 +4,122 @@ package moego.business.agreement.v1;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementrecordpb;agreementrecordpb";
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb;agreementpb";
 option java_multiple_files = true;
 option java_outer_classname = "AgreementRecordProto";
 option java_package = "com.moego.api.business.agreement.v1";
 
+// The agreement record object tracks individual instances of customer interactions
+// with agreements. It maintains the history of when and how customers signed
+// agreements, including the specific version of the agreement they saw and their
+// signature or consent method. This helps ensure compliance and provides an
+// audit trail for all agreement-related activities.
 message AgreementRecord {
-  // signing status of agreement
+  // Current state of the customer's signature on the agreement.
   enum SignedStatus {
-    // unspecified
+    // Not intended for direct use
     SIGNED_STATUS_UNSPECIFIED = 0;
-    // unsigned
+
+    // Agreement has been presented but not yet signed
     UNSIGNED = 1;
-    // signed
+
+    // Customer has completed the signing process
     SIGNED = 2;
   }
-  // signed an agreement type
+
+  // Method by which the agreement was signed or recorded.
   enum SignedType {
-    // unspecified
+    // Not intended for direct use
     SIGNED_TYPE_UNSPECIFIED = 0;
-    // customer signature
+
+    // Customer provided an electronic signature
     CUSTOMER_SIGNED = 1;
-    // business upload file
+
+    // Business uploaded a physically signed document
     BY_BUSINESS_UPLOAD = 2;
   }
-  // agreement source type
+
+  // Origin point where the agreement was presented to the customer.
   enum SourceType {
-    // unspecified
+    // Not intended for direct use
     SOURCE_TYPE_UNSPECIFIED = 0;
-    // from web url
+
+    // Signed through a web browser interface
     URL = 1;
-    // from mobile app
+
+    // Signed through the mobile application
     MOBILE = 2;
-    // from online booking
+
+    // Signed during online booking process
     ONLINE_BOOKING = 3;
-    // from intake form
+
+    // Signed as part of intake form completion
     INTAKE_FORM = 4;
   }
-  // Status
+
+  // Current status of the agreement record.
   enum Status {
-    // unspecified
+    // Not intended for direct use
     STATUS_UNSPECIFIED = 0;
-    // normal
+
+    // Record is active and valid
     NORMAL = 1;
-    // deleted
+
+    // Record has been removed
     DELETED = 2;
   }
 
-  // agreement record id
+  // string, Unique identifier for this record
   string id = 1;
-  // agreement record uuid
+
+  // string, UUID for external reference
   string uuid = 2;
-  // agreement id
+
+  // string, Reference to the agreement template
   string agreement_id = 3;
-  // business id
+
+  // string, Business location where signing occurred
   string business_id = 4;
-  // company id
+
+  // string, Parent company identifier
   string company_id = 5;
-  // customer id
+
+  // string, Customer who signed or was presented the agreement
   string customer_id = 6;
-  // associated target id
+
+  // string, Related object ID (e.g., appointment, form)
   string target_id = 7;
-  // status: normal, deleted
+
+  // enum(Status), Current state of the record
   Status status = 8;
-  // signed status: unsigned, signed
+
+  // enum(SignedStatus), Whether the agreement has been signed
   SignedStatus signed_status = 9;
-  // signed type, see definition in SignedType
+
+  // enum(SignedType), How the agreement was signed
   SignedType signed_type = 10;
-  // source type, see definition in SourceType
+
+  // enum(SourceType), Where the agreement was presented
   SourceType source_type = 11;
-  // agreement record link
+
+  // string, URL where the agreement can be viewed
   string link = 12;
-  // agreement title
+
+  // string, Agreement title at time of signing
   string title = 13;
-  // agreement content
+
+  // string, Agreement content at time of signing
   string content = 14;
-  // customer signature
+
+  // string, Customer's signature data
   string signature = 15;
-  // signed time: milliseconds
+
+  // timestamp, When the agreement was signed
   google.protobuf.Timestamp signed_time = 16;
-  // create time: milliseconds
+
+  // timestamp, When this record was created
   google.protobuf.Timestamp created_time = 17;
-  // update time: milliseconds
+
+  // timestamp, When this record was last modified
   google.protobuf.Timestamp updated_time = 18;
 }

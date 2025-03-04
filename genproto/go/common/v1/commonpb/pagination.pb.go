@@ -23,18 +23,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Pagination represents the pagination information.
-// It is used to control the page size and page token,
-// must be declared in the request of the List APIs.
-// The page size must be between 1 and 500, and the page token
-// must be a non-empty string with a maximum length of 64.
-// The Response of the List APIs will contain the next page token
-// if there are more results.
+// The pagination object provides a standardized way to handle paginated results
+// across all API endpoints. It supports both cursor-based and offset-based
+// pagination, with configurable page sizes and sorting options. This ensures
+// consistent and efficient data retrieval for large result sets.
 type Pagination struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The page size.
+	// integer, Number of items to return per page.
+	// Minimum: 1, Maximum: 500
 	PageSize int32 `protobuf:"varint,1,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	// The page token.
+	// string, Token for retrieving the next page.
+	// Obtained from the previous page's response.
+	// Leave empty for the first page.
 	PageToken     *string `protobuf:"bytes,2,opt,name=page_token,json=pageToken,proto3,oneof" json:"page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

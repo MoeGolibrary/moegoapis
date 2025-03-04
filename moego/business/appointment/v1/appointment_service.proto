@@ -13,20 +13,42 @@ option java_multiple_files = true;
 option java_outer_classname = "AppointmentServiceProto";
 option java_package = "com.moego.api.business.appointment.v1";
 
-// AppointmentService openapi definitions for operate appointments
+// The appointment service provides methods for managing pet service appointments.
+// This includes creating new appointments, retrieving appointment details,
+// rescheduling appointments, and handling cancellations.
+//
+// Typical appointment lifecycle:
+// 1. Create appointment with CreateAppointment
+// 2. Retrieve details with GetAppointment
+// 3. Optionally reschedule using RescheduleAppointment
+// 4. Cancel if needed with CancelAppointment
+//
+// All methods require authentication and proper business_id.
+// Rate limit: 100 requests per minute per API key.
 service AppointmentService {
-  // GetAppointment
+  // Retrieves a single appointment by its ID.
+  //
+  // Returns a detailed appointment object including all services, pet information,
+  // and current status. Returns 404 if appointment is not found.
   rpc GetAppointment(GetAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {get: "/v1/appointments/{id}"};
   }
-  // ListStaffs
+
+  // Lists appointments matching the specified criteria.
+  //
+  // Returns a paginated list of appointments. Use filters to narrow results
+  // by date range, status, or last update time. Maximum page size: 100.
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:list"
       body: "*"
     };
   }
-  // CreateAppointment
+
+  // Creates a new appointment.
+  //
+  // Schedules one or more services for specified pets. The appointment will
+  // initially be in UNCONFIRMED status. Staff assignments are optional.
   rpc CreateAppointment(CreateAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {
       post: "/v1/appointments"
@@ -34,6 +56,10 @@ service AppointmentService {
     };
   }
 
+  // Reschedules an existing appointment.
+  //
+  // Updates the appointment's time slot. All services within the appointment
+  // will be moved to the new time. Staff assignments may change based on availability.
   rpc RescheduleAppointment(RescheduleAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {
       post: "/v1/appointments/{id}:reschedule"
@@ -41,6 +67,10 @@ service AppointmentService {
     };
   }
 
+  // Cancels an appointment.
+  //
+  // Sets the appointment status to CANCELED. This action cannot be undone.
+  // Notifications will be sent to affected customers and staff.
   rpc CancelAppointment(CancelAppointmentRequest) returns (Appointment) {
     option (google.api.http) = {
       post: "/v1/appointments/{id}:cancel"
@@ -49,60 +79,125 @@ service AppointmentService {
   }
 }
 
-// GetAppointmentRequest get appointment request
+// Request to retrieve a specific appointment.
 message GetAppointmentRequest {
+  // string, The unique identifier of the appointment to retrieve.
+  // Format: "apt_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request to list appointments matching specified criteria.
 message ListAppointmentsRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 100).
+  // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The company identifier for multi-location businesses.
+  // Required for company-wide appointment listing.
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of business location IDs to include.
+  // Maximum: 50 locations per request
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the appointment list
   message Filter {
+    // object(Interval), Filter by appointment start time range.
+    // Maximum range: 90 days
     google.type.Interval start_time = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(Interval), Filter by appointment end time range.
+    // Maximum range: 90 days
     google.type.Interval end_time = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(Interval), Filter by last update time range.
+    // Maximum range: 30 days
     google.type.Interval last_updated_time = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(Status), Filter by appointment status.
+    // Example: ["CONFIRMED", "CHECKED_IN"]
     repeated Appointment.Status statuses = 4 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // object(Filter), Optional filters to narrow the results.
   Filter filter = 4;
 }
 
+// Response for listing appointments
 message ListAppointmentsResponse {
-  // The next page token
+  // string, Token for retrieving the next page of results.
+  // Empty if there are no more results.
   string next_page_token = 1;
-  // The Appointments
+
+  // array(Appointment), List of appointments matching the request criteria.
+  // Ordered by start time in ascending order.
   repeated Appointment appointments = 2;
 }
 
+// Request to create a new appointment
 message CreateAppointmentRequest {
+  // Details of services requested for a specific pet
   message PetService {
+    // string, The unique identifier of the pet receiving services.
+    // Must belong to the specified customer.
     string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+    // array(Service), List of services to be provided.
+    // Maximum: 10 services per pet
     repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
   }
+
+  // Individual service booking details
   message Service {
+    // string, The unique identifier of the service to be provided.
+    // Must be an active service in the business's service list.
     string id = 1;
-    // the service start time && end time
+
+    // object(Interval), The scheduled time window for this service.
+    // Must be within business hours and staff availability.
     google.type.Interval duration = 2;
-    // only support first staff
+
+    // array(string), Preferred staff member IDs for this service.
+    // Only the first staff member will be assigned if available.
     repeated string staff_ids = 3;
   }
 
-  // Account Info
+  // string, The business location's identifier where services will be provided.
   string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The customer's identifier who is booking the appointment.
   string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
 
-  // PetService info
+  // array(PetService), Services requested for each pet.
+  // Maximum: 5 pets per appointment
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request to reschedule an existing appointment
 message RescheduleAppointmentRequest {
+  // string, The unique identifier of the appointment to reschedule.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // object(Interval), The new time window for the appointment.
+  // Must be in the future and within business hours.
   google.type.Interval duration = 3;
 }
 
+// Request to cancel an appointment
 message CancelAppointmentRequest {
+  // string, The unique identifier of the appointment to cancel.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }

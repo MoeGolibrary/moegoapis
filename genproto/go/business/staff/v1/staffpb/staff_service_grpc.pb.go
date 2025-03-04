@@ -27,11 +27,25 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// StaffService openapi definitions for operate staff
+// StaffService provides methods for managing staff members and their associated data.
+// This service handles staff profile retrieval and listing operations. Staff members
+// are essential for service delivery and business operations management.
 type StaffServiceClient interface {
-	// GetStaff
+	// Retrieves detailed information about a specific staff member.
+	//
+	// Returns the complete staff profile including role, permissions, and work locations.
+	// This information is used for authentication, authorization, and service assignment.
+	//
+	// Returns NOT_FOUND if the staff ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	GetStaff(ctx context.Context, in *GetStaffRequest, opts ...grpc.CallOption) (*Staff, error)
-	// ListStaffs
+	// Lists staff members matching the specified criteria.
+	//
+	// Results are paginated and filtered by company ID. This method is typically used
+	// for staff management, scheduling, and reporting purposes.
+	//
+	// Returns an empty list if no staff members match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListStaffs(ctx context.Context, in *ListStaffsRequest, opts ...grpc.CallOption) (*ListStaffsResponse, error)
 }
 
@@ -67,11 +81,25 @@ func (c *staffServiceClient) ListStaffs(ctx context.Context, in *ListStaffsReque
 // All implementations must embed UnimplementedStaffServiceServer
 // for forward compatibility.
 //
-// StaffService openapi definitions for operate staff
+// StaffService provides methods for managing staff members and their associated data.
+// This service handles staff profile retrieval and listing operations. Staff members
+// are essential for service delivery and business operations management.
 type StaffServiceServer interface {
-	// GetStaff
+	// Retrieves detailed information about a specific staff member.
+	//
+	// Returns the complete staff profile including role, permissions, and work locations.
+	// This information is used for authentication, authorization, and service assignment.
+	//
+	// Returns NOT_FOUND if the staff ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	GetStaff(context.Context, *GetStaffRequest) (*Staff, error)
-	// ListStaffs
+	// Lists staff members matching the specified criteria.
+	//
+	// Results are paginated and filtered by company ID. This method is typically used
+	// for staff management, scheduling, and reporting purposes.
+	//
+	// Returns an empty list if no staff members match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListStaffs(context.Context, *ListStaffsRequest) (*ListStaffsResponse, error)
 	mustEmbedUnimplementedStaffServiceServer()
 }

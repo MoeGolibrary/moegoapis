@@ -10,38 +10,84 @@ option java_multiple_files = true;
 option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
-// Order line item
+// OrderLineItem represents an individual item within an order.
+// Each line item corresponds to a specific service, product, or charge that
+// contributes to the total order amount. Line items track individual pricing,
+// quantities, and payment status.
 message OrderLineItem {
-  // ObjectType
+  // ObjectType defines the category of item being charged.
+  // This determines pricing rules, tax treatment, and reporting categorization.
   enum ObjectType {
+    // Unknown or invalid object type
+    // Should not be used when creating new line items
     OBJECT_TYPE_UNSPECIFIED = 0;
+
+    // Standard service offering
+    // Example: Grooming, training session
     SERVICE = 1;
+
+    // Physical product sold
+    // Example: Pet food, grooming supplies
     PRODUCT = 2;
+
+    // Bundle of services or products
+    // Typically offered at a discount
     PACKAGE = 3;
+
+    // Charge for missed appointment
+    // Based on cancellation policy
     NO_SHOW = 4;
+
+    // Additional service-related fee
+    // Example: Holiday surcharge, rush fee
     SERVICE_CHARGE = 5;
+
+    // Initial pet evaluation service
+    // Required for new clients or services
     EVALUATION_SERVICE = 6;
   }
-  // id
+
+  // Unique identifier for the line item
+  // Format: "li_" followed by random characters
   string id = 1;
-  // order id
+
+  // ID of the parent order
+  // Required. Must be a valid order ID
   string order_id = 2;
-  // object id
+
+  // ID of the referenced service, product, or package
+  // Required. Must match the object_type
   string object_id = 3;
-  // item type
+
+  // Category of the line item
+  // Determines business rules and processing
   ObjectType object_type = 4;
-  // item name
+
+  // Display name of the item
+  // Example: "Premium Dog Grooming"
   string name = 5;
-  // item description
+
+  // Additional details about the item
+  // Optional. Max length: 500 characters
   string description = 6;
-  // item unit price
+
+  // Price per unit of the item
+  // Before any discounts or adjustments
   google.type.Money unit_price = 7;
-  // total quantity
+
+  // Number of units purchased
+  // Must be greater than 0
   int32 quantity = 8;
-  // create time
+
+  // When this line item was created
+  // System-generated timestamp
   google.protobuf.Timestamp created_time = 9;
-  // update time
+
+  // When this line item was last modified
+  // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 10;
-  // paid amount
+
+  // Amount that has been paid for this item
+  // Updated when payments are processed
   google.type.Money paid_amount = 11;
 }

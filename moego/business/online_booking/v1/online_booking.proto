@@ -12,24 +12,64 @@ option java_multiple_files = true;
 option java_outer_classname = "OnlineBookingProto";
 option java_package = "com.moego.api.business.online_booking.v1";
 
-// OnlineBooking
+// OnlineBooking represents a service appointment request made through digital channels.
+// These bookings can be made through the customer portal, mobile app, or website.
+// Each booking includes service details, timing preferences, and customer information
+// needed to schedule the appointment.
 message OnlineBooking {
-  // Status
+  // Status represents the current state of the online booking request.
+  // This affects how the booking is processed and displayed in the system.
   enum Status {
+    // Unknown or invalid status
+    // Should not be used when creating new bookings
     STATUS_UNSPECIFIED = 0;
+
+    // Booking is being processed normally
+    // Standard flow for immediate scheduling
     NORMAL = 1;
+
+    // Booking is on a waiting list
+    // Used when preferred time slot is unavailable
     IN_WAIT_LIST = 2;
+
+    // Booking was abandoned before completion
+    // No further processing needed
     ABANDONED = 3;
   }
 
-  // ID
+  // Unique identifier for the booking
+  // Format: "bkg_" followed by random characters
   string id = 1;
+
+  // ID of the business location for the service
+  // Required. Must be a valid business ID
   string business_id = 2;
+
+  // ID of the customer making the booking
+  // Required. Must be a valid customer ID
   string customer_id = 3;
+
+  // Service location details
+  // Required for mobile services, optional for in-store
   moego.common.v1.Address address = 4;
+
+  // Requested time window for the service
+  // Includes start and end time preferences
   google.type.Interval duration = 5;
+
+  // List of services requested for each pet
+  // Details specific services and pets involved
   repeated moego.business.appointment.v1.PetServiceDetail pet_service_details = 6;
+
+  // Current state of the booking request
+  // Determines processing flow and display
   Status status = 7;
+
+  // Visual identifier for the booking
+  // Used in calendar and schedule displays
   string color_code = 8;
+
+  // When this booking request was created
+  // System-generated timestamp
   google.protobuf.Timestamp created_time = 9;
 }

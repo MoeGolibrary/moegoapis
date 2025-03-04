@@ -10,91 +10,150 @@ option java_multiple_files = true;
 option java_outer_classname = "reportProto";
 option java_package = "com.moego.api.business.report.v1";
 
-// Report
+// Report represents a customizable business report definition.
+// Reports are used to generate structured data views with configurable fields
+// and formatting options. Each report can be used to analyze different aspects
+// of business operations.
 message Report {
-  // id
+  // Unique identifier for the report
+  // Format: "rpt_" followed by random characters
   string id = 1;
-  // name
+
+  // Display name of the report
+  // Used in UI and exported documents
   string name = 2;
-  // description
+
+  // Detailed description of the report's purpose and contents
+  // Helps users understand what data is included
   string description = 3;
-  // Fields
+
+  // List of fields included in the report
+  // Defines the structure and data types of the report
   repeated Field fields = 4;
 }
 
+// Field defines a single data column in a report.
+// Each field has a specific data type and display properties.
+// Fields can be used for grouping data and determining how values are formatted.
 message Field {
+  // Type specifies the data type and formatting rules for a field.
+  // This determines how values are stored, displayed, and processed.
   enum Type {
-    // Unspecified field type
+    // Default value when type is not specified
+    // Should not be used when creating new fields
     TYPE_UNSPECIFIED = 0;
-    // A money field type, value will be Money
+
+    // Represents monetary values with currency information
+    // Uses google.type.Money for storage
     MONEY = 1;
-    // A text field type, value will be string
+
+    // Represents text or string values
+    // Used for names, descriptions, and other textual data
     TEXT = 2;
-    // A date field type, value will be Timestamp
+
+    // Represents date values without time
+    // Stored as Timestamp with time set to midnight
     DATE = 3;
-    // A time field type, value will be Timestamp
+
+    // Represents time values without date
+    // Stored as Timestamp with date set to epoch
     TIME = 4;
-    // A number field type, value will be int64
+
+    // Represents whole numbers
+    // Used for counts and integer quantities
     NUMBER = 5;
-    // A decimal number field type, value will be double
+
+    // Represents numbers with decimal points
+    // Used for precise numerical values
     DECIMAL_NUMBER = 6;
-    // A percentage field type, value will be double
+
+    // Represents percentage values
+    // Stored as decimal (e.g., 0.75 for 75%)
     PERCENTAGE = 7;
-    // A duration field type, in minutes, value will be double
+
+    // Represents time duration in minutes
+    // Used for service times and intervals
     DURATION = 8;
-    // With both date and time info, value will be Timestamp
+
+    // Represents full date and time values
+    // Used for exact temporal data points
     DATETIME = 9;
   }
 
-  // The label of the field for display
+  // Display label for the field
+  // Used in report headers and UI elements
   string label = 1;
-  // The type of the field
+
+  // Data type of the field
+  // Determines value formatting and validation
   Type type = 2;
-  // The key of the field
+
+  // Unique identifier for the field within the report
+  // Used to reference field values in data structures
   string key = 3;
-  // Whether the field can be grouped by
+
+  // Whether this field can be used as a grouping criterion
+  // Affects report aggregation options
   bool group_by_enable = 4;
 }
 
-// Table data
+// TableData represents a complete data set for a report.
+// Contains both the structure (fields) and content (rows) of the report.
 message TableData {
-  // The title of the table
+  // Individual data rows in the table
+  // Each row contains values for all defined fields
   repeated TableRowData rows = 1;
-  // Fields of the table, fields from TableMeta or Dynamic generated fields
+
+  // Field definitions for the table
+  // Can be from TableMeta or dynamically generated
   repeated Field fields = 2;
 }
 
-// Table row data
+// TableRowData represents a single row of data in a report.
+// Contains values for each field defined in the table structure.
 message TableRowData {
-  // The column data of one row, key is field key
+  // Map of field values indexed by field key
+  // Each entry corresponds to a column in the report
   map<string, Data> data = 1;
 }
 
-// data of a column in one row
+// Data represents a single cell value in a report table.
+// Includes both the field metadata and the actual value.
 message Data {
-  // The field_key of the big number
+  // Reference to the field definition
+  // Must match a field key in the table structure
   string field_key = 1;
-  // The type of the field
+
+  // Data type of the value
+  // Must match the field definition
   Field.Type field_type = 2;
-  // The value of the big number
+
+  // Actual value of the cell
+  // Type must match field_type
   Value value = 3;
 }
 
-// A value of any type
+// Value represents a typed data value used in reports.
+// Supports multiple data types through a oneof field.
 message Value {
-  // The value
+  // The actual value in its appropriate type
   oneof value {
-    // The string value
+    // Text value for string fields
     string string = 2;
-    // The double value
+
+    // Decimal value for numerical fields
     double double = 3;
-    // The int64 value
+
+    // Integer value for whole number fields
     int64 int64 = 4;
-    // The bool value
+
+    // Boolean value for true/false fields
     bool bool = 6;
-    // The money value
+
+    // Monetary value with currency information
     google.type.Money money = 7;
-    // The timestamp value
+
+    // Date/time value for temporal fields
     google.protobuf.Timestamp timestamp = 8;
   }
 }

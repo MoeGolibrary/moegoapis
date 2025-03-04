@@ -14,9 +14,19 @@ option java_multiple_files = true;
 option java_outer_classname = "SettingProto";
 option java_package = "com.moego.api.business.setting.v1";
 
-// SettingService openapi definitions for operate setting
+// SettingService provides methods for managing business configuration settings.
+// This includes pet codes, customer tags, and service definitions that are used
+// throughout the system. These settings help standardize data entry and ensure
+// consistent service delivery across all business locations.
 service SettingService {
-  // List Pet Codes Setting
+  // Lists all available pet codes for a company.
+  //
+  // Pet codes are used to flag special handling requirements or medical conditions
+  // that staff need to be aware of when providing services. These codes are
+  // displayed prominently in pet profiles and during service delivery.
+  //
+  // Returns all active codes for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/pet/codes:list"
@@ -24,14 +34,29 @@ service SettingService {
     };
   }
 
-  // List Customer Tags Setting
+  // Lists all available customer tags for a company.
+  //
+  // Customer tags help categorize clients and can be used for marketing,
+  // reporting, and service customization. Tags can indicate preferences,
+  // loyalty status, or special handling requirements.
+  //
+  // Returns all active tags for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc ListCustomerTags(ListCustomerTagRequest) returns (ListCustomerTagResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/customer/tags:list"
       body: "*"
     };
   }
-  // ListServices
+
+  // Lists available services based on specified criteria.
+  //
+  // Services can be filtered by business location and service type.
+  // Results are paginated and can be used for service menu display,
+  // appointment booking, and pricing calculations.
+  //
+  // Returns services matching the filter criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/services:list"
@@ -40,35 +65,66 @@ service SettingService {
   }
 }
 
+// Request message for listing pet codes.
 message ListPetCodeRequest {
+  // ID of the company to list pet codes for
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing pet codes.
 message ListPetCodeResponse {
+  // List of available pet codes
+  // May be empty if no codes are defined
   repeated customer.v1.Pet.Code codes = 1;
 }
 
+// Request message for listing customer tags.
 message ListCustomerTagRequest {
+  // ID of the company to list customer tags for
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing customer tags.
 message ListCustomerTagResponse {
+  // List of available customer tags
+  // May be empty if no tags are defined
   repeated customer.v1.Customer.Tag tags = 2;
 }
 
+// Request message for listing services.
 message ListServicesRequest {
+  // ID of the company to list services for
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business locations to filter services by
+  // Optional. If empty, returns services from all locations
   repeated string business_ids = 3;
+
+  // Filter parameters for the service list
   message Filter {
+    // Types of services to include in the results
+    // Optional. If empty, returns all service types
     repeated Service.ItemType item_types = 1 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Optional filters to apply to the service list
   Filter filter = 4;
 }
 
+// Response message for listing services.
 message ListServicesResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The PetService
+
+  // List of services matching the request criteria
+  // May be empty if no services match
   repeated Service services = 2;
 }

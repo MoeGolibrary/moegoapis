@@ -21,10 +21,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// HealthCheck is the health check event payload
+// HealthCheck represents a system monitoring event used to verify the availability
+// and proper functioning of webhook endpoints. These events are sent periodically
+// to ensure reliable communication between system components.
 type HealthCheck struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// validation is a simple string that the webhook will echo back to the client
+	// Validation string to be echoed back by the webhook endpoint
+	// Used to verify bidirectional communication
+	// The endpoint must return this exact string in its response
 	Validation    string `protobuf:"bytes,1,opt,name=validation,proto3" json:"validation,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

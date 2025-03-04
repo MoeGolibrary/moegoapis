@@ -22,15 +22,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status
+// Current status of the agreement document.
 type Agreement_Status int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	Agreement_STATUS_UNSPECIFIED Agreement_Status = 0
-	// normal
+	// Agreement is active and can be presented to customers
 	Agreement_NORMAL Agreement_Status = 1
-	// deleted
+	// Agreement has been removed and is no longer in use
 	Agreement_DELETED Agreement_Status = 2
 )
 
@@ -75,17 +75,17 @@ func (Agreement_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// policy requirement for signed an agreement
+// Defines when customers need to sign the agreement.
 type Agreement_SignedPolicy int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	Agreement_SIGNED_POLICY_UNSPECIFIED Agreement_SignedPolicy = 0
-	// sign for first
+	// Customer must sign only on their first interaction
 	Agreement_FOR_FIRST Agreement_SignedPolicy = 1
-	// sign for each
+	// Customer must sign for each relevant transaction
 	Agreement_FOR_EACH Agreement_SignedPolicy = 2
-	// allow not to sign
+	// Customer may proceed without signing
 	Agreement_OPTIONAL Agreement_SignedPolicy = 3
 )
 
@@ -132,36 +132,40 @@ func (Agreement_SignedPolicy) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// Agreement
+// The agreement object represents a legal document that requires customer consent.
+// It is used to manage various types of agreements such as service terms, privacy policies,
+// and waivers. Each agreement can be configured with different signing requirements
+// and notification templates for customer communication.
 type Agreement struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// agreement id
+	// string, Unique identifier for the agreement
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// business id
+	// string, Business location where this agreement is used
 	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// creator id
+	// string, Staff member who created the agreement
 	CreatorId string `protobuf:"bytes,3,opt,name=creator_id,json=creatorId,proto3" json:"creator_id,omitempty"`
-	// status: normal, deleted
+	// enum(Status), Current state of the agreement
 	Status Agreement_Status `protobuf:"varint,4,opt,name=status,proto3,enum=moego.business.agreement.v1.Agreement_Status" json:"status,omitempty"`
-	// signed policy, see definition in SignedPolicy
+	// enum(SignedPolicy), When signatures are required
 	SignedPolicy Agreement_SignedPolicy `protobuf:"varint,5,opt,name=signed_policy,json=signedPolicy,proto3,enum=moego.business.agreement.v1.Agreement_SignedPolicy" json:"signed_policy,omitempty"`
-	// agreement title
+	// string, Display name of the agreement
 	Title string `protobuf:"bytes,6,opt,name=title,proto3" json:"title,omitempty"`
-	// agreement content
+	// string, Full text of the agreement
 	Content string `protobuf:"bytes,7,opt,name=content,proto3" json:"content,omitempty"`
-	// sms template
+	// string, Template for SMS notifications about this agreement
 	SmsTemplate string `protobuf:"bytes,8,opt,name=sms_template,json=smsTemplate,proto3" json:"sms_template,omitempty"`
-	// email template title
+	// string, Subject line for email notifications
 	EmailTemplateTitle string `protobuf:"bytes,9,opt,name=email_template_title,json=emailTemplateTitle,proto3" json:"email_template_title,omitempty"`
-	// email template body
+	// string, Body content for email notifications
 	EmailTemplateBody string `protobuf:"bytes,10,opt,name=email_template_body,json=emailTemplateBody,proto3" json:"email_template_body,omitempty"`
-	// last requested time: exceed this time will need to be re-signed
+	// timestamp, When signatures were last required
+	// Customers who signed before this time may need to re-sign
 	LastRequiredTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=last_required_time,json=lastRequiredTime,proto3" json:"last_required_time,omitempty"`
-	// last edit time: milliseconds
+	// timestamp, When the agreement content was last modified
 	LastEditTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=last_edit_time,json=lastEditTime,proto3" json:"last_edit_time,omitempty"`
-	// created time: milliseconds
+	// timestamp, When the agreement was first created
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	// last updated time: milliseconds
+	// timestamp, When any field was last changed
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

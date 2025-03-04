@@ -4,7 +4,7 @@
 // 	protoc        (unknown)
 // source: moego/business/agreement/v1/agreement_record.proto
 
-package agreementrecordpb
+package agreementpb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -22,15 +22,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// signing status of agreement
+// Current state of the customer's signature on the agreement.
 type AgreementRecord_SignedStatus int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	AgreementRecord_SIGNED_STATUS_UNSPECIFIED AgreementRecord_SignedStatus = 0
-	// unsigned
+	// Agreement has been presented but not yet signed
 	AgreementRecord_UNSIGNED AgreementRecord_SignedStatus = 1
-	// signed
+	// Customer has completed the signing process
 	AgreementRecord_SIGNED AgreementRecord_SignedStatus = 2
 )
 
@@ -75,15 +75,15 @@ func (AgreementRecord_SignedStatus) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_record_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// signed an agreement type
+// Method by which the agreement was signed or recorded.
 type AgreementRecord_SignedType int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	AgreementRecord_SIGNED_TYPE_UNSPECIFIED AgreementRecord_SignedType = 0
-	// customer signature
+	// Customer provided an electronic signature
 	AgreementRecord_CUSTOMER_SIGNED AgreementRecord_SignedType = 1
-	// business upload file
+	// Business uploaded a physically signed document
 	AgreementRecord_BY_BUSINESS_UPLOAD AgreementRecord_SignedType = 2
 )
 
@@ -128,19 +128,19 @@ func (AgreementRecord_SignedType) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_record_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// agreement source type
+// Origin point where the agreement was presented to the customer.
 type AgreementRecord_SourceType int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	AgreementRecord_SOURCE_TYPE_UNSPECIFIED AgreementRecord_SourceType = 0
-	// from web url
+	// Signed through a web browser interface
 	AgreementRecord_URL AgreementRecord_SourceType = 1
-	// from mobile app
+	// Signed through the mobile application
 	AgreementRecord_MOBILE AgreementRecord_SourceType = 2
-	// from online booking
+	// Signed during online booking process
 	AgreementRecord_ONLINE_BOOKING AgreementRecord_SourceType = 3
-	// from intake form
+	// Signed as part of intake form completion
 	AgreementRecord_INTAKE_FORM AgreementRecord_SourceType = 4
 )
 
@@ -189,15 +189,15 @@ func (AgreementRecord_SourceType) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_record_proto_rawDescGZIP(), []int{0, 2}
 }
 
-// Status
+// Current status of the agreement record.
 type AgreementRecord_Status int32
 
 const (
-	// unspecified
+	// Not intended for direct use
 	AgreementRecord_STATUS_UNSPECIFIED AgreementRecord_Status = 0
-	// normal
+	// Record is active and valid
 	AgreementRecord_NORMAL AgreementRecord_Status = 1
-	// deleted
+	// Record has been removed
 	AgreementRecord_DELETED AgreementRecord_Status = 2
 )
 
@@ -242,43 +242,48 @@ func (AgreementRecord_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_agreement_v1_agreement_record_proto_rawDescGZIP(), []int{0, 3}
 }
 
+// The agreement record object tracks individual instances of customer interactions
+// with agreements. It maintains the history of when and how customers signed
+// agreements, including the specific version of the agreement they saw and their
+// signature or consent method. This helps ensure compliance and provides an
+// audit trail for all agreement-related activities.
 type AgreementRecord struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// agreement record id
+	// string, Unique identifier for this record
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// agreement record uuid
+	// string, UUID for external reference
 	Uuid string `protobuf:"bytes,2,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	// agreement id
+	// string, Reference to the agreement template
 	AgreementId string `protobuf:"bytes,3,opt,name=agreement_id,json=agreementId,proto3" json:"agreement_id,omitempty"`
-	// business id
+	// string, Business location where signing occurred
 	BusinessId string `protobuf:"bytes,4,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// company id
+	// string, Parent company identifier
 	CompanyId string `protobuf:"bytes,5,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// customer id
+	// string, Customer who signed or was presented the agreement
 	CustomerId string `protobuf:"bytes,6,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// associated target id
+	// string, Related object ID (e.g., appointment, form)
 	TargetId string `protobuf:"bytes,7,opt,name=target_id,json=targetId,proto3" json:"target_id,omitempty"`
-	// status: normal, deleted
+	// enum(Status), Current state of the record
 	Status AgreementRecord_Status `protobuf:"varint,8,opt,name=status,proto3,enum=moego.business.agreement.v1.AgreementRecord_Status" json:"status,omitempty"`
-	// signed status: unsigned, signed
+	// enum(SignedStatus), Whether the agreement has been signed
 	SignedStatus AgreementRecord_SignedStatus `protobuf:"varint,9,opt,name=signed_status,json=signedStatus,proto3,enum=moego.business.agreement.v1.AgreementRecord_SignedStatus" json:"signed_status,omitempty"`
-	// signed type, see definition in SignedType
+	// enum(SignedType), How the agreement was signed
 	SignedType AgreementRecord_SignedType `protobuf:"varint,10,opt,name=signed_type,json=signedType,proto3,enum=moego.business.agreement.v1.AgreementRecord_SignedType" json:"signed_type,omitempty"`
-	// source type, see definition in SourceType
+	// enum(SourceType), Where the agreement was presented
 	SourceType AgreementRecord_SourceType `protobuf:"varint,11,opt,name=source_type,json=sourceType,proto3,enum=moego.business.agreement.v1.AgreementRecord_SourceType" json:"source_type,omitempty"`
-	// agreement record link
+	// string, URL where the agreement can be viewed
 	Link string `protobuf:"bytes,12,opt,name=link,proto3" json:"link,omitempty"`
-	// agreement title
+	// string, Agreement title at time of signing
 	Title string `protobuf:"bytes,13,opt,name=title,proto3" json:"title,omitempty"`
-	// agreement content
+	// string, Agreement content at time of signing
 	Content string `protobuf:"bytes,14,opt,name=content,proto3" json:"content,omitempty"`
-	// customer signature
+	// string, Customer's signature data
 	Signature string `protobuf:"bytes,15,opt,name=signature,proto3" json:"signature,omitempty"`
-	// signed time: milliseconds
+	// timestamp, When the agreement was signed
 	SignedTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=signed_time,json=signedTime,proto3" json:"signed_time,omitempty"`
-	// create time: milliseconds
+	// timestamp, When this record was created
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,17,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	// update time: milliseconds
+	// timestamp, When this record was last modified
 	UpdatedTime   *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=updated_time,json=updatedTime,proto3" json:"updated_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -523,18 +528,17 @@ var file_moego_business_agreement_v1_agreement_record_proto_rawDesc = string([]b
 	0x39, 0x0a, 0x06, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x16, 0x0a, 0x12, 0x53, 0x54, 0x41,
 	0x54, 0x55, 0x53, 0x5f, 0x55, 0x4e, 0x53, 0x50, 0x45, 0x43, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10,
 	0x00, 0x12, 0x0a, 0x0a, 0x06, 0x4e, 0x4f, 0x52, 0x4d, 0x41, 0x4c, 0x10, 0x01, 0x12, 0x0b, 0x0a,
-	0x07, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x02, 0x42, 0xa6, 0x01, 0x0a, 0x23, 0x63,
+	0x07, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x44, 0x10, 0x02, 0x42, 0x9a, 0x01, 0x0a, 0x23, 0x63,
 	0x6f, 0x6d, 0x2e, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e, 0x61, 0x70, 0x69, 0x2e, 0x62, 0x75, 0x73,
 	0x69, 0x6e, 0x65, 0x73, 0x73, 0x2e, 0x61, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x2e,
 	0x76, 0x31, 0x42, 0x14, 0x41, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x63,
-	0x6f, 0x72, 0x64, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x67, 0x67, 0x69, 0x74, 0x68,
+	0x6f, 0x72, 0x64, 0x50, 0x72, 0x6f, 0x74, 0x6f, 0x50, 0x01, 0x5a, 0x5b, 0x67, 0x69, 0x74, 0x68,
 	0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x4d, 0x6f, 0x65, 0x47, 0x6f, 0x6c, 0x69, 0x62, 0x72,
 	0x61, 0x72, 0x79, 0x2f, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x61, 0x70, 0x69, 0x73, 0x2f, 0x67, 0x65,
 	0x6e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x2f, 0x62, 0x75, 0x73, 0x69, 0x6e, 0x65,
 	0x73, 0x73, 0x2f, 0x61, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x2f, 0x76, 0x31, 0x2f,
-	0x61, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x72, 0x65, 0x63, 0x6f, 0x72, 0x64, 0x70,
-	0x62, 0x3b, 0x61, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x72, 0x65, 0x63, 0x6f, 0x72,
-	0x64, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x61, 0x67, 0x72, 0x65, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x70, 0x62, 0x3b, 0x61, 0x67, 0x72, 0x65,
+	0x65, 0x6d, 0x65, 0x6e, 0x74, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 })
 
 var (

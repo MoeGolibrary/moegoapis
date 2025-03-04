@@ -14,19 +14,45 @@ option java_multiple_files = true;
 option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
+// OrderService provides methods for managing orders and their line items.
+// This service handles the creation, retrieval, and listing of orders and
+// their associated items. It supports filtering and pagination for efficient
+// data access and reporting.
 service OrderService {
-  // GetOrder
+  // Retrieves detailed information about a specific order.
+  //
+  // Returns the complete order object including status, amounts, and timestamps.
+  // This information is used for order processing, financial reporting, and
+  // customer service inquiries.
+  //
+  // Returns NOT_FOUND if the order ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc GetOrder(GetOrderRequest) returns (Order) {
     option (google.api.http) = {get: "/v1/orders/{id}"};
   }
-  // ListOrders
+
+  // Lists orders matching the specified criteria.
+  //
+  // Results are paginated and can be filtered by business location, status,
+  // and update time. This method is typically used for order management,
+  // financial reporting, and reconciliation.
+  //
+  // Returns an empty list if no orders match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse) {
     option (google.api.http) = {
       post: "/v1/orders:list"
       body: "*"
     };
   }
-  // ListOrderLineItems
+
+  // Lists line items matching the specified criteria.
+  //
+  // Retrieves detailed information about individual items within orders.
+  // This method is useful for itemized reporting and revenue analysis.
+  //
+  // Returns an empty list if no line items match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
     option (google.api.http) = {
       post: "/v1/orders/items:list"
@@ -35,43 +61,77 @@ service OrderService {
   }
 }
 
+// Request message for listing orders.
 message ListOrdersRequest {
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the company to list orders for
+  // Required. Must be a valid company ID
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business locations to filter orders by
+  // Required. Must be valid business IDs within the company
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the order list
   message Filter {
+    // Specific order IDs to retrieve
+    // Optional. If provided, other filters are ignored
     repeated string ids = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // Order statuses to include in results
+    // Optional. If empty, returns orders in all statuses
     repeated Order.Status statuses = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Time range for filtering orders by last update time
+    // Optional. If not provided, returns all orders
     google.type.Interval last_updated_time = 3 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Optional filters to apply to the order list
   Filter filter = 4;
 }
 
+// Response message for listing orders.
 message ListOrdersResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The orders
+
+  // List of orders matching the request criteria
+  // May be empty if no orders match
   repeated Order orders = 2;
 }
 
-// GetOrderRequest get order request
+// Request message for retrieving a specific order.
 message GetOrderRequest {
-  // order id
+  // Unique identifier of the order to retrieve
+  // Required. Format: "ord_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListOrderLineItemsRequest get order request
+// Request message for listing order line items.
 message ListOrderLineItemsRequest {
-  // company id
+  // ID of the company to list line items for
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the line item list
   message Filter {
+    // Specific order IDs to retrieve line items for
+    // Optional. If empty, returns items from all orders
     repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Optional filters to apply to the line item list
   Filter filter = 2;
 }
 
-// ListOrderLineItemsResponse
+// Response message for listing order line items.
 message ListOrderLineItemsResponse {
-  // The order line item
+  // List of line items matching the request criteria
+  // May be empty if no items match
   repeated OrderLineItem order_line_items = 1;
 }

@@ -7,8 +7,12 @@ option java_multiple_files = true;
 option java_outer_classname = "HealthCheckProto";
 option java_package = "com.moego.api.business.event.v1";
 
-// HealthCheck is the health check event payload
+// HealthCheck represents a system monitoring event used to verify the availability
+// and proper functioning of webhook endpoints. These events are sent periodically
+// to ensure reliable communication between system components.
 message HealthCheck {
-  // validation is a simple string that the webhook will echo back to the client
+  // Validation string to be echoed back by the webhook endpoint
+  // Used to verify bidirectional communication
+  // The endpoint must return this exact string in its response
   string validation = 1;
 }

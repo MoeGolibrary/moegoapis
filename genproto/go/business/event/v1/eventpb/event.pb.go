@@ -24,26 +24,38 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Type is the type of the event
+// Type categorizes the event and determines how it should be processed.
+// Event types are grouped by functionality to maintain clear boundaries
+// and facilitate routing to appropriate handlers.
 type Event_Type int32
 
 const (
-	// EVENT_TYPE_UNSPECIFIED can never be used in a message. It is used as the default value in enums.
+	// Unknown or invalid event type
+	// Should not be used when creating new events
 	Event_TYPE_UNSPECIFIED Event_Type = 0
-	// From 1-99 are reserved for system events
-	// HEALTH_CHECK is an event type for health check
+	// Health check event for system monitoring
+	// Used to verify webhook endpoint availability
 	Event_HEALTH_CHECK Event_Type = 1
-	// From 100-199 are reserved for appointment events
-	// APPOINTMENT_CREATED is an event type for appointment created
+	// New appointment has been created
+	// Triggers notifications and resource allocation
 	Event_APPOINTMENT_CREATED Event_Type = 100
-	// APPOINTMENT_UPDATED is an event type for appointment updated
-	Event_APPOINTMENT_UPDATED    Event_Type = 101
-	Event_APPOINTMENT_FINISHED   Event_Type = 102
-	Event_APPOINTMENT_CANCELED   Event_Type = 103
-	Event_APPOINTMENT_DELETED    Event_Type = 104
+	// Existing appointment has been modified
+	// Updates schedules and notifications
+	Event_APPOINTMENT_UPDATED Event_Type = 101
+	// Service delivery has been completed
+	// Initiates payment and review processes
+	Event_APPOINTMENT_FINISHED Event_Type = 102
+	// Appointment has been canceled
+	// Releases reserved resources
+	Event_APPOINTMENT_CANCELED Event_Type = 103
+	// Appointment has been permanently removed
+	// Cleans up associated records
+	Event_APPOINTMENT_DELETED Event_Type = 104
+	// All payments for the appointment received
+	// Updates financial records
 	Event_APPOINTMENT_FULLY_PAID Event_Type = 105
-	// From 200-299 are reserved for online booking events
-	// ONLINE_BOOKING_RECEIVED is an event type for online booking received
+	// New online booking request received
+	// Initiates booking validation and processing
 	Event_ONLINE_BOOKING_RECEIVED Event_Type = 200
 )
 
@@ -100,14 +112,27 @@ func (Event_Type) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_event_v1_event_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Event
+// Event represents a significant occurrence within the system that requires notification
+// or processing. Events can be system-level operations, appointment status changes,
+// or customer interactions. Each event includes metadata and type-specific payload
+// for proper handling by event consumers.
 type Event struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id is the unique identifier of the event
-	Id        string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Type      Event_Type             `protobuf:"varint,2,opt,name=type,proto3,enum=moego.business.event.v1.Event_Type" json:"type,omitempty"`
+	// Unique identifier for the event
+	// Format: "evt_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Category of the event
+	// Determines payload type and processing rules
+	Type Event_Type `protobuf:"varint,2,opt,name=type,proto3,enum=moego.business.event.v1.Event_Type" json:"type,omitempty"`
+	// When this event occurred
+	// Used for event ordering and processing
 	Timestamp *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=timestamp,proto3" json:"timestamp,omitempty"`
-	CompanyId string                 `protobuf:"bytes,4,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the company associated with the event
+	// Used for event routing and access control
+	CompanyId string `protobuf:"bytes,4,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Event-specific data based on the event type
+	// Only one field will be set based on type
+	//
 	// Types that are valid to be assigned to Payload:
 	//
 	//	*Event_HealthCheck
@@ -215,14 +240,20 @@ type isEvent_Payload interface {
 }
 
 type Event_HealthCheck struct {
+	// Payload for system health check events
+	// Used when type is HEALTH_CHECK
 	HealthCheck *HealthCheck `protobuf:"bytes,5,opt,name=health_check,json=healthCheck,proto3,oneof"`
 }
 
 type Event_Appointment struct {
+	// Payload for appointment-related events
+	// Used when type is in the APPOINTMENT range
 	Appointment *appointmentpb.Appointment `protobuf:"bytes,6,opt,name=appointment,proto3,oneof"`
 }
 
 type Event_OnlineBooking struct {
+	// Payload for online booking events
+	// Used when type is in the ONLINE_BOOKING range
 	OnlineBooking *onlinebookingpb.OnlineBooking `protobuf:"bytes,7,opt,name=online_booking,json=onlineBooking,proto3,oneof"`
 }
 

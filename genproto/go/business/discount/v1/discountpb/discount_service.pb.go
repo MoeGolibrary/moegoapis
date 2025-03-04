@@ -23,11 +23,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// CreateDiscountRequest
+// CreateDiscountRequest represents a request to create a new discount.
 type CreateDiscountRequest struct {
-	state     protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// The discount to be created
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Company identifier for scoping the discount
+	// Required to ensure discounts are created in proper context
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Complete discount configuration to create
+	// Must include all required fields and valid settings
 	Discount      *Discount `protobuf:"bytes,2,opt,name=discount,proto3" json:"discount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -77,11 +80,15 @@ func (x *CreateDiscountRequest) GetDiscount() *Discount {
 	return nil
 }
 
-// GetDiscountRequest
+// GetDiscountRequest represents a request to retrieve a specific discount.
 type GetDiscountRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	Code          string                 `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Company identifier for scoping the request
+	// Required to ensure discounts are accessed within proper context
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Unique identifier of the discount to retrieve
+	// Must be a valid discount code
+	Code          string `protobuf:"bytes,2,opt,name=code,proto3" json:"code,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -130,12 +137,15 @@ func (x *GetDiscountRequest) GetCode() string {
 	return ""
 }
 
-// ListDiscountsRequest is the request message for DiscountAPI.ListDiscounts
+// ListDiscountsRequest encapsulates parameters for retrieving discounts.
 type ListDiscountsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
-	Pagination    *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string               `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Pagination parameters for handling large result sets
+	// Required to manage data volume efficiently
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Company identifier for scoping the discount list
+	// Required to ensure discounts are accessed within proper context
+	CompanyId     string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -184,12 +194,14 @@ func (x *ListDiscountsRequest) GetCompanyId() string {
 	return ""
 }
 
-// ListDiscountsResponse is the response message for DiscountAPI.ListDiscounts
+// ListDiscountsResponse contains the paginated list of discounts.
 type ListDiscountsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Discounts
+	// List of discounts matching the request criteria
+	// May be empty if no discounts match
 	Discounts     []*Discount `protobuf:"bytes,2,rep,name=discounts,proto3" json:"discounts,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

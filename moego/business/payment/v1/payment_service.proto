@@ -12,12 +12,26 @@ option java_multiple_files = true;
 option java_outer_classname = "PaymentProto";
 option java_package = "com.moego.api.business.payment.v1";
 
-// CompanyService openapi definitions for operate company
+// PaymentService provides APIs for managing payment transactions within the system.
+// This service handles operations related to payment retrieval and listing,
+// supporting both individual payment lookups and filtered bulk queries.
 service PaymentService {
+  // GetPayment retrieves detailed information about a specific payment by its ID.
+  // Returns a complete Payment object containing all payment details.
+  //
+  // Possible errors:
+  // - NOT_FOUND if the payment doesn't exist
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc GetPayment(GetPaymentRequest) returns (Payment) {
     option (google.api.http) = {get: "/v1/payment/{id}"};
   }
-  // ListPayments list payment
+
+  // ListPayments retrieves a paginated list of payments based on specified criteria.
+  // Supports filtering by order IDs and includes pagination for handling large result sets.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListPayments(ListPaymentsRequest) returns (ListPaymentsResponse) {
     option (google.api.http) = {
       post: "/v1/payments:list"
@@ -26,23 +40,42 @@ service PaymentService {
   }
 }
 
+// GetPaymentRequest represents a request to retrieve a specific payment.
 message GetPaymentRequest {
+  // Unique identifier of the payment to retrieve.
+  // This ID is required and must be a valid payment ID in the system.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// ListPaymentsRequest encapsulates the parameters for listing payments.
+// Supports pagination and filtering to customize the result set.
 message ListPaymentsRequest {
-  // The pagination information
+  // Pagination parameters to control the size and position of the result set.
+  // Required to manage large result sets efficiently.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Company identifier for access control and scoping.
+  // Required to ensure payments are only accessed within the proper context.
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter defines the criteria for filtering the payment list.
+  // Contains optional parameters to narrow down the result set.
   message Filter {
+    // Optional list of order IDs to filter payments by.
+    // If provided, only payments associated with these orders will be returned.
     repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
   }
+  // Filter criteria to apply to the payment list query.
   Filter filter = 3;
 }
 
+// ListPaymentsResponse contains the paginated list of payments and pagination metadata.
 message ListPaymentsResponse {
-  // The next page token
+  // Token for retrieving the next page of results.
+  // Empty if there are no more results available.
   string next_page_token = 1;
-  // The businesses
+
+  // List of payments matching the request criteria.
+  // May be empty if no payments match the specified filters.
   repeated Payment payments = 2;
 }

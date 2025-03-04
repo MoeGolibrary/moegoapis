@@ -23,10 +23,11 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetStaffRequest is the request message for StaffAPI.GetStaff
+// Request message for retrieving a specific staff member.
 type GetStaffRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The id of the Staff to retrieve
+	// Unique identifier of the staff member to retrieve
+	// Required. Format: "stf_" followed by random characters
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -69,12 +70,15 @@ func (x *GetStaffRequest) GetId() string {
 	return ""
 }
 
-// ListStaffsRequest is the request message for StaffAPI.ListStaffs
+// Request message for listing staff members.
 type ListStaffsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
-	Pagination    *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string               `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// ID of the company to list staff members for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -123,11 +127,14 @@ func (x *ListStaffsRequest) GetCompanyId() string {
 	return ""
 }
 
+// Response message for listing staff members.
 type ListStaffsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Staffs
+	// List of staff members matching the request criteria
+	// May be empty if no staff members match
 	Staffs        []*Staff `protobuf:"bytes,2,rep,name=staffs,proto3" json:"staffs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

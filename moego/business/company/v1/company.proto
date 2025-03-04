@@ -9,10 +9,24 @@ option java_multiple_files = true;
 option java_outer_classname = "CompanyProto";
 option java_package = "com.moego.api.business.company.v1";
 
-// Company information
+// Company represents a business entity in the system.
+// Companies are the top-level organizational units that contain multiple
+// business locations, staff members, and service offerings. Each company
+// has its own configuration settings and operational parameters.
 message Company {
+  // Unique identifier for the company
+  // Format: "cmp_" followed by random characters
   string id = 1;
+
+  // Legal name of the company
+  // Used in official communications and documents
   string name = 3;
+
+  // Country where the company is registered
+  // ISO 3166-1 alpha-2 country code
   string country = 4;
+
+  // Primary timezone for company operations
+  // Used for scheduling and reporting
   google.type.TimeZone timezone = 5;
 }

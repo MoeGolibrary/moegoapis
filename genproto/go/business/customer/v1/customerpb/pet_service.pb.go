@@ -23,11 +23,14 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Request message for creating a new pet profile.
 type CreatePetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of pet owner
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// pet to create
+	// Complete pet information to be created
+	// Required. Must include all required pet fields
 	Pet           *Pet `protobuf:"bytes,2,opt,name=pet,proto3" json:"pet,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -77,9 +80,11 @@ func (x *CreatePetRequest) GetPet() *Pet {
 	return nil
 }
 
+// Response message for creating a new pet profile.
 type CreatePetResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// pet created
+	// The newly created pet profile
+	// Includes system-generated fields like ID
 	Pet           *Pet `protobuf:"bytes,1,opt,name=pet,proto3" json:"pet,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -122,11 +127,14 @@ func (x *CreatePetResponse) GetPet() *Pet {
 	return nil
 }
 
+// Request message for retrieving a specific pet.
 type GetPetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of pet owner
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// id of pet
+	// Unique identifier of the pet to retrieve
+	// Required. Format: "pet_" followed by random characters
 	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -176,9 +184,11 @@ func (x *GetPetRequest) GetId() string {
 	return ""
 }
 
+// Request message for listing a customer's pets.
 type ListPetsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of pet owner
+	// ID of the customer whose pets to list
+	// Required. Must be a valid customer ID
 	CustomerId    string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -221,9 +231,11 @@ func (x *ListPetsRequest) GetCustomerId() string {
 	return ""
 }
 
+// Response message for listing a customer's pets.
 type ListPetsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pets of the customer
+	// List of pets belonging to the customer
+	// May be empty if the customer has no pets
 	Pets          []*Pet `protobuf:"bytes,1,rep,name=pets,proto3" json:"pets,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -266,13 +278,17 @@ func (x *ListPetsResponse) GetPets() []*Pet {
 	return nil
 }
 
+// Request message for adding codes to a pet's profile.
 type AppendPetCodesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of pet owner
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// id of pet
+	// Unique identifier of the pet
+	// Required. Format: "pet_" followed by random characters
 	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	// pet_code_ids to append
+	// IDs of the codes to add to the pet's profile
+	// Required. Must be valid code IDs
 	PetCodeIds    []string `protobuf:"bytes,3,rep,name=pet_code_ids,json=petCodeIds,proto3" json:"pet_code_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -329,9 +345,11 @@ func (x *AppendPetCodesRequest) GetPetCodeIds() []string {
 	return nil
 }
 
+// Response message for adding codes to a pet's profile.
 type AppendPetCodesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// pet codes appended
+	// Codes that were successfully added
+	// Includes full code details
 	Codes         []*Pet_Code `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -374,13 +392,17 @@ func (x *AppendPetCodesResponse) GetCodes() []*Pet_Code {
 	return nil
 }
 
+// Request message for adding notes to a pet's profile.
 type AppendPetNotesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of pet owner
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// id of pet
+	// Unique identifier of the pet
+	// Required. Format: "pet_" followed by random characters
 	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	// notes to append
+	// Notes to add to the pet's profile
+	// Required. At least one note must be provided
 	Notes         []*Pet_Note `protobuf:"bytes,3,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -437,9 +459,11 @@ func (x *AppendPetNotesRequest) GetNotes() []*Pet_Note {
 	return nil
 }
 
+// Response message for adding notes to a pet's profile.
 type AppendPetNotesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// pet notes appended
+	// Notes that were successfully added
+	// Includes generated IDs and timestamps
 	Notes         []*Pet_Note `protobuf:"bytes,1,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -482,13 +506,17 @@ func (x *AppendPetNotesResponse) GetNotes() []*Pet_Note {
 	return nil
 }
 
+// Request message for listing a pet's notes.
 type ListPetNotesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// id of pet owner
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// id of pet
+	// Unique identifier of the pet
+	// Required. Format: "pet_" followed by random characters
 	Id            string `protobuf:"bytes,3,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -545,11 +573,14 @@ func (x *ListPetNotesRequest) GetId() string {
 	return ""
 }
 
+// Response message for listing a pet's notes.
 type ListPetNotesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The notes
+	// List of notes for the pet
+	// May be empty if the pet has no notes
 	Notes         []*Pet_Note `protobuf:"bytes,2,rep,name=notes,proto3" json:"notes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -599,12 +630,16 @@ func (x *ListPetNotesResponse) GetNotes() []*Pet_Note {
 	return nil
 }
 
+// Request message for listing all pets in the company.
 type ListAllPetsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// The company id
-	CompanyId     string                     `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the company to list pets for
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Optional filters to apply to the pet list
 	Filter        *ListAllPetsRequest_Filter `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -661,11 +696,14 @@ func (x *ListAllPetsRequest) GetFilter() *ListAllPetsRequest_Filter {
 	return nil
 }
 
+// Response message for listing all pets.
 type ListAllPetsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The pets
+	// List of pets matching the request criteria
+	// May be empty if no pets match
 	Pets          []*Pet `protobuf:"bytes,2,rep,name=pets,proto3" json:"pets,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -715,9 +753,12 @@ func (x *ListAllPetsResponse) GetPets() []*Pet {
 	return nil
 }
 
+// Filter parameters for the pet list
 type ListAllPetsRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CustomerIds   []int64                `protobuf:"varint,1,rep,packed,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional list of customer IDs to filter by
+	// If provided, only returns pets belonging to these customers
+	CustomerIds   []int64 `protobuf:"varint,1,rep,packed,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

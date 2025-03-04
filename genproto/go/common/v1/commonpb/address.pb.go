@@ -22,13 +22,17 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Type of address
+// Possible values are `primary`, `secondary`.
+// Type represents the importance of the address
 type Address_Type int32
 
 const (
+	// Not intended for direct use. Indicates a system anomaly.
 	Address_TYPE_UNSPECIFIED Address_Type = 0
-	Address_PRIMARY          Address_Type = 1
-	Address_SECONDARY        Address_Type = 2
+	// Primary Address, which will be used as first address choice.
+	Address_PRIMARY Address_Type = 1
+	// Secondary Address, an optional address saved as back-up
+	Address_SECONDARY Address_Type = 2
 )
 
 // Enum value maps for Address_Type.
@@ -72,18 +76,37 @@ func (Address_Type) EnumDescriptor() ([]byte, []int) {
 	return file_moego_common_v1_address_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Address represents a physical address
+// The address object represents a physical location used throughout the system.
+// It provides a standardized way to store and validate address information for
+// businesses, customers, and service locations. The address format follows
+// common postal standards and includes geocoding information for mapping.
 type Address struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Address1      string                 `protobuf:"bytes,2,opt,name=address1,proto3" json:"address1,omitempty"`
-	Address2      string                 `protobuf:"bytes,3,opt,name=address2,proto3" json:"address2,omitempty"`
-	City          string                 `protobuf:"bytes,4,opt,name=city,proto3" json:"city,omitempty"`
-	State         string                 `protobuf:"bytes,5,opt,name=state,proto3" json:"state,omitempty"`
-	PostalCode    string                 `protobuf:"bytes,6,opt,name=postal_code,json=postalCode,proto3" json:"postal_code,omitempty"`
-	Country       string                 `protobuf:"bytes,7,opt,name=country,proto3" json:"country,omitempty"`
-	Coordinate    *latlng.LatLng         `protobuf:"bytes,8,opt,name=coordinate,proto3" json:"coordinate,omitempty"`
-	Type          Address_Type           `protobuf:"varint,9,opt,name=type,proto3,enum=moego.common.v1.Address_Type" json:"type,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, Unique identifier for the address.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, Street address including house number and street name.
+	// Example: "123 Main Street", "Unit 4B, 567 Park Avenue"
+	Address1 string `protobuf:"bytes,2,opt,name=address1,proto3" json:"address1,omitempty"`
+	// string, Additional address details like apartment, suite, or unit number.
+	// Example: "Floor 3", "Building B"
+	Address2 string `protobuf:"bytes,3,opt,name=address2,proto3" json:"address2,omitempty"`
+	// string, City or locality name.
+	// Example: "San Francisco", "New York City"
+	City string `protobuf:"bytes,4,opt,name=city,proto3" json:"city,omitempty"`
+	// string, State, province, or region.
+	// Example: "CA", "NY"
+	State string `protobuf:"bytes,5,opt,name=state,proto3" json:"state,omitempty"`
+	// string, Postal or ZIP code.
+	// Example: "94105", "10001"
+	PostalCode string `protobuf:"bytes,6,opt,name=postal_code,json=postalCode,proto3" json:"postal_code,omitempty"`
+	// string, Country name or ISO country code.
+	// Example: "US", "United States"
+	Country string `protobuf:"bytes,7,opt,name=country,proto3" json:"country,omitempty"`
+	// object(LatLng), Latitude and Longitude coordinate for mapping.
+	// Latitude Range: -90 to 90. Longitude Range: -180 to 180.
+	Coordinate *latlng.LatLng `protobuf:"bytes,8,opt,name=coordinate,proto3" json:"coordinate,omitempty"`
+	// enum(Type), represents the importance of the address
+	Type          Address_Type `protobuf:"varint,9,opt,name=type,proto3,enum=moego.common.v1.Address_Type" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

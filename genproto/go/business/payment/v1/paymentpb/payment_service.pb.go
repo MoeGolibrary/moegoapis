@@ -23,9 +23,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// GetPaymentRequest represents a request to retrieve a specific payment.
 type GetPaymentRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier of the payment to retrieve.
+	// This ID is required and must be a valid payment ID in the system.
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -67,11 +70,17 @@ func (x *GetPaymentRequest) GetId() string {
 	return ""
 }
 
+// ListPaymentsRequest encapsulates the parameters for listing payments.
+// Supports pagination and filtering to customize the result set.
 type ListPaymentsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
-	Pagination    *commonpb.Pagination        `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string                      `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Pagination parameters to control the size and position of the result set.
+	// Required to manage large result sets efficiently.
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// Company identifier for access control and scoping.
+	// Required to ensure payments are only accessed within the proper context.
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Filter criteria to apply to the payment list query.
 	Filter        *ListPaymentsRequest_Filter `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -128,11 +137,14 @@ func (x *ListPaymentsRequest) GetFilter() *ListPaymentsRequest_Filter {
 	return nil
 }
 
+// ListPaymentsResponse contains the paginated list of payments and pagination metadata.
 type ListPaymentsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results.
+	// Empty if there are no more results available.
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The businesses
+	// List of payments matching the request criteria.
+	// May be empty if no payments match the specified filters.
 	Payments      []*Payment `protobuf:"bytes,2,rep,name=payments,proto3" json:"payments,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -182,9 +194,13 @@ func (x *ListPaymentsResponse) GetPayments() []*Payment {
 	return nil
 }
 
+// Filter defines the criteria for filtering the payment list.
+// Contains optional parameters to narrow down the result set.
 type ListPaymentsRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderIds      []string               `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional list of order IDs to filter payments by.
+	// If provided, only payments associated with these orders will be returned.
+	OrderIds      []string `protobuf:"bytes,1,rep,name=order_ids,json=orderIds,proto3" json:"order_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

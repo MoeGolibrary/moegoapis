@@ -14,52 +14,91 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
-// CustomerService openapi definitions for operate customer
+// CustomerService provides methods for managing customer data, including creation,
+// retrieval, and management of customer-related information such as notes and tags.
+// All operations require appropriate authentication and authorization.
 service CustomerService {
-  // Create a customer
+  // Creates a new customer in the system.
+  // 
+  // This method validates and stores customer information, including basic details,
+  // preferences, and any initial tags or notes. A unique customer ID is generated
+  // and returned in the response.
+  //
+  // Returns the created Customer object with all fields populated.
+  // Throws INVALID_ARGUMENT if required fields are missing or invalid.
   rpc CreateCustomer(CreateCustomerRequest) returns (Customer) {
     option (google.api.http) = {
       post: "/v1/customers"
       body: "*"
     };
   }
-  // Get a customer
+
+  // Retrieves detailed information about a specific customer.
+  //
+  // Returns all customer data including preferences, notes, tags, and appointment history.
+  // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc GetCustomer(GetCustomerRequest) returns (Customer) {
     option (google.api.http) = {get: "/v1/customers/{id}"};
   }
-  // List customers
+
+  // Lists customers matching the specified criteria.
+  //
+  // Results are paginated and can be filtered by last update time.
+  // Returns an empty list if no customers match the criteria.
   rpc ListCustomers(ListCustomersRequest) returns (ListCustomersResponse) {
     option (google.api.http) = {
       post: "/v1/customers:list"
       body: "*"
     };
   }
-  // Generate a link to add customer card on file
+
+  // Generates a secure link for adding customer card-on-file information.
+  //
+  // The generated link is valid for 24 hours and can only be used once.
+  // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc GenCustomerCofLink(GenCustomerCofLinkRequest) returns (GenCustomerCofLinkResponse) {
     option (google.api.http) = {get: "/v1/customers/{id}/cof/link"};
   }
-  // Append notes to a Customer
+
+  // Adds new notes to a customer's profile.
+  //
+  // Notes are timestamped and attributed to the staff member who created them.
+  // Returns the newly created notes with generated IDs.
+  // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc AppendCustomerNotes(AppendCustomerNotesRequest) returns (AppendCustomerNotesResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{id}/notes"
       body: "*"
     };
   }
-  // List Customer Notes
+
+  // Retrieves a paginated list of notes for a specific customer.
+  //
+  // Notes are returned in reverse chronological order (newest first).
+  // Returns an empty list if the customer has no notes.
   rpc ListCustomerNotes(ListCustomerNotesRequest) returns (ListCustomerNotesResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{id}/notes:list"
       body: "*"
     };
   }
-  // Append tags to a Customer
+
+  // Adds new tags to a customer's profile.
+  //
+  // Tags help categorize customers and can be used for filtering and reporting.
+  // Returns the newly created tags with generated IDs.
+  // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc AppendCustomerTags(AppendCustomerTagsRequest) returns (AppendCustomerTagsResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{id}/tags"
       body: "*"
     };
   }
-  // List Customer Tags
+
+  // Retrieves all tags associated with a specific customer.
+  //
+  // Returns an empty list if the customer has no tags.
+  // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc ListCustomerTags(ListCustomerTagsRequest) returns (ListCustomerTagsResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{id}/tags:list"
@@ -68,96 +107,170 @@ service CustomerService {
   }
 }
 
+// Request message for creating a new customer.
 message CreateCustomerRequest {
+  // ID of the company creating the customer
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the business location preferred by the customer
+  // Required. Must be a valid business ID within the company
   string preferred_business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Customer's first name
+  // Required. Max length: 100 characters
   string first_name = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Customer's last name
+  // Required. Max length: 100 characters
   string last_name = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // Customer's phone number
+  // Required. Must be in E.164 format (e.g., +12125551234)
   string phone = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Customer's email address
+  // Optional. Must be a valid email address if provided
   string email = 6;
+
+  // Customer's primary address
+  // Optional. Must be a valid address if provided
   moego.common.v1.Address address = 7;
+
+  // Customer's communication and marketing preferences
+  // Optional. System defaults will be used if not provided
   CustomerPreference preference = 8;
+
+  // Initial tags to apply to the customer
+  // Optional. Empty list if not provided
   repeated Customer.Tag tags = 9;
+
+  // Initial notes about the customer
+  // Optional. Empty list if not provided
   repeated Customer.Note notes = 10;
 }
 
+// Request message for retrieving a specific customer.
 message GetCustomerRequest {
-  // The id of the customer to retrieve
+  // Unique identifier of the customer to retrieve
+  // Required. Format: "cus_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request message for listing customers.
 message ListCustomersRequest {
-  // The pagination information
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // The company id
+
+  // ID of the company to list customers for
+  // Required. Must be a valid company ID
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the customer list
   message Filter {
+    // Time range for filtering customers by last update time
+    // Optional. If not provided, returns all customers
     google.type.Interval last_updated_time = 1 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Optional filters to apply to the customer list
   Filter filter = 3;
 }
 
+// Response message for listing customers.
 message ListCustomersResponse {
-  // next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // customers belong to the company
+
+  // List of customers matching the request criteria
+  // May be empty if no customers match
   repeated Customer customers = 2;
 }
 
+// Request message for generating a card-on-file link.
 message GenCustomerCofLinkRequest {
-  // id of customer
+  // Unique identifier of the customer
+  // Required. Format: "cus_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for generating a card-on-file link.
 message GenCustomerCofLinkResponse {
-  // link of the customer cof
+  // Secure URL for adding card-on-file information
+  // Valid for 24 hours from generation
   string link = 1;
 }
 
+// Request message for adding notes to a customer.
 message AppendCustomerNotesRequest {
-  // id of customer
+  // Unique identifier of the customer
+  // Required. Format: "cus_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  // notes to append
+
+  // Notes to add to the customer's profile
+  // Required. At least one note must be provided
   repeated Customer.Note notes = 3;
 }
 
+// Response message for adding notes to a customer.
 message AppendCustomerNotesResponse {
-  // notes appended
+  // Notes that were successfully added
+  // Includes generated IDs and timestamps
   repeated Customer.Note notes = 1;
 }
 
+// Request message for listing customer notes.
 message ListCustomerNotesRequest {
-  // pagination information
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // id of customer
+
+  // Unique identifier of the customer
+  // Required. Format: "cus_" followed by random characters
   string id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing customer notes.
 message ListCustomerNotesResponse {
-  // next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // notes of the customer
+
+  // List of notes for the customer
+  // May be empty if the customer has no notes
   repeated Customer.Note notes = 2;
 }
 
+// Request message for adding tags to a customer.
 message AppendCustomerTagsRequest {
-  // id of customer
+  // Unique identifier of the customer
+  // Required. Format: "cus_" followed by random characters
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-  // tags to append
+
+  // Tags to add to the customer's profile
+  // Required. At least one tag must be provided
   repeated Customer.Tag tags = 3;
 }
 
+// Response message for adding tags to a customer.
 message AppendCustomerTagsResponse {
-  // tags appended
+  // Tags that were successfully added
+  // Includes generated IDs and timestamps
   repeated Customer.Tag tags = 1;
 }
 
+// Request message for listing customer tags.
 message ListCustomerTagsRequest {
-  // id of customer
+  // Unique identifier of the customer
+  // Required. Format: "cus_" followed by random characters
   string id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing customer tags.
 message ListCustomerTagsResponse {
-  // next page token
+  // List of tags associated with the customer
+  // May be empty if the customer has no tags
   repeated Customer.Tag tags = 2;
 }

@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package moego.business.setting.v1;
 
-import "google/type/interval.proto";
 import "google/type/money.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
@@ -10,33 +9,96 @@ option java_multiple_files = true;
 option java_outer_classname = "SettingProto";
 option java_package = "com.moego.api.business.setting.v1";
 
-// Service
+// Service represents a specific service or add-on that can be provided to pets.
+// Services are the core offerings of your business and can be customized based on
+// location, staff availability, and service type. Each service has its own pricing,
+// duration, and availability settings.
 message Service {
+  // ItemType categorizes the primary type of service being offered.
+  // This helps organize services in the system and determines applicable business rules.
   enum ItemType {
+    // Unknown or unspecified service type
+    // Should not be used when creating new services
     SERVICE_ITEM_TYPE_UNSPECIFIED = 0;
+
+    // Pet grooming services
+    // Includes bathing, haircuts, nail trimming, etc.
     GROOMING = 1;
+
+    // Pet boarding services
+    // Overnight or extended stay care
     BOARDING = 2;
+
+    // Daytime pet care services
+    // Supervised play and care during business hours
     DAYCARE = 3;
+
+    // Pet evaluation services
+    // Behavior assessment and service compatibility check
     EVALUATION = 4;
+
+    // Pet training services
+    // Individual or group training sessions
     TRAINING = 5;
   }
+
+  // Type indicates whether this is a standalone service or an add-on
+  // that can be combined with other services.
   enum Type {
+    // Unknown or unspecified type
+    // Should not be used when creating new services
     SERVICE_TYPE_UNSPECIFIED = 0;
+
+    // Primary standalone service
+    // Can be booked independently
     SERVICE = 1;
+
+    // Additional service that complements primary services
+    // Must be booked with a primary service
     ADDON = 2;
   }
+
+  // Unique identifier for the service
+  // Format: "srv_" followed by random characters
   string id = 1;
+
+  // Display name of the service
+  // Required. Max length: 100 characters
   string name = 2;
+
+  // Primary category of the service
+  // Determines applicable business rules and pricing structure
   ItemType service_item_type = 3;
+
+  // Subcategory for further service classification
+  // Example: "Basic Grooming", "Premium Training"
   string category = 4;
+
+  // Base price for the service
+  // Can be adjusted based on pet size, breed, or add-ons
   google.type.Money price = 5;
+
+  // Whether this is a primary service or an add-on
+  // Affects how the service can be booked
   Type service_type = 6;
-  // the service provision time, minutes
+
+  // Duration of the service in minutes
+  // Used for scheduling and resource allocation
   int32 service_time = 7;
 
-  // limit scope
+  // Whether this service is available at all business locations
+  // If false, check available_business_ids for specific locations
   bool available_all_business = 8;
+
+  // List of business locations where this service is available
+  // Only used when available_all_business is false
   repeated string available_business_ids = 9;
+
+  // Whether this service can be performed by all staff members
+  // If false, check available_staff_ids for specific staff
   bool available_all_staff = 10;
+
+  // List of staff members who can perform this service
+  // Only used when available_all_staff is false
   repeated string available_staff_ids = 11;
 }

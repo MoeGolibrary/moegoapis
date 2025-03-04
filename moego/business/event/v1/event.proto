@@ -12,37 +12,90 @@ option java_multiple_files = true;
 option java_outer_classname = "EventProto";
 option java_package = "com.moego.api.business.event.v1";
 
-// Event
+// Event represents a significant occurrence within the system that requires notification
+// or processing. Events can be system-level operations, appointment status changes,
+// or customer interactions. Each event includes metadata and type-specific payload
+// for proper handling by event consumers.
 message Event {
-  // Type is the type of the event
+  // Type categorizes the event and determines how it should be processed.
+  // Event types are grouped by functionality to maintain clear boundaries
+  // and facilitate routing to appropriate handlers.
   enum Type {
-    // EVENT_TYPE_UNSPECIFIED can never be used in a message. It is used as the default value in enums.
+    // Unknown or invalid event type
+    // Should not be used when creating new events
     TYPE_UNSPECIFIED = 0;
-    // From 1-99 are reserved for system events
-    // HEALTH_CHECK is an event type for health check
+
+    // System Events (1-99)
+    // Events related to system operations and monitoring
+
+    // Health check event for system monitoring
+    // Used to verify webhook endpoint availability
     HEALTH_CHECK = 1;
-    // From 100-199 are reserved for appointment events
-    // APPOINTMENT_CREATED is an event type for appointment created
+
+    // Appointment Events (100-199)
+    // Events related to appointment lifecycle changes
+
+    // New appointment has been created
+    // Triggers notifications and resource allocation
     APPOINTMENT_CREATED = 100;
-    // APPOINTMENT_UPDATED is an event type for appointment updated
+
+    // Existing appointment has been modified
+    // Updates schedules and notifications
     APPOINTMENT_UPDATED = 101;
+
+    // Service delivery has been completed
+    // Initiates payment and review processes
     APPOINTMENT_FINISHED = 102;
+
+    // Appointment has been canceled
+    // Releases reserved resources
     APPOINTMENT_CANCELED = 103;
+
+    // Appointment has been permanently removed
+    // Cleans up associated records
     APPOINTMENT_DELETED = 104;
+
+    // All payments for the appointment received
+    // Updates financial records
     APPOINTMENT_FULLY_PAID = 105;
-    // From 200-299 are reserved for online booking events
-    // ONLINE_BOOKING_RECEIVED is an event type for online booking received
+
+    // Online Booking Events (200-299)
+    // Events related to customer self-service booking
+
+    // New online booking request received
+    // Initiates booking validation and processing
     ONLINE_BOOKING_RECEIVED = 200;
   }
 
-  // id is the unique identifier of the event
+  // Unique identifier for the event
+  // Format: "evt_" followed by random characters
   string id = 1;
+
+  // Category of the event
+  // Determines payload type and processing rules
   Type type = 2;
+
+  // When this event occurred
+  // Used for event ordering and processing
   google.protobuf.Timestamp timestamp = 3;
+
+  // ID of the company associated with the event
+  // Used for event routing and access control
   string company_id = 4;
+
+  // Event-specific data based on the event type
+  // Only one field will be set based on type
   oneof payload {
+    // Payload for system health check events
+    // Used when type is HEALTH_CHECK
     HealthCheck health_check = 5;
+
+    // Payload for appointment-related events
+    // Used when type is in the APPOINTMENT range
     moego.business.appointment.v1.Appointment appointment = 6;
+
+    // Payload for online booking events
+    // Used when type is in the ONLINE_BOOKING range
     moego.business.online_booking.v1.OnlineBooking online_booking = 7;
   }
 }

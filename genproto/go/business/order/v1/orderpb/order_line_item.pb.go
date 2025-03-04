@@ -23,17 +23,32 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// ObjectType
+// ObjectType defines the category of item being charged.
+// This determines pricing rules, tax treatment, and reporting categorization.
 type OrderLineItem_ObjectType int32
 
 const (
+	// Unknown or invalid object type
+	// Should not be used when creating new line items
 	OrderLineItem_OBJECT_TYPE_UNSPECIFIED OrderLineItem_ObjectType = 0
-	OrderLineItem_SERVICE                 OrderLineItem_ObjectType = 1
-	OrderLineItem_PRODUCT                 OrderLineItem_ObjectType = 2
-	OrderLineItem_PACKAGE                 OrderLineItem_ObjectType = 3
-	OrderLineItem_NO_SHOW                 OrderLineItem_ObjectType = 4
-	OrderLineItem_SERVICE_CHARGE          OrderLineItem_ObjectType = 5
-	OrderLineItem_EVALUATION_SERVICE      OrderLineItem_ObjectType = 6
+	// Standard service offering
+	// Example: Grooming, training session
+	OrderLineItem_SERVICE OrderLineItem_ObjectType = 1
+	// Physical product sold
+	// Example: Pet food, grooming supplies
+	OrderLineItem_PRODUCT OrderLineItem_ObjectType = 2
+	// Bundle of services or products
+	// Typically offered at a discount
+	OrderLineItem_PACKAGE OrderLineItem_ObjectType = 3
+	// Charge for missed appointment
+	// Based on cancellation policy
+	OrderLineItem_NO_SHOW OrderLineItem_ObjectType = 4
+	// Additional service-related fee
+	// Example: Holiday surcharge, rush fee
+	OrderLineItem_SERVICE_CHARGE OrderLineItem_ObjectType = 5
+	// Initial pet evaluation service
+	// Required for new clients or services
+	OrderLineItem_EVALUATION_SERVICE OrderLineItem_ObjectType = 6
 )
 
 // Enum value maps for OrderLineItem_ObjectType.
@@ -85,30 +100,44 @@ func (OrderLineItem_ObjectType) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_order_v1_order_line_item_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Order line item
+// OrderLineItem represents an individual item within an order.
+// Each line item corresponds to a specific service, product, or charge that
+// contributes to the total order amount. Line items track individual pricing,
+// quantities, and payment status.
 type OrderLineItem struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id
+	// Unique identifier for the line item
+	// Format: "li_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// order id
+	// ID of the parent order
+	// Required. Must be a valid order ID
 	OrderId string `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	// object id
+	// ID of the referenced service, product, or package
+	// Required. Must match the object_type
 	ObjectId string `protobuf:"bytes,3,opt,name=object_id,json=objectId,proto3" json:"object_id,omitempty"`
-	// item type
+	// Category of the line item
+	// Determines business rules and processing
 	ObjectType OrderLineItem_ObjectType `protobuf:"varint,4,opt,name=object_type,json=objectType,proto3,enum=moego.business.order.v1.OrderLineItem_ObjectType" json:"object_type,omitempty"`
-	// item name
+	// Display name of the item
+	// Example: "Premium Dog Grooming"
 	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
-	// item description
+	// Additional details about the item
+	// Optional. Max length: 500 characters
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	// item unit price
+	// Price per unit of the item
+	// Before any discounts or adjustments
 	UnitPrice *money.Money `protobuf:"bytes,7,opt,name=unit_price,json=unitPrice,proto3" json:"unit_price,omitempty"`
-	// total quantity
+	// Number of units purchased
+	// Must be greater than 0
 	Quantity int32 `protobuf:"varint,8,opt,name=quantity,proto3" json:"quantity,omitempty"`
-	// create time
+	// When this line item was created
+	// System-generated timestamp
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	// update time
+	// When this line item was last modified
+	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	// paid amount
+	// Amount that has been paid for this item
+	// Updated when payments are processed
 	PaidAmount    *money.Money `protobuf:"bytes,11,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

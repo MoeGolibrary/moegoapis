@@ -11,31 +11,78 @@ option java_multiple_files = true;
 option java_outer_classname = "DiscountProto";
 option java_package = "com.moego.api.business.discount.v1";
 
-// Discount
+// Discount represents a promotional offer that reduces the price of services.
+// Discounts can be applied automatically or manually to appointments and can
+// be limited by various criteria such as usage count, validity period, and
+// eligible customers or business locations.
 message Discount {
+  // Unique identifier for the discount
+  // Format: Alphanumeric code, case-sensitive
   string code = 1;
+
+  // Human-readable explanation of the discount
+  // Used in customer communications and UI
   string description = 2;
+
+  // The discount value, either a fixed amount or percentage
+  // Only one field will be set
   oneof value {
+    // Fixed amount to deduct from the service price
+    // Must be in the same currency as the service
     google.type.Money amount = 3;
+
+    // Percentage to deduct from the service price
+    // Range: 1-100
     uint32 percentage = 4;
   }
+
+  // Time period during which the discount is valid
+  // Used to control seasonal or promotional offers
   google.type.Interval valid_period = 5;
+
+  // Usage restrictions and eligibility criteria
+  // Controls who can use the discount and how often
   DiscountLimitation limitation = 6;
+
+  // Configuration options for discount application
+  // Controls how the discount behaves in different contexts
   DiscountSettings settings = 7;
-  // discount will never expire if expiry_time is not set
+
+  // When this discount becomes invalid
+  // Optional. If not set, discount never expires
   google.protobuf.Timestamp expiry_time = 8;
 }
 
-// DiscountLimitation
+// DiscountLimitation defines usage restrictions for a discount.
+// These limitations help control discount usage and target specific
+// customer segments or business locations.
 message DiscountLimitation {
+  // Maximum number of times this discount can be used
+  // Set to 0 for unlimited usage
   uint32 max_redeem_times = 1;
+
+  // Business locations where this discount is valid
+  // Empty list means valid at all locations
   repeated string business_ids = 2;
+
+  // Whether each customer can use this discount only once
+  // Helps prevent discount abuse
   bool redeem_once_per_customer = 3;
+
+  // Specific customers eligible for this discount
+  // Empty list means all customers are eligible
   repeated string customer_ids = 4;
 }
 
-// DiscountSettings
+// DiscountSettings configures how the discount is applied and presented.
+// These settings control the discount's behavior in different booking
+// channels and scenarios.
 message DiscountSettings {
+  // Whether to apply the discount automatically when conditions are met
+  // Used for promotional campaigns and loyalty rewards
   bool auto_apply_on_eligible_appointment = 1;
+
+  // Whether this discount can be used in online bookings
+  // Controls discount visibility in customer portal
   bool allow_for_online_booking = 2;
 }

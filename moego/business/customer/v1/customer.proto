@@ -10,61 +10,147 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerProto";
 option java_package = "com.moego.api.business.customer.v1";
 
-// Customer is a customer
+// Customer represents a client who uses your services. A customer can have multiple pets,
+// appointments, and preferences. Customers are the core entity in the pet service business
+// and are used throughout the system for booking appointments, managing pets, and tracking
+// service history.
 message Customer {
-  // Status is the status of a customer
+  // Status represents the current state of a customer's account.
+  // This affects their ability to book appointments and access services.
   enum Status {
-    // The customer status is the default value
+    // STATUS_UNSPECIFIED indicates an unknown or invalid status.
+    // New customers should not be created with this status.
     STATUS_UNSPECIFIED = 0;
-    // The customer is active
+
+    // ACTIVE indicates the customer can book appointments and use services.
+    // This is the default status for new customers.
     ACTIVE = 1;
-    // The customer is inactive
+
+    // INACTIVE indicates the customer cannot book new appointments.
+    // Existing appointments may still be honored based on business policy.
     INACTIVE = 2;
   }
 
-  // Customer Note
+  // Note represents a comment or observation about a customer.
+  // Notes help track important customer information, preferences, and history.
   message Note {
+    // Unique identifier for this note
     string id = 1;
+
+    // The content of the note
+    // Max length: 1000 characters
     string note = 2;
+
+    // ID of the staff member who last modified this note
     string last_updated_by = 3;
+
+    // When this note was last modified
     google.protobuf.Timestamp last_updated_time = 4;
   }
 
-  // Customer Tag
+  // Tag represents a label that can be applied to customers for categorization
+  // and filtering purposes.
   message Tag {
+    // Unique identifier for this tag
     string id = 1;
+
+    // Display name of the tag
+    // Max length: 50 characters
     string name = 2;
+
+    // ID of the staff member who last modified this tag
     string last_updated_by = 3;
+
+    // When this tag was last modified
     google.protobuf.Timestamp last_updated_time = 4;
   }
 
-  // ID is the unique identifier of a customer
+  // Unique identifier for the customer
+  // Format: "cus_" followed by random characters
   string id = 1;
+
+  // Customer's first name
+  // Required. Max length: 100 characters
   string first_name = 2;
+
+  // Customer's last name
+  // Required. Max length: 100 characters
   string last_name = 3;
+
+  // URL to the customer's profile picture
+  // Optional. Must be a valid HTTPS URL
   string avatar = 4;
+
+  // Customer's phone number
+  // Format: E.164 format (e.g., +12125551234)
   string phone = 5;
+
+  // Customer's email address
+  // Format: Must be a valid email address
   string email = 6;
+
+  // List of customer's addresses
+  // Can include home, work, or other addresses
   repeated moego.common.v1.Address address = 7;
+
+  // Current status of the customer's account
   Status status = 8;
+
+  // Color code for visual identification in the UI
+  // Format: Hex color code (e.g., "#FF0000")
   string color_code = 9;
+
+  // How the customer was acquired
+  // Examples: "referral", "website", "walk-in"
   string source = 10;
+
+  // When the customer last had an appointment
   google.protobuf.Timestamp last_appointment_date = 11;
+
+  // When the customer's next appointment is scheduled
   google.protobuf.Timestamp next_appointment_date = 12;
+
+  // ID of the staff member who created this customer
   string created_by = 13;
+
+  // When this customer was created
   google.protobuf.Timestamp created_time = 14;
+
+  // ID of the staff member who last modified this customer
   string last_updated_by = 15;
+
+  // When this customer was last modified
   google.protobuf.Timestamp last_updated_time = 16;
+
+  // ID of the customer's preferred business location
   string preferred_business_id = 17;
+
+  // ID of the company this customer belongs to
   string company_id = 18;
+
+  // List of notes about this customer
   repeated Note notes = 19;
+
+  // List of tags applied to this customer
   repeated Tag tags = 20;
 }
 
-// CustomerPreference is the preference of a customer
+// CustomerPreference stores a customer's communication and marketing preferences.
+// These settings determine how and when we can contact the customer.
 message CustomerPreference {
+  // Whether the customer wants to receive automated SMS messages
+  // Default: true
   bool receive_auto_message = 1;
+
+  // Whether the customer wants to receive automated emails
+  // Default: true
   bool receive_auto_email = 2;
+
+  // Whether the customer has opted in to marketing emails
+  // Default: false
   bool subscribe_to_marketing_emails = 3;
+
+  // Whether the customer wants appointment reminders
+  // Default: true
   bool receive_appointment_reminder = 4;
 }

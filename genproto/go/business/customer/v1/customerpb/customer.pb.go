@@ -23,15 +23,19 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status is the status of a customer
+// Status represents the current state of a customer's account.
+// This affects their ability to book appointments and access services.
 type Customer_Status int32
 
 const (
-	// The customer status is the default value
+	// STATUS_UNSPECIFIED indicates an unknown or invalid status.
+	// New customers should not be created with this status.
 	Customer_STATUS_UNSPECIFIED Customer_Status = 0
-	// The customer is active
+	// ACTIVE indicates the customer can book appointments and use services.
+	// This is the default status for new customers.
 	Customer_ACTIVE Customer_Status = 1
-	// The customer is inactive
+	// INACTIVE indicates the customer cannot book new appointments.
+	// Existing appointments may still be honored based on business policy.
 	Customer_INACTIVE Customer_Status = 2
 )
 
@@ -76,32 +80,63 @@ func (Customer_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Customer is a customer
+// Customer represents a client who uses your services. A customer can have multiple pets,
+// appointments, and preferences. Customers are the core entity in the pet service business
+// and are used throughout the system for booking appointments, managing pets, and tracking
+// service history.
 type Customer struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID is the unique identifier of a customer
-	Id                  string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	FirstName           string                 `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName            string                 `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	Avatar              string                 `protobuf:"bytes,4,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	Phone               string                 `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
-	Email               string                 `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
-	Address             []*commonpb.Address    `protobuf:"bytes,7,rep,name=address,proto3" json:"address,omitempty"`
-	Status              Customer_Status        `protobuf:"varint,8,opt,name=status,proto3,enum=moego.business.customer.v1.Customer_Status" json:"status,omitempty"`
-	ColorCode           string                 `protobuf:"bytes,9,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
-	Source              string                 `protobuf:"bytes,10,opt,name=source,proto3" json:"source,omitempty"`
+	// Unique identifier for the customer
+	// Format: "cus_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Customer's first name
+	// Required. Max length: 100 characters
+	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	// Customer's last name
+	// Required. Max length: 100 characters
+	LastName string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	// URL to the customer's profile picture
+	// Optional. Must be a valid HTTPS URL
+	Avatar string `protobuf:"bytes,4,opt,name=avatar,proto3" json:"avatar,omitempty"`
+	// Customer's phone number
+	// Format: E.164 format (e.g., +12125551234)
+	Phone string `protobuf:"bytes,5,opt,name=phone,proto3" json:"phone,omitempty"`
+	// Customer's email address
+	// Format: Must be a valid email address
+	Email string `protobuf:"bytes,6,opt,name=email,proto3" json:"email,omitempty"`
+	// List of customer's addresses
+	// Can include home, work, or other addresses
+	Address []*commonpb.Address `protobuf:"bytes,7,rep,name=address,proto3" json:"address,omitempty"`
+	// Current status of the customer's account
+	Status Customer_Status `protobuf:"varint,8,opt,name=status,proto3,enum=moego.business.customer.v1.Customer_Status" json:"status,omitempty"`
+	// Color code for visual identification in the UI
+	// Format: Hex color code (e.g., "#FF0000")
+	ColorCode string `protobuf:"bytes,9,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
+	// How the customer was acquired
+	// Examples: "referral", "website", "walk-in"
+	Source string `protobuf:"bytes,10,opt,name=source,proto3" json:"source,omitempty"`
+	// When the customer last had an appointment
 	LastAppointmentDate *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=last_appointment_date,json=lastAppointmentDate,proto3" json:"last_appointment_date,omitempty"`
+	// When the customer's next appointment is scheduled
 	NextAppointmentDate *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=next_appointment_date,json=nextAppointmentDate,proto3" json:"next_appointment_date,omitempty"`
-	CreatedBy           string                 `protobuf:"bytes,13,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	CreatedTime         *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	LastUpdatedBy       string                 `protobuf:"bytes,15,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
-	LastUpdatedTime     *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	PreferredBusinessId string                 `protobuf:"bytes,17,opt,name=preferred_business_id,json=preferredBusinessId,proto3" json:"preferred_business_id,omitempty"`
-	CompanyId           string                 `protobuf:"bytes,18,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	Notes               []*Customer_Note       `protobuf:"bytes,19,rep,name=notes,proto3" json:"notes,omitempty"`
-	Tags                []*Customer_Tag        `protobuf:"bytes,20,rep,name=tags,proto3" json:"tags,omitempty"`
-	unknownFields       protoimpl.UnknownFields
-	sizeCache           protoimpl.SizeCache
+	// ID of the staff member who created this customer
+	CreatedBy string `protobuf:"bytes,13,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	// When this customer was created
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	// ID of the staff member who last modified this customer
+	LastUpdatedBy string `protobuf:"bytes,15,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	// When this customer was last modified
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	// ID of the customer's preferred business location
+	PreferredBusinessId string `protobuf:"bytes,17,opt,name=preferred_business_id,json=preferredBusinessId,proto3" json:"preferred_business_id,omitempty"`
+	// ID of the company this customer belongs to
+	CompanyId string `protobuf:"bytes,18,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// List of notes about this customer
+	Notes []*Customer_Note `protobuf:"bytes,19,rep,name=notes,proto3" json:"notes,omitempty"`
+	// List of tags applied to this customer
+	Tags          []*Customer_Tag `protobuf:"bytes,20,rep,name=tags,proto3" json:"tags,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -274,13 +309,22 @@ func (x *Customer) GetTags() []*Customer_Tag {
 	return nil
 }
 
-// CustomerPreference is the preference of a customer
+// CustomerPreference stores a customer's communication and marketing preferences.
+// These settings determine how and when we can contact the customer.
 type CustomerPreference struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	ReceiveAutoMessage         bool                   `protobuf:"varint,1,opt,name=receive_auto_message,json=receiveAutoMessage,proto3" json:"receive_auto_message,omitempty"`
-	ReceiveAutoEmail           bool                   `protobuf:"varint,2,opt,name=receive_auto_email,json=receiveAutoEmail,proto3" json:"receive_auto_email,omitempty"`
-	SubscribeToMarketingEmails bool                   `protobuf:"varint,3,opt,name=subscribe_to_marketing_emails,json=subscribeToMarketingEmails,proto3" json:"subscribe_to_marketing_emails,omitempty"`
-	ReceiveAppointmentReminder bool                   `protobuf:"varint,4,opt,name=receive_appointment_reminder,json=receiveAppointmentReminder,proto3" json:"receive_appointment_reminder,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Whether the customer wants to receive automated SMS messages
+	// Default: true
+	ReceiveAutoMessage bool `protobuf:"varint,1,opt,name=receive_auto_message,json=receiveAutoMessage,proto3" json:"receive_auto_message,omitempty"`
+	// Whether the customer wants to receive automated emails
+	// Default: true
+	ReceiveAutoEmail bool `protobuf:"varint,2,opt,name=receive_auto_email,json=receiveAutoEmail,proto3" json:"receive_auto_email,omitempty"`
+	// Whether the customer has opted in to marketing emails
+	// Default: false
+	SubscribeToMarketingEmails bool `protobuf:"varint,3,opt,name=subscribe_to_marketing_emails,json=subscribeToMarketingEmails,proto3" json:"subscribe_to_marketing_emails,omitempty"`
+	// Whether the customer wants appointment reminders
+	// Default: true
+	ReceiveAppointmentReminder bool `protobuf:"varint,4,opt,name=receive_appointment_reminder,json=receiveAppointmentReminder,proto3" json:"receive_appointment_reminder,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -343,12 +387,18 @@ func (x *CustomerPreference) GetReceiveAppointmentReminder() bool {
 	return false
 }
 
-// Customer Note
+// Note represents a comment or observation about a customer.
+// Notes help track important customer information, preferences, and history.
 type Customer_Note struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Note            string                 `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
-	LastUpdatedBy   string                 `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this note
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// The content of the note
+	// Max length: 1000 characters
+	Note string `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
+	// ID of the staff member who last modified this note
+	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	// When this note was last modified
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -412,12 +462,18 @@ func (x *Customer_Note) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-// Customer Tag
+// Tag represents a label that can be applied to customers for categorization
+// and filtering purposes.
 type Customer_Tag struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name            string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	LastUpdatedBy   string                 `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this tag
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Display name of the tag
+	// Max length: 50 characters
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// ID of the staff member who last modified this tag
+	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	// When this tag was last modified
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache

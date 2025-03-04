@@ -10,46 +10,107 @@ option java_multiple_files = true;
 option java_outer_classname = "PaymentProto";
 option java_package = "com.moego.api.business.payment.v1";
 
-// Payment
+// Payment represents a financial transaction that processes funds for an order.
+// Each payment tracks the amount, processing status, and associated fees. Payments
+// can be made for various business modules and support multiple payment methods.
 message Payment {
-  // Status
+  // Status represents the current state of the payment in its lifecycle.
+  // This determines what actions can be taken and affects reporting.
   enum Status {
-    // PAYMENT_STATUS_UNSPECIFIED
+    // Unknown or invalid status
+    // Should not be used when creating new payments
     STATUS_UNSPECIFIED = 0;
-    // CREATED
+
+    // Payment has been initiated but not processed
+    // Initial state for new payments
     CREATED = 1;
-    // PROCESSING
+
+    // Payment is being processed by the payment provider
+    // Temporary state during processing
     PROCESSING = 2;
-    // PAID
+
+    // Funds have been successfully transferred
+    // Awaiting final reconciliation
     PAID = 3;
-    // COMPLETED
+
+    // Payment has been fully reconciled
+    // Final state for successful payments
     COMPLETED = 4;
-    // FAILED
+
+    // Payment processing encountered an error
+    // May be retried depending on the error
     FAILED = 5;
   }
-  // Module
+
+  // Module identifies the business area associated with the payment.
+  // This affects accounting categorization and reporting.
   enum Module {
-    // PAYMENT_MODULE_UNSPECIFIED
+    // Unknown or invalid module
+    // Should not be used when creating new payments
     MODULE_UNSPECIFIED = 0;
-    // GROOMING
+
+    // Payment for pet grooming services
+    // Includes all grooming-related charges
     GROOMING = 1;
-    // RETAIL
+
+    // Payment for retail product purchases
+    // Includes all product sales
     RETAIL = 2;
-    // MEMBERSHIP
+
+    // Payment for membership fees or subscriptions
+    // Includes recurring and one-time membership charges
     MEMBERSHIP = 3;
   }
-  // ID
+
+  // Unique identifier for the payment
+  // Format: "py_" followed by random characters
   string id = 1;
+
+  // ID of the business location processing the payment
+  // Required. Must be a valid business ID
   string business_id = 2;
+
+  // ID of the order being paid for
+  // Required. Must be a valid order ID
   string order_id = 3;
+
+  // ID of the customer making the payment
+  // Required. Must be a valid customer ID
   string customer_id = 4;
+
+  // Display name of the customer
+  // Used for receipts and reporting
   string customer_name = 5;
+
+  // Payment method used
+  // Example: "credit_card", "cash", "check"
   string method = 6;
+
+  // Current status of the payment
+  // Determines available actions and processing flow
   Status status = 7;
+
+  // Business module associated with the payment
+  // Used for revenue categorization
   Module module = 8;
+
+  // Amount being processed
+  // Must be greater than zero
   google.type.Money amount = 9;
+
+  // Fees charged by payment processor
+  // Deducted from the payment amount
   google.type.Money processing_fee = 10;
+
+  // Amount that has been refunded
+  // Updated when refunds are processed
   google.type.Money refund_amount = 11;
+
+  // When this payment was created
+  // System-generated timestamp
   google.protobuf.Timestamp created_time = 12;
+
+  // When this payment was last modified
+  // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 13;
 }

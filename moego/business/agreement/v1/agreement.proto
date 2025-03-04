@@ -9,57 +9,78 @@ option java_multiple_files = true;
 option java_outer_classname = "AgreementProto";
 option java_package = "com.moego.api.business.agreement.v1";
 
-// Agreement
+// The agreement object represents a legal document that requires customer consent.
+// It is used to manage various types of agreements such as service terms, privacy policies,
+// and waivers. Each agreement can be configured with different signing requirements
+// and notification templates for customer communication.
 message Agreement {
-  // Status
+  // Current status of the agreement document.
   enum Status {
-    // unspecified
+    // Not intended for direct use
     STATUS_UNSPECIFIED = 0;
-    // normal
+
+    // Agreement is active and can be presented to customers
     NORMAL = 1;
-    // deleted
+
+    // Agreement has been removed and is no longer in use
     DELETED = 2;
   }
 
-  // policy requirement for signed an agreement
+  // Defines when customers need to sign the agreement.
   enum SignedPolicy {
-    // unspecified
+    // Not intended for direct use
     SIGNED_POLICY_UNSPECIFIED = 0;
-    // sign for first
+
+    // Customer must sign only on their first interaction
     FOR_FIRST = 1;
-    // sign for each
+
+    // Customer must sign for each relevant transaction
     FOR_EACH = 2;
-    // allow not to sign
+
+    // Customer may proceed without signing
     OPTIONAL = 3;
   }
 
-  // agreement id
+  // string, Unique identifier for the agreement
   string id = 1;
-  // business id
+
+  // string, Business location where this agreement is used
   string business_id = 2;
-  // creator id
+
+  // string, Staff member who created the agreement
   string creator_id = 3;
-  // status: normal, deleted
+
+  // enum(Status), Current state of the agreement
   Status status = 4;
-  // signed policy, see definition in SignedPolicy
+
+  // enum(SignedPolicy), When signatures are required
   SignedPolicy signed_policy = 5;
 
-  // agreement title
+  // string, Display name of the agreement
   string title = 6;
-  // agreement content
+
+  // string, Full text of the agreement
   string content = 7;
-  // sms template
+
+  // string, Template for SMS notifications about this agreement
   string sms_template = 8;
-  // email template title
+
+  // string, Subject line for email notifications
   string email_template_title = 9;
-  // email template body
+
+  // string, Body content for email notifications
   string email_template_body = 10;
-  // last requested time: exceed this time will need to be re-signed
+
+  // timestamp, When signatures were last required
+  // Customers who signed before this time may need to re-sign
   google.protobuf.Timestamp last_required_time = 11;
-  // last edit time: milliseconds
+
+  // timestamp, When the agreement content was last modified
   google.protobuf.Timestamp last_edit_time = 12;
-  // created time: milliseconds
+
+  // timestamp, When the agreement was first created
   google.protobuf.Timestamp created_time = 13;
-  // last updated time: milliseconds
+
+  // timestamp, When any field was last changed
   google.protobuf.Timestamp last_updated_time = 14;
 }

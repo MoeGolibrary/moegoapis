@@ -9,29 +9,75 @@ option java_multiple_files = true;
 option java_outer_classname = "StaffProto";
 option java_package = "com.moego.api.business.staff.v1";
 
-// Staff
+// Staff represents an employee or contractor who provides services in your business.
+// Staff members can be assigned to appointments, manage customer relationships,
+// and perform various administrative tasks based on their role and permissions.
 message Staff {
+  // Unique identifier for the staff member
+  // Format: "stf_" followed by random characters
   string id = 1;
+
+  // Staff member's first name
+  // Required. Max length: 100 characters
   string first_name = 2;
+
+  // Staff member's last name
+  // Required. Max length: 100 characters
   string last_name = 3;
+
+  // URL to the staff member's profile picture
+  // Optional. Must be a valid HTTPS URL
   string avatar = 4;
+
+  // Staff member's phone number
+  // Format: E.164 format (e.g., +12125551234)
   string phone = 5;
+
+  // Staff member's email address
+  // Format: Must be a valid email address
   string email = 6;
+
+  // Staff member's role and associated permissions
+  // Determines what actions they can perform in the system
   Role role = 7;
+
+  // When this staff member was hired
+  // Used for reporting and service history
   google.protobuf.Timestamp hired_time = 8;
+
+  // IDs of business locations where this staff member works
+  // Staff can only be assigned to appointments at these locations
   repeated string working_business_ids = 9;
+
+  // ID of the mobile van assigned to this staff member
+  // Only applicable for mobile service providers
   string mobile_van_id = 10;
+
+  // ID of the company this staff member belongs to
+  // Used for access control and data segregation
   string company_id = 11;
 }
 
-// Role
+// Role defines a set of permissions and capabilities assigned to staff members.
+// Roles help manage access control and determine what actions staff can perform.
 message Role {
+  // Unique identifier for the role
+  // Format: "rol_" followed by random characters
   string id = 1;
+
+  // Display name of the role
+  // Example: "Administrator", "Groomer", "Receptionist"
   string name = 2;
+
+  // List of permissions granted to this role
+  // Determines what actions can be performed
   repeated Permission permissions = 3;
 }
 
-// Permission
+// Permission represents a specific action that can be performed in the system.
+// Permissions are grouped into roles and assigned to staff members.
 enum Permission {
+  // Unknown or invalid permission
+  // Should not be used when assigning permissions
   PERMISSION_UNSPECIFIED = 0;
 }

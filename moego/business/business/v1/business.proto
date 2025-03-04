@@ -9,19 +9,60 @@ option java_multiple_files = true;
 option java_outer_classname = "BusinessProto";
 option java_package = "com.moego.api.business.business.v1";
 
-// Business information
+// Business represents a physical or virtual location where services are provided.
+// Each business location operates under a parent company and maintains its own
+// staff, services, and operational settings. Business profiles include contact
+// information and social media presence for customer engagement.
 message Business {
+  // Unique identifier for the business location
+  // Format: "bus_" followed by random characters
   string id = 1;
+
+  // Display name of the business location
+  // Used in customer communications and UI
   string name = 2;
+
+  // URL to the business location's logo or image
+  // Optional. Must be a valid HTTPS URL
   string avatar = 3;
+
+  // Primary contact phone number
+  // Format: E.164 format (e.g., +12125551234)
   string phone = 4;
+
+  // Public business phone number
+  // Format: E.164 format (e.g., +12125551234)
   string business_phone = 5;
+
+  // Business contact email address
+  // Format: Must be a valid email address
   string email = 6;
+
+  // Physical location details
+  // Required for in-person services
   moego.common.v1.Address address = 7;
+
+  // Business website URL
+  // Optional. Must be a valid HTTPS URL
   string website = 8;
+
+  // Facebook page URL
+  // Optional. Must be a valid Facebook page URL
   string facebook = 9;
+
+  // Instagram profile URL
+  // Optional. Must be a valid Instagram profile URL
   string instagram = 10;
+
+  // Yelp business page URL
+  // Optional. Must be a valid Yelp business URL
   string yelp = 11;
+
+  // Google Business Profile URL
+  // Optional. Must be a valid Google Business URL
   string google = 12;
+
+  // ID of the parent company
+  // Required. Must be a valid company ID
   string company_id = 13;
 }

@@ -27,12 +27,37 @@ const (
 // OrderServiceClient is the client API for OrderService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// OrderService provides methods for managing orders and their line items.
+// This service handles the creation, retrieval, and listing of orders and
+// their associated items. It supports filtering and pagination for efficient
+// data access and reporting.
 type OrderServiceClient interface {
-	// GetOrder
+	// Retrieves detailed information about a specific order.
+	//
+	// Returns the complete order object including status, amounts, and timestamps.
+	// This information is used for order processing, financial reporting, and
+	// customer service inquiries.
+	//
+	// Returns NOT_FOUND if the order ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	GetOrder(ctx context.Context, in *GetOrderRequest, opts ...grpc.CallOption) (*Order, error)
-	// ListOrders
+	// Lists orders matching the specified criteria.
+	//
+	// Results are paginated and can be filtered by business location, status,
+	// and update time. This method is typically used for order management,
+	// financial reporting, and reconciliation.
+	//
+	// Returns an empty list if no orders match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrders(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersResponse, error)
-	// ListOrderLineItems
+	// Lists line items matching the specified criteria.
+	//
+	// Retrieves detailed information about individual items within orders.
+	// This method is useful for itemized reporting and revenue analysis.
+	//
+	// Returns an empty list if no line items match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrderLineItemsResponse, error)
 }
 
@@ -77,12 +102,37 @@ func (c *orderServiceClient) ListOrderLineItems(ctx context.Context, in *ListOrd
 // OrderServiceServer is the server API for OrderService service.
 // All implementations must embed UnimplementedOrderServiceServer
 // for forward compatibility.
+//
+// OrderService provides methods for managing orders and their line items.
+// This service handles the creation, retrieval, and listing of orders and
+// their associated items. It supports filtering and pagination for efficient
+// data access and reporting.
 type OrderServiceServer interface {
-	// GetOrder
+	// Retrieves detailed information about a specific order.
+	//
+	// Returns the complete order object including status, amounts, and timestamps.
+	// This information is used for order processing, financial reporting, and
+	// customer service inquiries.
+	//
+	// Returns NOT_FOUND if the order ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	GetOrder(context.Context, *GetOrderRequest) (*Order, error)
-	// ListOrders
+	// Lists orders matching the specified criteria.
+	//
+	// Results are paginated and can be filtered by business location, status,
+	// and update time. This method is typically used for order management,
+	// financial reporting, and reconciliation.
+	//
+	// Returns an empty list if no orders match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrders(context.Context, *ListOrdersRequest) (*ListOrdersResponse, error)
-	// ListOrderLineItems
+	// Lists line items matching the specified criteria.
+	//
+	// Retrieves detailed information about individual items within orders.
+	// This method is useful for itemized reporting and revenue analysis.
+	//
+	// Returns an empty list if no line items match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }

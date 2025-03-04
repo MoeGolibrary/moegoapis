@@ -12,14 +12,33 @@ option java_multiple_files = true;
 option java_outer_classname = "CompanyProto";
 option java_package = "com.moego.api.business.company.v1";
 
-// CompanyService openapi definitions for operate company
+// CompanyService provides APIs for managing company information and settings.
+// This service handles operations related to company profile retrieval and
+// listing. Companies are the top-level organizational units in the system,
+// containing multiple business locations and staff members.
 service CompanyService {
-  // GetCompany get a company
+  // Retrieves detailed information about a specific company.
+  //
+  // Returns the complete company profile including configuration settings
+  // and operational parameters. This information is used for company
+  // management and system configuration.
+  //
+  // Possible errors:
+  // - NOT_FOUND if the company ID doesn't exist
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc GetCompany(GetCompanyRequest) returns (Company) {
     option (google.api.http) = {get: "/v1/companies/{id}"};
   }
 
-  // ListCompanies list companies
+  // Lists companies based on specified criteria.
+  //
+  // Results are paginated and can be used for system administration
+  // and multi-company management scenarios. Companies are returned
+  // in alphabetical order by name.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListCompanies(ListCompaniesRequest) returns (ListCompaniesResponse) {
     option (google.api.http) = {
       post: "/v1/companies:list"
@@ -28,22 +47,27 @@ service CompanyService {
   }
 }
 
-// GetCompanyRequest request for GetCompany
+// GetCompanyRequest represents a request to retrieve a specific company.
 message GetCompanyRequest {
-  // id of business
+  // Unique identifier of the company to retrieve
+  // Required. Must be a valid company ID
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListCompaniesRequest request for ListCompanies
+// ListCompaniesRequest encapsulates parameters for retrieving companies.
 message ListCompaniesRequest {
-  // The pagination information
+  // Pagination parameters for handling large result sets
+  // Required to manage data volume efficiently
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListCompaniesResponse response for ListCompanies
+// ListCompaniesResponse contains the paginated list of companies.
 message ListCompaniesResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The businesses
+
+  // List of companies matching the request criteria
+  // May be empty if no companies match
   repeated Company companies = 2;
 }

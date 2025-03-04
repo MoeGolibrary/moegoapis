@@ -25,22 +25,46 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// PetType is the type of pet
+// Type defines the species of the pet.
+// This helps determine appropriate services, care requirements, and pricing.
 type Pet_Type int32
 
 const (
+	// Unknown or unspecified pet type
 	Pet_TYPE_UNSPECIFIED Pet_Type = 0
-	Pet_OTHER            Pet_Type = 1
-	Pet_DOG              Pet_Type = 2
-	Pet_CAT              Pet_Type = 3
-	Pet_BIRD             Pet_Type = 4
-	Pet_RABBIT           Pet_Type = 5
-	Pet_GUINEA_PIG       Pet_Type = 6
-	Pet_HORSE            Pet_Type = 7
-	Pet_HAMSTER          Pet_Type = 8
-	Pet_RAT              Pet_Type = 9
-	Pet_MOUSE            Pet_Type = 10
-	Pet_CHINCHILLA       Pet_Type = 11
+	// Pet type not listed in standard categories
+	// Requires special handling and service customization
+	Pet_OTHER Pet_Type = 1
+	// Canine companion
+	// Common breeds include Labrador, German Shepherd, Golden Retriever
+	Pet_DOG Pet_Type = 2
+	// Feline companion
+	// Includes all domestic cat breeds
+	Pet_CAT Pet_Type = 3
+	// Avian pet
+	// Includes parrots, canaries, finches, etc.
+	Pet_BIRD Pet_Type = 4
+	// Domestic rabbit
+	// Requires specific grooming and handling techniques
+	Pet_RABBIT Pet_Type = 5
+	// Guinea pig
+	// Small rodent requiring gentle handling
+	Pet_GUINEA_PIG Pet_Type = 6
+	// Equine
+	// Requires specialized facilities and care
+	Pet_HORSE Pet_Type = 7
+	// Hamster
+	// Small rodent with specific handling needs
+	Pet_HAMSTER Pet_Type = 8
+	// Rat
+	// Intelligent rodent requiring social interaction
+	Pet_RAT Pet_Type = 9
+	// Mouse
+	// Small rodent needing careful handling
+	Pet_MOUSE Pet_Type = 10
+	// Chinchilla
+	// Requires special dust baths and temperature control
+	Pet_CHINCHILLA Pet_Type = 11
 )
 
 // Enum value maps for Pet_Type.
@@ -102,13 +126,19 @@ func (Pet_Type) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Status is the status of a pet
+// Status indicates whether the pet is currently receiving services.
+// This affects appointment scheduling and service availability.
 type Pet_Status int32
 
 const (
+	// Unknown or unspecified status
 	Pet_STATUS_UNSPECIFIED Pet_Status = 0
-	Pet_ALIVE              Pet_Status = 1
-	Pet_PASSED_AWAY        Pet_Status = 2
+	// Pet is currently receiving services
+	// Default status for new pets
+	Pet_ALIVE Pet_Status = 1
+	// Pet is no longer receiving services
+	// Historical records are maintained
+	Pet_PASSED_AWAY Pet_Status = 2
 )
 
 // Enum value maps for Pet_Status.
@@ -152,14 +182,21 @@ func (Pet_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// Gender
+// Gender of the pet
+// Used for appropriate service assignment and medical considerations
 type Pet_Gender int32
 
 const (
+	// Unknown or unspecified gender
 	Pet_GENDER_UNSPECIFIED Pet_Gender = 0
-	Pet_MALE               Pet_Gender = 1
-	Pet_FEMALE             Pet_Gender = 2
-	Pet_UNKNOWN            Pet_Gender = 3
+	// Male pet
+	// May require specific handling or service modifications
+	Pet_MALE Pet_Gender = 1
+	// Female pet
+	// May require specific handling or service modifications
+	Pet_FEMALE Pet_Gender = 2
+	// Gender not determined or disclosed
+	Pet_UNKNOWN Pet_Gender = 3
 )
 
 // Enum value maps for Pet_Gender.
@@ -205,13 +242,17 @@ func (Pet_Gender) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{0, 2}
 }
 
-// Status is the status of a pet
+// Status of the pet's evaluation for services
+// Determines which services can be provided
 type Pet_EvaluationStatus int32
 
 const (
+	// Evaluation status not yet determined
 	Pet_EVALUATION_STATUS_UNSPECIFIED Pet_EvaluationStatus = 0
-	Pet_PASS                          Pet_EvaluationStatus = 1
-	Pet_FAIL                          Pet_EvaluationStatus = 2
+	// Pet has passed evaluation and can receive services
+	Pet_PASS Pet_EvaluationStatus = 1
+	// Pet requires modifications to receive services
+	Pet_FAIL Pet_EvaluationStatus = 2
 )
 
 // Enum value maps for Pet_EvaluationStatus.
@@ -255,27 +296,59 @@ func (Pet_EvaluationStatus) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{0, 3}
 }
 
-// Pet is a pet
+// Pet represents a customer's pet that receives services at your business.
+// Each pet has its own profile containing essential information for providing
+// appropriate care, including health records, behavior notes, and service preferences.
 type Pet struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID is the unique identifier of a pet
-	Id       string           `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name     string           `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Birthday *date.Date       `protobuf:"bytes,3,opt,name=birthday,proto3" json:"birthday,omitempty"`
-	Status   Pet_Status       `protobuf:"varint,4,opt,name=status,proto3,enum=moego.business.customer.v1.Pet_Status" json:"status,omitempty"`
-	Type     Pet_Type         `protobuf:"varint,5,opt,name=type,proto3,enum=moego.business.customer.v1.Pet_Type" json:"type,omitempty"`
-	Breed    string           `protobuf:"bytes,6,opt,name=breed,proto3" json:"breed,omitempty"`
-	Gender   Pet_Gender       `protobuf:"varint,7,opt,name=gender,proto3,enum=moego.business.customer.v1.Pet_Gender" json:"gender,omitempty"`
-	Weight   *commonpb.Weight `protobuf:"bytes,8,opt,name=weight,proto3" json:"weight,omitempty"`
-	Fixed    string           `protobuf:"bytes,9,opt,name=fixed,proto3" json:"fixed,omitempty"`
-	Coat     string           `protobuf:"bytes,10,opt,name=coat,proto3" json:"coat,omitempty"`
-	Behavior string           `protobuf:"bytes,11,opt,name=behavior,proto3" json:"behavior,omitempty"`
-	PetCodes []*Pet_Code      `protobuf:"bytes,12,rep,name=pet_codes,json=petCodes,proto3" json:"pet_codes,omitempty"`
-	Notes    []*Pet_Note      `protobuf:"bytes,13,rep,name=notes,proto3" json:"notes,omitempty"`
-	// This field is not supported when creating a pet.
-	Vaccinations     []*Pet_Vaccination   `protobuf:"bytes,14,rep,name=vaccinations,proto3" json:"vaccinations,omitempty"`
-	CustomerId       string               `protobuf:"bytes,15,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Vet              *Pet_Vet             `protobuf:"bytes,16,opt,name=vet,proto3" json:"vet,omitempty"`
+	// Unique identifier for the pet
+	// Format: "pet_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Pet's given name
+	// Required. Max length: 100 characters
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Pet's date of birth
+	// Used for age-appropriate service modifications
+	Birthday *date.Date `protobuf:"bytes,3,opt,name=birthday,proto3" json:"birthday,omitempty"`
+	// Current status of the pet
+	Status Pet_Status `protobuf:"varint,4,opt,name=status,proto3,enum=moego.business.customer.v1.Pet_Status" json:"status,omitempty"`
+	// Species of the pet
+	// Required. Determines available services
+	Type Pet_Type `protobuf:"varint,5,opt,name=type,proto3,enum=moego.business.customer.v1.Pet_Type" json:"type,omitempty"`
+	// Specific breed within the pet type
+	// Required. Helps determine grooming requirements
+	Breed string `protobuf:"bytes,6,opt,name=breed,proto3" json:"breed,omitempty"`
+	// Pet's gender
+	// Used for service assignments
+	Gender Pet_Gender `protobuf:"varint,7,opt,name=gender,proto3,enum=moego.business.customer.v1.Pet_Gender" json:"gender,omitempty"`
+	// Pet's current weight
+	// Used for equipment selection and health monitoring
+	Weight *commonpb.Weight `protobuf:"bytes,8,opt,name=weight,proto3" json:"weight,omitempty"`
+	// Spay/neuter status
+	// Values: "yes", "no", "unknown"
+	Fixed string `protobuf:"bytes,9,opt,name=fixed,proto3" json:"fixed,omitempty"`
+	// Description of the pet's coat
+	// Example: "long double coat", "short hair"
+	Coat string `protobuf:"bytes,10,opt,name=coat,proto3" json:"coat,omitempty"`
+	// General temperament and behavior notes
+	// Example: "friendly", "nervous with new people"
+	Behavior string `protobuf:"bytes,11,opt,name=behavior,proto3" json:"behavior,omitempty"`
+	// Special handling codes for this pet
+	// Displayed prominently during service
+	PetCodes []*Pet_Code `protobuf:"bytes,12,rep,name=pet_codes,json=petCodes,proto3" json:"pet_codes,omitempty"`
+	// Staff observations and special instructions
+	Notes []*Pet_Note `protobuf:"bytes,13,rep,name=notes,proto3" json:"notes,omitempty"`
+	// Current vaccination records
+	// Required for certain services
+	Vaccinations []*Pet_Vaccination `protobuf:"bytes,14,rep,name=vaccinations,proto3" json:"vaccinations,omitempty"`
+	// ID of the pet's owner
+	// System-managed, do not set manually
+	CustomerId string `protobuf:"bytes,15,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// Primary veterinary care provider
+	// Used for emergencies and health verifications
+	Vet *Pet_Vet `protobuf:"bytes,16,opt,name=vet,proto3" json:"vet,omitempty"`
+	// Current evaluation status for services
+	// Determines service availability
 	EvaluationStatus Pet_EvaluationStatus `protobuf:"varint,17,opt,name=evaluation_status,json=evaluationStatus,proto3,enum=moego.business.customer.v1.Pet_EvaluationStatus" json:"evaluation_status,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
@@ -430,13 +503,21 @@ func (x *Pet) GetEvaluationStatus() Pet_EvaluationStatus {
 	return Pet_EVALUATION_STATUS_UNSPECIFIED
 }
 
-// Code
+// Code represents special handling instructions or medical alerts
+// These codes are visible to staff during service delivery
 type Pet_Code struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Abbreviation  string                 `protobuf:"bytes,2,opt,name=abbreviation,proto3" json:"abbreviation,omitempty"`
-	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	Color         string                 `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this code
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Short form of the code for quick reference
+	// Example: "AG" for "Aggressive"
+	Abbreviation string `protobuf:"bytes,2,opt,name=abbreviation,proto3" json:"abbreviation,omitempty"`
+	// Detailed explanation of the code
+	// Max length: 500 characters
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Color used to highlight this code in the UI
+	// Format: Hex color code (e.g., "#FF0000")
+	Color         string `protobuf:"bytes,4,opt,name=color,proto3" json:"color,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -499,12 +580,18 @@ func (x *Pet_Code) GetColor() string {
 	return ""
 }
 
-// Note
+// Note contains observations about the pet's behavior,
+// preferences, or special requirements
 type Pet_Note struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Id              string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Content         string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
-	LastUpdatedBy   string                 `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this note
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// The content of the note
+	// Max length: 1000 characters
+	Content string `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
+	// ID of the staff member who last modified this note
+	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	// When this note was last modified
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
@@ -568,10 +655,15 @@ func (x *Pet_Note) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-// Vaccination
+// Vaccination record for the pet
+// Used to ensure compliance with service requirements
 type Pet_Vaccination struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name of the vaccination
+	// Example: "Rabies", "DHPP", "Bordetella"
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// When this vaccination expires
+	// Staff are notified before expiration
 	ExpiredAt     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expired_at,json=expiredAt,proto3" json:"expired_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -621,12 +713,17 @@ func (x *Pet_Vaccination) GetExpiredAt() *timestamppb.Timestamp {
 	return nil
 }
 
-// Vet
+// Veterinary care provider information
+// Used for emergencies and health verifications
 type Pet_Vet struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	PhoneNumber   string                 `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
-	Address       string                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Name of the veterinary practice or doctor
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Contact number for the veterinarian
+	// Format: E.164 format (e.g., +12125551234)
+	PhoneNumber string `protobuf:"bytes,3,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
+	// Physical location of the veterinary practice
+	Address       string `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

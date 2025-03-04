@@ -21,15 +21,18 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Unit represents a weight unit.
+// Supported weight units. Each unit can be converted to others
+// using standard conversion factors.
 type Weight_Unit int32
 
 const (
-	// Unspecified weight unit.
+	// Not intended for direct use
 	Weight_UNIT_UNSPECIFIED Weight_Unit = 0
-	// Kilogram.
+	// Kilograms, base unit for weight
+	// 1 kg = 2.20462 lbs
 	Weight_KILOGRAM Weight_Unit = 1
-	// Pound.
+	// Pounds, common in US and some other regions
+	// 1 lb = 0.453592 kg
 	Weight_POUND Weight_Unit = 2
 )
 
@@ -74,12 +77,18 @@ func (Weight_Unit) EnumDescriptor() ([]byte, []int) {
 	return file_moego_common_v1_weight_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Weight represents a weight value and its unit.
+// The weight object provides a standardized way to represent and convert
+// weight measurements throughout the system. It supports multiple units
+// and ensures consistent weight tracking for pets, products, and other
+// resources that require weight measurements.
 type Weight struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The weight value.
-	Value uint32 `protobuf:"varint,1,opt,name=value,proto3" json:"value,omitempty"`
-	// The weight unit.
+	// double, The numeric value of the weight.
+	// Must be positive.
+	// Example: 5.4, 10.0
+	Value float64 `protobuf:"fixed64,1,opt,name=value,proto3" json:"value,omitempty"`
+	// enum(Unit), The unit of measurement.
+	// Default: KILOGRAM if not specified
 	Unit          Weight_Unit `protobuf:"varint,2,opt,name=unit,proto3,enum=moego.common.v1.Weight_Unit" json:"unit,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -115,7 +124,7 @@ func (*Weight) Descriptor() ([]byte, []int) {
 	return file_moego_common_v1_weight_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *Weight) GetValue() uint32 {
+func (x *Weight) GetValue() float64 {
 	if x != nil {
 		return x.Value
 	}
@@ -136,7 +145,7 @@ var file_moego_common_v1_weight_proto_rawDesc = string([]byte{
 	0x31, 0x2f, 0x77, 0x65, 0x69, 0x67, 0x68, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x12, 0x0f,
 	0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x31, 0x22,
 	0x87, 0x01, 0x0a, 0x06, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x76, 0x61,
-	0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
+	0x6c, 0x75, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x05, 0x76, 0x61, 0x6c, 0x75, 0x65,
 	0x12, 0x30, 0x0a, 0x04, 0x75, 0x6e, 0x69, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x1c,
 	0x2e, 0x6d, 0x6f, 0x65, 0x67, 0x6f, 0x2e, 0x63, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x2e, 0x76, 0x31,
 	0x2e, 0x57, 0x65, 0x69, 0x67, 0x68, 0x74, 0x2e, 0x55, 0x6e, 0x69, 0x74, 0x52, 0x04, 0x75, 0x6e,

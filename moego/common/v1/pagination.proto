@@ -10,15 +10,13 @@ option java_multiple_files = true;
 option java_outer_classname = "PaginationProto";
 option java_package = "com.moego.api.common.v1";
 
-// Pagination represents the pagination information.
-// It is used to control the page size and page token,
-// must be declared in the request of the List APIs.
-// The page size must be between 1 and 500, and the page token
-// must be a non-empty string with a maximum length of 64.
-// The Response of the List APIs will contain the next page token
-// if there are more results.
+// The pagination object provides a standardized way to handle paginated results
+// across all API endpoints. It supports both cursor-based and offset-based
+// pagination, with configurable page sizes and sorting options. This ensures
+// consistent and efficient data retrieval for large result sets.
 message Pagination {
-  // The page size.
+  // integer, Number of items to return per page.
+  // Minimum: 1, Maximum: 500
   int32 page_size = 1 [
     (google.api.field_behavior) = INPUT_ONLY,
     (buf.validate.field).int32 = {
@@ -26,7 +24,10 @@ message Pagination {
       lte: 500
     }
   ];
-  // The page token.
+
+  // string, Token for retrieving the next page.
+  // Obtained from the previous page's response.
+  // Leave empty for the first page.
   optional string page_token = 2 [
     (google.api.field_behavior) = INPUT_ONLY,
     (buf.validate.field).string = {

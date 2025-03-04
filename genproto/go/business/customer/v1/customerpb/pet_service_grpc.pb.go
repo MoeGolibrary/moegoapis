@@ -31,20 +31,51 @@ const (
 // PetServiceClient is the client API for PetService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+//
+// PetService provides methods for managing pet profiles and their associated data.
+// This service handles all aspects of pet management including creation, retrieval,
+// and updates to pet information, as well as managing pet-specific notes and codes.
 type PetServiceClient interface {
-	// Create a pet
+	// Creates a new pet profile in the system.
+	//
+	// This method validates and stores the pet's information, including basic details,
+	// health records, and any initial notes or codes. The pet is automatically
+	// associated with the specified customer.
+	//
+	// Returns the created Pet object with all fields populated.
+	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
-	// Get a Pet
+	// Retrieves detailed information about a specific pet.
+	//
+	// Returns all pet data including health records, notes, and service history.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	GetPet(ctx context.Context, in *GetPetRequest, opts ...grpc.CallOption) (*Pet, error)
-	// List Pets
+	// Lists all pets belonging to a specific customer.
+	//
+	// Returns a list of pet profiles associated with the customer.
+	// Returns an empty list if the customer has no pets.
 	ListPets(ctx context.Context, in *ListPetsRequest, opts ...grpc.CallOption) (*ListPetsResponse, error)
-	// Append pet codes to a pet
+	// Adds special handling codes or medical alerts to a pet's profile.
+	//
+	// These codes are displayed prominently during service delivery to ensure
+	// appropriate handling and care. Returns the newly added codes.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetCodes(ctx context.Context, in *AppendPetCodesRequest, opts ...grpc.CallOption) (*AppendPetCodesResponse, error)
-	// Append notes to a pet
+	// Adds new notes to a pet's profile.
+	//
+	// Notes can include observations about behavior, preferences, or special
+	// requirements. Returns the newly created notes with generated IDs.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetNotes(ctx context.Context, in *AppendPetNotesRequest, opts ...grpc.CallOption) (*AppendPetNotesResponse, error)
-	// List Pet Notes
+	// Retrieves a paginated list of notes for a specific pet.
+	//
+	// Notes are returned in reverse chronological order (newest first).
+	// Returns an empty list if the pet has no notes.
 	ListPetNotes(ctx context.Context, in *ListPetNotesRequest, opts ...grpc.CallOption) (*ListPetNotesResponse, error)
-	// List All Pets
+	// Lists all pets across all customers in the company.
+	//
+	// Results can be filtered by customer IDs and are paginated.
+	// Requires company-level access permissions.
 	ListAllPets(ctx context.Context, in *ListAllPetsRequest, opts ...grpc.CallOption) (*ListAllPetsResponse, error)
 }
 
@@ -129,20 +160,51 @@ func (c *petServiceClient) ListAllPets(ctx context.Context, in *ListAllPetsReque
 // PetServiceServer is the server API for PetService service.
 // All implementations must embed UnimplementedPetServiceServer
 // for forward compatibility.
+//
+// PetService provides methods for managing pet profiles and their associated data.
+// This service handles all aspects of pet management including creation, retrieval,
+// and updates to pet information, as well as managing pet-specific notes and codes.
 type PetServiceServer interface {
-	// Create a pet
+	// Creates a new pet profile in the system.
+	//
+	// This method validates and stores the pet's information, including basic details,
+	// health records, and any initial notes or codes. The pet is automatically
+	// associated with the specified customer.
+	//
+	// Returns the created Pet object with all fields populated.
+	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
-	// Get a Pet
+	// Retrieves detailed information about a specific pet.
+	//
+	// Returns all pet data including health records, notes, and service history.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	GetPet(context.Context, *GetPetRequest) (*Pet, error)
-	// List Pets
+	// Lists all pets belonging to a specific customer.
+	//
+	// Returns a list of pet profiles associated with the customer.
+	// Returns an empty list if the customer has no pets.
 	ListPets(context.Context, *ListPetsRequest) (*ListPetsResponse, error)
-	// Append pet codes to a pet
+	// Adds special handling codes or medical alerts to a pet's profile.
+	//
+	// These codes are displayed prominently during service delivery to ensure
+	// appropriate handling and care. Returns the newly added codes.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetCodes(context.Context, *AppendPetCodesRequest) (*AppendPetCodesResponse, error)
-	// Append notes to a pet
+	// Adds new notes to a pet's profile.
+	//
+	// Notes can include observations about behavior, preferences, or special
+	// requirements. Returns the newly created notes with generated IDs.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetNotes(context.Context, *AppendPetNotesRequest) (*AppendPetNotesResponse, error)
-	// List Pet Notes
+	// Retrieves a paginated list of notes for a specific pet.
+	//
+	// Notes are returned in reverse chronological order (newest first).
+	// Returns an empty list if the pet has no notes.
 	ListPetNotes(context.Context, *ListPetNotesRequest) (*ListPetNotesResponse, error)
-	// List All Pets
+	// Lists all pets across all customers in the company.
+	//
+	// Results can be filtered by customer IDs and are paginated.
+	// Requires company-level access permissions.
 	ListAllPets(context.Context, *ListAllPetsRequest) (*ListAllPetsResponse, error)
 	mustEmbedUnimplementedPetServiceServer()
 }

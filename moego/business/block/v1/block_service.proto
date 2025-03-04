@@ -12,9 +12,17 @@ option java_multiple_files = true;
 option java_outer_classname = "BlockServiceProto";
 option java_package = "com.moego.api.business.block.v1";
 
-// BlockService openapi definitions for operate block
+// BlockService provides operations for managing staff schedule blocks.
+// These blocks represent time periods when staff members are not available
+// for appointments, such as breaks, meetings, or personal time off.
 service BlockService {
-  // CreateBlock
+  // CreateBlock creates a new block in a staff member's schedule.
+  //
+  // Returns:
+  // - The newly created Block object
+  // - INVALID_ARGUMENT if the request is malformed
+  // - PERMISSION_DENIED if the caller lacks permission
+  // - NOT_FOUND if the business_id or staff_id is invalid
   rpc CreateBlock(CreateBlockRequest) returns (Block) {
     option (google.api.http) = {
       post: "/v1/blocks"
@@ -22,22 +30,44 @@ service BlockService {
     };
   }
 
-  // GetBlock
+  // GetBlock retrieves a specific block by its ID.
+  //
+  // Returns:
+  // - The requested Block object
+  // - NOT_FOUND if the block doesn't exist
+  // - PERMISSION_DENIED if the caller lacks permission
   rpc GetBlock(GetBlockRequest) returns (Block) {
     option (google.api.http) = {get: "/v1/blocks/{id}"};
   }
 }
 
-// CreateBlockRequest create block request
+// CreateBlockRequest contains the information needed to create a new block
+// in a staff member's schedule.
 message CreateBlockRequest {
+  // ID of the business where the block will be created.
+  // Required for access control and proper block organization.
   string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the staff member whose schedule will be blocked.
+  // Must be a valid staff member ID within the specified business.
   string staff_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The time interval during which the staff member will be unavailable.
+  // Must be a valid time interval with both start and end times specified.
   google.type.Interval duration = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional description explaining why the time is being blocked off.
+  // Examples: "Lunch break", "Team meeting", "Training session"
   string description = 4;
+
+  // Optional color code for visual distinction in the calendar UI.
+  // Should be a valid hex color code (e.g., "#FF0000" for red).
   string color_code = 5;
 }
 
-// GetBlockRequest get block request
+// GetBlockRequest contains the ID of the block to retrieve.
 message GetBlockRequest {
+  // Unique identifier of the block to retrieve.
+  // Must be a valid block ID that exists in the system.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }

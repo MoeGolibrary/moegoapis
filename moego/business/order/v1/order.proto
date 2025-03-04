@@ -10,61 +10,116 @@ option java_multiple_files = true;
 option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
-// Order
+// Order represents a financial transaction for services provided to a customer.
+// Orders track the complete financial details of a transaction, including services,
+// tips, taxes, discounts, and payment status. Each order is associated with a
+// specific business location and customer.
 message Order {
-  // Status
+  // Status represents the current state of the order in its lifecycle.
+  // This affects payment processing, reporting, and service delivery.
   enum Status {
-    // UNSPECIFIED
+    // Unknown or invalid status
+    // Should not be used when creating new orders
     STATUS_UNSPECIFIED = 0;
-    // CREATED
+
+    // Order has been created but processing hasn't started
+    // Initial state for new orders
     CREATED = 1;
-    // PROCESSING
+
+    // Order is currently being processed
+    // Services are being delivered or payments are pending
     PROCESSING = 2;
-    // COMPLETED
+
+    // Order has been fully completed
+    // All services delivered and payments processed
     COMPLETED = 3;
-    // REMOVED
+
+    // Order has been removed from active records
+    // Historical data is maintained for reporting
     REMOVED = 4;
   }
-  // id
+
+  // Unique identifier for the order
+  // Format: "ord_" followed by random characters
   string id = 1;
-  // business id
+
+  // ID of the business location where services were provided
+  // Required. Must be a valid business ID
   string business_id = 2;
-  // customer id
+
+  // ID of the customer who received services
+  // Required. Must be a valid customer ID
   string customer_id = 3;
-  // order status
+
+  // Current status of the order
+  // Determines available actions and processing flow
   Status status = 4;
-  // order title
+
+  // Short description of the order
+  // Example: "Full Grooming Package - Max"
   string title = 5;
-  // description
+
+  // Detailed notes about the order
+  // Optional. Max length: 1000 characters
   string description = 6;
-  // tips amount
+
+  // Additional amount provided as gratuity
+  // Optional. Must be non-negative
   google.type.Money tips_amount = 7;
-  // tax amount
+
+  // Tax amount applied to the order
+  // Calculated based on local tax rates
   google.type.Money tax_amount = 8;
-  // discount amount
+
+  // Total discounts applied to the order
+  // Sum of all applicable discounts
   google.type.Money discount_amount = 9;
-  // extra fee amount
+
+  // Additional fees applied to the order
+  // Example: Holiday surcharge, emergency service fee
   google.type.Money extra_fee_amount = 10;
-  // subTotal amount
+
+  // Subtotal before tax, tips, and adjustments
+  // Sum of all service prices
   google.type.Money sub_total_amount = 11;
-  // amount of tips based on
+
+  // Amount used as basis for calculating tips
+  // Usually equals sub_total_amount
   google.type.Money tips_based_amount = 12;
-  // total amount
+
+  // Total amount including all charges and adjustments
+  // Formula: subtotal + tax + tips + fees - discounts
   google.type.Money total_amount = 13;
-  // paid amount
+
+  // Amount that has been paid so far
+  // Updated when payments are processed
   google.type.Money paid_amount = 14;
-  // remain amount to pay
+
+  // Amount still due on the order
+  // Formula: total_amount - paid_amount
   google.type.Money remain_amount = 15;
-  // refunded amount
+
+  // Amount that has been refunded
+  // Tracks any refunds issued to the customer
   google.type.Money refunded_amount = 16;
-  // staff id of creating this order
+
+  // ID of the staff member who created the order
+  // Required. Must be a valid staff ID
   string created_by = 17;
-  // create time
+
+  // When this order was created
+  // System-generated timestamp
   google.protobuf.Timestamp created_time = 18;
-  // staff id of last updating this order
+
+  // ID of the staff member who last modified the order
+  // Updated on any order changes
   string last_updated_by = 19;
-  // update time
+
+  // When this order was last modified
+  // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 20;
-  // sales datetime
+
+  // When the sale was recorded
+  // Used for financial reporting and reconciliation
   google.protobuf.Timestamp sales_datetime = 21;
 }

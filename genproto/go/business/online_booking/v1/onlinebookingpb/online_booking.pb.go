@@ -25,14 +25,23 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status
+// Status represents the current state of the online booking request.
+// This affects how the booking is processed and displayed in the system.
 type OnlineBooking_Status int32
 
 const (
+	// Unknown or invalid status
+	// Should not be used when creating new bookings
 	OnlineBooking_STATUS_UNSPECIFIED OnlineBooking_Status = 0
-	OnlineBooking_NORMAL             OnlineBooking_Status = 1
-	OnlineBooking_IN_WAIT_LIST       OnlineBooking_Status = 2
-	OnlineBooking_ABANDONED          OnlineBooking_Status = 3
+	// Booking is being processed normally
+	// Standard flow for immediate scheduling
+	OnlineBooking_NORMAL OnlineBooking_Status = 1
+	// Booking is on a waiting list
+	// Used when preferred time slot is unavailable
+	OnlineBooking_IN_WAIT_LIST OnlineBooking_Status = 2
+	// Booking was abandoned before completion
+	// No further processing needed
+	OnlineBooking_ABANDONED OnlineBooking_Status = 3
 )
 
 // Enum value maps for OnlineBooking_Status.
@@ -78,21 +87,41 @@ func (OnlineBooking_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_online_booking_v1_online_booking_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// OnlineBooking
+// OnlineBooking represents a service appointment request made through digital channels.
+// These bookings can be made through the customer portal, mobile app, or website.
+// Each booking includes service details, timing preferences, and customer information
+// needed to schedule the appointment.
 type OnlineBooking struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID
-	Id                string                            `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId        string                            `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	CustomerId        string                            `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Address           *commonpb.Address                 `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
-	Duration          *interval.Interval                `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
+	// Unique identifier for the booking
+	// Format: "bkg_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the business location for the service
+	// Required. Must be a valid business ID
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// ID of the customer making the booking
+	// Required. Must be a valid customer ID
+	CustomerId string `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// Service location details
+	// Required for mobile services, optional for in-store
+	Address *commonpb.Address `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	// Requested time window for the service
+	// Includes start and end time preferences
+	Duration *interval.Interval `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
+	// List of services requested for each pet
+	// Details specific services and pets involved
 	PetServiceDetails []*appointmentpb.PetServiceDetail `protobuf:"bytes,6,rep,name=pet_service_details,json=petServiceDetails,proto3" json:"pet_service_details,omitempty"`
-	Status            OnlineBooking_Status              `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.online_booking.v1.OnlineBooking_Status" json:"status,omitempty"`
-	ColorCode         string                            `protobuf:"bytes,8,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
-	CreatedTime       *timestamppb.Timestamp            `protobuf:"bytes,9,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Current state of the booking request
+	// Determines processing flow and display
+	Status OnlineBooking_Status `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.online_booking.v1.OnlineBooking_Status" json:"status,omitempty"`
+	// Visual identifier for the booking
+	// Used in calendar and schedule displays
+	ColorCode string `protobuf:"bytes,8,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
+	// When this booking request was created
+	// System-generated timestamp
+	CreatedTime   *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *OnlineBooking) Reset() {

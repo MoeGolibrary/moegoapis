@@ -12,9 +12,20 @@ option java_multiple_files = true;
 option java_outer_classname = "DiscountServiceProto";
 option java_package = "com.moego.api.business.discount.v1";
 
-// DiscountService openapi definitions for operate discount
+// DiscountService provides APIs for managing promotional discounts and offers.
+// This service handles the creation, retrieval, and listing of discounts that
+// can be applied to services. It supports various discount types and
+// configurations to meet different promotional needs.
 service DiscountService {
-  // CreateDiscount
+  // Creates a new discount with the specified configuration.
+  //
+  // The created discount can be immediately used for appointments and
+  // online bookings based on its settings and limitations.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if the discount configuration is invalid
+  // - ALREADY_EXISTS if the discount code is already in use
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc CreateDiscount(CreateDiscountRequest) returns (Discount) {
     option (google.api.http) = {
       post: "/v1/discounts"
@@ -22,12 +33,28 @@ service DiscountService {
     };
   }
 
-  // GetDiscount
+  // Retrieves detailed information about a specific discount.
+  //
+  // Returns the complete discount object including all settings
+  // and limitations. This information is used for discount validation
+  // and application.
+  //
+  // Possible errors:
+  // - NOT_FOUND if the discount code doesn't exist
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc GetDiscount(GetDiscountRequest) returns (Discount) {
     option (google.api.http) = {get: "/v1/discounts/{code}"};
   }
 
-  // ListDiscounts
+  // Lists available discounts based on specified criteria.
+  //
+  // Results are paginated and can be used to display active promotions
+  // or manage existing discounts. Expired discounts are included in
+  // the results for historical reference.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListDiscounts(ListDiscountsRequest) returns (ListDiscountsResponse) {
     option (google.api.http) = {
       post: "/v1/discounts:list"
@@ -36,30 +63,46 @@ service DiscountService {
   }
 }
 
-// CreateDiscountRequest
+// CreateDiscountRequest represents a request to create a new discount.
 message CreateDiscountRequest {
+  // Company identifier for scoping the discount
+  // Required to ensure discounts are created in proper context
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // The discount to be created
+
+  // Complete discount configuration to create
+  // Must include all required fields and valid settings
   Discount discount = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// GetDiscountRequest
+// GetDiscountRequest represents a request to retrieve a specific discount.
 message GetDiscountRequest {
+  // Company identifier for scoping the request
+  // Required to ensure discounts are accessed within proper context
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier of the discount to retrieve
+  // Must be a valid discount code
   string code = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListDiscountsRequest is the request message for DiscountAPI.ListDiscounts
+// ListDiscountsRequest encapsulates parameters for retrieving discounts.
 message ListDiscountsRequest {
-  // The pagination information
+  // Pagination parameters for handling large result sets
+  // Required to manage data volume efficiently
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Company identifier for scoping the discount list
+  // Required to ensure discounts are accessed within proper context
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// ListDiscountsResponse is the response message for DiscountAPI.ListDiscounts
+// ListDiscountsResponse contains the paginated list of discounts.
 message ListDiscountsResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The Discounts
+
+  // List of discounts matching the request criteria
+  // May be empty if no discounts match
   repeated Discount discounts = 2;
 }

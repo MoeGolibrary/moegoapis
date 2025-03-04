@@ -27,11 +27,29 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// BusinessService openapi definitions for operate business
+// BusinessService provides APIs for managing business locations and their profiles.
+// This service handles operations related to business location retrieval and
+// listing. Business locations are the physical or virtual places where services
+// are provided to customers, operating under a parent company.
 type BusinessServiceClient interface {
-	// GetBusiness get a business
+	// Retrieves detailed information about a specific business location.
+	//
+	// Returns the complete business profile including contact information,
+	// address, and social media links. This information is used for customer
+	// communications and service delivery.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the business ID doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetBusiness(ctx context.Context, in *GetBusinessRequest, opts ...grpc.CallOption) (*Business, error)
-	// ListBusiness list businesses
+	// Lists business locations based on specified criteria.
+	//
+	// Results are paginated and filtered by company ID. This method is typically
+	// used for business management and customer-facing location directories.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListBusiness(ctx context.Context, in *ListBusinessRequest, opts ...grpc.CallOption) (*ListBusinessResponse, error)
 }
 
@@ -67,11 +85,29 @@ func (c *businessServiceClient) ListBusiness(ctx context.Context, in *ListBusine
 // All implementations must embed UnimplementedBusinessServiceServer
 // for forward compatibility.
 //
-// BusinessService openapi definitions for operate business
+// BusinessService provides APIs for managing business locations and their profiles.
+// This service handles operations related to business location retrieval and
+// listing. Business locations are the physical or virtual places where services
+// are provided to customers, operating under a parent company.
 type BusinessServiceServer interface {
-	// GetBusiness get a business
+	// Retrieves detailed information about a specific business location.
+	//
+	// Returns the complete business profile including contact information,
+	// address, and social media links. This information is used for customer
+	// communications and service delivery.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the business ID doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetBusiness(context.Context, *GetBusinessRequest) (*Business, error)
-	// ListBusiness list businesses
+	// Lists business locations based on specified criteria.
+	//
+	// Results are paginated and filtered by company ID. This method is typically
+	// used for business management and customer-facing location directories.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListBusiness(context.Context, *ListBusinessRequest) (*ListBusinessResponse, error)
 	mustEmbedUnimplementedBusinessServiceServer()
 }

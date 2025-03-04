@@ -27,11 +27,24 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// BlockService openapi definitions for operate block
+// BlockService provides operations for managing staff schedule blocks.
+// These blocks represent time periods when staff members are not available
+// for appointments, such as breaks, meetings, or personal time off.
 type BlockServiceClient interface {
-	// CreateBlock
+	// CreateBlock creates a new block in a staff member's schedule.
+	//
+	// Returns:
+	// - The newly created Block object
+	// - INVALID_ARGUMENT if the request is malformed
+	// - PERMISSION_DENIED if the caller lacks permission
+	// - NOT_FOUND if the business_id or staff_id is invalid
 	CreateBlock(ctx context.Context, in *CreateBlockRequest, opts ...grpc.CallOption) (*Block, error)
-	// GetBlock
+	// GetBlock retrieves a specific block by its ID.
+	//
+	// Returns:
+	// - The requested Block object
+	// - NOT_FOUND if the block doesn't exist
+	// - PERMISSION_DENIED if the caller lacks permission
 	GetBlock(ctx context.Context, in *GetBlockRequest, opts ...grpc.CallOption) (*Block, error)
 }
 
@@ -67,11 +80,24 @@ func (c *blockServiceClient) GetBlock(ctx context.Context, in *GetBlockRequest, 
 // All implementations must embed UnimplementedBlockServiceServer
 // for forward compatibility.
 //
-// BlockService openapi definitions for operate block
+// BlockService provides operations for managing staff schedule blocks.
+// These blocks represent time periods when staff members are not available
+// for appointments, such as breaks, meetings, or personal time off.
 type BlockServiceServer interface {
-	// CreateBlock
+	// CreateBlock creates a new block in a staff member's schedule.
+	//
+	// Returns:
+	// - The newly created Block object
+	// - INVALID_ARGUMENT if the request is malformed
+	// - PERMISSION_DENIED if the caller lacks permission
+	// - NOT_FOUND if the business_id or staff_id is invalid
 	CreateBlock(context.Context, *CreateBlockRequest) (*Block, error)
-	// GetBlock
+	// GetBlock retrieves a specific block by its ID.
+	//
+	// Returns:
+	// - The requested Block object
+	// - NOT_FOUND if the block doesn't exist
+	// - PERMISSION_DENIED if the caller lacks permission
 	GetBlock(context.Context, *GetBlockRequest) (*Block, error)
 	mustEmbedUnimplementedBlockServiceServer()
 }

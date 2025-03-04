@@ -12,47 +12,83 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
 
+// PetService provides methods for managing pet profiles and their associated data.
+// This service handles all aspects of pet management including creation, retrieval,
+// and updates to pet information, as well as managing pet-specific notes and codes.
 service PetService {
-  // Create a pet
+  // Creates a new pet profile in the system.
+  //
+  // This method validates and stores the pet's information, including basic details,
+  // health records, and any initial notes or codes. The pet is automatically
+  // associated with the specified customer.
+  //
+  // Returns the created Pet object with all fields populated.
+  // Throws INVALID_ARGUMENT if required fields are missing or invalid.
   rpc CreatePet(CreatePetRequest) returns (CreatePetResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets"
       body: "*"
     };
   }
-  // Get a Pet
+
+  // Retrieves detailed information about a specific pet.
+  //
+  // Returns all pet data including health records, notes, and service history.
+  // Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
   rpc GetPet(GetPetRequest) returns (Pet) {
     option (google.api.http) = {get: "/v1/customers/{customer_id}/pets/{id}"};
   }
-  // List Pets
+
+  // Lists all pets belonging to a specific customer.
+  //
+  // Returns a list of pet profiles associated with the customer.
+  // Returns an empty list if the customer has no pets.
   rpc ListPets(ListPetsRequest) returns (ListPetsResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets:list"
       body: "*"
     };
   }
-  // Append pet codes to a pet
+
+  // Adds special handling codes or medical alerts to a pet's profile.
+  //
+  // These codes are displayed prominently during service delivery to ensure
+  // appropriate handling and care. Returns the newly added codes.
+  // Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
   rpc AppendPetCodes(AppendPetCodesRequest) returns (AppendPetCodesResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets/{id}/codes"
       body: "*"
     };
   }
-  // Append notes to a pet
+
+  // Adds new notes to a pet's profile.
+  //
+  // Notes can include observations about behavior, preferences, or special
+  // requirements. Returns the newly created notes with generated IDs.
+  // Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
   rpc AppendPetNotes(AppendPetNotesRequest) returns (AppendPetNotesResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets/{id}/notes"
       body: "*"
     };
   }
-  // List Pet Notes
+
+  // Retrieves a paginated list of notes for a specific pet.
+  //
+  // Notes are returned in reverse chronological order (newest first).
+  // Returns an empty list if the pet has no notes.
   rpc ListPetNotes(ListPetNotesRequest) returns (ListPetNotesResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets/{id}/notes:list"
       body: "*"
     };
   }
-  // List All Pets
+
+  // Lists all pets across all customers in the company.
+  //
+  // Results can be filtered by customer IDs and are paginated.
+  // Requires company-level access permissions.
   rpc ListAllPets(ListAllPetsRequest) returns (ListAllPetsResponse) {
     option (google.api.http) = {
       post: "/v1/pets:list"
@@ -61,92 +97,147 @@ service PetService {
   }
 }
 
+// Request message for creating a new pet profile.
 message CreatePetRequest {
-  // id of pet owner
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // pet to create
+
+  // Complete pet information to be created
+  // Required. Must include all required pet fields
   Pet pet = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for creating a new pet profile.
 message CreatePetResponse {
-  // pet created
+  // The newly created pet profile
+  // Includes system-generated fields like ID
   Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
+// Request message for retrieving a specific pet.
 message GetPetRequest {
-  // id of pet owner
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // id of pet
+
+  // Unique identifier of the pet to retrieve
+  // Required. Format: "pet_" followed by random characters
   string id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request message for listing a customer's pets.
 message ListPetsRequest {
-  // id of pet owner
+  // ID of the customer whose pets to list
+  // Required. Must be a valid customer ID
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing a customer's pets.
 message ListPetsResponse {
-  // The pets of the customer
+  // List of pets belonging to the customer
+  // May be empty if the customer has no pets
   repeated Pet pets = 1;
 }
 
+// Request message for adding codes to a pet's profile.
 message AppendPetCodesRequest {
-  // id of pet owner
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // id of pet
+
+  // Unique identifier of the pet
+  // Required. Format: "pet_" followed by random characters
   string id = 2 [(google.api.field_behavior) = REQUIRED];
-  // pet_code_ids to append
+
+  // IDs of the codes to add to the pet's profile
+  // Required. Must be valid code IDs
   repeated string pet_code_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
+
+// Response message for adding codes to a pet's profile.
 message AppendPetCodesResponse {
-  // pet codes appended
+  // Codes that were successfully added
+  // Includes full code details
   repeated Pet.Code codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
+// Request message for adding notes to a pet's profile.
 message AppendPetNotesRequest {
-  // id of pet owner
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // id of pet
+
+  // Unique identifier of the pet
+  // Required. Format: "pet_" followed by random characters
   string id = 2 [(google.api.field_behavior) = REQUIRED];
-  // notes to append
+
+  // Notes to add to the pet's profile
+  // Required. At least one note must be provided
   repeated Pet.Note notes = 3;
 }
 
+// Response message for adding notes to a pet's profile.
 message AppendPetNotesResponse {
-  // pet notes appended
+  // Notes that were successfully added
+  // Includes generated IDs and timestamps
   repeated Pet.Note notes = 1;
 }
 
+// Request message for listing a pet's notes.
 message ListPetNotesRequest {
-  // The pagination information
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // id of pet owner
+
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
   string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
-  // id of pet
+
+  // Unique identifier of the pet
+  // Required. Format: "pet_" followed by random characters
   string id = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Response message for listing a pet's notes.
 message ListPetNotesResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The notes
+
+  // List of notes for the pet
+  // May be empty if the pet has no notes
   repeated Pet.Note notes = 2;
 }
 
+// Request message for listing all pets in the company.
 message ListAllPetsRequest {
-  // The pagination information
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-  // The company id
+
+  // ID of the company to list pets for
+  // Required. Must be a valid company ID
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the pet list
   message Filter {
+    // Optional list of customer IDs to filter by
+    // If provided, only returns pets belonging to these customers
     repeated int64 customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Optional filters to apply to the pet list
   Filter filter = 3;
 }
 
+// Response message for listing all pets.
 message ListAllPetsResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // The pets
+
+  // List of pets matching the request criteria
+  // May be empty if no pets match
   repeated Pet pets = 2;
 }

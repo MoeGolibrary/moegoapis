@@ -24,11 +24,15 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetAppointmentRequest get appointment request
+// Request to retrieve a specific appointment.
 type GetAppointmentRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId    string                 `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The unique identifier of the appointment to retrieve.
+	// Format: "apt_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId    string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -77,11 +81,20 @@ func (x *GetAppointmentRequest) GetBusinessId() string {
 	return ""
 }
 
+// Request to list appointments matching specified criteria.
 type ListAppointmentsRequest struct {
-	state         protoimpl.MessageState          `protogen:"open.v1"`
-	Pagination    *commonpb.Pagination            `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	CompanyId     string                          `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	BusinessIds   []string                        `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// object(Pagination), Pagination parameters.
+	// Use page_size to specify results per page (max 100).
+	// Use page_token from previous response for next page.
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// string, The company identifier for multi-location businesses.
+	// Required for company-wide appointment listing.
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// array(string), List of business location IDs to include.
+	// Maximum: 50 locations per request
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// object(Filter), Optional filters to narrow the results.
 	Filter        *ListAppointmentsRequest_Filter `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -145,11 +158,14 @@ func (x *ListAppointmentsRequest) GetFilter() *ListAppointmentsRequest_Filter {
 	return nil
 }
 
+// Response for listing appointments
 type ListAppointmentsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// string, Token for retrieving the next page of results.
+	// Empty if there are no more results.
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The Appointments
+	// array(Appointment), List of appointments matching the request criteria.
+	// Ordered by start time in ascending order.
 	Appointments  []*Appointment `protobuf:"bytes,2,rep,name=appointments,proto3" json:"appointments,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -199,12 +215,15 @@ func (x *ListAppointmentsResponse) GetAppointments() []*Appointment {
 	return nil
 }
 
+// Request to create a new appointment
 type CreateAppointmentRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Account Info
+	// string, The business location's identifier where services will be provided.
 	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// string, The customer's identifier who is booking the appointment.
 	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// PetService info
+	// array(PetService), Services requested for each pet.
+	// Maximum: 5 pets per appointment
 	PetServices   []*CreateAppointmentRequest_PetService `protobuf:"bytes,3,rep,name=pet_services,json=petServices,proto3" json:"pet_services,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -261,11 +280,17 @@ func (x *CreateAppointmentRequest) GetPetServices() []*CreateAppointmentRequest_
 	return nil
 }
 
+// Request to reschedule an existing appointment
 type RescheduleAppointmentRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId    string                 `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	Duration      *interval.Interval     `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The unique identifier of the appointment to reschedule.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// object(Interval), The new time window for the appointment.
+	// Must be in the future and within business hours.
+	Duration      *interval.Interval `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -321,10 +346,14 @@ func (x *RescheduleAppointmentRequest) GetDuration() *interval.Interval {
 	return nil
 }
 
+// Request to cancel an appointment
 type CancelAppointmentRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId    string                 `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The unique identifier of the appointment to cancel.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId    string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -373,14 +402,23 @@ func (x *CancelAppointmentRequest) GetBusinessId() string {
 	return ""
 }
 
+// Filter parameters for the appointment list
 type ListAppointmentsRequest_Filter struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	StartTime       *interval.Interval     `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
-	EndTime         *interval.Interval     `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
-	LastUpdatedTime *interval.Interval     `protobuf:"bytes,3,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	Statuses        []Appointment_Status   `protobuf:"varint,4,rep,packed,name=statuses,proto3,enum=moego.business.appointment.v1.Appointment_Status" json:"statuses,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// object(Interval), Filter by appointment start time range.
+	// Maximum range: 90 days
+	StartTime *interval.Interval `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	// object(Interval), Filter by appointment end time range.
+	// Maximum range: 90 days
+	EndTime *interval.Interval `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	// object(Interval), Filter by last update time range.
+	// Maximum range: 30 days
+	LastUpdatedTime *interval.Interval `protobuf:"bytes,3,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	// array(Status), Filter by appointment status.
+	// Example: ["CONFIRMED", "CHECKED_IN"]
+	Statuses      []Appointment_Status `protobuf:"varint,4,rep,packed,name=statuses,proto3,enum=moego.business.appointment.v1.Appointment_Status" json:"statuses,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListAppointmentsRequest_Filter) Reset() {
@@ -441,9 +479,14 @@ func (x *ListAppointmentsRequest_Filter) GetStatuses() []Appointment_Status {
 	return nil
 }
 
+// Details of services requested for a specific pet
 type CreateAppointmentRequest_PetService struct {
-	state         protoimpl.MessageState              `protogen:"open.v1"`
-	PetId         string                              `protobuf:"bytes,1,opt,name=pet_id,json=petId,proto3" json:"pet_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The unique identifier of the pet receiving services.
+	// Must belong to the specified customer.
+	PetId string `protobuf:"bytes,1,opt,name=pet_id,json=petId,proto3" json:"pet_id,omitempty"`
+	// array(Service), List of services to be provided.
+	// Maximum: 10 services per pet
 	Services      []*CreateAppointmentRequest_Service `protobuf:"bytes,2,rep,name=services,proto3" json:"services,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -493,12 +536,17 @@ func (x *CreateAppointmentRequest_PetService) GetServices() []*CreateAppointment
 	return nil
 }
 
+// Individual service booking details
 type CreateAppointmentRequest_Service struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	Id    string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// the service start time && end time
+	// string, The unique identifier of the service to be provided.
+	// Must be an active service in the business's service list.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// object(Interval), The scheduled time window for this service.
+	// Must be within business hours and staff availability.
 	Duration *interval.Interval `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`
-	// only support first staff
+	// array(string), Preferred staff member IDs for this service.
+	// Only the first staff member will be assigned if available.
 	StaffIds      []string `protobuf:"bytes,3,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

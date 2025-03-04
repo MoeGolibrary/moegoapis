@@ -22,13 +22,24 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Company information
+// Company represents a business entity in the system.
+// Companies are the top-level organizational units that contain multiple
+// business locations, staff members, and service offerings. Each company
+// has its own configuration settings and operational parameters.
 type Company struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Name          string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	Country       string                 `protobuf:"bytes,4,opt,name=country,proto3" json:"country,omitempty"`
-	Timezone      *datetime.TimeZone     `protobuf:"bytes,5,opt,name=timezone,proto3" json:"timezone,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the company
+	// Format: "cmp_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Legal name of the company
+	// Used in official communications and documents
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// Country where the company is registered
+	// ISO 3166-1 alpha-2 country code
+	Country string `protobuf:"bytes,4,opt,name=country,proto3" json:"country,omitempty"`
+	// Primary timezone for company operations
+	// Used for scheduling and reporting
+	Timezone      *datetime.TimeZone `protobuf:"bytes,5,opt,name=timezone,proto3" json:"timezone,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

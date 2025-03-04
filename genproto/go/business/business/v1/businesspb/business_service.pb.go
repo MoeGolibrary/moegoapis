@@ -23,10 +23,11 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// GetBusinessRequest request for GetBusiness
+// GetBusinessRequest represents a request to retrieve a specific business location.
 type GetBusinessRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of business
+	// Unique identifier of the business to retrieve
+	// Required. Must be a valid business ID
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -69,12 +70,14 @@ func (x *GetBusinessRequest) GetId() string {
 	return ""
 }
 
-// ListBusinessRequest request for ListBusiness
+// ListBusinessRequest encapsulates parameters for retrieving business locations.
 type ListBusinessRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The pagination information
+	// Pagination parameters for handling large result sets
+	// Required to manage data volume efficiently
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	// The company id
+	// ID of the company to list business locations for
+	// Required to ensure businesses are accessed within proper context
 	CompanyId     string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -124,12 +127,14 @@ func (x *ListBusinessRequest) GetCompanyId() string {
 	return ""
 }
 
-// ListBusinessResponse response for ListBusiness
+// ListBusinessResponse contains the paginated list of business locations.
 type ListBusinessResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The businesses
+	// List of business locations matching the request criteria
+	// May be empty if no businesses match
 	Businesses    []*Business `protobuf:"bytes,2,rep,name=businesses,proto3" json:"businesses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

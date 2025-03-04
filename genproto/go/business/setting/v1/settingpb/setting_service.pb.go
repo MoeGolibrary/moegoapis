@@ -24,9 +24,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Request message for listing pet codes.
 type ListPetCodeRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list pet codes for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -68,8 +71,11 @@ func (x *ListPetCodeRequest) GetCompanyId() string {
 	return ""
 }
 
+// Response message for listing pet codes.
 type ListPetCodeResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of available pet codes
+	// May be empty if no codes are defined
 	Codes         []*customerpb.Pet_Code `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -112,9 +118,12 @@ func (x *ListPetCodeResponse) GetCodes() []*customerpb.Pet_Code {
 	return nil
 }
 
+// Request message for listing customer tags.
 type ListCustomerTagRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	CompanyId     string                 `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list customer tags for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -156,8 +165,11 @@ func (x *ListCustomerTagRequest) GetCompanyId() string {
 	return ""
 }
 
+// Response message for listing customer tags.
 type ListCustomerTagResponse struct {
-	state         protoimpl.MessageState     `protogen:"open.v1"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of available customer tags
+	// May be empty if no tags are defined
 	Tags          []*customerpb.Customer_Tag `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -200,11 +212,19 @@ func (x *ListCustomerTagResponse) GetTags() []*customerpb.Customer_Tag {
 	return nil
 }
 
+// Request message for listing services.
 type ListServicesRequest struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	CompanyId     string                      `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	Pagination    *commonpb.Pagination        `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
-	BusinessIds   []string                    `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list services for
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Pagination parameters for the request
+	// Required. Defines page size and token for continuation
+	Pagination *commonpb.Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// List of business locations to filter services by
+	// Optional. If empty, returns services from all locations
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Optional filters to apply to the service list
 	Filter        *ListServicesRequest_Filter `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -268,11 +288,14 @@ func (x *ListServicesRequest) GetFilter() *ListServicesRequest_Filter {
 	return nil
 }
 
+// Response message for listing services.
 type ListServicesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The next page token
+	// Token for retrieving the next page of results
+	// Empty if there are no more results
 	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
-	// The PetService
+	// List of services matching the request criteria
+	// May be empty if no services match
 	Services      []*Service `protobuf:"bytes,2,rep,name=services,proto3" json:"services,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -322,9 +345,12 @@ func (x *ListServicesResponse) GetServices() []*Service {
 	return nil
 }
 
+// Filter parameters for the service list
 type ListServicesRequest_Filter struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	ItemTypes     []Service_ItemType     `protobuf:"varint,1,rep,packed,name=item_types,json=itemTypes,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"item_types,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types of services to include in the results
+	// Optional. If empty, returns all service types
+	ItemTypes     []Service_ItemType `protobuf:"varint,1,rep,packed,name=item_types,json=itemTypes,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"item_types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

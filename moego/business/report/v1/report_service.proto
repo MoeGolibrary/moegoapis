@@ -13,16 +13,34 @@ option java_multiple_files = true;
 option java_outer_classname = "reportServiceProto";
 option java_package = "com.moego.api.business.report.v1";
 
-// ReportService openapi definitions for operate report
+// ReportService provides APIs for managing and retrieving business reports.
+// This service handles operations for listing available reports and fetching
+// report data with various filtering and grouping options. It supports
+// customizable data views for business analytics and decision making.
 service ReportService {
-  // ListReports
+  // ListReports retrieves all available report definitions for a company.
+  // Returns a list of report configurations that can be used to generate
+  // specific data views.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if company_id is invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListReports(ListReportsRequest) returns (ListReportsResponse) {
     option (google.api.http) = {
       post: "/v1/reports:list"
       body: "*"
     };
   }
-  // FetchReportData
+
+  // FetchReportData generates and retrieves data for a specific report.
+  // Supports pagination, filtering by business units, and custom grouping
+  // options. Data is returned in a structured format defined by the report's
+  // field configuration.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if request parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  // - NOT_FOUND if the report definition doesn't exist
   rpc FetchReportData(FetchReportDataRequest) returns (FetchReportDataResponse) {
     option (google.api.http) = {
       post: "/v1/reports/data:fetch"
@@ -31,31 +49,63 @@ service ReportService {
   }
 }
 
-message ListReportsRequest{
+// ListReportsRequest represents a request to retrieve available reports.
+message ListReportsRequest {
+  // Company identifier for scoping available reports
+  // Required to ensure reports are accessed within proper context
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-message ListReportsResponse{
-  // reports
+// ListReportsResponse contains the list of available reports.
+message ListReportsResponse {
+  // List of report definitions available to the company
+  // May be empty if no reports are configured
   repeated Report reports = 1;
 }
 
-message FetchReportDataRequest{
+// FetchReportDataRequest encapsulates parameters for generating report data.
+// Supports pagination, business unit filtering, and custom data grouping.
+message FetchReportDataRequest {
+  // Pagination parameters for handling large result sets
+  // Required to manage data volume efficiently
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Company identifier for data access control
+  // Required to ensure data is scoped to proper context
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business units to include in the report
+  // Required to specify data scope
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Condition specifies the report configuration and filtering criteria.
+  // Controls what data is included and how it's organized.
   message Condition {
-    // report id
+    // Identifier of the report definition to use
+    // Must reference an existing report configuration
     string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+    // Time period for data collection
+    // Defines the date range for included data
     google.type.Interval query_period = 2 [(google.api.field_behavior) = REQUIRED];
-    repeated string group_by_field_keys = 3[(google.api.field_behavior) = OPTIONAL];
+
+    // Fields to group data by
+    // Optional. If provided, results will be aggregated by these fields
+    repeated string group_by_field_keys = 3 [(google.api.field_behavior) = OPTIONAL];
   }
+
+  // Report configuration and filtering parameters
+  // Controls the structure and content of the results
   Condition condition = 4;
 }
 
+// FetchReportDataResponse contains the generated report data.
 message FetchReportDataResponse {
-  // The next page token
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
   string next_page_token = 1;
-  // table data
+
+  // Structured report data including fields and rows
+  // Contains the actual report content
   TableData table_data = 2;
 }

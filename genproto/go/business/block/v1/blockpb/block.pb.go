@@ -22,15 +22,26 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Block
+// Block represents a time period that is blocked off in a staff member's schedule.
+// This can be used for breaks, meetings, or any other time when the staff member
+// is not available for appointments.
 type Block struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	StaffId       string                 `protobuf:"bytes,2,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
-	Duration      *interval.Interval     `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
-	Description   string                 `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
-	ColorCode     string                 `protobuf:"bytes,5,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
-	BusinessId    string                 `protobuf:"bytes,6,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the block.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the staff member whose schedule is being blocked.
+	StaffId string `protobuf:"bytes,2,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
+	// The time interval during which the staff member is unavailable.
+	// Uses Google's standard Interval type to represent the start and end times.
+	Duration *interval.Interval `protobuf:"bytes,3,opt,name=duration,proto3" json:"duration,omitempty"`
+	// Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting").
+	Description string `protobuf:"bytes,4,opt,name=description,proto3" json:"description,omitempty"`
+	// Color code used to visually distinguish this block in the calendar UI.
+	// Should be a valid hex color code (e.g., "#FF0000" for red).
+	ColorCode string `protobuf:"bytes,5,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
+	// ID of the business where this block is created.
+	// Used for access control and filtering blocks by business.
+	BusinessId    string `protobuf:"bytes,6,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }

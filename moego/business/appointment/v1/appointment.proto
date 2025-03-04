@@ -13,46 +13,106 @@ option java_multiple_files = true;
 option java_outer_classname = "AppointmentProto";
 option java_package = "com.moego.api.business.appointment.v1";
 
-// Appointment
+// The appointment object represents a scheduled pet service booking. When an appointment is created, 
+// it will transition through various states from unconfirmed to finished. Each appointment is associated 
+// with exactly one customer and one business location, but can include multiple pets and services.
+// The appointment tracks both the service status and payment status throughout its lifecycle.
 message Appointment {
-  // Status
+  // Possible values are `unconfirmed`, `confirmed`, `checked_in`, `ready`, `finished`, or `canceled`.
+  // An appointment starts as `unconfirmed` when created. Once confirmed by the business, it moves to `confirmed`.
+  // When the customer arrives with their pet(s), it transitions to `checked_in`. After service completion,
+  // it moves to `ready`, then `finished` after pickup. An appointment can be `canceled` at any stage.
   enum Status {
+    // Not intended for direct use. Indicates a system anomaly.
     STATUS_UNSPECIFIED = 0;
+
+    // Initial state. Appointment created but pending business confirmation.
     UNCONFIRMED = 1;
+
+    // Business has accepted and allocated resources.
     CONFIRMED = 2;
+
+    // Customer has arrived and service is in progress.
     CHECKED_IN = 3;
+
+    // Service completed, awaiting pet pickup.
     READY = 4;
+
+    // Final state. Pet picked up and service completed.
     FINISHED = 5;
+
+    // Final state. Appointment terminated before completion.
     CANCELED = 6;
   }
-  // PaymentStatus
+
+  // Possible values are `unpaid`, `partial_paid`, or `full_paid`.
+  // New appointments start as `unpaid`. After receiving partial payment (e.g., deposit),
+  // status changes to `partial_paid`. Once full payment is received, status becomes `full_paid`.
   enum PaymentStatus {
-    // PAYMENT_STATUS_UNSPECIFIED
+    // Not intended for direct use. Indicates a payment anomaly.
     PAYMENT_STATUS_UNSPECIFIED = 0;
-    // UNPAID
+
+    // No payment received. Default state for new appointments.
     UNPAID = 1;
-    // PARTIAL_PAID
+
+    // Deposit or partial payment received.
     PARTIAL_PAID = 2;
-    // FULL_PAID
+
+    // Complete payment received.
     FULL_PAID = 3;
   }
-  // id of the appointment
+
+  // string, Unique identifier for the appointment.
   string id = 1;
+  
+  // string, The business location's identifier where service will be performed.
   string business_id = 2;
+  
+  // string, The customer's identifier who booked the appointment.
   string customer_id = 3;
+  
+  // object(Address), Service location details. Required for home service appointments.
   moego.common.v1.Address address = 4;
+  
+  // object(Interval), The start and end time of the appointment.
   google.type.Interval duration = 5;
+  
+  // array(PetServiceDetail), List of services booked for each pet.
   repeated PetServiceDetail pet_service_details = 6;
+  
+  // enum(Status), Current appointment state.
   Status status = 7;
+  
+  // string, Optional notes about the appointment.
   string ticket_comment = 8;
+  
+  // string, UI display color in hex format (e.g., "#FF0000").
   string color_code = 9;
+  
+  // string, Identifier of the associated payment order.
   string order_id = 10;
+  
+  // object(Money), Total cost for all services.
   google.type.Money total_amount = 11;
+  
+  // object(Money), Amount received from customer.
   google.type.Money paid_amount = 12;
+  
+  // object(Money), Amount returned to customer.
   google.type.Money refund_amount = 13;
+  
+  // enum(PaymentStatus), Current payment state.
   PaymentStatus payment_status = 14;
+  
+  // string, Identifier of appointment creator.
   string created_by = 15;
+  
+  // timestamp, When the appointment was created.
   google.protobuf.Timestamp created_time = 16;
+  
+  // string, Identifier of last modifier who should be a staff working at the location
   string last_updated_by = 17;
+  
+  // timestamp, When the appointment was last modified.
   google.protobuf.Timestamp last_updated_time = 18;
 }

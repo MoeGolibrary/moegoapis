@@ -25,17 +25,27 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status
+// Possible values are `unconfirmed`, `confirmed`, `checked_in`, `ready`, `finished`, or `canceled`.
+// An appointment starts as `unconfirmed` when created. Once confirmed by the business, it moves to `confirmed`.
+// When the customer arrives with their pet(s), it transitions to `checked_in`. After service completion,
+// it moves to `ready`, then `finished` after pickup. An appointment can be `canceled` at any stage.
 type Appointment_Status int32
 
 const (
+	// Not intended for direct use. Indicates a system anomaly.
 	Appointment_STATUS_UNSPECIFIED Appointment_Status = 0
-	Appointment_UNCONFIRMED        Appointment_Status = 1
-	Appointment_CONFIRMED          Appointment_Status = 2
-	Appointment_CHECKED_IN         Appointment_Status = 3
-	Appointment_READY              Appointment_Status = 4
-	Appointment_FINISHED           Appointment_Status = 5
-	Appointment_CANCELED           Appointment_Status = 6
+	// Initial state. Appointment created but pending business confirmation.
+	Appointment_UNCONFIRMED Appointment_Status = 1
+	// Business has accepted and allocated resources.
+	Appointment_CONFIRMED Appointment_Status = 2
+	// Customer has arrived and service is in progress.
+	Appointment_CHECKED_IN Appointment_Status = 3
+	// Service completed, awaiting pet pickup.
+	Appointment_READY Appointment_Status = 4
+	// Final state. Pet picked up and service completed.
+	Appointment_FINISHED Appointment_Status = 5
+	// Final state. Appointment terminated before completion.
+	Appointment_CANCELED Appointment_Status = 6
 )
 
 // Enum value maps for Appointment_Status.
@@ -87,17 +97,19 @@ func (Appointment_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_appointment_v1_appointment_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// PaymentStatus
+// Possible values are `unpaid`, `partial_paid`, or `full_paid`.
+// New appointments start as `unpaid`. After receiving partial payment (e.g., deposit),
+// status changes to `partial_paid`. Once full payment is received, status becomes `full_paid`.
 type Appointment_PaymentStatus int32
 
 const (
-	// PAYMENT_STATUS_UNSPECIFIED
+	// Not intended for direct use. Indicates a payment anomaly.
 	Appointment_PAYMENT_STATUS_UNSPECIFIED Appointment_PaymentStatus = 0
-	// UNPAID
+	// No payment received. Default state for new appointments.
 	Appointment_UNPAID Appointment_PaymentStatus = 1
-	// PARTIAL_PAID
+	// Deposit or partial payment received.
 	Appointment_PARTIAL_PAID Appointment_PaymentStatus = 2
-	// FULL_PAID
+	// Complete payment received.
 	Appointment_FULL_PAID Appointment_PaymentStatus = 3
 )
 
@@ -144,30 +156,50 @@ func (Appointment_PaymentStatus) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_appointment_v1_appointment_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// Appointment
+// The appointment object represents a scheduled pet service booking. When an appointment is created,
+// it will transition through various states from unconfirmed to finished. Each appointment is associated
+// with exactly one customer and one business location, but can include multiple pets and services.
+// The appointment tracks both the service status and payment status throughout its lifecycle.
 type Appointment struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id of the appointment
-	Id                string                    `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	BusinessId        string                    `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	CustomerId        string                    `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	Address           *commonpb.Address         `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
-	Duration          *interval.Interval        `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
-	PetServiceDetails []*PetServiceDetail       `protobuf:"bytes,6,rep,name=pet_service_details,json=petServiceDetails,proto3" json:"pet_service_details,omitempty"`
-	Status            Appointment_Status        `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.appointment.v1.Appointment_Status" json:"status,omitempty"`
-	TicketComment     string                    `protobuf:"bytes,8,opt,name=ticket_comment,json=ticketComment,proto3" json:"ticket_comment,omitempty"`
-	ColorCode         string                    `protobuf:"bytes,9,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
-	OrderId           string                    `protobuf:"bytes,10,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
-	TotalAmount       *money.Money              `protobuf:"bytes,11,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount,omitempty"`
-	PaidAmount        *money.Money              `protobuf:"bytes,12,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
-	RefundAmount      *money.Money              `protobuf:"bytes,13,opt,name=refund_amount,json=refundAmount,proto3" json:"refund_amount,omitempty"`
-	PaymentStatus     Appointment_PaymentStatus `protobuf:"varint,14,opt,name=payment_status,json=paymentStatus,proto3,enum=moego.business.appointment.v1.Appointment_PaymentStatus" json:"payment_status,omitempty"`
-	CreatedBy         string                    `protobuf:"bytes,15,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	CreatedTime       *timestamppb.Timestamp    `protobuf:"bytes,16,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	LastUpdatedBy     string                    `protobuf:"bytes,17,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
-	LastUpdatedTime   *timestamppb.Timestamp    `protobuf:"bytes,18,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// string, Unique identifier for the appointment.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, The business location's identifier where service will be performed.
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// string, The customer's identifier who booked the appointment.
+	CustomerId string `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// object(Address), Service location details. Required for home service appointments.
+	Address *commonpb.Address `protobuf:"bytes,4,opt,name=address,proto3" json:"address,omitempty"`
+	// object(Interval), The start and end time of the appointment.
+	Duration *interval.Interval `protobuf:"bytes,5,opt,name=duration,proto3" json:"duration,omitempty"`
+	// array(PetServiceDetail), List of services booked for each pet.
+	PetServiceDetails []*PetServiceDetail `protobuf:"bytes,6,rep,name=pet_service_details,json=petServiceDetails,proto3" json:"pet_service_details,omitempty"`
+	// enum(Status), Current appointment state.
+	Status Appointment_Status `protobuf:"varint,7,opt,name=status,proto3,enum=moego.business.appointment.v1.Appointment_Status" json:"status,omitempty"`
+	// string, Optional notes about the appointment.
+	TicketComment string `protobuf:"bytes,8,opt,name=ticket_comment,json=ticketComment,proto3" json:"ticket_comment,omitempty"`
+	// string, UI display color in hex format (e.g., "#FF0000").
+	ColorCode string `protobuf:"bytes,9,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
+	// string, Identifier of the associated payment order.
+	OrderId string `protobuf:"bytes,10,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
+	// object(Money), Total cost for all services.
+	TotalAmount *money.Money `protobuf:"bytes,11,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount,omitempty"`
+	// object(Money), Amount received from customer.
+	PaidAmount *money.Money `protobuf:"bytes,12,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
+	// object(Money), Amount returned to customer.
+	RefundAmount *money.Money `protobuf:"bytes,13,opt,name=refund_amount,json=refundAmount,proto3" json:"refund_amount,omitempty"`
+	// enum(PaymentStatus), Current payment state.
+	PaymentStatus Appointment_PaymentStatus `protobuf:"varint,14,opt,name=payment_status,json=paymentStatus,proto3,enum=moego.business.appointment.v1.Appointment_PaymentStatus" json:"payment_status,omitempty"`
+	// string, Identifier of appointment creator.
+	CreatedBy string `protobuf:"bytes,15,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
+	// timestamp, When the appointment was created.
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,16,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
+	// string, Identifier of last modifier who should be a staff working at the location
+	LastUpdatedBy string `protobuf:"bytes,17,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
+	// timestamp, When the appointment was last modified.
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *Appointment) Reset() {

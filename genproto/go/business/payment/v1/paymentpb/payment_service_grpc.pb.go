@@ -27,10 +27,23 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// CompanyService openapi definitions for operate company
+// PaymentService provides APIs for managing payment transactions within the system.
+// This service handles operations related to payment retrieval and listing,
+// supporting both individual payment lookups and filtered bulk queries.
 type PaymentServiceClient interface {
+	// GetPayment retrieves detailed information about a specific payment by its ID.
+	// Returns a complete Payment object containing all payment details.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the payment doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetPayment(ctx context.Context, in *GetPaymentRequest, opts ...grpc.CallOption) (*Payment, error)
-	// ListPayments list payment
+	// ListPayments retrieves a paginated list of payments based on specified criteria.
+	// Supports filtering by order IDs and includes pagination for handling large result sets.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListPayments(ctx context.Context, in *ListPaymentsRequest, opts ...grpc.CallOption) (*ListPaymentsResponse, error)
 }
 
@@ -66,10 +79,23 @@ func (c *paymentServiceClient) ListPayments(ctx context.Context, in *ListPayment
 // All implementations must embed UnimplementedPaymentServiceServer
 // for forward compatibility.
 //
-// CompanyService openapi definitions for operate company
+// PaymentService provides APIs for managing payment transactions within the system.
+// This service handles operations related to payment retrieval and listing,
+// supporting both individual payment lookups and filtered bulk queries.
 type PaymentServiceServer interface {
+	// GetPayment retrieves detailed information about a specific payment by its ID.
+	// Returns a complete Payment object containing all payment details.
+	//
+	// Possible errors:
+	// - NOT_FOUND if the payment doesn't exist
+	// - PERMISSION_DENIED if the caller lacks access rights
 	GetPayment(context.Context, *GetPaymentRequest) (*Payment, error)
-	// ListPayments list payment
+	// ListPayments retrieves a paginated list of payments based on specified criteria.
+	// Supports filtering by order IDs and includes pagination for handling large result sets.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListPayments(context.Context, *ListPaymentsRequest) (*ListPaymentsResponse, error)
 	mustEmbedUnimplementedPaymentServiceServer()
 }

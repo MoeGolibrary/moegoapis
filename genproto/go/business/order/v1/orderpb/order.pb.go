@@ -23,19 +23,25 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Status
+// Status represents the current state of the order in its lifecycle.
+// This affects payment processing, reporting, and service delivery.
 type Order_Status int32
 
 const (
-	// UNSPECIFIED
+	// Unknown or invalid status
+	// Should not be used when creating new orders
 	Order_STATUS_UNSPECIFIED Order_Status = 0
-	// CREATED
+	// Order has been created but processing hasn't started
+	// Initial state for new orders
 	Order_CREATED Order_Status = 1
-	// PROCESSING
+	// Order is currently being processed
+	// Services are being delivered or payments are pending
 	Order_PROCESSING Order_Status = 2
-	// COMPLETED
+	// Order has been fully completed
+	// All services delivered and payments processed
 	Order_COMPLETED Order_Status = 3
-	// REMOVED
+	// Order has been removed from active records
+	// Historical data is maintained for reporting
 	Order_REMOVED Order_Status = 4
 )
 
@@ -84,50 +90,74 @@ func (Order_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_order_v1_order_proto_rawDescGZIP(), []int{0, 0}
 }
 
-// Order
+// Order represents a financial transaction for services provided to a customer.
+// Orders track the complete financial details of a transaction, including services,
+// tips, taxes, discounts, and payment status. Each order is associated with a
+// specific business location and customer.
 type Order struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// id
+	// Unique identifier for the order
+	// Format: "ord_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// business id
+	// ID of the business location where services were provided
+	// Required. Must be a valid business ID
 	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// customer id
+	// ID of the customer who received services
+	// Required. Must be a valid customer ID
 	CustomerId string `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// order status
+	// Current status of the order
+	// Determines available actions and processing flow
 	Status Order_Status `protobuf:"varint,4,opt,name=status,proto3,enum=moego.business.order.v1.Order_Status" json:"status,omitempty"`
-	// order title
+	// Short description of the order
+	// Example: "Full Grooming Package - Max"
 	Title string `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
-	// description
+	// Detailed notes about the order
+	// Optional. Max length: 1000 characters
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
-	// tips amount
+	// Additional amount provided as gratuity
+	// Optional. Must be non-negative
 	TipsAmount *money.Money `protobuf:"bytes,7,opt,name=tips_amount,json=tipsAmount,proto3" json:"tips_amount,omitempty"`
-	// tax amount
+	// Tax amount applied to the order
+	// Calculated based on local tax rates
 	TaxAmount *money.Money `protobuf:"bytes,8,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`
-	// discount amount
+	// Total discounts applied to the order
+	// Sum of all applicable discounts
 	DiscountAmount *money.Money `protobuf:"bytes,9,opt,name=discount_amount,json=discountAmount,proto3" json:"discount_amount,omitempty"`
-	// extra fee amount
+	// Additional fees applied to the order
+	// Example: Holiday surcharge, emergency service fee
 	ExtraFeeAmount *money.Money `protobuf:"bytes,10,opt,name=extra_fee_amount,json=extraFeeAmount,proto3" json:"extra_fee_amount,omitempty"`
-	// subTotal amount
+	// Subtotal before tax, tips, and adjustments
+	// Sum of all service prices
 	SubTotalAmount *money.Money `protobuf:"bytes,11,opt,name=sub_total_amount,json=subTotalAmount,proto3" json:"sub_total_amount,omitempty"`
-	// amount of tips based on
+	// Amount used as basis for calculating tips
+	// Usually equals sub_total_amount
 	TipsBasedAmount *money.Money `protobuf:"bytes,12,opt,name=tips_based_amount,json=tipsBasedAmount,proto3" json:"tips_based_amount,omitempty"`
-	// total amount
+	// Total amount including all charges and adjustments
+	// Formula: subtotal + tax + tips + fees - discounts
 	TotalAmount *money.Money `protobuf:"bytes,13,opt,name=total_amount,json=totalAmount,proto3" json:"total_amount,omitempty"`
-	// paid amount
+	// Amount that has been paid so far
+	// Updated when payments are processed
 	PaidAmount *money.Money `protobuf:"bytes,14,opt,name=paid_amount,json=paidAmount,proto3" json:"paid_amount,omitempty"`
-	// remain amount to pay
+	// Amount still due on the order
+	// Formula: total_amount - paid_amount
 	RemainAmount *money.Money `protobuf:"bytes,15,opt,name=remain_amount,json=remainAmount,proto3" json:"remain_amount,omitempty"`
-	// refunded amount
+	// Amount that has been refunded
+	// Tracks any refunds issued to the customer
 	RefundedAmount *money.Money `protobuf:"bytes,16,opt,name=refunded_amount,json=refundedAmount,proto3" json:"refunded_amount,omitempty"`
-	// staff id of creating this order
+	// ID of the staff member who created the order
+	// Required. Must be a valid staff ID
 	CreatedBy string `protobuf:"bytes,17,opt,name=created_by,json=createdBy,proto3" json:"created_by,omitempty"`
-	// create time
+	// When this order was created
+	// System-generated timestamp
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,18,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
-	// staff id of last updating this order
+	// ID of the staff member who last modified the order
+	// Updated on any order changes
 	LastUpdatedBy string `protobuf:"bytes,19,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
-	// update time
+	// When this order was last modified
+	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	// sales datetime
+	// When the sale was recorded
+	// Used for financial reporting and reconciliation
 	SalesDatetime *timestamppb.Timestamp `protobuf:"bytes,21,opt,name=sales_datetime,json=salesDatetime,proto3" json:"sales_datetime,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
