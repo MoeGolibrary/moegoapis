@@ -27,10 +27,8 @@ message Weight {
     POUND = 2;
   }
 
-  // double, The numeric value of the weight.
-  // Must be positive.
-  // Example: 5.4, 10.0
-  double value = 1;
+  // uint32, The numeric value of the weight.
+  uint32 value = 1;
 
   // enum(Unit), The unit of measurement.
   // Default: KILOGRAM if not specified
