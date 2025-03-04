@@ -4,6 +4,7 @@ package moego.business.customer.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/pagination.proto";
 
@@ -224,7 +225,12 @@ message ListAllPetsRequest {
   message Filter {
     // Optional list of customer IDs to filter by
     // If provided, only returns pets belonging to these customers
-    repeated int64 customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated string customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    
+    // Optional list of time intervals to filter by
+    // If provided, only returns pets with appointments within these intervals
+    repeated google.type.Interval last_updated_time = 2 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the pet list
