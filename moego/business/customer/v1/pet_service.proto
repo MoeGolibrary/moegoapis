@@ -230,7 +230,7 @@ message ListAllPetsRequest {
     
     // Optional list of time intervals to filter by
     // If provided, only returns pets with appointments within these intervals
-    repeated google.type.Interval last_updated_time = 2 [(google.api.field_behavior) = OPTIONAL];
+    google.type.Interval last_updated_time = 2 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the pet list
