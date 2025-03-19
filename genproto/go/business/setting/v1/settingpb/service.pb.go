@@ -161,7 +161,6 @@ type Service struct {
 	// Format: "srv_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Display name of the service
-	// Required. Max length: 100 characters
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Primary category of the service
 	// Determines applicable business rules and pricing structure

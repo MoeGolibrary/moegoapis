@@ -60,7 +60,6 @@ message Order {
   string title = 5;
 
   // Detailed notes about the order
-  // Optional. Max length: 1000 characters
   string description = 6;
 
   // Additional amount provided as gratuity

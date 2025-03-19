@@ -305,7 +305,6 @@ type Pet struct {
 	// Format: "pet_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Pet's given name
-	// Required. Max length: 100 characters
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// Pet's date of birth
 	// Used for age-appropriate service modifications
@@ -531,7 +530,6 @@ type Pet_Code struct {
 	// Example: "AG" for "Aggressive"
 	Abbreviation string `protobuf:"bytes,2,opt,name=abbreviation,proto3" json:"abbreviation,omitempty"`
 	// Detailed explanation of the code
-	// Max length: 500 characters
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	// Color used to highlight this code in the UI
 	// Format: Hex color code (e.g., "#FF0000")
@@ -605,7 +603,6 @@ type Pet_Note struct {
 	// Unique identifier for this note
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The content of the note
-	// Max length: 1000 characters
 	Content string `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
 	// ID of the staff member who last modified this note
 	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`

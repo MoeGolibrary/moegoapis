@@ -115,4 +115,10 @@ message Appointment {
   
   // timestamp, When the appointment was last modified.
   google.protobuf.Timestamp last_updated_time = 18;
+
+  // timestamp, When the appointment was checked in, will be null when appointment is not checked in.
+  google.protobuf.Timestamp check_in_time = 19;
+
+  // timestamp, When the appointment was checked out.will be null when appointment is not checked out.
+  google.protobuf.Timestamp check_out_time = 20;
 }

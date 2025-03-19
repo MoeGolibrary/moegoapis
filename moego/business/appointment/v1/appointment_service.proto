@@ -24,7 +24,6 @@ option java_package = "com.moego.api.business.appointment.v1";
 // 4. Cancel if needed with CancelAppointment
 //
 // All methods require authentication and proper business_id.
-// Rate limit: 100 requests per minute per API key.
 service AppointmentService {
   // Retrieves a single appointment by its ID.
   //
@@ -37,7 +36,7 @@ service AppointmentService {
   // Lists appointments matching the specified criteria.
   //
   // Returns a paginated list of appointments. Use filters to narrow results
-  // by date range, status, or last update time. Maximum page size: 100.
+  // by date range, status, or last update time. Maximum page size: 500.
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:list"
@@ -93,7 +92,7 @@ message GetAppointmentRequest {
 // Request to list appointments matching specified criteria.
 message ListAppointmentsRequest {
   // object(Pagination), Pagination parameters.
-  // Use page_size to specify results per page (max 100).
+  // Use page_size to specify results per page (max 500).
   // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -102,21 +101,17 @@ message ListAppointmentsRequest {
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // array(string), List of business location IDs to include.
-  // Maximum: 50 locations per request
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Filter parameters for the appointment list
   message Filter {
     // object(Interval), Filter by appointment start time range.
-    // Maximum range: 90 days
     google.type.Interval start_time = 1 [(google.api.field_behavior) = OPTIONAL];
 
     // object(Interval), Filter by appointment end time range.
-    // Maximum range: 90 days
     google.type.Interval end_time = 2 [(google.api.field_behavior) = OPTIONAL];
 
     // object(Interval), Filter by last update time range.
-    // Maximum range: 30 days
     google.type.Interval last_updated_time = 3 [(google.api.field_behavior) = OPTIONAL];
 
     // array(Status), Filter by appointment status.
@@ -148,7 +143,6 @@ message CreateAppointmentRequest {
     string pet_id = 1 [(google.api.field_behavior) = REQUIRED];
 
     // array(Service), List of services to be provided.
-    // Maximum: 10 services per pet
     repeated Service services = 2 [(google.api.field_behavior) = REQUIRED];
   }
 
@@ -174,7 +168,6 @@ message CreateAppointmentRequest {
   string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // array(PetService), Services requested for each pet.
-  // Maximum: 5 pets per appointment
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
 }
 

@@ -18,11 +18,9 @@ message Staff {
   string id = 1;
 
   // Staff member's first name
-  // Required. Max length: 100 characters
   string first_name = 2;
 
   // Staff member's last name
-  // Required. Max length: 100 characters
   string last_name = 3;
 
   // URL to the staff member's profile picture

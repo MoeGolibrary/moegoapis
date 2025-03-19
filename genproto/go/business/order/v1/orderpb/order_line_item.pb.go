@@ -122,7 +122,6 @@ type OrderLineItem struct {
 	// Example: "Premium Dog Grooming"
 	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
 	// Additional details about the item
-	// Optional. Max length: 500 characters
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Price per unit of the item
 	// Before any discounts or adjustments

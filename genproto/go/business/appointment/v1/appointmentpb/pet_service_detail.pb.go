@@ -119,7 +119,6 @@ type ServiceDetail struct {
 	ServiceType settingpb.Service_Type `protobuf:"varint,8,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
 	// integer, Expected duration of the service in minutes.
 	// Used for scheduling and resource allocation.
-	// Minimum: 1, Maximum: 1440 (24 hours)
 	ServiceTime int32 `protobuf:"varint,9,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
 	// string, Unique identifier for this specific pet's service booking.
 	// Links this service to a specific pet in a multi-pet appointment.

@@ -64,7 +64,6 @@ message Review {
   uint32 score = 7;
 
   // Detailed feedback from the customer
-  // Optional. Max length: 2000 characters
   string content = 8;
 
   // When the review was submitted by the customer

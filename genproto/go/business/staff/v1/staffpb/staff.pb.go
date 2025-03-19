@@ -78,10 +78,8 @@ type Staff struct {
 	// Format: "stf_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Staff member's first name
-	// Required. Max length: 100 characters
 	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	// Staff member's last name
-	// Required. Max length: 100 characters
 	LastName string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	// URL to the staff member's profile picture
 	// Optional. Must be a valid HTTPS URL

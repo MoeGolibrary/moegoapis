@@ -38,7 +38,6 @@ message Customer {
     string id = 1;
 
     // The content of the note
-    // Max length: 1000 characters
     string note = 2;
 
     // ID of the staff member who last modified this note
@@ -55,7 +54,6 @@ message Customer {
     string id = 1;
 
     // Display name of the tag
-    // Max length: 50 characters
     string name = 2;
 
     // ID of the staff member who last modified this tag
@@ -70,11 +68,9 @@ message Customer {
   string id = 1;
 
   // Customer's first name
-  // Required. Max length: 100 characters
   string first_name = 2;
 
   // Customer's last name
-  // Required. Max length: 100 characters
   string last_name = 3;
 
   // URL to the customer's profile picture

@@ -118,11 +118,9 @@ message CreateCustomerRequest {
   string preferred_business_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Customer's first name
-  // Required. Max length: 100 characters
   string first_name = 3 [(google.api.field_behavior) = REQUIRED];
 
   // Customer's last name
-  // Required. Max length: 100 characters
   string last_name = 4 [(google.api.field_behavior) = REQUIRED];
 
   // Customer's phone number

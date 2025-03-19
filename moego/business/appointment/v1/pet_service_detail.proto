@@ -67,7 +67,6 @@ message ServiceDetail {
 
   // integer, Expected duration of the service in minutes.
   // Used for scheduling and resource allocation.
-  // Minimum: 1, Maximum: 1440 (24 hours)
   int32 service_time = 9;
 
   // string, Unique identifier for this specific pet's service booking.

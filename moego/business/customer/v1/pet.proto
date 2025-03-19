@@ -111,7 +111,6 @@ message Pet {
     string abbreviation = 2;
 
     // Detailed explanation of the code
-    // Max length: 500 characters
     string description = 3;
 
     // Color used to highlight this code in the UI
@@ -126,7 +125,6 @@ message Pet {
     string id = 1;
 
     // The content of the note
-    // Max length: 1000 characters
     string content = 2;
 
     // ID of the staff member who last modified this note
@@ -180,7 +178,6 @@ message Pet {
   string id = 1;
 
   // Pet's given name
-  // Required. Max length: 100 characters
   string name = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Pet's date of birth

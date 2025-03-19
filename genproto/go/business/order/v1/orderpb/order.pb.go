@@ -112,7 +112,6 @@ type Order struct {
 	// Example: "Full Grooming Package - Max"
 	Title string `protobuf:"bytes,5,opt,name=title,proto3" json:"title,omitempty"`
 	// Detailed notes about the order
-	// Optional. Max length: 1000 characters
 	Description string `protobuf:"bytes,6,opt,name=description,proto3" json:"description,omitempty"`
 	// Additional amount provided as gratuity
 	// Optional. Must be non-negative

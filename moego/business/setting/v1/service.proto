@@ -63,7 +63,6 @@ message Service {
   string id = 1;
 
   // Display name of the service
-  // Required. Max length: 100 characters
   string name = 2;
 
   // Primary category of the service

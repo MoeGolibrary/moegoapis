@@ -68,7 +68,6 @@ message OrderLineItem {
   string name = 5;
 
   // Additional details about the item
-  // Optional. Max length: 500 characters
   string description = 6;
 
   // Price per unit of the item

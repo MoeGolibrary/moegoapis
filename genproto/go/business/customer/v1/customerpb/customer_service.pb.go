@@ -34,10 +34,8 @@ type CreateCustomerRequest struct {
 	// Required. Must be a valid business ID within the company
 	PreferredBusinessId string `protobuf:"bytes,2,opt,name=preferred_business_id,json=preferredBusinessId,proto3" json:"preferred_business_id,omitempty"`
 	// Customer's first name
-	// Required. Max length: 100 characters
 	FirstName string `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	// Customer's last name
-	// Required. Max length: 100 characters
 	LastName string `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	// Customer's phone number
 	// Required. Must be in E.164 format (e.g., +12125551234)

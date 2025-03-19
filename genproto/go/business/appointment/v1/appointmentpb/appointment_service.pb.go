@@ -85,14 +85,13 @@ func (x *GetAppointmentRequest) GetBusinessId() string {
 type ListAppointmentsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// object(Pagination), Pagination parameters.
-	// Use page_size to specify results per page (max 100).
+	// Use page_size to specify results per page (max 500).
 	// Use page_token from previous response for next page.
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	// string, The company identifier for multi-location businesses.
 	// Required for company-wide appointment listing.
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// array(string), List of business location IDs to include.
-	// Maximum: 50 locations per request
 	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
 	// object(Filter), Optional filters to narrow the results.
 	Filter        *ListAppointmentsRequest_Filter `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
@@ -223,7 +222,6 @@ type CreateAppointmentRequest struct {
 	// string, The customer's identifier who is booking the appointment.
 	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// array(PetService), Services requested for each pet.
-	// Maximum: 5 pets per appointment
 	PetServices   []*CreateAppointmentRequest_PetService `protobuf:"bytes,3,rep,name=pet_services,json=petServices,proto3" json:"pet_services,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -406,13 +404,10 @@ func (x *CancelAppointmentRequest) GetBusinessId() string {
 type ListAppointmentsRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// object(Interval), Filter by appointment start time range.
-	// Maximum range: 90 days
 	StartTime *interval.Interval `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	// object(Interval), Filter by appointment end time range.
-	// Maximum range: 90 days
 	EndTime *interval.Interval `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	// object(Interval), Filter by last update time range.
-	// Maximum range: 30 days
 	LastUpdatedTime *interval.Interval `protobuf:"bytes,3,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// array(Status), Filter by appointment status.
 	// Example: ["CONFIRMED", "CHECKED_IN"]
@@ -486,7 +481,6 @@ type CreateAppointmentRequest_PetService struct {
 	// Must belong to the specified customer.
 	PetId string `protobuf:"bytes,1,opt,name=pet_id,json=petId,proto3" json:"pet_id,omitempty"`
 	// array(Service), List of services to be provided.
-	// Maximum: 10 services per pet
 	Services      []*CreateAppointmentRequest_Service `protobuf:"bytes,2,rep,name=services,proto3" json:"services,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache

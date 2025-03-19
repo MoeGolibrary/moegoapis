@@ -41,7 +41,6 @@ const (
 // 4. Cancel if needed with CancelAppointment
 //
 // All methods require authentication and proper business_id.
-// Rate limit: 100 requests per minute per API key.
 type AppointmentServiceClient interface {
 	// Retrieves a single appointment by its ID.
 	//
@@ -51,7 +50,7 @@ type AppointmentServiceClient interface {
 	// Lists appointments matching the specified criteria.
 	//
 	// Returns a paginated list of appointments. Use filters to narrow results
-	// by date range, status, or last update time. Maximum page size: 100.
+	// by date range, status, or last update time. Maximum page size: 500.
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
 	// Creates a new appointment.
 	//
@@ -143,7 +142,6 @@ func (c *appointmentServiceClient) CancelAppointment(ctx context.Context, in *Ca
 // 4. Cancel if needed with CancelAppointment
 //
 // All methods require authentication and proper business_id.
-// Rate limit: 100 requests per minute per API key.
 type AppointmentServiceServer interface {
 	// Retrieves a single appointment by its ID.
 	//
@@ -153,7 +151,7 @@ type AppointmentServiceServer interface {
 	// Lists appointments matching the specified criteria.
 	//
 	// Returns a paginated list of appointments. Use filters to narrow results
-	// by date range, status, or last update time. Maximum page size: 100.
+	// by date range, status, or last update time. Maximum page size: 500.
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
 	// Creates a new appointment.
 	//

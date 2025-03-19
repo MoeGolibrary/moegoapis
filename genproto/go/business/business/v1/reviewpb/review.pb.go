@@ -113,7 +113,6 @@ type Review struct {
 	// Scale: 1 to 5, where 5 represents highest satisfaction
 	Score uint32 `protobuf:"varint,7,opt,name=score,proto3" json:"score,omitempty"`
 	// Detailed feedback from the customer
-	// Optional. Max length: 2000 characters
 	Content string `protobuf:"bytes,8,opt,name=content,proto3" json:"content,omitempty"`
 	// When the review was submitted by the customer
 	// Used for tracking feedback timeliness

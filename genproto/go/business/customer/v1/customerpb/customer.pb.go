@@ -90,10 +90,8 @@ type Customer struct {
 	// Format: "cus_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Customer's first name
-	// Required. Max length: 100 characters
 	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	// Customer's last name
-	// Required. Max length: 100 characters
 	LastName string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	// URL to the customer's profile picture
 	// Optional. Must be a valid HTTPS URL
@@ -394,7 +392,6 @@ type Customer_Note struct {
 	// Unique identifier for this note
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The content of the note
-	// Max length: 1000 characters
 	Note string `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
 	// ID of the staff member who last modified this note
 	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
@@ -469,7 +466,6 @@ type Customer_Tag struct {
 	// Unique identifier for this tag
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Display name of the tag
-	// Max length: 50 characters
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// ID of the staff member who last modified this tag
 	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
