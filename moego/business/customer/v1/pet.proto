@@ -243,4 +243,7 @@ message Pet {
   
   // timestamp, When the pet was last modified.
   google.protobuf.Timestamp last_updated_time = 19;
+
+  // photo url of pet.
+  string photo = 20;
 }
