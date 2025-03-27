@@ -48,7 +48,7 @@ type CreateCustomerRequest struct {
 	Address *commonpb.Address `protobuf:"bytes,7,opt,name=address,proto3" json:"address,omitempty"`
 	// Customer's communication and marketing preferences
 	// Optional. System defaults will be used if not provided
-	Preference *CustomerPreference `protobuf:"bytes,8,opt,name=preference,proto3" json:"preference,omitempty"`
+	Preference *Customer_Preference `protobuf:"bytes,8,opt,name=preference,proto3" json:"preference,omitempty"`
 	// Initial tags to apply to the customer
 	// Optional. Empty list if not provided
 	Tags []*Customer_Tag `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
@@ -138,7 +138,7 @@ func (x *CreateCustomerRequest) GetAddress() *commonpb.Address {
 	return nil
 }
 
-func (x *CreateCustomerRequest) GetPreference() *CustomerPreference {
+func (x *CreateCustomerRequest) GetPreference() *Customer_Preference {
 	if x != nil {
 		return x.Preference
 	}
@@ -890,7 +890,7 @@ var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDesc
 
 const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\n" +
-	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xee\x03\n" +
+	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xef\x03\n" +
 	"\x15CreateCustomerRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x127\n" +
@@ -900,9 +900,9 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\tlast_name\x18\x04 \x01(\tB\x03\xe0A\x02R\blastName\x12\x19\n" +
 	"\x05phone\x18\x05 \x01(\tB\x03\xe0A\x02R\x05phone\x12\x14\n" +
 	"\x05email\x18\x06 \x01(\tR\x05email\x122\n" +
-	"\aaddress\x18\a \x01(\v2\x18.moego.common.v1.AddressR\aaddress\x12N\n" +
+	"\aaddress\x18\a \x01(\v2\x18.moego.common.v1.AddressR\aaddress\x12O\n" +
 	"\n" +
-	"preference\x18\b \x01(\v2..moego.business.customer.v1.CustomerPreferenceR\n" +
+	"preference\x18\b \x01(\v2/.moego.business.customer.v1.Customer.PreferenceR\n" +
 	"preference\x12<\n" +
 	"\x04tags\x18\t \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12?\n" +
 	"\x05notes\x18\n" +
@@ -989,7 +989,7 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 	(*ListCustomerTagsResponse)(nil),    // 13: moego.business.customer.v1.ListCustomerTagsResponse
 	(*ListCustomersRequest_Filter)(nil), // 14: moego.business.customer.v1.ListCustomersRequest.Filter
 	(*commonpb.Address)(nil),            // 15: moego.common.v1.Address
-	(*CustomerPreference)(nil),          // 16: moego.business.customer.v1.CustomerPreference
+	(*Customer_Preference)(nil),         // 16: moego.business.customer.v1.Customer.Preference
 	(*Customer_Tag)(nil),                // 17: moego.business.customer.v1.Customer.Tag
 	(*Customer_Note)(nil),               // 18: moego.business.customer.v1.Customer.Note
 	(*commonpb.Pagination)(nil),         // 19: moego.common.v1.Pagination
@@ -998,7 +998,7 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 }
 var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	15, // 0: moego.business.customer.v1.CreateCustomerRequest.address:type_name -> moego.common.v1.Address
-	16, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.CustomerPreference
+	16, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.Customer.Preference
 	17, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
 	18, // 3: moego.business.customer.v1.CreateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
 	19, // 4: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination

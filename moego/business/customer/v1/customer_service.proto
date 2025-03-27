@@ -137,7 +137,7 @@ message CreateCustomerRequest {
 
   // Customer's communication and marketing preferences
   // Optional. System defaults will be used if not provided
-  CustomerPreference preference = 8;
+  Customer.Preference preference = 8;
 
   // Initial tags to apply to the customer
   // Optional. Empty list if not provided

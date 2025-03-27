@@ -63,6 +63,35 @@ message Customer {
     google.protobuf.Timestamp last_updated_time = 4;
   }
 
+  // Preference stores a customer's communication and marketing preferences.
+  // These settings determine how and when we can contact the customer.
+  message Preference {
+    // Whether the customer wants to receive automated SMS messages
+    // Default: true
+    bool receive_auto_message = 1;
+
+    // Whether the customer wants to receive automated emails
+    // Default: true
+    bool receive_auto_email = 2;
+
+    // Whether the customer has opted in to marketing emails
+    // Default: false
+    bool subscribe_to_marketing_emails = 3;
+
+    // Whether the customer wants appointment reminders
+    // Default: true
+    bool receive_appointment_reminder = 4;
+  }
+
+  // ReferralSource represents the source or channel through which a customer was acquired.
+  // This helps track the origin of new customers and analyze marketing effectiveness.
+  message ReferralSource {
+    // Unique identifier for the source
+    string id = 1;
+    // Display name of the source
+    string name = 2;
+  }
+
   // Unique identifier for the customer
   // Format: "cus_" followed by random characters
   string id = 1;
@@ -129,24 +158,7 @@ message Customer {
 
   // List of tags applied to this customer
   repeated Tag tags = 20;
-}
 
-// CustomerPreference stores a customer's communication and marketing preferences.
-// These settings determine how and when we can contact the customer.
-message CustomerPreference {
-  // Whether the customer wants to receive automated SMS messages
-  // Default: true
-  bool receive_auto_message = 1;
-
-  // Whether the customer wants to receive automated emails
-  // Default: true
-  bool receive_auto_email = 2;
-
-  // Whether the customer has opted in to marketing emails
-  // Default: false
-  bool subscribe_to_marketing_emails = 3;
-
-  // Whether the customer wants appointment reminders
-  // Default: true
-  bool receive_appointment_reminder = 4;
+  // The source or channel through which a customer was acquired.
+  ReferralSource referral_source = 21;
 }
