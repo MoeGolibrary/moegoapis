@@ -129,7 +129,7 @@ type FetchReportDataRequest struct {
 	// Required to ensure data is scoped to proper context
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// List of business units to include in the report
-	// Required to specify data scope
+	// If null, all business units are included in the report
 	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
 	// Report configuration and filtering parameters
 	// Controls the structure and content of the results
@@ -337,7 +337,7 @@ const file_moego_business_report_v1_report_service_proto_rawDesc = "" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12&\n" +
-	"\fbusiness_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\vbusinessIds\x12X\n" +
+	"\fbusiness_ids\x18\x03 \x03(\tB\x03\xe0A\x01R\vbusinessIds\x12X\n" +
 	"\tcondition\x18\x04 \x01(\v2:.moego.business.report.v1.FetchReportDataRequest.ConditionR\tcondition\x1a\x93\x01\n" +
 	"\tCondition\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12=\n" +

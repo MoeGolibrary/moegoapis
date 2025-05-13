@@ -123,6 +123,7 @@ type ServiceDetail struct {
 	// string, Unique identifier for this specific pet's service booking.
 	// Links this service to a specific pet in a multi-pet appointment.
 	// Format: "psd_" followed by random characters
+	// It will be changed when pet service detail is updated or deleted.
 	PetServiceDetailId string `protobuf:"bytes,10,opt,name=pet_service_detail_id,json=petServiceDetailId,proto3" json:"pet_service_detail_id,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
