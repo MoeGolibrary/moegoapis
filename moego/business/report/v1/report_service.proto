@@ -75,8 +75,8 @@ message FetchReportDataRequest {
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // List of business units to include in the report
-  // Required to specify data scope
-  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+  // If null, all business units are included in the report
+  repeated string business_ids = 3 [(google.api.field_behavior) = OPTIONAL];
 
   // Condition specifies the report configuration and filtering criteria.
   // Controls what data is included and how it's organized.
