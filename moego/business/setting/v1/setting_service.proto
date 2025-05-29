@@ -85,7 +85,7 @@ service SettingService {
   rpc CreateService(CreateServiceRequest) returns (Service) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/services"
-      body: "service"
+      body: "*"
     };
   }
 
@@ -100,7 +100,7 @@ service SettingService {
   rpc UpdateService(UpdateServiceRequest) returns (Service) {
     option (google.api.http) = {
       put: "/v1/setting/companies/{company_id}/services/{id}"
-      body: "service"
+      body: "*"
     };
   }
 }

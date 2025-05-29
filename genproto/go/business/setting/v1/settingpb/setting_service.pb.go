@@ -793,15 +793,15 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x16available_business_ids\x18\b \x03(\tR\x14availableBusinessIds\x12.\n" +
 	"\x13available_all_staff\x18\t \x01(\bR\x11availableAllStaff\x12.\n" +
 	"\x13available_staff_ids\x18\n" +
-	" \x03(\tR\x11availableStaffIds2\x95\b\n" +
+	" \x03(\tR\x11availableStaffIds2\x89\b\n" +
 	"\x0eSettingService\x12\xab\x01\n" +
 	"\fListPetCodes\x12-.moego.business.setting.v1.ListPetCodeRequest\x1a..moego.business.setting.v1.ListPetCodeResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbb\x01\n" +
 	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\x98\x01\n" +
 	"\n" +
 	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
-	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\xa2\x01\n" +
-	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"<\x82\xd3\xe4\x93\x026:\aservice\"+/v1/setting/companies/{company_id}/services\x12\xa7\x01\n" +
-	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\"A\x82\xd3\xe4\x93\x02;:\aservice\x1a0/v1/setting/companies/{company_id}/services/{id}B\x8a\x01\n" +
+	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\x9c\x01\n" +
+	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/setting/companies/{company_id}/services\x12\xa1\x01\n" +
+	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}B\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
