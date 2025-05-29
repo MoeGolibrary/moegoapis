@@ -269,4 +269,7 @@ message UpdateServiceRequest {
   // List of staff members who can perform this service
   // Only used when available_all_staff is false
   repeated string available_staff_ids = 10;
+
+  // Whether this service is inactive
+  bool inactive = 11;
 }

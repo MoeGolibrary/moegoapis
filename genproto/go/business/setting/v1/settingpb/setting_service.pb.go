@@ -583,8 +583,10 @@ type UpdateServiceRequest struct {
 	// List of staff members who can perform this service
 	// Only used when available_all_staff is false
 	AvailableStaffIds []string `protobuf:"bytes,10,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Whether this service is inactive
+	Inactive      bool `protobuf:"varint,11,opt,name=inactive,proto3" json:"inactive,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *UpdateServiceRequest) Reset() {
@@ -687,6 +689,13 @@ func (x *UpdateServiceRequest) GetAvailableStaffIds() []string {
 	return nil
 }
 
+func (x *UpdateServiceRequest) GetInactive() bool {
+	if x != nil {
+		return x.Inactive
+	}
+	return false
+}
+
 // Filter parameters for the service list
 type ListServicesRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -780,7 +789,7 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x16available_business_ids\x18\t \x03(\tR\x14availableBusinessIds\x12.\n" +
 	"\x13available_all_staff\x18\n" +
 	" \x01(\bR\x11availableAllStaff\x12.\n" +
-	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\"\xa9\x03\n" +
+	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\"\xc5\x03\n" +
 	"\x14UpdateServiceRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
@@ -793,7 +802,8 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x16available_business_ids\x18\b \x03(\tR\x14availableBusinessIds\x12.\n" +
 	"\x13available_all_staff\x18\t \x01(\bR\x11availableAllStaff\x12.\n" +
 	"\x13available_staff_ids\x18\n" +
-	" \x03(\tR\x11availableStaffIds2\x89\b\n" +
+	" \x03(\tR\x11availableStaffIds\x12\x1a\n" +
+	"\binactive\x18\v \x01(\bR\binactive2\x89\b\n" +
 	"\x0eSettingService\x12\xab\x01\n" +
 	"\fListPetCodes\x12-.moego.business.setting.v1.ListPetCodeRequest\x1a..moego.business.setting.v1.ListPetCodeResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbb\x01\n" +
 	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\x98\x01\n" +
