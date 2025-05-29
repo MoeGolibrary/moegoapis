@@ -159,6 +159,153 @@ func (x *CreateCustomerRequest) GetNotes() []*Customer_Note {
 	return nil
 }
 
+// Request message for updating a customer.
+type UpdateCustomerRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier of the customer to update
+	// Required. Format: "cus_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the company that owns the customer
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the business location preferred by the customer
+	// Optional. If not provided, current value will be retained
+	PreferredBusinessId *string `protobuf:"bytes,3,opt,name=preferred_business_id,json=preferredBusinessId,proto3,oneof" json:"preferred_business_id,omitempty"`
+	// avatar path, optional
+	// Optional. If not provided, current value will be retained
+	AvatarPath *string `protobuf:"bytes,4,opt,name=avatar_path,json=avatarPath,proto3,oneof" json:"avatar_path,omitempty"`
+	// first name, optional
+	// Optional. If not provided, current value will be retained
+	FirstName *string `protobuf:"bytes,5,opt,name=first_name,json=firstName,proto3,oneof" json:"first_name,omitempty"`
+	// last name, optional
+	// Optional. If not provided, current value will be retained
+	LastName *string `protobuf:"bytes,6,opt,name=last_name,json=lastName,proto3,oneof" json:"last_name,omitempty"`
+	// Customer's phone number
+	// Optional. If not provided, current value will be retained
+	Phone *string `protobuf:"bytes,7,opt,name=phone,proto3,oneof" json:"phone,omitempty"`
+	// email, optional
+	// Optional. If not provided, current value will be retained
+	Email *string `protobuf:"bytes,8,opt,name=email,proto3,oneof" json:"email,omitempty"`
+	// Customer's primary address
+	// Optional. If not provided, current value will be retained
+	Address *commonpb.Address `protobuf:"bytes,9,opt,name=address,proto3,oneof" json:"address,omitempty"`
+	// Initial tags to apply to the customer
+	// Optional. Empty list if not provided
+	Tags []*Customer_Tag `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
+	// Initial notes about the customer
+	// Optional. Empty list if not provided
+	Notes         []*Customer_Note `protobuf:"bytes,11,rep,name=notes,proto3" json:"notes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateCustomerRequest) Reset() {
+	*x = UpdateCustomerRequest{}
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateCustomerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateCustomerRequest) ProtoMessage() {}
+
+func (x *UpdateCustomerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateCustomerRequest.ProtoReflect.Descriptor instead.
+func (*UpdateCustomerRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *UpdateCustomerRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetPreferredBusinessId() string {
+	if x != nil && x.PreferredBusinessId != nil {
+		return *x.PreferredBusinessId
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetAvatarPath() string {
+	if x != nil && x.AvatarPath != nil {
+		return *x.AvatarPath
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetFirstName() string {
+	if x != nil && x.FirstName != nil {
+		return *x.FirstName
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetLastName() string {
+	if x != nil && x.LastName != nil {
+		return *x.LastName
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetPhone() string {
+	if x != nil && x.Phone != nil {
+		return *x.Phone
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
+	}
+	return ""
+}
+
+func (x *UpdateCustomerRequest) GetAddress() *commonpb.Address {
+	if x != nil {
+		return x.Address
+	}
+	return nil
+}
+
+func (x *UpdateCustomerRequest) GetTags() []*Customer_Tag {
+	if x != nil {
+		return x.Tags
+	}
+	return nil
+}
+
+func (x *UpdateCustomerRequest) GetNotes() []*Customer_Note {
+	if x != nil {
+		return x.Notes
+	}
+	return nil
+}
+
 // Request message for retrieving a specific customer.
 type GetCustomerRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -171,7 +318,7 @@ type GetCustomerRequest struct {
 
 func (x *GetCustomerRequest) Reset() {
 	*x = GetCustomerRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[1]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -183,7 +330,7 @@ func (x *GetCustomerRequest) String() string {
 func (*GetCustomerRequest) ProtoMessage() {}
 
 func (x *GetCustomerRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[1]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -196,7 +343,7 @@ func (x *GetCustomerRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetCustomerRequest.ProtoReflect.Descriptor instead.
 func (*GetCustomerRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{1}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetCustomerRequest) GetId() string {
@@ -223,7 +370,7 @@ type ListCustomersRequest struct {
 
 func (x *ListCustomersRequest) Reset() {
 	*x = ListCustomersRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -235,7 +382,7 @@ func (x *ListCustomersRequest) String() string {
 func (*ListCustomersRequest) ProtoMessage() {}
 
 func (x *ListCustomersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -248,7 +395,7 @@ func (x *ListCustomersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomersRequest.ProtoReflect.Descriptor instead.
 func (*ListCustomersRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{2}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *ListCustomersRequest) GetPagination() *commonpb.Pagination {
@@ -287,7 +434,7 @@ type ListCustomersResponse struct {
 
 func (x *ListCustomersResponse) Reset() {
 	*x = ListCustomersResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -299,7 +446,7 @@ func (x *ListCustomersResponse) String() string {
 func (*ListCustomersResponse) ProtoMessage() {}
 
 func (x *ListCustomersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -312,7 +459,7 @@ func (x *ListCustomersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomersResponse.ProtoReflect.Descriptor instead.
 func (*ListCustomersResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{3}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListCustomersResponse) GetNextPageToken() string {
@@ -341,7 +488,7 @@ type GenCustomerCofLinkRequest struct {
 
 func (x *GenCustomerCofLinkRequest) Reset() {
 	*x = GenCustomerCofLinkRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -353,7 +500,7 @@ func (x *GenCustomerCofLinkRequest) String() string {
 func (*GenCustomerCofLinkRequest) ProtoMessage() {}
 
 func (x *GenCustomerCofLinkRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -366,7 +513,7 @@ func (x *GenCustomerCofLinkRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenCustomerCofLinkRequest.ProtoReflect.Descriptor instead.
 func (*GenCustomerCofLinkRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{4}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *GenCustomerCofLinkRequest) GetId() string {
@@ -388,7 +535,7 @@ type GenCustomerCofLinkResponse struct {
 
 func (x *GenCustomerCofLinkResponse) Reset() {
 	*x = GenCustomerCofLinkResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -400,7 +547,7 @@ func (x *GenCustomerCofLinkResponse) String() string {
 func (*GenCustomerCofLinkResponse) ProtoMessage() {}
 
 func (x *GenCustomerCofLinkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -413,7 +560,7 @@ func (x *GenCustomerCofLinkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GenCustomerCofLinkResponse.ProtoReflect.Descriptor instead.
 func (*GenCustomerCofLinkResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{5}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *GenCustomerCofLinkResponse) GetLink() string {
@@ -438,7 +585,7 @@ type AppendCustomerNotesRequest struct {
 
 func (x *AppendCustomerNotesRequest) Reset() {
 	*x = AppendCustomerNotesRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[6]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -450,7 +597,7 @@ func (x *AppendCustomerNotesRequest) String() string {
 func (*AppendCustomerNotesRequest) ProtoMessage() {}
 
 func (x *AppendCustomerNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[6]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -463,7 +610,7 @@ func (x *AppendCustomerNotesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendCustomerNotesRequest.ProtoReflect.Descriptor instead.
 func (*AppendCustomerNotesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{6}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *AppendCustomerNotesRequest) GetId() string {
@@ -492,7 +639,7 @@ type AppendCustomerNotesResponse struct {
 
 func (x *AppendCustomerNotesResponse) Reset() {
 	*x = AppendCustomerNotesResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[7]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -504,7 +651,7 @@ func (x *AppendCustomerNotesResponse) String() string {
 func (*AppendCustomerNotesResponse) ProtoMessage() {}
 
 func (x *AppendCustomerNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[7]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -517,7 +664,7 @@ func (x *AppendCustomerNotesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendCustomerNotesResponse.ProtoReflect.Descriptor instead.
 func (*AppendCustomerNotesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{7}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *AppendCustomerNotesResponse) GetNotes() []*Customer_Note {
@@ -542,7 +689,7 @@ type ListCustomerNotesRequest struct {
 
 func (x *ListCustomerNotesRequest) Reset() {
 	*x = ListCustomerNotesRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[8]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -554,7 +701,7 @@ func (x *ListCustomerNotesRequest) String() string {
 func (*ListCustomerNotesRequest) ProtoMessage() {}
 
 func (x *ListCustomerNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[8]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -567,7 +714,7 @@ func (x *ListCustomerNotesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomerNotesRequest.ProtoReflect.Descriptor instead.
 func (*ListCustomerNotesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{8}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListCustomerNotesRequest) GetPagination() *commonpb.Pagination {
@@ -599,7 +746,7 @@ type ListCustomerNotesResponse struct {
 
 func (x *ListCustomerNotesResponse) Reset() {
 	*x = ListCustomerNotesResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[9]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -611,7 +758,7 @@ func (x *ListCustomerNotesResponse) String() string {
 func (*ListCustomerNotesResponse) ProtoMessage() {}
 
 func (x *ListCustomerNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[9]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -624,7 +771,7 @@ func (x *ListCustomerNotesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomerNotesResponse.ProtoReflect.Descriptor instead.
 func (*ListCustomerNotesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{9}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListCustomerNotesResponse) GetNextPageToken() string {
@@ -656,7 +803,7 @@ type AppendCustomerTagsRequest struct {
 
 func (x *AppendCustomerTagsRequest) Reset() {
 	*x = AppendCustomerTagsRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[10]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -668,7 +815,7 @@ func (x *AppendCustomerTagsRequest) String() string {
 func (*AppendCustomerTagsRequest) ProtoMessage() {}
 
 func (x *AppendCustomerTagsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[10]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -681,7 +828,7 @@ func (x *AppendCustomerTagsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendCustomerTagsRequest.ProtoReflect.Descriptor instead.
 func (*AppendCustomerTagsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{10}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *AppendCustomerTagsRequest) GetId() string {
@@ -710,7 +857,7 @@ type AppendCustomerTagsResponse struct {
 
 func (x *AppendCustomerTagsResponse) Reset() {
 	*x = AppendCustomerTagsResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[11]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -722,7 +869,7 @@ func (x *AppendCustomerTagsResponse) String() string {
 func (*AppendCustomerTagsResponse) ProtoMessage() {}
 
 func (x *AppendCustomerTagsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[11]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -735,7 +882,7 @@ func (x *AppendCustomerTagsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendCustomerTagsResponse.ProtoReflect.Descriptor instead.
 func (*AppendCustomerTagsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{11}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *AppendCustomerTagsResponse) GetTags() []*Customer_Tag {
@@ -757,7 +904,7 @@ type ListCustomerTagsRequest struct {
 
 func (x *ListCustomerTagsRequest) Reset() {
 	*x = ListCustomerTagsRequest{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[12]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -769,7 +916,7 @@ func (x *ListCustomerTagsRequest) String() string {
 func (*ListCustomerTagsRequest) ProtoMessage() {}
 
 func (x *ListCustomerTagsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[12]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -782,7 +929,7 @@ func (x *ListCustomerTagsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomerTagsRequest.ProtoReflect.Descriptor instead.
 func (*ListCustomerTagsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{12}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListCustomerTagsRequest) GetId() string {
@@ -804,7 +951,7 @@ type ListCustomerTagsResponse struct {
 
 func (x *ListCustomerTagsResponse) Reset() {
 	*x = ListCustomerTagsResponse{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[13]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -816,7 +963,7 @@ func (x *ListCustomerTagsResponse) String() string {
 func (*ListCustomerTagsResponse) ProtoMessage() {}
 
 func (x *ListCustomerTagsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[13]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -829,7 +976,7 @@ func (x *ListCustomerTagsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomerTagsResponse.ProtoReflect.Descriptor instead.
 func (*ListCustomerTagsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{13}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListCustomerTagsResponse) GetTags() []*Customer_Tag {
@@ -851,7 +998,7 @@ type ListCustomersRequest_Filter struct {
 
 func (x *ListCustomersRequest_Filter) Reset() {
 	*x = ListCustomersRequest_Filter{}
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[14]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -863,7 +1010,7 @@ func (x *ListCustomersRequest_Filter) String() string {
 func (*ListCustomersRequest_Filter) ProtoMessage() {}
 
 func (x *ListCustomersRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[14]
+	mi := &file_moego_business_customer_v1_customer_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -876,7 +1023,7 @@ func (x *ListCustomersRequest_Filter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListCustomersRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListCustomersRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{2, 0}
+	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{3, 0}
 }
 
 func (x *ListCustomersRequest_Filter) GetLastUpdatedTime() *interval.Interval {
@@ -906,7 +1053,32 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"preference\x12<\n" +
 	"\x04tags\x18\t \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12?\n" +
 	"\x05notes\x18\n" +
-	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\")\n" +
+	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"\xcf\x04\n" +
+	"\x15UpdateCustomerRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x127\n" +
+	"\x15preferred_business_id\x18\x03 \x01(\tH\x00R\x13preferredBusinessId\x88\x01\x01\x12$\n" +
+	"\vavatar_path\x18\x04 \x01(\tH\x01R\n" +
+	"avatarPath\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"first_name\x18\x05 \x01(\tH\x02R\tfirstName\x88\x01\x01\x12 \n" +
+	"\tlast_name\x18\x06 \x01(\tH\x03R\blastName\x88\x01\x01\x12\x1e\n" +
+	"\x05phone\x18\a \x01(\tB\x03\xe0A\x02H\x04R\x05phone\x88\x01\x01\x12\x19\n" +
+	"\x05email\x18\b \x01(\tH\x05R\x05email\x88\x01\x01\x127\n" +
+	"\aaddress\x18\t \x01(\v2\x18.moego.common.v1.AddressH\x06R\aaddress\x88\x01\x01\x12<\n" +
+	"\x04tags\x18\n" +
+	" \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12?\n" +
+	"\x05notes\x18\v \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notesB\x18\n" +
+	"\x16_preferred_business_idB\x0e\n" +
+	"\f_avatar_pathB\r\n" +
+	"\v_first_nameB\f\n" +
+	"\n" +
+	"_last_nameB\b\n" +
+	"\x06_phoneB\b\n" +
+	"\x06_emailB\n" +
+	"\n" +
+	"\b_address\")\n" +
 	"\x12GetCustomerRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x9f\x02\n" +
 	"\x14ListCustomersRequest\x12@\n" +
@@ -946,10 +1118,10 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\x17ListCustomerTagsRequest\x12\x13\n" +
 	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"X\n" +
 	"\x18ListCustomerTagsResponse\x12<\n" +
-	"\x04tags\x18\x02 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags2\x87\n" +
-	"\n" +
+	"\x04tags\x18\x02 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags2\x92\v\n" +
 	"\x0fCustomerService\x12\x83\x01\n" +
-	"\x0eCreateCustomer\x121.moego.business.customer.v1.CreateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/customers\x12\x7f\n" +
+	"\x0eCreateCustomer\x121.moego.business.customer.v1.CreateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/customers\x12\x88\x01\n" +
+	"\x0eUpdateCustomer\x121.moego.business.customer.v1.UpdateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/v1/customers/{id}\x12\x7f\n" +
 	"\vGetCustomer\x12..moego.business.customer.v1.GetCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/customers/{id}\x12\x93\x01\n" +
 	"\rListCustomers\x120.moego.business.customer.v1.ListCustomersRequest\x1a1.moego.business.customer.v1.ListCustomersResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/customers:list\x12\xa8\x01\n" +
 	"\x12GenCustomerCofLink\x125.moego.business.customer.v1.GenCustomerCofLinkRequest\x1a6.moego.business.customer.v1.GenCustomerCofLinkResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/customers/{id}/cof/link\x12\xab\x01\n" +
@@ -971,68 +1143,74 @@ func file_moego_business_customer_v1_customer_service_proto_rawDescGZIP() []byte
 	return file_moego_business_customer_v1_customer_service_proto_rawDescData
 }
 
-var file_moego_business_customer_v1_customer_service_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_moego_business_customer_v1_customer_service_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 	(*CreateCustomerRequest)(nil),       // 0: moego.business.customer.v1.CreateCustomerRequest
-	(*GetCustomerRequest)(nil),          // 1: moego.business.customer.v1.GetCustomerRequest
-	(*ListCustomersRequest)(nil),        // 2: moego.business.customer.v1.ListCustomersRequest
-	(*ListCustomersResponse)(nil),       // 3: moego.business.customer.v1.ListCustomersResponse
-	(*GenCustomerCofLinkRequest)(nil),   // 4: moego.business.customer.v1.GenCustomerCofLinkRequest
-	(*GenCustomerCofLinkResponse)(nil),  // 5: moego.business.customer.v1.GenCustomerCofLinkResponse
-	(*AppendCustomerNotesRequest)(nil),  // 6: moego.business.customer.v1.AppendCustomerNotesRequest
-	(*AppendCustomerNotesResponse)(nil), // 7: moego.business.customer.v1.AppendCustomerNotesResponse
-	(*ListCustomerNotesRequest)(nil),    // 8: moego.business.customer.v1.ListCustomerNotesRequest
-	(*ListCustomerNotesResponse)(nil),   // 9: moego.business.customer.v1.ListCustomerNotesResponse
-	(*AppendCustomerTagsRequest)(nil),   // 10: moego.business.customer.v1.AppendCustomerTagsRequest
-	(*AppendCustomerTagsResponse)(nil),  // 11: moego.business.customer.v1.AppendCustomerTagsResponse
-	(*ListCustomerTagsRequest)(nil),     // 12: moego.business.customer.v1.ListCustomerTagsRequest
-	(*ListCustomerTagsResponse)(nil),    // 13: moego.business.customer.v1.ListCustomerTagsResponse
-	(*ListCustomersRequest_Filter)(nil), // 14: moego.business.customer.v1.ListCustomersRequest.Filter
-	(*commonpb.Address)(nil),            // 15: moego.common.v1.Address
-	(*Customer_Preference)(nil),         // 16: moego.business.customer.v1.Customer.Preference
-	(*Customer_Tag)(nil),                // 17: moego.business.customer.v1.Customer.Tag
-	(*Customer_Note)(nil),               // 18: moego.business.customer.v1.Customer.Note
-	(*commonpb.Pagination)(nil),         // 19: moego.common.v1.Pagination
-	(*Customer)(nil),                    // 20: moego.business.customer.v1.Customer
-	(*interval.Interval)(nil),           // 21: google.type.Interval
+	(*UpdateCustomerRequest)(nil),       // 1: moego.business.customer.v1.UpdateCustomerRequest
+	(*GetCustomerRequest)(nil),          // 2: moego.business.customer.v1.GetCustomerRequest
+	(*ListCustomersRequest)(nil),        // 3: moego.business.customer.v1.ListCustomersRequest
+	(*ListCustomersResponse)(nil),       // 4: moego.business.customer.v1.ListCustomersResponse
+	(*GenCustomerCofLinkRequest)(nil),   // 5: moego.business.customer.v1.GenCustomerCofLinkRequest
+	(*GenCustomerCofLinkResponse)(nil),  // 6: moego.business.customer.v1.GenCustomerCofLinkResponse
+	(*AppendCustomerNotesRequest)(nil),  // 7: moego.business.customer.v1.AppendCustomerNotesRequest
+	(*AppendCustomerNotesResponse)(nil), // 8: moego.business.customer.v1.AppendCustomerNotesResponse
+	(*ListCustomerNotesRequest)(nil),    // 9: moego.business.customer.v1.ListCustomerNotesRequest
+	(*ListCustomerNotesResponse)(nil),   // 10: moego.business.customer.v1.ListCustomerNotesResponse
+	(*AppendCustomerTagsRequest)(nil),   // 11: moego.business.customer.v1.AppendCustomerTagsRequest
+	(*AppendCustomerTagsResponse)(nil),  // 12: moego.business.customer.v1.AppendCustomerTagsResponse
+	(*ListCustomerTagsRequest)(nil),     // 13: moego.business.customer.v1.ListCustomerTagsRequest
+	(*ListCustomerTagsResponse)(nil),    // 14: moego.business.customer.v1.ListCustomerTagsResponse
+	(*ListCustomersRequest_Filter)(nil), // 15: moego.business.customer.v1.ListCustomersRequest.Filter
+	(*commonpb.Address)(nil),            // 16: moego.common.v1.Address
+	(*Customer_Preference)(nil),         // 17: moego.business.customer.v1.Customer.Preference
+	(*Customer_Tag)(nil),                // 18: moego.business.customer.v1.Customer.Tag
+	(*Customer_Note)(nil),               // 19: moego.business.customer.v1.Customer.Note
+	(*commonpb.Pagination)(nil),         // 20: moego.common.v1.Pagination
+	(*Customer)(nil),                    // 21: moego.business.customer.v1.Customer
+	(*interval.Interval)(nil),           // 22: google.type.Interval
 }
 var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
-	15, // 0: moego.business.customer.v1.CreateCustomerRequest.address:type_name -> moego.common.v1.Address
-	16, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.Customer.Preference
-	17, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	18, // 3: moego.business.customer.v1.CreateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
-	19, // 4: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination
-	14, // 5: moego.business.customer.v1.ListCustomersRequest.filter:type_name -> moego.business.customer.v1.ListCustomersRequest.Filter
-	20, // 6: moego.business.customer.v1.ListCustomersResponse.customers:type_name -> moego.business.customer.v1.Customer
-	18, // 7: moego.business.customer.v1.AppendCustomerNotesRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
-	18, // 8: moego.business.customer.v1.AppendCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
-	19, // 9: moego.business.customer.v1.ListCustomerNotesRequest.pagination:type_name -> moego.common.v1.Pagination
-	18, // 10: moego.business.customer.v1.ListCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
-	17, // 11: moego.business.customer.v1.AppendCustomerTagsRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	17, // 12: moego.business.customer.v1.AppendCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	17, // 13: moego.business.customer.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	21, // 14: moego.business.customer.v1.ListCustomersRequest.Filter.last_updated_time:type_name -> google.type.Interval
-	0,  // 15: moego.business.customer.v1.CustomerService.CreateCustomer:input_type -> moego.business.customer.v1.CreateCustomerRequest
-	1,  // 16: moego.business.customer.v1.CustomerService.GetCustomer:input_type -> moego.business.customer.v1.GetCustomerRequest
-	2,  // 17: moego.business.customer.v1.CustomerService.ListCustomers:input_type -> moego.business.customer.v1.ListCustomersRequest
-	4,  // 18: moego.business.customer.v1.CustomerService.GenCustomerCofLink:input_type -> moego.business.customer.v1.GenCustomerCofLinkRequest
-	6,  // 19: moego.business.customer.v1.CustomerService.AppendCustomerNotes:input_type -> moego.business.customer.v1.AppendCustomerNotesRequest
-	8,  // 20: moego.business.customer.v1.CustomerService.ListCustomerNotes:input_type -> moego.business.customer.v1.ListCustomerNotesRequest
-	10, // 21: moego.business.customer.v1.CustomerService.AppendCustomerTags:input_type -> moego.business.customer.v1.AppendCustomerTagsRequest
-	12, // 22: moego.business.customer.v1.CustomerService.ListCustomerTags:input_type -> moego.business.customer.v1.ListCustomerTagsRequest
-	20, // 23: moego.business.customer.v1.CustomerService.CreateCustomer:output_type -> moego.business.customer.v1.Customer
-	20, // 24: moego.business.customer.v1.CustomerService.GetCustomer:output_type -> moego.business.customer.v1.Customer
-	3,  // 25: moego.business.customer.v1.CustomerService.ListCustomers:output_type -> moego.business.customer.v1.ListCustomersResponse
-	5,  // 26: moego.business.customer.v1.CustomerService.GenCustomerCofLink:output_type -> moego.business.customer.v1.GenCustomerCofLinkResponse
-	7,  // 27: moego.business.customer.v1.CustomerService.AppendCustomerNotes:output_type -> moego.business.customer.v1.AppendCustomerNotesResponse
-	9,  // 28: moego.business.customer.v1.CustomerService.ListCustomerNotes:output_type -> moego.business.customer.v1.ListCustomerNotesResponse
-	11, // 29: moego.business.customer.v1.CustomerService.AppendCustomerTags:output_type -> moego.business.customer.v1.AppendCustomerTagsResponse
-	13, // 30: moego.business.customer.v1.CustomerService.ListCustomerTags:output_type -> moego.business.customer.v1.ListCustomerTagsResponse
-	23, // [23:31] is the sub-list for method output_type
-	15, // [15:23] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	16, // 0: moego.business.customer.v1.CreateCustomerRequest.address:type_name -> moego.common.v1.Address
+	17, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.Customer.Preference
+	18, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	19, // 3: moego.business.customer.v1.CreateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
+	16, // 4: moego.business.customer.v1.UpdateCustomerRequest.address:type_name -> moego.common.v1.Address
+	18, // 5: moego.business.customer.v1.UpdateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	19, // 6: moego.business.customer.v1.UpdateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
+	20, // 7: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination
+	15, // 8: moego.business.customer.v1.ListCustomersRequest.filter:type_name -> moego.business.customer.v1.ListCustomersRequest.Filter
+	21, // 9: moego.business.customer.v1.ListCustomersResponse.customers:type_name -> moego.business.customer.v1.Customer
+	19, // 10: moego.business.customer.v1.AppendCustomerNotesRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
+	19, // 11: moego.business.customer.v1.AppendCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
+	20, // 12: moego.business.customer.v1.ListCustomerNotesRequest.pagination:type_name -> moego.common.v1.Pagination
+	19, // 13: moego.business.customer.v1.ListCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
+	18, // 14: moego.business.customer.v1.AppendCustomerTagsRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	18, // 15: moego.business.customer.v1.AppendCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	18, // 16: moego.business.customer.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	22, // 17: moego.business.customer.v1.ListCustomersRequest.Filter.last_updated_time:type_name -> google.type.Interval
+	0,  // 18: moego.business.customer.v1.CustomerService.CreateCustomer:input_type -> moego.business.customer.v1.CreateCustomerRequest
+	1,  // 19: moego.business.customer.v1.CustomerService.UpdateCustomer:input_type -> moego.business.customer.v1.UpdateCustomerRequest
+	2,  // 20: moego.business.customer.v1.CustomerService.GetCustomer:input_type -> moego.business.customer.v1.GetCustomerRequest
+	3,  // 21: moego.business.customer.v1.CustomerService.ListCustomers:input_type -> moego.business.customer.v1.ListCustomersRequest
+	5,  // 22: moego.business.customer.v1.CustomerService.GenCustomerCofLink:input_type -> moego.business.customer.v1.GenCustomerCofLinkRequest
+	7,  // 23: moego.business.customer.v1.CustomerService.AppendCustomerNotes:input_type -> moego.business.customer.v1.AppendCustomerNotesRequest
+	9,  // 24: moego.business.customer.v1.CustomerService.ListCustomerNotes:input_type -> moego.business.customer.v1.ListCustomerNotesRequest
+	11, // 25: moego.business.customer.v1.CustomerService.AppendCustomerTags:input_type -> moego.business.customer.v1.AppendCustomerTagsRequest
+	13, // 26: moego.business.customer.v1.CustomerService.ListCustomerTags:input_type -> moego.business.customer.v1.ListCustomerTagsRequest
+	21, // 27: moego.business.customer.v1.CustomerService.CreateCustomer:output_type -> moego.business.customer.v1.Customer
+	21, // 28: moego.business.customer.v1.CustomerService.UpdateCustomer:output_type -> moego.business.customer.v1.Customer
+	21, // 29: moego.business.customer.v1.CustomerService.GetCustomer:output_type -> moego.business.customer.v1.Customer
+	4,  // 30: moego.business.customer.v1.CustomerService.ListCustomers:output_type -> moego.business.customer.v1.ListCustomersResponse
+	6,  // 31: moego.business.customer.v1.CustomerService.GenCustomerCofLink:output_type -> moego.business.customer.v1.GenCustomerCofLinkResponse
+	8,  // 32: moego.business.customer.v1.CustomerService.AppendCustomerNotes:output_type -> moego.business.customer.v1.AppendCustomerNotesResponse
+	10, // 33: moego.business.customer.v1.CustomerService.ListCustomerNotes:output_type -> moego.business.customer.v1.ListCustomerNotesResponse
+	12, // 34: moego.business.customer.v1.CustomerService.AppendCustomerTags:output_type -> moego.business.customer.v1.AppendCustomerTagsResponse
+	14, // 35: moego.business.customer.v1.CustomerService.ListCustomerTags:output_type -> moego.business.customer.v1.ListCustomerTagsResponse
+	27, // [27:36] is the sub-list for method output_type
+	18, // [18:27] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_customer_service_proto_init() }
@@ -1041,13 +1219,14 @@ func file_moego_business_customer_v1_customer_service_proto_init() {
 		return
 	}
 	file_moego_business_customer_v1_customer_proto_init()
+	file_moego_business_customer_v1_customer_service_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_customer_service_proto_rawDesc), len(file_moego_business_customer_v1_customer_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

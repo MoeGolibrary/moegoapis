@@ -11,7 +11,7 @@ option java_multiple_files = true;
 option java_outer_classname = "APIKeyProto";
 option java_package = "com.moego.api.auth.apikey.v1";
 
-// Authentication to the MoeGo API is performed via API keys. Each key has its own set of permissions 
+// Authentication to the MoeGo API is performed via API keys. Each key has its own set of permissions
 // and restrictions that determine what actions it can perform and what resources it can access.
 //
 // To authenticate, provide your API key in the Authorization header:

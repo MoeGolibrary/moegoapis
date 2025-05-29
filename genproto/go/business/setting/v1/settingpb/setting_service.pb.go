@@ -10,6 +10,7 @@ import (
 	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
+	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -288,6 +289,63 @@ func (x *ListServicesRequest) GetFilter() *ListServicesRequest_Filter {
 	return nil
 }
 
+// Request message for getting a service.
+type GetServiceRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company that owns the service.
+	// Required. Must be a valid company ID.
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the service to retrieve.
+	// Required. Must be a valid service ID.
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetServiceRequest) Reset() {
+	*x = GetServiceRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServiceRequest) ProtoMessage() {}
+
+func (x *GetServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetServiceRequest.ProtoReflect.Descriptor instead.
+func (*GetServiceRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetServiceRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *GetServiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 // Response message for listing services.
 type ListServicesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -303,7 +361,7 @@ type ListServicesResponse struct {
 
 func (x *ListServicesResponse) Reset() {
 	*x = ListServicesResponse{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -315,7 +373,7 @@ func (x *ListServicesResponse) String() string {
 func (*ListServicesResponse) ProtoMessage() {}
 
 func (x *ListServicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -328,7 +386,7 @@ func (x *ListServicesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListServicesResponse.ProtoReflect.Descriptor instead.
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{5}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListServicesResponse) GetNextPageToken() string {
@@ -345,6 +403,290 @@ func (x *ListServicesResponse) GetServices() []*Service {
 	return nil
 }
 
+// Request message for creating a service.
+type CreateServiceRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to create the service under.
+	// Required. Must be a valid company ID.
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Name of the service (e.g., "Grooming", "Boarding")
+	// Required. Should be human-readable and unique within the company
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// List of business locations where this service is available
+	// Optional. If empty, service is available at all locations
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Type of service (e.g., grooming, boarding, daycare)
+	// Required. Used for categorization and filtering
+	ServiceItemType Service_ItemType `protobuf:"varint,4,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
+	// Base price for the service
+	// Can be adjusted based on pet size, breed, or add-ons
+	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
+	// Whether this is a primary service or an add-on
+	// Affects how the service can be booked
+	ServiceType Service_Type `protobuf:"varint,6,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
+	// Duration of the service in minutes
+	// Used for scheduling and resource allocation
+	ServiceTime int32 `protobuf:"varint,7,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
+	// Whether this service is available at all business locations
+	// If false, check available_business_ids for specific locations
+	AvailableAllBusiness bool `protobuf:"varint,8,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
+	// List of business locations where this service is available
+	// Only used when available_all_business is false
+	AvailableBusinessIds []string `protobuf:"bytes,9,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
+	// Whether this service can be performed by all staff members
+	// If false, check available_staff_ids for specific staff
+	AvailableAllStaff bool `protobuf:"varint,10,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
+	// List of staff members who can perform this service
+	// Only used when available_all_staff is false
+	AvailableStaffIds []string `protobuf:"bytes,11,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *CreateServiceRequest) Reset() {
+	*x = CreateServiceRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateServiceRequest) ProtoMessage() {}
+
+func (x *CreateServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateServiceRequest.ProtoReflect.Descriptor instead.
+func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CreateServiceRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *CreateServiceRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateServiceRequest) GetBusinessIds() []string {
+	if x != nil {
+		return x.BusinessIds
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetServiceItemType() Service_ItemType {
+	if x != nil {
+		return x.ServiceItemType
+	}
+	return Service_SERVICE_ITEM_TYPE_UNSPECIFIED
+}
+
+func (x *CreateServiceRequest) GetPrice() *money.Money {
+	if x != nil {
+		return x.Price
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetServiceType() Service_Type {
+	if x != nil {
+		return x.ServiceType
+	}
+	return Service_SERVICE_TYPE_UNSPECIFIED
+}
+
+func (x *CreateServiceRequest) GetServiceTime() int32 {
+	if x != nil {
+		return x.ServiceTime
+	}
+	return 0
+}
+
+func (x *CreateServiceRequest) GetAvailableAllBusiness() bool {
+	if x != nil {
+		return x.AvailableAllBusiness
+	}
+	return false
+}
+
+func (x *CreateServiceRequest) GetAvailableBusinessIds() []string {
+	if x != nil {
+		return x.AvailableBusinessIds
+	}
+	return nil
+}
+
+func (x *CreateServiceRequest) GetAvailableAllStaff() bool {
+	if x != nil {
+		return x.AvailableAllStaff
+	}
+	return false
+}
+
+func (x *CreateServiceRequest) GetAvailableStaffIds() []string {
+	if x != nil {
+		return x.AvailableStaffIds
+	}
+	return nil
+}
+
+// Request message for updating a service.
+type UpdateServiceRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company that owns the service.
+	// Required. Must be a valid company ID.
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Unique identifier of the service to update.
+	// Required. Must be a valid service ID.
+	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the service (e.g., "Grooming", "Boarding")
+	// Required. Should be human-readable and unique within the company
+	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// List of business locations where this service is available
+	// Optional. If empty, service is available at all locations
+	BusinessIds []string `protobuf:"bytes,4,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Base price for the service
+	// Can be adjusted based on pet size, breed, or add-ons
+	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
+	// Duration of the service in minutes
+	// Used for scheduling and resource allocation
+	ServiceTime int32 `protobuf:"varint,6,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
+	// Whether this service is available at all business locations
+	// If false, check available_business_ids for specific locations
+	AvailableAllBusiness bool `protobuf:"varint,7,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
+	// List of business locations where this service is available
+	// Only used when available_all_business is false
+	AvailableBusinessIds []string `protobuf:"bytes,8,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
+	// Whether this service can be performed by all staff members
+	// If false, check available_staff_ids for specific staff
+	AvailableAllStaff bool `protobuf:"varint,9,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
+	// List of staff members who can perform this service
+	// Only used when available_all_staff is false
+	AvailableStaffIds []string `protobuf:"bytes,10,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *UpdateServiceRequest) Reset() {
+	*x = UpdateServiceRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateServiceRequest) ProtoMessage() {}
+
+func (x *UpdateServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateServiceRequest.ProtoReflect.Descriptor instead.
+func (*UpdateServiceRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateServiceRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *UpdateServiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateServiceRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *UpdateServiceRequest) GetBusinessIds() []string {
+	if x != nil {
+		return x.BusinessIds
+	}
+	return nil
+}
+
+func (x *UpdateServiceRequest) GetPrice() *money.Money {
+	if x != nil {
+		return x.Price
+	}
+	return nil
+}
+
+func (x *UpdateServiceRequest) GetServiceTime() int32 {
+	if x != nil {
+		return x.ServiceTime
+	}
+	return 0
+}
+
+func (x *UpdateServiceRequest) GetAvailableAllBusiness() bool {
+	if x != nil {
+		return x.AvailableAllBusiness
+	}
+	return false
+}
+
+func (x *UpdateServiceRequest) GetAvailableBusinessIds() []string {
+	if x != nil {
+		return x.AvailableBusinessIds
+	}
+	return nil
+}
+
+func (x *UpdateServiceRequest) GetAvailableAllStaff() bool {
+	if x != nil {
+		return x.AvailableAllStaff
+	}
+	return false
+}
+
+func (x *UpdateServiceRequest) GetAvailableStaffIds() []string {
+	if x != nil {
+		return x.AvailableStaffIds
+	}
+	return nil
+}
+
 // Filter parameters for the service list
 type ListServicesRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -357,7 +699,7 @@ type ListServicesRequest_Filter struct {
 
 func (x *ListServicesRequest_Filter) Reset() {
 	*x = ListServicesRequest_Filter{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -369,7 +711,7 @@ func (x *ListServicesRequest_Filter) String() string {
 func (*ListServicesRequest_Filter) ProtoMessage() {}
 
 func (x *ListServicesRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -396,7 +738,7 @@ var File_moego_business_setting_v1_setting_service_proto protoreflect.FileDescri
 
 const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a moego/common/v1/pagination.proto\x1a'moego/business/setting/v1/service.proto\"8\n" +
+	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\x1a\x17google/type/money.proto\"8\n" +
 	"\x12ListPetCodeRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"Q\n" +
@@ -417,14 +759,49 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x06filter\x18\x04 \x01(\v25.moego.business.setting.v1.ListServicesRequest.FilterR\x06filter\x1aY\n" +
 	"\x06Filter\x12O\n" +
 	"\n" +
-	"item_types\x18\x01 \x03(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x01R\titemTypes\"~\n" +
+	"item_types\x18\x01 \x03(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x01R\titemTypes\"L\n" +
+	"\x11GetServiceRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"~\n" +
 	"\x14ListServicesResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
-	"\bservices\x18\x02 \x03(\v2\".moego.business.setting.v1.ServiceR\bservices2\xab\x04\n" +
+	"\bservices\x18\x02 \x03(\v2\".moego.business.setting.v1.ServiceR\bservices\"\xc3\x04\n" +
+	"\x14CreateServiceRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tB\x03\xe0A\x02R\x04name\x12!\n" +
+	"\fbusiness_ids\x18\x03 \x03(\tR\vbusinessIds\x12\\\n" +
+	"\x11service_item_type\x18\x04 \x01(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x02R\x0fserviceItemType\x12-\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12O\n" +
+	"\fservice_type\x18\x06 \x01(\x0e2'.moego.business.setting.v1.Service.TypeB\x03\xe0A\x02R\vserviceType\x12!\n" +
+	"\fservice_time\x18\a \x01(\x05R\vserviceTime\x124\n" +
+	"\x16available_all_business\x18\b \x01(\bR\x14availableAllBusiness\x124\n" +
+	"\x16available_business_ids\x18\t \x03(\tR\x14availableBusinessIds\x12.\n" +
+	"\x13available_all_staff\x18\n" +
+	" \x01(\bR\x11availableAllStaff\x12.\n" +
+	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\"\xa9\x03\n" +
+	"\x14UpdateServiceRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tB\x03\xe0A\x02R\x04name\x12!\n" +
+	"\fbusiness_ids\x18\x04 \x03(\tR\vbusinessIds\x12-\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12!\n" +
+	"\fservice_time\x18\x06 \x01(\x05R\vserviceTime\x124\n" +
+	"\x16available_all_business\x18\a \x01(\bR\x14availableAllBusiness\x124\n" +
+	"\x16available_business_ids\x18\b \x03(\tR\x14availableBusinessIds\x12.\n" +
+	"\x13available_all_staff\x18\t \x01(\bR\x11availableAllStaff\x12.\n" +
+	"\x13available_staff_ids\x18\n" +
+	" \x03(\tR\x11availableStaffIds2\x95\b\n" +
 	"\x0eSettingService\x12\xab\x01\n" +
 	"\fListPetCodes\x12-.moego.business.setting.v1.ListPetCodeRequest\x1a..moego.business.setting.v1.ListPetCodeResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbb\x01\n" +
-	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\xac\x01\n" +
-	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:listB\x8a\x01\n" +
+	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\x98\x01\n" +
+	"\n" +
+	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
+	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\xa2\x01\n" +
+	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"<\x82\xd3\xe4\x93\x026:\aservice\"+/v1/setting/companies/{company_id}/services\x12\xa7\x01\n" +
+	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\"A\x82\xd3\xe4\x93\x02;:\aservice\x1a0/v1/setting/companies/{company_id}/services/{id}B\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -439,39 +816,54 @@ func file_moego_business_setting_v1_setting_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescData
 }
 
-var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
+var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_moego_business_setting_v1_setting_service_proto_goTypes = []any{
 	(*ListPetCodeRequest)(nil),         // 0: moego.business.setting.v1.ListPetCodeRequest
 	(*ListPetCodeResponse)(nil),        // 1: moego.business.setting.v1.ListPetCodeResponse
 	(*ListCustomerTagRequest)(nil),     // 2: moego.business.setting.v1.ListCustomerTagRequest
 	(*ListCustomerTagResponse)(nil),    // 3: moego.business.setting.v1.ListCustomerTagResponse
 	(*ListServicesRequest)(nil),        // 4: moego.business.setting.v1.ListServicesRequest
-	(*ListServicesResponse)(nil),       // 5: moego.business.setting.v1.ListServicesResponse
-	(*ListServicesRequest_Filter)(nil), // 6: moego.business.setting.v1.ListServicesRequest.Filter
-	(*customerpb.Pet_Code)(nil),        // 7: moego.business.customer.v1.Pet.Code
-	(*customerpb.Customer_Tag)(nil),    // 8: moego.business.customer.v1.Customer.Tag
-	(*commonpb.Pagination)(nil),        // 9: moego.common.v1.Pagination
-	(*Service)(nil),                    // 10: moego.business.setting.v1.Service
-	(Service_ItemType)(0),              // 11: moego.business.setting.v1.Service.ItemType
+	(*GetServiceRequest)(nil),          // 5: moego.business.setting.v1.GetServiceRequest
+	(*ListServicesResponse)(nil),       // 6: moego.business.setting.v1.ListServicesResponse
+	(*CreateServiceRequest)(nil),       // 7: moego.business.setting.v1.CreateServiceRequest
+	(*UpdateServiceRequest)(nil),       // 8: moego.business.setting.v1.UpdateServiceRequest
+	(*ListServicesRequest_Filter)(nil), // 9: moego.business.setting.v1.ListServicesRequest.Filter
+	(*customerpb.Pet_Code)(nil),        // 10: moego.business.customer.v1.Pet.Code
+	(*customerpb.Customer_Tag)(nil),    // 11: moego.business.customer.v1.Customer.Tag
+	(*commonpb.Pagination)(nil),        // 12: moego.common.v1.Pagination
+	(*Service)(nil),                    // 13: moego.business.setting.v1.Service
+	(Service_ItemType)(0),              // 14: moego.business.setting.v1.Service.ItemType
+	(*money.Money)(nil),                // 15: google.type.Money
+	(Service_Type)(0),                  // 16: moego.business.setting.v1.Service.Type
 }
 var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
-	7,  // 0: moego.business.setting.v1.ListPetCodeResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
-	8,  // 1: moego.business.setting.v1.ListCustomerTagResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	9,  // 2: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
-	6,  // 3: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
-	10, // 4: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
-	11, // 5: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
-	0,  // 6: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodeRequest
-	2,  // 7: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagRequest
-	4,  // 8: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
-	1,  // 9: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodeResponse
-	3,  // 10: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagResponse
-	5,  // 11: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
-	9,  // [9:12] is the sub-list for method output_type
-	6,  // [6:9] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	10, // 0: moego.business.setting.v1.ListPetCodeResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
+	11, // 1: moego.business.setting.v1.ListCustomerTagResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	12, // 2: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
+	9,  // 3: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
+	13, // 4: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
+	14, // 5: moego.business.setting.v1.CreateServiceRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	15, // 6: moego.business.setting.v1.CreateServiceRequest.price:type_name -> google.type.Money
+	16, // 7: moego.business.setting.v1.CreateServiceRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
+	15, // 8: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
+	14, // 9: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
+	0,  // 10: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodeRequest
+	2,  // 11: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagRequest
+	5,  // 12: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
+	4,  // 13: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
+	7,  // 14: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
+	8,  // 15: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
+	1,  // 16: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodeResponse
+	3,  // 17: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagResponse
+	13, // 18: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
+	6,  // 19: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
+	13, // 20: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
+	13, // 21: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
+	16, // [16:22] is the sub-list for method output_type
+	10, // [10:16] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_setting_service_proto_init() }
@@ -486,7 +878,7 @@ func file_moego_business_setting_v1_setting_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_setting_service_proto_rawDesc), len(file_moego_business_setting_v1_setting_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   7,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

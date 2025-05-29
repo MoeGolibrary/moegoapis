@@ -7,6 +7,8 @@ import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/pagination.proto";
+import "google/type/date.proto";
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -28,6 +30,20 @@ service PetService {
   rpc CreatePet(CreatePetRequest) returns (CreatePetResponse) {
     option (google.api.http) = {
       post: "/v1/customers/{customer_id}/pets"
+      body: "*"
+    };
+  }
+  // Updates an existing pet's information.
+  //
+  // Modifies the details of an existing pet, including basic information,
+  // health records, and any associated notes or codes.
+  //
+  // Returns the updated Pet object with all fields populated.
+  // Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
+  // Throws INVALID_ARGUMENT if provided fields are invalid.
+  rpc UpdatePet(UpdatePetRequest) returns (Pet) {
+    option (google.api.http) = {
+      put: "/v1/customers/{customer_id}/pets/{id}"
       body: "*"
     };
   }
@@ -115,6 +131,70 @@ message CreatePetResponse {
   // Includes system-generated fields like ID
   Pet pet = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
+
+// Request message for updating a pet's profile.
+message UpdatePetRequest {
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier for the pet
+  // Format: "pet_" followed by random characters
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Pet's given name
+  // Optional. If not provided, current value will be retained
+  optional string name = 3;
+
+  // Pet's date of birth
+  // Optional. If not provided, current value will be retained
+  optional google.type.Date birthday = 4;
+
+  // Species of the pet
+  // Optional. If not provided, current value will be retained
+  optional Pet.Type type = 5;
+
+  // Specific breed within the pet type
+  // Optional. If not provided, current value will be retained
+  optional string breed = 6;
+
+  // Pet's gender
+  // Optional. If not provided, current value will be retained
+  optional Pet.Gender gender = 7;
+
+  // Pet's current weight
+  // Optional. If not provided, current value will be retained
+  optional moego.common.v1.Weight weight = 8;
+
+  // Spay/neuter status
+  // Values: "yes", "no", "unknown"
+  // Optional. If not provided, current value will be retained
+  optional string fixed = 9;
+
+  // Description of the pet's coat
+  // Example: "long double coat", "short hair"
+  // Optional. If not provided, current value will be retained
+  optional string coat = 10;
+
+  // General temperament and behavior notes
+  // Example: "friendly", "nervous with new people"
+  // Optional. If not provided, current value will be retained
+  optional string behavior = 11;
+
+  // Primary veterinary care provider
+  // Used for emergencies and health verifications
+  // Optional. If not provided, current value will be retained
+  optional Pet.Vet vet = 12;
+
+
+  // Current evaluation status for services
+  // Determines service availability
+  optional Pet.EvaluationStatus evaluation_status = 13;
+
+  // photo url of pet.
+  optional string photo = 14;
+}
+
 
 // Request message for retrieving a specific pet.
 message GetPetRequest {
@@ -227,7 +307,6 @@ message ListAllPetsRequest {
     // If provided, only returns pets belonging to these customers
     repeated string customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
 
-    
     // Optional list of time intervals to filter by
     // If provided, only returns pets with appointments within these intervals
     google.type.Interval last_updated_time = 2 [(google.api.field_behavior) = OPTIONAL];

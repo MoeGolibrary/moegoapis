@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	PetService_CreatePet_FullMethodName      = "/moego.business.customer.v1.PetService/CreatePet"
+	PetService_UpdatePet_FullMethodName      = "/moego.business.customer.v1.PetService/UpdatePet"
 	PetService_GetPet_FullMethodName         = "/moego.business.customer.v1.PetService/GetPet"
 	PetService_ListPets_FullMethodName       = "/moego.business.customer.v1.PetService/ListPets"
 	PetService_AppendPetCodes_FullMethodName = "/moego.business.customer.v1.PetService/AppendPetCodes"
@@ -45,6 +46,15 @@ type PetServiceClient interface {
 	// Returns the created Pet object with all fields populated.
 	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreatePet(ctx context.Context, in *CreatePetRequest, opts ...grpc.CallOption) (*CreatePetResponse, error)
+	// Updates an existing pet's information.
+	//
+	// Modifies the details of an existing pet, including basic information,
+	// health records, and any associated notes or codes.
+	//
+	// Returns the updated Pet object with all fields populated.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
+	// Throws INVALID_ARGUMENT if provided fields are invalid.
+	UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...grpc.CallOption) (*Pet, error)
 	// Retrieves detailed information about a specific pet.
 	//
 	// Returns all pet data including health records, notes, and service history.
@@ -91,6 +101,16 @@ func (c *petServiceClient) CreatePet(ctx context.Context, in *CreatePetRequest, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(CreatePetResponse)
 	err := c.cc.Invoke(ctx, PetService_CreatePet_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *petServiceClient) UpdatePet(ctx context.Context, in *UpdatePetRequest, opts ...grpc.CallOption) (*Pet, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Pet)
+	err := c.cc.Invoke(ctx, PetService_UpdatePet_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -174,6 +194,15 @@ type PetServiceServer interface {
 	// Returns the created Pet object with all fields populated.
 	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error)
+	// Updates an existing pet's information.
+	//
+	// Modifies the details of an existing pet, including basic information,
+	// health records, and any associated notes or codes.
+	//
+	// Returns the updated Pet object with all fields populated.
+	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
+	// Throws INVALID_ARGUMENT if provided fields are invalid.
+	UpdatePet(context.Context, *UpdatePetRequest) (*Pet, error)
 	// Retrieves detailed information about a specific pet.
 	//
 	// Returns all pet data including health records, notes, and service history.
@@ -218,6 +247,9 @@ type UnimplementedPetServiceServer struct{}
 
 func (UnimplementedPetServiceServer) CreatePet(context.Context, *CreatePetRequest) (*CreatePetResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreatePet not implemented")
+}
+func (UnimplementedPetServiceServer) UpdatePet(context.Context, *UpdatePetRequest) (*Pet, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdatePet not implemented")
 }
 func (UnimplementedPetServiceServer) GetPet(context.Context, *GetPetRequest) (*Pet, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPet not implemented")
@@ -272,6 +304,24 @@ func _PetService_CreatePet_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(PetServiceServer).CreatePet(ctx, req.(*CreatePetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _PetService_UpdatePet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdatePetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PetServiceServer).UpdatePet(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PetService_UpdatePet_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PetServiceServer).UpdatePet(ctx, req.(*UpdatePetRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -394,6 +444,10 @@ var PetService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreatePet",
 			Handler:    _PetService_CreatePet_Handler,
+		},
+		{
+			MethodName: "UpdatePet",
+			Handler:    _PetService_UpdatePet_Handler,
 		},
 		{
 			MethodName: "GetPet",

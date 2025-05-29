@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	CustomerService_CreateCustomer_FullMethodName      = "/moego.business.customer.v1.CustomerService/CreateCustomer"
+	CustomerService_UpdateCustomer_FullMethodName      = "/moego.business.customer.v1.CustomerService/UpdateCustomer"
 	CustomerService_GetCustomer_FullMethodName         = "/moego.business.customer.v1.CustomerService/GetCustomer"
 	CustomerService_ListCustomers_FullMethodName       = "/moego.business.customer.v1.CustomerService/ListCustomers"
 	CustomerService_GenCustomerCofLink_FullMethodName  = "/moego.business.customer.v1.CustomerService/GenCustomerCofLink"
@@ -46,6 +47,15 @@ type CustomerServiceClient interface {
 	// Returns the created Customer object with all fields populated.
 	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreateCustomer(ctx context.Context, in *CreateCustomerRequest, opts ...grpc.CallOption) (*Customer, error)
+	// Updates an existing customer's information.
+	//
+	// Modifies the details of an existing customer, including basic information,
+	// preferences, and optionally updating associated tags or notes.
+	//
+	// Returns the updated Customer object with all fields populated.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
+	// Throws INVALID_ARGUMENT if provided fields are invalid.
+	UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*Customer, error)
 	// Retrieves detailed information about a specific customer.
 	//
 	// Returns all customer data including preferences, notes, tags, and appointment history.
@@ -97,6 +107,16 @@ func (c *customerServiceClient) CreateCustomer(ctx context.Context, in *CreateCu
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Customer)
 	err := c.cc.Invoke(ctx, CustomerService_CreateCustomer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) UpdateCustomer(ctx context.Context, in *UpdateCustomerRequest, opts ...grpc.CallOption) (*Customer, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Customer)
+	err := c.cc.Invoke(ctx, CustomerService_UpdateCustomer_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,6 +210,15 @@ type CustomerServiceServer interface {
 	// Returns the created Customer object with all fields populated.
 	// Throws INVALID_ARGUMENT if required fields are missing or invalid.
 	CreateCustomer(context.Context, *CreateCustomerRequest) (*Customer, error)
+	// Updates an existing customer's information.
+	//
+	// Modifies the details of an existing customer, including basic information,
+	// preferences, and optionally updating associated tags or notes.
+	//
+	// Returns the updated Customer object with all fields populated.
+	// Throws NOT_FOUND if the customer ID doesn't exist.
+	// Throws INVALID_ARGUMENT if provided fields are invalid.
+	UpdateCustomer(context.Context, *UpdateCustomerRequest) (*Customer, error)
 	// Retrieves detailed information about a specific customer.
 	//
 	// Returns all customer data including preferences, notes, tags, and appointment history.
@@ -239,6 +268,9 @@ type UnimplementedCustomerServiceServer struct{}
 
 func (UnimplementedCustomerServiceServer) CreateCustomer(context.Context, *CreateCustomerRequest) (*Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCustomer not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateCustomer(context.Context, *UpdateCustomerRequest) (*Customer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCustomer not implemented")
 }
 func (UnimplementedCustomerServiceServer) GetCustomer(context.Context, *GetCustomerRequest) (*Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCustomer not implemented")
@@ -296,6 +328,24 @@ func _CustomerService_CreateCustomer_Handler(srv interface{}, ctx context.Contex
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CustomerServiceServer).CreateCustomer(ctx, req.(*CreateCustomerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_UpdateCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCustomerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_UpdateCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateCustomer(ctx, req.(*UpdateCustomerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -436,6 +486,10 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateCustomer",
 			Handler:    _CustomerService_CreateCustomer_Handler,
+		},
+		{
+			MethodName: "UpdateCustomer",
+			Handler:    _CustomerService_UpdateCustomer_Handler,
 		},
 		{
 			MethodName: "GetCustomer",
