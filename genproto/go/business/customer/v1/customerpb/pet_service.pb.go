@@ -9,6 +9,7 @@ package customerpb
 import (
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
+	date "google.golang.org/genproto/googleapis/type/date"
 	interval "google.golang.org/genproto/googleapis/type/interval"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -128,6 +129,186 @@ func (x *CreatePetResponse) GetPet() *Pet {
 	return nil
 }
 
+// Request message for updating a pet's profile.
+type UpdatePetRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the customer who owns the pet
+	// Required. Must be a valid customer ID
+	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// Unique identifier for the pet
+	// Format: "pet_" followed by random characters
+	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	// Pet's given name
+	// Optional. If not provided, current value will be retained
+	Name *string `protobuf:"bytes,3,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	// Pet's date of birth
+	// Optional. If not provided, current value will be retained
+	Birthday *date.Date `protobuf:"bytes,4,opt,name=birthday,proto3,oneof" json:"birthday,omitempty"`
+	// Species of the pet
+	// Optional. If not provided, current value will be retained
+	Type *Pet_Type `protobuf:"varint,5,opt,name=type,proto3,enum=moego.business.customer.v1.Pet_Type,oneof" json:"type,omitempty"`
+	// Specific breed within the pet type
+	// Optional. If not provided, current value will be retained
+	Breed *string `protobuf:"bytes,6,opt,name=breed,proto3,oneof" json:"breed,omitempty"`
+	// Pet's gender
+	// Optional. If not provided, current value will be retained
+	Gender *Pet_Gender `protobuf:"varint,7,opt,name=gender,proto3,enum=moego.business.customer.v1.Pet_Gender,oneof" json:"gender,omitempty"`
+	// Pet's current weight
+	// Optional. If not provided, current value will be retained
+	Weight *commonpb.Weight `protobuf:"bytes,8,opt,name=weight,proto3,oneof" json:"weight,omitempty"`
+	// Spay/neuter status
+	// Values: "yes", "no", "unknown"
+	// Optional. If not provided, current value will be retained
+	Fixed *string `protobuf:"bytes,9,opt,name=fixed,proto3,oneof" json:"fixed,omitempty"`
+	// Description of the pet's coat
+	// Example: "long double coat", "short hair"
+	// Optional. If not provided, current value will be retained
+	Coat *string `protobuf:"bytes,10,opt,name=coat,proto3,oneof" json:"coat,omitempty"`
+	// General temperament and behavior notes
+	// Example: "friendly", "nervous with new people"
+	// Optional. If not provided, current value will be retained
+	Behavior *string `protobuf:"bytes,11,opt,name=behavior,proto3,oneof" json:"behavior,omitempty"`
+	// Primary veterinary care provider
+	// Used for emergencies and health verifications
+	// Optional. If not provided, current value will be retained
+	Vet *Pet_Vet `protobuf:"bytes,12,opt,name=vet,proto3,oneof" json:"vet,omitempty"`
+	// Current evaluation status for services
+	// Determines service availability
+	EvaluationStatus *Pet_EvaluationStatus `protobuf:"varint,13,opt,name=evaluation_status,json=evaluationStatus,proto3,enum=moego.business.customer.v1.Pet_EvaluationStatus,oneof" json:"evaluation_status,omitempty"`
+	// photo url of pet.
+	Photo         *string `protobuf:"bytes,14,opt,name=photo,proto3,oneof" json:"photo,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdatePetRequest) Reset() {
+	*x = UpdatePetRequest{}
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdatePetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdatePetRequest) ProtoMessage() {}
+
+func (x *UpdatePetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdatePetRequest.ProtoReflect.Descriptor instead.
+func (*UpdatePetRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *UpdatePetRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetBirthday() *date.Date {
+	if x != nil {
+		return x.Birthday
+	}
+	return nil
+}
+
+func (x *UpdatePetRequest) GetType() Pet_Type {
+	if x != nil && x.Type != nil {
+		return *x.Type
+	}
+	return Pet_TYPE_UNSPECIFIED
+}
+
+func (x *UpdatePetRequest) GetBreed() string {
+	if x != nil && x.Breed != nil {
+		return *x.Breed
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetGender() Pet_Gender {
+	if x != nil && x.Gender != nil {
+		return *x.Gender
+	}
+	return Pet_GENDER_UNSPECIFIED
+}
+
+func (x *UpdatePetRequest) GetWeight() *commonpb.Weight {
+	if x != nil {
+		return x.Weight
+	}
+	return nil
+}
+
+func (x *UpdatePetRequest) GetFixed() string {
+	if x != nil && x.Fixed != nil {
+		return *x.Fixed
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetCoat() string {
+	if x != nil && x.Coat != nil {
+		return *x.Coat
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetBehavior() string {
+	if x != nil && x.Behavior != nil {
+		return *x.Behavior
+	}
+	return ""
+}
+
+func (x *UpdatePetRequest) GetVet() *Pet_Vet {
+	if x != nil {
+		return x.Vet
+	}
+	return nil
+}
+
+func (x *UpdatePetRequest) GetEvaluationStatus() Pet_EvaluationStatus {
+	if x != nil && x.EvaluationStatus != nil {
+		return *x.EvaluationStatus
+	}
+	return Pet_EVALUATION_STATUS_UNSPECIFIED
+}
+
+func (x *UpdatePetRequest) GetPhoto() string {
+	if x != nil && x.Photo != nil {
+		return *x.Photo
+	}
+	return ""
+}
+
 // Request message for retrieving a specific pet.
 type GetPetRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -143,7 +324,7 @@ type GetPetRequest struct {
 
 func (x *GetPetRequest) Reset() {
 	*x = GetPetRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -155,7 +336,7 @@ func (x *GetPetRequest) String() string {
 func (*GetPetRequest) ProtoMessage() {}
 
 func (x *GetPetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -168,7 +349,7 @@ func (x *GetPetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetPetRequest.ProtoReflect.Descriptor instead.
 func (*GetPetRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{2}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *GetPetRequest) GetCustomerId() string {
@@ -197,7 +378,7 @@ type ListPetsRequest struct {
 
 func (x *ListPetsRequest) Reset() {
 	*x = ListPetsRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -209,7 +390,7 @@ func (x *ListPetsRequest) String() string {
 func (*ListPetsRequest) ProtoMessage() {}
 
 func (x *ListPetsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -222,7 +403,7 @@ func (x *ListPetsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPetsRequest.ProtoReflect.Descriptor instead.
 func (*ListPetsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{3}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *ListPetsRequest) GetCustomerId() string {
@@ -244,7 +425,7 @@ type ListPetsResponse struct {
 
 func (x *ListPetsResponse) Reset() {
 	*x = ListPetsResponse{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -256,7 +437,7 @@ func (x *ListPetsResponse) String() string {
 func (*ListPetsResponse) ProtoMessage() {}
 
 func (x *ListPetsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -269,7 +450,7 @@ func (x *ListPetsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPetsResponse.ProtoReflect.Descriptor instead.
 func (*ListPetsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{4}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *ListPetsResponse) GetPets() []*Pet {
@@ -297,7 +478,7 @@ type AppendPetCodesRequest struct {
 
 func (x *AppendPetCodesRequest) Reset() {
 	*x = AppendPetCodesRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -309,7 +490,7 @@ func (x *AppendPetCodesRequest) String() string {
 func (*AppendPetCodesRequest) ProtoMessage() {}
 
 func (x *AppendPetCodesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -322,7 +503,7 @@ func (x *AppendPetCodesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendPetCodesRequest.ProtoReflect.Descriptor instead.
 func (*AppendPetCodesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{5}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *AppendPetCodesRequest) GetCustomerId() string {
@@ -358,7 +539,7 @@ type AppendPetCodesResponse struct {
 
 func (x *AppendPetCodesResponse) Reset() {
 	*x = AppendPetCodesResponse{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[6]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -370,7 +551,7 @@ func (x *AppendPetCodesResponse) String() string {
 func (*AppendPetCodesResponse) ProtoMessage() {}
 
 func (x *AppendPetCodesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[6]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -383,7 +564,7 @@ func (x *AppendPetCodesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendPetCodesResponse.ProtoReflect.Descriptor instead.
 func (*AppendPetCodesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{6}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *AppendPetCodesResponse) GetCodes() []*Pet_Code {
@@ -411,7 +592,7 @@ type AppendPetNotesRequest struct {
 
 func (x *AppendPetNotesRequest) Reset() {
 	*x = AppendPetNotesRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[7]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -423,7 +604,7 @@ func (x *AppendPetNotesRequest) String() string {
 func (*AppendPetNotesRequest) ProtoMessage() {}
 
 func (x *AppendPetNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[7]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -436,7 +617,7 @@ func (x *AppendPetNotesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendPetNotesRequest.ProtoReflect.Descriptor instead.
 func (*AppendPetNotesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{7}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *AppendPetNotesRequest) GetCustomerId() string {
@@ -472,7 +653,7 @@ type AppendPetNotesResponse struct {
 
 func (x *AppendPetNotesResponse) Reset() {
 	*x = AppendPetNotesResponse{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[8]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -484,7 +665,7 @@ func (x *AppendPetNotesResponse) String() string {
 func (*AppendPetNotesResponse) ProtoMessage() {}
 
 func (x *AppendPetNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[8]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -497,7 +678,7 @@ func (x *AppendPetNotesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AppendPetNotesResponse.ProtoReflect.Descriptor instead.
 func (*AppendPetNotesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{8}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *AppendPetNotesResponse) GetNotes() []*Pet_Note {
@@ -525,7 +706,7 @@ type ListPetNotesRequest struct {
 
 func (x *ListPetNotesRequest) Reset() {
 	*x = ListPetNotesRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[9]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -537,7 +718,7 @@ func (x *ListPetNotesRequest) String() string {
 func (*ListPetNotesRequest) ProtoMessage() {}
 
 func (x *ListPetNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[9]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -550,7 +731,7 @@ func (x *ListPetNotesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPetNotesRequest.ProtoReflect.Descriptor instead.
 func (*ListPetNotesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{9}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListPetNotesRequest) GetPagination() *commonpb.Pagination {
@@ -589,7 +770,7 @@ type ListPetNotesResponse struct {
 
 func (x *ListPetNotesResponse) Reset() {
 	*x = ListPetNotesResponse{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[10]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -601,7 +782,7 @@ func (x *ListPetNotesResponse) String() string {
 func (*ListPetNotesResponse) ProtoMessage() {}
 
 func (x *ListPetNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[10]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -614,7 +795,7 @@ func (x *ListPetNotesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListPetNotesResponse.ProtoReflect.Descriptor instead.
 func (*ListPetNotesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{10}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListPetNotesResponse) GetNextPageToken() string {
@@ -648,7 +829,7 @@ type ListAllPetsRequest struct {
 
 func (x *ListAllPetsRequest) Reset() {
 	*x = ListAllPetsRequest{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[11]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -660,7 +841,7 @@ func (x *ListAllPetsRequest) String() string {
 func (*ListAllPetsRequest) ProtoMessage() {}
 
 func (x *ListAllPetsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[11]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -673,7 +854,7 @@ func (x *ListAllPetsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAllPetsRequest.ProtoReflect.Descriptor instead.
 func (*ListAllPetsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{11}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListAllPetsRequest) GetPagination() *commonpb.Pagination {
@@ -712,7 +893,7 @@ type ListAllPetsResponse struct {
 
 func (x *ListAllPetsResponse) Reset() {
 	*x = ListAllPetsResponse{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[12]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -724,7 +905,7 @@ func (x *ListAllPetsResponse) String() string {
 func (*ListAllPetsResponse) ProtoMessage() {}
 
 func (x *ListAllPetsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[12]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -737,7 +918,7 @@ func (x *ListAllPetsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAllPetsResponse.ProtoReflect.Descriptor instead.
 func (*ListAllPetsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{12}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListAllPetsResponse) GetNextPageToken() string {
@@ -769,7 +950,7 @@ type ListAllPetsRequest_Filter struct {
 
 func (x *ListAllPetsRequest_Filter) Reset() {
 	*x = ListAllPetsRequest_Filter{}
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[13]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -781,7 +962,7 @@ func (x *ListAllPetsRequest_Filter) String() string {
 func (*ListAllPetsRequest_Filter) ProtoMessage() {}
 
 func (x *ListAllPetsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[13]
+	mi := &file_moego_business_customer_v1_pet_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -794,7 +975,7 @@ func (x *ListAllPetsRequest_Filter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAllPetsRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListAllPetsRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{11, 0}
+	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{12, 0}
 }
 
 func (x *ListAllPetsRequest_Filter) GetCustomerIds() []string {
@@ -815,13 +996,43 @@ var File_moego_business_customer_v1_pet_service_proto protoreflect.FileDescripto
 
 const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/customer/v1/pet_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a moego/common/v1/pagination.proto\"p\n" +
+	",moego/business/customer/v1/pet_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\"p\n" +
 	"\x10CreatePetRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x126\n" +
 	"\x03pet\x18\x02 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x02R\x03pet\"K\n" +
 	"\x11CreatePetResponse\x126\n" +
-	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x03R\x03pet\"J\n" +
+	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x03R\x03pet\"\x86\x06\n" +
+	"\x10UpdatePetRequest\x12$\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
+	"customerId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tH\x00R\x04name\x88\x01\x01\x122\n" +
+	"\bbirthday\x18\x04 \x01(\v2\x11.google.type.DateH\x01R\bbirthday\x88\x01\x01\x12=\n" +
+	"\x04type\x18\x05 \x01(\x0e2$.moego.business.customer.v1.Pet.TypeH\x02R\x04type\x88\x01\x01\x12\x19\n" +
+	"\x05breed\x18\x06 \x01(\tH\x03R\x05breed\x88\x01\x01\x12C\n" +
+	"\x06gender\x18\a \x01(\x0e2&.moego.business.customer.v1.Pet.GenderH\x04R\x06gender\x88\x01\x01\x124\n" +
+	"\x06weight\x18\b \x01(\v2\x17.moego.common.v1.WeightH\x05R\x06weight\x88\x01\x01\x12\x19\n" +
+	"\x05fixed\x18\t \x01(\tH\x06R\x05fixed\x88\x01\x01\x12\x17\n" +
+	"\x04coat\x18\n" +
+	" \x01(\tH\aR\x04coat\x88\x01\x01\x12\x1f\n" +
+	"\bbehavior\x18\v \x01(\tH\bR\bbehavior\x88\x01\x01\x12:\n" +
+	"\x03vet\x18\f \x01(\v2#.moego.business.customer.v1.Pet.VetH\tR\x03vet\x88\x01\x01\x12b\n" +
+	"\x11evaluation_status\x18\r \x01(\x0e20.moego.business.customer.v1.Pet.EvaluationStatusH\n" +
+	"R\x10evaluationStatus\x88\x01\x01\x12\x19\n" +
+	"\x05photo\x18\x0e \x01(\tH\vR\x05photo\x88\x01\x01B\a\n" +
+	"\x05_nameB\v\n" +
+	"\t_birthdayB\a\n" +
+	"\x05_typeB\b\n" +
+	"\x06_breedB\t\n" +
+	"\a_genderB\t\n" +
+	"\a_weightB\b\n" +
+	"\x06_fixedB\a\n" +
+	"\x05_coatB\v\n" +
+	"\t_behaviorB\x06\n" +
+	"\x04_vetB\x14\n" +
+	"\x12_evaluation_statusB\b\n" +
+	"\x06_photo\"J\n" +
 	"\rGetPetRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12\x13\n" +
@@ -868,10 +1079,11 @@ const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"\x11last_updated_time\x18\x02 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\x0flastUpdatedTime\"r\n" +
 	"\x13ListAllPetsResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x123\n" +
-	"\x04pets\x18\x02 \x03(\v2\x1f.moego.business.customer.v1.PetR\x04pets2\xe4\b\n" +
+	"\x04pets\x18\x02 \x03(\v2\x1f.moego.business.customer.v1.PetR\x04pets2\xf3\t\n" +
 	"\n" +
 	"PetService\x12\x95\x01\n" +
-	"\tCreatePet\x12,.moego.business.customer.v1.CreatePetRequest\x1a-.moego.business.customer.v1.CreatePetResponse\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/customers/{customer_id}/pets\x12\x83\x01\n" +
+	"\tCreatePet\x12,.moego.business.customer.v1.CreatePetRequest\x1a-.moego.business.customer.v1.CreatePetResponse\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/customers/{customer_id}/pets\x12\x8c\x01\n" +
+	"\tUpdatePet\x12,.moego.business.customer.v1.UpdatePetRequest\x1a\x1f.moego.business.customer.v1.Pet\"0\x82\xd3\xe4\x93\x02*:\x01*\x1a%/v1/customers/{customer_id}/pets/{id}\x12\x83\x01\n" +
 	"\x06GetPet\x12).moego.business.customer.v1.GetPetRequest\x1a\x1f.moego.business.customer.v1.Pet\"-\x82\xd3\xe4\x93\x02'\x12%/v1/customers/{customer_id}/pets/{id}\x12\x97\x01\n" +
 	"\bListPets\x12+.moego.business.customer.v1.ListPetsRequest\x1a,.moego.business.customer.v1.ListPetsResponse\"0\x82\xd3\xe4\x93\x02*:\x01*\"%/v1/customers/{customer_id}/pets:list\x12\xaf\x01\n" +
 	"\x0eAppendPetCodes\x121.moego.business.customer.v1.AppendPetCodesRequest\x1a2.moego.business.customer.v1.AppendPetCodesResponse\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/customers/{customer_id}/pets/{id}/codes\x12\xaf\x01\n" +
@@ -892,60 +1104,75 @@ func file_moego_business_customer_v1_pet_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_customer_v1_pet_service_proto_rawDescData
 }
 
-var file_moego_business_customer_v1_pet_service_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_moego_business_customer_v1_pet_service_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_moego_business_customer_v1_pet_service_proto_goTypes = []any{
 	(*CreatePetRequest)(nil),          // 0: moego.business.customer.v1.CreatePetRequest
 	(*CreatePetResponse)(nil),         // 1: moego.business.customer.v1.CreatePetResponse
-	(*GetPetRequest)(nil),             // 2: moego.business.customer.v1.GetPetRequest
-	(*ListPetsRequest)(nil),           // 3: moego.business.customer.v1.ListPetsRequest
-	(*ListPetsResponse)(nil),          // 4: moego.business.customer.v1.ListPetsResponse
-	(*AppendPetCodesRequest)(nil),     // 5: moego.business.customer.v1.AppendPetCodesRequest
-	(*AppendPetCodesResponse)(nil),    // 6: moego.business.customer.v1.AppendPetCodesResponse
-	(*AppendPetNotesRequest)(nil),     // 7: moego.business.customer.v1.AppendPetNotesRequest
-	(*AppendPetNotesResponse)(nil),    // 8: moego.business.customer.v1.AppendPetNotesResponse
-	(*ListPetNotesRequest)(nil),       // 9: moego.business.customer.v1.ListPetNotesRequest
-	(*ListPetNotesResponse)(nil),      // 10: moego.business.customer.v1.ListPetNotesResponse
-	(*ListAllPetsRequest)(nil),        // 11: moego.business.customer.v1.ListAllPetsRequest
-	(*ListAllPetsResponse)(nil),       // 12: moego.business.customer.v1.ListAllPetsResponse
-	(*ListAllPetsRequest_Filter)(nil), // 13: moego.business.customer.v1.ListAllPetsRequest.Filter
-	(*Pet)(nil),                       // 14: moego.business.customer.v1.Pet
-	(*Pet_Code)(nil),                  // 15: moego.business.customer.v1.Pet.Code
-	(*Pet_Note)(nil),                  // 16: moego.business.customer.v1.Pet.Note
-	(*commonpb.Pagination)(nil),       // 17: moego.common.v1.Pagination
-	(*interval.Interval)(nil),         // 18: google.type.Interval
+	(*UpdatePetRequest)(nil),          // 2: moego.business.customer.v1.UpdatePetRequest
+	(*GetPetRequest)(nil),             // 3: moego.business.customer.v1.GetPetRequest
+	(*ListPetsRequest)(nil),           // 4: moego.business.customer.v1.ListPetsRequest
+	(*ListPetsResponse)(nil),          // 5: moego.business.customer.v1.ListPetsResponse
+	(*AppendPetCodesRequest)(nil),     // 6: moego.business.customer.v1.AppendPetCodesRequest
+	(*AppendPetCodesResponse)(nil),    // 7: moego.business.customer.v1.AppendPetCodesResponse
+	(*AppendPetNotesRequest)(nil),     // 8: moego.business.customer.v1.AppendPetNotesRequest
+	(*AppendPetNotesResponse)(nil),    // 9: moego.business.customer.v1.AppendPetNotesResponse
+	(*ListPetNotesRequest)(nil),       // 10: moego.business.customer.v1.ListPetNotesRequest
+	(*ListPetNotesResponse)(nil),      // 11: moego.business.customer.v1.ListPetNotesResponse
+	(*ListAllPetsRequest)(nil),        // 12: moego.business.customer.v1.ListAllPetsRequest
+	(*ListAllPetsResponse)(nil),       // 13: moego.business.customer.v1.ListAllPetsResponse
+	(*ListAllPetsRequest_Filter)(nil), // 14: moego.business.customer.v1.ListAllPetsRequest.Filter
+	(*Pet)(nil),                       // 15: moego.business.customer.v1.Pet
+	(*date.Date)(nil),                 // 16: google.type.Date
+	(Pet_Type)(0),                     // 17: moego.business.customer.v1.Pet.Type
+	(Pet_Gender)(0),                   // 18: moego.business.customer.v1.Pet.Gender
+	(*commonpb.Weight)(nil),           // 19: moego.common.v1.Weight
+	(*Pet_Vet)(nil),                   // 20: moego.business.customer.v1.Pet.Vet
+	(Pet_EvaluationStatus)(0),         // 21: moego.business.customer.v1.Pet.EvaluationStatus
+	(*Pet_Code)(nil),                  // 22: moego.business.customer.v1.Pet.Code
+	(*Pet_Note)(nil),                  // 23: moego.business.customer.v1.Pet.Note
+	(*commonpb.Pagination)(nil),       // 24: moego.common.v1.Pagination
+	(*interval.Interval)(nil),         // 25: google.type.Interval
 }
 var file_moego_business_customer_v1_pet_service_proto_depIdxs = []int32{
-	14, // 0: moego.business.customer.v1.CreatePetRequest.pet:type_name -> moego.business.customer.v1.Pet
-	14, // 1: moego.business.customer.v1.CreatePetResponse.pet:type_name -> moego.business.customer.v1.Pet
-	14, // 2: moego.business.customer.v1.ListPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
-	15, // 3: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
-	16, // 4: moego.business.customer.v1.AppendPetNotesRequest.notes:type_name -> moego.business.customer.v1.Pet.Note
-	16, // 5: moego.business.customer.v1.AppendPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
-	17, // 6: moego.business.customer.v1.ListPetNotesRequest.pagination:type_name -> moego.common.v1.Pagination
-	16, // 7: moego.business.customer.v1.ListPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
-	17, // 8: moego.business.customer.v1.ListAllPetsRequest.pagination:type_name -> moego.common.v1.Pagination
-	13, // 9: moego.business.customer.v1.ListAllPetsRequest.filter:type_name -> moego.business.customer.v1.ListAllPetsRequest.Filter
-	14, // 10: moego.business.customer.v1.ListAllPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
-	18, // 11: moego.business.customer.v1.ListAllPetsRequest.Filter.last_updated_time:type_name -> google.type.Interval
-	0,  // 12: moego.business.customer.v1.PetService.CreatePet:input_type -> moego.business.customer.v1.CreatePetRequest
-	2,  // 13: moego.business.customer.v1.PetService.GetPet:input_type -> moego.business.customer.v1.GetPetRequest
-	3,  // 14: moego.business.customer.v1.PetService.ListPets:input_type -> moego.business.customer.v1.ListPetsRequest
-	5,  // 15: moego.business.customer.v1.PetService.AppendPetCodes:input_type -> moego.business.customer.v1.AppendPetCodesRequest
-	7,  // 16: moego.business.customer.v1.PetService.AppendPetNotes:input_type -> moego.business.customer.v1.AppendPetNotesRequest
-	9,  // 17: moego.business.customer.v1.PetService.ListPetNotes:input_type -> moego.business.customer.v1.ListPetNotesRequest
-	11, // 18: moego.business.customer.v1.PetService.ListAllPets:input_type -> moego.business.customer.v1.ListAllPetsRequest
-	1,  // 19: moego.business.customer.v1.PetService.CreatePet:output_type -> moego.business.customer.v1.CreatePetResponse
-	14, // 20: moego.business.customer.v1.PetService.GetPet:output_type -> moego.business.customer.v1.Pet
-	4,  // 21: moego.business.customer.v1.PetService.ListPets:output_type -> moego.business.customer.v1.ListPetsResponse
-	6,  // 22: moego.business.customer.v1.PetService.AppendPetCodes:output_type -> moego.business.customer.v1.AppendPetCodesResponse
-	8,  // 23: moego.business.customer.v1.PetService.AppendPetNotes:output_type -> moego.business.customer.v1.AppendPetNotesResponse
-	10, // 24: moego.business.customer.v1.PetService.ListPetNotes:output_type -> moego.business.customer.v1.ListPetNotesResponse
-	12, // 25: moego.business.customer.v1.PetService.ListAllPets:output_type -> moego.business.customer.v1.ListAllPetsResponse
-	19, // [19:26] is the sub-list for method output_type
-	12, // [12:19] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	15, // 0: moego.business.customer.v1.CreatePetRequest.pet:type_name -> moego.business.customer.v1.Pet
+	15, // 1: moego.business.customer.v1.CreatePetResponse.pet:type_name -> moego.business.customer.v1.Pet
+	16, // 2: moego.business.customer.v1.UpdatePetRequest.birthday:type_name -> google.type.Date
+	17, // 3: moego.business.customer.v1.UpdatePetRequest.type:type_name -> moego.business.customer.v1.Pet.Type
+	18, // 4: moego.business.customer.v1.UpdatePetRequest.gender:type_name -> moego.business.customer.v1.Pet.Gender
+	19, // 5: moego.business.customer.v1.UpdatePetRequest.weight:type_name -> moego.common.v1.Weight
+	20, // 6: moego.business.customer.v1.UpdatePetRequest.vet:type_name -> moego.business.customer.v1.Pet.Vet
+	21, // 7: moego.business.customer.v1.UpdatePetRequest.evaluation_status:type_name -> moego.business.customer.v1.Pet.EvaluationStatus
+	15, // 8: moego.business.customer.v1.ListPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
+	22, // 9: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
+	23, // 10: moego.business.customer.v1.AppendPetNotesRequest.notes:type_name -> moego.business.customer.v1.Pet.Note
+	23, // 11: moego.business.customer.v1.AppendPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
+	24, // 12: moego.business.customer.v1.ListPetNotesRequest.pagination:type_name -> moego.common.v1.Pagination
+	23, // 13: moego.business.customer.v1.ListPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
+	24, // 14: moego.business.customer.v1.ListAllPetsRequest.pagination:type_name -> moego.common.v1.Pagination
+	14, // 15: moego.business.customer.v1.ListAllPetsRequest.filter:type_name -> moego.business.customer.v1.ListAllPetsRequest.Filter
+	15, // 16: moego.business.customer.v1.ListAllPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
+	25, // 17: moego.business.customer.v1.ListAllPetsRequest.Filter.last_updated_time:type_name -> google.type.Interval
+	0,  // 18: moego.business.customer.v1.PetService.CreatePet:input_type -> moego.business.customer.v1.CreatePetRequest
+	2,  // 19: moego.business.customer.v1.PetService.UpdatePet:input_type -> moego.business.customer.v1.UpdatePetRequest
+	3,  // 20: moego.business.customer.v1.PetService.GetPet:input_type -> moego.business.customer.v1.GetPetRequest
+	4,  // 21: moego.business.customer.v1.PetService.ListPets:input_type -> moego.business.customer.v1.ListPetsRequest
+	6,  // 22: moego.business.customer.v1.PetService.AppendPetCodes:input_type -> moego.business.customer.v1.AppendPetCodesRequest
+	8,  // 23: moego.business.customer.v1.PetService.AppendPetNotes:input_type -> moego.business.customer.v1.AppendPetNotesRequest
+	10, // 24: moego.business.customer.v1.PetService.ListPetNotes:input_type -> moego.business.customer.v1.ListPetNotesRequest
+	12, // 25: moego.business.customer.v1.PetService.ListAllPets:input_type -> moego.business.customer.v1.ListAllPetsRequest
+	1,  // 26: moego.business.customer.v1.PetService.CreatePet:output_type -> moego.business.customer.v1.CreatePetResponse
+	15, // 27: moego.business.customer.v1.PetService.UpdatePet:output_type -> moego.business.customer.v1.Pet
+	15, // 28: moego.business.customer.v1.PetService.GetPet:output_type -> moego.business.customer.v1.Pet
+	5,  // 29: moego.business.customer.v1.PetService.ListPets:output_type -> moego.business.customer.v1.ListPetsResponse
+	7,  // 30: moego.business.customer.v1.PetService.AppendPetCodes:output_type -> moego.business.customer.v1.AppendPetCodesResponse
+	9,  // 31: moego.business.customer.v1.PetService.AppendPetNotes:output_type -> moego.business.customer.v1.AppendPetNotesResponse
+	11, // 32: moego.business.customer.v1.PetService.ListPetNotes:output_type -> moego.business.customer.v1.ListPetNotesResponse
+	13, // 33: moego.business.customer.v1.PetService.ListAllPets:output_type -> moego.business.customer.v1.ListAllPetsResponse
+	26, // [26:34] is the sub-list for method output_type
+	18, // [18:26] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_pet_service_proto_init() }
@@ -954,13 +1181,14 @@ func file_moego_business_customer_v1_pet_service_proto_init() {
 		return
 	}
 	file_moego_business_customer_v1_pet_proto_init()
+	file_moego_business_customer_v1_pet_service_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_pet_service_proto_rawDesc), len(file_moego_business_customer_v1_pet_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

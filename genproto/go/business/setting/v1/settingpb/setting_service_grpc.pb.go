@@ -21,7 +21,10 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	SettingService_ListPetCodes_FullMethodName     = "/moego.business.setting.v1.SettingService/ListPetCodes"
 	SettingService_ListCustomerTags_FullMethodName = "/moego.business.setting.v1.SettingService/ListCustomerTags"
+	SettingService_GetService_FullMethodName       = "/moego.business.setting.v1.SettingService/GetService"
 	SettingService_ListServices_FullMethodName     = "/moego.business.setting.v1.SettingService/ListServices"
+	SettingService_CreateService_FullMethodName    = "/moego.business.setting.v1.SettingService/CreateService"
+	SettingService_UpdateService_FullMethodName    = "/moego.business.setting.v1.SettingService/UpdateService"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -51,6 +54,12 @@ type SettingServiceClient interface {
 	// Returns all active tags for the specified company.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerTags(ctx context.Context, in *ListCustomerTagRequest, opts ...grpc.CallOption) (*ListCustomerTagResponse, error)
+	// Gets the details of a specific service.
+	//
+	// Retrieves detailed information about a service identified by its ID.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns NOT_FOUND if the service does not exist.
+	GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error)
 	// Lists available services based on specified criteria.
 	//
 	// Services can be filtered by business location and service type.
@@ -60,6 +69,24 @@ type SettingServiceClient interface {
 	// Returns services matching the filter criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error)
+	// Creates a new service.
+	//
+	// Adds a new service definition to the system. The service must be associated with
+	// a specific company and can optionally belong to one or more business locations.
+	//
+	// Returns the created service with assigned ID.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns ALREADY_EXISTS if a service with the same ID already exists.
+	CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*Service, error)
+	// Updates an existing service.
+	//
+	// Modifies the details of an existing service. The update may affect all business
+	// locations where this service is used.
+	//
+	// Returns the updated service.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns NOT_FOUND if the service does not exist.
+	UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*Service, error)
 }
 
 type settingServiceClient struct {
@@ -90,10 +117,40 @@ func (c *settingServiceClient) ListCustomerTags(ctx context.Context, in *ListCus
 	return out, nil
 }
 
+func (c *settingServiceClient) GetService(ctx context.Context, in *GetServiceRequest, opts ...grpc.CallOption) (*Service, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Service)
+	err := c.cc.Invoke(ctx, SettingService_GetService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *settingServiceClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListServicesResponse)
 	err := c.cc.Invoke(ctx, SettingService_ListServices_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) CreateService(ctx context.Context, in *CreateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Service)
+	err := c.cc.Invoke(ctx, SettingService_CreateService_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*Service, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Service)
+	err := c.cc.Invoke(ctx, SettingService_UpdateService_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -127,6 +184,12 @@ type SettingServiceServer interface {
 	// Returns all active tags for the specified company.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error)
+	// Gets the details of a specific service.
+	//
+	// Retrieves detailed information about a service identified by its ID.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns NOT_FOUND if the service does not exist.
+	GetService(context.Context, *GetServiceRequest) (*Service, error)
 	// Lists available services based on specified criteria.
 	//
 	// Services can be filtered by business location and service type.
@@ -136,6 +199,24 @@ type SettingServiceServer interface {
 	// Returns services matching the filter criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error)
+	// Creates a new service.
+	//
+	// Adds a new service definition to the system. The service must be associated with
+	// a specific company and can optionally belong to one or more business locations.
+	//
+	// Returns the created service with assigned ID.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns ALREADY_EXISTS if a service with the same ID already exists.
+	CreateService(context.Context, *CreateServiceRequest) (*Service, error)
+	// Updates an existing service.
+	//
+	// Modifies the details of an existing service. The update may affect all business
+	// locations where this service is used.
+	//
+	// Returns the updated service.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns NOT_FOUND if the service does not exist.
+	UpdateService(context.Context, *UpdateServiceRequest) (*Service, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -152,8 +233,17 @@ func (UnimplementedSettingServiceServer) ListPetCodes(context.Context, *ListPetC
 func (UnimplementedSettingServiceServer) ListCustomerTags(context.Context, *ListCustomerTagRequest) (*ListCustomerTagResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCustomerTags not implemented")
 }
+func (UnimplementedSettingServiceServer) GetService(context.Context, *GetServiceRequest) (*Service, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
+}
 func (UnimplementedSettingServiceServer) ListServices(context.Context, *ListServicesRequest) (*ListServicesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListServices not implemented")
+}
+func (UnimplementedSettingServiceServer) CreateService(context.Context, *CreateServiceRequest) (*Service, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateService not implemented")
+}
+func (UnimplementedSettingServiceServer) UpdateService(context.Context, *UpdateServiceRequest) (*Service, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateService not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -212,6 +302,24 @@ func _SettingService_ListCustomerTags_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_GetService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).GetService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_GetService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).GetService(ctx, req.(*GetServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _SettingService_ListServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListServicesRequest)
 	if err := dec(in); err != nil {
@@ -226,6 +334,42 @@ func _SettingService_ListServices_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingServiceServer).ListServices(ctx, req.(*ListServicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_CreateService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).CreateService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_CreateService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).CreateService(ctx, req.(*CreateServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_UpdateService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).UpdateService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_UpdateService_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).UpdateService(ctx, req.(*UpdateServiceRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -246,8 +390,20 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SettingService_ListCustomerTags_Handler,
 		},
 		{
+			MethodName: "GetService",
+			Handler:    _SettingService_GetService_Handler,
+		},
+		{
 			MethodName: "ListServices",
 			Handler:    _SettingService_ListServices_Handler,
+		},
+		{
+			MethodName: "CreateService",
+			Handler:    _SettingService_CreateService_Handler,
+		},
+		{
+			MethodName: "UpdateService",
+			Handler:    _SettingService_UpdateService_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

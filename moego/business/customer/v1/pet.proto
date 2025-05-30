@@ -240,7 +240,7 @@ message Pet {
 
   // timestamp, When the pet was created.
   google.protobuf.Timestamp created_time = 18;
-  
+
   // timestamp, When the pet was last modified.
   google.protobuf.Timestamp last_updated_time = 19;
 

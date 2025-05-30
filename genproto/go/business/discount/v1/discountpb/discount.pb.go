@@ -319,7 +319,7 @@ var File_moego_business_discount_v1_discount_proto protoreflect.FileDescriptor
 
 const file_moego_business_discount_v1_discount_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/discount/v1/discount.proto\x12\x1amoego.business.discount.v1\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xaa\x03\n" +
+	")moego/business/discount/v1/discount.proto\x12\x1amoego.business.discount.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\"\xaa\x03\n" +
 	"\bDiscount\x12\x12\n" +
 	"\x04code\x18\x01 \x01(\tR\x04code\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12,\n" +

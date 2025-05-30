@@ -6,8 +6,9 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
-import "moego/common/v1/pagination.proto";
 import "moego/business/setting/v1/service.proto";
+import "moego/common/v1/pagination.proto";
+import "google/type/money.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
@@ -49,6 +50,15 @@ service SettingService {
     };
   }
 
+  // Gets the details of a specific service.
+  //
+  // Retrieves detailed information about a service identified by its ID.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns NOT_FOUND if the service does not exist.
+  rpc GetService(GetServiceRequest) returns (Service) {
+    option (google.api.http) = {get: "/v1/setting/companies/{company_id}/services/{id}"};
+  }
+
   // Lists available services based on specified criteria.
   //
   // Services can be filtered by business location and service type.
@@ -60,6 +70,36 @@ service SettingService {
   rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/services:list"
+      body: "*"
+    };
+  }
+
+  // Creates a new service.
+  //
+  // Adds a new service definition to the system. The service must be associated with
+  // a specific company and can optionally belong to one or more business locations.
+  //
+  // Returns the created service with assigned ID.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns ALREADY_EXISTS if a service with the same ID already exists.
+  rpc CreateService(CreateServiceRequest) returns (Service) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/services"
+      body: "*"
+    };
+  }
+
+  // Updates an existing service.
+  //
+  // Modifies the details of an existing service. The update may affect all business
+  // locations where this service is used.
+  //
+  // Returns the updated service.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns NOT_FOUND if the service does not exist.
+  rpc UpdateService(UpdateServiceRequest) returns (Service) {
+    option (google.api.http) = {
+      put: "/v1/setting/companies/{company_id}/services/{id}"
       body: "*"
     };
   }
@@ -118,6 +158,17 @@ message ListServicesRequest {
   Filter filter = 4;
 }
 
+// Request message for getting a service.
+message GetServiceRequest {
+  // ID of the company that owns the service.
+  // Required. Must be a valid company ID.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the service to retrieve.
+  // Required. Must be a valid service ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
 // Response message for listing services.
 message ListServicesResponse {
   // Token for retrieving the next page of results
@@ -127,4 +178,98 @@ message ListServicesResponse {
   // List of services matching the request criteria
   // May be empty if no services match
   repeated Service services = 2;
+}
+
+// Request message for creating a service.
+message CreateServiceRequest {
+  // ID of the company to create the service under.
+  // Required. Must be a valid company ID.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the service (e.g., "Grooming", "Boarding")
+  // Required. Should be human-readable and unique within the company
+  string name = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business locations where this service is available
+  // Optional. If empty, service is available at all locations
+  repeated string business_ids = 3;
+
+  // Type of service (e.g., grooming, boarding, daycare)
+  // Required. Used for categorization and filtering
+  Service.ItemType service_item_type = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // Base price for the service
+  // Can be adjusted based on pet size, breed, or add-ons
+  google.type.Money price = 5  [(google.api.field_behavior) = REQUIRED];
+
+  // Whether this is a primary service or an add-on
+  // Affects how the service can be booked
+  Service.Type service_type = 6  [(google.api.field_behavior) = REQUIRED];
+
+  // Duration of the service in minutes
+  // Used for scheduling and resource allocation
+  int32 service_time = 7;
+
+  // Whether this service is available at all business locations
+  // If false, check available_business_ids for specific locations
+  bool available_all_business = 8;
+
+  // List of business locations where this service is available
+  // Only used when available_all_business is false
+  repeated string available_business_ids = 9;
+
+  // Whether this service can be performed by all staff members
+  // If false, check available_staff_ids for specific staff
+  bool available_all_staff = 10;
+
+  // List of staff members who can perform this service
+  // Only used when available_all_staff is false
+  repeated string available_staff_ids = 11;
+}
+
+// Request message for updating a service.
+message UpdateServiceRequest {
+  // ID of the company that owns the service.
+  // Required. Must be a valid company ID.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier of the service to update.
+  // Required. Must be a valid service ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the service (e.g., "Grooming", "Boarding")
+  // Required. Should be human-readable and unique within the company
+  string name = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business locations where this service is available
+  // Optional. If empty, service is available at all locations
+  repeated string business_ids = 4;
+
+  // Base price for the service
+  // Can be adjusted based on pet size, breed, or add-ons
+  google.type.Money price = 5  [(google.api.field_behavior) = REQUIRED];
+
+
+  // Duration of the service in minutes
+  // Used for scheduling and resource allocation
+  int32 service_time = 6;
+
+  // Whether this service is available at all business locations
+  // If false, check available_business_ids for specific locations
+  bool available_all_business = 7;
+
+  // List of business locations where this service is available
+  // Only used when available_all_business is false
+  repeated string available_business_ids = 8;
+
+  // Whether this service can be performed by all staff members
+  // If false, check available_staff_ids for specific staff
+  bool available_all_staff = 9;
+
+  // List of staff members who can perform this service
+  // Only used when available_all_staff is false
+  repeated string available_staff_ids = 10;
+
+  // Whether this service is inactive
+  bool inactive = 11;
 }

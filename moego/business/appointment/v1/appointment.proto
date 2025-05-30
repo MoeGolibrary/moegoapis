@@ -13,8 +13,8 @@ option java_multiple_files = true;
 option java_outer_classname = "AppointmentProto";
 option java_package = "com.moego.api.business.appointment.v1";
 
-// The appointment object represents a scheduled pet service booking. When an appointment is created, 
-// it will transition through various states from unconfirmed to finished. Each appointment is associated 
+// The appointment object represents a scheduled pet service booking. When an appointment is created,
+// it will transition through various states from unconfirmed to finished. Each appointment is associated
 // with exactly one customer and one business location, but can include multiple pets and services.
 // The appointment tracks both the service status and payment status throughout its lifecycle.
 message Appointment {
@@ -64,55 +64,55 @@ message Appointment {
 
   // string, Unique identifier for the appointment.
   string id = 1;
-  
+
   // string, The business location's identifier where service will be performed.
   string business_id = 2;
-  
+
   // string, The customer's identifier who booked the appointment.
   string customer_id = 3;
-  
+
   // object(Address), Service location details. Required for home service appointments.
   moego.common.v1.Address address = 4;
-  
+
   // object(Interval), The start and end time of the appointment.
   google.type.Interval duration = 5;
-  
+
   // array(PetServiceDetail), List of services booked for each pet.
   repeated PetServiceDetail pet_service_details = 6;
-  
+
   // enum(Status), Current appointment state.
   Status status = 7;
-  
+
   // string, Optional notes about the appointment.
   string ticket_comment = 8;
-  
+
   // string, UI display color in hex format (e.g., "#FF0000").
   string color_code = 9;
-  
+
   // string, Identifier of the associated payment order.
   string order_id = 10;
-  
+
   // object(Money), Total cost for all services.
   google.type.Money total_amount = 11;
-  
+
   // object(Money), Amount received from customer.
   google.type.Money paid_amount = 12;
-  
+
   // object(Money), Amount returned to customer.
   google.type.Money refund_amount = 13;
-  
+
   // enum(PaymentStatus), Current payment state.
   PaymentStatus payment_status = 14;
-  
+
   // string, Identifier of appointment creator.
   string created_by = 15;
-  
+
   // timestamp, When the appointment was created.
   google.protobuf.Timestamp created_time = 16;
-  
+
   // string, Identifier of last modifier who should be a staff working at the location
   string last_updated_by = 17;
-  
+
   // timestamp, When the appointment was last modified.
   google.protobuf.Timestamp last_updated_time = 18;
 
