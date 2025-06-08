@@ -24,6 +24,7 @@ const (
 	AppointmentService_CreateAppointment_FullMethodName     = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
 	AppointmentService_RescheduleAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/RescheduleAppointment"
 	AppointmentService_CancelAppointment_FullMethodName     = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
+	AppointmentService_ListGroomingReports_FullMethodName   = "/moego.business.appointment.v1.AppointmentService/ListGroomingReports"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -67,6 +68,8 @@ type AppointmentServiceClient interface {
 	// Sets the appointment status to CANCELED. This action cannot be undone.
 	// Notifications will be sent to affected customers and staff.
 	CancelAppointment(ctx context.Context, in *CancelAppointmentRequest, opts ...grpc.CallOption) (*Appointment, error)
+	// List grooming reports of appointments
+	ListGroomingReports(ctx context.Context, in *ListGroomingReportsRequest, opts ...grpc.CallOption) (*ListGroomingReportsResponse, error)
 }
 
 type appointmentServiceClient struct {
@@ -127,6 +130,16 @@ func (c *appointmentServiceClient) CancelAppointment(ctx context.Context, in *Ca
 	return out, nil
 }
 
+func (c *appointmentServiceClient) ListGroomingReports(ctx context.Context, in *ListGroomingReportsRequest, opts ...grpc.CallOption) (*ListGroomingReportsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListGroomingReportsResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_ListGroomingReports_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppointmentServiceServer is the server API for AppointmentService service.
 // All implementations must embed UnimplementedAppointmentServiceServer
 // for forward compatibility.
@@ -168,6 +181,8 @@ type AppointmentServiceServer interface {
 	// Sets the appointment status to CANCELED. This action cannot be undone.
 	// Notifications will be sent to affected customers and staff.
 	CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error)
+	// List grooming reports of appointments
+	ListGroomingReports(context.Context, *ListGroomingReportsRequest) (*ListGroomingReportsResponse, error)
 	mustEmbedUnimplementedAppointmentServiceServer()
 }
 
@@ -192,6 +207,9 @@ func (UnimplementedAppointmentServiceServer) RescheduleAppointment(context.Conte
 }
 func (UnimplementedAppointmentServiceServer) CancelAppointment(context.Context, *CancelAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CancelAppointment not implemented")
+}
+func (UnimplementedAppointmentServiceServer) ListGroomingReports(context.Context, *ListGroomingReportsRequest) (*ListGroomingReportsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListGroomingReports not implemented")
 }
 func (UnimplementedAppointmentServiceServer) mustEmbedUnimplementedAppointmentServiceServer() {}
 func (UnimplementedAppointmentServiceServer) testEmbeddedByValue()                            {}
@@ -304,6 +322,24 @@ func _AppointmentService_CancelAppointment_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _AppointmentService_ListGroomingReports_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListGroomingReportsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppointmentServiceServer).ListGroomingReports(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: AppointmentService_ListGroomingReports_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppointmentServiceServer).ListGroomingReports(ctx, req.(*ListGroomingReportsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // AppointmentService_ServiceDesc is the grpc.ServiceDesc for AppointmentService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -330,6 +366,10 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CancelAppointment",
 			Handler:    _AppointmentService_CancelAppointment_Handler,
+		},
+		{
+			MethodName: "ListGroomingReports",
+			Handler:    _AppointmentService_ListGroomingReports_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

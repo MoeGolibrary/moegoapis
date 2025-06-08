@@ -201,9 +201,11 @@ type Appointment struct {
 	// timestamp, When the appointment was checked in, will be null when appointment is not checked in.
 	CheckInTime *timestamppb.Timestamp `protobuf:"bytes,19,opt,name=check_in_time,json=checkInTime,proto3" json:"check_in_time,omitempty"`
 	// timestamp, When the appointment was checked out.will be null when appointment is not checked out.
-	CheckOutTime  *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=check_out_time,json=checkOutTime,proto3" json:"check_out_time,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	CheckOutTime *timestamppb.Timestamp `protobuf:"bytes,20,opt,name=check_out_time,json=checkOutTime,proto3" json:"check_out_time,omitempty"`
+	// string, The booking request id associated with this appointment.
+	BookingRequestId *string `protobuf:"bytes,21,opt,name=booking_request_id,json=bookingRequestId,proto3,oneof" json:"booking_request_id,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Appointment) Reset() {
@@ -376,11 +378,18 @@ func (x *Appointment) GetCheckOutTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Appointment) GetBookingRequestId() string {
+	if x != nil && x.BookingRequestId != nil {
+		return *x.BookingRequestId
+	}
+	return ""
+}
+
 var File_moego_business_appointment_v1_appointment_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\x80\n" +
+	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xca\n" +
 	"\n" +
 	"\vAppointment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
@@ -408,7 +417,8 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x0flast_updated_by\x18\x11 \x01(\tR\rlastUpdatedBy\x12F\n" +
 	"\x11last_updated_time\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12>\n" +
 	"\rcheck_in_time\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\vcheckInTime\x12@\n" +
-	"\x0echeck_out_time\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\fcheckOutTime\"w\n" +
+	"\x0echeck_out_time\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\fcheckOutTime\x121\n" +
+	"\x12booking_request_id\x18\x15 \x01(\tH\x00R\x10bookingRequestId\x88\x01\x01\"w\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x0f\n" +
 	"\vUNCONFIRMED\x10\x01\x12\r\n" +
@@ -423,7 +433,8 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
 	"\x06UNPAID\x10\x01\x12\x10\n" +
 	"\fPARTIAL_PAID\x10\x02\x12\r\n" +
-	"\tFULL_PAID\x10\x03B\x9e\x01\n" +
+	"\tFULL_PAID\x10\x03B\x15\n" +
+	"\x13_booking_request_idB\x9e\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x10AppointmentProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (
@@ -476,6 +487,7 @@ func file_moego_business_appointment_v1_appointment_proto_init() {
 		return
 	}
 	file_moego_business_appointment_v1_pet_service_detail_proto_init()
+	file_moego_business_appointment_v1_appointment_proto_msgTypes[0].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

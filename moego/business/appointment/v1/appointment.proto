@@ -121,4 +121,7 @@ message Appointment {
 
   // timestamp, When the appointment was checked out.will be null when appointment is not checked out.
   google.protobuf.Timestamp check_out_time = 20;
+
+  // string, The booking request id associated with this appointment.
+  optional string booking_request_id = 21;
 }
