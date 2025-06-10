@@ -79,7 +79,11 @@ service AppointmentService {
   }
 
   // List grooming reports of appointments
-  rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {}
+  rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {
+    option (google.api.http) = {
+      post: "/v1/grooming_reports:list"
+    };
+  }
 }
 
 // Request to retrieve a specific appointment.
