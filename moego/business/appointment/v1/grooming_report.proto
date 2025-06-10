@@ -3,7 +3,6 @@ syntax = "proto3";
 package moego.business.appointment.v1;
 
 import "google/protobuf/timestamp.proto";
-import "moego/business/customer/v1/pet.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
