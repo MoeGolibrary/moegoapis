@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -76,6 +77,9 @@ service AppointmentService {
       body: "*"
     };
   }
+
+  // List grooming reports of appointments
+  rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {}
 }
 
 // Request to retrieve a specific appointment.
@@ -200,3 +204,21 @@ message CancelAppointmentRequest {
   // Must match the business_id of the appointment.
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
+
+
+// Request to list grooming reports
+message ListGroomingReportsRequest {
+  // array(string) , The unique identifier of the appointment. Max: 500
+  repeated string appointment_ids = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response to list grooming reports
+message ListGroomingReportsResponse {
+  // array(GroomingReport), The grooming reports.
+  repeated GroomingReport grooming_reports = 1;
+}
+

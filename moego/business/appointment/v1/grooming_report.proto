@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package moego.business.appointment.v1;
+
+import "google/protobuf/timestamp.proto";
+import "moego/business/customer/v1/pet.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
+option java_multiple_files = true;
+option java_outer_classname = "GroomingReportProto";
+option java_package = "com.moego.api.business.appointment.v1";
+
+// GroomingReport represents a grooming report generated after a pet grooming service.
+// It contains information about the pet, report status, sending methods and logs,
+// and is used for customer communication and internal record keeping.
+message GroomingReport {
+
+  // Status of the grooming report throughout its lifecycle.
+  enum Status {
+    // Not intended for direct use. Indicates a system anomaly.
+    STATUS_UNSPECIFIED = 0;
+    // Report is created but not submitted (draft).
+    CREATED = 1;
+    // The report is created but not submitted.
+    DRAFT = 2;
+    // Report has been submitted and is ready to be sent.
+    SUBMITTED = 3;
+    // Report has been successfully sent to the customer.
+    SENT = 4;
+  }
+
+  // Type of send action that triggered the report delivery.
+  enum SendType {
+    // Not intended for direct use. Indicates a system anomaly.
+    SEND_TYPE_UNSPECIFIED = 0;
+    // Report was manually sent by a user.
+    MANUAL = 1;
+    // Report was automatically sent by the system.
+    AUTO = 2;
+  }
+
+  // Supported delivery methods for sending the report.
+  enum SendMethod {
+    // Not intended for direct use. Indicates a system anomaly.
+    SEND_METHOD_UNSPECIFIED = 0;
+    // Delivery via SMS.
+    SMS = 1;
+    // Delivery via Email.
+    EMAIL = 2;
+  }
+
+  // Status result of a send attempt.
+  enum SendStatus {
+    // Not intended for direct use. Indicates a system anomaly.
+    SEND_STATUS_UNSPECIFIED = 0;
+    // Send attempt was successful.
+    SEND_SUCCESS = 1;
+    // Send attempt failed.
+    SEND_FAIL = 2;
+  }
+
+  // string, The unique identifier of the grooming report.
+  string id = 1;
+
+  // string, The appointment associated with this grooming report.
+  string appointment_id = 2;
+
+  // string, The business location's identifier where service will be performed.
+  string business_id = 3;
+
+  // string, The customer's identifier who owns the grooming report.
+  string customer_id = 4;
+
+  // string, The pet's identifier who owns the grooming report.
+  string pet_id = 5;
+
+  // string, JSON-formatted template content used to generate the report.
+  string template_json = 6;
+
+  // string, JSON-formatted actual content filled in based on the template and service data.
+  string content_json = 7;
+
+  // enum(Status), Current status of the grooming report.
+  Status status = 8;
+
+  // string, URL where the report can be accessed
+  string report_url = 9;
+
+  // enum(SendType), Indicates how the report was sent (manually or automatically).
+  SendType send_type = 10;
+
+  // timestamp, Timestamp when the current template was published.
+  google.protobuf.Timestamp template_publish_time = 11;
+
+  // array(SendMethod), List of available sending methods configured for this report.
+  repeated SendMethod sending_method_list = 12;
+
+  // array(SendMethod), List of sending methods selected during the last send attempt.
+  repeated SendMethod last_sending_method_list = 13;
+
+  // object(SendLog), Log entry for each send attempt made for this report.
+  message SendLog {
+
+    // enum(SendMethod), Method used for this send attempt.
+    SendMethod send_method = 1;
+
+    // enum(SendStatus), Result of this send attempt.
+    SendStatus send_status = 2;
+
+    // timestamp, Timestamp when the send attempt occurred.
+    google.protobuf.Timestamp sent_time = 3;
+
+    // string, Identifier of the staff or system that initiated the send.
+    string sender_id = 4;
+
+    // int64, Optional error code if the send failed.
+    optional int64 error_code = 5;
+
+    // string, Optional error message if the send failed.
+    optional string error_msg = 6;
+  }
+
+  // array(SendLog), A list of all send attempts made for this grooming report.
+  repeated SendLog send_log = 14;
+}
