@@ -7,7 +7,6 @@
 package appointmentpb
 
 import (
-	_ "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -503,7 +502,7 @@ var File_moego_business_appointment_v1_grooming_report_proto protoreflect.FileDe
 
 const file_moego_business_appointment_v1_grooming_report_proto_rawDesc = "" +
 	"\n" +
-	"3moego/business/appointment/v1/grooming_report.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$moego/business/customer/v1/pet.proto\"\xbf\v\n" +
+	"3moego/business/appointment/v1/grooming_report.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbf\v\n" +
 	"\x0eGroomingReport\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12%\n" +
 	"\x0eappointment_id\x18\x02 \x01(\tR\rappointmentId\x12\x1f\n" +
