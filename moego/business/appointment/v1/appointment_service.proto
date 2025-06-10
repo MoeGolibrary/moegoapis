@@ -82,6 +82,7 @@ service AppointmentService {
   rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {
     option (google.api.http) = {
       post: "/v1/grooming_reports:list"
+      body: "*"
     };
   }
 }

@@ -773,14 +773,14 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\"w\n" +
 	"\x1bListGroomingReportsResponse\x12X\n" +
-	"\x10grooming_reports\x18\x01 \x03(\v2-.moego.business.appointment.v1.GroomingReportR\x0fgroomingReports2\xcd\a\n" +
+	"\x10grooming_reports\x18\x01 \x03(\v2-.moego.business.appointment.v1.GroomingReportR\x0fgroomingReports2\xf1\a\n" +
 	"\x12AppointmentService\x12\x91\x01\n" +
 	"\x0eGetAppointment\x124.moego.business.appointment.v1.GetAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/appointments/{id}\x12\xa5\x01\n" +
 	"\x10ListAppointments\x126.moego.business.appointment.v1.ListAppointmentsRequest\x1a7.moego.business.appointment.v1.ListAppointmentsResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/appointments:list\x12\x95\x01\n" +
 	"\x11CreateAppointment\x127.moego.business.appointment.v1.CreateAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/appointments\x12\xad\x01\n" +
 	"\x15RescheduleAppointment\x12;.moego.business.appointment.v1.RescheduleAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/appointments/{id}:reschedule\x12\xa1\x01\n" +
-	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\x8e\x01\n" +
-	"\x13ListGroomingReports\x129.moego.business.appointment.v1.ListGroomingReportsRequest\x1a:.moego.business.appointment.v1.ListGroomingReportsResponse\"\x00B\xa5\x01\n" +
+	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\xb2\x01\n" +
+	"\x13ListGroomingReports\x129.moego.business.appointment.v1.ListGroomingReportsRequest\x1a:.moego.business.appointment.v1.ListGroomingReportsResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/grooming_reports:listB\xa5\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x17AppointmentServiceProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (
