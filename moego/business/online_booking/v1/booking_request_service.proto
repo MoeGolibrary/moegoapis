@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package moego.business.online_booking.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
+import "moego/business/online_booking/v1/booking_request.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
+option java_multiple_files = true;
+option java_outer_classname = "BookingRequestServiceProto";
+option java_package = "com.moego.api.business.online_booking.v1";
+
+// The BookingRequestService provides methods for managing online booking requests,
+// including retrieving individual requests and listing filtered sets.
+//
+// All methods require authentication and proper business context.
+service BookingRequestService {
+  // Retrieves a single booking request by ID.
+  //
+  // Returns detailed information about the customer, requested services,
+  // time window, and current status. Returns NOT_FOUND if not found.
+  rpc GetBookingRequest(GetBookingRequestRequest) returns (BookingRequest) {
+    option (google.api.http) = {get: "/v1/booking_requests/{id}"};
+  }
+
+  // Lists booking requests matching specified criteria.
+  //
+  // Returns a paginated list of booking requests filtered by time range,
+  // status, customer ID, or associated appointment ID.
+  rpc ListBookingRequests(ListBookingRequestsRequest) returns (ListBookingRequestResponse) {
+    option (google.api.http) = {
+      post: "/v1/booking_requests:list"
+      body: "*"
+    };
+  }
+
+}
+
+// Request to list booking requests matching specified criteria.
+message ListBookingRequestsRequest {
+  // Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The company identifier for multi-location businesses.
+  // Required for company-wide booking request listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business location IDs to include.
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the booking request list.
+  message Filter {
+    // Filter by the start time range of the booking request.
+    google.type.Interval start_time = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the end time range of the booking request.
+    google.type.Interval end_time = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the statuses of the booking requests.
+    // Example values: ["SUBMITTED", "WAIT_LIST", "SCHEDULED", "DECLINED", "DELETED"]
+    repeated BookingRequest.Status statuses = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Filter by the payment statuses of the booking requests.
+    // Supported values include: ["NO_PAYMENT", "WAITING", "PROCESSING", "SUCCESS", "FAILED"].
+    repeated BookingRequest.PaymentStatus payment_statuses = 4 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Filter by associated customer IDs.
+    repeated string customer_id = 5 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Filter by associated appointment IDs.
+    repeated string appointment_ids = 6 [(google.api.field_behavior) = OPTIONAL];
+
+    // Optional. Filter by whether the waitlist booking request is expired.
+    bool is_waitlist_expired = 7 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to narrow the results.
+  Filter filter = 4;
+}
+
+// Response for listing booking requests.
+message ListBookingRequestResponse {
+  // Token for retrieving the next page of results.
+  // Empty if there are no more results.
+  string next_page_token = 1;
+
+  // List of booking requests matching the request criteria.
+  // Ordered by start time in ascending order.
+  repeated BookingRequest booking_requests = 2;
+}
+
+// Request to get a booking request by its ID.
+message GetBookingRequestRequest {
+  // The unique identifier of the booking request to retrieve.
+  // Format: "obg_" followed by random characters
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The business location's identifier.
+  // Must match the business_id of the booking request.
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+}

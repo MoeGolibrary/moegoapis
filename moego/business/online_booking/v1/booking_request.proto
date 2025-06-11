@@ -1,0 +1,250 @@
+syntax = "proto3";
+
+package moego.business.online_booking.v1;
+
+import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
+import "google/type/interval.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
+import "moego/common/v1/address.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
+option java_multiple_files = true;
+option java_outer_classname = "BookingRequestServiceProto";
+option java_package = "com.moego.api.business.online_booking.v1";
+
+// BookingRequest represents a service appointment request made through digital channels.
+// These bookings can be made through the customer portal, mobile app, or website.
+// Each booking includes service details, timing preferences, and customer information
+// needed to schedule the appointment.
+message BookingRequest {
+  // Status represents the current state of the online booking request.
+  // This affects how the booking is processed and displayed in the system.
+  enum Status {
+    // unspecified
+    BOOKING_REQUEST_STATUS_UNSPECIFIED = 0;
+    // The user submitted it from online booking, but the business did not process it.
+    SUBMITTED = 1;
+    // moved to wait list
+    WAIT_LIST = 2;
+    // business accepts and scheduled to an appointment
+    SCHEDULED = 3;
+    // business rejects the booking request, it will be displayed in the canceled list.
+    DECLINED = 4;
+    // business deletes the booking request, it won't show up on any lists
+    DELETED = 5;
+  }
+
+  // payment status definition
+  enum PaymentStatus {
+    // unspecified
+    PAYMENT_STATUS_UNSPECIFIED = 0;
+    // no payment
+    // B 端没有开启 prepay
+    NO_PAYMENT = 1;
+    // waiting: 成功 submit，但是还没触发支付的状态（等待支付）
+    // 在 submit 之后，调用 confirm PaymentIntent 之前，payment_status 为 WAITING。
+    WAITING = 5;
+    // processing
+    // 当 C 端 confirm payment 之后，会把 BookingRequest 的 payment_status 设置为 PROCESSING
+    PROCESSING = 2;
+    // success
+    // 当 B 端 accept 或者 auto accept 之后，会去 capture payment，
+    // 如果 capture 成功，会把 BookingRequest 的 payment_status 设置为 SUCCESS
+    SUCCESS = 3;
+    // failed
+    // C 端 confirm 失败或者 capture payment 失败，会把 BookingRequest 的 payment_status 设置为 FAILED
+    FAILED = 4;
+  }
+
+  // Unique identifier for the booking
+  // Format: "bkg_" followed by random characters
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the business location for the service
+  // Required. Must be a valid business ID
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the customer making the booking
+  // Required. Must be a valid customer ID
+  string customer_id = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the company associated with the booking
+  string company_id = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the appointment associated with the booking
+  string appointment_id = 5;
+
+  // Service location details
+  // Required for mobile services, optional for in-store appointments
+  moego.common.v1.Address address = 6;
+
+  // Requested time window for the service
+  // Includes start and end time preferences
+  google.type.Interval duration = 7;
+
+  // List of services requested for each pet
+  // Details specific services and pets involved
+  repeated moego.business.appointment.v1.PetServiceDetail pet_service_details = 8;
+
+  // Current state of the booking request
+  // Determines processing flow and display
+  Status status = 9;
+
+  // Whether the booking has been prepaid
+  bool is_prepaid = 10;
+
+  // Payment status
+  PaymentStatus payment_status = 11;
+
+  // Additional note provided by the customer during booking
+  string additional_note = 12;
+
+  // Indicates whether the original time slot is now available
+  optional bool is_waitlist_expired = 13;
+  // Indicates whether the wait list entry has expired
+  optional bool is_waitlist_available = 14;
+
+  // When this booking request was created
+  // System-generated timestamp
+  google.protobuf.Timestamp created_time = 15;
+
+  // Timestamp indicating when the booking request was last modified
+  google.protobuf.Timestamp last_updated_time = 16;
+
+  // the services
+  repeated Service services = 17;
+
+  // booking request attributes, store some additional information
+  Attr attr = 18;
+
+  // Booking request source
+  Source source = 19;
+
+  // comment
+  Note comment = 25;
+
+  // Booking request attributes
+  message Attr {
+    // whether the customer is a new visitor
+    bool is_new_visitor = 1;
+
+    // 当 source 为 B 端创建时，记录创建 BookingRequest 的 Staff ID
+    optional int64 created_by_staff_id = 2;
+  }
+
+  // TODO: The booking request service
+  message Service {
+    //    // the service type
+    //    oneof service {
+    //      // grooming service
+    //      GroomingService grooming = 1;
+    //      // boarding service
+    //      BoardingService boarding = 2;
+    //      // daycare service
+    //      DaycareService daycare = 3;
+    //      // evaluation service
+    //      EvaluationService evaluation = 4;
+    //      // dog walking service
+    //      DogWalkingService dog_walking = 5;
+    //      // group class service
+    //      GroupClassService group_class = 6;
+    //    }
+  }
+
+  //  // The grooming service
+  //  message GroomingService {
+  //    // the grooming service detail
+  //    GroomingServiceDetailModel service = 1;
+  //    // the addons
+  //    repeated GroomingAddOnDetailModel addons = 2;
+  //    // auto assign
+  //    optional GroomingAutoAssignModel auto_assign = 3;
+  //  }
+  //
+  //  // The boarding service
+  //  message BoardingService {
+  //    // the boarding service detail
+  //    BoardingServiceDetailModel service = 1;
+  //    // the addons
+  //    repeated BoardingAddOnDetailModel addons = 2;
+  //    // the feeding. Deprecated, use feedings instead
+  //    FeedingModel feeding = 3 [deprecated = true];
+  //    // the medication. Deprecated, use medications instead
+  //    MedicationModel medication = 4 [deprecated = true];
+  //    // auto assign
+  //    optional BoardingAutoAssignModel auto_assign = 5;
+  //    // the feedings
+  //    repeated FeedingModel feedings = 6;
+  //    // the medications
+  //    repeated MedicationModel medications = 7;
+  //    // Boarding waitlist
+  //    optional BoardingServiceWaitlistModel waitlist = 8;
+  //  }
+  //
+  //  // The daycare service
+  //  message DaycareService {
+  //    // the daycare service detail
+  //    DaycareServiceDetailModel service = 1;
+  //    // the addons
+  //    repeated DaycareAddOnDetailModel addons = 2;
+  //    // the feeding. Deprecated, use feedings instead
+  //    FeedingModel feeding = 3 [deprecated = true];
+  //    // the medication. Deprecated, use medications instead
+  //    MedicationModel medication = 4 [deprecated = true];
+  //    // the feedings
+  //    repeated FeedingModel feedings = 5;
+  //    // the medications
+  //    repeated MedicationModel medications = 6;
+  //    // Boarding waitlist
+  //    optional DaycareServiceWaitlistModel waitlist = 8;
+  //  }
+  //
+  //  // The evaluation service
+  //  message EvaluationService {
+  //    // the evaluation service detail
+  //    EvaluationTestDetailModel service = 1;
+  //  }
+  //
+  //  // The dog walking service
+  //  message DogWalkingService {
+  //    // the dog walking service detail
+  //    DogWalkingServiceDetailModel service = 1;
+  //  }
+  //
+  //  // The group class service
+  //  message GroupClassService {
+  //    // the group class service detail
+  //    GroupClassServiceDetailModel service = 1;
+  //  }
+
+  // Booking request source definition
+  enum Source {
+    // unspecified
+    SOURCE_UNSPECIFIED = 0;
+    // Created by business
+    BUSINESS = 1;
+    // Created by online booking
+    OB = 2;
+    // Created by membership, source id is membership id
+    MEMBERSHIP = 3;
+  }
+
+  // The booking request note model
+  message Note {
+    // id
+    int64 id = 1;
+    // company id
+    int64 company_id = 2;
+    // customer id
+    int64 customer_id = 3;
+    // question name
+    string note = 4;
+    // customer id
+    int64 booking_request_id = 5;
+    // createdAt
+    google.protobuf.Timestamp created_at = 6;
+    // updatedAt
+    google.protobuf.Timestamp updated_at = 7;
+  }
+}
