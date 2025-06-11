@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.6
 // 	protoc        (unknown)
-// source: moego/business/online_booking/v1/booking_request_service.proto
+// source: moego/business/online_booking/v1/online_booking_service.proto
 
 package onlinebookingpb
 
@@ -44,7 +44,7 @@ type ListAbandonedBookingRequest struct {
 
 func (x *ListAbandonedBookingRequest) Reset() {
 	*x = ListAbandonedBookingRequest{}
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[0]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -56,7 +56,7 @@ func (x *ListAbandonedBookingRequest) String() string {
 func (*ListAbandonedBookingRequest) ProtoMessage() {}
 
 func (x *ListAbandonedBookingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[0]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -69,7 +69,7 @@ func (x *ListAbandonedBookingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAbandonedBookingRequest.ProtoReflect.Descriptor instead.
 func (*ListAbandonedBookingRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_online_booking_v1_booking_request_service_proto_rawDescGZIP(), []int{0}
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *ListAbandonedBookingRequest) GetPagination() *commonpb.Pagination {
@@ -114,7 +114,7 @@ type ListAbandonedBookingResponse struct {
 
 func (x *ListAbandonedBookingResponse) Reset() {
 	*x = ListAbandonedBookingResponse{}
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[1]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -126,7 +126,7 @@ func (x *ListAbandonedBookingResponse) String() string {
 func (*ListAbandonedBookingResponse) ProtoMessage() {}
 
 func (x *ListAbandonedBookingResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[1]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -139,7 +139,7 @@ func (x *ListAbandonedBookingResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAbandonedBookingResponse.ProtoReflect.Descriptor instead.
 func (*ListAbandonedBookingResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_online_booking_v1_booking_request_service_proto_rawDescGZIP(), []int{1}
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *ListAbandonedBookingResponse) GetNextPageToken() string {
@@ -170,7 +170,7 @@ type GetAbandonedBookingRequest struct {
 
 func (x *GetAbandonedBookingRequest) Reset() {
 	*x = GetAbandonedBookingRequest{}
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[2]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -182,7 +182,7 @@ func (x *GetAbandonedBookingRequest) String() string {
 func (*GetAbandonedBookingRequest) ProtoMessage() {}
 
 func (x *GetAbandonedBookingRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[2]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -195,7 +195,7 @@ func (x *GetAbandonedBookingRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetAbandonedBookingRequest.ProtoReflect.Descriptor instead.
 func (*GetAbandonedBookingRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_online_booking_v1_booking_request_service_proto_rawDescGZIP(), []int{2}
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *GetAbandonedBookingRequest) GetId() string {
@@ -232,7 +232,7 @@ type ListAbandonedBookingRequest_Filter struct {
 
 func (x *ListAbandonedBookingRequest_Filter) Reset() {
 	*x = ListAbandonedBookingRequest_Filter{}
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[3]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -244,7 +244,7 @@ func (x *ListAbandonedBookingRequest_Filter) String() string {
 func (*ListAbandonedBookingRequest_Filter) ProtoMessage() {}
 
 func (x *ListAbandonedBookingRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes[3]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +257,7 @@ func (x *ListAbandonedBookingRequest_Filter) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use ListAbandonedBookingRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListAbandonedBookingRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_moego_business_online_booking_v1_booking_request_service_proto_rawDescGZIP(), []int{0, 0}
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{0, 0}
 }
 
 func (x *ListAbandonedBookingRequest_Filter) GetAbandonTime() *interval.Interval {
@@ -288,11 +288,11 @@ func (x *ListAbandonedBookingRequest_Filter) GetStatuses() []AbandonedBooking_St
 	return nil
 }
 
-var File_moego_business_online_booking_v1_booking_request_service_proto protoreflect.FileDescriptor
+var File_moego_business_online_booking_v1_online_booking_service_proto protoreflect.FileDescriptor
 
-const file_moego_business_online_booking_v1_booking_request_service_proto_rawDesc = "" +
+const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc = "" +
 	"\n" +
-	">moego/business/online_booking/v1/booking_request_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\"\xe4\x04\n" +
+	"=moego/business/online_booking/v1/online_booking_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\"\xe4\x04\n" +
 	"\x1bListAbandonedBookingRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -313,26 +313,26 @@ const file_moego_business_online_booking_v1_booking_request_service_proto_rawDes
 	"\x1aGetAbandonedBookingRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId2\x87\x03\n" +
-	"\x15BookingRequestService\x12\xac\x01\n" +
+	"businessId2\x86\x03\n" +
+	"\x14OnlineBookingService\x12\xac\x01\n" +
 	"\x13GetAbandonedBooking\x12<.moego.business.online_booking.v1.GetAbandonedBookingRequest\x1a2.moego.business.online_booking.v1.AbandonedBooking\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/abandoned_bookings/{id}\x12\xbe\x01\n" +
-	"\x15ListAbandonedBookings\x12=.moego.business.online_booking.v1.ListAbandonedBookingRequest\x1a>.moego.business.online_booking.v1.ListAbandonedBookingResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:listB\xb2\x01\n" +
-	"(com.moego.api.business.online_booking.v1B\x1aBookingRequestServiceProtoP\x01Zhgithub.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpbb\x06proto3"
+	"\x15ListAbandonedBookings\x12=.moego.business.online_booking.v1.ListAbandonedBookingRequest\x1a>.moego.business.online_booking.v1.ListAbandonedBookingResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:listB\xb1\x01\n" +
+	"(com.moego.api.business.online_booking.v1B\x19OnlineBookingServiceProtoP\x01Zhgithub.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpbb\x06proto3"
 
 var (
-	file_moego_business_online_booking_v1_booking_request_service_proto_rawDescOnce sync.Once
-	file_moego_business_online_booking_v1_booking_request_service_proto_rawDescData []byte
+	file_moego_business_online_booking_v1_online_booking_service_proto_rawDescOnce sync.Once
+	file_moego_business_online_booking_v1_online_booking_service_proto_rawDescData []byte
 )
 
-func file_moego_business_online_booking_v1_booking_request_service_proto_rawDescGZIP() []byte {
-	file_moego_business_online_booking_v1_booking_request_service_proto_rawDescOnce.Do(func() {
-		file_moego_business_online_booking_v1_booking_request_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_booking_request_service_proto_rawDesc), len(file_moego_business_online_booking_v1_booking_request_service_proto_rawDesc)))
+func file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP() []byte {
+	file_moego_business_online_booking_v1_online_booking_service_proto_rawDescOnce.Do(func() {
+		file_moego_business_online_booking_v1_online_booking_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc), len(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc)))
 	})
-	return file_moego_business_online_booking_v1_booking_request_service_proto_rawDescData
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescData
 }
 
-var file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_moego_business_online_booking_v1_booking_request_service_proto_goTypes = []any{
+var file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_moego_business_online_booking_v1_online_booking_service_proto_goTypes = []any{
 	(*ListAbandonedBookingRequest)(nil),        // 0: moego.business.online_booking.v1.ListAbandonedBookingRequest
 	(*ListAbandonedBookingResponse)(nil),       // 1: moego.business.online_booking.v1.ListAbandonedBookingResponse
 	(*GetAbandonedBookingRequest)(nil),         // 2: moego.business.online_booking.v1.GetAbandonedBookingRequest
@@ -344,7 +344,7 @@ var file_moego_business_online_booking_v1_booking_request_service_proto_goTypes 
 	(AbandonedBooking_Step)(0),                 // 8: moego.business.online_booking.v1.AbandonedBooking.Step
 	(AbandonedBooking_Status)(0),               // 9: moego.business.online_booking.v1.AbandonedBooking.Status
 }
-var file_moego_business_online_booking_v1_booking_request_service_proto_depIdxs = []int32{
+var file_moego_business_online_booking_v1_online_booking_service_proto_depIdxs = []int32{
 	4, // 0: moego.business.online_booking.v1.ListAbandonedBookingRequest.pagination:type_name -> moego.common.v1.Pagination
 	3, // 1: moego.business.online_booking.v1.ListAbandonedBookingRequest.filter:type_name -> moego.business.online_booking.v1.ListAbandonedBookingRequest.Filter
 	5, // 2: moego.business.online_booking.v1.ListAbandonedBookingResponse.bookings:type_name -> moego.business.online_booking.v1.AbandonedBooking
@@ -352,10 +352,10 @@ var file_moego_business_online_booking_v1_booking_request_service_proto_depIdxs 
 	7, // 4: moego.business.online_booking.v1.ListAbandonedBookingRequest.Filter.lead_types:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
 	8, // 5: moego.business.online_booking.v1.ListAbandonedBookingRequest.Filter.steps:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
 	9, // 6: moego.business.online_booking.v1.ListAbandonedBookingRequest.Filter.statuses:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
-	2, // 7: moego.business.online_booking.v1.BookingRequestService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
-	0, // 8: moego.business.online_booking.v1.BookingRequestService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingRequest
-	5, // 9: moego.business.online_booking.v1.BookingRequestService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
-	1, // 10: moego.business.online_booking.v1.BookingRequestService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingResponse
+	2, // 7: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
+	0, // 8: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingRequest
+	5, // 9: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
+	1, // 10: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingResponse
 	9, // [9:11] is the sub-list for method output_type
 	7, // [7:9] is the sub-list for method input_type
 	7, // [7:7] is the sub-list for extension type_name
@@ -363,9 +363,9 @@ var file_moego_business_online_booking_v1_booking_request_service_proto_depIdxs 
 	0, // [0:7] is the sub-list for field type_name
 }
 
-func init() { file_moego_business_online_booking_v1_booking_request_service_proto_init() }
-func file_moego_business_online_booking_v1_booking_request_service_proto_init() {
-	if File_moego_business_online_booking_v1_booking_request_service_proto != nil {
+func init() { file_moego_business_online_booking_v1_online_booking_service_proto_init() }
+func file_moego_business_online_booking_v1_online_booking_service_proto_init() {
+	if File_moego_business_online_booking_v1_online_booking_service_proto != nil {
 		return
 	}
 	file_moego_business_online_booking_v1_abandoned_booking_proto_init()
@@ -373,17 +373,17 @@ func file_moego_business_online_booking_v1_booking_request_service_proto_init() 
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_booking_request_service_proto_rawDesc), len(file_moego_business_online_booking_v1_booking_request_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc), len(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_moego_business_online_booking_v1_booking_request_service_proto_goTypes,
-		DependencyIndexes: file_moego_business_online_booking_v1_booking_request_service_proto_depIdxs,
-		MessageInfos:      file_moego_business_online_booking_v1_booking_request_service_proto_msgTypes,
+		GoTypes:           file_moego_business_online_booking_v1_online_booking_service_proto_goTypes,
+		DependencyIndexes: file_moego_business_online_booking_v1_online_booking_service_proto_depIdxs,
+		MessageInfos:      file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes,
 	}.Build()
-	File_moego_business_online_booking_v1_booking_request_service_proto = out.File
-	file_moego_business_online_booking_v1_booking_request_service_proto_goTypes = nil
-	file_moego_business_online_booking_v1_booking_request_service_proto_depIdxs = nil
+	File_moego_business_online_booking_v1_online_booking_service_proto = out.File
+	file_moego_business_online_booking_v1_online_booking_service_proto_goTypes = nil
+	file_moego_business_online_booking_v1_online_booking_service_proto_depIdxs = nil
 }
