@@ -160,10 +160,7 @@ func (x *ListAbandonedBookingsResponse) GetBookings() []*AbandonedBooking {
 type GetAbandonedBookingRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The unique identifier of the abandoned booking to retrieve.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// The company identifier for multi-location businesses.
-	// Required for company-wide listing.
-	CompanyId     string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -205,13 +202,6 @@ func (x *GetAbandonedBookingRequest) GetId() string {
 	return ""
 }
 
-func (x *GetAbandonedBookingRequest) GetCompanyId() string {
-	if x != nil {
-		return x.CompanyId
-	}
-	return ""
-}
-
 // Filter parameters for the abandoned booking list.
 type ListAbandonedBookingsRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -225,7 +215,7 @@ type ListAbandonedBookingsRequest_Filter struct {
 	// Example values: ["WELCOME_PAGE", "BASIC_INFO", "SELECT_CARE_TYPE", ...]
 	Steps []AbandonedBooking_Step `protobuf:"varint,3,rep,packed,name=steps,proto3,enum=moego.business.online_booking.v1.AbandonedBooking_Step" json:"steps,omitempty"`
 	// Filter by the statuses of the abandoned bookings.
-	// Example values: ["CONFIRMED", "CHECKED_IN"]
+	// Example values: ["ABANDONED", "CONTACTED", "RECOVERED"]
 	Statuses      []AbandonedBooking_Status `protobuf:"varint,4,rep,packed,name=statuses,proto3,enum=moego.business.online_booking.v1.AbandonedBooking_Status" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -310,11 +300,9 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\bstatuses\x18\x04 \x03(\x0e29.moego.business.online_booking.v1.AbandonedBooking.StatusB\x03\xe0A\x01R\bstatuses\"\x97\x01\n" +
 	"\x1dListAbandonedBookingsResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12N\n" +
-	"\bbookings\x18\x02 \x03(\v22.moego.business.online_booking.v1.AbandonedBookingR\bbookings\"U\n" +
+	"\bbookings\x18\x02 \x03(\v22.moego.business.online_booking.v1.AbandonedBookingR\bbookings\"1\n" +
 	"\x1aGetAbandonedBookingRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
-	"\n" +
-	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId2\x88\x03\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id2\x88\x03\n" +
 	"\x14OnlineBookingService\x12\xac\x01\n" +
 	"\x13GetAbandonedBooking\x12<.moego.business.online_booking.v1.GetAbandonedBookingRequest\x1a2.moego.business.online_booking.v1.AbandonedBooking\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/abandoned_bookings/{id}\x12\xc0\x01\n" +
 	"\x15ListAbandonedBookings\x12>.moego.business.online_booking.v1.ListAbandonedBookingsRequest\x1a?.moego.business.online_booking.v1.ListAbandonedBookingsResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:listB\xb1\x01\n" +

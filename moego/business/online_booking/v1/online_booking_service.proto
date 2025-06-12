@@ -68,7 +68,7 @@ message ListAbandonedBookingsRequest {
     repeated AbandonedBooking.Step steps = 3 [(google.api.field_behavior) = OPTIONAL];
 
     // Filter by the statuses of the abandoned bookings.
-    // Example values: ["CONFIRMED", "CHECKED_IN"]
+    // Example values: ["ABANDONED", "CONTACTED", "RECOVERED"]
     repeated AbandonedBooking.Status statuses = 4 [(google.api.field_behavior) = OPTIONAL];
   }
 
@@ -90,9 +90,5 @@ message ListAbandonedBookingsResponse {
 message GetAbandonedBookingRequest {
   // The unique identifier of the abandoned booking to retrieve.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // The company identifier for multi-location businesses.
-  // Required for company-wide listing.
-  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 
 }
