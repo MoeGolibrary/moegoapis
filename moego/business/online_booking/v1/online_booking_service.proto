@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package moego.business.online_booking.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
+import "moego/business/online_booking/v1/abandoned_booking.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
+option java_multiple_files = true;
+option java_outer_classname = "OnlineBookingServiceProto";
+option java_package = "com.moego.api.business.online_booking.v1";
+
+// The OnlineBookingService provides methods for managing abandoned online bookings.
+//
+// This service allows retrieval of individual abandoned bookings and listing filtered sets.
+// All methods require authentication and proper business context.
+service OnlineBookingService {
+
+  // Retrieves a single abandoned booking by ID.
+  //
+  // Returns detailed information about the abandoned booking including customer info,
+  // step where it was abandoned, and associated lead type. Returns NOT_FOUND if not found.
+  rpc GetAbandonedBooking(GetAbandonedBookingRequest) returns (AbandonedBooking) {
+    option (google.api.http) = {get: "/v1/abandoned_bookings/{id}"};
+  }
+
+  // Lists abandoned bookings matching specified criteria.
+  //
+  // Returns a paginated list of abandoned bookings filtered by abandon time,
+  // status, step, or lead type.
+  rpc ListAbandonedBookings(ListAbandonedBookingsRequest) returns (ListAbandonedBookingsResponse) {
+    option (google.api.http) = {
+      post: "/v1/abandoned_bookings:list"
+      body: "*"
+    };
+  }
+}
+
+// Request to list abandoned bookings.
+message ListAbandonedBookingsRequest {
+  // Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The company identifier for multi-location businesses.
+  // Required for company-wide listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // List of business location IDs to include.
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the abandoned booking list.
+  message Filter {
+    // Filter by the abandon time range of the booking.
+    // By default, it is set to the most recent week. The end and start times cannot exceed one month.
+    google.type.Interval abandon_time = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the lead types of the abandoned booking.
+    // Example values: ["LEAD_TYPE_UNSPECIFIED", "NEW_VISITOR", "EXISTING_CLIENT"]
+    repeated AbandonedBooking.LeadType lead_types = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the steps at which the booking was abandoned.
+    // Example values: ["WELCOME_PAGE", "BASIC_INFO", "SELECT_CARE_TYPE", ...]
+    repeated AbandonedBooking.Step steps = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the statuses of the abandoned bookings.
+    // Example values: ["ABANDONED", "CONTACTED", "RECOVERED"]
+    repeated AbandonedBooking.Status statuses = 4 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to narrow the results.
+  Filter filter = 4;
+}
+
+// Response for listing abandoned bookings.
+message ListAbandonedBookingsResponse {
+  // Token for retrieving the next page of results.
+  // Empty if there are no more results.
+  string next_page_token = 1;
+
+  // List of abandoned bookings matching the request criteria.
+  repeated AbandonedBooking bookings = 2;
+}
+
+// Request to retrieve a specific abandoned booking.
+message GetAbandonedBookingRequest {
+  // The unique identifier of the abandoned booking to retrieve.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+}

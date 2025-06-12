@@ -1,0 +1,271 @@
+syntax = "proto3";
+
+package moego.business.online_booking.v1;
+
+import "google/protobuf/timestamp.proto";
+import "moego/business/appointment/v1/pet_service_detail.proto";
+import "moego/business/setting/v1/service.proto";
+import "moego/common/v1/address.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
+option java_multiple_files = true;
+option java_outer_classname = "AbandonedBookingProto";
+option java_package = "com.moego.api.business.online_booking.v1";
+
+// AbandonedBooking represents a booking that was not completed by the customer.
+// This message captures information about the customer, selected services,
+// abandonment step, and recovery status for analytics and follow-up actions.
+message AbandonedBooking {
+  // LeadType indicates how the customer was acquired or originated from.
+  enum LeadType {
+    // Default value. This value is unused.
+    LEAD_TYPE_UNSPECIFIED = 0;
+
+    // New visitor to the system.
+    NEW_VISITOR = 1;
+
+    // Existing client returning for another service.
+    EXISTING_CLIENT = 2;
+  }
+
+  // RecoverType indicates how an abandoned booking was recovered.
+  enum RecoverType {
+    // Default value. This value is unused.
+    ABANDON_RECOVER_TYPE_UNSPECIFIED = 0;
+
+    // Booking was recovered by scheduling an appointment.
+    RECOVERED_BY_SCHEDULE_APPOINTMENT = 1;
+
+    // Booking was recovered through email communication.
+    RECOVERED_BY_EMAIL = 2;
+
+    // Booking was recovered through messaging (e.g., SMS).
+    RECOVERED_BY_MESSAGE = 3;
+  }
+
+  // Step represents the stage in the booking process where the abandonment occurred.
+  enum Step {
+    // Default value. This value is unused.
+    ABANDON_STEP_UNSPECIFIED = 0;
+
+    // Customer visited the welcome page.
+    WELCOME_PAGE = 1;
+
+    // Customer filled out basic info.
+    BASIC_INFO = 2;
+
+    // Customer selected care type.
+    SELECT_CARE_TYPE = 3;
+
+    // Customer selected address.
+    SELECT_ADDRESS = 4;
+
+    // Customer selected pet.
+    SELECT_PET = 5;
+
+    // Customer selected date.
+    SELECT_DATE = 6;
+
+    // Customer selected service.
+    SELECT_SERVICE = 7;
+
+    // Customer selected groomer.
+    SELECT_GROOMER = 8;
+
+    // Customer selected time.
+    SELECT_TIME = 9;
+
+    // Customer provided additional pet info.
+    ADDITIONAL_PET_INFO = 10;
+
+    // Customer entered personal info.
+    PERSONAL_INFO = 11;
+
+    // Customer provided card on file.
+    CARD_ON_FILE = 12;
+
+    // Customer initiated prepay.
+    PREPAY = 13;
+
+    // Customer initiated pre-auth.
+    PRE_AUTH = 14;
+
+    // Customer submitted the appointment.
+    SUBMIT_APPT = 15;
+  }
+
+  // Status of the abandonment process.
+  enum Status {
+    // Default value. This value is unused.
+    ABANDON_STATUS_UNSPECIFIED = 0;
+
+    // The booking was abandoned before completion.
+    ABANDONED = 1;
+
+    // The customer has been contacted regarding this abandoned booking.
+    CONTACTED = 2;
+
+    // The booking was successfully recovered.
+    RECOVERED = 3;
+  }
+
+
+  // Frequency type of the abandonment process.
+  enum PreferredFrequencyType {
+    // Default value. This value is unused.
+    PREFERRED_FREQUENCY_TYPE_UNSPECIFIED = 0;
+    // Daily
+    PREFERRED_FREQUENCY_TYPE_DAY = 1;
+    // Weekly
+    PREFERRED_FREQUENCY_TYPE_WEEK = 2;
+    // Monthly
+    PREFERRED_FREQUENCY_TYPE_MONTH = 3;
+  }
+
+  // QuestionAnswer represents a key-value pair capturing user input during the booking flow.
+  message QuestionAnswer {
+    // Unique identifier for the question-answer pair.
+    string key = 1;
+
+    // The question shown to the user.
+    string question = 2;
+
+    // The answer provided by the user.
+    string answer = 3;
+  }
+
+  // == Core Fields ==
+
+  // Unique identifier for this abandoned booking.
+  // Format: "abk_" followed by random characters.
+  string id = 1;
+
+  // ID of the business associated with this booking.
+  string business_id = 2;
+
+  // Customer details involved in this booking.
+  AbandonedBookingCustomer customer = 3;
+
+  // List of pets and related services involved in this booking.
+  repeated AbandonedBookingPet pets = 4;
+
+  // Service location details.
+  // Required for mobile services, optional for in-store bookings.
+  moego.common.v1.Address address = 5;
+
+  // == Abandonment Tracking ==
+
+  // The last step reached before the booking was abandoned.
+  Step abandon_step = 6;
+
+  // Timestamp when the booking was abandoned.
+  google.protobuf.Timestamp abandon_time = 7;
+
+  // Current status of the abandonment process.
+  Status abandon_status = 8;
+
+  // == Follow-up Information ==
+
+  // Timestamp when the customer was last texted about this booking.
+  google.protobuf.Timestamp last_texted_time = 9;
+
+  // Timestamp when the customer was last emailed about this booking.
+  google.protobuf.Timestamp last_emailed_time = 10;
+
+  // Method used to recover this abandoned booking.
+  RecoverType recovery_type = 11;
+
+  // Timestamp when the booking was recovered.
+  google.protobuf.Timestamp recovery_time = 12;
+
+  // ID of the staff member who handled the recovery.
+  string staff_id = 13;
+
+  // ID of the appointment created as a result of recovery.
+  string appointment_id = 14;
+
+  // Scheduled appointment time if one was set.
+  google.protobuf.Timestamp appointment_time = 15;
+
+  // == Metadata ==
+
+  // How the customer was acquired.
+  LeadType lead_type = 16;
+
+  // Timestamp when this record was created.
+  google.protobuf.Timestamp create_time = 17;
+
+  // Timestamp when this record was last updated.
+  google.protobuf.Timestamp update_time = 18;
+
+  // Additional notes added by staff or system.
+  string additional_note = 19;
+
+  // Type of service selected by the customer.
+  setting.v1.Service.ItemType care_type = 20;
+}
+
+// AbandonedBookingCustomer contains information about the customer associated with an abandoned booking.
+// It includes both core customer data and additional booking-specific preferences and metadata.
+message AbandonedBookingCustomer {
+
+  // The unique identifier for the customer.
+  string customer_id = 1;
+
+  // The email address of the customer.
+  string email = 2;
+
+  // firstName
+  string first_name = 3;
+
+  // lastName
+  string last_name = 4;
+
+  // phoneNumber
+  string phone_number = 5;
+
+  // The source that referred this customer to the system.
+  string referer = 6;
+
+  // The source that referred this customer to the system.
+  string referral_source = 7;
+
+  // ID of the staff member preferred by the customer for grooming services.
+  string preferred_groomer_id = 8;
+
+  // Preferred frequency in days for recurring visits.
+  int32 preferred_frequency_day = 9;
+
+  // Type of frequency (e.g., daily, weekly).
+  AbandonedBooking.PreferredFrequencyType preferred_frequency_type = 10;
+
+  // Preferred day(s) of the week for service.
+  repeated int32 preferred_days = 11;
+
+  // Preferred time(s) of the day for service.
+  repeated int32 preferred_time = 12;
+
+  // List of question-answer pairs capturing user input during the booking process.
+  repeated AbandonedBooking.QuestionAnswer question_answer_list = 13;
+}
+
+
+// AbandonedBookingPet represents a pet involved in an abandoned booking.
+// It captures service-related details along with emergency contact and health information.
+message AbandonedBookingPet {
+
+  // Pet and service detail information used in the booking flow.
+  moego.business.appointment.v1.PetServiceDetail pet_service_detail = 1;
+
+  // Name of the person to contact in case of emergency.
+  string emergency_contact_name = 2;
+
+  // Phone number of the emergency contact.
+  string emergency_contact_phone = 3;
+
+  // Known health issues or conditions of the pet.
+  string health_issues = 4;
+
+  // List of question-answer pairs specific to this pet.
+  repeated AbandonedBooking.QuestionAnswer question_answer_list = 5;
+}
