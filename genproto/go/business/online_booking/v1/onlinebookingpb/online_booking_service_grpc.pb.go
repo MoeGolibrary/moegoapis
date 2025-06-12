@@ -41,7 +41,7 @@ type OnlineBookingServiceClient interface {
 	//
 	// Returns a paginated list of abandoned bookings filtered by abandon time,
 	// status, step, or lead type.
-	ListAbandonedBookings(ctx context.Context, in *ListAbandonedBookingRequest, opts ...grpc.CallOption) (*ListAbandonedBookingResponse, error)
+	ListAbandonedBookings(ctx context.Context, in *ListAbandonedBookingsRequest, opts ...grpc.CallOption) (*ListAbandonedBookingsResponse, error)
 }
 
 type onlineBookingServiceClient struct {
@@ -62,9 +62,9 @@ func (c *onlineBookingServiceClient) GetAbandonedBooking(ctx context.Context, in
 	return out, nil
 }
 
-func (c *onlineBookingServiceClient) ListAbandonedBookings(ctx context.Context, in *ListAbandonedBookingRequest, opts ...grpc.CallOption) (*ListAbandonedBookingResponse, error) {
+func (c *onlineBookingServiceClient) ListAbandonedBookings(ctx context.Context, in *ListAbandonedBookingsRequest, opts ...grpc.CallOption) (*ListAbandonedBookingsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAbandonedBookingResponse)
+	out := new(ListAbandonedBookingsResponse)
 	err := c.cc.Invoke(ctx, OnlineBookingService_ListAbandonedBookings_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ type OnlineBookingServiceServer interface {
 	//
 	// Returns a paginated list of abandoned bookings filtered by abandon time,
 	// status, step, or lead type.
-	ListAbandonedBookings(context.Context, *ListAbandonedBookingRequest) (*ListAbandonedBookingResponse, error)
+	ListAbandonedBookings(context.Context, *ListAbandonedBookingsRequest) (*ListAbandonedBookingsResponse, error)
 	mustEmbedUnimplementedOnlineBookingServiceServer()
 }
 
@@ -104,7 +104,7 @@ type UnimplementedOnlineBookingServiceServer struct{}
 func (UnimplementedOnlineBookingServiceServer) GetAbandonedBooking(context.Context, *GetAbandonedBookingRequest) (*AbandonedBooking, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAbandonedBooking not implemented")
 }
-func (UnimplementedOnlineBookingServiceServer) ListAbandonedBookings(context.Context, *ListAbandonedBookingRequest) (*ListAbandonedBookingResponse, error) {
+func (UnimplementedOnlineBookingServiceServer) ListAbandonedBookings(context.Context, *ListAbandonedBookingsRequest) (*ListAbandonedBookingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAbandonedBookings not implemented")
 }
 func (UnimplementedOnlineBookingServiceServer) mustEmbedUnimplementedOnlineBookingServiceServer() {}
@@ -147,7 +147,7 @@ func _OnlineBookingService_GetAbandonedBooking_Handler(srv interface{}, ctx cont
 }
 
 func _OnlineBookingService_ListAbandonedBookings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAbandonedBookingRequest)
+	in := new(ListAbandonedBookingsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -159,7 +159,7 @@ func _OnlineBookingService_ListAbandonedBookings_Handler(srv interface{}, ctx co
 		FullMethod: OnlineBookingService_ListAbandonedBookings_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OnlineBookingServiceServer).ListAbandonedBookings(ctx, req.(*ListAbandonedBookingRequest))
+		return srv.(OnlineBookingServiceServer).ListAbandonedBookings(ctx, req.(*ListAbandonedBookingsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

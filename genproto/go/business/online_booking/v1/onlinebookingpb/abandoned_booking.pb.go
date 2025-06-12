@@ -8,7 +8,6 @@ package onlinebookingpb
 
 import (
 	appointmentpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
-	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -298,6 +297,63 @@ func (AbandonedBooking_Status) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_online_booking_v1_abandoned_booking_proto_rawDescGZIP(), []int{0, 3}
 }
 
+// Frequency type of the abandonment process.
+type AbandonedBooking_PreferredFrequencyType int32
+
+const (
+	// Default value. This value is unused.
+	AbandonedBooking_PREFERRED_FREQUENCY_TYPE_UNSPECIFIED AbandonedBooking_PreferredFrequencyType = 0
+	// Daily
+	AbandonedBooking_PREFERRED_FREQUENCY_TYPE_DAY AbandonedBooking_PreferredFrequencyType = 1
+	// Weekly
+	AbandonedBooking_PREFERRED_FREQUENCY_TYPE_WEEK AbandonedBooking_PreferredFrequencyType = 2
+	// Monthly
+	AbandonedBooking_PREFERRED_FREQUENCY_TYPE_MONTH AbandonedBooking_PreferredFrequencyType = 3
+)
+
+// Enum value maps for AbandonedBooking_PreferredFrequencyType.
+var (
+	AbandonedBooking_PreferredFrequencyType_name = map[int32]string{
+		0: "PREFERRED_FREQUENCY_TYPE_UNSPECIFIED",
+		1: "PREFERRED_FREQUENCY_TYPE_DAY",
+		2: "PREFERRED_FREQUENCY_TYPE_WEEK",
+		3: "PREFERRED_FREQUENCY_TYPE_MONTH",
+	}
+	AbandonedBooking_PreferredFrequencyType_value = map[string]int32{
+		"PREFERRED_FREQUENCY_TYPE_UNSPECIFIED": 0,
+		"PREFERRED_FREQUENCY_TYPE_DAY":         1,
+		"PREFERRED_FREQUENCY_TYPE_WEEK":        2,
+		"PREFERRED_FREQUENCY_TYPE_MONTH":       3,
+	}
+)
+
+func (x AbandonedBooking_PreferredFrequencyType) Enum() *AbandonedBooking_PreferredFrequencyType {
+	p := new(AbandonedBooking_PreferredFrequencyType)
+	*p = x
+	return p
+}
+
+func (x AbandonedBooking_PreferredFrequencyType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (AbandonedBooking_PreferredFrequencyType) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_online_booking_v1_abandoned_booking_proto_enumTypes[4].Descriptor()
+}
+
+func (AbandonedBooking_PreferredFrequencyType) Type() protoreflect.EnumType {
+	return &file_moego_business_online_booking_v1_abandoned_booking_proto_enumTypes[4]
+}
+
+func (x AbandonedBooking_PreferredFrequencyType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use AbandonedBooking_PreferredFrequencyType.Descriptor instead.
+func (AbandonedBooking_PreferredFrequencyType) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_abandoned_booking_proto_rawDescGZIP(), []int{0, 4}
+}
+
 // AbandonedBooking represents a booking that was not completed by the customer.
 // This message captures information about the customer, selected services,
 // abandonment step, and recovery status for analytics and follow-up actions.
@@ -523,24 +579,32 @@ func (x *AbandonedBooking) GetCareType() settingpb.Service_ItemType {
 // It includes both core customer data and additional booking-specific preferences and metadata.
 type AbandonedBookingCustomer struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Core customer information, such as name, contact details, and preferences.
-	Customer *customerpb.Customer `protobuf:"bytes,1,opt,name=customer,proto3" json:"customer,omitempty"`
+	// The unique identifier for the customer.
+	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// The email address of the customer.
+	Email string `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	// firstName
+	FirstName string `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	// lastName
+	LastName string `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	// phoneNumber
+	PhoneNumber string `protobuf:"bytes,5,opt,name=phone_number,json=phoneNumber,proto3" json:"phone_number,omitempty"`
 	// The source that referred this customer to the system.
-	Referer string `protobuf:"bytes,2,opt,name=referer,proto3" json:"referer,omitempty"`
-	// ID of the referral source through which the customer was acquired.
-	ReferralSourceId string `protobuf:"bytes,3,opt,name=referral_source_id,json=referralSourceId,proto3" json:"referral_source_id,omitempty"`
+	Referer string `protobuf:"bytes,6,opt,name=referer,proto3" json:"referer,omitempty"`
+	// The source that referred this customer to the system.
+	ReferralSource string `protobuf:"bytes,7,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
 	// ID of the staff member preferred by the customer for grooming services.
-	PreferredGroomerId int32 `protobuf:"varint,4,opt,name=preferred_groomer_id,json=preferredGroomerId,proto3" json:"preferred_groomer_id,omitempty"`
+	PreferredGroomerId string `protobuf:"bytes,8,opt,name=preferred_groomer_id,json=preferredGroomerId,proto3" json:"preferred_groomer_id,omitempty"`
 	// Preferred frequency in days for recurring visits.
-	PreferredFrequencyDay int32 `protobuf:"varint,5,opt,name=preferred_frequency_day,json=preferredFrequencyDay,proto3" json:"preferred_frequency_day,omitempty"`
-	// Type of frequency (e.g., daily, weekly). Corresponds to Byte in Java.
-	PreferredFrequencyType int32 `protobuf:"varint,6,opt,name=preferred_frequency_type,json=preferredFrequencyType,proto3" json:"preferred_frequency_type,omitempty"`
+	PreferredFrequencyDay int32 `protobuf:"varint,9,opt,name=preferred_frequency_day,json=preferredFrequencyDay,proto3" json:"preferred_frequency_day,omitempty"`
+	// Type of frequency (e.g., daily, weekly).
+	PreferredFrequencyType AbandonedBooking_PreferredFrequencyType `protobuf:"varint,10,opt,name=preferred_frequency_type,json=preferredFrequencyType,proto3,enum=moego.business.online_booking.v1.AbandonedBooking_PreferredFrequencyType" json:"preferred_frequency_type,omitempty"`
 	// Preferred day(s) of the week for service.
-	PreferredDay string `protobuf:"bytes,7,opt,name=preferred_day,json=preferredDay,proto3" json:"preferred_day,omitempty"`
+	PreferredDays []int32 `protobuf:"varint,11,rep,packed,name=preferred_days,json=preferredDays,proto3" json:"preferred_days,omitempty"`
 	// Preferred time(s) of the day for service.
-	PreferredTime string `protobuf:"bytes,8,opt,name=preferred_time,json=preferredTime,proto3" json:"preferred_time,omitempty"`
+	PreferredTime []int32 `protobuf:"varint,12,rep,packed,name=preferred_time,json=preferredTime,proto3" json:"preferred_time,omitempty"`
 	// List of question-answer pairs capturing user input during the booking process.
-	QuestionAnswerList []*AbandonedBooking_QuestionAnswer `protobuf:"bytes,9,rep,name=question_answer_list,json=questionAnswerList,proto3" json:"question_answer_list,omitempty"`
+	QuestionAnswerList []*AbandonedBooking_QuestionAnswer `protobuf:"bytes,13,rep,name=question_answer_list,json=questionAnswerList,proto3" json:"question_answer_list,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -575,11 +639,39 @@ func (*AbandonedBookingCustomer) Descriptor() ([]byte, []int) {
 	return file_moego_business_online_booking_v1_abandoned_booking_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *AbandonedBookingCustomer) GetCustomer() *customerpb.Customer {
+func (x *AbandonedBookingCustomer) GetCustomerId() string {
 	if x != nil {
-		return x.Customer
+		return x.CustomerId
 	}
-	return nil
+	return ""
+}
+
+func (x *AbandonedBookingCustomer) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *AbandonedBookingCustomer) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *AbandonedBookingCustomer) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *AbandonedBookingCustomer) GetPhoneNumber() string {
+	if x != nil {
+		return x.PhoneNumber
+	}
+	return ""
 }
 
 func (x *AbandonedBookingCustomer) GetReferer() string {
@@ -589,18 +681,18 @@ func (x *AbandonedBookingCustomer) GetReferer() string {
 	return ""
 }
 
-func (x *AbandonedBookingCustomer) GetReferralSourceId() string {
+func (x *AbandonedBookingCustomer) GetReferralSource() string {
 	if x != nil {
-		return x.ReferralSourceId
+		return x.ReferralSource
 	}
 	return ""
 }
 
-func (x *AbandonedBookingCustomer) GetPreferredGroomerId() int32 {
+func (x *AbandonedBookingCustomer) GetPreferredGroomerId() string {
 	if x != nil {
 		return x.PreferredGroomerId
 	}
-	return 0
+	return ""
 }
 
 func (x *AbandonedBookingCustomer) GetPreferredFrequencyDay() int32 {
@@ -610,25 +702,25 @@ func (x *AbandonedBookingCustomer) GetPreferredFrequencyDay() int32 {
 	return 0
 }
 
-func (x *AbandonedBookingCustomer) GetPreferredFrequencyType() int32 {
+func (x *AbandonedBookingCustomer) GetPreferredFrequencyType() AbandonedBooking_PreferredFrequencyType {
 	if x != nil {
 		return x.PreferredFrequencyType
 	}
-	return 0
+	return AbandonedBooking_PREFERRED_FREQUENCY_TYPE_UNSPECIFIED
 }
 
-func (x *AbandonedBookingCustomer) GetPreferredDay() string {
+func (x *AbandonedBookingCustomer) GetPreferredDays() []int32 {
 	if x != nil {
-		return x.PreferredDay
+		return x.PreferredDays
 	}
-	return ""
+	return nil
 }
 
-func (x *AbandonedBookingCustomer) GetPreferredTime() string {
+func (x *AbandonedBookingCustomer) GetPreferredTime() []int32 {
 	if x != nil {
 		return x.PreferredTime
 	}
-	return ""
+	return nil
 }
 
 func (x *AbandonedBookingCustomer) GetQuestionAnswerList() []*AbandonedBooking_QuestionAnswer {
@@ -789,7 +881,7 @@ var File_moego_business_online_booking_v1_abandoned_booking_proto protoreflect.F
 
 const file_moego_business_online_booking_v1_abandoned_booking_proto_rawDesc = "" +
 	"\n" +
-	"8moego/business/online_booking/v1/abandoned_booking.proto\x12 moego.business.online_booking.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a)moego/business/customer/v1/customer.proto\x1a'moego/business/setting/v1/service.proto\x1a\x1dmoego/common/v1/address.proto\"\xdc\x0f\n" +
+	"8moego/business/online_booking/v1/abandoned_booking.proto\x12 moego.business.online_booking.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a'moego/business/setting/v1/service.proto\x1a\x1dmoego/common/v1/address.proto\"\x8a\x11\n" +
 	"\x10AbandonedBooking\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -853,17 +945,29 @@ const file_moego_business_online_booking_v1_abandoned_booking_proto_rawDesc = ""
 	"\x1aABANDON_STATUS_UNSPECIFIED\x10\x00\x12\r\n" +
 	"\tABANDONED\x10\x01\x12\r\n" +
 	"\tCONTACTED\x10\x02\x12\r\n" +
-	"\tRECOVERED\x10\x03\"\x89\x04\n" +
-	"\x18AbandonedBookingCustomer\x12@\n" +
-	"\bcustomer\x18\x01 \x01(\v2$.moego.business.customer.v1.CustomerR\bcustomer\x12\x18\n" +
-	"\areferer\x18\x02 \x01(\tR\areferer\x12,\n" +
-	"\x12referral_source_id\x18\x03 \x01(\tR\x10referralSourceId\x120\n" +
-	"\x14preferred_groomer_id\x18\x04 \x01(\x05R\x12preferredGroomerId\x126\n" +
-	"\x17preferred_frequency_day\x18\x05 \x01(\x05R\x15preferredFrequencyDay\x128\n" +
-	"\x18preferred_frequency_type\x18\x06 \x01(\x05R\x16preferredFrequencyType\x12#\n" +
-	"\rpreferred_day\x18\a \x01(\tR\fpreferredDay\x12%\n" +
-	"\x0epreferred_time\x18\b \x01(\tR\rpreferredTime\x12s\n" +
-	"\x14question_answer_list\x18\t \x03(\v2A.moego.business.online_booking.v1.AbandonedBooking.QuestionAnswerR\x12questionAnswerList\"\xfc\x02\n" +
+	"\tRECOVERED\x10\x03\"\xab\x01\n" +
+	"\x16PreferredFrequencyType\x12(\n" +
+	"$PREFERRED_FREQUENCY_TYPE_UNSPECIFIED\x10\x00\x12 \n" +
+	"\x1cPREFERRED_FREQUENCY_TYPE_DAY\x10\x01\x12!\n" +
+	"\x1dPREFERRED_FREQUENCY_TYPE_WEEK\x10\x02\x12\"\n" +
+	"\x1ePREFERRED_FREQUENCY_TYPE_MONTH\x10\x03\"\xa6\x05\n" +
+	"\x18AbandonedBookingCustomer\x12\x1f\n" +
+	"\vcustomer_id\x18\x01 \x01(\tR\n" +
+	"customerId\x12\x14\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
+	"\n" +
+	"first_name\x18\x03 \x01(\tR\tfirstName\x12\x1b\n" +
+	"\tlast_name\x18\x04 \x01(\tR\blastName\x12!\n" +
+	"\fphone_number\x18\x05 \x01(\tR\vphoneNumber\x12\x18\n" +
+	"\areferer\x18\x06 \x01(\tR\areferer\x12'\n" +
+	"\x0freferral_source\x18\a \x01(\tR\x0ereferralSource\x120\n" +
+	"\x14preferred_groomer_id\x18\b \x01(\tR\x12preferredGroomerId\x126\n" +
+	"\x17preferred_frequency_day\x18\t \x01(\x05R\x15preferredFrequencyDay\x12\x83\x01\n" +
+	"\x18preferred_frequency_type\x18\n" +
+	" \x01(\x0e2I.moego.business.online_booking.v1.AbandonedBooking.PreferredFrequencyTypeR\x16preferredFrequencyType\x12%\n" +
+	"\x0epreferred_days\x18\v \x03(\x05R\rpreferredDays\x12%\n" +
+	"\x0epreferred_time\x18\f \x03(\x05R\rpreferredTime\x12s\n" +
+	"\x14question_answer_list\x18\r \x03(\v2A.moego.business.online_booking.v1.AbandonedBooking.QuestionAnswerR\x12questionAnswerList\"\xfc\x02\n" +
 	"\x13AbandonedBookingPet\x12]\n" +
 	"\x12pet_service_detail\x18\x01 \x01(\v2/.moego.business.appointment.v1.PetServiceDetailR\x10petServiceDetail\x124\n" +
 	"\x16emergency_contact_name\x18\x02 \x01(\tR\x14emergencyContactName\x126\n" +
@@ -884,43 +988,43 @@ func file_moego_business_online_booking_v1_abandoned_booking_proto_rawDescGZIP()
 	return file_moego_business_online_booking_v1_abandoned_booking_proto_rawDescData
 }
 
-var file_moego_business_online_booking_v1_abandoned_booking_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_moego_business_online_booking_v1_abandoned_booking_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
 var file_moego_business_online_booking_v1_abandoned_booking_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_online_booking_v1_abandoned_booking_proto_goTypes = []any{
-	(AbandonedBooking_LeadType)(0),          // 0: moego.business.online_booking.v1.AbandonedBooking.LeadType
-	(AbandonedBooking_RecoverType)(0),       // 1: moego.business.online_booking.v1.AbandonedBooking.RecoverType
-	(AbandonedBooking_Step)(0),              // 2: moego.business.online_booking.v1.AbandonedBooking.Step
-	(AbandonedBooking_Status)(0),            // 3: moego.business.online_booking.v1.AbandonedBooking.Status
-	(*AbandonedBooking)(nil),                // 4: moego.business.online_booking.v1.AbandonedBooking
-	(*AbandonedBookingCustomer)(nil),        // 5: moego.business.online_booking.v1.AbandonedBookingCustomer
-	(*AbandonedBookingPet)(nil),             // 6: moego.business.online_booking.v1.AbandonedBookingPet
-	(*AbandonedBooking_QuestionAnswer)(nil), // 7: moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
-	(*commonpb.Address)(nil),                // 8: moego.common.v1.Address
-	(*timestamppb.Timestamp)(nil),           // 9: google.protobuf.Timestamp
-	(settingpb.Service_ItemType)(0),         // 10: moego.business.setting.v1.Service.ItemType
-	(*customerpb.Customer)(nil),             // 11: moego.business.customer.v1.Customer
-	(*appointmentpb.PetServiceDetail)(nil),  // 12: moego.business.appointment.v1.PetServiceDetail
+	(AbandonedBooking_LeadType)(0),               // 0: moego.business.online_booking.v1.AbandonedBooking.LeadType
+	(AbandonedBooking_RecoverType)(0),            // 1: moego.business.online_booking.v1.AbandonedBooking.RecoverType
+	(AbandonedBooking_Step)(0),                   // 2: moego.business.online_booking.v1.AbandonedBooking.Step
+	(AbandonedBooking_Status)(0),                 // 3: moego.business.online_booking.v1.AbandonedBooking.Status
+	(AbandonedBooking_PreferredFrequencyType)(0), // 4: moego.business.online_booking.v1.AbandonedBooking.PreferredFrequencyType
+	(*AbandonedBooking)(nil),                     // 5: moego.business.online_booking.v1.AbandonedBooking
+	(*AbandonedBookingCustomer)(nil),             // 6: moego.business.online_booking.v1.AbandonedBookingCustomer
+	(*AbandonedBookingPet)(nil),                  // 7: moego.business.online_booking.v1.AbandonedBookingPet
+	(*AbandonedBooking_QuestionAnswer)(nil),      // 8: moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
+	(*commonpb.Address)(nil),                     // 9: moego.common.v1.Address
+	(*timestamppb.Timestamp)(nil),                // 10: google.protobuf.Timestamp
+	(settingpb.Service_ItemType)(0),              // 11: moego.business.setting.v1.Service.ItemType
+	(*appointmentpb.PetServiceDetail)(nil),       // 12: moego.business.appointment.v1.PetServiceDetail
 }
 var file_moego_business_online_booking_v1_abandoned_booking_proto_depIdxs = []int32{
-	5,  // 0: moego.business.online_booking.v1.AbandonedBooking.customer:type_name -> moego.business.online_booking.v1.AbandonedBookingCustomer
-	6,  // 1: moego.business.online_booking.v1.AbandonedBooking.pets:type_name -> moego.business.online_booking.v1.AbandonedBookingPet
-	8,  // 2: moego.business.online_booking.v1.AbandonedBooking.address:type_name -> moego.common.v1.Address
+	6,  // 0: moego.business.online_booking.v1.AbandonedBooking.customer:type_name -> moego.business.online_booking.v1.AbandonedBookingCustomer
+	7,  // 1: moego.business.online_booking.v1.AbandonedBooking.pets:type_name -> moego.business.online_booking.v1.AbandonedBookingPet
+	9,  // 2: moego.business.online_booking.v1.AbandonedBooking.address:type_name -> moego.common.v1.Address
 	2,  // 3: moego.business.online_booking.v1.AbandonedBooking.abandon_step:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
-	9,  // 4: moego.business.online_booking.v1.AbandonedBooking.abandon_time:type_name -> google.protobuf.Timestamp
+	10, // 4: moego.business.online_booking.v1.AbandonedBooking.abandon_time:type_name -> google.protobuf.Timestamp
 	3,  // 5: moego.business.online_booking.v1.AbandonedBooking.abandon_status:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
-	9,  // 6: moego.business.online_booking.v1.AbandonedBooking.last_texted_time:type_name -> google.protobuf.Timestamp
-	9,  // 7: moego.business.online_booking.v1.AbandonedBooking.last_emailed_time:type_name -> google.protobuf.Timestamp
+	10, // 6: moego.business.online_booking.v1.AbandonedBooking.last_texted_time:type_name -> google.protobuf.Timestamp
+	10, // 7: moego.business.online_booking.v1.AbandonedBooking.last_emailed_time:type_name -> google.protobuf.Timestamp
 	1,  // 8: moego.business.online_booking.v1.AbandonedBooking.recovery_type:type_name -> moego.business.online_booking.v1.AbandonedBooking.RecoverType
-	9,  // 9: moego.business.online_booking.v1.AbandonedBooking.recovery_time:type_name -> google.protobuf.Timestamp
-	9,  // 10: moego.business.online_booking.v1.AbandonedBooking.appointment_time:type_name -> google.protobuf.Timestamp
+	10, // 9: moego.business.online_booking.v1.AbandonedBooking.recovery_time:type_name -> google.protobuf.Timestamp
+	10, // 10: moego.business.online_booking.v1.AbandonedBooking.appointment_time:type_name -> google.protobuf.Timestamp
 	0,  // 11: moego.business.online_booking.v1.AbandonedBooking.lead_type:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
-	9,  // 12: moego.business.online_booking.v1.AbandonedBooking.create_time:type_name -> google.protobuf.Timestamp
-	9,  // 13: moego.business.online_booking.v1.AbandonedBooking.update_time:type_name -> google.protobuf.Timestamp
-	10, // 14: moego.business.online_booking.v1.AbandonedBooking.care_type:type_name -> moego.business.setting.v1.Service.ItemType
-	11, // 15: moego.business.online_booking.v1.AbandonedBookingCustomer.customer:type_name -> moego.business.customer.v1.Customer
-	7,  // 16: moego.business.online_booking.v1.AbandonedBookingCustomer.question_answer_list:type_name -> moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
+	10, // 12: moego.business.online_booking.v1.AbandonedBooking.create_time:type_name -> google.protobuf.Timestamp
+	10, // 13: moego.business.online_booking.v1.AbandonedBooking.update_time:type_name -> google.protobuf.Timestamp
+	11, // 14: moego.business.online_booking.v1.AbandonedBooking.care_type:type_name -> moego.business.setting.v1.Service.ItemType
+	4,  // 15: moego.business.online_booking.v1.AbandonedBookingCustomer.preferred_frequency_type:type_name -> moego.business.online_booking.v1.AbandonedBooking.PreferredFrequencyType
+	8,  // 16: moego.business.online_booking.v1.AbandonedBookingCustomer.question_answer_list:type_name -> moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
 	12, // 17: moego.business.online_booking.v1.AbandonedBookingPet.pet_service_detail:type_name -> moego.business.appointment.v1.PetServiceDetail
-	7,  // 18: moego.business.online_booking.v1.AbandonedBookingPet.question_answer_list:type_name -> moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
+	8,  // 18: moego.business.online_booking.v1.AbandonedBookingPet.question_answer_list:type_name -> moego.business.online_booking.v1.AbandonedBooking.QuestionAnswer
 	19, // [19:19] is the sub-list for method output_type
 	19, // [19:19] is the sub-list for method input_type
 	19, // [19:19] is the sub-list for extension type_name
@@ -938,7 +1042,7 @@ func file_moego_business_online_booking_v1_abandoned_booking_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_abandoned_booking_proto_rawDesc), len(file_moego_business_online_booking_v1_abandoned_booking_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      5,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,

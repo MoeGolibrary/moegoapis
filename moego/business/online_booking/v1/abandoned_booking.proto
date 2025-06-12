@@ -4,7 +4,6 @@ package moego.business.online_booking.v1;
 
 import "google/protobuf/timestamp.proto";
 import "moego/business/appointment/v1/pet_service_detail.proto";
-import "moego/business/customer/v1/customer.proto";
 import "moego/business/setting/v1/service.proto";
 import "moego/common/v1/address.proto";
 
@@ -110,6 +109,19 @@ message AbandonedBooking {
     RECOVERED = 3;
   }
 
+
+  // Frequency type of the abandonment process.
+  enum PreferredFrequencyType {
+    // Default value. This value is unused.
+    PREFERRED_FREQUENCY_TYPE_UNSPECIFIED = 0;
+    // Daily
+    PREFERRED_FREQUENCY_TYPE_DAY = 1;
+    // Weekly
+    PREFERRED_FREQUENCY_TYPE_WEEK = 2;
+    // Monthly
+    PREFERRED_FREQUENCY_TYPE_MONTH = 3;
+  }
+
   // QuestionAnswer represents a key-value pair capturing user input during the booking flow.
   message QuestionAnswer {
     // Unique identifier for the question-answer pair.
@@ -196,37 +208,52 @@ message AbandonedBooking {
 // AbandonedBookingCustomer contains information about the customer associated with an abandoned booking.
 // It includes both core customer data and additional booking-specific preferences and metadata.
 message AbandonedBookingCustomer {
-  // Core customer information, such as name, contact details, and preferences.
-  moego.business.customer.v1.Customer customer = 1;
+
+  // The unique identifier for the customer.
+  string customer_id = 1;
+
+  // The email address of the customer.
+  string email = 2;
+
+  // firstName
+  string first_name = 3;
+
+  // lastName
+  string last_name = 4;
+
+  // phoneNumber
+  string phone_number = 5;
 
   // The source that referred this customer to the system.
-  string referer = 2;
+  string referer = 6;
 
-  // ID of the referral source through which the customer was acquired.
-  string referral_source_id = 3;
+  // The source that referred this customer to the system.
+  string referral_source = 7;
 
   // ID of the staff member preferred by the customer for grooming services.
-  int32 preferred_groomer_id = 4;
+  string preferred_groomer_id = 8;
 
   // Preferred frequency in days for recurring visits.
-  int32 preferred_frequency_day = 5;
+  int32 preferred_frequency_day = 9;
 
-  // Type of frequency (e.g., daily, weekly). Corresponds to Byte in Java.
-  int32 preferred_frequency_type = 6;
+  // Type of frequency (e.g., daily, weekly).
+  AbandonedBooking.PreferredFrequencyType preferred_frequency_type = 10;
 
   // Preferred day(s) of the week for service.
-  string preferred_day = 7;
+  repeated int32 preferred_days = 11;
 
   // Preferred time(s) of the day for service.
-  string preferred_time = 8;
+  repeated int32 preferred_time = 12;
 
   // List of question-answer pairs capturing user input during the booking process.
-  repeated AbandonedBooking.QuestionAnswer question_answer_list = 9;
+  repeated AbandonedBooking.QuestionAnswer question_answer_list = 13;
 }
+
 
 // AbandonedBookingPet represents a pet involved in an abandoned booking.
 // It captures service-related details along with emergency contact and health information.
 message AbandonedBookingPet {
+
   // Pet and service detail information used in the booking flow.
   moego.business.appointment.v1.PetServiceDetail pet_service_detail = 1;
 
