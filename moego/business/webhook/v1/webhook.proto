@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package moego.business.webhook.v1;
+
+import "google/protobuf/timestamp.proto";
+import "moego/auth/apikey/v1/apikey.proto";
+import "moego/business/event/v1/event.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb;webhookpb";
+option java_multiple_files = true;
+option java_outer_classname = "WebhookProto";
+option java_package = "com.moego.api.business.webhook.v1";
+
+// Webhook represents a webhook configuration for event notifications.
+message Webhook {
+
+  // ContentType defines the format of the payload.
+  enum ContentType {
+    // Default value.
+    CONTENT_TYPE_UNSPECIFIED = 0;
+    // application/json
+    CONTENT_TYPE_JSON = 1;
+    // application/x-www-form-urlencoded
+    CONTENT_TYPE_FORM_URLENCODED = 2;
+    // application/grpc, application/grpc+proto
+    CONTENT_TYPE_GRPC = 3;
+  }
+
+  // Unique identifier of the webhook.
+  string id = 1;
+
+  // Webhook restrictions
+  moego.auth.apikey.v1.Restrictions restrictions = 4;
+
+  // List of event types the webhook is subscribed to.
+  repeated moego.business.event.v1.Event.Type events = 5;
+
+
+  // URL to receive webhook payloads.
+  string endpoint_url = 6;
+
+
+  // Optional secret token used to sign payloads (e.g., HMAC).
+  string secret_token = 7;
+
+  // Content-Type header used when delivering payloads.
+  // Default: CONTENT_TYPE_JSON
+  ContentType content_type = 8;
+
+  // Retry policy configuration for failed deliveries.
+  RetryPolicy retry_policy = 9;
+
+  // Whether the webhook is currently active.
+  bool is_active = 10;
+
+
+  // Whether to verify SSL certificates when delivering payloads.
+  // Default: true (recommended for security)
+  bool verify_ssl = 11;
+
+  // A list of values for a header key.
+  message HeaderValues {
+    // The values
+    repeated string values = 1;
+  }
+
+  // Custom HTTP headers to include when delivering payloads.
+  map<string, HeaderValues> headers = 12;
+
+  // Timestamp when the webhook was created.
+  google.protobuf.Timestamp created_time = 13;
+
+  // Timestamp when the webhook was last updated.
+  google.protobuf.Timestamp updated_time = 14;
+
+}
+
+// RetryPolicy defines how many times and how frequently the system should retry failed deliveries.
+message RetryPolicy {
+  // Maximum number of retries before giving up.
+  int32 max_retries = 1;
+
+  // Initial interval in milliseconds between retries.
+  int32 initial_interval_ms = 2;
+
+  // Backoff factor for exponential backoff strategy.
+  // e.g., 2 means each retry delay doubles.
+  int32 backoff_factor = 3;
+
+  // HTTP status codes that are considered retryable.
+  // Example: [500, 502, 503, 504]
+  repeated int32 retryable_http_codes = 4;
+}
+
+// WebhookDelivery represents a log entry for a webhook event delivery attempt.
+message WebhookDelivery {
+  // Unique ID for this delivery attempt.
+  string id = 1;
+
+  // Reference to the webhook that triggered this delivery.
+  string webhook_id = 2;
+
+  // Type of the event being delivered.
+  moego.business.event.v1.Event.Type event_type = 3;
+
+  // Unique message/event ID from the message queue or event source.
+  string event_id = 4;
+
+  // URL where the event was delivered.
+  string request_url = 5;
+
+  // Actual destination the request was delivered to (e.g., IP, domain, or URL).
+  string delivered_to = 6;
+
+  // HTTP headers sent with the delivery request.
+  map<string, Webhook.HeaderValues> request_headers = 7;
+
+  // Payload of the event delivery request.
+  bytes request_body = 8;
+
+  // HTTP status code returned by the endpoint.
+  int32 response_status = 9;
+
+  // HTTP headers received in the response.
+  map<string, Webhook.HeaderValues> response_headers = 10;
+
+  // Body of the response, may be truncated.
+  bytes response_body = 11;
+
+  // Timestamp when the event was delivered.
+  google.protobuf.Timestamp delivered_at = 12;
+
+  // Time taken to complete the delivery in milliseconds.
+  int64 duration_ms = 13;
+
+  // Whether the delivery was successful (HTTP 2xx).
+  bool success = 14;
+
+  // Number of retries before final delivery outcome.
+  int32 retry_count = 15;
+
+  // Format of the request body
+  Webhook.ContentType request_format = 16;
+
+  // Format of the response body
+  Webhook.ContentType response_format = 17;
+}
