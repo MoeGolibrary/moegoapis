@@ -31,19 +31,19 @@ type CreateWebhookRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// endpoint_url is the URL where the webhook will be delivered.
 	EndpointUrl string `protobuf:"bytes,1,opt,name=endpoint_url,json=endpointUrl,proto3" json:"endpoint_url,omitempty"`
-	// events is the list of event types this webhook subscribes to.
-	Events []eventpb.Event_Type `protobuf:"varint,2,rep,packed,name=events,proto3,enum=moego.business.event.v1.Event_Type" json:"events,omitempty"`
+	// event_types is the list of event types this webhook subscribes to.
+	EventTypes []eventpb.Event_Type `protobuf:"varint,2,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// secret_token is an optional HMAC token used to sign payloads.
-	SecretToken string `protobuf:"bytes,3,opt,name=secret_token,json=secretToken,proto3" json:"secret_token,omitempty"`
+	SecretToken *string `protobuf:"bytes,3,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
 	// content_type specifies the Content-Type header when delivering payloads.
 	ContentType Webhook_ContentType `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
 	// retry_policy defines how many times and how frequently the system should retry failed deliveries.
 	RetryPolicy *RetryPolicy `protobuf:"bytes,5,opt,name=retry_policy,json=retryPolicy,proto3" json:"retry_policy,omitempty"`
 	// Whether the webhook is currently active.
-	IsActive bool `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	IsActive *bool `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3,oneof" json:"is_active,omitempty"`
 	// Whether to verify SSL certificates when delivering payloads.
 	// Default: true (recommended for security)
-	VerifySsl bool `protobuf:"varint,7,opt,name=verify_ssl,json=verifySsl,proto3" json:"verify_ssl,omitempty"`
+	VerifySsl *bool `protobuf:"varint,7,opt,name=verify_ssl,json=verifySsl,proto3,oneof" json:"verify_ssl,omitempty"`
 	// Custom HTTP headers to include when delivering payloads.
 	Headers map[string]*Webhook_HeaderValues `protobuf:"bytes,8,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Restrictions
@@ -89,16 +89,16 @@ func (x *CreateWebhookRequest) GetEndpointUrl() string {
 	return ""
 }
 
-func (x *CreateWebhookRequest) GetEvents() []eventpb.Event_Type {
+func (x *CreateWebhookRequest) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
-		return x.Events
+		return x.EventTypes
 	}
 	return nil
 }
 
 func (x *CreateWebhookRequest) GetSecretToken() string {
-	if x != nil {
-		return x.SecretToken
+	if x != nil && x.SecretToken != nil {
+		return *x.SecretToken
 	}
 	return ""
 }
@@ -118,15 +118,15 @@ func (x *CreateWebhookRequest) GetRetryPolicy() *RetryPolicy {
 }
 
 func (x *CreateWebhookRequest) GetIsActive() bool {
-	if x != nil {
-		return x.IsActive
+	if x != nil && x.IsActive != nil {
+		return *x.IsActive
 	}
 	return false
 }
 
 func (x *CreateWebhookRequest) GetVerifySsl() bool {
-	if x != nil {
-		return x.VerifySsl
+	if x != nil && x.VerifySsl != nil {
+		return *x.VerifySsl
 	}
 	return false
 }
@@ -198,19 +198,19 @@ type UpdateWebhookRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// endpoint_url is the URL where the webhook will be delivered.
 	EndpointUrl string `protobuf:"bytes,2,opt,name=endpoint_url,json=endpointUrl,proto3" json:"endpoint_url,omitempty"`
-	// events is the list of event types this webhook subscribes to.
-	Events []eventpb.Event_Type `protobuf:"varint,3,rep,packed,name=events,proto3,enum=moego.business.event.v1.Event_Type" json:"events,omitempty"`
+	// event_types is the list of event types this webhook subscribes to.
+	EventTypes []eventpb.Event_Type `protobuf:"varint,3,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// secret_token is an optional HMAC token used to sign payloads.
-	SecretToken string `protobuf:"bytes,4,opt,name=secret_token,json=secretToken,proto3" json:"secret_token,omitempty"`
+	SecretToken *string `protobuf:"bytes,4,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
 	// content_type specifies the Content-Type header when delivering payloads.
 	ContentType Webhook_ContentType `protobuf:"varint,5,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
 	// retry_policy defines how many times and how frequently the system should retry failed deliveries.
 	RetryPolicy *RetryPolicy `protobuf:"bytes,6,opt,name=retry_policy,json=retryPolicy,proto3" json:"retry_policy,omitempty"`
 	// Whether the webhook is currently active.
-	IsActive bool `protobuf:"varint,7,opt,name=is_active,json=isActive,proto3" json:"is_active,omitempty"`
+	IsActive *bool `protobuf:"varint,7,opt,name=is_active,json=isActive,proto3,oneof" json:"is_active,omitempty"`
 	// Whether to verify SSL certificates when delivering payloads.
 	// Default: true (recommended for security)
-	VerifySsl bool `protobuf:"varint,8,opt,name=verify_ssl,json=verifySsl,proto3" json:"verify_ssl,omitempty"`
+	VerifySsl *bool `protobuf:"varint,8,opt,name=verify_ssl,json=verifySsl,proto3,oneof" json:"verify_ssl,omitempty"`
 	// Custom HTTP headers to include when delivering payloads.
 	Headers map[string]*Webhook_HeaderValues `protobuf:"bytes,9,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	// Restrictions
@@ -263,16 +263,16 @@ func (x *UpdateWebhookRequest) GetEndpointUrl() string {
 	return ""
 }
 
-func (x *UpdateWebhookRequest) GetEvents() []eventpb.Event_Type {
+func (x *UpdateWebhookRequest) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
-		return x.Events
+		return x.EventTypes
 	}
 	return nil
 }
 
 func (x *UpdateWebhookRequest) GetSecretToken() string {
-	if x != nil {
-		return x.SecretToken
+	if x != nil && x.SecretToken != nil {
+		return *x.SecretToken
 	}
 	return ""
 }
@@ -292,15 +292,15 @@ func (x *UpdateWebhookRequest) GetRetryPolicy() *RetryPolicy {
 }
 
 func (x *UpdateWebhookRequest) GetIsActive() bool {
-	if x != nil {
-		return x.IsActive
+	if x != nil && x.IsActive != nil {
+		return *x.IsActive
 	}
 	return false
 }
 
 func (x *UpdateWebhookRequest) GetVerifySsl() bool {
-	if x != nil {
-		return x.VerifySsl
+	if x != nil && x.VerifySsl != nil {
+		return *x.VerifySsl
 	}
 	return false
 }
@@ -824,39 +824,49 @@ var File_moego_business_webhook_v1_webhook_service_proto protoreflect.FileDescri
 
 const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xa8\x05\n" +
+	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xee\x05\n" +
 	"\x14CreateWebhookRequest\x12&\n" +
-	"\fendpoint_url\x18\x01 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12@\n" +
-	"\x06events\x18\x02 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\x06events\x12&\n" +
-	"\fsecret_token\x18\x03 \x01(\tB\x03\xe0A\x01R\vsecretToken\x12V\n" +
+	"\fendpoint_url\x18\x01 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
+	"\vevent_types\x18\x02 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
+	"eventTypes\x12+\n" +
+	"\fsecret_token\x18\x03 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
 	"\fcontent_type\x18\x04 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12N\n" +
-	"\fretry_policy\x18\x05 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12 \n" +
-	"\tis_active\x18\x06 \x01(\bB\x03\xe0A\x01R\bisActive\x12\"\n" +
+	"\fretry_policy\x18\x05 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12%\n" +
+	"\tis_active\x18\x06 \x01(\bB\x03\xe0A\x01H\x01R\bisActive\x88\x01\x01\x12'\n" +
 	"\n" +
-	"verify_ssl\x18\a \x01(\bB\x03\xe0A\x01R\tverifySsl\x12[\n" +
+	"verify_ssl\x18\a \x01(\bB\x03\xe0A\x01H\x02R\tverifySsl\x88\x01\x01\x12[\n" +
 	"\aheaders\x18\b \x03(\v2<.moego.business.webhook.v1.CreateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12F\n" +
 	"\frestrictions\x18\t \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
-	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\"(\n" +
+	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01B\x0f\n" +
+	"\r_secret_tokenB\f\n" +
+	"\n" +
+	"_is_activeB\r\n" +
+	"\v_verify_ssl\"(\n" +
 	"\x11GetWebhookRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x01R\x02id\"\xbd\x05\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x01R\x02id\"\x83\x06\n" +
 	"\x14UpdateWebhookRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12&\n" +
-	"\fendpoint_url\x18\x02 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12@\n" +
-	"\x06events\x18\x03 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\x06events\x12&\n" +
-	"\fsecret_token\x18\x04 \x01(\tB\x03\xe0A\x01R\vsecretToken\x12V\n" +
+	"\fendpoint_url\x18\x02 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
+	"\vevent_types\x18\x03 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
+	"eventTypes\x12+\n" +
+	"\fsecret_token\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
 	"\fcontent_type\x18\x05 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12N\n" +
-	"\fretry_policy\x18\x06 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12 \n" +
-	"\tis_active\x18\a \x01(\bB\x03\xe0A\x01R\bisActive\x12\"\n" +
+	"\fretry_policy\x18\x06 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12%\n" +
+	"\tis_active\x18\a \x01(\bB\x03\xe0A\x01H\x01R\bisActive\x88\x01\x01\x12'\n" +
 	"\n" +
-	"verify_ssl\x18\b \x01(\bB\x03\xe0A\x01R\tverifySsl\x12[\n" +
+	"verify_ssl\x18\b \x01(\bB\x03\xe0A\x01H\x02R\tverifySsl\x88\x01\x01\x12[\n" +
 	"\aheaders\x18\t \x03(\v2<.moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12F\n" +
 	"\frestrictions\x18\n" +
 	" \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
-	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\"+\n" +
+	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01B\x0f\n" +
+	"\r_secret_tokenB\f\n" +
+	"\n" +
+	"_is_activeB\r\n" +
+	"\v_verify_ssl\"+\n" +
 	"\x14DeleteWebhookRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x17\n" +
 	"\x15DeleteWebhookResponse\"\xac\x03\n" +
@@ -945,12 +955,12 @@ var file_moego_business_webhook_v1_webhook_service_proto_goTypes = []any{
 	(*interval.Interval)(nil),                   // 22: google.type.Interval
 }
 var file_moego_business_webhook_v1_webhook_service_proto_depIdxs = []int32{
-	14, // 0: moego.business.webhook.v1.CreateWebhookRequest.events:type_name -> moego.business.event.v1.Event.Type
+	14, // 0: moego.business.webhook.v1.CreateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
 	15, // 1: moego.business.webhook.v1.CreateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
 	16, // 2: moego.business.webhook.v1.CreateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
 	10, // 3: moego.business.webhook.v1.CreateWebhookRequest.headers:type_name -> moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
 	17, // 4: moego.business.webhook.v1.CreateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	14, // 5: moego.business.webhook.v1.UpdateWebhookRequest.events:type_name -> moego.business.event.v1.Event.Type
+	14, // 5: moego.business.webhook.v1.UpdateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
 	15, // 6: moego.business.webhook.v1.UpdateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
 	16, // 7: moego.business.webhook.v1.UpdateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
 	11, // 8: moego.business.webhook.v1.UpdateWebhookRequest.headers:type_name -> moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
@@ -994,6 +1004,8 @@ func file_moego_business_webhook_v1_webhook_service_proto_init() {
 		return
 	}
 	file_moego_business_webhook_v1_webhook_proto_init()
+	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[0].OneofWrappers = []any{}
+	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[2].OneofWrappers = []any{}
 	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[5].OneofWrappers = []any{}
 	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[8].OneofWrappers = []any{}
 	type x struct{}

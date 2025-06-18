@@ -110,11 +110,11 @@ message CreateWebhookRequest {
   // endpoint_url is the URL where the webhook will be delivered.
   string endpoint_url = 1  [(google.api.field_behavior) = REQUIRED];
 
-  // events is the list of event types this webhook subscribes to.
-  repeated moego.business.event.v1.Event.Type events = 2  [(google.api.field_behavior) = REQUIRED];
+  // event_types is the list of event types this webhook subscribes to.
+  repeated moego.business.event.v1.Event.Type event_types = 2  [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
-  string secret_token = 3 [(google.api.field_behavior) = OPTIONAL];
+  optional string secret_token = 3 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
   Webhook.ContentType content_type = 4  [(google.api.field_behavior) = OPTIONAL];
@@ -123,11 +123,11 @@ message CreateWebhookRequest {
   RetryPolicy retry_policy = 5 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
-  bool is_active = 6 [(google.api.field_behavior) = OPTIONAL];
+  optional bool is_active = 6 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether to verify SSL certificates when delivering payloads.
   // Default: true (recommended for security)
-  bool verify_ssl = 7 [(google.api.field_behavior) = OPTIONAL];
+  optional bool verify_ssl = 7 [(google.api.field_behavior) = OPTIONAL];
 
   // Custom HTTP headers to include when delivering payloads.
   map<string, Webhook.HeaderValues> headers = 8 [(google.api.field_behavior) = OPTIONAL];
@@ -152,11 +152,11 @@ message UpdateWebhookRequest {
   // endpoint_url is the URL where the webhook will be delivered.
   string endpoint_url = 2  [(google.api.field_behavior) = REQUIRED];
 
-  // events is the list of event types this webhook subscribes to.
-  repeated moego.business.event.v1.Event.Type events = 3  [(google.api.field_behavior) = REQUIRED];
+  // event_types is the list of event types this webhook subscribes to.
+  repeated moego.business.event.v1.Event.Type event_types = 3  [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
-  string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
+  optional string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
   Webhook.ContentType content_type = 5  [(google.api.field_behavior) = OPTIONAL];
@@ -165,11 +165,11 @@ message UpdateWebhookRequest {
   RetryPolicy retry_policy = 6 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
-  bool is_active = 7 [(google.api.field_behavior) = OPTIONAL];
+  optional bool is_active = 7 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether to verify SSL certificates when delivering payloads.
   // Default: true (recommended for security)
-  bool verify_ssl = 8 [(google.api.field_behavior) = OPTIONAL];
+  optional bool verify_ssl = 8 [(google.api.field_behavior) = OPTIONAL];
 
   // Custom HTTP headers to include when delivering payloads.
   map<string, Webhook.HeaderValues> headers = 9 [(google.api.field_behavior) = OPTIONAL];

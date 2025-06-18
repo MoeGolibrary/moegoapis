@@ -33,7 +33,7 @@ message Webhook {
   moego.auth.apikey.v1.Restrictions restrictions = 4;
 
   // List of event types the webhook is subscribed to.
-  repeated moego.business.event.v1.Event.Type events = 5;
+  repeated moego.business.event.v1.Event.Type event_types = 5;
 
 
   // URL to receive webhook payloads.

@@ -89,7 +89,7 @@ type Webhook struct {
 	// Webhook restrictions
 	Restrictions *apikeypb.Restrictions `protobuf:"bytes,4,opt,name=restrictions,proto3" json:"restrictions,omitempty"`
 	// List of event types the webhook is subscribed to.
-	Events []eventpb.Event_Type `protobuf:"varint,5,rep,packed,name=events,proto3,enum=moego.business.event.v1.Event_Type" json:"events,omitempty"`
+	EventTypes []eventpb.Event_Type `protobuf:"varint,5,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// URL to receive webhook payloads.
 	EndpointUrl string `protobuf:"bytes,6,opt,name=endpoint_url,json=endpointUrl,proto3" json:"endpoint_url,omitempty"`
 	// Optional secret token used to sign payloads (e.g., HMAC).
@@ -158,9 +158,9 @@ func (x *Webhook) GetRestrictions() *apikeypb.Restrictions {
 	return nil
 }
 
-func (x *Webhook) GetEvents() []eventpb.Event_Type {
+func (x *Webhook) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
-		return x.Events
+		return x.EventTypes
 	}
 	return nil
 }
@@ -543,11 +543,12 @@ var File_moego_business_webhook_v1_webhook_proto protoreflect.FileDescriptor
 
 const file_moego_business_webhook_v1_webhook_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/webhook/v1/webhook.proto\x12\x19moego.business.webhook.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\x99\a\n" +
+	"'moego/business/webhook/v1/webhook.proto\x12\x19moego.business.webhook.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xa2\a\n" +
 	"\aWebhook\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12F\n" +
-	"\frestrictions\x18\x04 \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x12;\n" +
-	"\x06events\x18\x05 \x03(\x0e2#.moego.business.event.v1.Event.TypeR\x06events\x12!\n" +
+	"\frestrictions\x18\x04 \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x12D\n" +
+	"\vevent_types\x18\x05 \x03(\x0e2#.moego.business.event.v1.Event.TypeR\n" +
+	"eventTypes\x12!\n" +
 	"\fendpoint_url\x18\x06 \x01(\tR\vendpointUrl\x12!\n" +
 	"\fsecret_token\x18\a \x01(\tR\vsecretToken\x12Q\n" +
 	"\fcontent_type\x18\b \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeR\vcontentType\x12I\n" +
@@ -636,7 +637,7 @@ var file_moego_business_webhook_v1_webhook_proto_goTypes = []any{
 }
 var file_moego_business_webhook_v1_webhook_proto_depIdxs = []int32{
 	8,  // 0: moego.business.webhook.v1.Webhook.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	9,  // 1: moego.business.webhook.v1.Webhook.events:type_name -> moego.business.event.v1.Event.Type
+	9,  // 1: moego.business.webhook.v1.Webhook.event_types:type_name -> moego.business.event.v1.Event.Type
 	0,  // 2: moego.business.webhook.v1.Webhook.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
 	2,  // 3: moego.business.webhook.v1.Webhook.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
 	5,  // 4: moego.business.webhook.v1.Webhook.headers:type_name -> moego.business.webhook.v1.Webhook.HeadersEntry
