@@ -29,34 +29,32 @@ message Webhook {
   // Unique identifier of the webhook.
   string id = 1;
 
-  // Webhook restrictions
-  moego.auth.apikey.v1.Restrictions restrictions = 4;
+  // List of organizations the webhook is subscribed to.
+  // If empty, the webhook is subscribed to all organizations.
+  repeated moego.auth.apikey.v1.Organization organizations = 2;
 
   // List of event types the webhook is subscribed to.
-  repeated moego.business.event.v1.Event.Type event_types = 5;
+  // If it is empty, no events will be subscribed to
+  repeated moego.business.event.v1.Event.Type event_types = 3;
 
 
   // URL to receive webhook payloads.
-  string endpoint_url = 6;
+  string endpoint_url = 4;
 
 
   // Optional secret token used to sign payloads (e.g., HMAC).
-  string secret_token = 7;
+  string secret_token = 5;
 
   // Content-Type header used when delivering payloads.
   // Default: CONTENT_TYPE_JSON
-  ContentType content_type = 8;
-
-  // Retry policy configuration for failed deliveries.
-  RetryPolicy retry_policy = 9;
+  ContentType content_type = 6;
 
   // Whether the webhook is currently active.
-  bool is_active = 10;
-
+  bool is_active = 7;
 
   // Whether to verify SSL certificates when delivering payloads.
   // Default: true (recommended for security)
-  bool verify_ssl = 11;
+  bool verify_ssl = 8;
 
   // A list of values for a header key.
   message HeaderValues {
@@ -65,31 +63,14 @@ message Webhook {
   }
 
   // Custom HTTP headers to include when delivering payloads.
-  map<string, HeaderValues> headers = 12;
+  map<string, HeaderValues> headers = 9;
 
   // Timestamp when the webhook was created.
-  google.protobuf.Timestamp created_time = 13;
+  google.protobuf.Timestamp created_time = 10;
 
   // Timestamp when the webhook was last updated.
-  google.protobuf.Timestamp updated_time = 14;
+  google.protobuf.Timestamp updated_time = 11;
 
-}
-
-// RetryPolicy defines how many times and how frequently the system should retry failed deliveries.
-message RetryPolicy {
-  // Maximum number of retries before giving up.
-  int32 max_retries = 1;
-
-  // Initial interval in milliseconds between retries.
-  int32 initial_interval_ms = 2;
-
-  // Backoff factor for exponential backoff strategy.
-  // e.g., 2 means each retry delay doubles.
-  int32 backoff_factor = 3;
-
-  // HTTP status codes that are considered retryable.
-  // Example: [500, 502, 503, 504]
-  repeated int32 retryable_http_codes = 4;
 }
 
 // WebhookDelivery represents a log entry for a webhook event delivery attempt.

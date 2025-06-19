@@ -120,17 +120,19 @@ message CreateWebhookRequest {
   // endpoint_url is the URL where the webhook will be delivered.
   string endpoint_url = 1  [(google.api.field_behavior) = REQUIRED];
 
+  // List of organizations the webhook is subscribed to.
+  // If empty, the webhook is subscribed to all organizations.
+  repeated moego.auth.apikey.v1.Organization organizations = 2;
+
   // event_types is the list of event types this webhook subscribes to.
-  repeated moego.business.event.v1.Event.Type event_types = 2  [(google.api.field_behavior) = REQUIRED];
+  // If it is empty, no events will be subscribed to
+  repeated moego.business.event.v1.Event.Type event_types = 3  [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
-  optional string secret_token = 3 [(google.api.field_behavior) = OPTIONAL];
+  optional string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
-  Webhook.ContentType content_type = 4  [(google.api.field_behavior) = OPTIONAL];
-
-  // retry_policy defines how many times and how frequently the system should retry failed deliveries.
-  RetryPolicy retry_policy = 5 [(google.api.field_behavior) = OPTIONAL];
+  Webhook.ContentType content_type = 5  [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
   optional bool is_active = 6 [(google.api.field_behavior) = OPTIONAL];
@@ -141,9 +143,6 @@ message CreateWebhookRequest {
 
   // Custom HTTP headers to include when delivering payloads.
   map<string, Webhook.HeaderValues> headers = 8 [(google.api.field_behavior) = OPTIONAL];
-
-  // Restrictions
-  moego.auth.apikey.v1.Restrictions restrictions = 9 [(google.api.field_behavior) = OPTIONAL];
 }
 
 
@@ -162,17 +161,19 @@ message UpdateWebhookRequest {
   // endpoint_url is the URL where the webhook will be delivered.
   string endpoint_url = 2  [(google.api.field_behavior) = REQUIRED];
 
+  // List of organizations the webhook is subscribed to.
+  // If empty, the webhook is subscribed to all organizations.
+  repeated moego.auth.apikey.v1.Organization organizations = 3;
+
   // event_types is the list of event types this webhook subscribes to.
-  repeated moego.business.event.v1.Event.Type event_types = 3  [(google.api.field_behavior) = REQUIRED];
+  // If it is empty, no events will be subscribed to
+  repeated moego.business.event.v1.Event.Type event_types = 4  [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
-  optional string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
+  optional string secret_token = 5 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
-  Webhook.ContentType content_type = 5  [(google.api.field_behavior) = OPTIONAL];
-
-  // retry_policy defines how many times and how frequently the system should retry failed deliveries.
-  RetryPolicy retry_policy = 6 [(google.api.field_behavior) = OPTIONAL];
+  Webhook.ContentType content_type = 6  [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
   optional bool is_active = 7 [(google.api.field_behavior) = OPTIONAL];
@@ -183,9 +184,6 @@ message UpdateWebhookRequest {
 
   // Custom HTTP headers to include when delivering payloads.
   map<string, Webhook.HeaderValues> headers = 9 [(google.api.field_behavior) = OPTIONAL];
-
-  // Restrictions
-  moego.auth.apikey.v1.Restrictions restrictions = 10;
 }
 
 // DeleteWebhookRequest

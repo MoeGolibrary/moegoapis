@@ -31,23 +31,23 @@ type CreateWebhookRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// endpoint_url is the URL where the webhook will be delivered.
 	EndpointUrl string `protobuf:"bytes,1,opt,name=endpoint_url,json=endpointUrl,proto3" json:"endpoint_url,omitempty"`
+	// List of organizations the webhook is subscribed to.
+	// If empty, the webhook is subscribed to all organizations.
+	Organizations []*apikeypb.Organization `protobuf:"bytes,2,rep,name=organizations,proto3" json:"organizations,omitempty"`
 	// event_types is the list of event types this webhook subscribes to.
-	EventTypes []eventpb.Event_Type `protobuf:"varint,2,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
+	// If it is empty, no events will be subscribed to
+	EventTypes []eventpb.Event_Type `protobuf:"varint,3,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// secret_token is an optional HMAC token used to sign payloads.
-	SecretToken *string `protobuf:"bytes,3,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
+	SecretToken *string `protobuf:"bytes,4,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
 	// content_type specifies the Content-Type header when delivering payloads.
-	ContentType Webhook_ContentType `protobuf:"varint,4,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
-	// retry_policy defines how many times and how frequently the system should retry failed deliveries.
-	RetryPolicy *RetryPolicy `protobuf:"bytes,5,opt,name=retry_policy,json=retryPolicy,proto3" json:"retry_policy,omitempty"`
+	ContentType Webhook_ContentType `protobuf:"varint,5,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
 	// Whether the webhook is currently active.
 	IsActive *bool `protobuf:"varint,6,opt,name=is_active,json=isActive,proto3,oneof" json:"is_active,omitempty"`
 	// Whether to verify SSL certificates when delivering payloads.
 	// Default: true (recommended for security)
 	VerifySsl *bool `protobuf:"varint,7,opt,name=verify_ssl,json=verifySsl,proto3,oneof" json:"verify_ssl,omitempty"`
 	// Custom HTTP headers to include when delivering payloads.
-	Headers map[string]*Webhook_HeaderValues `protobuf:"bytes,8,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Restrictions
-	Restrictions  *apikeypb.Restrictions `protobuf:"bytes,9,opt,name=restrictions,proto3" json:"restrictions,omitempty"`
+	Headers       map[string]*Webhook_HeaderValues `protobuf:"bytes,8,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -89,6 +89,13 @@ func (x *CreateWebhookRequest) GetEndpointUrl() string {
 	return ""
 }
 
+func (x *CreateWebhookRequest) GetOrganizations() []*apikeypb.Organization {
+	if x != nil {
+		return x.Organizations
+	}
+	return nil
+}
+
 func (x *CreateWebhookRequest) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
 		return x.EventTypes
@@ -110,13 +117,6 @@ func (x *CreateWebhookRequest) GetContentType() Webhook_ContentType {
 	return Webhook_CONTENT_TYPE_UNSPECIFIED
 }
 
-func (x *CreateWebhookRequest) GetRetryPolicy() *RetryPolicy {
-	if x != nil {
-		return x.RetryPolicy
-	}
-	return nil
-}
-
 func (x *CreateWebhookRequest) GetIsActive() bool {
 	if x != nil && x.IsActive != nil {
 		return *x.IsActive
@@ -134,13 +134,6 @@ func (x *CreateWebhookRequest) GetVerifySsl() bool {
 func (x *CreateWebhookRequest) GetHeaders() map[string]*Webhook_HeaderValues {
 	if x != nil {
 		return x.Headers
-	}
-	return nil
-}
-
-func (x *CreateWebhookRequest) GetRestrictions() *apikeypb.Restrictions {
-	if x != nil {
-		return x.Restrictions
 	}
 	return nil
 }
@@ -198,23 +191,23 @@ type UpdateWebhookRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// endpoint_url is the URL where the webhook will be delivered.
 	EndpointUrl string `protobuf:"bytes,2,opt,name=endpoint_url,json=endpointUrl,proto3" json:"endpoint_url,omitempty"`
+	// List of organizations the webhook is subscribed to.
+	// If empty, the webhook is subscribed to all organizations.
+	Organizations []*apikeypb.Organization `protobuf:"bytes,3,rep,name=organizations,proto3" json:"organizations,omitempty"`
 	// event_types is the list of event types this webhook subscribes to.
-	EventTypes []eventpb.Event_Type `protobuf:"varint,3,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
+	// If it is empty, no events will be subscribed to
+	EventTypes []eventpb.Event_Type `protobuf:"varint,4,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// secret_token is an optional HMAC token used to sign payloads.
-	SecretToken *string `protobuf:"bytes,4,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
+	SecretToken *string `protobuf:"bytes,5,opt,name=secret_token,json=secretToken,proto3,oneof" json:"secret_token,omitempty"`
 	// content_type specifies the Content-Type header when delivering payloads.
-	ContentType Webhook_ContentType `protobuf:"varint,5,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
-	// retry_policy defines how many times and how frequently the system should retry failed deliveries.
-	RetryPolicy *RetryPolicy `protobuf:"bytes,6,opt,name=retry_policy,json=retryPolicy,proto3" json:"retry_policy,omitempty"`
+	ContentType Webhook_ContentType `protobuf:"varint,6,opt,name=content_type,json=contentType,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"content_type,omitempty"`
 	// Whether the webhook is currently active.
 	IsActive *bool `protobuf:"varint,7,opt,name=is_active,json=isActive,proto3,oneof" json:"is_active,omitempty"`
 	// Whether to verify SSL certificates when delivering payloads.
 	// Default: true (recommended for security)
 	VerifySsl *bool `protobuf:"varint,8,opt,name=verify_ssl,json=verifySsl,proto3,oneof" json:"verify_ssl,omitempty"`
 	// Custom HTTP headers to include when delivering payloads.
-	Headers map[string]*Webhook_HeaderValues `protobuf:"bytes,9,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
-	// Restrictions
-	Restrictions  *apikeypb.Restrictions `protobuf:"bytes,10,opt,name=restrictions,proto3" json:"restrictions,omitempty"`
+	Headers       map[string]*Webhook_HeaderValues `protobuf:"bytes,9,rep,name=headers,proto3" json:"headers,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -263,6 +256,13 @@ func (x *UpdateWebhookRequest) GetEndpointUrl() string {
 	return ""
 }
 
+func (x *UpdateWebhookRequest) GetOrganizations() []*apikeypb.Organization {
+	if x != nil {
+		return x.Organizations
+	}
+	return nil
+}
+
 func (x *UpdateWebhookRequest) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
 		return x.EventTypes
@@ -284,13 +284,6 @@ func (x *UpdateWebhookRequest) GetContentType() Webhook_ContentType {
 	return Webhook_CONTENT_TYPE_UNSPECIFIED
 }
 
-func (x *UpdateWebhookRequest) GetRetryPolicy() *RetryPolicy {
-	if x != nil {
-		return x.RetryPolicy
-	}
-	return nil
-}
-
 func (x *UpdateWebhookRequest) GetIsActive() bool {
 	if x != nil && x.IsActive != nil {
 		return *x.IsActive
@@ -308,13 +301,6 @@ func (x *UpdateWebhookRequest) GetVerifySsl() bool {
 func (x *UpdateWebhookRequest) GetHeaders() map[string]*Webhook_HeaderValues {
 	if x != nil {
 		return x.Headers
-	}
-	return nil
-}
-
-func (x *UpdateWebhookRequest) GetRestrictions() *apikeypb.Restrictions {
-	if x != nil {
-		return x.Restrictions
 	}
 	return nil
 }
@@ -953,19 +939,18 @@ var File_moego_business_webhook_v1_webhook_service_proto protoreflect.FileDescri
 
 const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xf3\x05\n" +
+	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xa0\x05\n" +
 	"\x14CreateWebhookRequest\x12&\n" +
-	"\fendpoint_url\x18\x01 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
-	"\vevent_types\x18\x02 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
+	"\fendpoint_url\x18\x01 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12H\n" +
+	"\rorganizations\x18\x02 \x03(\v2\".moego.auth.apikey.v1.OrganizationR\rorganizations\x12I\n" +
+	"\vevent_types\x18\x03 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
 	"eventTypes\x12+\n" +
-	"\fsecret_token\x18\x03 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
-	"\fcontent_type\x18\x04 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12N\n" +
-	"\fretry_policy\x18\x05 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12%\n" +
+	"\fsecret_token\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
+	"\fcontent_type\x18\x05 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12%\n" +
 	"\tis_active\x18\x06 \x01(\bB\x03\xe0A\x01H\x01R\bisActive\x88\x01\x01\x12'\n" +
 	"\n" +
 	"verify_ssl\x18\a \x01(\bB\x03\xe0A\x01H\x02R\tverifySsl\x88\x01\x01\x12[\n" +
-	"\aheaders\x18\b \x03(\v2<.moego.business.webhook.v1.CreateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12K\n" +
-	"\frestrictions\x18\t \x01(\v2\".moego.auth.apikey.v1.RestrictionsB\x03\xe0A\x01R\frestrictions\x1ak\n" +
+	"\aheaders\x18\b \x03(\v2<.moego.business.webhook.v1.CreateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
 	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01B\x0f\n" +
@@ -974,21 +959,19 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"_is_activeB\r\n" +
 	"\v_verify_ssl\"(\n" +
 	"\x11GetWebhookRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x83\x06\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xb5\x05\n" +
 	"\x14UpdateWebhookRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12&\n" +
-	"\fendpoint_url\x18\x02 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
-	"\vevent_types\x18\x03 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
+	"\fendpoint_url\x18\x02 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12H\n" +
+	"\rorganizations\x18\x03 \x03(\v2\".moego.auth.apikey.v1.OrganizationR\rorganizations\x12I\n" +
+	"\vevent_types\x18\x04 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
 	"eventTypes\x12+\n" +
-	"\fsecret_token\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
-	"\fcontent_type\x18\x05 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12N\n" +
-	"\fretry_policy\x18\x06 \x01(\v2&.moego.business.webhook.v1.RetryPolicyB\x03\xe0A\x01R\vretryPolicy\x12%\n" +
+	"\fsecret_token\x18\x05 \x01(\tB\x03\xe0A\x01H\x00R\vsecretToken\x88\x01\x01\x12V\n" +
+	"\fcontent_type\x18\x06 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeB\x03\xe0A\x01R\vcontentType\x12%\n" +
 	"\tis_active\x18\a \x01(\bB\x03\xe0A\x01H\x01R\bisActive\x88\x01\x01\x12'\n" +
 	"\n" +
 	"verify_ssl\x18\b \x01(\bB\x03\xe0A\x01H\x02R\tverifySsl\x88\x01\x01\x12[\n" +
-	"\aheaders\x18\t \x03(\v2<.moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12F\n" +
-	"\frestrictions\x18\n" +
-	" \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x1ak\n" +
+	"\aheaders\x18\t \x03(\v2<.moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
 	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01B\x0f\n" +
@@ -1095,64 +1078,61 @@ var file_moego_business_webhook_v1_webhook_service_proto_goTypes = []any{
 	nil,                                         // 13: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
 	(*ListWebhooksRequest_Filter)(nil),          // 14: moego.business.webhook.v1.ListWebhooksRequest.Filter
 	(*ListWebhookDeliveriesRequest_Filter)(nil), // 15: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
-	(eventpb.Event_Type)(0),                     // 16: moego.business.event.v1.Event.Type
-	(Webhook_ContentType)(0),                    // 17: moego.business.webhook.v1.Webhook.ContentType
-	(*RetryPolicy)(nil),                         // 18: moego.business.webhook.v1.RetryPolicy
-	(*apikeypb.Restrictions)(nil),               // 19: moego.auth.apikey.v1.Restrictions
-	(*commonpb.Pagination)(nil),                 // 20: moego.common.v1.Pagination
-	(*Webhook)(nil),                             // 21: moego.business.webhook.v1.Webhook
-	(*WebhookDelivery)(nil),                     // 22: moego.business.webhook.v1.WebhookDelivery
-	(*Webhook_HeaderValues)(nil),                // 23: moego.business.webhook.v1.Webhook.HeaderValues
-	(*interval.Interval)(nil),                   // 24: google.type.Interval
+	(*apikeypb.Organization)(nil),               // 16: moego.auth.apikey.v1.Organization
+	(eventpb.Event_Type)(0),                     // 17: moego.business.event.v1.Event.Type
+	(Webhook_ContentType)(0),                    // 18: moego.business.webhook.v1.Webhook.ContentType
+	(*commonpb.Pagination)(nil),                 // 19: moego.common.v1.Pagination
+	(*Webhook)(nil),                             // 20: moego.business.webhook.v1.Webhook
+	(*WebhookDelivery)(nil),                     // 21: moego.business.webhook.v1.WebhookDelivery
+	(*Webhook_HeaderValues)(nil),                // 22: moego.business.webhook.v1.Webhook.HeaderValues
+	(*interval.Interval)(nil),                   // 23: google.type.Interval
 }
 var file_moego_business_webhook_v1_webhook_service_proto_depIdxs = []int32{
-	16, // 0: moego.business.webhook.v1.CreateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
-	17, // 1: moego.business.webhook.v1.CreateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
-	18, // 2: moego.business.webhook.v1.CreateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
+	16, // 0: moego.business.webhook.v1.CreateWebhookRequest.organizations:type_name -> moego.auth.apikey.v1.Organization
+	17, // 1: moego.business.webhook.v1.CreateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
+	18, // 2: moego.business.webhook.v1.CreateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
 	12, // 3: moego.business.webhook.v1.CreateWebhookRequest.headers:type_name -> moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
-	19, // 4: moego.business.webhook.v1.CreateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	16, // 5: moego.business.webhook.v1.UpdateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
-	17, // 6: moego.business.webhook.v1.UpdateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
-	18, // 7: moego.business.webhook.v1.UpdateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
-	13, // 8: moego.business.webhook.v1.UpdateWebhookRequest.headers:type_name -> moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
-	19, // 9: moego.business.webhook.v1.UpdateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	20, // 10: moego.business.webhook.v1.ListWebhooksRequest.pagination:type_name -> moego.common.v1.Pagination
-	14, // 11: moego.business.webhook.v1.ListWebhooksRequest.filter:type_name -> moego.business.webhook.v1.ListWebhooksRequest.Filter
-	21, // 12: moego.business.webhook.v1.ListWebhooksResponse.webhooks:type_name -> moego.business.webhook.v1.Webhook
-	16, // 13: moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest.event_type:type_name -> moego.business.event.v1.Event.Type
-	20, // 14: moego.business.webhook.v1.ListWebhookDeliveriesRequest.pagination:type_name -> moego.common.v1.Pagination
-	15, // 15: moego.business.webhook.v1.ListWebhookDeliveriesRequest.filter:type_name -> moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
-	22, // 16: moego.business.webhook.v1.ListWebhookDeliveriesResponse.deliveries:type_name -> moego.business.webhook.v1.WebhookDelivery
-	23, // 17: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
-	23, // 18: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
-	16, // 19: moego.business.webhook.v1.ListWebhooksRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
-	24, // 20: moego.business.webhook.v1.ListWebhooksRequest.Filter.created_time:type_name -> google.type.Interval
-	24, // 21: moego.business.webhook.v1.ListWebhooksRequest.Filter.updated_time:type_name -> google.type.Interval
-	16, // 22: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
-	24, // 23: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
-	0,  // 24: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
-	1,  // 25: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
-	2,  // 26: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
-	3,  // 27: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
-	5,  // 28: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
-	7,  // 29: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:input_type -> moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest
-	8,  // 30: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
-	9,  // 31: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
-	11, // 32: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:input_type -> moego.business.webhook.v1.RedeliverWebhookDeliveryRequest
-	21, // 33: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	21, // 34: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
-	21, // 35: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	4,  // 36: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
-	6,  // 37: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
-	22, // 38: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
-	22, // 39: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
-	10, // 40: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
-	22, // 41: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:output_type -> moego.business.webhook.v1.WebhookDelivery
-	33, // [33:42] is the sub-list for method output_type
-	24, // [24:33] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	16, // 4: moego.business.webhook.v1.UpdateWebhookRequest.organizations:type_name -> moego.auth.apikey.v1.Organization
+	17, // 5: moego.business.webhook.v1.UpdateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
+	18, // 6: moego.business.webhook.v1.UpdateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
+	13, // 7: moego.business.webhook.v1.UpdateWebhookRequest.headers:type_name -> moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
+	19, // 8: moego.business.webhook.v1.ListWebhooksRequest.pagination:type_name -> moego.common.v1.Pagination
+	14, // 9: moego.business.webhook.v1.ListWebhooksRequest.filter:type_name -> moego.business.webhook.v1.ListWebhooksRequest.Filter
+	20, // 10: moego.business.webhook.v1.ListWebhooksResponse.webhooks:type_name -> moego.business.webhook.v1.Webhook
+	17, // 11: moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest.event_type:type_name -> moego.business.event.v1.Event.Type
+	19, // 12: moego.business.webhook.v1.ListWebhookDeliveriesRequest.pagination:type_name -> moego.common.v1.Pagination
+	15, // 13: moego.business.webhook.v1.ListWebhookDeliveriesRequest.filter:type_name -> moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
+	21, // 14: moego.business.webhook.v1.ListWebhookDeliveriesResponse.deliveries:type_name -> moego.business.webhook.v1.WebhookDelivery
+	22, // 15: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
+	22, // 16: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
+	17, // 17: moego.business.webhook.v1.ListWebhooksRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
+	23, // 18: moego.business.webhook.v1.ListWebhooksRequest.Filter.created_time:type_name -> google.type.Interval
+	23, // 19: moego.business.webhook.v1.ListWebhooksRequest.Filter.updated_time:type_name -> google.type.Interval
+	17, // 20: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
+	23, // 21: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
+	0,  // 22: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
+	1,  // 23: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
+	2,  // 24: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
+	3,  // 25: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
+	5,  // 26: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
+	7,  // 27: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:input_type -> moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest
+	8,  // 28: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
+	9,  // 29: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
+	11, // 30: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:input_type -> moego.business.webhook.v1.RedeliverWebhookDeliveryRequest
+	20, // 31: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	20, // 32: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
+	20, // 33: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	4,  // 34: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
+	6,  // 35: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
+	21, // 36: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
+	21, // 37: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
+	10, // 38: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
+	21, // 39: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:output_type -> moego.business.webhook.v1.WebhookDelivery
+	31, // [31:40] is the sub-list for method output_type
+	22, // [22:31] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_webhook_v1_webhook_service_proto_init() }
