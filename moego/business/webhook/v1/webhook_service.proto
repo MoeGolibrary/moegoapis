@@ -72,6 +72,17 @@ service WebhookService {
     };
   }
 
+  // TriggerTestWebhookDelivery manually triggers a test event delivery for a webhook.
+  //
+  // This is useful for verifying that the webhook endpoint is correctly configured
+  // and can receive and process events.
+  //
+  // Returns NOT_FOUND if the webhook ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc TriggerTestWebhookDelivery(TriggerTestWebhookDeliveryRequest) returns (WebhookDelivery) {
+    option (google.api.http) = {post: "/v1/webhooks/{id}/test"};
+  }
+
   // GetWebhookDelivery retrieves a specific webhook event delivery log.
   //
   // Returns the event delivery log.
@@ -93,15 +104,14 @@ service WebhookService {
     };
   }
 
-  //  rpc RedeliverWebhookEvent(RedeliverWebhookEventRequest) returns (RedeliverWebhookEventResponse) {
-  //    option (google.api.http) = {post: "/v1/webhooks/{id}/redeliver"};
-  //  }
+  // RedeliverWebhookDelivery redelivers a specific webhook event delivery log.
   //
-  //  rpc TriggerTestWebhookEvent(TriggerTestWebhookEventRequest) returns (TriggerTestWebhookEventResponse) {
-  //    option (google.api.http) = {post: "/v1/webhooks/{id}/test"};
-  //  }
-
-
+  // Useful for retrying deliveries after fixing endpoint issues.
+  // Returns the redelivered event delivery log.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc RedeliverWebhookDeliveries(RedeliverWebhookDeliveryRequest) returns (WebhookDelivery) {
+    option (google.api.http) = {post: "/v1/webhooks/deliveries/{id}/redeliver"};
+  }
 }
 
 // CreateWebhookRequest
@@ -133,14 +143,14 @@ message CreateWebhookRequest {
   map<string, Webhook.HeaderValues> headers = 8 [(google.api.field_behavior) = OPTIONAL];
 
   // Restrictions
-  moego.auth.apikey.v1.Restrictions restrictions = 9;
+  moego.auth.apikey.v1.Restrictions restrictions = 9 [(google.api.field_behavior) = OPTIONAL];
 }
 
 
 // GetWebhookRequest
 message GetWebhookRequest {
   // id is the unique identifier of the webhook.
-  string id = 1 [(google.api.field_behavior) = OPTIONAL];
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 
@@ -221,10 +231,27 @@ message ListWebhooksResponse {
   repeated Webhook webhooks = 2;
 }
 
+
+// TriggerTestWebhookDeliveryRequest defines the request to trigger a test webhook event.
+message TriggerTestWebhookDeliveryRequest {
+  // id is the unique identifier of the webhook to test.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional custom event type to send (default is "ping").
+  optional moego.business.event.v1.Event.Type event_type = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional payload override for the test event.
+  // If not provided, a default ping payload will be used.
+  optional bytes payload = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
 // GetWebhookDeliveryRequest
 message GetWebhookDeliveryRequest {
   // id is the unique identifier of the webhook event delivery.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // webhook_id filters deliveries by the webhook.
+  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListWebhookDeliveriesRequest
@@ -264,3 +291,11 @@ message ListWebhookDeliveriesResponse {
   repeated WebhookDelivery deliveries = 2;
 }
 
+// RedeliverWebhookDeliveryRequest
+message RedeliverWebhookDeliveryRequest {
+  // id is the unique identifier of the webhook event delivery.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // webhook_id filters deliveries by the webhook.
+  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
+}

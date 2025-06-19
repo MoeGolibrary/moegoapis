@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	WebhookService_CreateWebhook_FullMethodName         = "/moego.business.webhook.v1.WebhookService/CreateWebhook"
-	WebhookService_GetWebhook_FullMethodName            = "/moego.business.webhook.v1.WebhookService/GetWebhook"
-	WebhookService_UpdateWebhook_FullMethodName         = "/moego.business.webhook.v1.WebhookService/UpdateWebhook"
-	WebhookService_DeleteWebhook_FullMethodName         = "/moego.business.webhook.v1.WebhookService/DeleteWebhook"
-	WebhookService_ListWebhooks_FullMethodName          = "/moego.business.webhook.v1.WebhookService/ListWebhooks"
-	WebhookService_GetWebhookDelivery_FullMethodName    = "/moego.business.webhook.v1.WebhookService/GetWebhookDelivery"
-	WebhookService_ListWebhookDeliveries_FullMethodName = "/moego.business.webhook.v1.WebhookService/ListWebhookDeliveries"
+	WebhookService_CreateWebhook_FullMethodName              = "/moego.business.webhook.v1.WebhookService/CreateWebhook"
+	WebhookService_GetWebhook_FullMethodName                 = "/moego.business.webhook.v1.WebhookService/GetWebhook"
+	WebhookService_UpdateWebhook_FullMethodName              = "/moego.business.webhook.v1.WebhookService/UpdateWebhook"
+	WebhookService_DeleteWebhook_FullMethodName              = "/moego.business.webhook.v1.WebhookService/DeleteWebhook"
+	WebhookService_ListWebhooks_FullMethodName               = "/moego.business.webhook.v1.WebhookService/ListWebhooks"
+	WebhookService_TriggerTestWebhookDelivery_FullMethodName = "/moego.business.webhook.v1.WebhookService/TriggerTestWebhookDelivery"
+	WebhookService_GetWebhookDelivery_FullMethodName         = "/moego.business.webhook.v1.WebhookService/GetWebhookDelivery"
+	WebhookService_ListWebhookDeliveries_FullMethodName      = "/moego.business.webhook.v1.WebhookService/ListWebhookDeliveries"
+	WebhookService_RedeliverWebhookDeliveries_FullMethodName = "/moego.business.webhook.v1.WebhookService/RedeliverWebhookDeliveries"
 )
 
 // WebhookServiceClient is the client API for WebhookService service.
@@ -64,6 +66,14 @@ type WebhookServiceClient interface {
 	// Returns an empty list if no webhooks match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListWebhooks(ctx context.Context, in *ListWebhooksRequest, opts ...grpc.CallOption) (*ListWebhooksResponse, error)
+	// TriggerTestWebhookDelivery manually triggers a test event delivery for a webhook.
+	//
+	// This is useful for verifying that the webhook endpoint is correctly configured
+	// and can receive and process events.
+	//
+	// Returns NOT_FOUND if the webhook ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	TriggerTestWebhookDelivery(ctx context.Context, in *TriggerTestWebhookDeliveryRequest, opts ...grpc.CallOption) (*WebhookDelivery, error)
 	// GetWebhookDelivery retrieves a specific webhook event delivery log.
 	//
 	// Returns the event delivery log.
@@ -76,6 +86,12 @@ type WebhookServiceClient interface {
 	// Returns an empty list if no deliveries match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListWebhookDeliveries(ctx context.Context, in *ListWebhookDeliveriesRequest, opts ...grpc.CallOption) (*ListWebhookDeliveriesResponse, error)
+	// RedeliverWebhookDelivery redelivers a specific webhook event delivery log.
+	//
+	// Useful for retrying deliveries after fixing endpoint issues.
+	// Returns the redelivered event delivery log.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	RedeliverWebhookDeliveries(ctx context.Context, in *RedeliverWebhookDeliveryRequest, opts ...grpc.CallOption) (*WebhookDelivery, error)
 }
 
 type webhookServiceClient struct {
@@ -136,6 +152,16 @@ func (c *webhookServiceClient) ListWebhooks(ctx context.Context, in *ListWebhook
 	return out, nil
 }
 
+func (c *webhookServiceClient) TriggerTestWebhookDelivery(ctx context.Context, in *TriggerTestWebhookDeliveryRequest, opts ...grpc.CallOption) (*WebhookDelivery, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WebhookDelivery)
+	err := c.cc.Invoke(ctx, WebhookService_TriggerTestWebhookDelivery_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *webhookServiceClient) GetWebhookDelivery(ctx context.Context, in *GetWebhookDeliveryRequest, opts ...grpc.CallOption) (*WebhookDelivery, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(WebhookDelivery)
@@ -150,6 +176,16 @@ func (c *webhookServiceClient) ListWebhookDeliveries(ctx context.Context, in *Li
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListWebhookDeliveriesResponse)
 	err := c.cc.Invoke(ctx, WebhookService_ListWebhookDeliveries_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *webhookServiceClient) RedeliverWebhookDeliveries(ctx context.Context, in *RedeliverWebhookDeliveryRequest, opts ...grpc.CallOption) (*WebhookDelivery, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WebhookDelivery)
+	err := c.cc.Invoke(ctx, WebhookService_RedeliverWebhookDeliveries_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -192,6 +228,14 @@ type WebhookServiceServer interface {
 	// Returns an empty list if no webhooks match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListWebhooks(context.Context, *ListWebhooksRequest) (*ListWebhooksResponse, error)
+	// TriggerTestWebhookDelivery manually triggers a test event delivery for a webhook.
+	//
+	// This is useful for verifying that the webhook endpoint is correctly configured
+	// and can receive and process events.
+	//
+	// Returns NOT_FOUND if the webhook ID doesn't exist.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	TriggerTestWebhookDelivery(context.Context, *TriggerTestWebhookDeliveryRequest) (*WebhookDelivery, error)
 	// GetWebhookDelivery retrieves a specific webhook event delivery log.
 	//
 	// Returns the event delivery log.
@@ -204,6 +248,12 @@ type WebhookServiceServer interface {
 	// Returns an empty list if no deliveries match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListWebhookDeliveries(context.Context, *ListWebhookDeliveriesRequest) (*ListWebhookDeliveriesResponse, error)
+	// RedeliverWebhookDelivery redelivers a specific webhook event delivery log.
+	//
+	// Useful for retrying deliveries after fixing endpoint issues.
+	// Returns the redelivered event delivery log.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	RedeliverWebhookDeliveries(context.Context, *RedeliverWebhookDeliveryRequest) (*WebhookDelivery, error)
 	mustEmbedUnimplementedWebhookServiceServer()
 }
 
@@ -229,11 +279,17 @@ func (UnimplementedWebhookServiceServer) DeleteWebhook(context.Context, *DeleteW
 func (UnimplementedWebhookServiceServer) ListWebhooks(context.Context, *ListWebhooksRequest) (*ListWebhooksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWebhooks not implemented")
 }
+func (UnimplementedWebhookServiceServer) TriggerTestWebhookDelivery(context.Context, *TriggerTestWebhookDeliveryRequest) (*WebhookDelivery, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TriggerTestWebhookDelivery not implemented")
+}
 func (UnimplementedWebhookServiceServer) GetWebhookDelivery(context.Context, *GetWebhookDeliveryRequest) (*WebhookDelivery, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWebhookDelivery not implemented")
 }
 func (UnimplementedWebhookServiceServer) ListWebhookDeliveries(context.Context, *ListWebhookDeliveriesRequest) (*ListWebhookDeliveriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListWebhookDeliveries not implemented")
+}
+func (UnimplementedWebhookServiceServer) RedeliverWebhookDeliveries(context.Context, *RedeliverWebhookDeliveryRequest) (*WebhookDelivery, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RedeliverWebhookDeliveries not implemented")
 }
 func (UnimplementedWebhookServiceServer) mustEmbedUnimplementedWebhookServiceServer() {}
 func (UnimplementedWebhookServiceServer) testEmbeddedByValue()                        {}
@@ -346,6 +402,24 @@ func _WebhookService_ListWebhooks_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WebhookService_TriggerTestWebhookDelivery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TriggerTestWebhookDeliveryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookServiceServer).TriggerTestWebhookDelivery(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookService_TriggerTestWebhookDelivery_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookServiceServer).TriggerTestWebhookDelivery(ctx, req.(*TriggerTestWebhookDeliveryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _WebhookService_GetWebhookDelivery_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetWebhookDeliveryRequest)
 	if err := dec(in); err != nil {
@@ -382,6 +456,24 @@ func _WebhookService_ListWebhookDeliveries_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _WebhookService_RedeliverWebhookDeliveries_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RedeliverWebhookDeliveryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(WebhookServiceServer).RedeliverWebhookDeliveries(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: WebhookService_RedeliverWebhookDeliveries_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(WebhookServiceServer).RedeliverWebhookDeliveries(ctx, req.(*RedeliverWebhookDeliveryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // WebhookService_ServiceDesc is the grpc.ServiceDesc for WebhookService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -410,12 +502,20 @@ var WebhookService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _WebhookService_ListWebhooks_Handler,
 		},
 		{
+			MethodName: "TriggerTestWebhookDelivery",
+			Handler:    _WebhookService_TriggerTestWebhookDelivery_Handler,
+		},
+		{
 			MethodName: "GetWebhookDelivery",
 			Handler:    _WebhookService_GetWebhookDelivery_Handler,
 		},
 		{
 			MethodName: "ListWebhookDeliveries",
 			Handler:    _WebhookService_ListWebhookDeliveries_Handler,
+		},
+		{
+			MethodName: "RedeliverWebhookDeliveries",
+			Handler:    _WebhookService_RedeliverWebhookDeliveries_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

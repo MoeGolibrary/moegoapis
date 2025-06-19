@@ -515,18 +515,85 @@ func (x *ListWebhooksResponse) GetWebhooks() []*Webhook {
 	return nil
 }
 
+// TriggerTestWebhookDeliveryRequest defines the request to trigger a test webhook event.
+type TriggerTestWebhookDeliveryRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// id is the unique identifier of the webhook to test.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Optional custom event type to send (default is "ping").
+	EventType *eventpb.Event_Type `protobuf:"varint,2,opt,name=event_type,json=eventType,proto3,enum=moego.business.event.v1.Event_Type,oneof" json:"event_type,omitempty"`
+	// Optional payload override for the test event.
+	// If not provided, a default ping payload will be used.
+	Payload       []byte `protobuf:"bytes,3,opt,name=payload,proto3,oneof" json:"payload,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TriggerTestWebhookDeliveryRequest) Reset() {
+	*x = TriggerTestWebhookDeliveryRequest{}
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TriggerTestWebhookDeliveryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TriggerTestWebhookDeliveryRequest) ProtoMessage() {}
+
+func (x *TriggerTestWebhookDeliveryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TriggerTestWebhookDeliveryRequest.ProtoReflect.Descriptor instead.
+func (*TriggerTestWebhookDeliveryRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *TriggerTestWebhookDeliveryRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *TriggerTestWebhookDeliveryRequest) GetEventType() eventpb.Event_Type {
+	if x != nil && x.EventType != nil {
+		return *x.EventType
+	}
+	return eventpb.Event_Type(0)
+}
+
+func (x *TriggerTestWebhookDeliveryRequest) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
+	}
+	return nil
+}
+
 // GetWebhookDeliveryRequest
 type GetWebhookDeliveryRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// id is the unique identifier of the webhook event delivery.
-	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// webhook_id filters deliveries by the webhook.
+	WebhookId     string `protobuf:"bytes,2,opt,name=webhook_id,json=webhookId,proto3" json:"webhook_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *GetWebhookDeliveryRequest) Reset() {
 	*x = GetWebhookDeliveryRequest{}
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[7]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -538,7 +605,7 @@ func (x *GetWebhookDeliveryRequest) String() string {
 func (*GetWebhookDeliveryRequest) ProtoMessage() {}
 
 func (x *GetWebhookDeliveryRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[7]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -551,12 +618,19 @@ func (x *GetWebhookDeliveryRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetWebhookDeliveryRequest.ProtoReflect.Descriptor instead.
 func (*GetWebhookDeliveryRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{7}
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetWebhookDeliveryRequest) GetId() string {
 	if x != nil {
 		return x.Id
+	}
+	return ""
+}
+
+func (x *GetWebhookDeliveryRequest) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
 	}
 	return ""
 }
@@ -578,7 +652,7 @@ type ListWebhookDeliveriesRequest struct {
 
 func (x *ListWebhookDeliveriesRequest) Reset() {
 	*x = ListWebhookDeliveriesRequest{}
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[8]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -590,7 +664,7 @@ func (x *ListWebhookDeliveriesRequest) String() string {
 func (*ListWebhookDeliveriesRequest) ProtoMessage() {}
 
 func (x *ListWebhookDeliveriesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[8]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -603,7 +677,7 @@ func (x *ListWebhookDeliveriesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWebhookDeliveriesRequest.ProtoReflect.Descriptor instead.
 func (*ListWebhookDeliveriesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{8}
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListWebhookDeliveriesRequest) GetPagination() *commonpb.Pagination {
@@ -641,7 +715,7 @@ type ListWebhookDeliveriesResponse struct {
 
 func (x *ListWebhookDeliveriesResponse) Reset() {
 	*x = ListWebhookDeliveriesResponse{}
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[9]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -653,7 +727,7 @@ func (x *ListWebhookDeliveriesResponse) String() string {
 func (*ListWebhookDeliveriesResponse) ProtoMessage() {}
 
 func (x *ListWebhookDeliveriesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[9]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -666,7 +740,7 @@ func (x *ListWebhookDeliveriesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListWebhookDeliveriesResponse.ProtoReflect.Descriptor instead.
 func (*ListWebhookDeliveriesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{9}
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListWebhookDeliveriesResponse) GetNextPageToken() string {
@@ -681,6 +755,61 @@ func (x *ListWebhookDeliveriesResponse) GetDeliveries() []*WebhookDelivery {
 		return x.Deliveries
 	}
 	return nil
+}
+
+// RedeliverWebhookDeliveryRequest
+type RedeliverWebhookDeliveryRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// id is the unique identifier of the webhook event delivery.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// webhook_id filters deliveries by the webhook.
+	WebhookId     string `protobuf:"bytes,2,opt,name=webhook_id,json=webhookId,proto3" json:"webhook_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RedeliverWebhookDeliveryRequest) Reset() {
+	*x = RedeliverWebhookDeliveryRequest{}
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RedeliverWebhookDeliveryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RedeliverWebhookDeliveryRequest) ProtoMessage() {}
+
+func (x *RedeliverWebhookDeliveryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RedeliverWebhookDeliveryRequest.ProtoReflect.Descriptor instead.
+func (*RedeliverWebhookDeliveryRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RedeliverWebhookDeliveryRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *RedeliverWebhookDeliveryRequest) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
 }
 
 // Filter
@@ -700,7 +829,7 @@ type ListWebhooksRequest_Filter struct {
 
 func (x *ListWebhooksRequest_Filter) Reset() {
 	*x = ListWebhooksRequest_Filter{}
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[12]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -712,7 +841,7 @@ func (x *ListWebhooksRequest_Filter) String() string {
 func (*ListWebhooksRequest_Filter) ProtoMessage() {}
 
 func (x *ListWebhooksRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[12]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -771,7 +900,7 @@ type ListWebhookDeliveriesRequest_Filter struct {
 
 func (x *ListWebhookDeliveriesRequest_Filter) Reset() {
 	*x = ListWebhookDeliveriesRequest_Filter{}
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[13]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -783,7 +912,7 @@ func (x *ListWebhookDeliveriesRequest_Filter) String() string {
 func (*ListWebhookDeliveriesRequest_Filter) ProtoMessage() {}
 
 func (x *ListWebhookDeliveriesRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[13]
+	mi := &file_moego_business_webhook_v1_webhook_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -796,7 +925,7 @@ func (x *ListWebhookDeliveriesRequest_Filter) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use ListWebhookDeliveriesRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListWebhookDeliveriesRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{8, 0}
+	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{9, 0}
 }
 
 func (x *ListWebhookDeliveriesRequest_Filter) GetEventTypes() []eventpb.Event_Type {
@@ -824,7 +953,7 @@ var File_moego_business_webhook_v1_webhook_service_proto protoreflect.FileDescri
 
 const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xee\x05\n" +
+	"/moego/business/webhook/v1/webhook_service.proto\x12\x19moego.business.webhook.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a'moego/business/webhook/v1/webhook.proto\x1a moego/common/v1/pagination.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xf3\x05\n" +
 	"\x14CreateWebhookRequest\x12&\n" +
 	"\fendpoint_url\x18\x01 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
 	"\vevent_types\x18\x02 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x02R\n" +
@@ -835,8 +964,8 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\tis_active\x18\x06 \x01(\bB\x03\xe0A\x01H\x01R\bisActive\x88\x01\x01\x12'\n" +
 	"\n" +
 	"verify_ssl\x18\a \x01(\bB\x03\xe0A\x01H\x02R\tverifySsl\x88\x01\x01\x12[\n" +
-	"\aheaders\x18\b \x03(\v2<.moego.business.webhook.v1.CreateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12F\n" +
-	"\frestrictions\x18\t \x01(\v2\".moego.auth.apikey.v1.RestrictionsR\frestrictions\x1ak\n" +
+	"\aheaders\x18\b \x03(\v2<.moego.business.webhook.v1.CreateWebhookRequest.HeadersEntryB\x03\xe0A\x01R\aheaders\x12K\n" +
+	"\frestrictions\x18\t \x01(\v2\".moego.auth.apikey.v1.RestrictionsB\x03\xe0A\x01R\frestrictions\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
 	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01B\x0f\n" +
@@ -845,7 +974,7 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"_is_activeB\r\n" +
 	"\v_verify_ssl\"(\n" +
 	"\x11GetWebhookRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x01R\x02id\"\x83\x06\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x83\x06\n" +
 	"\x14UpdateWebhookRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12&\n" +
 	"\fendpoint_url\x18\x02 \x01(\tB\x03\xe0A\x02R\vendpointUrl\x12I\n" +
@@ -886,9 +1015,19 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\a_filter\"~\n" +
 	"\x14ListWebhooksResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
-	"\bwebhooks\x18\x02 \x03(\v2\".moego.business.webhook.v1.WebhookR\bwebhooks\"0\n" +
+	"\bwebhooks\x18\x02 \x03(\v2\".moego.business.webhook.v1.WebhookR\bwebhooks\"\xc5\x01\n" +
+	"!TriggerTestWebhookDeliveryRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12L\n" +
+	"\n" +
+	"event_type\x18\x02 \x01(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x01H\x00R\teventType\x88\x01\x01\x12\"\n" +
+	"\apayload\x18\x03 \x01(\fB\x03\xe0A\x01H\x01R\apayload\x88\x01\x01B\r\n" +
+	"\v_event_typeB\n" +
+	"\n" +
+	"\b_payload\"T\n" +
 	"\x19GetWebhookDeliveryRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xa3\x03\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
+	"\n" +
+	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\"\xa3\x03\n" +
 	"\x1cListWebhookDeliveriesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -907,16 +1046,23 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12J\n" +
 	"\n" +
 	"deliveries\x18\x02 \x03(\v2*.moego.business.webhook.v1.WebhookDeliveryR\n" +
-	"deliveries2\x82\b\n" +
+	"deliveries\"Z\n" +
+	"\x1fRedeliverWebhookDeliveryRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
+	"\n" +
+	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId2\xe2\n" +
+	"\n" +
 	"\x0eWebhookService\x12}\n" +
 	"\rCreateWebhook\x12/.moego.business.webhook.v1.CreateWebhookRequest\x1a\".moego.business.webhook.v1.Webhook\"\x17\x82\xd3\xe4\x93\x02\x11:\x01*\"\f/v1/webhooks\x12y\n" +
 	"\n" +
 	"GetWebhook\x12,.moego.business.webhook.v1.GetWebhookRequest\x1a\".moego.business.webhook.v1.Webhook\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/webhooks/{id}\x12\x82\x01\n" +
 	"\rUpdateWebhook\x12/.moego.business.webhook.v1.UpdateWebhookRequest\x1a\".moego.business.webhook.v1.Webhook\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\x1a\x11/v1/webhooks/{id}\x12\x8d\x01\n" +
 	"\rDeleteWebhook\x12/.moego.business.webhook.v1.DeleteWebhookRequest\x1a0.moego.business.webhook.v1.DeleteWebhookResponse\"\x19\x82\xd3\xe4\x93\x02\x13*\x11/v1/webhooks/{id}\x12\x8d\x01\n" +
-	"\fListWebhooks\x12..moego.business.webhook.v1.ListWebhooksRequest\x1a/.moego.business.webhook.v1.ListWebhooksResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/webhooks:list\x12\x9b\x01\n" +
+	"\fListWebhooks\x12..moego.business.webhook.v1.ListWebhooksRequest\x1a/.moego.business.webhook.v1.ListWebhooksResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/webhooks:list\x12\xa6\x01\n" +
+	"\x1aTriggerTestWebhookDelivery\x12<.moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest\x1a*.moego.business.webhook.v1.WebhookDelivery\"\x1e\x82\xd3\xe4\x93\x02\x18\"\x16/v1/webhooks/{id}/test\x12\x9b\x01\n" +
 	"\x12GetWebhookDelivery\x124.moego.business.webhook.v1.GetWebhookDeliveryRequest\x1a*.moego.business.webhook.v1.WebhookDelivery\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/webhook/deliveries/{id}\x12\xb2\x01\n" +
-	"\x15ListWebhookDeliveries\x127.moego.business.webhook.v1.ListWebhookDeliveriesRequest\x1a8.moego.business.webhook.v1.ListWebhookDeliveriesResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/webhook/deliveries:listB\x91\x01\n" +
+	"\x15ListWebhookDeliveries\x127.moego.business.webhook.v1.ListWebhookDeliveriesRequest\x1a8.moego.business.webhook.v1.ListWebhookDeliveriesResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/webhook/deliveries:list\x12\xb4\x01\n" +
+	"\x1aRedeliverWebhookDeliveries\x12:.moego.business.webhook.v1.RedeliverWebhookDeliveryRequest\x1a*.moego.business.webhook.v1.WebhookDelivery\".\x82\xd3\xe4\x93\x02(\"&/v1/webhooks/deliveries/{id}/redeliverB\x91\x01\n" +
 	"!com.moego.api.business.webhook.v1B\x13WebhookServiceProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb;webhookpbb\x06proto3"
 
 var (
@@ -931,7 +1077,7 @@ func file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_webhook_v1_webhook_service_proto_rawDescData
 }
 
-var file_moego_business_webhook_v1_webhook_service_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_moego_business_webhook_v1_webhook_service_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_moego_business_webhook_v1_webhook_service_proto_goTypes = []any{
 	(*CreateWebhookRequest)(nil),                // 0: moego.business.webhook.v1.CreateWebhookRequest
 	(*GetWebhookRequest)(nil),                   // 1: moego.business.webhook.v1.GetWebhookRequest
@@ -940,66 +1086,73 @@ var file_moego_business_webhook_v1_webhook_service_proto_goTypes = []any{
 	(*DeleteWebhookResponse)(nil),               // 4: moego.business.webhook.v1.DeleteWebhookResponse
 	(*ListWebhooksRequest)(nil),                 // 5: moego.business.webhook.v1.ListWebhooksRequest
 	(*ListWebhooksResponse)(nil),                // 6: moego.business.webhook.v1.ListWebhooksResponse
-	(*GetWebhookDeliveryRequest)(nil),           // 7: moego.business.webhook.v1.GetWebhookDeliveryRequest
-	(*ListWebhookDeliveriesRequest)(nil),        // 8: moego.business.webhook.v1.ListWebhookDeliveriesRequest
-	(*ListWebhookDeliveriesResponse)(nil),       // 9: moego.business.webhook.v1.ListWebhookDeliveriesResponse
-	nil,                                         // 10: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
-	nil,                                         // 11: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
-	(*ListWebhooksRequest_Filter)(nil),          // 12: moego.business.webhook.v1.ListWebhooksRequest.Filter
-	(*ListWebhookDeliveriesRequest_Filter)(nil), // 13: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
-	(eventpb.Event_Type)(0),                     // 14: moego.business.event.v1.Event.Type
-	(Webhook_ContentType)(0),                    // 15: moego.business.webhook.v1.Webhook.ContentType
-	(*RetryPolicy)(nil),                         // 16: moego.business.webhook.v1.RetryPolicy
-	(*apikeypb.Restrictions)(nil),               // 17: moego.auth.apikey.v1.Restrictions
-	(*commonpb.Pagination)(nil),                 // 18: moego.common.v1.Pagination
-	(*Webhook)(nil),                             // 19: moego.business.webhook.v1.Webhook
-	(*WebhookDelivery)(nil),                     // 20: moego.business.webhook.v1.WebhookDelivery
-	(*Webhook_HeaderValues)(nil),                // 21: moego.business.webhook.v1.Webhook.HeaderValues
-	(*interval.Interval)(nil),                   // 22: google.type.Interval
+	(*TriggerTestWebhookDeliveryRequest)(nil),   // 7: moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest
+	(*GetWebhookDeliveryRequest)(nil),           // 8: moego.business.webhook.v1.GetWebhookDeliveryRequest
+	(*ListWebhookDeliveriesRequest)(nil),        // 9: moego.business.webhook.v1.ListWebhookDeliveriesRequest
+	(*ListWebhookDeliveriesResponse)(nil),       // 10: moego.business.webhook.v1.ListWebhookDeliveriesResponse
+	(*RedeliverWebhookDeliveryRequest)(nil),     // 11: moego.business.webhook.v1.RedeliverWebhookDeliveryRequest
+	nil,                                         // 12: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
+	nil,                                         // 13: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
+	(*ListWebhooksRequest_Filter)(nil),          // 14: moego.business.webhook.v1.ListWebhooksRequest.Filter
+	(*ListWebhookDeliveriesRequest_Filter)(nil), // 15: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
+	(eventpb.Event_Type)(0),                     // 16: moego.business.event.v1.Event.Type
+	(Webhook_ContentType)(0),                    // 17: moego.business.webhook.v1.Webhook.ContentType
+	(*RetryPolicy)(nil),                         // 18: moego.business.webhook.v1.RetryPolicy
+	(*apikeypb.Restrictions)(nil),               // 19: moego.auth.apikey.v1.Restrictions
+	(*commonpb.Pagination)(nil),                 // 20: moego.common.v1.Pagination
+	(*Webhook)(nil),                             // 21: moego.business.webhook.v1.Webhook
+	(*WebhookDelivery)(nil),                     // 22: moego.business.webhook.v1.WebhookDelivery
+	(*Webhook_HeaderValues)(nil),                // 23: moego.business.webhook.v1.Webhook.HeaderValues
+	(*interval.Interval)(nil),                   // 24: google.type.Interval
 }
 var file_moego_business_webhook_v1_webhook_service_proto_depIdxs = []int32{
-	14, // 0: moego.business.webhook.v1.CreateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
-	15, // 1: moego.business.webhook.v1.CreateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
-	16, // 2: moego.business.webhook.v1.CreateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
-	10, // 3: moego.business.webhook.v1.CreateWebhookRequest.headers:type_name -> moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
-	17, // 4: moego.business.webhook.v1.CreateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	14, // 5: moego.business.webhook.v1.UpdateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
-	15, // 6: moego.business.webhook.v1.UpdateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
-	16, // 7: moego.business.webhook.v1.UpdateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
-	11, // 8: moego.business.webhook.v1.UpdateWebhookRequest.headers:type_name -> moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
-	17, // 9: moego.business.webhook.v1.UpdateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
-	18, // 10: moego.business.webhook.v1.ListWebhooksRequest.pagination:type_name -> moego.common.v1.Pagination
-	12, // 11: moego.business.webhook.v1.ListWebhooksRequest.filter:type_name -> moego.business.webhook.v1.ListWebhooksRequest.Filter
-	19, // 12: moego.business.webhook.v1.ListWebhooksResponse.webhooks:type_name -> moego.business.webhook.v1.Webhook
-	18, // 13: moego.business.webhook.v1.ListWebhookDeliveriesRequest.pagination:type_name -> moego.common.v1.Pagination
-	13, // 14: moego.business.webhook.v1.ListWebhookDeliveriesRequest.filter:type_name -> moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
-	20, // 15: moego.business.webhook.v1.ListWebhookDeliveriesResponse.deliveries:type_name -> moego.business.webhook.v1.WebhookDelivery
-	21, // 16: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
-	21, // 17: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
-	14, // 18: moego.business.webhook.v1.ListWebhooksRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
-	22, // 19: moego.business.webhook.v1.ListWebhooksRequest.Filter.created_time:type_name -> google.type.Interval
-	22, // 20: moego.business.webhook.v1.ListWebhooksRequest.Filter.updated_time:type_name -> google.type.Interval
-	14, // 21: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
-	22, // 22: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
-	0,  // 23: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
-	1,  // 24: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
-	2,  // 25: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
-	3,  // 26: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
-	5,  // 27: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
-	7,  // 28: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
-	8,  // 29: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
-	19, // 30: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	19, // 31: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
-	19, // 32: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	4,  // 33: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
-	6,  // 34: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
-	20, // 35: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
-	9,  // 36: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
-	30, // [30:37] is the sub-list for method output_type
-	23, // [23:30] is the sub-list for method input_type
-	23, // [23:23] is the sub-list for extension type_name
-	23, // [23:23] is the sub-list for extension extendee
-	0,  // [0:23] is the sub-list for field type_name
+	16, // 0: moego.business.webhook.v1.CreateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
+	17, // 1: moego.business.webhook.v1.CreateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
+	18, // 2: moego.business.webhook.v1.CreateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
+	12, // 3: moego.business.webhook.v1.CreateWebhookRequest.headers:type_name -> moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry
+	19, // 4: moego.business.webhook.v1.CreateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
+	16, // 5: moego.business.webhook.v1.UpdateWebhookRequest.event_types:type_name -> moego.business.event.v1.Event.Type
+	17, // 6: moego.business.webhook.v1.UpdateWebhookRequest.content_type:type_name -> moego.business.webhook.v1.Webhook.ContentType
+	18, // 7: moego.business.webhook.v1.UpdateWebhookRequest.retry_policy:type_name -> moego.business.webhook.v1.RetryPolicy
+	13, // 8: moego.business.webhook.v1.UpdateWebhookRequest.headers:type_name -> moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry
+	19, // 9: moego.business.webhook.v1.UpdateWebhookRequest.restrictions:type_name -> moego.auth.apikey.v1.Restrictions
+	20, // 10: moego.business.webhook.v1.ListWebhooksRequest.pagination:type_name -> moego.common.v1.Pagination
+	14, // 11: moego.business.webhook.v1.ListWebhooksRequest.filter:type_name -> moego.business.webhook.v1.ListWebhooksRequest.Filter
+	21, // 12: moego.business.webhook.v1.ListWebhooksResponse.webhooks:type_name -> moego.business.webhook.v1.Webhook
+	16, // 13: moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest.event_type:type_name -> moego.business.event.v1.Event.Type
+	20, // 14: moego.business.webhook.v1.ListWebhookDeliveriesRequest.pagination:type_name -> moego.common.v1.Pagination
+	15, // 15: moego.business.webhook.v1.ListWebhookDeliveriesRequest.filter:type_name -> moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter
+	22, // 16: moego.business.webhook.v1.ListWebhookDeliveriesResponse.deliveries:type_name -> moego.business.webhook.v1.WebhookDelivery
+	23, // 17: moego.business.webhook.v1.CreateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
+	23, // 18: moego.business.webhook.v1.UpdateWebhookRequest.HeadersEntry.value:type_name -> moego.business.webhook.v1.Webhook.HeaderValues
+	16, // 19: moego.business.webhook.v1.ListWebhooksRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
+	24, // 20: moego.business.webhook.v1.ListWebhooksRequest.Filter.created_time:type_name -> google.type.Interval
+	24, // 21: moego.business.webhook.v1.ListWebhooksRequest.Filter.updated_time:type_name -> google.type.Interval
+	16, // 22: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
+	24, // 23: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
+	0,  // 24: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
+	1,  // 25: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
+	2,  // 26: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
+	3,  // 27: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
+	5,  // 28: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
+	7,  // 29: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:input_type -> moego.business.webhook.v1.TriggerTestWebhookDeliveryRequest
+	8,  // 30: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
+	9,  // 31: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
+	11, // 32: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:input_type -> moego.business.webhook.v1.RedeliverWebhookDeliveryRequest
+	21, // 33: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	21, // 34: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
+	21, // 35: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	4,  // 36: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
+	6,  // 37: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
+	22, // 38: moego.business.webhook.v1.WebhookService.TriggerTestWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
+	22, // 39: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
+	10, // 40: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
+	22, // 41: moego.business.webhook.v1.WebhookService.RedeliverWebhookDeliveries:output_type -> moego.business.webhook.v1.WebhookDelivery
+	33, // [33:42] is the sub-list for method output_type
+	24, // [24:33] is the sub-list for method input_type
+	24, // [24:24] is the sub-list for extension type_name
+	24, // [24:24] is the sub-list for extension extendee
+	0,  // [0:24] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_webhook_v1_webhook_service_proto_init() }
@@ -1011,15 +1164,16 @@ func file_moego_business_webhook_v1_webhook_service_proto_init() {
 	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[2].OneofWrappers = []any{}
 	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[5].OneofWrappers = []any{}
-	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[12].OneofWrappers = []any{}
-	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[13].OneofWrappers = []any{}
+	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[7].OneofWrappers = []any{}
+	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[14].OneofWrappers = []any{}
+	file_moego_business_webhook_v1_webhook_service_proto_msgTypes[15].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_webhook_v1_webhook_service_proto_rawDesc), len(file_moego_business_webhook_v1_webhook_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
