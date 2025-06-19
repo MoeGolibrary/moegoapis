@@ -240,7 +240,7 @@ message ListWebhookDeliveriesRequest {
   // Filter defines advanced filtering options
   message Filter {
     // filter by event types
-    repeated string event_types = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated moego.business.event.v1.Event.Type event_types = 1 [(google.api.field_behavior) = OPTIONAL];
 
     // filter by success status
     bool success = 2 [(google.api.field_behavior) = OPTIONAL];

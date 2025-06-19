@@ -760,7 +760,7 @@ func (x *ListWebhooksRequest_Filter) GetUpdatedTime() *interval.Interval {
 type ListWebhookDeliveriesRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// filter by event types
-	EventTypes []string `protobuf:"bytes,1,rep,name=event_types,json=eventTypes,proto3" json:"event_types,omitempty"`
+	EventTypes []eventpb.Event_Type `protobuf:"varint,1,rep,packed,name=event_types,json=eventTypes,proto3,enum=moego.business.event.v1.Event_Type" json:"event_types,omitempty"`
 	// filter by success status
 	Success bool `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
 	// filter by delivery time range
@@ -799,7 +799,7 @@ func (*ListWebhookDeliveriesRequest_Filter) Descriptor() ([]byte, []int) {
 	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{8, 0}
 }
 
-func (x *ListWebhookDeliveriesRequest_Filter) GetEventTypes() []string {
+func (x *ListWebhookDeliveriesRequest_Filter) GetEventTypes() []eventpb.Event_Type {
 	if x != nil {
 		return x.EventTypes
 	}
@@ -886,16 +886,16 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
 	"\bwebhooks\x18\x02 \x03(\v2\".moego.business.webhook.v1.WebhookR\bwebhooks\"0\n" +
 	"\x19GetWebhookDeliveryRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xfd\x02\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xa2\x03\n" +
 	"\x1cListWebhookDeliveriesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\x12[\n" +
-	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\x8e\x01\n" +
-	"\x06Filter\x12$\n" +
-	"\vevent_types\x18\x01 \x03(\tB\x03\xe0A\x01R\n" +
+	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\xb3\x01\n" +
+	"\x06Filter\x12I\n" +
+	"\vevent_types\x18\x01 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x01R\n" +
 	"eventTypes\x12\x1d\n" +
 	"\asuccess\x18\x02 \x01(\bB\x03\xe0A\x01R\asuccess\x12?\n" +
 	"\rdelivery_time\x18\x03 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\fdeliveryTimeB\t\n" +
@@ -976,26 +976,27 @@ var file_moego_business_webhook_v1_webhook_service_proto_depIdxs = []int32{
 	14, // 18: moego.business.webhook.v1.ListWebhooksRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
 	22, // 19: moego.business.webhook.v1.ListWebhooksRequest.Filter.created_time:type_name -> google.type.Interval
 	22, // 20: moego.business.webhook.v1.ListWebhooksRequest.Filter.updated_time:type_name -> google.type.Interval
-	22, // 21: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
-	0,  // 22: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
-	1,  // 23: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
-	2,  // 24: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
-	3,  // 25: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
-	5,  // 26: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
-	7,  // 27: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
-	8,  // 28: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
-	19, // 29: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	19, // 30: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
-	19, // 31: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
-	4,  // 32: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
-	6,  // 33: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
-	20, // 34: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
-	9,  // 35: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
-	29, // [29:36] is the sub-list for method output_type
-	22, // [22:29] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	14, // 21: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.event_types:type_name -> moego.business.event.v1.Event.Type
+	22, // 22: moego.business.webhook.v1.ListWebhookDeliveriesRequest.Filter.delivery_time:type_name -> google.type.Interval
+	0,  // 23: moego.business.webhook.v1.WebhookService.CreateWebhook:input_type -> moego.business.webhook.v1.CreateWebhookRequest
+	1,  // 24: moego.business.webhook.v1.WebhookService.GetWebhook:input_type -> moego.business.webhook.v1.GetWebhookRequest
+	2,  // 25: moego.business.webhook.v1.WebhookService.UpdateWebhook:input_type -> moego.business.webhook.v1.UpdateWebhookRequest
+	3,  // 26: moego.business.webhook.v1.WebhookService.DeleteWebhook:input_type -> moego.business.webhook.v1.DeleteWebhookRequest
+	5,  // 27: moego.business.webhook.v1.WebhookService.ListWebhooks:input_type -> moego.business.webhook.v1.ListWebhooksRequest
+	7,  // 28: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:input_type -> moego.business.webhook.v1.GetWebhookDeliveryRequest
+	8,  // 29: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:input_type -> moego.business.webhook.v1.ListWebhookDeliveriesRequest
+	19, // 30: moego.business.webhook.v1.WebhookService.CreateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	19, // 31: moego.business.webhook.v1.WebhookService.GetWebhook:output_type -> moego.business.webhook.v1.Webhook
+	19, // 32: moego.business.webhook.v1.WebhookService.UpdateWebhook:output_type -> moego.business.webhook.v1.Webhook
+	4,  // 33: moego.business.webhook.v1.WebhookService.DeleteWebhook:output_type -> moego.business.webhook.v1.DeleteWebhookResponse
+	6,  // 34: moego.business.webhook.v1.WebhookService.ListWebhooks:output_type -> moego.business.webhook.v1.ListWebhooksResponse
+	20, // 35: moego.business.webhook.v1.WebhookService.GetWebhookDelivery:output_type -> moego.business.webhook.v1.WebhookDelivery
+	9,  // 36: moego.business.webhook.v1.WebhookService.ListWebhookDeliveries:output_type -> moego.business.webhook.v1.ListWebhookDeliveriesResponse
+	30, // [30:37] is the sub-list for method output_type
+	23, // [23:30] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_webhook_v1_webhook_service_proto_init() }
