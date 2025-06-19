@@ -198,7 +198,7 @@ message ListWebhooksRequest {
   // Filter
   message Filter {
     // filter by active status
-    bool is_active = 1 [(google.api.field_behavior) = OPTIONAL];
+    optional bool is_active = 1 [(google.api.field_behavior) = OPTIONAL];
     // filter by event types
     repeated moego.business.event.v1.Event.Type event_types = 2 [(google.api.field_behavior) = OPTIONAL];
     //  filter by created time
@@ -243,14 +243,14 @@ message ListWebhookDeliveriesRequest {
     repeated moego.business.event.v1.Event.Type event_types = 1 [(google.api.field_behavior) = OPTIONAL];
 
     // filter by success status
-    bool success = 2 [(google.api.field_behavior) = OPTIONAL];
+    optional bool success = 2 [(google.api.field_behavior) = OPTIONAL];
 
     // filter by delivery time range
     google.type.Interval delivery_time = 3 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // filter options for deliveries
-  optional Filter filter = 3;
+  Filter filter = 3;
 
 }
 
