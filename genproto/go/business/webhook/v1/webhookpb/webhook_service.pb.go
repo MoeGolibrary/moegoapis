@@ -759,8 +759,8 @@ func (x *ListWebhooksRequest_Filter) GetUpdatedTime() *interval.Interval {
 // Filter defines advanced filtering options
 type ListWebhookDeliveriesRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// filter by event name
-	EventName []string `protobuf:"bytes,1,rep,name=event_name,json=eventName,proto3" json:"event_name,omitempty"`
+	// filter by event types
+	EventTypes []string `protobuf:"bytes,1,rep,name=event_types,json=eventTypes,proto3" json:"event_types,omitempty"`
 	// filter by success status
 	Success bool `protobuf:"varint,2,opt,name=success,proto3" json:"success,omitempty"`
 	// filter by delivery time range
@@ -799,9 +799,9 @@ func (*ListWebhookDeliveriesRequest_Filter) Descriptor() ([]byte, []int) {
 	return file_moego_business_webhook_v1_webhook_service_proto_rawDescGZIP(), []int{8, 0}
 }
 
-func (x *ListWebhookDeliveriesRequest_Filter) GetEventName() []string {
+func (x *ListWebhookDeliveriesRequest_Filter) GetEventTypes() []string {
 	if x != nil {
-		return x.EventName
+		return x.EventTypes
 	}
 	return nil
 }
@@ -886,17 +886,17 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
 	"\bwebhooks\x18\x02 \x03(\v2\".moego.business.webhook.v1.WebhookR\bwebhooks\"0\n" +
 	"\x19GetWebhookDeliveryRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xfb\x02\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xfd\x02\n" +
 	"\x1cListWebhookDeliveriesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\x12[\n" +
-	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\x8c\x01\n" +
-	"\x06Filter\x12\"\n" +
-	"\n" +
-	"event_name\x18\x01 \x03(\tB\x03\xe0A\x01R\teventName\x12\x1d\n" +
+	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\x8e\x01\n" +
+	"\x06Filter\x12$\n" +
+	"\vevent_types\x18\x01 \x03(\tB\x03\xe0A\x01R\n" +
+	"eventTypes\x12\x1d\n" +
 	"\asuccess\x18\x02 \x01(\bB\x03\xe0A\x01R\asuccess\x12?\n" +
 	"\rdelivery_time\x18\x03 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\fdeliveryTimeB\t\n" +
 	"\a_filter\"\x93\x01\n" +
