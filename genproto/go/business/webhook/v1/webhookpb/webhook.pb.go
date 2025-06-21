@@ -32,10 +32,6 @@ const (
 	Webhook_CONTENT_TYPE_UNSPECIFIED Webhook_ContentType = 0
 	// application/json
 	Webhook_CONTENT_TYPE_JSON Webhook_ContentType = 1
-	// application/x-www-form-urlencoded
-	Webhook_CONTENT_TYPE_FORM_URLENCODED Webhook_ContentType = 2
-	// application/grpc, application/grpc+proto
-	Webhook_CONTENT_TYPE_GRPC Webhook_ContentType = 3
 )
 
 // Enum value maps for Webhook_ContentType.
@@ -43,14 +39,10 @@ var (
 	Webhook_ContentType_name = map[int32]string{
 		0: "CONTENT_TYPE_UNSPECIFIED",
 		1: "CONTENT_TYPE_JSON",
-		2: "CONTENT_TYPE_FORM_URLENCODED",
-		3: "CONTENT_TYPE_GRPC",
 	}
 	Webhook_ContentType_value = map[string]int32{
-		"CONTENT_TYPE_UNSPECIFIED":     0,
-		"CONTENT_TYPE_JSON":            1,
-		"CONTENT_TYPE_FORM_URLENCODED": 2,
-		"CONTENT_TYPE_GRPC":            3,
+		"CONTENT_TYPE_UNSPECIFIED": 0,
+		"CONTENT_TYPE_JSON":        1,
 	}
 )
 
@@ -461,7 +453,7 @@ var File_moego_business_webhook_v1_webhook_proto protoreflect.FileDescriptor
 
 const file_moego_business_webhook_v1_webhook_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/webhook/v1/webhook.proto\x12\x19moego.business.webhook.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xd9\x06\n" +
+	"'moego/business/webhook/v1/webhook.proto\x12\x19moego.business.webhook.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!moego/auth/apikey/v1/apikey.proto\x1a#moego/business/event/v1/event.proto\"\xa0\x06\n" +
 	"\aWebhook\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12H\n" +
 	"\rorganizations\x18\x02 \x03(\v2\".moego.auth.apikey.v1.OrganizationR\rorganizations\x12D\n" +
@@ -481,12 +473,10 @@ const file_moego_business_webhook_v1_webhook_proto_rawDesc = "" +
 	"\x06values\x18\x01 \x03(\tR\x06values\x1ak\n" +
 	"\fHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
-	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\"{\n" +
+	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\"B\n" +
 	"\vContentType\x12\x1c\n" +
 	"\x18CONTENT_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
-	"\x11CONTENT_TYPE_JSON\x10\x01\x12 \n" +
-	"\x1cCONTENT_TYPE_FORM_URLENCODED\x10\x02\x12\x15\n" +
-	"\x11CONTENT_TYPE_GRPC\x10\x03\"\xdd\b\n" +
+	"\x11CONTENT_TYPE_JSON\x10\x01\"\xdd\b\n" +
 	"\x0fWebhookDelivery\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
