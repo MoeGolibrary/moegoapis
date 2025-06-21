@@ -244,12 +244,14 @@ type WebhookDelivery struct {
 	DurationMs int64 `protobuf:"varint,13,opt,name=duration_ms,json=durationMs,proto3" json:"duration_ms,omitempty"`
 	// Whether the delivery was successful (HTTP 2xx).
 	Success bool `protobuf:"varint,14,opt,name=success,proto3" json:"success,omitempty"`
+	// Error message in case of failure.
+	Error string `protobuf:"bytes,15,opt,name=error,proto3" json:"error,omitempty"`
 	// Number of retries before final delivery outcome.
-	RetryCount int32 `protobuf:"varint,15,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`
+	RetryCount int32 `protobuf:"varint,16,opt,name=retry_count,json=retryCount,proto3" json:"retry_count,omitempty"`
 	// Format of the request body
-	RequestFormat Webhook_ContentType `protobuf:"varint,16,opt,name=request_format,json=requestFormat,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"request_format,omitempty"`
+	RequestFormat Webhook_ContentType `protobuf:"varint,17,opt,name=request_format,json=requestFormat,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"request_format,omitempty"`
 	// Format of the response body
-	ResponseFormat Webhook_ContentType `protobuf:"varint,17,opt,name=response_format,json=responseFormat,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"response_format,omitempty"`
+	ResponseFormat Webhook_ContentType `protobuf:"varint,18,opt,name=response_format,json=responseFormat,proto3,enum=moego.business.webhook.v1.Webhook_ContentType" json:"response_format,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -382,6 +384,13 @@ func (x *WebhookDelivery) GetSuccess() bool {
 	return false
 }
 
+func (x *WebhookDelivery) GetError() string {
+	if x != nil {
+		return x.Error
+	}
+	return ""
+}
+
 func (x *WebhookDelivery) GetRetryCount() int32 {
 	if x != nil {
 		return x.RetryCount
@@ -476,7 +485,7 @@ const file_moego_business_webhook_v1_webhook_proto_rawDesc = "" +
 	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\"B\n" +
 	"\vContentType\x12\x1c\n" +
 	"\x18CONTENT_TYPE_UNSPECIFIED\x10\x00\x12\x15\n" +
-	"\x11CONTENT_TYPE_JSON\x10\x01\"\xdd\b\n" +
+	"\x11CONTENT_TYPE_JSON\x10\x01\"\xf3\b\n" +
 	"\x0fWebhookDelivery\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -496,11 +505,12 @@ const file_moego_business_webhook_v1_webhook_proto_rawDesc = "" +
 	"\fdelivered_at\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vdeliveredAt\x12\x1f\n" +
 	"\vduration_ms\x18\r \x01(\x03R\n" +
 	"durationMs\x12\x18\n" +
-	"\asuccess\x18\x0e \x01(\bR\asuccess\x12\x1f\n" +
-	"\vretry_count\x18\x0f \x01(\x05R\n" +
+	"\asuccess\x18\x0e \x01(\bR\asuccess\x12\x14\n" +
+	"\x05error\x18\x0f \x01(\tR\x05error\x12\x1f\n" +
+	"\vretry_count\x18\x10 \x01(\x05R\n" +
 	"retryCount\x12U\n" +
-	"\x0erequest_format\x18\x10 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeR\rrequestFormat\x12W\n" +
-	"\x0fresponse_format\x18\x11 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeR\x0eresponseFormat\x1ar\n" +
+	"\x0erequest_format\x18\x11 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeR\rrequestFormat\x12W\n" +
+	"\x0fresponse_format\x18\x12 \x01(\x0e2..moego.business.webhook.v1.Webhook.ContentTypeR\x0eresponseFormat\x1ar\n" +
 	"\x13RequestHeadersEntry\x12\x10\n" +
 	"\x03key\x18\x01 \x01(\tR\x03key\x12E\n" +
 	"\x05value\x18\x02 \x01(\v2/.moego.business.webhook.v1.Webhook.HeaderValuesR\x05value:\x028\x01\x1as\n" +

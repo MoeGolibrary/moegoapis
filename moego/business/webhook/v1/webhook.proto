@@ -113,12 +113,15 @@ message WebhookDelivery {
   // Whether the delivery was successful (HTTP 2xx).
   bool success = 14;
 
+  // Error message in case of failure.
+  string error = 15;
+
   // Number of retries before final delivery outcome.
-  int32 retry_count = 15;
+  int32 retry_count = 16;
 
   // Format of the request body
-  Webhook.ContentType request_format = 16;
+  Webhook.ContentType request_format = 17;
 
   // Format of the response body
-  Webhook.ContentType response_format = 17;
+  Webhook.ContentType response_format = 18;
 }
