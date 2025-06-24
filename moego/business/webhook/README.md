@@ -48,6 +48,8 @@ method, etc.
 
 Represents a specific webhook push record.
 
+> By default, delivery logs are retained for up to **15 days**
+
 | Field Name         | Type                      | Description                |
 |--------------------|---------------------------|----------------------------|
 | `id`               | string                    | Delivery log ID            |
@@ -550,6 +552,12 @@ To ensure system stability and fair resource usage, the following default limits
 
 - **Limit**: Up to 300,000 times/month
 - **Description**: Long-term resource allocation basis, suitable for multi-tenant SaaS resource management strategies.
+
+### 5. Delivery Log Retention Period
+
+- **Limit**: Delivery logs (`WebhookDelivery`) are retained for a maximum of **15 days** by default.
+- **Description**: Logs older than 15 days are automatically deleted to manage storage and performance. For long-term
+  auditing, export logs periodically.
 
 > ⚠️ Note: If limits are exceeded, the API may return `RESOURCE_EXHAUSTED`. It is recommended that clients implement
 > reasonable rate-limiting fallback logic, such as queue caching and delayed retries.
