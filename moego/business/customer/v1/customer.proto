@@ -161,4 +161,7 @@ message Customer {
 
   // The source or channel through which a customer was acquired.
   ReferralSource referral_source = 21;
+
+  // Preferences related to communication and marketing.
+  Preference preference = 22;
 }
