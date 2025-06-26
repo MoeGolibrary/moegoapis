@@ -43,8 +43,7 @@ efficient way to integrate external services with the platform.
 
 ### 📁 Location:
 
-
-- `moego/business/webhook/v1/webhook_service.proto`
+- [proto file](moego/business/webhook/v1/webhook_service.proto)
 - [webhook.md](docs/webhook.md)
 
 ### 📌 Features:
@@ -53,8 +52,6 @@ efficient way to integrate external services with the platform.
 - Configure delivery endpoints and HMAC signing
 - View and retry webhook delivery logs
 - Set up test calls for debugging
-
-
 
 ## 📚 API Docs
 
