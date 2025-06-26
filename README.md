@@ -54,3 +54,9 @@ efficient way to integrate external services with the platform.
 - View and retry webhook delivery logs
 - Set up test calls for debugging
 
+
+
+## 📚 API Docs
+
+- [Customer](docs/customer.md): Customer is a core entity representing clients who use your services
+- [Pet](docs/pet.md): Pet represents an animal companion owned by a customer, which receives services at your business
