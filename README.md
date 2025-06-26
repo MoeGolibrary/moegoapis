@@ -43,7 +43,9 @@ efficient way to integrate external services with the platform.
 
 ### 📁 Location:
 
-- [moego/business/webhook/README.md](moego/business/webhook/README.md)
+
+- `moego/business/webhook/v1/webhook_service.proto`
+- [webhook.md](docs/webhook.md)
 
 ### 📌 Features:
 

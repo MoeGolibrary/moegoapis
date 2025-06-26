@@ -605,6 +605,6 @@ To ensure system stability and fair resource usage, the following default limits
 
 ## 📎 11. Related File References
 
-- [webhook_service.proto](../../../moego/business/webhook/v1/webhook_service.proto)
-- [webhook.proto](../../../moego/business/webhook/v1/webhook.proto)
-- [event.proto](../../../moego/business/event/v1/event.proto)
+- [webhook_service.proto](../moego/business/webhook/v1/webhook_service.proto)
+- [webhook.proto](../moego/business/webhook/v1/webhook.proto)
+- [event.proto](../moego/business/event/v1/event.proto)
