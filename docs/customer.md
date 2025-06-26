@@ -55,7 +55,7 @@ pets, and tracking service history.
 | `notes`                 | Array<Note\>    | List of notes about this customer                                     |
 | `tags`                  | Array<Tag\>     | List of tags applied to this customer                                 |
 | `referral_source`       | ReferralSource  | The source or channel through which a customer was acquired           |
-| `preferences`           | Preference      | Customer's communication and marketing preferences                    |
+| `preference`            | Preference      | Customer's communication and marketing preferences                    |
 
 ### 2. Note
 
