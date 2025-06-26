@@ -21,3 +21,10 @@ The MoeGo APIs are organized into one domain `openapi.moego.pet` and multiple pa
 corresponds to a specific version and resource, such as `/v1/auth`, `/v1/appointment`, and
 `/v1/customer`. Each path contains one or more core resources, and each product
 contains one or more APIs.
+
+
+
+## 📚 API Docs
+
+- [Customer](docs/customer.md): Customer is a core entity representing clients who use your services
+- [Pet](docs/pet.md): Pet represents an animal companion owned by a customer, which receives services at your business

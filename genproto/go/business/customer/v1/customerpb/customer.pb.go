@@ -135,8 +135,10 @@ type Customer struct {
 	Tags []*Customer_Tag `protobuf:"bytes,20,rep,name=tags,proto3" json:"tags,omitempty"`
 	// The source or channel through which a customer was acquired.
 	ReferralSource *Customer_ReferralSource `protobuf:"bytes,21,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// Preferences related to communication and marketing.
+	Preference    *Customer_Preference `protobuf:"bytes,22,opt,name=preference,proto3" json:"preference,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -312,6 +314,13 @@ func (x *Customer) GetTags() []*Customer_Tag {
 func (x *Customer) GetReferralSource() *Customer_ReferralSource {
 	if x != nil {
 		return x.ReferralSource
+	}
+	return nil
+}
+
+func (x *Customer) GetPreference() *Customer_Preference {
+	if x != nil {
+		return x.Preference
 	}
 	return nil
 }
@@ -602,7 +611,7 @@ var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\"\x87\r\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\"\xd8\r\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -629,7 +638,10 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"company_id\x18\x12 \x01(\tR\tcompanyId\x12?\n" +
 	"\x05notes\x18\x13 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12<\n" +
 	"\x04tags\x18\x14 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12\\\n" +
-	"\x0freferral_source\x18\x15 \x01(\v23.moego.business.customer.v1.Customer.ReferralSourceR\x0ereferralSource\x1a\x9a\x01\n" +
+	"\x0freferral_source\x18\x15 \x01(\v23.moego.business.customer.v1.Customer.ReferralSourceR\x0ereferralSource\x12O\n" +
+	"\n" +
+	"preference\x18\x16 \x01(\v2/.moego.business.customer.v1.Customer.PreferenceR\n" +
+	"preference\x1a\x9a\x01\n" +
 	"\x04Note\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04note\x18\x02 \x01(\tR\x04note\x12&\n" +
@@ -690,13 +702,14 @@ var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
 	2,  // 6: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
 	3,  // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.customer.v1.Customer.Tag
 	5,  // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.customer.v1.Customer.ReferralSource
-	7,  // 9: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
-	7,  // 10: moego.business.customer.v1.Customer.Tag.last_updated_time:type_name -> google.protobuf.Timestamp
-	11, // [11:11] is the sub-list for method output_type
-	11, // [11:11] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	4,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
+	7,  // 10: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	7,  // 11: moego.business.customer.v1.Customer.Tag.last_updated_time:type_name -> google.protobuf.Timestamp
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_customer_proto_init() }
