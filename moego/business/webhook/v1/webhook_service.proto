@@ -1,0 +1,299 @@
+syntax = "proto3";
+
+package moego.business.webhook.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "google/type/interval.proto";
+import "moego/business/webhook/v1/webhook.proto";
+import "moego/common/v1/pagination.proto";
+import "moego/auth/apikey/v1/apikey.proto";
+import "moego/business/event/v1/event.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb;webhookpb";
+option java_multiple_files = true;
+option java_outer_classname = "WebhookServiceProto";
+option java_package = "com.moego.api.business.webhook.v1";
+
+
+// WebhookService is a service for managing webhook configurations and event deliveries.
+service WebhookService {
+  // CreateWebhook creates a new webhook configuration.
+  //
+  // Returns the created webhook configuration.
+  // Returns ALREADY_EXISTS if a webhook with the same endpoint URL already exists.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc CreateWebhook(CreateWebhookRequest) returns (Webhook) {
+    option (google.api.http) = {
+      post: "/v1/webhooks"
+      body: "*"
+    };
+  }
+
+  // GetWebhook retrieves a webhook by its ID.
+  //
+  // Returns the webhook configuration.
+  // Returns NOT_FOUND if the webhook ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc GetWebhook(GetWebhookRequest) returns (Webhook) {
+    option (google.api.http) = {get: "/v1/webhooks/{id}"};
+  }
+
+  // UpdateWebhook updates an existing webhook configuration.
+  //
+  // Returns the updated webhook configuration.
+  // Returns NOT_FOUND if the webhook ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc UpdateWebhook(UpdateWebhookRequest) returns (Webhook) {
+    option (google.api.http) = {
+      put: "/v1/webhooks/{id}"
+      body: "*"
+    };
+  }
+
+  // DeleteWebhook deletes a webhook configuration.
+  //
+  // Returns successfully if the deletion is completed.
+  // Returns NOT_FOUND if the webhook ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc DeleteWebhook(DeleteWebhookRequest) returns (DeleteWebhookResponse) {
+    option (google.api.http) = {delete: "/v1/webhooks/{id}"};
+  }
+
+  // ListWebhooks lists all webhooks associated with an enterprise and client.
+  //
+  // Results are paginated and filtered by enterprise and client IDs.
+  // Returns an empty list if no webhooks match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListWebhooks(ListWebhooksRequest) returns (ListWebhooksResponse) {
+    option (google.api.http) = {
+      post: "/v1/webhooks:list"
+      body: "*"
+    };
+  }
+
+  // TriggerTestWebhookDelivery manually triggers a test event delivery for a webhook.
+  //
+  // This is useful for verifying that the webhook endpoint is correctly configured
+  // and can receive and process events.
+  //
+  // Returns NOT_FOUND if the webhook ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc TriggerTestWebhookDelivery(TriggerTestWebhookDeliveryRequest) returns (WebhookDelivery) {
+    option (google.api.http) = {post: "/v1/webhooks/{id}/test"};
+  }
+
+  // GetWebhookDelivery retrieves a specific webhook event delivery log.
+  //
+  // Returns the event delivery log.
+  // Returns NOT_FOUND if the delivery ID doesn't exist.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc GetWebhookDelivery(GetWebhookDeliveryRequest) returns (WebhookDelivery) {
+    option (google.api.http) = {get: "/v1/webhook/deliveries/{id}"};
+  }
+
+  // ListWebhookDeliveries lists all event deliveries for a given webhook.
+  //
+  // Returns event deliveries matching the specified webhook ID.
+  // Returns an empty list if no deliveries match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListWebhookDeliveries(ListWebhookDeliveriesRequest) returns (ListWebhookDeliveriesResponse) {
+    option (google.api.http) = {
+      post: "/v1/webhook/deliveries:list"
+      body: "*"
+    };
+  }
+
+  // RedeliverWebhookDelivery redelivers a specific webhook event delivery log.
+  //
+  // Useful for retrying deliveries after fixing endpoint issues.
+  // Returns the redelivered event delivery log.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc RedeliverWebhookDeliveries(RedeliverWebhookDeliveryRequest) returns (WebhookDelivery) {
+    option (google.api.http) = {post: "/v1/webhooks/deliveries/{id}/redeliver"};
+  }
+}
+
+// CreateWebhookRequest
+message CreateWebhookRequest {
+
+  // endpoint_url is the URL where the webhook will be delivered.
+  string endpoint_url = 1  [(google.api.field_behavior) = REQUIRED];
+
+  // List of organizations the webhook is subscribed to.
+  // If empty, the webhook is subscribed to all organizations.
+  repeated moego.auth.apikey.v1.Organization organizations = 2;
+
+  // event_types is the list of event types this webhook subscribes to.
+  // If it is empty, no events will be subscribed to
+  repeated moego.business.event.v1.Event.Type event_types = 3  [(google.api.field_behavior) = REQUIRED];
+
+  // secret_token is an optional HMAC token used to sign payloads.
+  optional string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // content_type specifies the Content-Type header when delivering payloads.
+  Webhook.ContentType content_type = 5  [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether the webhook is currently active.
+  optional bool is_active = 6 [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether to verify SSL certificates when delivering payloads.
+  // Default: true (recommended for security)
+  optional bool verify_ssl = 7 [(google.api.field_behavior) = OPTIONAL];
+
+  // Custom HTTP headers to include when delivering payloads.
+  map<string, Webhook.HeaderValues> headers = 8 [(google.api.field_behavior) = OPTIONAL];
+}
+
+
+// GetWebhookRequest
+message GetWebhookRequest {
+  // id is the unique identifier of the webhook.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+
+// UpdateWebhookRequest
+message UpdateWebhookRequest {
+  // id is the unique identifier of the webhook.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // endpoint_url is the URL where the webhook will be delivered.
+  string endpoint_url = 2  [(google.api.field_behavior) = REQUIRED];
+
+  // List of organizations the webhook is subscribed to.
+  // If empty, the webhook is subscribed to all organizations.
+  repeated moego.auth.apikey.v1.Organization organizations = 3;
+
+  // event_types is the list of event types this webhook subscribes to.
+  // If it is empty, no events will be subscribed to
+  repeated moego.business.event.v1.Event.Type event_types = 4  [(google.api.field_behavior) = REQUIRED];
+
+  // secret_token is an optional HMAC token used to sign payloads.
+  optional string secret_token = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // content_type specifies the Content-Type header when delivering payloads.
+  Webhook.ContentType content_type = 6  [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether the webhook is currently active.
+  optional bool is_active = 7 [(google.api.field_behavior) = OPTIONAL];
+
+  // Whether to verify SSL certificates when delivering payloads.
+  // Default: true (recommended for security)
+  optional bool verify_ssl = 8 [(google.api.field_behavior) = OPTIONAL];
+
+  // Custom HTTP headers to include when delivering payloads.
+  map<string, Webhook.HeaderValues> headers = 9 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// DeleteWebhookRequest
+message DeleteWebhookRequest {
+  // id is the unique identifier of the webhook.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// DeleteWebhookResponse
+message DeleteWebhookResponse {}
+
+// ListWebhooksRequest
+message ListWebhooksRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+
+  // Filter
+  message Filter {
+    // filter by active status
+    optional bool is_active = 1 [(google.api.field_behavior) = OPTIONAL];
+    // filter by event types
+    repeated moego.business.event.v1.Event.Type event_types = 2 [(google.api.field_behavior) = OPTIONAL];
+    //  filter by created time
+    google.type.Interval created_time = 3 [(google.api.field_behavior) = OPTIONAL];
+    //  filter by updated time
+    google.type.Interval updated_time = 4 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // filter options for webhooks
+  optional Filter filter = 2;
+}
+
+// ListWebhooksResponse
+message ListWebhooksResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // webhooks is the list of matching webhook configurations.
+  repeated Webhook webhooks = 2;
+}
+
+
+// TriggerTestWebhookDeliveryRequest defines the request to trigger a test webhook event.
+message TriggerTestWebhookDeliveryRequest {
+  // id is the unique identifier of the webhook to test.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional custom event type to send (default is "ping").
+  optional moego.business.event.v1.Event.Type event_type = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // Optional payload override for the test event.
+  // If not provided, a default ping payload will be used.
+  optional bytes payload = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// GetWebhookDeliveryRequest
+message GetWebhookDeliveryRequest {
+  // id is the unique identifier of the webhook event delivery.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // webhook_id filters deliveries by the webhook.
+  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListWebhookDeliveriesRequest
+message ListWebhookDeliveriesRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // webhook_id filters deliveries by the webhook.
+  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter defines advanced filtering options
+  message Filter {
+    // filter by event types
+    repeated moego.business.event.v1.Event.Type event_types = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // filter by success status
+    optional bool success = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // filter by delivery time range
+    google.type.Interval delivery_time = 3 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // filter options for deliveries
+  Filter filter = 3;
+
+}
+
+// ListWebhookEventDeliveriesResponse
+message ListWebhookDeliveriesResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // deliveries is the list of matching webhook event deliveries.
+  repeated WebhookDelivery deliveries = 2;
+}
+
+// RedeliverWebhookDeliveryRequest
+message RedeliverWebhookDeliveryRequest {
+  // id is the unique identifier of the webhook event delivery.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // webhook_id filters deliveries by the webhook.
+  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
+}
