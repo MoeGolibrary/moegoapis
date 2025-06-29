@@ -33,14 +33,14 @@ method, etc.
 | Field Name      | Type                      | Description            |
 |-----------------|---------------------------|------------------------|
 | `id`            | string                    | Unique identifier      |
-| `organizations` | Array<Organization\>      | List of organizations  |
-| `event_types`   | Array<EventType\>         | Subscribed event types |
+| `organizations` | Array(Organization)       | List of organizations  |
+| `event_types`   | Array(EventType)          | Subscribed event types |
 | `endpoint_url`  | string                    | URL to receive webhook |
 | `secret_token`  | string                    | Optional HMAC token    |
 | `content_type`  | ContentType               | Default is JSON        |
 | `is_active`     | bool                      | Whether active         |
 | `verify_ssl`    | bool                      | Whether to verify SSL  |
-| `headers`       | map<string, HeaderValues> | Custom HTTP headers    |
+| `headers`       | map(string, HeaderValues) | Custom HTTP headers    |
 | `created_time`  | Timestamp                 | Creation time          |
 | `updated_time`  | Timestamp                 | Last update time       |
 
@@ -58,10 +58,10 @@ Represents a specific webhook push record.
 | `event_id`         | string                    | Unique event ID            |
 | `request_url`      | string                    | Request URL                |
 | `delivered_to`     | string                    | Actual destination address |
-| `request_headers`  | map<string, HeaderValues> | Request headers            |
+| `request_headers`  | map(string, HeaderValues) | Request headers            |
 | `request_body`     | bytes                     | Request body               |
 | `response_status`  | int32                     | HTTP status code           |
-| `response_headers` | map<string, HeaderValues> | Response headers           |
+| `response_headers` | map(string, HeaderValues) | Response headers           |
 | `response_body`    | bytes                     | Response body              |
 | `delivered_at`     | Timestamp                 | Delivery timestamp         |
 | `duration_ms`      | int64                     | Duration in milliseconds   |
@@ -134,13 +134,13 @@ e.g., authentication token, headers).
 | Field Name      | Type                      | Required | Description                         |
 |-----------------|---------------------------|----------|-------------------------------------|
 | `endpoint_url`  | string                    | Yes      | URL to receive webhook              |
-| `organizations` | Array<Organization\>      | No       | Organization list (empty means all) |
-| `event_types`   | Array<EventType\>         | Yes      | List of event types (empty = none)  |
+| `organizations` | Array(Organization)       | No       | Organization list (empty means all) |
+| `event_types`   | Array(EventType)          | Yes      | List of event types (empty = none)  |
 | `secret_token`  | string                    | No       | Optional HMAC token                 |
 | `content_type`  | ContentType               | No       | Content format, default JSON        |
 | `is_active`     | bool                      | No       | Whether active, default true        |
 | `verify_ssl`    | bool                      | No       | Whether to verify SSL (recommended) |
-| `headers`       | map<string, HeaderValues> | No       | Custom HTTP headers                 |
+| `headers`       | map(string, HeaderValues) | No       | Custom HTTP headers                 |
 
 #### 💡 Example Request:
 
@@ -241,13 +241,13 @@ secret token.
 |-----------------|---------------------------|----------|---------------------------|
 | `id`            | string                    | Yes      | Webhook ID to update      |
 | `endpoint_url`  | string                    | Yes      | New endpoint URL          |
-| `organizations` | Array<Organization\>      | No       | Updated organization list |
-| `event_types`   | Array<EventType\>         | Yes      | Updated event types       |
+| `organizations` | Array(Organization)       | No       | Updated organization list |
+| `event_types`   | Array(EventType)          | Yes      | Updated event types       |
 | `secret_token`  | string                    | No       | Updated secret token      |
 | `content_type`  | ContentType               | No       | Updated content type      |
 | `is_active`     | bool                      | No       | Whether active            |
 | `verify_ssl`    | bool                      | No       | Whether to verify SSL     |
-| `headers`       | map<string, HeaderValues> | No       | Custom HTTP headers       |
+| `headers`       | map(string, HeaderValues) | No       | Custom HTTP headers       |
 
 #### 📌 Return Value:
 
@@ -310,13 +310,13 @@ Lists all webhooks under the current account, supporting filtering by status, ev
 
 #### 🔧 Request Parameters:
 
-| Field Name            | Type              | Required | Description                            |
-|-----------------------|-------------------|----------|----------------------------------------|
-| `pagination`          | Pagination        | Yes      | Pagination info: page_size, page_token |
-| `filter.is_active`    | bool              | No       | Filter by active status                |
-| `filter.event_types`  | Array<EventType\> | No       | Filter by event types                  |
-| `filter.created_time` | Interval          | No       | Filter by creation time                |
-| `filter.updated_time` | Interval          | No       | Filter by update time                  |
+| Field Name            | Type             | Required | Description                            |
+|-----------------------|------------------|----------|----------------------------------------|
+| `pagination`          | Pagination       | Yes      | Pagination info: page_size, page_token |
+| `filter.is_active`    | bool             | No       | Filter by active status                |
+| `filter.event_types`  | Array(EventType) | No       | Filter by event types                  |
+| `filter.created_time` | Interval         | No       | Filter by creation time                |
+| `filter.updated_time` | Interval         | No       | Filter by update time                  |
 
 #### 📌 Return Value:
 
@@ -415,13 +415,13 @@ Lists all push records for a given webhook, supports filtering by event type, su
 
 #### 🔧 Request Parameters:
 
-| Field Name             | Type              | Required | Description                   |
-|------------------------|-------------------|----------|-------------------------------|
-| `pagination`           | Pagination        | Yes      | Pagination info               |
-| `webhook_id`           | string            | Yes      | Associated webhook ID         |
-| `filter.event_types`   | Array<EventType\> | No       | Filter by event types         |
-| `filter.success`       | bool              | No       | Filter by success status      |
-| `filter.delivery_time` | Interval          | No       | Filter by delivery time range |
+| Field Name             | Type             | Required | Description                   |
+|------------------------|------------------|----------|-------------------------------|
+| `pagination`           | Pagination       | Yes      | Pagination info               |
+| `webhook_id`           | string           | Yes      | Associated webhook ID         |
+| `filter.event_types`   | Array(EventType) | No       | Filter by event types         |
+| `filter.success`       | bool             | No       | Filter by success status      |
+| `filter.delivery_time` | Interval         | No       | Filter by delivery time range |
 
 #### 📌 Return Value:
 
@@ -533,25 +533,27 @@ To ensure system stability and fair resource usage, the following default limits
 
 ### 1. Maximum Number of Webhook Configurations per Client
 
-- **Limit**: Up to 10
-- **Description**: Prevents abuse or malicious registration of large numbers of webhooks. Contact admin or adjust quota
-  if higher limits are required.
+- **Limit**: Up to 50
+- **Description**: Prevents abuse or malicious registration of large numbers of webhooks. **Contact us if you need a
+  higher limit.**
 
 ### 2. Maximum Pushes per Minute per Webhook
 
-- **Limit**: Up to 100 times/minute
+- **Limit**: Up to 500 times/minute
 - **Description**: Avoids downstream service overload due to high-frequency pushes. Evaluate service capacity before
-  requesting higher thresholds.
+  requesting higher thresholds. **Contact us if you need a higher limit.**
 
 ### 3. Daily Total Push Count per Webhook
 
-- **Limit**: Up to 10,000 times/day
-- **Description**: Controls long-term resource consumption to ensure overall system stability and fairness.
+- **Limit**: Up to 50,000 times/day
+- **Description**: Controls long-term resource consumption to ensure overall system stability and fairness. **Contact us
+  if you need a higher limit.**
 
 ### 4. Monthly Total Push Count per Webhook
 
-- **Limit**: Up to 300,000 times/month
-- **Description**: Long-term resource allocation basis, suitable for multi-tenant SaaS resource management strategies.
+- **Limit**: Up to 1,500,000 times/month
+- **Description**: Long-term resource allocation basis, suitable for multi-tenant SaaS resource management strategies. *
+  *Contact us if you need a higher limit.**
 
 ### 5. Delivery Log Retention Period
 

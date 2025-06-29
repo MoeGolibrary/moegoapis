@@ -1,0 +1,393 @@
+# 🛠️ Setting Service API  Documentation (`moego.business.setting.v1`)
+
+## 📌 1. Functional Overview
+
+The `SettingService` provides a centralized interface for managing business configuration settings, including:
+
+- Managing **Pet Codes** used to flag special handling requirements or medical conditions.
+- Managing **Customer Tags** that categorize clients for marketing and service customization.
+- Managing **Services** offered by the business, such as grooming, boarding, daycare, evaluation, and training.
+- Supporting **creation, updating, listing, and retrieving** of service definitions.
+- Enabling filtering and pagination for scalable data management.
+
+This service is essential for maintaining standardized data across all business locations and ensuring consistent
+service delivery.
+
+---
+
+## 🎯 2. Design Goals
+
+- **Centralized Configuration**: Provides a unified way to manage business-wide settings like services, tags, and codes.
+- **Rich Data Model**: Supports complex relationships like pricing, availability, and staff assignment.
+- **Secure and Reliable**: Ensures access control and data integrity.
+- **Easy Integration**: Offers RESTful APIs compatible with mainstream development frameworks.
+
+Applicable to scenarios such as:
+
+- Configuring new services before launch.
+- Updating service pricing or availability.
+- Categorizing customers for reporting or marketing campaigns.
+- Standardizing pet handling codes across multiple locations.
+
+---
+
+## 🧩 3. Core Concepts
+
+### 1. Service
+
+Represents a specific service or add-on that can be provided to pets.
+
+| Field Name               | Type          | Description                                                  |
+|--------------------------|---------------|--------------------------------------------------------------|
+| `id`                     | string        | Unique identifier (`srv_` prefix)                            |
+| `name`                   | string        | Display name of the service                                  |
+| `service_item_type`      | ItemType      | Primary category of the service                              |
+| `category`               | string        | Subcategory for further classification                       |
+| `price`                  | Money         | Base price for the service                                   |
+| `service_type`           | Type          | Whether it's a standalone service or an add-on               |
+| `service_time`           | int32         | Duration in minutes                                          |
+| `available_all_business` | bool          | Whether available at all business locations                  |
+| `available_business_ids` | Array(string) | List of specific business IDs where the service is available |
+| `available_all_staff`    | bool          | Whether available to all staff                               |
+| `available_staff_ids`    | Array(string) | List of staff members who can perform this service           |
+
+#### Enum: ItemType
+
+- `SERVICE_ITEM_TYPE_UNSPECIFIED`
+- `GROOMING`
+- `BOARDING`
+- `DAYCARE`
+- `EVALUATION`
+- `TRAINING`
+
+#### Enum: Type
+
+- `SERVICE_TYPE_UNSPECIFIED`
+- `SERVICE`
+- `ADDON`
+
+---
+
+## 📈 4. Typical Usage Flow
+
+### ✅ Scenario: User Integrates and Debugs Setting API
+
+Here is a typical integration flow:
+
+1. **Create Service**
+    - Define a new service with required attributes (name, type, price).
+    - Optionally specify business and staff availability.
+
+2. **Update Service**
+    - Modify existing service details like price, duration, or availability.
+
+3. **Retrieve Service**
+    - Fetch full service information using its ID.
+
+4. **List Services**
+    - View all available services, optionally filtered by location or type.
+
+5. **Manage Pet Codes & Customer Tags**
+    - Retrieve active codes and tags for use in other modules.
+
+6. **Monitoring & Maintenance**
+    - Regularly retrieve and audit service configurations.
+
+---
+
+## 📦 5. API Interface Descriptions
+
+### 1. Create Service (`CreateService`)
+
+- **Method**: `CreateService`
+- **HTTP Method**: POST
+- **Path**: `/v1/setting/companies/{company_id}/services`
+
+#### ✅ Functionality:
+
+Registers a new service definition with base attributes.
+
+#### 🎯 Use Cases:
+
+- Add a new grooming package.
+- Define a new training session type.
+
+#### 🔧 Request Parameters:
+
+| Field Name               | Type          | Required | Description                                   |
+|--------------------------|---------------|----------|-----------------------------------------------|
+| `company_id`             | string        | Yes      | ID of the company creating the service        |
+| `name`                   | string        | Yes      | Service name                                  |
+| `business_ids`           | Array(string) | No       | Business locations where service is available |
+| `service_item_type`      | ItemType      | Yes      | Service category                              |
+| `price`                  | Money         | Yes      | Base price                                    |
+| `service_type`           | Type          | Yes      | Whether primary or add-on                     |
+| `service_time`           | int32         | No       | Duration in minutes                           |
+| `available_all_business` | bool          | No       | Available at all locations                    |
+| `available_business_ids` | Array(string) | No       | Specific business IDs if not all              |
+| `available_all_staff`    | bool          | No       | Available to all staff                        |
+| `available_staff_ids`    | Array(string) | No       | Specific staff IDs                            |
+
+#### 📌 Return Value:
+
+Returns the created `Service` object.
+
+#### ⚠️ Error Codes:
+
+- `INVALID_ARGUMENT`: Missing or invalid fields.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 2. Get Service (`GetService`)
+
+- **Method**: `GetService`
+- **HTTP Method**: GET
+- **Path**: `/v1/setting/companies/{company_id}/services/{id}`
+
+#### ✅ Functionality:
+
+Retrieves detailed information about a specific service.
+
+#### 🎯 Use Cases:
+
+- Verify current service details before updates.
+- Audit service configurations.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description            |
+|--------------|--------|----------|------------------------|
+| `company_id` | string | Yes      | Company owning service |
+| `id`         | string | Yes      | Service ID to retrieve |
+
+#### 📌 Return Value:
+
+Returns the full `Service` object.
+
+#### ⚠️ Error Codes:
+
+- `NOT_FOUND`: Service does not exist.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 3. Update Service (`UpdateService`)
+
+- **Method**: `UpdateService`
+- **HTTP Method**: PUT
+- **Path**: `/v1/setting/companies/{company_id}/services/{id}`
+
+#### ✅ Functionality:
+
+Modifies existing service attributes.
+
+#### 🎯 Use Cases:
+
+- Adjust pricing due to cost changes.
+- Change availability or staff assignments.
+
+#### 🔧 Request Parameters:
+
+| Field Name               | Type          | Required | Description                 |
+|--------------------------|---------------|----------|-----------------------------|
+| `company_id`             | string        | Yes      | Company owning service      |
+| `id`                     | string        | Yes      | Service ID to update        |
+| `name`                   | string        | Yes      | Updated service name        |
+| `business_ids`           | Array(string) | No       | Updated business locations  |
+| `price`                  | Money         | Yes      | Updated base price          |
+| `service_time`           | int32         | No       | Updated duration            |
+| `available_all_business` | bool          | No       | Updated availability status |
+| `available_business_ids` | Array(string) | No       | Updated business IDs        |
+| `available_all_staff`    | bool          | No       | Updated staff availability  |
+| `available_staff_ids`    | Array(string) | No       | Updated staff member list   |
+| `inactive`               | bool          | No       | Mark service as inactive    |
+
+#### 📌 Return Value:
+
+Returns the updated `Service` object.
+
+#### ⚠️ Error Codes:
+
+- `NOT_FOUND`: Service does not exist.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 4. List Services (`ListServices`)
+
+- **Method**: `ListServices`
+- **HTTP Method**: POST
+- **Path**: `/v1/setting/companies/{company_id}/services:list`
+
+#### ✅ Functionality:
+
+Lists services matching specified criteria.
+
+#### 🎯 Use Cases:
+
+- View all available services.
+- Filter services by location or type.
+
+#### 🔧 Request Parameters:
+
+| Field Name          | Type            | Required | Description                  |
+|---------------------|-----------------|----------|------------------------------|
+| `company_id`        | string          | Yes      | Company owning services      |
+| `pagination`        | Pagination      | Yes      | Page size and token          |
+| `business_ids`      | Array(string)   | No       | Filter by business locations |
+| `filter.item_types` | Array(ItemType) | No       | Filter by service types      |
+
+#### 📌 Return Value:
+
+Returns paginated results and service list.
+
+#### ⚠️ Error Code:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 5. List Pet Codes (`ListPetCodes`)
+
+- **Method**: `ListPetCodes`
+- **HTTP Method**: POST
+- **Path**: `/v1/setting/companies/{company_id}/pet/codes:list`
+
+#### ✅ Functionality:
+
+Retrieves all active pet codes defined for the company.
+
+#### 🎯 Use Cases:
+
+- Retrieve special handling instructions.
+- Standardize pet care alerts across locations.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description            |
+|--------------|--------|----------|------------------------|
+| `company_id` | string | Yes      | Company ID to retrieve |
+
+#### 📌 Return Value:
+
+Returns a list of `Pet.Code` objects.
+
+#### ⚠️ Error Code:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 6. List Customer Tags (`ListCustomerTags`)
+
+- **Method**: `ListCustomerTags`
+- **HTTP Method**: POST
+- **Path**: `/v1/setting/companies/{company_id}/customer/tags:list`
+
+#### ✅ Functionality:
+
+Retrieves all active customer tags defined for the company.
+
+#### 🎯 Use Cases:
+
+- Categorize customers for marketing.
+- Apply labels for loyalty programs or preferences.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description            |
+|--------------|--------|----------|------------------------|
+| `company_id` | string | Yes      | Company ID to retrieve |
+
+#### 📌 Return Value:
+
+Returns a list of `Customer.Tag` objects.
+
+#### ⚠️ Error Code:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+## 🧪 6. Usage Examples
+
+### Example 1: Create Service
+
+```json
+{
+  "company_id": "cmp_001",
+  "name": "Premium Grooming",
+  "service_item_type": "GROOMING",
+  "price": {
+    "currency_code": "USD",
+    "units": 75,
+    "nanos": 0
+  },
+  "service_type": "SERVICE",
+  "service_time": 90,
+  "available_all_business": true
+}
+```
+
+### Example 2: List Services
+
+```json
+{
+  "company_id": "cmp_001",
+  "pagination": {
+    "page_size": 20
+  },
+  "business_ids": [
+    "biz_001",
+    "biz_002"
+  ],
+  "filter": {
+    "item_types": [
+      "GROOMING",
+      "DAYCARE"
+    ]
+  }
+}
+```
+
+---
+
+## ⚠️ 7. Usage Limitations
+
+TODO
+
+---
+
+## ❓ 8. FAQ
+
+| Question                                                             | Answer                                                                                                                  |
+|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
+| How can I verify if a service configuration is effective?            | Use `ListServices` to check if the service appears in the response with expected attributes.                            |
+| How can I prevent duplicate services from being created?             | Ensure that your system checks for existing services before creating new ones.                                          |
+| What should I do if a service creation returns "resource exhausted"? | Clean up unused services or contact support to request a quota increase.                                                |
+| Can I restrict services to specific business locations?              | Yes, via the `available_business_ids` field. Set `available_all_business = false` and specify the allowed business IDs. |
+| How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                               |
+| Why does updating a service return “not found”?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.                 |
+| How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.             |
+
+---
+
+## 📌 9. Common Error Codes
+
+| Error Code           | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| `ALREADY_EXISTS`     | A setting (e.g., service, tag) with the same name or ID already exists.     |
+| `NOT_FOUND`          | The requested setting (e.g., service, pet code) does not exist.             |
+| `PERMISSION_DENIED`  | Current user has no access rights to perform the operation.                 |
+| `INVALID_ARGUMENT`   | Invalid request parameters (e.g., missing required fields, invalid format). |
+| `INTERNAL`           | Internal server error occurred while processing the request.                |
+| `RESOURCE_EXHAUSTED` | Request exceeds system-defined quotas or limits.                            |
+
+---
+
+## 📎 10. Related File References
+
+- [service.proto](../moego/business/setting/v1/service.proto)
+- [setting_service.proto](../moego/business/setting/v1/setting_service.proto)
+
