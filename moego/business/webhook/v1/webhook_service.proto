@@ -80,7 +80,10 @@ service WebhookService {
   // Returns NOT_FOUND if the webhook ID doesn't exist.
   // Returns PERMISSION_DENIED if the caller lacks access rights.
   rpc TriggerTestWebhookDelivery(TriggerTestWebhookDeliveryRequest) returns (WebhookDelivery) {
-    option (google.api.http) = {post: "/v1/webhooks/{id}/test"};
+    option (google.api.http) = {
+      post: "/v1/webhooks/{id}/test"
+      body: "*"
+    };
   }
 
   // GetWebhookDelivery retrieves a specific webhook event delivery log.
