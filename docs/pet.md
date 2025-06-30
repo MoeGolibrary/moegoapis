@@ -1,4 +1,4 @@
-# Pet
+# Pet API Documentation (`moego.business.customer.v1`)
 
 ## 📌 1. Functional Overview
 
@@ -32,28 +32,28 @@ Applicable to scenarios such as pet grooming, medical care tracking, behavioral 
 Represents a customer's pet that receives services at your business. Each pet has its own profile containing essential
 information for providing appropriate care.
 
-| Field Name          | Type                | Description                                        |
-|---------------------|---------------------|----------------------------------------------------|
-| `id`                | string              | Unique identifier                                  |
-| `name`              | string              | Pet's given name                                   |
-| `birthday`          | Date                | Pet's date of birth                                |
-| `status`            | Status              | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`              | Type                | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`             | string              | Specific breed within the pet type                 |
-| `gender`            | Gender              | Gender of the pet                                  |
-| `weight`            | Weight              | Pet's current weight                               |
-| `fixed`             | string              | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`              | string              | Description of the coat (e.g., "long double coat") |
-| `behavior`          | string              | General temperament and behavior                   |
-| `pet_codes`         | Array<Code\>        | Special handling instructions or medical alerts    |
-| `notes`             | Array<Note\>        | Staff observations and special instructions        |
-| `vaccinations`      | Array<Vaccination\> | Vaccination records                                |
-| `customer_id`       | string              | ID of the pet’s owner                              |
-| `vet`               | Vet                 | Primary veterinary care provider                   |
-| `evaluation_status` | EvaluationStatus    | Service eligibility status                         |
-| `created_time`      | Timestamp           | When the pet was created                           |
-| `last_updated_time` | Timestamp           | When the pet was last modified                     |
-| `photo`             | string              | Photo URL of the pet                               |
+| Field Name          | Type               | Description                                        |
+|---------------------|--------------------|----------------------------------------------------|
+| `id`                | string             | Unique identifier                                  |
+| `name`              | string             | Pet's given name                                   |
+| `birthday`          | Date               | Pet's date of birth                                |
+| `status`            | Status             | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`              | Type               | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`             | string             | Specific breed within the pet type                 |
+| `gender`            | Gender             | Gender of the pet                                  |
+| `weight`            | Weight             | Pet's current weight                               |
+| `fixed`             | string             | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`              | string             | Description of the coat (e.g., "long double coat") |
+| `behavior`          | string             | General temperament and behavior                   |
+| `pet_codes`         | Array(Code)        | Special handling instructions or medical alerts    |
+| `notes`             | Array(Note)        | Staff observations and special instructions        |
+| `vaccinations`      | Array(Vaccination) | Vaccination records                                |
+| `customer_id`       | string             | ID of the pet’s owner                              |
+| `vet`               | Vet                | Primary veterinary care provider                   |
+| `evaluation_status` | EvaluationStatus   | Service eligibility status                         |
+| `created_time`      | Timestamp          | When the pet was created                           |
+| `last_updated_time` | Timestamp          | When the pet was last modified                     |
+| `photo`             | string             | Photo URL of the pet                               |
 
 ### 2. Code
 
@@ -337,11 +337,11 @@ Adds new notes to a pet's profile.
 
 #### 🔧 Request Parameters:
 
-| Field Name    | Type             | Required | Description             |
-|---------------|------------------|----------|-------------------------|
-| `customer_id` | string           | Yes      | Owner customer ID       |
-| `id`          | string           | Yes      | Pet ID to add notes to  |
-| `notes`       | Array<Pet.Note\> | Yes      | Notes to add to the pet |
+| Field Name    | Type            | Required | Description             |
+|---------------|-----------------|----------|-------------------------|
+| `customer_id` | string          | Yes      | Owner customer ID       |
+| `id`          | string          | Yes      | Pet ID to add notes to  |
+| `notes`       | Array(Pet.Note) | Yes      | Notes to add to the pet |
 
 #### 📌 Return Value:
 
@@ -405,11 +405,11 @@ Adds special handling codes or medical alerts to a pet's profile.
 
 #### 🔧 Request Parameters:
 
-| Field Name     | Type           | Required | Description                  |
-|----------------|----------------|----------|------------------------------|
-| `customer_id`  | string         | Yes      | Owner customer ID            |
-| `id`           | string         | Yes      | Pet ID to add codes to       |
-| `pet_code_ids` | Array<string\> | Yes      | Code IDs to apply to the pet |
+| Field Name     | Type          | Required | Description                  |
+|----------------|---------------|----------|------------------------------|
+| `customer_id`  | string        | Yes      | Owner customer ID            |
+| `id`           | string        | Yes      | Pet ID to add codes to       |
+| `pet_code_ids` | Array(string) | Yes      | Code IDs to apply to the pet |
 
 #### 📌 Return Value:
 
@@ -439,12 +439,12 @@ Lists all pets across all customers in the company.
 
 #### 🔧 Request Parameters:
 
-| Field Name                 | Type           | Required | Description                   |
-|----------------------------|----------------|----------|-------------------------------|
-| `pagination`               | Pagination     | Yes      | Page size and token           |
-| `company_id`               | string         | Yes      | Company ID to list pets for   |
-| `filter.customer_ids`      | Array<string\> | No       | Optional list of customer IDs |
-| `filter.last_updated_time` | Interval       | No       | Time range filter             |
+| Field Name                 | Type          | Required | Description                   |
+|----------------------------|---------------|----------|-------------------------------|
+| `pagination`               | Pagination    | Yes      | Page size and token           |
+| `company_id`               | string        | Yes      | Company ID to list pets for   |
+| `filter.customer_ids`      | Array(string) | No       | Optional list of customer IDs |
+| `filter.last_updated_time` | Interval      | No       | Time range filter             |
 
 > **Note**:The `pagination` field is used for pagination.
 > The `page_size` field specifies the number of results to return per page. Maximum value is 500.
