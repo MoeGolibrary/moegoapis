@@ -275,6 +275,9 @@ message ListWebhookDeliveriesRequest {
 
     // filter by delivery time range
     google.type.Interval delivery_time = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // filter by event ids
+    repeated string event_ids = 4 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // filter options for deliveries
