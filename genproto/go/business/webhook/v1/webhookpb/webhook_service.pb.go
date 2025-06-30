@@ -879,7 +879,9 @@ type ListWebhookDeliveriesRequest_Filter struct {
 	// filter by success status
 	Success *bool `protobuf:"varint,2,opt,name=success,proto3,oneof" json:"success,omitempty"`
 	// filter by delivery time range
-	DeliveryTime  *interval.Interval `protobuf:"bytes,3,opt,name=delivery_time,json=deliveryTime,proto3" json:"delivery_time,omitempty"`
+	DeliveryTime *interval.Interval `protobuf:"bytes,3,opt,name=delivery_time,json=deliveryTime,proto3" json:"delivery_time,omitempty"`
+	// filter by event ids
+	EventIds      []string `protobuf:"bytes,4,rep,name=event_ids,json=eventIds,proto3" json:"event_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -931,6 +933,13 @@ func (x *ListWebhookDeliveriesRequest_Filter) GetSuccess() bool {
 func (x *ListWebhookDeliveriesRequest_Filter) GetDeliveryTime() *interval.Interval {
 	if x != nil {
 		return x.DeliveryTime
+	}
+	return nil
+}
+
+func (x *ListWebhookDeliveriesRequest_Filter) GetEventIds() []string {
+	if x != nil {
+		return x.EventIds
 	}
 	return nil
 }
@@ -1010,19 +1019,20 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\x19GetWebhookDeliveryRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
 	"\n" +
-	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\"\xa3\x03\n" +
+	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\"\xc5\x03\n" +
 	"\x1cListWebhookDeliveriesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\x12V\n" +
-	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterR\x06filter\x1a\xc4\x01\n" +
+	"\x06filter\x18\x03 \x01(\v2>.moego.business.webhook.v1.ListWebhookDeliveriesRequest.FilterR\x06filter\x1a\xe6\x01\n" +
 	"\x06Filter\x12I\n" +
 	"\vevent_types\x18\x01 \x03(\x0e2#.moego.business.event.v1.Event.TypeB\x03\xe0A\x01R\n" +
 	"eventTypes\x12\"\n" +
 	"\asuccess\x18\x02 \x01(\bB\x03\xe0A\x01H\x00R\asuccess\x88\x01\x01\x12?\n" +
-	"\rdelivery_time\x18\x03 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\fdeliveryTimeB\n" +
+	"\rdelivery_time\x18\x03 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\fdeliveryTime\x12 \n" +
+	"\tevent_ids\x18\x04 \x03(\tB\x03\xe0A\x01R\beventIdsB\n" +
 	"\n" +
 	"\b_success\"\x93\x01\n" +
 	"\x1dListWebhookDeliveriesResponse\x12&\n" +

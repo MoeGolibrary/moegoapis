@@ -420,6 +420,7 @@ Lists all push records for a given webhook, supports filtering by event type, su
 | `pagination`           | Pagination       | Yes      | Pagination info               |
 | `webhook_id`           | string           | Yes      | Associated webhook ID         |
 | `filter.event_types`   | Array(EventType) | No       | Filter by event types         |
+| `filter.event_ids`     | Array(string)    | No       | Filter by event ids           |
 | `filter.success`       | bool             | No       | Filter by success status      |
 | `filter.delivery_time` | Interval         | No       | Filter by delivery time range |
 
