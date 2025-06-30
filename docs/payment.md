@@ -75,8 +75,8 @@ Represents a complete dataset for a report, containing both the structure (field
 
 Represents a single row of data in a report, containing values for each field defined in the table structure.
 
-| Field Name | Type               | Description                                                                                |
-|------------|--------------------|--------------------------------------------------------------------------------------------|
+| Field Name | Type              | Description                                                                                |
+|------------|-------------------|--------------------------------------------------------------------------------------------|
 | `data`     | Map(string, Data) | Map of field values indexed by field key, each entry corresponds to a column in the report |
 
 ### 5. Data
