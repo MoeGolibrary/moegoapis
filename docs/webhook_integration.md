@@ -59,6 +59,7 @@ When an event occurs, Moego will send a `POST` request to your webhook URL conta
 |-----------------------|----------------------------------------|------------------------------------------|
 | `User-Agent`          | `Moego/Webhook-1.0`                    | Identifies Moego as the source.          |
 | `X-Moe-Client-Id`     | `018e5b36-e35c-7925-a9de-321ed638b682` | Unique client identifier.                |
+| `X-Moe-Event-Type`    | `HEALTH_CHECK`                         | Type of event.                           |
 | `X-Moe-Delivery-ID`   | `whkdXfP`                              | Unique ID for this delivery.             |
 | `X-Moe-Nonce`         | `780525611260542810`                   | Random string for replay prevention.     |
 | `X-Moe-Timestamp`     | `1751284717825`                        | Unix timestamp (in milliseconds).        |
@@ -85,13 +86,13 @@ These headers are used for **security and idempotency**, especially when you ena
 
 ### Fields Explained
 
-| Field       | Type   | Description                                              |
-|-------------|--------|----------------------------------------------------------|
-| `id`        | string | Unique event ID                                          |
-| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`) |
-| `timestamp` | string | ISO 8601 formatted timestamp                             |
-| `companyId` | string | Encoded company ID associated with the event             |
-| `payload`   | object | Varies based on event type                               |
+| Field       | Type   | Description                                               |
+|-------------|--------|-----------------------------------------------------------|
+| `id`        | string | Unique event ID                                           |
+| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`)  |
+| `timestamp` | string | ISO 8601 formatted timestamp                              |
+| `companyId` | string | Encoded company ID associated with the event              |
+| `payload`   | bytes  | Varies based on event type.  The string encoded in base64 |
 
 ---
 
@@ -137,8 +138,8 @@ You can test your webhook by triggering a health check using Moego’s API:
 ```json
 {
   "id": "whk_001",
-  "event_type": "PING",
-  "payload": "{ \"test\": \"hello world\" }"
+  "eventType": "HEALTH_CHECK",
+  "payload": "aGVsbG8gd29ybGQ="
 }
 ```
 

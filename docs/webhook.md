@@ -50,26 +50,26 @@ Represents a specific webhook push record.
 
 > By default, delivery logs are retained for up to **15 days**
 
-| Field Name         | Type                      | Description                |
-|--------------------|---------------------------|----------------------------|
-| `id`               | string                    | Delivery log ID            |
-| `webhook_id`       | string                    | Associated webhook ID      |
-| `event_type`       | EventType                 | Event type                 |
-| `event_id`         | string                    | Unique event ID            |
-| `request_url`      | string                    | Request URL                |
-| `delivered_to`     | string                    | Actual destination address |
-| `request_headers`  | map(string, HeaderValues) | Request headers            |
-| `request_body`     | bytes                     | Request body               |
-| `response_status`  | int32                     | HTTP status code           |
-| `response_headers` | map(string, HeaderValues) | Response headers           |
-| `response_body`    | bytes                     | Response body              |
-| `delivered_at`     | Timestamp                 | Delivery timestamp         |
-| `duration_ms`      | int64                     | Duration in milliseconds   |
-| `success`          | bool                      | Whether successful         |
-| `error`            | string                    | Error message              |
-| `retry_count`      | int32                     | Retry count                |
-| `request_format`   | ContentType               | Request format             |
-| `response_format`  | ContentType               | Response format            |
+| Field Name         | Type                      | Description                         |
+|--------------------|---------------------------|-------------------------------------|
+| `id`               | string                    | Delivery log ID                     |
+| `webhook_id`       | string                    | Associated webhook ID               |
+| `event_type`       | EventType                 | Event type                          |
+| `event_id`         | string                    | Unique event ID                     |
+| `request_url`      | string                    | Request URL                         |
+| `delivered_to`     | string                    | Actual destination address          |
+| `request_headers`  | map(string, HeaderValues) | Request headers                     |
+| `request_body`     | bytes                     | The request body encoded in base64  |
+| `response_status`  | int32                     | HTTP status code                    |
+| `response_headers` | map(string, HeaderValues) | Response headers                    |
+| `response_body`    | bytes                     | The Response body encoded in base64 |
+| `delivered_at`     | Timestamp                 | Delivery timestamp                  |
+| `duration_ms`      | int64                     | Duration in milliseconds            |
+| `success`          | bool                      | Whether successful                  |
+| `error`            | string                    | Error message                       |
+| `retry_count`      | int32                     | Retry count                         |
+| `request_format`   | ContentType               | Request format                      |
+| `response_format`  | ContentType               | Response format                     |
 
 ### 3. Event Type
 
