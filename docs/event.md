@@ -1,4 +1,4 @@
-# Event API Documentation (`moego.business.event.v1`)
+# Event Documentation (`moego.business.event.v1`)
 
 ## 📌 1. Functional Overview
 
