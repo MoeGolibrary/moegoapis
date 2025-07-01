@@ -94,6 +94,9 @@ features include:
 
 For more details:
 
-- [proto file](moego/business/webhook/v1/webhook_service.proto)
-- [webhook documentation](docs/webhook.md)
-- [event documentation](docs/event.md)
+- [Moego Webhook Integration Guide](docs/webhook_integration.md): A step-by-step guide on integrating with Moego's
+  webhook system.
+- [webhook documentation](docs/webhook.md): API reference for webhooks.
+- [event documentation](docs/event.md): API reference for events.
+- [proto file](moego/business/webhook/v1/webhook_service.proto): Protobuf definition for webhooks.
+
