@@ -59,6 +59,7 @@ When an event occurs, Moego will send a `POST` request to your webhook URL conta
 |-----------------------|----------------------------------------|------------------------------------------|
 | `User-Agent`          | `Moego/Webhook-1.0`                    | Identifies Moego as the source.          |
 | `X-Moe-Client-Id`     | `018e5b36-e35c-7925-a9de-321ed638b682` | Unique client identifier.                |
+| `X-Moe-Event-Type`    | `HEALTH_CHECK`                         | Type of event.                           |
 | `X-Moe-Delivery-ID`   | `whkdXfP`                              | Unique ID for this delivery.             |
 | `X-Moe-Nonce`         | `780525611260542810`                   | Random string for replay prevention.     |
 | `X-Moe-Timestamp`     | `1751284717825`                        | Unix timestamp (in milliseconds).        |
