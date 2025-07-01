@@ -85,13 +85,13 @@ These headers are used for **security and idempotency**, especially when you ena
 
 ### Fields Explained
 
-| Field       | Type   | Description                                              |
-|-------------|--------|----------------------------------------------------------|
-| `id`        | string | Unique event ID                                          |
-| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`) |
-| `timestamp` | string | ISO 8601 formatted timestamp                             |
-| `companyId` | string | Encoded company ID associated with the event             |
-| `payload`   | object | Varies based on event type                               |
+| Field       | Type   | Description                                               |
+|-------------|--------|-----------------------------------------------------------|
+| `id`        | string | Unique event ID                                           |
+| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`)  |
+| `timestamp` | string | ISO 8601 formatted timestamp                              |
+| `companyId` | string | Encoded company ID associated with the event              |
+| `payload`   | bytes  | Varies based on event type.  The string encoded in base64 |
 
 ---
 
@@ -137,8 +137,8 @@ You can test your webhook by triggering a health check using Moego’s API:
 ```json
 {
   "id": "whk_001",
-  "event_type": "PING",
-  "payload": "{ \"test\": \"hello world\" }"
+  "eventType": "HEALTH_CHECK",
+  "payload": "aGVsbG8gd29ybGQ="
 }
 ```
 
