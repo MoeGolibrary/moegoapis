@@ -183,6 +183,7 @@ message CheckCreateAppointmentResponse {
     repeated PetAppointmentsOverview conflicts = 1;
   }
 
+  // pet appointments overview
   message PetAppointmentsOverview {
     // object(Pet), The pet receiving the services.
     // Contains pet's basic information, health records, and preferences.

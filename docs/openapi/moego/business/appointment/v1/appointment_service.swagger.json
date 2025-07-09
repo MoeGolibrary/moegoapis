@@ -385,6 +385,7 @@
           "description": "array(Appointment), Appointments that conflict with the requested appointment."
         }
       },
+      "title": "pet appointments overview",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
