@@ -99,3 +99,19 @@ For more details:
 - [webhook documentation](docs/webhook.md): API reference for webhooks.
 - [event documentation](docs/event.md): API reference for events.
 
+---
+
+## 📄 OpenAPI Specifications
+
+To better support developers using MoeGo APIs, we have added corresponding `openapi.json` files under the `docs/openapi` directory. These files are generated based on the Protocol Buffer definitions and provide comprehensive interface descriptions for REST APIs, including request paths, parameters, and response formats.
+
+With these OpenAPI specifications, developers can:
+
+- Quickly understand how to use each API, including data structures and calling methods;
+- Use open-source tools (such as Swagger UI, Postman, etc.) to generate visual documentation;
+- Automatically generate client SDKs or server-side stub code;
+- Use them as a reference for API testing and debugging.
+
+It is recommended to refer to the corresponding module documentation (e.g., [Customer](docs/customer.md), [Appointment](docs/appointment.md)) alongside the OpenAPI files for a more complete understanding.
+
+Each JSON file corresponds to a core module and follows the OpenAPI 3.0 specification, making it easy to integrate into various development toolchains.
