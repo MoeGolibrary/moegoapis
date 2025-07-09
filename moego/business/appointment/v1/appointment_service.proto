@@ -9,6 +9,8 @@ import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
+import "moego/business/customer/v1/pet.proto";
+
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -177,16 +179,28 @@ message CheckCreateAppointmentRequest {
 message CheckCreateAppointmentResponse {
   // appointment date conflict check result
   message AppointmentDateConflictCheckResult {
-    // array(Appointment), Appointments that conflict with the requested appointment.
-    repeated Appointment conflicts = 1;
+    // array(PetAppointmentsOverview), Appointments that conflict with the requested appointment.
+    repeated PetAppointmentsOverview conflicts = 1;
   }
+
+  message PetAppointmentsOverview {
+    // object(Pet), The pet receiving the services.
+    // Contains pet's basic information, health records, and preferences.
+    moego.business.customer.v1.Pet pet = 1;
+
+    // array(Appointment), Appointments that conflict with the requested appointment.
+    repeated Appointment appointments = 2;
+  }
+
   // business closed date check result
   message BusinessClosedDateCheckResult {
     // array(Date), Business closed dates.
     repeated google.type.Date closed_dates = 1;
   }
+
   // appointment date conflict check result
   AppointmentDateConflictCheckResult appointment_conflict_check = 1;
+
   // business closed date check result
   BusinessClosedDateCheckResult business_closed_date_check = 2;
 }

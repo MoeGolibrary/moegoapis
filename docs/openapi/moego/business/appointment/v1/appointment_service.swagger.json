@@ -336,9 +336,9 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1Appointment"
+            "$ref": "#/definitions/CheckCreateAppointmentResponsePetAppointmentsOverview"
           },
-          "description": "array(Appointment), Appointments that conflict with the requested appointment."
+          "description": "array(PetAppointmentsOverview), Appointments that conflict with the requested appointment."
         }
       },
       "title": "appointment date conflict check result",
@@ -367,6 +367,29 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
         "type": "BusinessClosedDateCheckResult"
+      }
+    },
+    "CheckCreateAppointmentResponsePetAppointmentsOverview": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet",
+          "description": "object(Pet), The pet receiving the services.\nContains pet's basic information, health records, and preferences."
+        },
+        "appointments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Appointment"
+          },
+          "description": "array(Appointment), Appointments that conflict with the requested appointment."
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "PetAppointmentsOverview"
       }
     },
     "CreateAppointmentRequestPetService": {
