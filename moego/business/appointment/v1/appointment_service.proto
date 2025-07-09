@@ -8,6 +8,7 @@ import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
+import "google/type/date.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -41,6 +42,17 @@ service AppointmentService {
   rpc ListAppointments(ListAppointmentsRequest) returns (ListAppointmentsResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:list"
+      body: "*"
+    };
+  }
+
+  // Check before create appointment
+  //
+  // Return the check result. If it is empty, it indicates that it can be created;
+  // otherwise, return conflicting data
+  rpc CheckCreateAppointment(CheckCreateAppointmentRequest) returns (CheckCreateAppointmentResponse) {
+    option (google.api.http) = {
+      post: "/v1/appointments:check"
       body: "*"
     };
   }
@@ -149,6 +161,36 @@ message ListAppointmentsResponse {
   repeated Appointment appointments = 2;
 }
 
+// Request to check before create appointment
+message CheckCreateAppointmentRequest {
+  // string, The business location's identifier where services will be provided.
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The customer's identifier who is booking the appointment.
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(PetService), Services requested for each pet.
+  repeated CreateAppointmentRequest.PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response for check before create appointment
+message CheckCreateAppointmentResponse {
+  // appointment date conflict check result
+  message AppointmentDateConflictCheckResult {
+    // array(Appointment), Appointments that conflict with the requested appointment.
+    repeated Appointment conflicts = 1;
+  }
+  // business closed date check result
+  message BusinessClosedDateCheckResult {
+    // array(Date), Business closed dates.
+    repeated google.type.Date closed_dates = 1;
+  }
+  // appointment date conflict check result
+  AppointmentDateConflictCheckResult appointment_conflict_check = 1;
+  // business closed date check result
+  BusinessClosedDateCheckResult business_closed_date_check = 2;
+}
+
 // Request to create a new appointment
 message CreateAppointmentRequest {
   // Details of services requested for a specific pet
@@ -184,6 +226,11 @@ message CreateAppointmentRequest {
 
   // array(PetService), Services requested for each pet.
   repeated PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // bool, Whether to ignore conflicts when scheduling services.
+  // If true, services will be scheduled even if there are conflicts.
+  // Defaults to true.
+  bool ignore_conflict = 4 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request to reschedule an existing appointment

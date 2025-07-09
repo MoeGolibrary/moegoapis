@@ -266,11 +266,16 @@ Creates a new appointment with services for one or more pets.
 
 #### 🔧 Request Parameters:
 
-| Field Name     | Type              | Required | Description                     |
-|----------------|-------------------|----------|---------------------------------|
-| `business_id`  | string            | Yes      | Business location ID            |
-| `customer_id`  | string            | Yes      | Customer ID                     |
-| `pet_services` | Array(PetService) | Yes      | Services requested for each pet |
+| Field Name        | Type              | Required | Description                                                                              |
+|-------------------|-------------------|----------|------------------------------------------------------------------------------------------|
+| `business_id`     | string            | Yes      | Business location ID where services will be provided                                     |
+| `customer_id`     | string            | Yes      | Customer ID who is booking the appointment                                               |
+| `pet_services`    | Array(PetService) | Yes      | Services requested for each pet                                                          |
+| `ignore_conflict` | bool              | No       | Whether to ignore scheduling conflicts when creating an appointment. Defaults to `true`. |
+
+> ** Note ** : When set to 'true', the system will ignore time conflicts and directly create reservations. This field is
+> mainly used to support mandatory appointments in certain special scenarios (such as manual intervention in the
+> background).
 
 #### 📌 Return Value:
 
@@ -350,7 +355,50 @@ Returns the canceled `Appointment` object.
 
 ---
 
-### 6. List Grooming Reports (`ListGroomingReports`)
+### 6. Check Create Appointment (`CheckCreateAppointment`)
+
+- **Method**: `CheckCreateAppointment`
+- **HTTP Method**: POST
+- **Path**: `/v1/appointments:check`
+
+#### ✅ Functionality:
+
+Performs pre-checks before creating a new appointment, including checking for time conflicts and business closed dates.
+
+This method helps clients determine if it's safe to proceed with creating an appointment without causing scheduling
+issues.
+
+#### 🎯 Use Cases:
+
+- Validate that there are no conflicting appointments.
+- Ensure the selected date does not fall on a business holiday or closed day.
+- Prevent duplicate or overlapping bookings.
+
+#### 🔧 Request Parameters:
+
+| Field Name     | Type              | Required | Description                                |
+|----------------|-------------------|----------|--------------------------------------------|
+| `business_id`  | string            | Yes      | Business location ID                       |
+| `customer_id`  | string            | Yes      | Customer ID                                |
+| `pet_services` | Array(PetService) | Yes      | List of pets and their associated services |
+
+#### 📌 Return Value:
+
+Returns a `CheckCreateAppointmentResponse` object containing results from:
+
+- **Appointment Date Conflict Check**: List of conflicting appointments (if any).
+- **Business Closed Date Check**: List of closed dates during the requested period.
+
+If both checks return empty results, it means the appointment can be safely created.
+
+#### ⚠️ Error Codes:
+
+- `INVALID_ARGUMENT`: Missing required fields in request.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 7. List Grooming Reports (`ListGroomingReports`)
 
 - **Method**: `ListGroomingReports`
 - **HTTP Method**: POST
@@ -489,16 +537,75 @@ POST /v1/appointments/apt_12345:reschedule
 }
 ```
 
+### Example 4: Check Create Appointment
+
+```http
+POST /v1/appointments:check
+```
+
+```json
+{
+  "business_id": "biz_001",
+  "customer_id": "cus_001",
+  "pet_services": [
+    {
+      "pet_id": "pet_001",
+      "services": [
+        {
+          "id": "svc_grooming",
+          "duration": {
+            "start_time": "2024-08-15T10:00:00Z",
+            "end_time": "2024-08-15T11:00:00Z"
+          },
+          "staff_ids": [
+            "staff_001"
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Response:**
+
+```json
+{
+  "appointment_conflict_check": {
+    "conflicts": [
+      {
+        "id": "apt_98765",
+        "business_id": "biz_001",
+        "customer_id": "cus_002",
+        "duration": {
+          "start_time": "2024-08-15T10:30:00Z",
+          "end_time": "2024-08-15T11:30:00Z"
+        },
+        "status": "CONFIRMED"
+      }
+    ]
+  },
+  "business_closed_date_check": {
+    "closed_dates": []
+  }
+}
+```
+
+> The above response indicates that there is currently a confirmed appointment that overlaps with the new appointment
+> time, but there is no conflict with the business closure date.
+
+
 ---
 
 ## 📌 6. Common Error Codes
 
-| Error Code          | Description                               |
-|---------------------|-------------------------------------------|
-| `NOT_FOUND`         | Appointment or customer ID does not exist |
-| `PERMISSION_DENIED` | Current user has no access rights         |
-| `INVALID_ARGUMENT`  | Invalid request parameters                |
-| `INTERNAL`          | Internal server error                     |
+| Error Code          | Description                                                         |
+|---------------------|---------------------------------------------------------------------|
+| `NOT_FOUND`         | Appointment or customer ID does not exist                           |
+| `PERMISSION_DENIED` | Current user has no access rights                                   |
+| `INVALID_ARGUMENT`  | Invalid request parameters                                          |
+| `INTERNAL`          | Internal server error                                               |
+| `CONFLICT`          | Detected scheduling conflict (returned by `CheckCreateAppointment`) |
 
 ---
 
