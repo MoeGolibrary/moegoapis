@@ -1,0 +1,1117 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/customer/v1/pet_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.customer.v1.PetService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/customers/{customerId}/pets": {
+      "post": {
+        "summary": "Creates a new pet profile in the system.",
+        "description": "This method validates and stores the pet's information, including basic details,\nhealth records, and any initial notes or codes. The pet is automatically\nassociated with the specified customer.\n\nReturns the created Pet object with all fields populated.\nThrows INVALID_ARGUMENT if required fields are missing or invalid.",
+        "operationId": "PetService_CreatePet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreatePetResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceCreatePetBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/customers/{customerId}/pets/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific pet.",
+        "description": "Returns all pet data including health records, notes, and service history.\nThrows NOT_FOUND if the pet ID or customer ID doesn't exist.",
+        "operationId": "PetService_GetPet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Pet"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the pet to retrieve\nRequired. Format: \"pet_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      },
+      "put": {
+        "summary": "Updates an existing pet's information.",
+        "description": "Modifies the details of an existing pet, including basic information,\nhealth records, and any associated notes or codes.\n\nReturns the updated Pet object with all fields populated.\nThrows NOT_FOUND if the pet ID or customer ID doesn't exist.\nThrows INVALID_ARGUMENT if provided fields are invalid.",
+        "operationId": "PetService_UpdatePet",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Pet"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier for the pet\nFormat: \"pet_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceUpdatePetBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/customers/{customerId}/pets/{id}/codes": {
+      "post": {
+        "summary": "Adds special handling codes or medical alerts to a pet's profile.",
+        "description": "These codes are displayed prominently during service delivery to ensure\nappropriate handling and care. Returns the newly added codes.\nThrows NOT_FOUND if the pet ID or customer ID doesn't exist.",
+        "operationId": "PetService_AppendPetCodes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppendPetCodesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the pet\nRequired. Format: \"pet_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceAppendPetCodesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/customers/{customerId}/pets/{id}/notes": {
+      "post": {
+        "summary": "Adds new notes to a pet's profile.",
+        "description": "Notes can include observations about behavior, preferences, or special\nrequirements. Returns the newly created notes with generated IDs.\nThrows NOT_FOUND if the pet ID or customer ID doesn't exist.",
+        "operationId": "PetService_AppendPetNotes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppendPetNotesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the pet\nRequired. Format: \"pet_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceAppendPetNotesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/customers/{customerId}/pets/{id}/notes:list": {
+      "post": {
+        "summary": "Retrieves a paginated list of notes for a specific pet.",
+        "description": "Notes are returned in reverse chronological order (newest first).\nReturns an empty list if the pet has no notes.",
+        "operationId": "PetService_ListPetNotes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPetNotesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the pet\nRequired. Format: \"pet_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceListPetNotesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/customers/{customerId}/pets:list": {
+      "post": {
+        "summary": "Lists all pets belonging to a specific customer.",
+        "description": "Returns a list of pet profiles associated with the customer.\nReturns an empty list if the customer has no pets.",
+        "operationId": "PetService_ListPets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPetsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer whose pets to list\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetServiceListPetsBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
+    "/v1/pets:list": {
+      "post": {
+        "summary": "Lists all pets across all customers in the company.",
+        "description": "Results can be filtered by customer IDs and are paginated.\nRequires company-level access permissions.",
+        "operationId": "PetService_ListAllPets",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAllPetsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing all pets in the company.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListAllPetsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Code"
+      }
+    },
+    "PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
+    "PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
+    "PetServiceAppendPetCodesBody": {
+      "type": "object",
+      "properties": {
+        "petCodeIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of the codes to add to the pet's profile\nRequired. Must be valid code IDs"
+        }
+      },
+      "description": "Request message for adding codes to a pet's profile.",
+      "required": [
+        "petCodeIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendPetCodesRequest"
+      }
+    },
+    "PetServiceAppendPetNotesBody": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "Notes to add to the pet's profile\nRequired. At least one note must be provided"
+        }
+      },
+      "description": "Request message for adding notes to a pet's profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendPetNotesRequest"
+      }
+    },
+    "PetServiceCreatePetBody": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet",
+          "title": "Complete pet information to be created\nRequired. Must include all required pet fields"
+        }
+      },
+      "description": "Request message for creating a new pet profile.",
+      "required": [
+        "pet"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CreatePetRequest"
+      }
+    },
+    "PetServiceListPetNotesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        }
+      },
+      "description": "Request message for listing a pet's notes.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListPetNotesRequest"
+      }
+    },
+    "PetServiceListPetsBody": {
+      "type": "object",
+      "description": "Request message for listing a customer's pets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListPetsRequest"
+      }
+    },
+    "PetServiceUpdatePetBody": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "Pet's given name\nOptional. If not provided, current value will be retained"
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "x-nullable": true,
+          "title": "Pet's date of birth\nOptional. If not provided, current value will be retained"
+        },
+        "type": {
+          "$ref": "#/definitions/v1PetType",
+          "x-nullable": true,
+          "title": "Species of the pet\nOptional. If not provided, current value will be retained"
+        },
+        "breed": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "Specific breed within the pet type\nOptional. If not provided, current value will be retained"
+        },
+        "gender": {
+          "$ref": "#/definitions/PetGender",
+          "x-nullable": true,
+          "title": "Pet's gender\nOptional. If not provided, current value will be retained"
+        },
+        "weight": {
+          "$ref": "#/definitions/v1Weight",
+          "x-nullable": true,
+          "title": "Pet's current weight\nOptional. If not provided, current value will be retained"
+        },
+        "fixed": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "Spay/neuter status\nValues: \"yes\", \"no\", \"unknown\"\nOptional. If not provided, current value will be retained"
+        },
+        "coat": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "Description of the pet's coat\nExample: \"long double coat\", \"short hair\"\nOptional. If not provided, current value will be retained"
+        },
+        "behavior": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "General temperament and behavior notes\nExample: \"friendly\", \"nervous with new people\"\nOptional. If not provided, current value will be retained"
+        },
+        "vet": {
+          "$ref": "#/definitions/PetVet",
+          "x-nullable": true,
+          "title": "Primary veterinary care provider\nUsed for emergencies and health verifications\nOptional. If not provided, current value will be retained"
+        },
+        "evaluationStatus": {
+          "$ref": "#/definitions/PetEvaluationStatus",
+          "x-nullable": true,
+          "title": "Current evaluation status for services\nDetermines service availability"
+        },
+        "photo": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "photo url of pet."
+        }
+      },
+      "description": "Request message for updating a pet's profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "UpdatePetRequest"
+      }
+    },
+    "PetVaccination": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the vaccination\nExample: \"Rabies\", \"DHPP\", \"Bordetella\""
+        },
+        "expiredAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this vaccination expires\nStaff are notified before expiration"
+        }
+      },
+      "title": "Vaccination record for the pet\nUsed to ensure compliance with service requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vaccination"
+      }
+    },
+    "PetVet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the veterinary practice or doctor"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "title": "Contact number for the veterinarian\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "address": {
+          "type": "string",
+          "title": "Physical location of the veterinary practice"
+        }
+      },
+      "title": "Veterinary care provider information\nUsed for emergencies and health verifications",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vet"
+      }
+    },
+    "WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "v1AppendPetCodesResponse": {
+      "type": "object",
+      "properties": {
+        "codes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetCode"
+          },
+          "title": "Codes that were successfully added\nIncludes full code details",
+          "readOnly": true
+        }
+      },
+      "description": "Response message for adding codes to a pet's profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendPetCodesResponse"
+      }
+    },
+    "v1AppendPetNotesResponse": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "Notes that were successfully added\nIncludes generated IDs and timestamps"
+        }
+      },
+      "description": "Response message for adding notes to a pet's profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendPetNotesResponse"
+      }
+    },
+    "v1CreatePetResponse": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet",
+          "title": "The newly created pet profile\nIncludes system-generated fields like ID",
+          "readOnly": true
+        }
+      },
+      "description": "Response message for creating a new pet profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CreatePetResponse"
+      }
+    },
+    "v1ListAllPetsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list pets for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListAllPetsRequestFilter",
+          "title": "Optional filters to apply to the pet list"
+        }
+      },
+      "description": "Request message for listing all pets in the company.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListAllPetsRequest"
+      }
+    },
+    "v1ListAllPetsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "customerIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Optional list of customer IDs to filter by\nIf provided, only returns pets belonging to these customers"
+        },
+        "lastUpdatedTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "Optional list of time intervals to filter by\nIf provided, only returns pets with appointments within these intervals"
+        }
+      },
+      "title": "Filter parameters for the pet list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListAllPetsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Pet"
+          },
+          "title": "List of pets matching the request criteria\nMay be empty if no pets match"
+        }
+      },
+      "description": "Response message for listing all pets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListAllPetsResponse"
+      }
+    },
+    "v1ListPetNotesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "List of notes for the pet\nMay be empty if the pet has no notes"
+        }
+      },
+      "description": "Response message for listing a pet's notes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListPetNotesResponse"
+      }
+    },
+    "v1ListPetsResponse": {
+      "type": "object",
+      "properties": {
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Pet"
+          },
+          "title": "List of pets belonging to the customer\nMay be empty if the customer has no pets"
+        }
+      },
+      "description": "Response message for listing a customer's pets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListPetsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Pet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the pet\nFormat: \"pet_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Pet's given name"
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "title": "Pet's date of birth\nUsed for age-appropriate service modifications"
+        },
+        "status": {
+          "$ref": "#/definitions/v1PetStatus",
+          "title": "Current status of the pet"
+        },
+        "type": {
+          "$ref": "#/definitions/v1PetType",
+          "title": "Species of the pet\nRequired. Determines available services"
+        },
+        "breed": {
+          "type": "string",
+          "title": "Specific breed within the pet type\nRequired. Helps determine grooming requirements"
+        },
+        "gender": {
+          "$ref": "#/definitions/PetGender",
+          "title": "Pet's gender\nUsed for service assignments"
+        },
+        "weight": {
+          "$ref": "#/definitions/v1Weight",
+          "title": "Pet's current weight\nUsed for equipment selection and health monitoring"
+        },
+        "fixed": {
+          "type": "string",
+          "title": "Spay/neuter status\nValues: \"yes\", \"no\", \"unknown\""
+        },
+        "coat": {
+          "type": "string",
+          "title": "Description of the pet's coat\nExample: \"long double coat\", \"short hair\""
+        },
+        "behavior": {
+          "type": "string",
+          "title": "General temperament and behavior notes\nExample: \"friendly\", \"nervous with new people\""
+        },
+        "petCodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetCode"
+          },
+          "title": "Special handling codes for this pet\nDisplayed prominently during service"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "Staff observations and special instructions"
+        },
+        "vaccinations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetVaccination"
+          },
+          "title": "Current vaccination records\nRequired for certain services"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the pet's owner\nSystem-managed, do not set manually",
+          "readOnly": true
+        },
+        "vet": {
+          "$ref": "#/definitions/PetVet",
+          "title": "Primary veterinary care provider\nUsed for emergencies and health verifications"
+        },
+        "evaluationStatus": {
+          "$ref": "#/definitions/PetEvaluationStatus",
+          "title": "Current evaluation status for services\nDetermines service availability"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was created."
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was last modified."
+        },
+        "photo": {
+          "type": "string",
+          "description": "photo url of pet."
+        }
+      },
+      "description": "Pet represents a customer's pet that receives services at your business.\nEach pet has its own profile containing essential information for providing\nappropriate care, including health records, behavior notes, and service preferences.",
+      "required": [
+        "name",
+        "type",
+        "breed"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Pet"
+      }
+    },
+    "v1PetNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this note"
+        },
+        "content": {
+          "type": "string",
+          "title": "The content of the note"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this note"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this note was last modified"
+        }
+      },
+      "title": "Note contains observations about the pet's behavior,\npreferences, or special requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Note"
+      }
+    },
+    "v1PetStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ALIVE",
+        "PASSED_AWAY"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status indicates whether the pet is currently receiving services.\nThis affects appointment scheduling and service availability.\n\n - STATUS_UNSPECIFIED: Unknown or unspecified status\n - ALIVE: Pet is currently receiving services\nDefault status for new pets\n - PASSED_AWAY: Pet is no longer receiving services\nHistorical records are maintained"
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    },
+    "v1Weight": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": "uint32, The numeric value of the weight."
+        },
+        "unit": {
+          "$ref": "#/definitions/WeightUnit",
+          "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
+        }
+      },
+      "description": "The weight object provides a standardized way to represent and convert\nweight measurements throughout the system. It supports multiple units\nand ensures consistent weight tracking for pets, products, and other\nresources that require weight measurements.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Weight"
+      }
+    }
+  }
+}

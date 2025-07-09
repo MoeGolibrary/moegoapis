@@ -1,0 +1,514 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/report/v1/report_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.report.v1.ReportService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/reports/data:fetch": {
+      "post": {
+        "summary": "FetchReportData generates and retrieves data for a specific report.\nSupports pagination, filtering by business units, and custom grouping\noptions. Data is returned in a structured format defined by the report's\nfield configuration.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if request parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights\n- NOT_FOUND if the report definition doesn't exist",
+        "operationId": "ReportService_FetchReportData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1FetchReportDataResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "FetchReportDataRequest encapsulates parameters for generating report data.\nSupports pagination, business unit filtering, and custom data grouping.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1FetchReportDataRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.report.v1.ReportService"
+        ]
+      }
+    },
+    "/v1/reports:list": {
+      "post": {
+        "summary": "ListReports retrieves all available report definitions for a company.\nReturns a list of report configurations that can be used to generate\nspecific data views.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if company_id is invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "ReportService_ListReports",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListReportsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "ListReportsRequest represents a request to retrieve available reports.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListReportsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.report.v1.ReportService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "FetchReportDataRequestCondition": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Identifier of the report definition to use\nMust reference an existing report configuration"
+        },
+        "queryPeriod": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "Time period for data collection\nDefines the date range for included data"
+        },
+        "groupByFieldKeys": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Fields to group data by\nOptional. If provided, results will be aggregated by these fields"
+        }
+      },
+      "description": "Condition specifies the report configuration and filtering criteria.\nControls what data is included and how it's organized.",
+      "required": [
+        "id",
+        "queryPeriod"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Condition"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "typeMoney": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "The three-letter currency code defined in ISO 4217."
+        },
+        "units": {
+          "type": "string",
+          "format": "int64",
+          "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000."
+        }
+      },
+      "description": "Represents an amount of money with its currency type.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/money"
+        },
+        "type": "Money"
+      }
+    },
+    "v1Data": {
+      "type": "object",
+      "properties": {
+        "fieldKey": {
+          "type": "string",
+          "title": "Reference to the field definition\nMust match a field key in the table structure"
+        },
+        "fieldType": {
+          "$ref": "#/definitions/v1FieldType",
+          "title": "Data type of the value\nMust match the field definition"
+        },
+        "value": {
+          "$ref": "#/definitions/v1Value",
+          "title": "Actual value of the cell\nType must match field_type"
+        }
+      },
+      "description": "Data represents a single cell value in a report table.\nIncludes both the field metadata and the actual value.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Data"
+      }
+    },
+    "v1FetchReportDataRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for handling large result sets\nRequired to manage data volume efficiently"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "Company identifier for data access control\nRequired to ensure data is scoped to proper context"
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of business units to include in the report\nIf null, all business units are included in the report"
+        },
+        "condition": {
+          "$ref": "#/definitions/FetchReportDataRequestCondition",
+          "title": "Report configuration and filtering parameters\nControls the structure and content of the results"
+        }
+      },
+      "description": "FetchReportDataRequest encapsulates parameters for generating report data.\nSupports pagination, business unit filtering, and custom data grouping.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "FetchReportDataRequest"
+      }
+    },
+    "v1FetchReportDataResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "tableData": {
+          "$ref": "#/definitions/v1TableData",
+          "title": "Structured report data including fields and rows\nContains the actual report content"
+        }
+      },
+      "description": "FetchReportDataResponse contains the generated report data.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "FetchReportDataResponse"
+      }
+    },
+    "v1Field": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "title": "Display label for the field\nUsed in report headers and UI elements"
+        },
+        "type": {
+          "$ref": "#/definitions/v1FieldType",
+          "title": "Data type of the field\nDetermines value formatting and validation"
+        },
+        "key": {
+          "type": "string",
+          "title": "Unique identifier for the field within the report\nUsed to reference field values in data structures"
+        },
+        "groupByEnable": {
+          "type": "boolean",
+          "title": "Whether this field can be used as a grouping criterion\nAffects report aggregation options"
+        }
+      },
+      "description": "Field defines a single data column in a report.\nEach field has a specific data type and display properties.\nFields can be used for grouping data and determining how values are formatted.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Field"
+      }
+    },
+    "v1FieldType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "MONEY",
+        "TEXT",
+        "DATE",
+        "TIME",
+        "NUMBER",
+        "DECIMAL_NUMBER",
+        "PERCENTAGE",
+        "DURATION",
+        "DATETIME"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type specifies the data type and formatting rules for a field.\nThis determines how values are stored, displayed, and processed.\n\n - TYPE_UNSPECIFIED: Default value when type is not specified\nShould not be used when creating new fields\n - MONEY: Represents monetary values with currency information\nUses google.type.Money for storage\n - TEXT: Represents text or string values\nUsed for names, descriptions, and other textual data\n - DATE: Represents date values without time\nStored as Timestamp with time set to midnight\n - TIME: Represents time values without date\nStored as Timestamp with date set to epoch\n - NUMBER: Represents whole numbers\nUsed for counts and integer quantities\n - DECIMAL_NUMBER: Represents numbers with decimal points\nUsed for precise numerical values\n - PERCENTAGE: Represents percentage values\nStored as decimal (e.g., 0.75 for 75%)\n - DURATION: Represents time duration in minutes\nUsed for service times and intervals\n - DATETIME: Represents full date and time values\nUsed for exact temporal data points"
+    },
+    "v1ListReportsRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "Company identifier for scoping available reports\nRequired to ensure reports are accessed within proper context"
+        }
+      },
+      "description": "ListReportsRequest represents a request to retrieve available reports.",
+      "required": [
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "ListReportsRequest"
+      }
+    },
+    "v1ListReportsResponse": {
+      "type": "object",
+      "properties": {
+        "reports": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Report"
+          },
+          "title": "List of report definitions available to the company\nMay be empty if no reports are configured"
+        }
+      },
+      "description": "ListReportsResponse contains the list of available reports.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "ListReportsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Report": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the report\nFormat: \"rpt_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the report\nUsed in UI and exported documents"
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed description of the report's purpose and contents\nHelps users understand what data is included"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Field"
+          },
+          "title": "List of fields included in the report\nDefines the structure and data types of the report"
+        }
+      },
+      "description": "Report represents a customizable business report definition.\nReports are used to generate structured data views with configurable fields\nand formatting options. Each report can be used to analyze different aspects\nof business operations.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Report"
+      }
+    },
+    "v1TableData": {
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1TableRowData"
+          },
+          "title": "Individual data rows in the table\nEach row contains values for all defined fields"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Field"
+          },
+          "title": "Field definitions for the table\nCan be from TableMeta or dynamically generated"
+        }
+      },
+      "description": "TableData represents a complete data set for a report.\nContains both the structure (fields) and content (rows) of the report.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "TableData"
+      }
+    },
+    "v1TableRowData": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1Data"
+          },
+          "title": "Map of field values indexed by field key\nEach entry corresponds to a column in the report"
+        }
+      },
+      "description": "TableRowData represents a single row of data in a report.\nContains values for each field defined in the table structure.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "TableRowData"
+      }
+    },
+    "v1Value": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "title": "Text value for string fields"
+        },
+        "double": {
+          "type": "number",
+          "format": "double",
+          "title": "Decimal value for numerical fields"
+        },
+        "int64": {
+          "type": "string",
+          "format": "int64",
+          "title": "Integer value for whole number fields"
+        },
+        "bool": {
+          "type": "boolean",
+          "title": "Boolean value for true/false fields"
+        },
+        "money": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Monetary value with currency information"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date/time value for temporal fields"
+        }
+      },
+      "description": "Value represents a typed data value used in reports.\nSupports multiple data types through a oneof field.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Value"
+      }
+    }
+  }
+}

@@ -1,0 +1,374 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/agreement/v1/agreement_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.agreement.v1.AgreementService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/agreements/{id}": {
+      "get": {
+        "summary": "Retrieves a specific agreement by its ID.",
+        "description": "Returns: The complete agreement object including content and templates.",
+        "operationId": "AgreementService_GetAgreement",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Agreement"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "string, Unique identifier of the agreement",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "companyId",
+            "description": "string, Company identifier for access control",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.agreement.v1.AgreementService"
+        ]
+      }
+    },
+    "/v1/agreements/{id}/sign_link": {
+      "get": {
+        "summary": "Generates a signing URL for a specific agreement and customer.",
+        "description": "Returns: A unique URL where the customer can view and sign the agreement.",
+        "operationId": "AgreementService_GetAgreementSignLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetAgreementSignURLResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "string, Agreement to be signed",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "customerId",
+            "description": "string, Customer who will sign",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "businessId",
+            "description": "string, Business location context",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.agreement.v1.AgreementService"
+        ]
+      }
+    },
+    "/v1/agreements:list": {
+      "post": {
+        "summary": "Lists agreements matching the specified criteria.",
+        "description": "Returns: A paginated list of agreements ordered by creation time.",
+        "operationId": "AgreementService_ListAgreements",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAgreementsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request to list agreements matching specified criteria.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListAgreementsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.agreement.v1.AgreementService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AgreementSignedPolicy": {
+      "type": "string",
+      "enum": [
+        "SIGNED_POLICY_UNSPECIFIED",
+        "FOR_FIRST",
+        "FOR_EACH",
+        "OPTIONAL"
+      ],
+      "default": "SIGNED_POLICY_UNSPECIFIED",
+      "description": "Defines when customers need to sign the agreement.\n\n - SIGNED_POLICY_UNSPECIFIED: Not intended for direct use\n - FOR_FIRST: Customer must sign only on their first interaction\n - FOR_EACH: Customer must sign for each relevant transaction\n - OPTIONAL: Customer may proceed without signing"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "v1Agreement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "string, Unique identifier for the agreement"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "string, Business location where this agreement is used"
+        },
+        "creatorId": {
+          "type": "string",
+          "title": "string, Staff member who created the agreement"
+        },
+        "status": {
+          "$ref": "#/definitions/v1AgreementStatus",
+          "title": "enum(Status), Current state of the agreement"
+        },
+        "signedPolicy": {
+          "$ref": "#/definitions/AgreementSignedPolicy",
+          "title": "enum(SignedPolicy), When signatures are required"
+        },
+        "title": {
+          "type": "string",
+          "title": "string, Display name of the agreement"
+        },
+        "content": {
+          "type": "string",
+          "title": "string, Full text of the agreement"
+        },
+        "smsTemplate": {
+          "type": "string",
+          "title": "string, Template for SMS notifications about this agreement"
+        },
+        "emailTemplateTitle": {
+          "type": "string",
+          "title": "string, Subject line for email notifications"
+        },
+        "emailTemplateBody": {
+          "type": "string",
+          "title": "string, Body content for email notifications"
+        },
+        "lastRequiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "timestamp, When signatures were last required\nCustomers who signed before this time may need to re-sign"
+        },
+        "lastEditTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "timestamp, When the agreement content was last modified"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "timestamp, When the agreement was first created"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "timestamp, When any field was last changed"
+        }
+      },
+      "description": "The agreement object represents a legal document that requires customer consent.\nIt is used to manage various types of agreements such as service terms, privacy policies,\nand waivers. Each agreement can be configured with different signing requirements\nand notification templates for customer communication.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb"
+        },
+        "type": "Agreement"
+      }
+    },
+    "v1AgreementStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "NORMAL",
+        "DELETED"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Current status of the agreement document.\n\n - STATUS_UNSPECIFIED: Not intended for direct use\n - NORMAL: Agreement is active and can be presented to customers\n - DELETED: Agreement has been removed and is no longer in use"
+    },
+    "v1GetAgreementSignURLResponse": {
+      "type": "object",
+      "properties": {
+        "agreementRecordId": {
+          "type": "string",
+          "title": "string, Identifier of the agreement record created"
+        },
+        "signUrl": {
+          "type": "string",
+          "title": "string, URL where the agreement can be signed"
+        }
+      },
+      "description": "Response containing the generated signing URL.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb"
+        },
+        "type": "GetAgreementSignURLResponse"
+      }
+    },
+    "v1ListAgreementsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "object(Pagination), Pagination parameters for the request"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "string, Company identifier for access control"
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "array(string), Optional filter by business locations"
+        }
+      },
+      "description": "Request to list agreements matching specified criteria.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb"
+        },
+        "type": "ListAgreementsRequest"
+      }
+    },
+    "v1ListAgreementsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "string, Token for retrieving the next page"
+        },
+        "agreement": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Agreement"
+          },
+          "title": "array(Agreement), List of matching agreements"
+        }
+      },
+      "description": "Response containing agreements matching the list criteria.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/agreement/v1/agreementpb"
+        },
+        "type": "ListAgreementsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}

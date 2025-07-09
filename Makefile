@@ -19,8 +19,9 @@ deps:												##@Tools: link buf modules to local, you should run this again 
 
 pb:														##@Build steps: generate protobuf
 	@buf generate
-	@rm -rf genproto
+	@rm -rf genproto docs/openapi
 	@mv out/go/github.com/MoeGolibrary/moegoapis/genproto genproto
+	@mv out/openapi docs/
 	@rm -rf out
 	@buf build -o genproto/moego.bin --as-file-descriptor-set
 	@echo "Generate protobuf files done!"

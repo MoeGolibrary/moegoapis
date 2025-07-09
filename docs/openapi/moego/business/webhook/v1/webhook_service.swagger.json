@@ -1,0 +1,987 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/webhook/v1/webhook_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.webhook.v1.WebhookService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/webhook/deliveries/{id}": {
+      "get": {
+        "summary": "GetWebhookDelivery retrieves a specific webhook event delivery log.",
+        "description": "Returns the event delivery log.\nReturns NOT_FOUND if the delivery ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_GetWebhookDelivery",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1WebhookDelivery"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook event delivery.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "webhookId",
+            "description": "webhook_id filters deliveries by the webhook.",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhook/deliveries:list": {
+      "post": {
+        "summary": "ListWebhookDeliveries lists all event deliveries for a given webhook.",
+        "description": "Returns event deliveries matching the specified webhook ID.\nReturns an empty list if no deliveries match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_ListWebhookDeliveries",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListWebhookDeliveriesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListWebhookDeliveriesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhooks": {
+      "post": {
+        "summary": "CreateWebhook creates a new webhook configuration.",
+        "description": "Returns the created webhook configuration.\nReturns ALREADY_EXISTS if a webhook with the same endpoint URL already exists.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_CreateWebhook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Webhook"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateWebhookRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhooks/deliveries/{id}/redeliver": {
+      "post": {
+        "summary": "RedeliverWebhookDelivery redelivers a specific webhook event delivery log.",
+        "description": "Useful for retrying deliveries after fixing endpoint issues.\nReturns the redelivered event delivery log.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_RedeliverWebhookDeliveries",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1WebhookDelivery"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook event delivery.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "webhookId",
+            "description": "webhook_id filters deliveries by the webhook.",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhooks/{id}": {
+      "get": {
+        "summary": "GetWebhook retrieves a webhook by its ID.",
+        "description": "Returns the webhook configuration.\nReturns NOT_FOUND if the webhook ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_GetWebhook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Webhook"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      },
+      "delete": {
+        "summary": "DeleteWebhook deletes a webhook configuration.",
+        "description": "Returns successfully if the deletion is completed.\nReturns NOT_FOUND if the webhook ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_DeleteWebhook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteWebhookResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      },
+      "put": {
+        "summary": "UpdateWebhook updates an existing webhook configuration.",
+        "description": "Returns the updated webhook configuration.\nReturns NOT_FOUND if the webhook ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_UpdateWebhook",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Webhook"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WebhookServiceUpdateWebhookBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhooks/{id}/test": {
+      "post": {
+        "summary": "TriggerTestWebhookDelivery manually triggers a test event delivery for a webhook.",
+        "description": "This is useful for verifying that the webhook endpoint is correctly configured\nand can receive and process events.\n\nReturns NOT_FOUND if the webhook ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_TriggerTestWebhookDelivery",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1WebhookDelivery"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "id is the unique identifier of the webhook to test.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/WebhookServiceTriggerTestWebhookDeliveryBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    },
+    "/v1/webhooks:list": {
+      "post": {
+        "summary": "ListWebhooks lists all webhooks associated with an enterprise and client.",
+        "description": "Results are paginated and filtered by enterprise and client IDs.\nReturns an empty list if no webhooks match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "WebhookService_ListWebhooks",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListWebhooksResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListWebhooksRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.webhook.v1.WebhookService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "WebhookContentType": {
+      "type": "string",
+      "enum": [
+        "CONTENT_TYPE_UNSPECIFIED",
+        "CONTENT_TYPE_JSON"
+      ],
+      "default": "CONTENT_TYPE_UNSPECIFIED",
+      "description": "ContentType defines the format of the payload.\n\n - CONTENT_TYPE_UNSPECIFIED: Default value.\n - CONTENT_TYPE_JSON: application/json"
+    },
+    "WebhookHeaderValues": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "The values"
+        }
+      },
+      "description": "A list of values for a header key.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "HeaderValues"
+      }
+    },
+    "WebhookServiceTriggerTestWebhookDeliveryBody": {
+      "type": "object",
+      "properties": {
+        "eventType": {
+          "$ref": "#/definitions/v1EventType",
+          "x-nullable": true,
+          "description": "Optional custom event type to send (default is \"ping\")."
+        },
+        "payload": {
+          "type": "string",
+          "format": "byte",
+          "x-nullable": true,
+          "description": "Optional payload override for the test event.\nIf not provided, a default ping payload will be used."
+        }
+      },
+      "description": "TriggerTestWebhookDeliveryRequest defines the request to trigger a test webhook event.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "TriggerTestWebhookDeliveryRequest"
+      }
+    },
+    "WebhookServiceUpdateWebhookBody": {
+      "type": "object",
+      "properties": {
+        "endpointUrl": {
+          "type": "string",
+          "description": "endpoint_url is the URL where the webhook will be delivered."
+        },
+        "organizations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Organization"
+          },
+          "description": "List of organizations the webhook is subscribed to.\nIf empty, the webhook is subscribed to all organizations."
+        },
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventType"
+          },
+          "title": "event_types is the list of event types this webhook subscribes to.\nIf it is empty, no events will be subscribed to"
+        },
+        "secretToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "secret_token is an optional HMAC token used to sign payloads."
+        },
+        "contentType": {
+          "$ref": "#/definitions/WebhookContentType",
+          "description": "content_type specifies the Content-Type header when delivering payloads."
+        },
+        "isActive": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "Whether the webhook is currently active."
+        },
+        "verifySsl": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Whether to verify SSL certificates when delivering payloads.\nDefault: true (recommended for security)"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/WebhookHeaderValues"
+          },
+          "description": "Custom HTTP headers to include when delivering payloads."
+        }
+      },
+      "title": "UpdateWebhookRequest",
+      "required": [
+        "endpointUrl",
+        "eventTypes"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "UpdateWebhookRequest"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "v1CreateWebhookRequest": {
+      "type": "object",
+      "properties": {
+        "endpointUrl": {
+          "type": "string",
+          "description": "endpoint_url is the URL where the webhook will be delivered."
+        },
+        "organizations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Organization"
+          },
+          "description": "List of organizations the webhook is subscribed to.\nIf empty, the webhook is subscribed to all organizations."
+        },
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventType"
+          },
+          "title": "event_types is the list of event types this webhook subscribes to.\nIf it is empty, no events will be subscribed to"
+        },
+        "secretToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "secret_token is an optional HMAC token used to sign payloads."
+        },
+        "contentType": {
+          "$ref": "#/definitions/WebhookContentType",
+          "description": "content_type specifies the Content-Type header when delivering payloads."
+        },
+        "isActive": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "Whether the webhook is currently active."
+        },
+        "verifySsl": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Whether to verify SSL certificates when delivering payloads.\nDefault: true (recommended for security)"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/WebhookHeaderValues"
+          },
+          "description": "Custom HTTP headers to include when delivering payloads."
+        }
+      },
+      "title": "CreateWebhookRequest",
+      "required": [
+        "endpointUrl",
+        "eventTypes"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "CreateWebhookRequest"
+      }
+    },
+    "v1DeleteWebhookResponse": {
+      "type": "object",
+      "title": "DeleteWebhookResponse",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "DeleteWebhookResponse"
+      }
+    },
+    "v1EventType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "HEALTH_CHECK",
+        "APPOINTMENT_CREATED",
+        "APPOINTMENT_UPDATED",
+        "APPOINTMENT_FINISHED",
+        "APPOINTMENT_CANCELED",
+        "APPOINTMENT_DELETED",
+        "APPOINTMENT_FULLY_PAID",
+        "ONLINE_BOOKING_RECEIVED"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type categorizes the event and determines how it should be processed.\nEvent types are grouped by functionality to maintain clear boundaries\nand facilitate routing to appropriate handlers.\n\n - TYPE_UNSPECIFIED: Unknown or invalid event type\nShould not be used when creating new events\n - HEALTH_CHECK: Health check event for system monitoring\nUsed to verify webhook endpoint availability\n - APPOINTMENT_CREATED: New appointment has been created\nTriggers notifications and resource allocation\n - APPOINTMENT_UPDATED: Existing appointment has been modified\nUpdates schedules and notifications\n - APPOINTMENT_FINISHED: Service delivery has been completed\nInitiates payment and review processes\n - APPOINTMENT_CANCELED: Appointment has been canceled\nReleases reserved resources\n - APPOINTMENT_DELETED: Appointment has been permanently removed\nCleans up associated records\n - APPOINTMENT_FULLY_PAID: All payments for the appointment received\nUpdates financial records\n - ONLINE_BOOKING_RECEIVED: New online booking request received\nInitiates booking validation and processing"
+    },
+    "v1ListWebhookDeliveriesRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "webhookId": {
+          "type": "string",
+          "description": "webhook_id filters deliveries by the webhook."
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListWebhookDeliveriesRequestFilter",
+          "title": "filter options for deliveries"
+        }
+      },
+      "title": "ListWebhookDeliveriesRequest",
+      "required": [
+        "pagination",
+        "webhookId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "ListWebhookDeliveriesRequest"
+      }
+    },
+    "v1ListWebhookDeliveriesRequestFilter": {
+      "type": "object",
+      "properties": {
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventType"
+          },
+          "title": "filter by event types"
+        },
+        "success": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "filter by success status"
+        },
+        "deliveryTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "filter by delivery time range"
+        }
+      },
+      "title": "Filter defines advanced filtering options",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListWebhookDeliveriesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "deliveries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1WebhookDelivery"
+          },
+          "description": "deliveries is the list of matching webhook event deliveries."
+        }
+      },
+      "title": "ListWebhookEventDeliveriesResponse",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "ListWebhookDeliveriesResponse"
+      }
+    },
+    "v1ListWebhooksRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListWebhooksRequestFilter",
+          "x-nullable": true,
+          "title": "filter options for webhooks"
+        }
+      },
+      "title": "ListWebhooksRequest",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "ListWebhooksRequest"
+      }
+    },
+    "v1ListWebhooksRequestFilter": {
+      "type": "object",
+      "properties": {
+        "isActive": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "filter by active status"
+        },
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventType"
+          },
+          "title": "filter by event types"
+        },
+        "createdTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "filter by created time"
+        },
+        "updatedTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "filter by updated time"
+        }
+      },
+      "title": "Filter",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListWebhooksResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "webhooks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Webhook"
+          },
+          "description": "webhooks is the list of matching webhook configurations."
+        }
+      },
+      "title": "ListWebhooksResponse",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "ListWebhooksResponse"
+      }
+    },
+    "v1Organization": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "string, Unique identifier for the organization.\nFormat: \"org_\" followed by random characters\nExample: \"org_1234567890abcdef\""
+        },
+        "type": {
+          "$ref": "#/definitions/v1OrganizationType",
+          "description": "enum(Type), Organization's service tier.\nDetermines feature availability and API capabilities."
+        }
+      },
+      "description": "Represents a MoeGo organization entity. Organizations are the top-level grouping\nfor resources and determine available features and capabilities.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/auth/apikey/v1/apikeypb"
+        },
+        "type": "Organization"
+      }
+    },
+    "v1OrganizationType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "BUSINESS",
+        "COMPANY",
+        "ENTERPRISE"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: Reserved value. Do not use.\n - BUSINESS: Single-location business with standard features.\nSuitable for individual pet service providers.\n - COMPANY: Multi-location business with advanced features.\nIncludes location management and roll-up reporting.\n - ENTERPRISE: Enterprise organization with full platform access.\nIncludes custom integrations and priority support.",
+      "title": "Possible values are `business`, `company`, or `enterprise`.\nThe type determines available features and API capabilities:\n* `business` - Basic features for single-location businesses\n* `company` - Advanced features for multi-location businesses\n* `enterprise` - Full platform access with custom integrations"
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Webhook": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier of the webhook."
+        },
+        "organizations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Organization"
+          },
+          "description": "List of organizations the webhook is subscribed to.\nIf empty, the webhook is subscribed to all organizations."
+        },
+        "eventTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1EventType"
+          },
+          "title": "List of event types the webhook is subscribed to.\nIf it is empty, no events will be subscribed to"
+        },
+        "endpointUrl": {
+          "type": "string",
+          "description": "URL to receive webhook payloads."
+        },
+        "secretToken": {
+          "type": "string",
+          "description": "Optional secret token used to sign payloads (e.g., HMAC)."
+        },
+        "contentType": {
+          "$ref": "#/definitions/WebhookContentType",
+          "title": "Content-Type header used when delivering payloads.\nDefault: CONTENT_TYPE_JSON"
+        },
+        "isActive": {
+          "type": "boolean",
+          "description": "Whether the webhook is currently active."
+        },
+        "verifySsl": {
+          "type": "boolean",
+          "title": "Whether to verify SSL certificates when delivering payloads.\nDefault: true (recommended for security)"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/WebhookHeaderValues"
+          },
+          "description": "Custom HTTP headers to include when delivering payloads."
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the webhook was created."
+        },
+        "updatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the webhook was last updated."
+        }
+      },
+      "description": "Webhook represents a webhook configuration for event notifications.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "Webhook"
+      }
+    },
+    "v1WebhookDelivery": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID for this delivery attempt."
+        },
+        "webhookId": {
+          "type": "string",
+          "description": "Reference to the webhook that triggered this delivery."
+        },
+        "eventType": {
+          "$ref": "#/definitions/v1EventType",
+          "description": "Type of the event being delivered."
+        },
+        "eventId": {
+          "type": "string",
+          "description": "Unique message/event ID from the message queue or event source."
+        },
+        "requestUrl": {
+          "type": "string",
+          "description": "URL where the event was delivered."
+        },
+        "deliveredTo": {
+          "type": "string",
+          "description": "Actual destination the request was delivered to (e.g., IP, domain, or URL)."
+        },
+        "requestHeaders": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/WebhookHeaderValues"
+          },
+          "description": "HTTP headers sent with the delivery request."
+        },
+        "requestBody": {
+          "type": "string",
+          "format": "byte",
+          "description": "Payload of the event delivery request."
+        },
+        "responseStatus": {
+          "type": "integer",
+          "format": "int32",
+          "description": "HTTP status code returned by the endpoint."
+        },
+        "responseHeaders": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/WebhookHeaderValues"
+          },
+          "description": "HTTP headers received in the response."
+        },
+        "responseBody": {
+          "type": "string",
+          "format": "byte",
+          "description": "Body of the response, may be truncated."
+        },
+        "deliveredAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the event was delivered."
+        },
+        "durationMs": {
+          "type": "string",
+          "format": "int64",
+          "description": "Time taken to complete the delivery in milliseconds."
+        },
+        "success": {
+          "type": "boolean",
+          "description": "Whether the delivery was successful (HTTP 2xx)."
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message in case of failure."
+        },
+        "retryCount": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of retries before final delivery outcome."
+        },
+        "requestFormat": {
+          "$ref": "#/definitions/WebhookContentType",
+          "title": "Format of the request body"
+        },
+        "responseFormat": {
+          "$ref": "#/definitions/WebhookContentType",
+          "title": "Format of the response body"
+        }
+      },
+      "description": "WebhookDelivery represents a log entry for a webhook event delivery attempt.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb"
+        },
+        "type": "WebhookDelivery"
+      }
+    }
+  }
+}

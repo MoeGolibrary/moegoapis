@@ -1,0 +1,345 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/business/v1/business_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.business.v1.BusinessService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/businesses/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific business location.",
+        "description": "Returns the complete business profile including contact information,\naddress, and social media links. This information is used for customer\ncommunications and service delivery.\n\nPossible errors:\n- NOT_FOUND if the business ID doesn't exist\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "BusinessService_GetBusiness",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Business"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the business to retrieve\nRequired. Must be a valid business ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.business.v1.BusinessService"
+        ]
+      }
+    },
+    "/v1/businesses:list": {
+      "post": {
+        "summary": "Lists business locations based on specified criteria.",
+        "description": "Results are paginated and filtered by company ID. This method is typically\nused for business management and customer-facing location directories.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "BusinessService_ListBusiness",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListBusinessResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "ListBusinessRequest encapsulates parameters for retrieving business locations.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListBusinessRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.business.v1.BusinessService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeLatLng": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The latitude in degrees. It must be in the range [-90.0, +90.0]."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The longitude in degrees. It must be in the range [-180.0, +180.0]."
+        }
+      },
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a\npair of doubles to represent degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/latlng"
+        },
+        "type": "LatLng"
+      }
+    },
+    "v1Address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, Unique identifier for the address."
+        },
+        "address1": {
+          "type": "string",
+          "title": "string, Street address including house number and street name.\nExample: \"123 Main Street\", \"Unit 4B, 567 Park Avenue\""
+        },
+        "address2": {
+          "type": "string",
+          "title": "string, Additional address details like apartment, suite, or unit number.\nExample: \"Floor 3\", \"Building B\""
+        },
+        "city": {
+          "type": "string",
+          "title": "string, City or locality name.\nExample: \"San Francisco\", \"New York City\""
+        },
+        "state": {
+          "type": "string",
+          "title": "string, State, province, or region.\nExample: \"CA\", \"NY\""
+        },
+        "postalCode": {
+          "type": "string",
+          "title": "string, Postal or ZIP code.\nExample: \"94105\", \"10001\""
+        },
+        "country": {
+          "type": "string",
+          "title": "string, Country name or ISO country code.\nExample: \"US\", \"United States\""
+        },
+        "coordinate": {
+          "$ref": "#/definitions/typeLatLng",
+          "description": "object(LatLng), Latitude and Longitude coordinate for mapping.\nLatitude Range: -90 to 90. Longitude Range: -180 to 180."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AddressType",
+          "title": "enum(Type), represents the importance of the address"
+        }
+      },
+      "description": "The address object represents a physical location used throughout the system.\nIt provides a standardized way to store and validate address information for\nbusinesses, customers, and service locations. The address format follows\ncommon postal standards and includes geocoding information for mapping.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Address"
+      }
+    },
+    "v1AddressType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "PRIMARY",
+        "SECONDARY"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
+      "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
+    },
+    "v1Business": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the business location\nFormat: \"bus_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the business location\nUsed in customer communications and UI"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "URL to the business location's logo or image\nOptional. Must be a valid HTTPS URL"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Primary contact phone number\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "businessPhone": {
+          "type": "string",
+          "title": "Public business phone number\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Business contact email address\nFormat: Must be a valid email address"
+        },
+        "address": {
+          "$ref": "#/definitions/v1Address",
+          "title": "Physical location details\nRequired for in-person services"
+        },
+        "website": {
+          "type": "string",
+          "title": "Business website URL\nOptional. Must be a valid HTTPS URL"
+        },
+        "facebook": {
+          "type": "string",
+          "title": "Facebook page URL\nOptional. Must be a valid Facebook page URL"
+        },
+        "instagram": {
+          "type": "string",
+          "title": "Instagram profile URL\nOptional. Must be a valid Instagram profile URL"
+        },
+        "yelp": {
+          "type": "string",
+          "title": "Yelp business page URL\nOptional. Must be a valid Yelp business URL"
+        },
+        "google": {
+          "type": "string",
+          "title": "Google Business Profile URL\nOptional. Must be a valid Google Business URL"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the parent company\nRequired. Must be a valid company ID"
+        }
+      },
+      "description": "Business represents a physical or virtual location where services are provided.\nEach business location operates under a parent company and maintains its own\nstaff, services, and operational settings. Business profiles include contact\ninformation and social media presence for customer engagement.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/businesspb"
+        },
+        "type": "Business"
+      }
+    },
+    "v1ListBusinessRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for handling large result sets\nRequired to manage data volume efficiently"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list business locations for\nRequired to ensure businesses are accessed within proper context"
+        }
+      },
+      "description": "ListBusinessRequest encapsulates parameters for retrieving business locations.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/businesspb"
+        },
+        "type": "ListBusinessRequest"
+      }
+    },
+    "v1ListBusinessResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "businesses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Business"
+          },
+          "title": "List of business locations matching the request criteria\nMay be empty if no businesses match"
+        }
+      },
+      "description": "ListBusinessResponse contains the paginated list of business locations.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/businesspb"
+        },
+        "type": "ListBusinessResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}

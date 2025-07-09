@@ -1,0 +1,295 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/staff/v1/staff_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.staff.v1.StaffService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/staffs/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific staff member.",
+        "description": "Returns the complete staff profile including role, permissions, and work locations.\nThis information is used for authentication, authorization, and service assignment.\n\nReturns NOT_FOUND if the staff ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "StaffService_GetStaff",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Staff"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the staff member to retrieve\nRequired. Format: \"stf_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.staff.v1.StaffService"
+        ]
+      }
+    },
+    "/v1/staffs:list": {
+      "post": {
+        "summary": "Lists staff members matching the specified criteria.",
+        "description": "Results are paginated and filtered by company ID. This method is typically used\nfor staff management, scheduling, and reporting purposes.\n\nReturns an empty list if no staff members match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "StaffService_ListStaffs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListStaffsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing staff members.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListStaffsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.staff.v1.StaffService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "v1ListStaffsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list staff members for\nRequired. Must be a valid company ID"
+        }
+      },
+      "description": "Request message for listing staff members.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/staff/v1/staffpb"
+        },
+        "type": "ListStaffsRequest"
+      }
+    },
+    "v1ListStaffsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "staffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Staff"
+          },
+          "title": "List of staff members matching the request criteria\nMay be empty if no staff members match"
+        }
+      },
+      "description": "Response message for listing staff members.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/staff/v1/staffpb"
+        },
+        "type": "ListStaffsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Permission": {
+      "type": "string",
+      "enum": [
+        "PERMISSION_UNSPECIFIED"
+      ],
+      "default": "PERMISSION_UNSPECIFIED",
+      "description": "Permission represents a specific action that can be performed in the system.\nPermissions are grouped into roles and assigned to staff members.\n\n - PERMISSION_UNSPECIFIED: Unknown or invalid permission\nShould not be used when assigning permissions"
+    },
+    "v1Role": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the role\nFormat: \"rol_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the role\nExample: \"Administrator\", \"Groomer\", \"Receptionist\""
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Permission"
+          },
+          "title": "List of permissions granted to this role\nDetermines what actions can be performed"
+        }
+      },
+      "description": "Role defines a set of permissions and capabilities assigned to staff members.\nRoles help manage access control and determine what actions staff can perform.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/staff/v1/staffpb"
+        },
+        "type": "Role"
+      }
+    },
+    "v1Staff": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the staff member\nFormat: \"stf_\" followed by random characters"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Staff member's first name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Staff member's last name"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "URL to the staff member's profile picture\nOptional. Must be a valid HTTPS URL"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Staff member's phone number\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Staff member's email address\nFormat: Must be a valid email address"
+        },
+        "role": {
+          "$ref": "#/definitions/v1Role",
+          "title": "Staff member's role and associated permissions\nDetermines what actions they can perform in the system"
+        },
+        "hiredTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this staff member was hired\nUsed for reporting and service history"
+        },
+        "workingBusinessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of business locations where this staff member works\nStaff can only be assigned to appointments at these locations"
+        },
+        "mobileVanId": {
+          "type": "string",
+          "title": "ID of the mobile van assigned to this staff member\nOnly applicable for mobile service providers"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company this staff member belongs to\nUsed for access control and data segregation"
+        }
+      },
+      "description": "Staff represents an employee or contractor who provides services in your business.\nStaff members can be assigned to appointments, manage customer relationships,\nand perform various administrative tasks based on their role and permissions.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/staff/v1/staffpb"
+        },
+        "type": "Staff"
+      }
+    }
+  }
+}

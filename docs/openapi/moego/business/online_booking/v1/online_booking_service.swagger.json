@@ -1,0 +1,1112 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/online_booking/v1/online_booking_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.online_booking.v1.OnlineBookingService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/abandoned_bookings/{id}": {
+      "get": {
+        "summary": "Retrieves a single abandoned booking by ID.",
+        "description": "Returns detailed information about the abandoned booking including customer info,\nstep where it was abandoned, and associated lead type. Returns NOT_FOUND if not found.",
+        "operationId": "OnlineBookingService_GetAbandonedBooking",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AbandonedBooking"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "The unique identifier of the abandoned booking to retrieve.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.online_booking.v1.OnlineBookingService"
+        ]
+      }
+    },
+    "/v1/abandoned_bookings:list": {
+      "post": {
+        "summary": "Lists abandoned bookings matching specified criteria.",
+        "description": "Returns a paginated list of abandoned bookings filtered by abandon time,\nstatus, step, or lead type.",
+        "operationId": "OnlineBookingService_ListAbandonedBookings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAbandonedBookingsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request to list abandoned bookings.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListAbandonedBookingsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.online_booking.v1.OnlineBookingService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AbandonedBookingLeadType": {
+      "type": "string",
+      "enum": [
+        "LEAD_TYPE_UNSPECIFIED",
+        "NEW_VISITOR",
+        "EXISTING_CLIENT"
+      ],
+      "default": "LEAD_TYPE_UNSPECIFIED",
+      "description": "LeadType indicates how the customer was acquired or originated from.\n\n - LEAD_TYPE_UNSPECIFIED: Default value. This value is unused.\n - NEW_VISITOR: New visitor to the system.\n - EXISTING_CLIENT: Existing client returning for another service."
+    },
+    "AbandonedBookingPreferredFrequencyType": {
+      "type": "string",
+      "enum": [
+        "PREFERRED_FREQUENCY_TYPE_UNSPECIFIED",
+        "PREFERRED_FREQUENCY_TYPE_DAY",
+        "PREFERRED_FREQUENCY_TYPE_WEEK",
+        "PREFERRED_FREQUENCY_TYPE_MONTH"
+      ],
+      "default": "PREFERRED_FREQUENCY_TYPE_UNSPECIFIED",
+      "description": "Frequency type of the abandonment process.\n\n - PREFERRED_FREQUENCY_TYPE_UNSPECIFIED: Default value. This value is unused.\n - PREFERRED_FREQUENCY_TYPE_DAY: Daily\n - PREFERRED_FREQUENCY_TYPE_WEEK: Weekly\n - PREFERRED_FREQUENCY_TYPE_MONTH: Monthly"
+    },
+    "AbandonedBookingQuestionAnswer": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Unique identifier for the question-answer pair."
+        },
+        "question": {
+          "type": "string",
+          "description": "The question shown to the user."
+        },
+        "answer": {
+          "type": "string",
+          "description": "The answer provided by the user."
+        }
+      },
+      "description": "QuestionAnswer represents a key-value pair capturing user input during the booking flow.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "QuestionAnswer"
+      }
+    },
+    "AbandonedBookingRecoverType": {
+      "type": "string",
+      "enum": [
+        "ABANDON_RECOVER_TYPE_UNSPECIFIED",
+        "RECOVERED_BY_SCHEDULE_APPOINTMENT",
+        "RECOVERED_BY_EMAIL",
+        "RECOVERED_BY_MESSAGE"
+      ],
+      "default": "ABANDON_RECOVER_TYPE_UNSPECIFIED",
+      "description": "RecoverType indicates how an abandoned booking was recovered.\n\n - ABANDON_RECOVER_TYPE_UNSPECIFIED: Default value. This value is unused.\n - RECOVERED_BY_SCHEDULE_APPOINTMENT: Booking was recovered by scheduling an appointment.\n - RECOVERED_BY_EMAIL: Booking was recovered through email communication.\n - RECOVERED_BY_MESSAGE: Booking was recovered through messaging (e.g., SMS)."
+    },
+    "AbandonedBookingStep": {
+      "type": "string",
+      "enum": [
+        "ABANDON_STEP_UNSPECIFIED",
+        "WELCOME_PAGE",
+        "BASIC_INFO",
+        "SELECT_CARE_TYPE",
+        "SELECT_ADDRESS",
+        "SELECT_PET",
+        "SELECT_DATE",
+        "SELECT_SERVICE",
+        "SELECT_GROOMER",
+        "SELECT_TIME",
+        "ADDITIONAL_PET_INFO",
+        "PERSONAL_INFO",
+        "CARD_ON_FILE",
+        "PREPAY",
+        "PRE_AUTH",
+        "SUBMIT_APPT"
+      ],
+      "default": "ABANDON_STEP_UNSPECIFIED",
+      "description": "Step represents the stage in the booking process where the abandonment occurred.\n\n - ABANDON_STEP_UNSPECIFIED: Default value. This value is unused.\n - WELCOME_PAGE: Customer visited the welcome page.\n - BASIC_INFO: Customer filled out basic info.\n - SELECT_CARE_TYPE: Customer selected care type.\n - SELECT_ADDRESS: Customer selected address.\n - SELECT_PET: Customer selected pet.\n - SELECT_DATE: Customer selected date.\n - SELECT_SERVICE: Customer selected service.\n - SELECT_GROOMER: Customer selected groomer.\n - SELECT_TIME: Customer selected time.\n - ADDITIONAL_PET_INFO: Customer provided additional pet info.\n - PERSONAL_INFO: Customer entered personal info.\n - CARD_ON_FILE: Customer provided card on file.\n - PREPAY: Customer initiated prepay.\n - PRE_AUTH: Customer initiated pre-auth.\n - SUBMIT_APPT: Customer submitted the appointment."
+    },
+    "PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Code"
+      }
+    },
+    "PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
+    "PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
+    "PetVaccination": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the vaccination\nExample: \"Rabies\", \"DHPP\", \"Bordetella\""
+        },
+        "expiredAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this vaccination expires\nStaff are notified before expiration"
+        }
+      },
+      "title": "Vaccination record for the pet\nUsed to ensure compliance with service requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vaccination"
+      }
+    },
+    "PetVet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the veterinary practice or doctor"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "title": "Contact number for the veterinarian\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "address": {
+          "type": "string",
+          "title": "Physical location of the veterinary practice"
+        }
+      },
+      "title": "Veterinary care provider information\nUsed for emergencies and health verifications",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vet"
+      }
+    },
+    "ServiceItemType": {
+      "type": "string",
+      "enum": [
+        "SERVICE_ITEM_TYPE_UNSPECIFIED",
+        "GROOMING",
+        "BOARDING",
+        "DAYCARE",
+        "EVALUATION",
+        "TRAINING"
+      ],
+      "default": "SERVICE_ITEM_TYPE_UNSPECIFIED",
+      "description": "ItemType categorizes the primary type of service being offered.\nThis helps organize services in the system and determines applicable business rules.\n\n - SERVICE_ITEM_TYPE_UNSPECIFIED: Unknown or unspecified service type\nShould not be used when creating new services\n - GROOMING: Pet grooming services\nIncludes bathing, haircuts, nail trimming, etc.\n - BOARDING: Pet boarding services\nOvernight or extended stay care\n - DAYCARE: Daytime pet care services\nSupervised play and care during business hours\n - EVALUATION: Pet evaluation services\nBehavior assessment and service compatibility check\n - TRAINING: Pet training services\nIndividual or group training sessions"
+    },
+    "WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "typeLatLng": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The latitude in degrees. It must be in the range [-90.0, +90.0]."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The longitude in degrees. It must be in the range [-180.0, +180.0]."
+        }
+      },
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a\npair of doubles to represent degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/latlng"
+        },
+        "type": "LatLng"
+      }
+    },
+    "typeMoney": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "The three-letter currency code defined in ISO 4217."
+        },
+        "units": {
+          "type": "string",
+          "format": "int64",
+          "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000."
+        }
+      },
+      "description": "Represents an amount of money with its currency type.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/money"
+        },
+        "type": "Money"
+      }
+    },
+    "v1AbandonedBooking": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this abandoned booking.\nFormat: \"abk_\" followed by random characters."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "ID of the business associated with this booking."
+        },
+        "customer": {
+          "$ref": "#/definitions/v1AbandonedBookingCustomer",
+          "description": "Customer details involved in this booking."
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AbandonedBookingPet"
+          },
+          "description": "List of pets and related services involved in this booking."
+        },
+        "address": {
+          "$ref": "#/definitions/v1Address",
+          "description": "Service location details.\nRequired for mobile services, optional for in-store bookings."
+        },
+        "abandonStep": {
+          "$ref": "#/definitions/AbandonedBookingStep",
+          "description": "The last step reached before the booking was abandoned."
+        },
+        "abandonTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the booking was abandoned."
+        },
+        "abandonStatus": {
+          "$ref": "#/definitions/v1AbandonedBookingStatus",
+          "description": "Current status of the abandonment process."
+        },
+        "lastTextedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the customer was last texted about this booking."
+        },
+        "lastEmailedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the customer was last emailed about this booking."
+        },
+        "recoveryType": {
+          "$ref": "#/definitions/AbandonedBookingRecoverType",
+          "description": "Method used to recover this abandoned booking."
+        },
+        "recoveryTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the booking was recovered."
+        },
+        "staffId": {
+          "type": "string",
+          "description": "ID of the staff member who handled the recovery."
+        },
+        "appointmentId": {
+          "type": "string",
+          "description": "ID of the appointment created as a result of recovery."
+        },
+        "appointmentTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Scheduled appointment time if one was set."
+        },
+        "leadType": {
+          "$ref": "#/definitions/AbandonedBookingLeadType",
+          "description": "How the customer was acquired."
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this record was created."
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when this record was last updated."
+        },
+        "additionalNote": {
+          "type": "string",
+          "description": "Additional notes added by staff or system."
+        },
+        "careType": {
+          "$ref": "#/definitions/ServiceItemType",
+          "description": "Type of service selected by the customer."
+        }
+      },
+      "description": "AbandonedBooking represents a booking that was not completed by the customer.\nThis message captures information about the customer, selected services,\nabandonment step, and recovery status for analytics and follow-up actions.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "AbandonedBooking"
+      }
+    },
+    "v1AbandonedBookingCustomer": {
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "type": "string",
+          "description": "The unique identifier for the customer."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the customer."
+        },
+        "firstName": {
+          "type": "string",
+          "title": "firstName"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "lastName"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "title": "phoneNumber"
+        },
+        "referer": {
+          "type": "string",
+          "description": "The source that referred this customer to the system."
+        },
+        "referralSource": {
+          "type": "string",
+          "description": "The source that referred this customer to the system."
+        },
+        "preferredGroomerId": {
+          "type": "string",
+          "description": "ID of the staff member preferred by the customer for grooming services."
+        },
+        "preferredFrequencyDay": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Preferred frequency in days for recurring visits."
+        },
+        "preferredFrequencyType": {
+          "$ref": "#/definitions/AbandonedBookingPreferredFrequencyType",
+          "description": "Type of frequency (e.g., daily, weekly)."
+        },
+        "preferredDays": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "Preferred day(s) of the week for service."
+        },
+        "preferredTime": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": "Preferred time(s) of the day for service."
+        },
+        "questionAnswerList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/AbandonedBookingQuestionAnswer"
+          },
+          "description": "List of question-answer pairs capturing user input during the booking process."
+        }
+      },
+      "description": "AbandonedBookingCustomer contains information about the customer associated with an abandoned booking.\nIt includes both core customer data and additional booking-specific preferences and metadata.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "AbandonedBookingCustomer"
+      }
+    },
+    "v1AbandonedBookingPet": {
+      "type": "object",
+      "properties": {
+        "petServiceDetail": {
+          "$ref": "#/definitions/v1PetServiceDetail",
+          "description": "Pet and service detail information used in the booking flow."
+        },
+        "emergencyContactName": {
+          "type": "string",
+          "description": "Name of the person to contact in case of emergency."
+        },
+        "emergencyContactPhone": {
+          "type": "string",
+          "description": "Phone number of the emergency contact."
+        },
+        "healthIssues": {
+          "type": "string",
+          "description": "Known health issues or conditions of the pet."
+        },
+        "questionAnswerList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/AbandonedBookingQuestionAnswer"
+          },
+          "description": "List of question-answer pairs specific to this pet."
+        }
+      },
+      "description": "AbandonedBookingPet represents a pet involved in an abandoned booking.\nIt captures service-related details along with emergency contact and health information.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "AbandonedBookingPet"
+      }
+    },
+    "v1AbandonedBookingStatus": {
+      "type": "string",
+      "enum": [
+        "ABANDON_STATUS_UNSPECIFIED",
+        "ABANDONED",
+        "CONTACTED",
+        "RECOVERED"
+      ],
+      "default": "ABANDON_STATUS_UNSPECIFIED",
+      "description": "Status of the abandonment process.\n\n - ABANDON_STATUS_UNSPECIFIED: Default value. This value is unused.\n - ABANDONED: The booking was abandoned before completion.\n - CONTACTED: The customer has been contacted regarding this abandoned booking.\n - RECOVERED: The booking was successfully recovered."
+    },
+    "v1Address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, Unique identifier for the address."
+        },
+        "address1": {
+          "type": "string",
+          "title": "string, Street address including house number and street name.\nExample: \"123 Main Street\", \"Unit 4B, 567 Park Avenue\""
+        },
+        "address2": {
+          "type": "string",
+          "title": "string, Additional address details like apartment, suite, or unit number.\nExample: \"Floor 3\", \"Building B\""
+        },
+        "city": {
+          "type": "string",
+          "title": "string, City or locality name.\nExample: \"San Francisco\", \"New York City\""
+        },
+        "state": {
+          "type": "string",
+          "title": "string, State, province, or region.\nExample: \"CA\", \"NY\""
+        },
+        "postalCode": {
+          "type": "string",
+          "title": "string, Postal or ZIP code.\nExample: \"94105\", \"10001\""
+        },
+        "country": {
+          "type": "string",
+          "title": "string, Country name or ISO country code.\nExample: \"US\", \"United States\""
+        },
+        "coordinate": {
+          "$ref": "#/definitions/typeLatLng",
+          "description": "object(LatLng), Latitude and Longitude coordinate for mapping.\nLatitude Range: -90 to 90. Longitude Range: -180 to 180."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AddressType",
+          "title": "enum(Type), represents the importance of the address"
+        }
+      },
+      "description": "The address object represents a physical location used throughout the system.\nIt provides a standardized way to store and validate address information for\nbusinesses, customers, and service locations. The address format follows\ncommon postal standards and includes geocoding information for mapping.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Address"
+      }
+    },
+    "v1AddressType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "PRIMARY",
+        "SECONDARY"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
+      "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
+    },
+    "v1ListAbandonedBookingsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "The company identifier for multi-location businesses.\nRequired for company-wide listing."
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of business location IDs to include."
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListAbandonedBookingsRequestFilter",
+          "description": "Optional filters to narrow the results."
+        }
+      },
+      "description": "Request to list abandoned bookings.",
+      "required": [
+        "pagination",
+        "companyId",
+        "businessIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "ListAbandonedBookingsRequest"
+      }
+    },
+    "v1ListAbandonedBookingsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "abandonTime": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "Filter by the abandon time range of the booking.\nBy default, it is set to the most recent week. The end and start times cannot exceed one month."
+        },
+        "leadTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AbandonedBookingLeadType"
+          },
+          "title": "Filter by the lead types of the abandoned booking.\nExample values: [\"LEAD_TYPE_UNSPECIFIED\", \"NEW_VISITOR\", \"EXISTING_CLIENT\"]"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AbandonedBookingStep"
+          },
+          "title": "Filter by the steps at which the booking was abandoned.\nExample values: [\"WELCOME_PAGE\", \"BASIC_INFO\", \"SELECT_CARE_TYPE\", ...]"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AbandonedBookingStatus"
+          },
+          "title": "Filter by the statuses of the abandoned bookings.\nExample values: [\"ABANDONED\", \"CONTACTED\", \"RECOVERED\"]"
+        }
+      },
+      "description": "Filter parameters for the abandoned booking list.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListAbandonedBookingsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "description": "Token for retrieving the next page of results.\nEmpty if there are no more results."
+        },
+        "bookings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AbandonedBooking"
+          },
+          "description": "List of abandoned bookings matching the request criteria."
+        }
+      },
+      "description": "Response for listing abandoned bookings.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "ListAbandonedBookingsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Pet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the pet\nFormat: \"pet_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Pet's given name"
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "title": "Pet's date of birth\nUsed for age-appropriate service modifications"
+        },
+        "status": {
+          "$ref": "#/definitions/v1PetStatus",
+          "title": "Current status of the pet"
+        },
+        "type": {
+          "$ref": "#/definitions/v1PetType",
+          "title": "Species of the pet\nRequired. Determines available services"
+        },
+        "breed": {
+          "type": "string",
+          "title": "Specific breed within the pet type\nRequired. Helps determine grooming requirements"
+        },
+        "gender": {
+          "$ref": "#/definitions/PetGender",
+          "title": "Pet's gender\nUsed for service assignments"
+        },
+        "weight": {
+          "$ref": "#/definitions/v1Weight",
+          "title": "Pet's current weight\nUsed for equipment selection and health monitoring"
+        },
+        "fixed": {
+          "type": "string",
+          "title": "Spay/neuter status\nValues: \"yes\", \"no\", \"unknown\""
+        },
+        "coat": {
+          "type": "string",
+          "title": "Description of the pet's coat\nExample: \"long double coat\", \"short hair\""
+        },
+        "behavior": {
+          "type": "string",
+          "title": "General temperament and behavior notes\nExample: \"friendly\", \"nervous with new people\""
+        },
+        "petCodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetCode"
+          },
+          "title": "Special handling codes for this pet\nDisplayed prominently during service"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "Staff observations and special instructions"
+        },
+        "vaccinations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetVaccination"
+          },
+          "title": "Current vaccination records\nRequired for certain services"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the pet's owner\nSystem-managed, do not set manually",
+          "readOnly": true
+        },
+        "vet": {
+          "$ref": "#/definitions/PetVet",
+          "title": "Primary veterinary care provider\nUsed for emergencies and health verifications"
+        },
+        "evaluationStatus": {
+          "$ref": "#/definitions/PetEvaluationStatus",
+          "title": "Current evaluation status for services\nDetermines service availability"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was created."
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was last modified."
+        },
+        "photo": {
+          "type": "string",
+          "description": "photo url of pet."
+        }
+      },
+      "description": "Pet represents a customer's pet that receives services at your business.\nEach pet has its own profile containing essential information for providing\nappropriate care, including health records, behavior notes, and service preferences.",
+      "required": [
+        "name",
+        "type",
+        "breed"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Pet"
+      }
+    },
+    "v1PetNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this note"
+        },
+        "content": {
+          "type": "string",
+          "title": "The content of the note"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this note"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this note was last modified"
+        }
+      },
+      "title": "Note contains observations about the pet's behavior,\npreferences, or special requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Note"
+      }
+    },
+    "v1PetServiceDetail": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet",
+          "description": "object(Pet), The pet receiving the services.\nContains pet's basic information, health records, and preferences."
+        },
+        "serviceDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ServiceDetail"
+          },
+          "description": "array(ServiceDetail), List of services scheduled for this pet.\nEach service includes timing, pricing, and staff assignments."
+        }
+      },
+      "description": "The pet service detail object represents the services booked for a specific pet in an appointment.\nEach appointment can include multiple pets, and each pet can receive multiple services.\nThis object links pets with their scheduled services and maintains the service-specific details\nsuch as pricing, duration, and assigned staff.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "PetServiceDetail"
+      }
+    },
+    "v1PetStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ALIVE",
+        "PASSED_AWAY"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status indicates whether the pet is currently receiving services.\nThis affects appointment scheduling and service availability.\n\n - STATUS_UNSPECIFIED: Unknown or unspecified status\n - ALIVE: Pet is currently receiving services\nDefault status for new pets\n - PASSED_AWAY: Pet is no longer receiving services\nHistorical records are maintained"
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    },
+    "v1ServiceDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "string, Unique identifier for the service.\nFormat: \"svc_\" followed by random characters\nExample: \"svc_1234567890abcdef\""
+        },
+        "name": {
+          "type": "string",
+          "title": "string, Display name of the service.\nExample: \"Premium Grooming\", \"Basic Wash\""
+        },
+        "serviceItemType": {
+          "$ref": "#/definitions/ServiceItemType",
+          "description": "enum(ItemType), Category of service item.\nReferences the standardized service types defined in settings."
+        },
+        "category": {
+          "type": "string",
+          "title": "string, Service category for grouping and filtering.\nExample: \"Grooming\", \"Boarding\", \"Daycare\""
+        },
+        "price": {
+          "$ref": "#/definitions/typeMoney",
+          "description": "object(Money), Price for this service instance.\nMay differ from standard price due to customizations or special offers."
+        },
+        "duration": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "object(Interval), Scheduled time window for the service.\nIncludes both start and end time.\nUsed for staff scheduling and customer notifications."
+        },
+        "staffIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "array(string), IDs of staff members assigned to this service.\nMultiple staff may be assigned for complex services.\nFormat: Each ID starts with \"staff_\""
+        },
+        "serviceType": {
+          "$ref": "#/definitions/v1ServiceType",
+          "description": "enum(Type), The type of service being provided.\nDetermines service flow and required resources."
+        },
+        "serviceTime": {
+          "type": "integer",
+          "format": "int32",
+          "description": "integer, Expected duration of the service in minutes.\nUsed for scheduling and resource allocation."
+        },
+        "petServiceDetailId": {
+          "type": "string",
+          "description": "string, Unique identifier for this specific pet's service booking.\nLinks this service to a specific pet in a multi-pet appointment.\nFormat: \"psd_\" followed by random characters\nIt will be changed when pet service detail is updated or deleted."
+        }
+      },
+      "description": "The service detail object represents a specific service booked for a pet.\nIt contains all the information needed to perform the service, including\ntiming, pricing, staff assignments, and service-specific parameters.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "ServiceDetail"
+      }
+    },
+    "v1ServiceType": {
+      "type": "string",
+      "enum": [
+        "SERVICE_TYPE_UNSPECIFIED",
+        "SERVICE",
+        "ADDON"
+      ],
+      "default": "SERVICE_TYPE_UNSPECIFIED",
+      "description": "Type indicates whether this is a standalone service or an add-on\nthat can be combined with other services.\n\n - SERVICE_TYPE_UNSPECIFIED: Unknown or unspecified type\nShould not be used when creating new services\n - SERVICE: Primary standalone service\nCan be booked independently\n - ADDON: Additional service that complements primary services\nMust be booked with a primary service"
+    },
+    "v1Weight": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": "uint32, The numeric value of the weight."
+        },
+        "unit": {
+          "$ref": "#/definitions/WeightUnit",
+          "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
+        }
+      },
+      "description": "The weight object provides a standardized way to represent and convert\nweight measurements throughout the system. It supports multiple units\nand ensures consistent weight tracking for pets, products, and other\nresources that require weight measurements.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Weight"
+      }
+    }
+  }
+}

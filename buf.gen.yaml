@@ -5,3 +5,10 @@ plugins:
   - remote: buf.build/grpc/go
     out: out/go
     opt: require_unimplemented_servers=true
+  - remote: buf.build/grpc-ecosystem/openapiv2:v2.27.1
+    out: out/openapi
+    opt:
+      - version=true
+      - include_package_in_tags=true
+      - proto3_optional_nullable=true
+      - generate_x_go_type=true

@@ -98,5 +98,4 @@ For more details:
   webhook system.
 - [webhook documentation](docs/webhook.md): API reference for webhooks.
 - [event documentation](docs/event.md): API reference for events.
-- [proto file](moego/business/webhook/v1/webhook_service.proto): Protobuf definition for webhooks.
 

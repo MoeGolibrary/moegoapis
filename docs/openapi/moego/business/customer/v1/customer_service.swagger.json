@@ -1,0 +1,1133 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/customer/v1/customer_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.customer.v1.CustomerService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/customers": {
+      "post": {
+        "summary": "Creates a new customer in the system.",
+        "description": "This method validates and stores customer information, including basic details,\npreferences, and any initial tags or notes. A unique customer ID is generated\nand returned in the response.\n\nReturns the created Customer object with all fields populated.\nThrows INVALID_ARGUMENT if required fields are missing or invalid.",
+        "operationId": "CustomerService_CreateCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Customer"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for creating a new customer.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific customer.",
+        "description": "Returns all customer data including preferences, notes, tags, and appointment history.\nThrows NOT_FOUND if the customer ID doesn't exist.",
+        "operationId": "CustomerService_GetCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Customer"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer to retrieve\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      },
+      "put": {
+        "summary": "Updates an existing customer's information.",
+        "description": "Modifies the details of an existing customer, including basic information,\npreferences, and optionally updating associated tags or notes.\n\nReturns the updated Customer object with all fields populated.\nThrows NOT_FOUND if the customer ID doesn't exist.\nThrows INVALID_ARGUMENT if provided fields are invalid.",
+        "operationId": "CustomerService_UpdateCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Customer"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer to update\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerServiceUpdateCustomerBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}/cof/link": {
+      "get": {
+        "summary": "Generates a secure link for adding customer card-on-file information.",
+        "description": "The generated link is valid for 24 hours and can only be used once.\nThrows NOT_FOUND if the customer ID doesn't exist.",
+        "operationId": "CustomerService_GenCustomerCofLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GenCustomerCofLinkResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}/notes": {
+      "post": {
+        "summary": "Adds new notes to a customer's profile.",
+        "description": "Notes are timestamped and attributed to the staff member who created them.\nReturns the newly created notes with generated IDs.\nThrows NOT_FOUND if the customer ID doesn't exist.",
+        "operationId": "CustomerService_AppendCustomerNotes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppendCustomerNotesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerServiceAppendCustomerNotesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}/notes:list": {
+      "post": {
+        "summary": "Retrieves a paginated list of notes for a specific customer.",
+        "description": "Notes are returned in reverse chronological order (newest first).\nReturns an empty list if the customer has no notes.",
+        "operationId": "CustomerService_ListCustomerNotes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomerNotesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerServiceListCustomerNotesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}/tags": {
+      "post": {
+        "summary": "Adds new tags to a customer's profile.",
+        "description": "Tags help categorize customers and can be used for filtering and reporting.\nReturns the newly created tags with generated IDs.\nThrows NOT_FOUND if the customer ID doesn't exist.",
+        "operationId": "CustomerService_AppendCustomerTags",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppendCustomerTagsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerServiceAppendCustomerTagsBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers/{id}/tags:list": {
+      "post": {
+        "summary": "Retrieves all tags associated with a specific customer.",
+        "description": "Returns an empty list if the customer has no tags.\nThrows NOT_FOUND if the customer ID doesn't exist.",
+        "operationId": "CustomerService_ListCustomerTags",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomerTagsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CustomerServiceListCustomerTagsBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
+    "/v1/customers:list": {
+      "post": {
+        "summary": "Lists customers matching the specified criteria.",
+        "description": "Results are paginated and can be filtered by last update time.\nReturns an empty list if no customers match the criteria.",
+        "operationId": "CustomerService_ListCustomers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing customers.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CustomerPreference": {
+      "type": "object",
+      "properties": {
+        "receiveAutoMessage": {
+          "type": "boolean",
+          "title": "Whether the customer wants to receive automated SMS messages\nDefault: true"
+        },
+        "receiveAutoEmail": {
+          "type": "boolean",
+          "title": "Whether the customer wants to receive automated emails\nDefault: true"
+        },
+        "subscribeToMarketingEmails": {
+          "type": "boolean",
+          "title": "Whether the customer has opted in to marketing emails\nDefault: false"
+        },
+        "receiveAppointmentReminder": {
+          "type": "boolean",
+          "title": "Whether the customer wants appointment reminders\nDefault: true"
+        }
+      },
+      "description": "Preference stores a customer's communication and marketing preferences.\nThese settings determine how and when we can contact the customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Preference"
+      }
+    },
+    "CustomerReferralSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the source"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the source"
+        }
+      },
+      "description": "ReferralSource represents the source or channel through which a customer was acquired.\nThis helps track the origin of new customers and analyze marketing effectiveness.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ReferralSource"
+      }
+    },
+    "CustomerServiceAppendCustomerNotesBody": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "Notes to add to the customer's profile\nRequired. At least one note must be provided"
+        }
+      },
+      "description": "Request message for adding notes to a customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendCustomerNotesRequest"
+      }
+    },
+    "CustomerServiceAppendCustomerTagsBody": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "Tags to add to the customer's profile\nRequired. At least one tag must be provided"
+        }
+      },
+      "description": "Request message for adding tags to a customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendCustomerTagsRequest"
+      }
+    },
+    "CustomerServiceListCustomerNotesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        }
+      },
+      "description": "Request message for listing customer notes.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomerNotesRequest"
+      }
+    },
+    "CustomerServiceUpdateCustomerBody": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company that owns the customer\nRequired. Must be a valid company ID"
+        },
+        "preferredBusinessId": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "ID of the business location preferred by the customer\nOptional. If not provided, current value will be retained"
+        },
+        "avatarPath": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "avatar path, optional\nOptional. If not provided, current value will be retained"
+        },
+        "firstName": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "first name, optional\nOptional. If not provided, current value will be retained"
+        },
+        "lastName": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "last name, optional\nOptional. If not provided, current value will be retained"
+        },
+        "phone": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "Customer's phone number\nOptional. If not provided, current value will be retained"
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "email, optional\nOptional. If not provided, current value will be retained"
+        },
+        "address": {
+          "$ref": "#/definitions/v1Address",
+          "x-nullable": true,
+          "title": "Customer's primary address\nOptional. If not provided, current value will be retained"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "Initial tags to apply to the customer\nOptional. Empty list if not provided"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "Initial notes about the customer\nOptional. Empty list if not provided"
+        }
+      },
+      "description": "Request message for updating a customer.",
+      "required": [
+        "companyId",
+        "phone"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "UpdateCustomerRequest"
+      }
+    },
+    "CustomerTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this tag"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the tag"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this tag"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tag was last modified"
+        }
+      },
+      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Tag"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "typeLatLng": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The latitude in degrees. It must be in the range [-90.0, +90.0]."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The longitude in degrees. It must be in the range [-180.0, +180.0]."
+        }
+      },
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a\npair of doubles to represent degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/latlng"
+        },
+        "type": "LatLng"
+      }
+    },
+    "v1Address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, Unique identifier for the address."
+        },
+        "address1": {
+          "type": "string",
+          "title": "string, Street address including house number and street name.\nExample: \"123 Main Street\", \"Unit 4B, 567 Park Avenue\""
+        },
+        "address2": {
+          "type": "string",
+          "title": "string, Additional address details like apartment, suite, or unit number.\nExample: \"Floor 3\", \"Building B\""
+        },
+        "city": {
+          "type": "string",
+          "title": "string, City or locality name.\nExample: \"San Francisco\", \"New York City\""
+        },
+        "state": {
+          "type": "string",
+          "title": "string, State, province, or region.\nExample: \"CA\", \"NY\""
+        },
+        "postalCode": {
+          "type": "string",
+          "title": "string, Postal or ZIP code.\nExample: \"94105\", \"10001\""
+        },
+        "country": {
+          "type": "string",
+          "title": "string, Country name or ISO country code.\nExample: \"US\", \"United States\""
+        },
+        "coordinate": {
+          "$ref": "#/definitions/typeLatLng",
+          "description": "object(LatLng), Latitude and Longitude coordinate for mapping.\nLatitude Range: -90 to 90. Longitude Range: -180 to 180."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AddressType",
+          "title": "enum(Type), represents the importance of the address"
+        }
+      },
+      "description": "The address object represents a physical location used throughout the system.\nIt provides a standardized way to store and validate address information for\nbusinesses, customers, and service locations. The address format follows\ncommon postal standards and includes geocoding information for mapping.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Address"
+      }
+    },
+    "v1AddressType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "PRIMARY",
+        "SECONDARY"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
+      "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
+    },
+    "v1AppendCustomerNotesResponse": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "Notes that were successfully added\nIncludes generated IDs and timestamps"
+        }
+      },
+      "description": "Response message for adding notes to a customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendCustomerNotesResponse"
+      }
+    },
+    "v1AppendCustomerTagsResponse": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "Tags that were successfully added\nIncludes generated IDs and timestamps"
+        }
+      },
+      "description": "Response message for adding tags to a customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "AppendCustomerTagsResponse"
+      }
+    },
+    "v1CreateCustomerRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company creating the customer\nRequired. Must be a valid company ID"
+        },
+        "preferredBusinessId": {
+          "type": "string",
+          "title": "ID of the business location preferred by the customer\nRequired. Must be a valid business ID within the company"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Customer's first name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Customer's last name"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Customer's phone number\nRequired. Must be in E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Customer's email address\nOptional. Must be a valid email address if provided"
+        },
+        "address": {
+          "$ref": "#/definitions/v1Address",
+          "title": "Customer's primary address\nOptional. Must be a valid address if provided"
+        },
+        "preference": {
+          "$ref": "#/definitions/CustomerPreference",
+          "title": "Customer's communication and marketing preferences\nOptional. System defaults will be used if not provided"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "Initial tags to apply to the customer\nOptional. Empty list if not provided"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "Initial notes about the customer\nOptional. Empty list if not provided"
+        }
+      },
+      "description": "Request message for creating a new customer.",
+      "required": [
+        "companyId",
+        "preferredBusinessId",
+        "firstName",
+        "lastName",
+        "phone"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CreateCustomerRequest"
+      }
+    },
+    "v1Customer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the customer\nFormat: \"cus_\" followed by random characters"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Customer's first name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Customer's last name"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "URL to the customer's profile picture\nOptional. Must be a valid HTTPS URL"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Customer's phone number\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Customer's email address\nFormat: Must be a valid email address"
+        },
+        "address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Address"
+          },
+          "title": "List of customer's addresses\nCan include home, work, or other addresses"
+        },
+        "status": {
+          "$ref": "#/definitions/v1CustomerStatus",
+          "title": "Current status of the customer's account"
+        },
+        "colorCode": {
+          "type": "string",
+          "title": "Color code for visual identification in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        },
+        "source": {
+          "type": "string",
+          "title": "How the customer was acquired\nExamples: \"referral\", \"website\", \"walk-in\""
+        },
+        "lastAppointmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the customer last had an appointment"
+        },
+        "nextAppointmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the customer's next appointment is scheduled"
+        },
+        "createdBy": {
+          "type": "string",
+          "title": "ID of the staff member who created this customer"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this customer was created"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this customer"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this customer was last modified"
+        },
+        "preferredBusinessId": {
+          "type": "string",
+          "title": "ID of the customer's preferred business location"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company this customer belongs to"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "List of notes about this customer"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "List of tags applied to this customer"
+        },
+        "referralSource": {
+          "$ref": "#/definitions/CustomerReferralSource",
+          "description": "The source or channel through which a customer was acquired."
+        },
+        "preference": {
+          "$ref": "#/definitions/CustomerPreference",
+          "description": "Preferences related to communication and marketing."
+        }
+      },
+      "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Customer"
+      }
+    },
+    "v1CustomerNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this note"
+        },
+        "note": {
+          "type": "string",
+          "title": "The content of the note"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this note"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this note was last modified"
+        }
+      },
+      "description": "Note represents a comment or observation about a customer.\nNotes help track important customer information, preferences, and history.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Note"
+      }
+    },
+    "v1CustomerServiceListCustomerTagsBody": {
+      "type": "object",
+      "description": "Request message for listing customer tags.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomerTagsRequest"
+      }
+    },
+    "v1CustomerStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ACTIVE",
+        "INACTIVE"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status represents the current state of a customer's account.\nThis affects their ability to book appointments and access services.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\nNew customers should not be created with this status.\n - ACTIVE: ACTIVE indicates the customer can book appointments and use services.\nThis is the default status for new customers.\n - INACTIVE: INACTIVE indicates the customer cannot book new appointments.\nExisting appointments may still be honored based on business policy."
+    },
+    "v1GenCustomerCofLinkResponse": {
+      "type": "object",
+      "properties": {
+        "link": {
+          "type": "string",
+          "title": "Secure URL for adding card-on-file information\nValid for 24 hours from generation"
+        }
+      },
+      "description": "Response message for generating a card-on-file link.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "GenCustomerCofLinkResponse"
+      }
+    },
+    "v1ListCustomerNotesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "List of notes for the customer\nMay be empty if the customer has no notes"
+        }
+      },
+      "description": "Response message for listing customer notes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomerNotesResponse"
+      }
+    },
+    "v1ListCustomerTagsResponse": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomerTag"
+          },
+          "title": "List of tags associated with the customer\nMay be empty if the customer has no tags"
+        }
+      },
+      "description": "Response message for listing customer tags.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomerTagsResponse"
+      }
+    },
+    "v1ListCustomersRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list customers for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListCustomersRequestFilter",
+          "title": "Optional filters to apply to the customer list"
+        }
+      },
+      "description": "Request message for listing customers.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomersRequest"
+      }
+    },
+    "v1ListCustomersRequestFilter": {
+      "type": "object",
+      "properties": {
+        "lastUpdatedTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "Time range for filtering customers by last update time\nOptional. If not provided, returns all customers"
+        }
+      },
+      "title": "Filter parameters for the customer list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListCustomersResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "customers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Customer"
+          },
+          "title": "List of customers matching the request criteria\nMay be empty if no customers match"
+        }
+      },
+      "description": "Response message for listing customers.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListCustomersResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}

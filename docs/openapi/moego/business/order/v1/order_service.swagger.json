@@ -1,0 +1,571 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/order/v1/order_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.order.v1.OrderService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/orders/items:list": {
+      "post": {
+        "summary": "Lists line items matching the specified criteria.",
+        "description": "Retrieves detailed information about individual items within orders.\nThis method is useful for itemized reporting and revenue analysis.\n\nReturns an empty list if no line items match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "OrderService_ListOrderLineItems",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderLineItemsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing order line items.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderLineItemsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.order.v1.OrderService"
+        ]
+      }
+    },
+    "/v1/orders/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific order.",
+        "description": "Returns the complete order object including status, amounts, and timestamps.\nThis information is used for order processing, financial reporting, and\ncustomer service inquiries.\n\nReturns NOT_FOUND if the order ID doesn't exist.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "OrderService_GetOrder",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Order"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the order to retrieve\nRequired. Format: \"ord_\" followed by random characters",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.order.v1.OrderService"
+        ]
+      }
+    },
+    "/v1/orders:list": {
+      "post": {
+        "summary": "Lists orders matching the specified criteria.",
+        "description": "Results are paginated and can be filtered by business location, status,\nand update time. This method is typically used for order management,\nfinancial reporting, and reconciliation.\n\nReturns an empty list if no orders match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "OrderService_ListOrders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrdersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing orders.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListOrdersRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.order.v1.OrderService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "OrderLineItemObjectType": {
+      "type": "string",
+      "enum": [
+        "OBJECT_TYPE_UNSPECIFIED",
+        "SERVICE",
+        "PRODUCT",
+        "PACKAGE",
+        "NO_SHOW",
+        "SERVICE_CHARGE",
+        "EVALUATION_SERVICE"
+      ],
+      "default": "OBJECT_TYPE_UNSPECIFIED",
+      "description": "ObjectType defines the category of item being charged.\nThis determines pricing rules, tax treatment, and reporting categorization.\n\n - OBJECT_TYPE_UNSPECIFIED: Unknown or invalid object type\nShould not be used when creating new line items\n - SERVICE: Standard service offering\nExample: Grooming, training session\n - PRODUCT: Physical product sold\nExample: Pet food, grooming supplies\n - PACKAGE: Bundle of services or products\nTypically offered at a discount\n - NO_SHOW: Charge for missed appointment\nBased on cancellation policy\n - SERVICE_CHARGE: Additional service-related fee\nExample: Holiday surcharge, rush fee\n - EVALUATION_SERVICE: Initial pet evaluation service\nRequired for new clients or services"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "typeMoney": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "The three-letter currency code defined in ISO 4217."
+        },
+        "units": {
+          "type": "string",
+          "format": "int64",
+          "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000."
+        }
+      },
+      "description": "Represents an amount of money with its currency type.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/money"
+        },
+        "type": "Money"
+      }
+    },
+    "v1ListOrderLineItemsRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list line items for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListOrderLineItemsRequestFilter",
+          "title": "Optional filters to apply to the line item list"
+        }
+      },
+      "description": "Request message for listing order line items.",
+      "required": [
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderLineItemsRequest"
+      }
+    },
+    "v1ListOrderLineItemsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "orderIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Specific order IDs to retrieve line items for\nOptional. If empty, returns items from all orders"
+        }
+      },
+      "title": "Filter parameters for the line item list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListOrderLineItemsResponse": {
+      "type": "object",
+      "properties": {
+        "orderLineItems": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1OrderLineItem"
+          },
+          "title": "List of line items matching the request criteria\nMay be empty if no items match"
+        }
+      },
+      "description": "Response message for listing order line items.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderLineItemsResponse"
+      }
+    },
+    "v1ListOrdersRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list orders for\nRequired. Must be a valid company ID"
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of business locations to filter orders by\nRequired. Must be valid business IDs within the company"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListOrdersRequestFilter",
+          "title": "Optional filters to apply to the order list"
+        }
+      },
+      "description": "Request message for listing orders.",
+      "required": [
+        "pagination",
+        "companyId",
+        "businessIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrdersRequest"
+      }
+    },
+    "v1ListOrdersRequestFilter": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Specific order IDs to retrieve\nOptional. If provided, other filters are ignored"
+        },
+        "statuses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1OrderStatus"
+          },
+          "title": "Order statuses to include in results\nOptional. If empty, returns orders in all statuses"
+        },
+        "lastUpdatedTime": {
+          "$ref": "#/definitions/typeInterval",
+          "title": "Time range for filtering orders by last update time\nOptional. If not provided, returns all orders"
+        }
+      },
+      "title": "Filter parameters for the order list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListOrdersResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "orders": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Order"
+          },
+          "title": "List of orders matching the request criteria\nMay be empty if no orders match"
+        }
+      },
+      "description": "Response message for listing orders.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrdersResponse"
+      }
+    },
+    "v1Order": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the order\nFormat: \"ord_\" followed by random characters"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business location where services were provided\nRequired. Must be a valid business ID"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the customer who received services\nRequired. Must be a valid customer ID"
+        },
+        "status": {
+          "$ref": "#/definitions/v1OrderStatus",
+          "title": "Current status of the order\nDetermines available actions and processing flow"
+        },
+        "title": {
+          "type": "string",
+          "title": "Short description of the order\nExample: \"Full Grooming Package - Max\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed notes about the order"
+        },
+        "tipsAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Additional amount provided as gratuity\nOptional. Must be non-negative"
+        },
+        "taxAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Tax amount applied to the order\nCalculated based on local tax rates"
+        },
+        "discountAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Total discounts applied to the order\nSum of all applicable discounts"
+        },
+        "extraFeeAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Additional fees applied to the order\nExample: Holiday surcharge, emergency service fee"
+        },
+        "subTotalAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Subtotal before tax, tips, and adjustments\nSum of all service prices"
+        },
+        "tipsBasedAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount used as basis for calculating tips\nUsually equals sub_total_amount"
+        },
+        "totalAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Total amount including all charges and adjustments\nFormula: subtotal + tax + tips + fees - discounts"
+        },
+        "paidAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount that has been paid so far\nUpdated when payments are processed"
+        },
+        "remainAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount still due on the order\nFormula: total_amount - paid_amount"
+        },
+        "refundedAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount that has been refunded\nTracks any refunds issued to the customer"
+        },
+        "createdBy": {
+          "type": "string",
+          "title": "ID of the staff member who created the order\nRequired. Must be a valid staff ID"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this order was created\nSystem-generated timestamp"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified the order\nUpdated on any order changes"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this order was last modified\nSystem-generated timestamp"
+        },
+        "salesDatetime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the sale was recorded\nUsed for financial reporting and reconciliation"
+        }
+      },
+      "description": "Order represents a financial transaction for services provided to a customer.\nOrders track the complete financial details of a transaction, including services,\ntips, taxes, discounts, and payment status. Each order is associated with a\nspecific business location and customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "Order"
+      }
+    },
+    "v1OrderLineItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the line item\nFormat: \"li_\" followed by random characters"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "ID of the parent order\nRequired. Must be a valid order ID"
+        },
+        "objectId": {
+          "type": "string",
+          "title": "ID of the referenced service, product, or package\nRequired. Must match the object_type"
+        },
+        "objectType": {
+          "$ref": "#/definitions/OrderLineItemObjectType",
+          "title": "Category of the line item\nDetermines business rules and processing"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the item\nExample: \"Premium Dog Grooming\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Additional details about the item"
+        },
+        "unitPrice": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Price per unit of the item\nBefore any discounts or adjustments"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of units purchased\nMust be greater than 0"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this line item was created\nSystem-generated timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this line item was last modified\nSystem-generated timestamp"
+        },
+        "paidAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount that has been paid for this item\nUpdated when payments are processed"
+        }
+      },
+      "description": "OrderLineItem represents an individual item within an order.\nEach line item corresponds to a specific service, product, or charge that\ncontributes to the total order amount. Line items track individual pricing,\nquantities, and payment status.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "OrderLineItem"
+      }
+    },
+    "v1OrderStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "CREATED",
+        "PROCESSING",
+        "COMPLETED",
+        "REMOVED"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status represents the current state of the order in its lifecycle.\nThis affects payment processing, reporting, and service delivery.\n\n - STATUS_UNSPECIFIED: Unknown or invalid status\nShould not be used when creating new orders\n - CREATED: Order has been created but processing hasn't started\nInitial state for new orders\n - PROCESSING: Order is currently being processed\nServices are being delivered or payments are pending\n - COMPLETED: Order has been fully completed\nAll services delivered and payments processed\n - REMOVED: Order has been removed from active records\nHistorical data is maintained for reporting"
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}

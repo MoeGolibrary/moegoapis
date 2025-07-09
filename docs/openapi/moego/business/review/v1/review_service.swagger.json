@@ -1,0 +1,274 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/review/v1/review_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.review.v1.ReviewService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/reviews:list": {
+      "post": {
+        "summary": "ListReviews retrieves a paginated list of customer reviews based on specified criteria.\nSupports filtering by feedback source and staff members to facilitate\ntargeted analysis of customer satisfaction and service quality.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights\n- NOT_FOUND if the business ID doesn't exist",
+        "operationId": "ReviewService_ListReviews",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListReviewsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "ListReviewsRequest encapsulates parameters for retrieving customer reviews.\nSupports pagination and filtering to customize the result set based on\nbusiness needs and analysis requirements.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListReviewsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.review.v1.ReviewService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ReviewSource": {
+      "type": "string",
+      "enum": [
+        "SOURCE_UNSPECIFIED",
+        "SMS",
+        "GROOMING_REPORT",
+        "PET_PARENT_PORTAL"
+      ],
+      "default": "SOURCE_UNSPECIFIED",
+      "description": "Source identifies the channel through which the review was submitted.\nThis helps track engagement across different feedback collection methods\nand analyze response patterns.\n\n - SOURCE_UNSPECIFIED: Unknown or invalid source\nShould not be used when creating new reviews\n - SMS: Review submitted via SMS message\nTypically sent after service completion\n - GROOMING_REPORT: Review submitted through grooming report\nCollected during service documentation\n - PET_PARENT_PORTAL: Review submitted through customer portal\nDirect customer feedback channel"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "v1ListReviewsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for handling large result sets\nRequired to manage data volume efficiently"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "Business location identifier for scoping reviews\nRequired to ensure reviews are accessed within proper context"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListReviewsRequestFilter",
+          "title": "Filter criteria to apply to the review list\nOptional. If not provided, returns all reviews"
+        }
+      },
+      "description": "ListReviewsRequest encapsulates parameters for retrieving customer reviews.\nSupports pagination and filtering to customize the result set based on\nbusiness needs and analysis requirements.",
+      "required": [
+        "pagination",
+        "businessId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/reviewpb"
+        },
+        "type": "ListReviewsRequest"
+      }
+    },
+    "v1ListReviewsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ReviewSource"
+          },
+          "title": "Feedback channels to include in results\nOptional. If empty, includes reviews from all sources"
+        },
+        "staffIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Staff members to filter reviews by\nOptional. If empty, includes reviews for all staff"
+        }
+      },
+      "description": "Filter specifies criteria for filtering the review list.\nAllows targeting specific feedback sources and staff members.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/reviewpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListReviewsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "reviews": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Review"
+          },
+          "title": "List of reviews matching the request criteria\nMay be empty if no reviews match the filters"
+        }
+      },
+      "description": "ListReviewsResponse contains the paginated list of reviews and metadata.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/reviewpb"
+        },
+        "type": "ListReviewsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Review": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the review\nFormat: \"rev_\" followed by random characters"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the customer who submitted the review\nRequired. Must be a valid customer ID"
+        },
+        "appointmentId": {
+          "type": "string",
+          "title": "ID of the appointment being reviewed\nRequired. Must be a valid appointment ID"
+        },
+        "staffIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of staff members included in the review\nMay include multiple staff for team services"
+        },
+        "petIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "IDs of pets involved in the reviewed service\nMay include multiple pets for group appointments"
+        },
+        "source": {
+          "$ref": "#/definitions/ReviewSource",
+          "title": "Channel through which the review was submitted\nUsed for tracking feedback collection methods"
+        },
+        "score": {
+          "type": "integer",
+          "format": "int64",
+          "title": "Customer satisfaction rating\nScale: 1 to 5, where 5 represents highest satisfaction"
+        },
+        "content": {
+          "type": "string",
+          "title": "Detailed feedback from the customer"
+        },
+        "reviewTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the review was submitted by the customer\nUsed for tracking feedback timeliness"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this review was created in the system\nSystem-generated timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this review was last modified\nUpdated on any review changes"
+        }
+      },
+      "description": "Review represents customer feedback for services provided.\nEach review is associated with a specific appointment and can include\nratings and comments about multiple staff members and pets. Reviews\nhelp track customer satisfaction and service quality.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/business/v1/reviewpb"
+        },
+        "type": "Review"
+      }
+    }
+  }
+}

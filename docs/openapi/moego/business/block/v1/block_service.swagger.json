@@ -1,0 +1,225 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/block/v1/block_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.block.v1.BlockService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/blocks": {
+      "post": {
+        "summary": "CreateBlock creates a new block in a staff member's schedule.",
+        "description": "Returns:\n- The newly created Block object\n- INVALID_ARGUMENT if the request is malformed\n- PERMISSION_DENIED if the caller lacks permission\n- NOT_FOUND if the business_id or staff_id is invalid",
+        "operationId": "BlockService_CreateBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Block"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "CreateBlockRequest contains the information needed to create a new block\nin a staff member's schedule.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateBlockRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.block.v1.BlockService"
+        ]
+      }
+    },
+    "/v1/blocks/{id}": {
+      "get": {
+        "summary": "GetBlock retrieves a specific block by its ID.",
+        "description": "Returns:\n- The requested Block object\n- NOT_FOUND if the block doesn't exist\n- PERMISSION_DENIED if the caller lacks permission",
+        "operationId": "BlockService_GetBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Block"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the block to retrieve.\nMust be a valid block ID that exists in the system.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.block.v1.BlockService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeInterval": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Inclusive start of the interval.\n\nIf specified, a Timestamp matching this interval will have to be the same\nor after the start."
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional. Exclusive end of the interval.\n\nIf specified, a Timestamp matching this interval will have to be before the\nend."
+        }
+      },
+      "description": "Represents a time interval, encoded as a Timestamp start (inclusive) and a\nTimestamp end (exclusive).\n\nThe start must be less than or equal to the end.\nWhen the start equals the end, the interval is empty (matches no time).\nWhen both start and end are unspecified, the interval matches any time.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/interval"
+        },
+        "type": "Interval"
+      }
+    },
+    "v1Block": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the block."
+        },
+        "staffId": {
+          "type": "string",
+          "description": "ID of the staff member whose schedule is being blocked."
+        },
+        "duration": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "The time interval during which the staff member is unavailable.\nUses Google's standard Interval type to represent the start and end times."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional description of why the time is blocked off (e.g., \"Lunch break\", \"Team meeting\")."
+        },
+        "colorCode": {
+          "type": "string",
+          "description": "Color code used to visually distinguish this block in the calendar UI.\nShould be a valid hex color code (e.g., \"#FF0000\" for red)."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "ID of the business where this block is created.\nUsed for access control and filtering blocks by business."
+        }
+      },
+      "description": "Block represents a time period that is blocked off in a staff member's schedule.\nThis can be used for breaks, meetings, or any other time when the staff member\nis not available for appointments.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "Block"
+      }
+    },
+    "v1CreateBlockRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string",
+          "description": "ID of the business where the block will be created.\nRequired for access control and proper block organization."
+        },
+        "staffId": {
+          "type": "string",
+          "description": "ID of the staff member whose schedule will be blocked.\nMust be a valid staff member ID within the specified business."
+        },
+        "duration": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "The time interval during which the staff member will be unavailable.\nMust be a valid time interval with both start and end times specified."
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description explaining why the time is being blocked off.\nExamples: \"Lunch break\", \"Team meeting\", \"Training session\""
+        },
+        "colorCode": {
+          "type": "string",
+          "description": "Optional color code for visual distinction in the calendar UI.\nShould be a valid hex color code (e.g., \"#FF0000\" for red)."
+        }
+      },
+      "description": "CreateBlockRequest contains the information needed to create a new block\nin a staff member's schedule.",
+      "required": [
+        "businessId",
+        "staffId",
+        "duration"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "CreateBlockRequest"
+      }
+    }
+  }
+}

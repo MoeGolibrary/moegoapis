@@ -1,0 +1,243 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/company/v1/company_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.company.v1.CompanyService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/companies/{id}": {
+      "get": {
+        "summary": "Retrieves detailed information about a specific company.",
+        "description": "Returns the complete company profile including configuration settings\nand operational parameters. This information is used for company\nmanagement and system configuration.\n\nPossible errors:\n- NOT_FOUND if the company ID doesn't exist\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "CompanyService_GetCompany",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Company"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the company to retrieve\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.company.v1.CompanyService"
+        ]
+      }
+    },
+    "/v1/companies:list": {
+      "post": {
+        "summary": "Lists companies based on specified criteria.",
+        "description": "Results are paginated and can be used for system administration\nand multi-company management scenarios. Companies are returned\nin alphabetical order by name.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "CompanyService_ListCompanies",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCompaniesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "ListCompaniesRequest encapsulates parameters for retrieving companies.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListCompaniesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.company.v1.CompanyService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeTimeZone": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "IANA Time Zone Database time zone, e.g. \"America/New_York\"."
+        },
+        "version": {
+          "type": "string",
+          "description": "Optional. IANA Time Zone Database version number, e.g. \"2019a\"."
+        }
+      },
+      "description": "Represents a time zone from the\n[IANA Time Zone Database](https://www.iana.org/time-zones).",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/datetime"
+        },
+        "type": "TimeZone"
+      }
+    },
+    "v1Company": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the company\nFormat: \"cmp_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Legal name of the company\nUsed in official communications and documents"
+        },
+        "country": {
+          "type": "string",
+          "title": "Country where the company is registered\nISO 3166-1 alpha-2 country code"
+        },
+        "timezone": {
+          "$ref": "#/definitions/typeTimeZone",
+          "title": "Primary timezone for company operations\nUsed for scheduling and reporting"
+        }
+      },
+      "description": "Company represents a business entity in the system.\nCompanies are the top-level organizational units that contain multiple\nbusiness locations, staff members, and service offerings. Each company\nhas its own configuration settings and operational parameters.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/company/v1/companypb"
+        },
+        "type": "Company"
+      }
+    },
+    "v1ListCompaniesRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for handling large result sets\nRequired to manage data volume efficiently"
+        }
+      },
+      "description": "ListCompaniesRequest encapsulates parameters for retrieving companies.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/company/v1/companypb"
+        },
+        "type": "ListCompaniesRequest"
+      }
+    },
+    "v1ListCompaniesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "companies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Company"
+          },
+          "title": "List of companies matching the request criteria\nMay be empty if no companies match"
+        }
+      },
+      "description": "ListCompaniesResponse contains the paginated list of companies.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/company/v1/companypb"
+        },
+        "type": "ListCompaniesResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}
