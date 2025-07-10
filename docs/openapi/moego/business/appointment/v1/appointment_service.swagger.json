@@ -172,6 +172,40 @@
         ]
       }
     },
+    "/v1/appointments:check": {
+      "post": {
+        "summary": "Check before create appointment",
+        "description": "Return the check result. If it is empty, it indicates that it can be created;\notherwise, return conflicting data",
+        "operationId": "AppointmentService_CheckCreateAppointment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CheckCreateAppointmentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CheckCreateAppointmentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.appointment.v1.AppointmentService"
+        ]
+      }
+    },
     "/v1/appointments:list": {
       "post": {
         "summary": "Lists appointments matching the specified criteria.",
@@ -293,6 +327,70 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
         "type": "RescheduleAppointmentRequest"
+      }
+    },
+    "CheckCreateAppointmentResponseAppointmentDateConflictCheckResult": {
+      "type": "object",
+      "properties": {
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CheckCreateAppointmentResponsePetAppointmentsOverview"
+          },
+          "description": "array(PetAppointmentsOverview), Appointments that conflict with the requested appointment."
+        }
+      },
+      "title": "appointment date conflict check result",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "AppointmentDateConflictCheckResult"
+      }
+    },
+    "CheckCreateAppointmentResponseBusinessClosedDateCheckResult": {
+      "type": "object",
+      "properties": {
+        "closedDates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/typeDate"
+          },
+          "description": "array(Date), Business closed dates."
+        }
+      },
+      "title": "business closed date check result",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "BusinessClosedDateCheckResult"
+      }
+    },
+    "CheckCreateAppointmentResponsePetAppointmentsOverview": {
+      "type": "object",
+      "properties": {
+        "pet": {
+          "$ref": "#/definitions/v1Pet",
+          "description": "object(Pet), The pet receiving the services.\nContains pet's basic information, health records, and preferences."
+        },
+        "appointments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Appointment"
+          },
+          "description": "array(Appointment), Appointments that conflict with the requested appointment."
+        }
+      },
+      "title": "pet appointments overview",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "PetAppointmentsOverview"
       }
     },
     "CreateAppointmentRequestPetService": {
@@ -828,6 +926,59 @@
       "default": "STATUS_UNSPECIFIED",
       "description": "Possible values are `unconfirmed`, `confirmed`, `checked_in`, `ready`, `finished`, or `canceled`.\nAn appointment starts as `unconfirmed` when created. Once confirmed by the business, it moves to `confirmed`.\nWhen the customer arrives with their pet(s), it transitions to `checked_in`. After service completion,\nit moves to `ready`, then `finished` after pickup. An appointment can be `canceled` at any stage.\n\n - STATUS_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - UNCONFIRMED: Initial state. Appointment created but pending business confirmation.\n - CONFIRMED: Business has accepted and allocated resources.\n - CHECKED_IN: Customer has arrived and service is in progress.\n - READY: Service completed, awaiting pet pickup.\n - FINISHED: Final state. Pet picked up and service completed.\n - CANCELED: Final state. Appointment terminated before completion."
     },
+    "v1CheckCreateAppointmentRequest": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier where services will be provided."
+        },
+        "customerId": {
+          "type": "string",
+          "description": "string, The customer's identifier who is booking the appointment."
+        },
+        "petServices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CreateAppointmentRequestPetService"
+          },
+          "description": "array(PetService), Services requested for each pet."
+        }
+      },
+      "title": "Request to check before create appointment",
+      "required": [
+        "businessId",
+        "customerId",
+        "petServices"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "CheckCreateAppointmentRequest"
+      }
+    },
+    "v1CheckCreateAppointmentResponse": {
+      "type": "object",
+      "properties": {
+        "appointmentConflictCheck": {
+          "$ref": "#/definitions/CheckCreateAppointmentResponseAppointmentDateConflictCheckResult",
+          "title": "appointment date conflict check result"
+        },
+        "businessClosedDateCheck": {
+          "$ref": "#/definitions/CheckCreateAppointmentResponseBusinessClosedDateCheckResult",
+          "title": "business closed date check result"
+        }
+      },
+      "title": "Response for check before create appointment",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "CheckCreateAppointmentResponse"
+      }
+    },
     "v1CreateAppointmentRequest": {
       "type": "object",
       "properties": {
@@ -846,6 +997,11 @@
             "$ref": "#/definitions/CreateAppointmentRequestPetService"
           },
           "description": "array(PetService), Services requested for each pet."
+        },
+        "ignoreConflict": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "bool, Whether to ignore conflicts when scheduling services.\nIf true, services will be scheduled even if there are conflicts.\nDefaults to true."
         }
       },
       "title": "Request to create a new appointment",
