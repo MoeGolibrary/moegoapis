@@ -570,9 +570,7 @@ func (x *TriggerTestWebhookDeliveryRequest) GetPayload() []byte {
 type GetWebhookDeliveryRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// id is the unique identifier of the webhook event delivery.
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// webhook_id filters deliveries by the webhook.
-	WebhookId     string `protobuf:"bytes,2,opt,name=webhook_id,json=webhookId,proto3" json:"webhook_id,omitempty"`
+	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -610,13 +608,6 @@ func (*GetWebhookDeliveryRequest) Descriptor() ([]byte, []int) {
 func (x *GetWebhookDeliveryRequest) GetId() string {
 	if x != nil {
 		return x.Id
-	}
-	return ""
-}
-
-func (x *GetWebhookDeliveryRequest) GetWebhookId() string {
-	if x != nil {
-		return x.WebhookId
 	}
 	return ""
 }
@@ -1006,11 +997,9 @@ const file_moego_business_webhook_v1_webhook_service_proto_rawDesc = "" +
 	"\apayload\x18\x03 \x01(\fB\x03\xe0A\x01H\x01R\apayload\x88\x01\x01B\r\n" +
 	"\v_event_typeB\n" +
 	"\n" +
-	"\b_payload\"T\n" +
+	"\b_payload\"0\n" +
 	"\x19GetWebhookDeliveryRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
-	"\n" +
-	"webhook_id\x18\x02 \x01(\tB\x03\xe0A\x02R\twebhookId\"\xa3\x03\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xa3\x03\n" +
 	"\x1cListWebhookDeliveriesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +

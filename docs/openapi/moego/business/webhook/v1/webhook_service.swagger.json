@@ -42,13 +42,6 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "webhookId",
-            "description": "webhook_id filters deliveries by the webhook.",
-            "in": "query",
-            "required": true,
-            "type": "string"
           }
         ],
         "tags": [

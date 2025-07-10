@@ -47,8 +47,52 @@ https://your-service.com/webhook-endpoint
 ```
 
 > ⚠️ **Note**: Avoid using local addresses like `localhost`. It's recommended to use tools
-> like [ngrok](https://ngrok.com) or [localtunnel](https://theboroer.github.io/localtunnel-www/) to expose local services
+> like [ngrok](https://ngrok.com) or [localtunnel](https://theboroer.github.io/localtunnel-www/) to expose local
+> services
 > as public URLs for testing.
+
+### 🧾 Request Headers
+
+| Header Name           | Sample Value                           | Description                              |
+|-----------------------|----------------------------------------|------------------------------------------|
+| `User-Agent`          | `Moego/Webhook-1.0`                    | Identifies Moego as the source.          |
+| `X-Moe-Client-Id`     | `018e5b36-e35c-7925-a9de-321ed638b682` | Unique client identifier.                |
+| `X-Moe-Event-Type`    | `HEALTH_CHECK`                         | Type of event.                           |
+| `X-Moe-Delivery-ID`   | `whkdXfP`                              | Unique ID for this delivery.             |
+| `X-Moe-Webhook-ID`    | `whk01`                                | Unique ID for this Webhook.              |
+| `X-Moe-Nonce`         | `780525611260542810`                   | Random string for replay prevention.     |
+| `X-Moe-Timestamp`     | `1751284717825`                        | Unix timestamp (in milliseconds).        |
+| `X-Moe-Signature`     | `base64_encoded_sha1_signature`        | SHA1-based HMAC signature.               |
+| `X-Moe-Signature-256` | `base64_encoded_sha256_signature`      | SHA256-based HMAC signature (preferred). |
+
+These headers are used for **security and idempotency**, especially when you enable signing with a `secret_token`.
+
+### 📦 Request Body Format (JSON)
+
+```json
+{
+  "id": "a21eb4cd-367e-485f-932a-397a0951b709",
+  "type": "HEALTH_CHECK",
+  "timestamp": "2025-06-30T11:58:36.740351808Z",
+  "companyId": "encoded_company_id",
+  "payload": {
+    "validation": "hello world"
+  }
+}
+```
+
+#### Fields Explained
+
+| Field       | Type   | Description                                               |
+|-------------|--------|-----------------------------------------------------------|
+| `id`        | string | Unique event ID                                           |
+| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`)  |
+| `timestamp` | string | ISO 8601 formatted timestamp                              |
+| `companyId` | string | Encoded company ID associated with the event              |
+| `payload`   | bytes  | Varies based on event type.  The string encoded in base64 |
+
+---
+
 
 ---
 

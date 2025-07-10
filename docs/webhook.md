@@ -384,7 +384,6 @@ Retrieves a specific webhook push record, including detailed request/response in
 | Field Name   | Type   | Required | Description           |
 |--------------|--------|----------|-----------------------|
 | `id`         | string | Yes      | Delivery log ID       |
-| `webhook_id` | string | Yes      | Associated webhook ID |
 
 #### 📌 Return Value:
 

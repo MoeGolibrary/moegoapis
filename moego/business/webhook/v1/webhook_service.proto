@@ -250,9 +250,6 @@ message TriggerTestWebhookDeliveryRequest {
 message GetWebhookDeliveryRequest {
   // id is the unique identifier of the webhook event delivery.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // webhook_id filters deliveries by the webhook.
-  string webhook_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // ListWebhookDeliveriesRequest
