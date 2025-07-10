@@ -1000,6 +1000,7 @@
         },
         "ignoreConflict": {
           "type": "boolean",
+          "x-nullable": true,
           "description": "bool, Whether to ignore conflicts when scheduling services.\nIf true, services will be scheduled even if there are conflicts.\nDefaults to true."
         }
       },

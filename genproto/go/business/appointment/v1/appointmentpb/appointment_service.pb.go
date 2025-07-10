@@ -347,7 +347,7 @@ type CreateAppointmentRequest struct {
 	// bool, Whether to ignore conflicts when scheduling services.
 	// If true, services will be scheduled even if there are conflicts.
 	// Defaults to true.
-	IgnoreConflict bool `protobuf:"varint,4,opt,name=ignore_conflict,json=ignoreConflict,proto3" json:"ignore_conflict,omitempty"`
+	IgnoreConflict *bool `protobuf:"varint,4,opt,name=ignore_conflict,json=ignoreConflict,proto3,oneof" json:"ignore_conflict,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -404,8 +404,8 @@ func (x *CreateAppointmentRequest) GetPetServices() []*CreateAppointmentRequest_
 }
 
 func (x *CreateAppointmentRequest) GetIgnoreConflict() bool {
-	if x != nil {
-		return x.IgnoreConflict
+	if x != nil && x.IgnoreConflict != nil {
+		return *x.IgnoreConflict
 	}
 	return false
 }
@@ -1040,14 +1040,14 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetR\x03pet\x12N\n" +
 	"\fappointments\x18\x02 \x03(\v2*.moego.business.appointment.v1.AppointmentR\fappointments\x1aU\n" +
 	"\x1dBusinessClosedDateCheckResult\x124\n" +
-	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\"\xf8\x03\n" +
+	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\"\x91\x04\n" +
 	"\x18CreateAppointmentRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12$\n" +
 	"\vcustomer_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12j\n" +
-	"\fpet_services\x18\x03 \x03(\v2B.moego.business.appointment.v1.CreateAppointmentRequest.PetServiceB\x03\xe0A\x02R\vpetServices\x12,\n" +
-	"\x0fignore_conflict\x18\x04 \x01(\bB\x03\xe0A\x01R\x0eignoreConflict\x1a\x8a\x01\n" +
+	"\fpet_services\x18\x03 \x03(\v2B.moego.business.appointment.v1.CreateAppointmentRequest.PetServiceB\x03\xe0A\x02R\vpetServices\x121\n" +
+	"\x0fignore_conflict\x18\x04 \x01(\bB\x03\xe0A\x01H\x00R\x0eignoreConflict\x88\x01\x01\x1a\x8a\x01\n" +
 	"\n" +
 	"PetService\x12\x1a\n" +
 	"\x06pet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\x05petId\x12`\n" +
@@ -1055,7 +1055,8 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
 	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalR\bduration\x12\x1b\n" +
-	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\"\x8c\x01\n" +
+	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIdsB\x12\n" +
+	"\x10_ignore_conflict\"\x8c\x01\n" +
 	"\x1cRescheduleAppointmentRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
@@ -1169,6 +1170,7 @@ func file_moego_business_appointment_v1_appointment_service_proto_init() {
 	}
 	file_moego_business_appointment_v1_appointment_proto_init()
 	file_moego_business_appointment_v1_grooming_report_proto_init()
+	file_moego_business_appointment_v1_appointment_service_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

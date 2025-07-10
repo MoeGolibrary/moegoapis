@@ -245,7 +245,7 @@ message CreateAppointmentRequest {
   // bool, Whether to ignore conflicts when scheduling services.
   // If true, services will be scheduled even if there are conflicts.
   // Defaults to true.
-  bool ignore_conflict = 4 [(google.api.field_behavior) = OPTIONAL];
+  optional bool ignore_conflict = 4 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request to reschedule an existing appointment
