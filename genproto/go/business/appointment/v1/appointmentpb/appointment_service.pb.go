@@ -221,14 +221,14 @@ type CheckAppointmentAvailabilityRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// string, The business location's identifier where services will be provided.
 	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// string, The customer's identifier who is booking the appointment.
-	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// object(Interval), Date range for checking availability.
-	DateRange *interval.Interval `protobuf:"bytes,3,opt,name=date_range,json=dateRange,proto3" json:"date_range,omitempty"`
+	DateRange *interval.Interval `protobuf:"bytes,2,opt,name=date_range,json=dateRange,proto3" json:"date_range,omitempty"`
 	// array(string), List of pet IDs for which services will be provided.
-	PetIds []string `protobuf:"bytes,4,rep,name=pet_ids,json=petIds,proto3" json:"pet_ids,omitempty"`
+	PetIds []string `protobuf:"bytes,3,rep,name=pet_ids,json=petIds,proto3" json:"pet_ids,omitempty"`
+	// optional(string), The customer's identifier who is booking the appointment.
+	CustomerId string `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// optional(string), The appointment identifier to exclude from availability check.
-	AppointmentId *string `protobuf:"bytes,7,opt,name=appointment_id,json=appointmentId,proto3,oneof" json:"appointment_id,omitempty"`
+	AppointmentId string `protobuf:"bytes,5,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -270,13 +270,6 @@ func (x *CheckAppointmentAvailabilityRequest) GetBusinessId() string {
 	return ""
 }
 
-func (x *CheckAppointmentAvailabilityRequest) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
-	}
-	return ""
-}
-
 func (x *CheckAppointmentAvailabilityRequest) GetDateRange() *interval.Interval {
 	if x != nil {
 		return x.DateRange
@@ -291,9 +284,16 @@ func (x *CheckAppointmentAvailabilityRequest) GetPetIds() []string {
 	return nil
 }
 
+func (x *CheckAppointmentAvailabilityRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
 func (x *CheckAppointmentAvailabilityRequest) GetAppointmentId() string {
-	if x != nil && x.AppointmentId != nil {
-		return *x.AppointmentId
+	if x != nil {
+		return x.AppointmentId
 	}
 	return ""
 }
@@ -1042,17 +1042,16 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x0echeck_out_time\x18\x06 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\fcheckOutTime\"\x92\x01\n" +
 	"\x18ListAppointmentsResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12N\n" +
-	"\fappointments\x18\x02 \x03(\v2*.moego.business.appointment.v1.AppointmentR\fappointments\"\x84\x02\n" +
+	"\fappointments\x18\x02 \x03(\v2*.moego.business.appointment.v1.AppointmentR\fappointments\"\xf6\x01\n" +
 	"#CheckAppointmentAvailabilityRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId\x12$\n" +
-	"\vcustomer_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
-	"customerId\x129\n" +
+	"businessId\x129\n" +
 	"\n" +
-	"date_range\x18\x03 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x02R\tdateRange\x12\x17\n" +
-	"\apet_ids\x18\x04 \x03(\tR\x06petIds\x12*\n" +
-	"\x0eappointment_id\x18\a \x01(\tH\x00R\rappointmentId\x88\x01\x01B\x11\n" +
-	"\x0f_appointment_id\"\x86\x06\n" +
+	"date_range\x18\x02 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x02R\tdateRange\x12\x1c\n" +
+	"\apet_ids\x18\x03 \x03(\tB\x03\xe0A\x01R\x06petIds\x12$\n" +
+	"\vcustomer_id\x18\x04 \x01(\tB\x03\xe0A\x01R\n" +
+	"customerId\x12*\n" +
+	"\x0eappointment_id\x18\x05 \x01(\tB\x03\xe0A\x01R\rappointmentId\"\x86\x06\n" +
 	"$CheckAppointmentAvailabilityResponse\x12\xa4\x01\n" +
 	"\x1aappointment_conflict_check\x18\x01 \x01(\v2f.moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResultR\x18appointmentConflictCheck\x12\x9e\x01\n" +
 	"\x1abusiness_closed_date_check\x18\x02 \x01(\v2a.moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResultR\x17businessClosedDateCheck\x1a\x9f\x01\n" +
@@ -1192,7 +1191,6 @@ func file_moego_business_appointment_v1_appointment_service_proto_init() {
 	}
 	file_moego_business_appointment_v1_appointment_proto_init()
 	file_moego_business_appointment_v1_grooming_report_proto_init()
-	file_moego_business_appointment_v1_appointment_service_proto_msgTypes[3].OneofWrappers = []any{}
 	file_moego_business_appointment_v1_appointment_service_proto_msgTypes[5].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
