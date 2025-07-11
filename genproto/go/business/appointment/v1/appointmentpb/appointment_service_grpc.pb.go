@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	AppointmentService_GetAppointment_FullMethodName         = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
-	AppointmentService_ListAppointments_FullMethodName       = "/moego.business.appointment.v1.AppointmentService/ListAppointments"
-	AppointmentService_CheckCreateAppointment_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CheckCreateAppointment"
-	AppointmentService_CreateAppointment_FullMethodName      = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
-	AppointmentService_RescheduleAppointment_FullMethodName  = "/moego.business.appointment.v1.AppointmentService/RescheduleAppointment"
-	AppointmentService_CancelAppointment_FullMethodName      = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
-	AppointmentService_ListGroomingReports_FullMethodName    = "/moego.business.appointment.v1.AppointmentService/ListGroomingReports"
+	AppointmentService_GetAppointment_FullMethodName               = "/moego.business.appointment.v1.AppointmentService/GetAppointment"
+	AppointmentService_ListAppointments_FullMethodName             = "/moego.business.appointment.v1.AppointmentService/ListAppointments"
+	AppointmentService_CheckAppointmentAvailability_FullMethodName = "/moego.business.appointment.v1.AppointmentService/CheckAppointmentAvailability"
+	AppointmentService_CreateAppointment_FullMethodName            = "/moego.business.appointment.v1.AppointmentService/CreateAppointment"
+	AppointmentService_RescheduleAppointment_FullMethodName        = "/moego.business.appointment.v1.AppointmentService/RescheduleAppointment"
+	AppointmentService_CancelAppointment_FullMethodName            = "/moego.business.appointment.v1.AppointmentService/CancelAppointment"
+	AppointmentService_ListGroomingReports_FullMethodName          = "/moego.business.appointment.v1.AppointmentService/ListGroomingReports"
 )
 
 // AppointmentServiceClient is the client API for AppointmentService service.
@@ -54,11 +54,12 @@ type AppointmentServiceClient interface {
 	// Returns a paginated list of appointments. Use filters to narrow results
 	// by date range, status, or last update time. Maximum page size: 500.
 	ListAppointments(ctx context.Context, in *ListAppointmentsRequest, opts ...grpc.CallOption) (*ListAppointmentsResponse, error)
-	// Check before create appointment
+	// Check appointment availability
 	//
-	// Return the check result. If it is empty, it indicates that it can be created;
-	// otherwise, return conflicting data
-	CheckCreateAppointment(ctx context.Context, in *CheckCreateAppointmentRequest, opts ...grpc.CallOption) (*CheckCreateAppointmentResponse, error)
+	// Returns appointment availability check results.
+	// 1. appointment date conflict check result
+	// 2. business closed date check result
+	CheckAppointmentAvailability(ctx context.Context, in *CheckAppointmentAvailabilityRequest, opts ...grpc.CallOption) (*CheckAppointmentAvailabilityResponse, error)
 	// Creates a new appointment.
 	//
 	// Schedules one or more services for specified pets. The appointment will
@@ -106,10 +107,10 @@ func (c *appointmentServiceClient) ListAppointments(ctx context.Context, in *Lis
 	return out, nil
 }
 
-func (c *appointmentServiceClient) CheckCreateAppointment(ctx context.Context, in *CheckCreateAppointmentRequest, opts ...grpc.CallOption) (*CheckCreateAppointmentResponse, error) {
+func (c *appointmentServiceClient) CheckAppointmentAvailability(ctx context.Context, in *CheckAppointmentAvailabilityRequest, opts ...grpc.CallOption) (*CheckAppointmentAvailabilityResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CheckCreateAppointmentResponse)
-	err := c.cc.Invoke(ctx, AppointmentService_CheckCreateAppointment_FullMethodName, in, out, cOpts...)
+	out := new(CheckAppointmentAvailabilityResponse)
+	err := c.cc.Invoke(ctx, AppointmentService_CheckAppointmentAvailability_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -182,11 +183,12 @@ type AppointmentServiceServer interface {
 	// Returns a paginated list of appointments. Use filters to narrow results
 	// by date range, status, or last update time. Maximum page size: 500.
 	ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error)
-	// Check before create appointment
+	// Check appointment availability
 	//
-	// Return the check result. If it is empty, it indicates that it can be created;
-	// otherwise, return conflicting data
-	CheckCreateAppointment(context.Context, *CheckCreateAppointmentRequest) (*CheckCreateAppointmentResponse, error)
+	// Returns appointment availability check results.
+	// 1. appointment date conflict check result
+	// 2. business closed date check result
+	CheckAppointmentAvailability(context.Context, *CheckAppointmentAvailabilityRequest) (*CheckAppointmentAvailabilityResponse, error)
 	// Creates a new appointment.
 	//
 	// Schedules one or more services for specified pets. The appointment will
@@ -220,8 +222,8 @@ func (UnimplementedAppointmentServiceServer) GetAppointment(context.Context, *Ge
 func (UnimplementedAppointmentServiceServer) ListAppointments(context.Context, *ListAppointmentsRequest) (*ListAppointmentsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAppointments not implemented")
 }
-func (UnimplementedAppointmentServiceServer) CheckCreateAppointment(context.Context, *CheckCreateAppointmentRequest) (*CheckCreateAppointmentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CheckCreateAppointment not implemented")
+func (UnimplementedAppointmentServiceServer) CheckAppointmentAvailability(context.Context, *CheckAppointmentAvailabilityRequest) (*CheckAppointmentAvailabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckAppointmentAvailability not implemented")
 }
 func (UnimplementedAppointmentServiceServer) CreateAppointment(context.Context, *CreateAppointmentRequest) (*Appointment, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAppointment not implemented")
@@ -292,20 +294,20 @@ func _AppointmentService_ListAppointments_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
-func _AppointmentService_CheckCreateAppointment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CheckCreateAppointmentRequest)
+func _AppointmentService_CheckAppointmentAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckAppointmentAvailabilityRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppointmentServiceServer).CheckCreateAppointment(ctx, in)
+		return srv.(AppointmentServiceServer).CheckAppointmentAvailability(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: AppointmentService_CheckCreateAppointment_FullMethodName,
+		FullMethod: AppointmentService_CheckAppointmentAvailability_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppointmentServiceServer).CheckCreateAppointment(ctx, req.(*CheckCreateAppointmentRequest))
+		return srv.(AppointmentServiceServer).CheckAppointmentAvailability(ctx, req.(*CheckAppointmentAvailabilityRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -398,8 +400,8 @@ var AppointmentService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _AppointmentService_ListAppointments_Handler,
 		},
 		{
-			MethodName: "CheckCreateAppointment",
-			Handler:    _AppointmentService_CheckCreateAppointment_Handler,
+			MethodName: "CheckAppointmentAvailability",
+			Handler:    _AppointmentService_CheckAppointmentAvailability_Handler,
 		},
 		{
 			MethodName: "CreateAppointment",

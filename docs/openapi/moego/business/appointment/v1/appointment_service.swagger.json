@@ -174,14 +174,14 @@
     },
     "/v1/appointments:check": {
       "post": {
-        "summary": "Check before create appointment",
-        "description": "Return the check result. If it is empty, it indicates that it can be created;\notherwise, return conflicting data",
-        "operationId": "AppointmentService_CheckCreateAppointment",
+        "summary": "Check appointment availability",
+        "description": "Returns appointment availability check results.\n1. appointment date conflict check result\n2. business closed date check result",
+        "operationId": "AppointmentService_CheckAppointmentAvailability",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1CheckCreateAppointmentResponse"
+              "$ref": "#/definitions/v1CheckAppointmentAvailabilityResponse"
             }
           },
           "default": {
@@ -197,7 +197,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1CheckCreateAppointmentRequest"
+              "$ref": "#/definitions/v1CheckAppointmentAvailabilityRequest"
             }
           }
         ],
@@ -329,14 +329,14 @@
         "type": "RescheduleAppointmentRequest"
       }
     },
-    "CheckCreateAppointmentResponseAppointmentDateConflictCheckResult": {
+    "CheckAppointmentAvailabilityResponseAppointmentDateConflictCheckResult": {
       "type": "object",
       "properties": {
         "conflicts": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CheckCreateAppointmentResponsePetAppointmentsOverview"
+            "$ref": "#/definitions/CheckAppointmentAvailabilityResponsePetAppointmentsOverview"
           },
           "description": "array(PetAppointmentsOverview), Appointments that conflict with the requested appointment."
         }
@@ -349,7 +349,7 @@
         "type": "AppointmentDateConflictCheckResult"
       }
     },
-    "CheckCreateAppointmentResponseBusinessClosedDateCheckResult": {
+    "CheckAppointmentAvailabilityResponseBusinessClosedDateCheckResult": {
       "type": "object",
       "properties": {
         "closedDates": {
@@ -369,7 +369,7 @@
         "type": "BusinessClosedDateCheckResult"
       }
     },
-    "CheckCreateAppointmentResponsePetAppointmentsOverview": {
+    "CheckAppointmentAvailabilityResponsePetAppointmentsOverview": {
       "type": "object",
       "properties": {
         "pet": {
@@ -926,57 +926,63 @@
       "default": "STATUS_UNSPECIFIED",
       "description": "Possible values are `unconfirmed`, `confirmed`, `checked_in`, `ready`, `finished`, or `canceled`.\nAn appointment starts as `unconfirmed` when created. Once confirmed by the business, it moves to `confirmed`.\nWhen the customer arrives with their pet(s), it transitions to `checked_in`. After service completion,\nit moves to `ready`, then `finished` after pickup. An appointment can be `canceled` at any stage.\n\n - STATUS_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - UNCONFIRMED: Initial state. Appointment created but pending business confirmation.\n - CONFIRMED: Business has accepted and allocated resources.\n - CHECKED_IN: Customer has arrived and service is in progress.\n - READY: Service completed, awaiting pet pickup.\n - FINISHED: Final state. Pet picked up and service completed.\n - CANCELED: Final state. Appointment terminated before completion."
     },
-    "v1CheckCreateAppointmentRequest": {
+    "v1CheckAppointmentAvailabilityRequest": {
       "type": "object",
       "properties": {
         "businessId": {
           "type": "string",
           "description": "string, The business location's identifier where services will be provided."
         },
-        "customerId": {
-          "type": "string",
-          "description": "string, The customer's identifier who is booking the appointment."
+        "dateRange": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "object(Interval), Date range for checking availability."
         },
-        "petServices": {
+        "petIds": {
           "type": "array",
           "items": {
-            "type": "object",
-            "$ref": "#/definitions/CreateAppointmentRequestPetService"
+            "type": "string"
           },
-          "description": "array(PetService), Services requested for each pet."
+          "description": "array(string), List of pet IDs for which services will be provided."
+        },
+        "customerId": {
+          "type": "string",
+          "description": "optional(string), The customer's identifier who is booking the appointment."
+        },
+        "appointmentId": {
+          "type": "string",
+          "description": "optional(string), The appointment identifier to exclude from availability check."
         }
       },
-      "title": "Request to check before create appointment",
+      "title": "Request to check appointment availability",
       "required": [
         "businessId",
-        "customerId",
-        "petServices"
+        "dateRange"
       ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
-        "type": "CheckCreateAppointmentRequest"
+        "type": "CheckAppointmentAvailabilityRequest"
       }
     },
-    "v1CheckCreateAppointmentResponse": {
+    "v1CheckAppointmentAvailabilityResponse": {
       "type": "object",
       "properties": {
         "appointmentConflictCheck": {
-          "$ref": "#/definitions/CheckCreateAppointmentResponseAppointmentDateConflictCheckResult",
+          "$ref": "#/definitions/CheckAppointmentAvailabilityResponseAppointmentDateConflictCheckResult",
           "title": "appointment date conflict check result"
         },
         "businessClosedDateCheck": {
-          "$ref": "#/definitions/CheckCreateAppointmentResponseBusinessClosedDateCheckResult",
+          "$ref": "#/definitions/CheckAppointmentAvailabilityResponseBusinessClosedDateCheckResult",
           "title": "business closed date check result"
         }
       },
-      "title": "Response for check before create appointment",
+      "title": "Response for check appointment availability",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
-        "type": "CheckCreateAppointmentResponse"
+        "type": "CheckAppointmentAvailabilityResponse"
       }
     },
     "v1CreateAppointmentRequest": {
