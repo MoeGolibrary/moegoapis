@@ -391,10 +391,6 @@ Returns a `CheckCreateAppointmentResponse` object containing results from:
 
 If both checks return empty results, it means the appointment can be safely created.
 
-根据你提供的 `CheckCreateAppointmentResponse`
-的新结构，以下是更新后的 [appointment.md](file:///Users/hanyunpeng/Projects/moegoapis/docs/appointment.md)
-文档中关于该响应的描述部分。我们将确保文档与实际的 `.proto` 文件保持一致，并清晰地反映当前的字段结构和含义。
-
 ---
 
 ### 6. Check Create Appointment (`CheckCreateAppointment`)
