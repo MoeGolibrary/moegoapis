@@ -380,9 +380,9 @@ issues.
 | Field Name       | Type          | Required | Description           |
 |------------------|---------------|----------|-----------------------|
 | `business_id`    | string        | Yes      | Business location ID  |
-| `customer_id`    | string        | Yes      | Customer ID           |
 | `date_range`     | Interval      | Yes      | Appointment time slot |
-| `pet_ids`        | Array(string) | Yes      | List of pets ids      |
+| `pet_ids`        | Array(string) | No       | List of pets ids      |
+| `customer_id`    | string        | No       | Customer ID           |
 | `appointment_id` | string        | No       | Appointment ID        |
 
 #### 📌 Return Value:

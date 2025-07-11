@@ -169,17 +169,17 @@ message CheckAppointmentAvailabilityRequest {
   // string, The business location's identifier where services will be provided.
   string business_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // string, The customer's identifier who is booking the appointment.
-  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
-
   // object(Interval), Date range for checking availability.
-  google.type.Interval date_range = 3 [(google.api.field_behavior) = REQUIRED];
+  google.type.Interval date_range = 2 [(google.api.field_behavior) = REQUIRED];
 
   // array(string), List of pet IDs for which services will be provided.
-  repeated string pet_ids = 4;
+  repeated string pet_ids = 3 [(google.api.field_behavior) = OPTIONAL];
+
+  // optional(string), The customer's identifier who is booking the appointment.
+  string customer_id = 4 [(google.api.field_behavior) = OPTIONAL];
 
   // optional(string), The appointment identifier to exclude from availability check.
-  optional string appointment_id = 7;
+  string appointment_id = 5 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Response for check appointment availability

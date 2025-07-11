@@ -933,10 +933,6 @@
           "type": "string",
           "description": "string, The business location's identifier where services will be provided."
         },
-        "customerId": {
-          "type": "string",
-          "description": "string, The customer's identifier who is booking the appointment."
-        },
         "dateRange": {
           "$ref": "#/definitions/typeInterval",
           "description": "object(Interval), Date range for checking availability."
@@ -948,16 +944,18 @@
           },
           "description": "array(string), List of pet IDs for which services will be provided."
         },
+        "customerId": {
+          "type": "string",
+          "description": "optional(string), The customer's identifier who is booking the appointment."
+        },
         "appointmentId": {
           "type": "string",
-          "x-nullable": true,
           "description": "optional(string), The appointment identifier to exclude from availability check."
         }
       },
       "title": "Request to check appointment availability",
       "required": [
         "businessId",
-        "customerId",
         "dateRange"
       ],
       "x-go-type": {
