@@ -48,11 +48,12 @@ service AppointmentService {
     };
   }
 
-  // Check before create appointment
+  // Check appointment availability
   //
-  // Return the check result. If it is empty, it indicates that it can be created;
-  // otherwise, return conflicting data
-  rpc CheckCreateAppointment(CheckCreateAppointmentRequest) returns (CheckCreateAppointmentResponse) {
+  // Returns appointment availability check results.
+  // 1. appointment date conflict check result
+  // 2. business closed date check result
+  rpc CheckAppointmentAvailability(CheckAppointmentAvailabilityRequest) returns (CheckAppointmentAvailabilityResponse) {
     option (google.api.http) = {
       post: "/v1/appointments:check"
       body: "*"
@@ -163,20 +164,26 @@ message ListAppointmentsResponse {
   repeated Appointment appointments = 2;
 }
 
-// Request to check before create appointment
-message CheckCreateAppointmentRequest {
+// Request to check appointment availability
+message CheckAppointmentAvailabilityRequest {
   // string, The business location's identifier where services will be provided.
   string business_id = 1 [(google.api.field_behavior) = REQUIRED];
 
   // string, The customer's identifier who is booking the appointment.
   string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
 
-  // array(PetService), Services requested for each pet.
-  repeated CreateAppointmentRequest.PetService pet_services = 3 [(google.api.field_behavior) = REQUIRED];
+  // object(Interval), Date range for checking availability.
+  google.type.Interval date_range = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of pet IDs for which services will be provided.
+  repeated string pet_ids = 4;
+
+  // optional(string), The appointment identifier to exclude from availability check.
+  optional string appointment_id = 7;
 }
 
-// Response for check before create appointment
-message CheckCreateAppointmentResponse {
+// Response for check appointment availability
+message CheckAppointmentAvailabilityResponse {
   // appointment date conflict check result
   message AppointmentDateConflictCheckResult {
     // array(PetAppointmentsOverview), Appointments that conflict with the requested appointment.

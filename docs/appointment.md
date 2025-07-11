@@ -355,15 +355,16 @@ Returns the canceled `Appointment` object.
 
 ---
 
-### 6. Check Create Appointment (`CheckCreateAppointment`)
+### 6. Check Appointment Availability (`CheckAppointmentAvailability`)
 
-- **Method**: `CheckCreateAppointment`
+- **Method**: `CheckAppointmentAvailability`
 - **HTTP Method**: POST
 - **Path**: `/v1/appointments:check`
 
 #### ✅ Functionality:
 
-Performs pre-checks before creating a new appointment, including checking for time conflicts and business closed dates.
+Performs pre-checks before creating or rescheduling an appointment, including checking for time conflicts and business
+closed dates.
 
 This method helps clients determine if it's safe to proceed with creating an appointment without causing scheduling
 issues.
@@ -376,62 +377,27 @@ issues.
 
 #### 🔧 Request Parameters:
 
-| Field Name     | Type              | Required | Description                                |
-|----------------|-------------------|----------|--------------------------------------------|
-| `business_id`  | string            | Yes      | Business location ID                       |
-| `customer_id`  | string            | Yes      | Customer ID                                |
-| `pet_services` | Array(PetService) | Yes      | List of pets and their associated services |
+| Field Name       | Type          | Required | Description           |
+|------------------|---------------|----------|-----------------------|
+| `business_id`    | string        | Yes      | Business location ID  |
+| `customer_id`    | string        | Yes      | Customer ID           |
+| `date_range`     | Interval      | Yes      | Appointment time slot |
+| `pet_ids`        | Array(string) | Yes      | List of pets ids      |
+| `appointment_id` | string        | No       | Appointment ID        |
 
 #### 📌 Return Value:
 
-Returns a `CheckCreateAppointmentResponse` object containing results from:
+Returns a `CheckAppointmentAvailabilityResponse` object containing results from:
 
 - **Appointment Date Conflict Check**: List of conflicting appointments (if any).
 - **Business Closed Date Check**: List of closed dates during the requested period.
 
 If both checks return empty results, it means the appointment can be safely created.
 
----
+##### CheckAppointmentAvailabilityResponse
 
-### 6. Check Create Appointment (`CheckCreateAppointment`)
-
-- **Method**: `CheckCreateAppointment`
-- **HTTP Method**: POST
-- **Path**: `/v1/appointments:check`
-
-#### ✅ Functionality:
-
-Performs pre-checks before creating a new appointment, including checking for time conflicts and business closed dates.
-
-This method helps clients determine if it's safe to proceed with creating an appointment without causing scheduling
-issues.
-
-#### 🎯 Use Cases:
-
-- Validate that there are no conflicting appointments.
-- Ensure the selected date does not fall on a business holiday or closed day.
-- Prevent duplicate or overlapping bookings.
-
-#### 🔧 Request Parameters:
-
-| Field Name     | Type              | Required | Description                                |
-|----------------|-------------------|----------|--------------------------------------------|
-| `business_id`  | string            | Yes      | Business location ID                       |
-| `customer_id`  | string            | Yes      | Customer ID                                |
-| `pet_services` | Array(PetService) | Yes      | List of pets and their associated services |
-
-#### 📌 Return Value:
-
-Returns a `CheckCreateAppointmentResponse` object containing results from:
-
-- **Appointment Date Conflict Check**: List of conflicting appointments (if any).
-- **Business Closed Date Check**: List of closed dates during the requested period.
-
-If both checks return empty results, it means the appointment can be safely created.
-
-##### CheckCreateAppointmentResponse
-
-Represents the result of a pre-check operation before creating an appointment. It includes two main components:
+Represents the result of a pre-check operation before creating or rescheduling an appointment. It includes two main
+components:
 
 ###### Fields:
 
@@ -682,13 +648,13 @@ POST /v1/appointments:check
 
 ## 📌 6. Common Error Codes
 
-| Error Code          | Description                                                         |
-|---------------------|---------------------------------------------------------------------|
-| `NOT_FOUND`         | Appointment or customer ID does not exist                           |
-| `PERMISSION_DENIED` | Current user has no access rights                                   |
-| `INVALID_ARGUMENT`  | Invalid request parameters                                          |
-| `INTERNAL`          | Internal server error                                               |
-| `CONFLICT`          | Detected scheduling conflict (returned by `CheckCreateAppointment`) |
+| Error Code          | Description                                                               |
+|---------------------|---------------------------------------------------------------------------|
+| `NOT_FOUND`         | Appointment or customer ID does not exist                                 |
+| `PERMISSION_DENIED` | Current user has no access rights                                         |
+| `INVALID_ARGUMENT`  | Invalid request parameters                                                |
+| `INTERNAL`          | Internal server error                                                     |
+| `CONFLICT`          | Detected scheduling conflict (returned by `CheckAppointmentAvailability`) |
 
 ---
 
