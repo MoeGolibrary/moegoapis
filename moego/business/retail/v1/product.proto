@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package moego.business.retail.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb;retailpb";
+option java_multiple_files = true;
+option java_outer_classname = "RetailServiceProto";
+option java_package = "com.moego.api.business.retail.v1";
+
+// Product represents detailed information about a retail product.
+message Product {
+  // Unique identifier for the product
+  string id = 1;
+
+  // ID of the business location associated with this product
+  string business_id = 2;
+
+  // Name of the product
+  string name = 3;
+
+  // Description of the product
+  string description = 4;
+
+  // Stock Keeping Unit (SKU) identifier
+  string sku = 5;
+
+  // Barcode used for scanning the product
+  string barcode = 6;
+
+  // URL to the product's image
+  string image_url = 7;
+
+  // Name of the category the product belongs to
+  string category_name = 8;
+
+  // Supplier information associated with the product
+  Supplier supplier = 21;
+
+  // Cost price of the product from the supplier
+  google.type.Money supply_price = 9;
+
+  // Retail selling price to customers
+  google.type.Money retail_price = 11;
+
+  // Special discounted price available for limited time
+  google.type.Money special_price = 12;
+
+  // Tax rate applied to this product (e.g., 0.08 for 8%)
+  double tax_rate = 10;
+
+  // Whether staff commission is enabled for this product
+  bool enable_staff_commission = 13;
+
+  // Current stock quantity available
+  int32 stock = 17;
+
+  // Whether the product has been marked as deleted
+  bool deleted = 18;
+
+  // When this product was created
+  google.protobuf.Timestamp create_time = 14;
+
+  // When this product was last updated
+  google.protobuf.Timestamp update_time = 15;
+}
+
+// Supplier represents detailed information about a product supplier.
+message Supplier {
+  // Unique identifier for the supplier
+  string id = 1;
+
+  // Name of the supplier company
+  string name = 2;
+
+  // Contact person's first name
+  string first_name = 3;
+
+  // Contact person's last name
+  string last_name = 4;
+
+  // Landline telephone number
+  string telephone = 5;
+
+  // Mobile phone number
+  string mobile = 6;
+
+  // Email address for communication
+  string email = 7;
+
+  // Website URL of the supplier
+  string website = 8;
+
+  // Physical address of the supplier
+  string address = 9;
+}
