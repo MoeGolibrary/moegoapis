@@ -58,6 +58,10 @@ notifications.
 - [Order](docs/order.md): Purchase records with filtering by status, company, or business ID.
 - [Payment](docs/payment.md): Transaction details between customers and businesses.
 
+### 🛒 Retail & Inventory Management
+
+- [Retail](docs/retail.md): Manages retail products and supplier relationships.
+
 ### ⚙️ Settings & Integrations
 
 - [Webhook](docs/webhook.md): Real-time event notification system with HTTPS callbacks, HMAC signing, and retry
@@ -103,7 +107,9 @@ For more details:
 
 ## 📄 OpenAPI Specifications
 
-To better support developers using MoeGo APIs, we have added corresponding `openapi.json` files under the `docs/openapi` directory. These files are generated based on the Protocol Buffer definitions and provide comprehensive interface descriptions for REST APIs, including request paths, parameters, and response formats.
+To better support developers using MoeGo APIs, we have added corresponding `openapi.json` files under the `docs/openapi`
+directory. These files are generated based on the Protocol Buffer definitions and provide comprehensive interface
+descriptions for REST APIs, including request paths, parameters, and response formats.
 
 With these OpenAPI specifications, developers can:
 
@@ -112,6 +118,9 @@ With these OpenAPI specifications, developers can:
 - Automatically generate client SDKs or server-side stub code;
 - Use them as a reference for API testing and debugging.
 
-It is recommended to refer to the corresponding module documentation (e.g., [Customer](docs/customer.md), [Appointment](docs/appointment.md)) alongside the OpenAPI files for a more complete understanding.
+It is recommended to refer to the corresponding module documentation (
+e.g., [Customer](docs/customer.md), [Appointment](docs/appointment.md)) alongside the OpenAPI files for a more complete
+understanding.
 
-Each JSON file corresponds to a core module and follows the OpenAPI 3.0 specification, making it easy to integrate into various development toolchains.
+Each JSON file corresponds to a core module and follows the OpenAPI 3.0 specification, making it easy to integrate into
+various development toolchains.
