@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package moego.business.setting.v1;
+
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
+option java_multiple_files = true;
+option java_outer_classname = "SettingProto";
+option java_package = "com.moego.api.business.setting.v1";
+
+// type enum for lodging type
+// property of all lodging unit under one lodging type
+enum LodgingUnitType {
+  // Unspecified lodging unit type
+  LODGING_UNIT_TYPE_UNSPECIFIED = 0;
+  // Room/kennel type
+  ROOM = 1;
+  // Area type
+  AREA = 2;
+}
+
+// Lodging type
+message LodgingType {
+  // string, The unique identifier of the lodging type.
+  string id = 1;
+  // string, The name of the lodging type.
+  string name = 2;
+  // string, description of the lodging type
+  string description = 3;
+  // Array(string), image urls of this lodging type
+  repeated string photo_list = 4;
+  // max pet number of this lodging type
+  int32 max_pet_num = 5;
+
+  // lodging unit type in this lodging type
+  LodgingUnitType lodging_unit_type = 6;
+}
+
+// Lodging unit
+message LodgingUnit {
+  // string, The unique identifier of the lodging unit.
+  string id = 1;
+  // string, The name of the lodging unit.
+  string name = 2;
+}
+
+// Lodging
+message Lodging {
+  // Lodging type
+  LodgingType lodging_type = 1;
+  // array(LodgingUnit), The lodging units available for booking.
+  repeated LodgingUnit lodging_units = 2;
+}

@@ -441,33 +441,9 @@ This structure is used to indicate whether lodging units are over capacity durin
 appointment involves pet boarding services, the system checks if the business has exceeded its lodging capacity during
 the requested time.
 
-| Field Name      | Type                         | Description                                    |
-|-----------------|------------------------------|------------------------------------------------|
-| `lodging_units` | Array(`LodgingUnitOverview`) | List of lodging units that exceed capacity     |
-| `lodging_types` | Array(`LodgingTypeOverview`) | List of lodging types that caused the overload |
-
----
-
-###### 5. `LodgingUnitOverview`
-
-Represents detailed information about a specific lodging unit, including its ID, name, and associated lodging type.
-
-| Field Name        | Type   | Description                           |
-|-------------------|--------|---------------------------------------|
-| `id`              | int64  | Unique identifier of the lodging unit |
-| `name`            | string | Display name of the lodging unit      |
-| `lodging_type_id` | int64  | ID of the associated lodging type     |
-
----
-
-###### 6. `LodgingTypeOverview`
-
-Represents a type of lodging service offered by the business.
-
-| Field Name | Type   | Description              |
-|------------|--------|--------------------------|
-| `id`       | int64  | Unique identifier        |
-| `name`     | string | Display name of the type |
+| Field Name | Type                                       | Description                          |
+|------------|--------------------------------------------|--------------------------------------|
+| `lodgings` | Array(`moego.business.setting.v1.Lodging`) | List of lodging that exceed capacity |
 
 ---
 

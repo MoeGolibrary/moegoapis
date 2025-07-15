@@ -10,6 +10,7 @@ import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
 import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/lodging.proto";
 
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -212,27 +213,7 @@ message CheckAppointmentAvailabilityResponse {
   // lodging over capacity check result
   message LodgingOverCapacityCheckResult {
     // lodging over capacity list
-    repeated LodgingUnitOverview lodging_units = 1;
-    // lodging type list
-    repeated LodgingTypeOverview lodging_types = 2;
-  }
-
-  //  lodging unit over view
-  message LodgingUnitOverview {
-    // lodging unit id
-    int64 id = 1;
-    // lodging unit name
-    string name = 2;
-    // lodging unit type id
-    int64 lodging_type_id = 3;
-  }
-
-  // lodging type over view
-  message LodgingTypeOverview {
-    // lodging type id
-    int64 id = 1;
-    // lodging type name
-    string name = 2;
+    repeated moego.business.setting.v1.Lodging lodgings = 1;
   }
 
   // appointment date conflict check result
