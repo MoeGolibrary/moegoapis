@@ -369,6 +369,81 @@
         "type": "BusinessClosedDateCheckResult"
       }
     },
+    "CheckAppointmentAvailabilityResponseLodgingOverCapacityCheckResult": {
+      "type": "object",
+      "properties": {
+        "lodgingUnits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CheckAppointmentAvailabilityResponseLodgingUnitOverview"
+          },
+          "title": "lodging over capacity list"
+        },
+        "lodgingTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CheckAppointmentAvailabilityResponseLodgingTypeOverview"
+          },
+          "title": "lodging type list"
+        }
+      },
+      "title": "lodging over capacity check result",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "LodgingOverCapacityCheckResult"
+      }
+    },
+    "CheckAppointmentAvailabilityResponseLodgingTypeOverview": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "lodging type id"
+        },
+        "name": {
+          "type": "string",
+          "title": "lodging type name"
+        }
+      },
+      "title": "lodging type over view",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "LodgingTypeOverview"
+      }
+    },
+    "CheckAppointmentAvailabilityResponseLodgingUnitOverview": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "lodging unit id"
+        },
+        "name": {
+          "type": "string",
+          "title": "lodging unit name"
+        },
+        "lodgingTypeId": {
+          "type": "string",
+          "format": "int64",
+          "title": "lodging unit type id"
+        }
+      },
+      "title": "lodging unit over view",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "LodgingUnitOverview"
+      }
+    },
     "CheckAppointmentAvailabilityResponsePetAppointmentsOverview": {
       "type": "object",
       "properties": {
@@ -951,6 +1026,14 @@
         "appointmentId": {
           "type": "string",
           "description": "optional(string), The appointment identifier to exclude from availability check."
+        },
+        "lodgingUnitIds": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "int64"
+          },
+          "description": "array(int64), The lodging unit identifiers to check availability for."
         }
       },
       "title": "Request to check appointment availability",
@@ -975,6 +1058,10 @@
         "businessClosedDateCheck": {
           "$ref": "#/definitions/CheckAppointmentAvailabilityResponseBusinessClosedDateCheckResult",
           "title": "business closed date check result"
+        },
+        "lodgingOverCapacityCheck": {
+          "$ref": "#/definitions/CheckAppointmentAvailabilityResponseLodgingOverCapacityCheckResult",
+          "title": "lodging over capacity check result"
         }
       },
       "title": "Response for check appointment availability",

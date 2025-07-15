@@ -180,6 +180,9 @@ message CheckAppointmentAvailabilityRequest {
 
   // optional(string), The appointment identifier to exclude from availability check.
   string appointment_id = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // array(string), The lodging unit identifiers to check availability for.
+  repeated string lodging_unit_ids = 6 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Response for check appointment availability
@@ -206,11 +209,40 @@ message CheckAppointmentAvailabilityResponse {
     repeated google.type.Date closed_dates = 1;
   }
 
+  // lodging over capacity check result
+  message LodgingOverCapacityCheckResult {
+    // lodging over capacity list
+    repeated LodgingUnitOverview lodging_units = 1;
+    // lodging type list
+    repeated LodgingTypeOverview lodging_types = 2;
+  }
+
+  //  lodging unit over view
+  message LodgingUnitOverview {
+    // lodging unit id
+    int64 id = 1;
+    // lodging unit name
+    string name = 2;
+    // lodging unit type id
+    int64 lodging_type_id = 3;
+  }
+
+  // lodging type over view
+  message LodgingTypeOverview {
+    // lodging type id
+    int64 id = 1;
+    // lodging type name
+    string name = 2;
+  }
+
   // appointment date conflict check result
   AppointmentDateConflictCheckResult appointment_conflict_check = 1;
 
   // business closed date check result
   BusinessClosedDateCheckResult business_closed_date_check = 2;
+
+  // lodging over capacity check result
+  LodgingOverCapacityCheckResult lodging_over_capacity_check = 3;
 }
 
 // Request to create a new appointment
