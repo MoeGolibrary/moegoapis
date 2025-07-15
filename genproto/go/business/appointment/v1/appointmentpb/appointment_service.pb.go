@@ -8,7 +8,7 @@ package appointmentpb
 
 import (
 	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v
+	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	date "google.golang.org/genproto/googleapis/type/date"
