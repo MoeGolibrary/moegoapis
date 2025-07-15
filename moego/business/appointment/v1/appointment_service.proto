@@ -323,14 +323,18 @@ message ListGroomingReportsResponse {
 
 // Request to create an appointment note
 message CreateAppointmentNoteRequest {
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+
   // string, The unique identifier of the appointment.
-  string appointment_id = 1 [(google.api.field_behavior) = REQUIRED];
+  string appointment_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // string, The note.
-  string note = 2 [(google.api.field_behavior) = REQUIRED];
+  string note = 3 [(google.api.field_behavior) = REQUIRED];
 
   // enum(AppointmentNote.Type), The type of note. Only ALERT_NOTES and COMMENT are supported.
-  AppointmentNote.Type type = 3 [(google.api.field_behavior) = REQUIRED];
+  AppointmentNote.Type type = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Request to update an appointment note
@@ -340,6 +344,11 @@ message UpdateAppointmentNoteRequest {
 
   // string, The note.
   string note = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
+
 }
 
 // Request to list appointment notes
@@ -349,10 +358,15 @@ message ListAppointmentNotesRequest {
 
   // enum(AppointmentNote.Type), The type of note.
   AppointmentNote.Type type = 2 [(google.api.field_behavior) = OPTIONAL];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
+
 }
 
 // Response to list appointment notes
 message ListAppointmentNotesResponse {
   // array(AppointmentNote), The appointment notes.
-  repeated AppointmentNote appointment_notes = 1;
+  repeated AppointmentNote notes = 1;
 }

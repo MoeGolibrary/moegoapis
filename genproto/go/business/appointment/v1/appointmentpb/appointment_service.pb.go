@@ -655,12 +655,15 @@ func (x *ListGroomingReportsResponse) GetGroomingReports() []*GroomingReport {
 // Request to create an appointment note
 type CreateAppointmentNoteRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	// string, The unique identifier of the appointment.
-	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
+	AppointmentId string `protobuf:"bytes,2,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
 	// string, The note.
-	Note string `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
+	Note string `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
 	// enum(AppointmentNote.Type), The type of note. Only ALERT_NOTES and COMMENT are supported.
-	Type          AppointmentNote_Type `protobuf:"varint,3,opt,name=type,proto3,enum=moego.business.appointment.v1.AppointmentNote_Type" json:"type,omitempty"`
+	Type          AppointmentNote_Type `protobuf:"varint,4,opt,name=type,proto3,enum=moego.business.appointment.v1.AppointmentNote_Type" json:"type,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -695,6 +698,13 @@ func (*CreateAppointmentNoteRequest) Descriptor() ([]byte, []int) {
 	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{10}
 }
 
+func (x *CreateAppointmentNoteRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
 func (x *CreateAppointmentNoteRequest) GetAppointmentId() string {
 	if x != nil {
 		return x.AppointmentId
@@ -722,7 +732,10 @@ type UpdateAppointmentNoteRequest struct {
 	// string, The unique identifier of the appointment notes
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// string, The note.
-	Note          string `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
+	Note string `protobuf:"bytes,2,opt,name=note,proto3" json:"note,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId    string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -771,13 +784,23 @@ func (x *UpdateAppointmentNoteRequest) GetNote() string {
 	return ""
 }
 
+func (x *UpdateAppointmentNoteRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
 // Request to list appointment notes
 type ListAppointmentNotesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// string, The unique identifier of the appointment.
 	AppointmentId string `protobuf:"bytes,1,opt,name=appointment_id,json=appointmentId,proto3" json:"appointment_id,omitempty"`
 	// enum(AppointmentNote.Type), The type of note.
-	Type          AppointmentNote_Type `protobuf:"varint,2,opt,name=type,proto3,enum=moego.business.appointment.v1.AppointmentNote_Type" json:"type,omitempty"`
+	Type AppointmentNote_Type `protobuf:"varint,2,opt,name=type,proto3,enum=moego.business.appointment.v1.AppointmentNote_Type" json:"type,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId    string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -826,13 +849,20 @@ func (x *ListAppointmentNotesRequest) GetType() AppointmentNote_Type {
 	return AppointmentNote_APPOINTMENT_NOTE_TYPE_UNSPECIFIED
 }
 
+func (x *ListAppointmentNotesRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
 // Response to list appointment notes
 type ListAppointmentNotesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// array(AppointmentNote), The appointment notes.
-	AppointmentNotes []*AppointmentNote `protobuf:"bytes,1,rep,name=appointment_notes,json=appointmentNotes,proto3" json:"appointment_notes,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	Notes         []*AppointmentNote `protobuf:"bytes,1,rep,name=notes,proto3" json:"notes,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListAppointmentNotesResponse) Reset() {
@@ -865,9 +895,9 @@ func (*ListAppointmentNotesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *ListAppointmentNotesResponse) GetAppointmentNotes() []*AppointmentNote {
+func (x *ListAppointmentNotesResponse) GetNotes() []*AppointmentNote {
 	if x != nil {
-		return x.AppointmentNotes
+		return x.Notes
 	}
 	return nil
 }
@@ -1312,19 +1342,25 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\"w\n" +
 	"\x1bListGroomingReportsResponse\x12X\n" +
-	"\x10grooming_reports\x18\x01 \x03(\v2-.moego.business.appointment.v1.GroomingReportR\x0fgroomingReports\"\xb1\x01\n" +
-	"\x1cCreateAppointmentNoteRequest\x12*\n" +
-	"\x0eappointment_id\x18\x01 \x01(\tB\x03\xe0A\x02R\rappointmentId\x12\x17\n" +
-	"\x04note\x18\x02 \x01(\tB\x03\xe0A\x02R\x04note\x12L\n" +
-	"\x04type\x18\x03 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x02R\x04type\"L\n" +
+	"\x10grooming_reports\x18\x01 \x03(\v2-.moego.business.appointment.v1.GroomingReportR\x0fgroomingReports\"\xd7\x01\n" +
+	"\x1cCreateAppointmentNoteRequest\x12$\n" +
+	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
+	"businessId\x12*\n" +
+	"\x0eappointment_id\x18\x02 \x01(\tB\x03\xe0A\x02R\rappointmentId\x12\x17\n" +
+	"\x04note\x18\x03 \x01(\tB\x03\xe0A\x02R\x04note\x12L\n" +
+	"\x04type\x18\x04 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x02R\x04type\"r\n" +
 	"\x1cUpdateAppointmentNoteRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
-	"\x04note\x18\x02 \x01(\tB\x03\xe0A\x02R\x04note\"\x97\x01\n" +
+	"\x04note\x18\x02 \x01(\tB\x03\xe0A\x02R\x04note\x12$\n" +
+	"\vbusiness_id\x18\x03 \x01(\tB\x03\xe0A\x02R\n" +
+	"businessId\"\xbd\x01\n" +
 	"\x1bListAppointmentNotesRequest\x12*\n" +
 	"\x0eappointment_id\x18\x01 \x01(\tB\x03\xe0A\x02R\rappointmentId\x12L\n" +
-	"\x04type\x18\x02 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x01R\x04type\"{\n" +
-	"\x1cListAppointmentNotesResponse\x12[\n" +
-	"\x11appointment_notes\x18\x01 \x03(\v2..moego.business.appointment.v1.AppointmentNoteR\x10appointmentNotes2\xd1\r\n" +
+	"\x04type\x18\x02 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x01R\x04type\x12$\n" +
+	"\vbusiness_id\x18\x03 \x01(\tB\x03\xe0A\x02R\n" +
+	"businessId\"d\n" +
+	"\x1cListAppointmentNotesResponse\x12D\n" +
+	"\x05notes\x18\x01 \x03(\v2..moego.business.appointment.v1.AppointmentNoteR\x05notes2\xd1\r\n" +
 	"\x12AppointmentService\x12\x91\x01\n" +
 	"\x0eGetAppointment\x124.moego.business.appointment.v1.GetAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/appointments/{id}\x12\xa5\x01\n" +
 	"\x10ListAppointments\x126.moego.business.appointment.v1.ListAppointmentsRequest\x1a7.moego.business.appointment.v1.ListAppointmentsResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/appointments:list\x12\xca\x01\n" +
@@ -1394,7 +1430,7 @@ var file_moego_business_appointment_v1_appointment_service_proto_depIdxs = []int
 	23, // 8: moego.business.appointment.v1.ListGroomingReportsResponse.grooming_reports:type_name -> moego.business.appointment.v1.GroomingReport
 	24, // 9: moego.business.appointment.v1.CreateAppointmentNoteRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
 	24, // 10: moego.business.appointment.v1.ListAppointmentNotesRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
-	25, // 11: moego.business.appointment.v1.ListAppointmentNotesResponse.appointment_notes:type_name -> moego.business.appointment.v1.AppointmentNote
+	25, // 11: moego.business.appointment.v1.ListAppointmentNotesResponse.notes:type_name -> moego.business.appointment.v1.AppointmentNote
 	22, // 12: moego.business.appointment.v1.ListAppointmentsRequest.Filter.start_time:type_name -> google.type.Interval
 	22, // 13: moego.business.appointment.v1.ListAppointmentsRequest.Filter.end_time:type_name -> google.type.Interval
 	22, // 14: moego.business.appointment.v1.ListAppointmentsRequest.Filter.last_updated_time:type_name -> google.type.Interval

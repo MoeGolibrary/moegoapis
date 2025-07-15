@@ -441,11 +441,16 @@
         "note": {
           "type": "string",
           "description": "string, The note."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier.\nMust match the business_id of the appointment."
         }
       },
       "title": "Request to update an appointment note",
       "required": [
-        "note"
+        "note",
+        "businessId"
       ],
       "x-go-type": {
         "import": {
@@ -1184,6 +1189,10 @@
     "v1CreateAppointmentNoteRequest": {
       "type": "object",
       "properties": {
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier.\nMust match the business_id of the appointment."
+        },
         "appointmentId": {
           "type": "string",
           "description": "string, The unique identifier of the appointment."
@@ -1199,6 +1208,7 @@
       },
       "title": "Request to create an appointment note",
       "required": [
+        "businessId",
         "appointmentId",
         "note",
         "type"
@@ -1376,11 +1386,16 @@
         "type": {
           "$ref": "#/definitions/v1AppointmentNoteType",
           "description": "enum(AppointmentNote.Type), The type of note."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier.\nMust match the business_id of the appointment."
         }
       },
       "title": "Request to list appointment notes",
       "required": [
-        "appointmentId"
+        "appointmentId",
+        "businessId"
       ],
       "x-go-type": {
         "import": {
@@ -1392,7 +1407,7 @@
     "v1ListAppointmentNotesResponse": {
       "type": "object",
       "properties": {
-        "appointmentNotes": {
+        "notes": {
           "type": "array",
           "items": {
             "type": "object",
