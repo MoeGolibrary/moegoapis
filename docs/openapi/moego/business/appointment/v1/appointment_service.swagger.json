@@ -50,6 +50,112 @@
         ]
       }
     },
+    "/v1/appointments/notes": {
+      "post": {
+        "summary": "Create an appointment note",
+        "operationId": "AppointmentService_CreateAppointmentNote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppointmentNote"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateAppointmentNoteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.appointment.v1.AppointmentService"
+        ]
+      }
+    },
+    "/v1/appointments/notes/{id}": {
+      "put": {
+        "summary": "Update an appointment note",
+        "operationId": "AppointmentService_UpdateAppointmentNote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AppointmentNote"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "string, The unique identifier of the appointment notes",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentServiceUpdateAppointmentNoteBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.appointment.v1.AppointmentService"
+        ]
+      }
+    },
+    "/v1/appointments/notes:list": {
+      "post": {
+        "summary": "List appointment notes",
+        "operationId": "AppointmentService_ListAppointmentNotes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListAppointmentNotesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListAppointmentNotesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.appointment.v1.AppointmentService"
+        ]
+      }
+    },
     "/v1/appointments/{id}": {
       "get": {
         "summary": "Retrieves a single appointment by its ID.",
@@ -327,6 +433,25 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
         "type": "RescheduleAppointmentRequest"
+      }
+    },
+    "AppointmentServiceUpdateAppointmentNoteBody": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "description": "string, The note."
+        }
+      },
+      "title": "Request to update an appointment note",
+      "required": [
+        "note"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "UpdateAppointmentNoteRequest"
       }
     },
     "CheckAppointmentAvailabilityResponseAppointmentDateConflictCheckResult": {
@@ -912,6 +1037,77 @@
         "type": "Appointment"
       }
     },
+    "v1AppointmentNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the appointment note."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier."
+        },
+        "customerId": {
+          "type": "string",
+          "description": "string, The customer's identifier."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "string, The company's identifier."
+        },
+        "appointmentId": {
+          "type": "string",
+          "description": "string, The appointment's identifier."
+        },
+        "note": {
+          "type": "string",
+          "description": "string, The note."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AppointmentNoteType",
+          "description": "enum(AppointmentNote.Type), The type of note."
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was created."
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was last modified."
+        },
+        "createdBy": {
+          "type": "string",
+          "description": "string, The staff who created the note."
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "description": "string, The staff who last modified the note."
+        }
+      },
+      "title": "Appointment note",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "AppointmentNote"
+      }
+    },
+    "v1AppointmentNoteType": {
+      "type": "string",
+      "enum": [
+        "APPOINTMENT_NOTE_TYPE_UNSPECIFIED",
+        "ALERT_NOTES",
+        "COMMENT",
+        "CANCEL",
+        "ADDITIONAL"
+      ],
+      "default": "APPOINTMENT_NOTE_TYPE_UNSPECIFIED",
+      "description": "- APPOINTMENT_NOTE_TYPE_UNSPECIFIED: unspecified\n - ALERT_NOTES: Alert notes\n - COMMENT: Ticket comments, Block description\n - CANCEL: Cancel reason\n - ADDITIONAL: Booking request additional note",
+      "title": "Type of note"
+    },
     "v1AppointmentStatus": {
       "type": "string",
       "enum": [
@@ -983,6 +1179,35 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
         "type": "CheckAppointmentAvailabilityResponse"
+      }
+    },
+    "v1CreateAppointmentNoteRequest": {
+      "type": "object",
+      "properties": {
+        "appointmentId": {
+          "type": "string",
+          "description": "string, The unique identifier of the appointment."
+        },
+        "note": {
+          "type": "string",
+          "description": "string, The note."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AppointmentNoteType",
+          "description": "enum(AppointmentNote.Type), The type of note. Only ALERT_NOTES and COMMENT are supported."
+        }
+      },
+      "title": "Request to create an appointment note",
+      "required": [
+        "appointmentId",
+        "note",
+        "type"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "CreateAppointmentNoteRequest"
       }
     },
     "v1CreateAppointmentRequest": {
@@ -1140,6 +1365,49 @@
       ],
       "default": "STATUS_UNSPECIFIED",
       "description": "Status of the grooming report throughout its lifecycle.\n\n - STATUS_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - CREATED: Report is created but not submitted (draft).\n - DRAFT: The report is created but not submitted.\n - SUBMITTED: Report has been submitted and is ready to be sent.\n - SENT: Report has been successfully sent to the customer."
+    },
+    "v1ListAppointmentNotesRequest": {
+      "type": "object",
+      "properties": {
+        "appointmentId": {
+          "type": "string",
+          "description": "string, The unique identifier of the appointment."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AppointmentNoteType",
+          "description": "enum(AppointmentNote.Type), The type of note."
+        }
+      },
+      "title": "Request to list appointment notes",
+      "required": [
+        "appointmentId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "ListAppointmentNotesRequest"
+      }
+    },
+    "v1ListAppointmentNotesResponse": {
+      "type": "object",
+      "properties": {
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AppointmentNote"
+          },
+          "description": "array(AppointmentNote), The appointment notes."
+        }
+      },
+      "title": "Response to list appointment notes",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "ListAppointmentNotesResponse"
+      }
     },
     "v1ListAppointmentsRequest": {
       "type": "object",
