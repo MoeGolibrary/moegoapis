@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package moego.business.appointment.v1;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
+option java_multiple_files = true;
+option java_outer_classname = "AppointmentNoteProto";
+option java_package = "com.moego.api.business.appointment.v1";
+
+// Appointment note
+message AppointmentNote {
+
+  // Type of note
+  enum Type {
+    // unspecified
+    APPOINTMENT_NOTE_TYPE_UNSPECIFIED = 0;
+    // Alert notes
+    ALERT_NOTES = 1;
+    // Ticket comments, Block description
+    COMMENT = 2;
+    // Cancel reason
+    CANCEL = 3;
+    // Booking request additional note
+    ADDITIONAL = 4;
+  }
+
+  // string, The unique identifier of the appointment note.
+  string id = 1;
+
+  // string, The business location's identifier.
+  string business_id = 2;
+
+  // string, The customer's identifier.
+  string customer_id = 3;
+
+  // string, The company's identifier.
+  string company_id = 4;
+
+  // string, The appointment's identifier.
+  string appointment_id = 5;
+
+  // string, The note.
+  string note = 6;
+
+  // enum(AppointmentNote.Type), The type of note.
+  Type type = 7;
+
+  // timestamp, When the pet was created.
+  google.protobuf.Timestamp created_time = 8;
+
+  // timestamp, When the pet was last modified.
+  google.protobuf.Timestamp last_updated_time = 9;
+
+  // string, The staff who created the note.
+  string created_by = 10;
+
+  // string, The staff who last modified the note.
+  string last_updated_by = 11;
+}
+

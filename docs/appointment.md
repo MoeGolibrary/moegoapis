@@ -172,6 +172,36 @@ timing, pricing, staff assignments, and service-specific parameters.
 
 ---
 
+### 5. AppointmentNote
+
+Represents notes associated with an appointment, used for internal communication or customer information tracking.
+
+| Field Name          | Type       | Description                                                 |
+|---------------------|------------|-------------------------------------------------------------|
+| `id`                | string     | Unique identifier of the note                               |
+| `business_id`       | string     | Business location ID                                        |
+| `customer_id`       | string     | Customer ID                                                 |
+| `company_id`        | string     | Company ID                                                  |
+| `appointment_id`    | string     | Related appointment ID                                      |
+| `note`              | string     | The content of the note                                     |
+| `type`              | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
+| `created_time`      | timestamp  | When the note was created                                   |
+| `last_updated_time` | timestamp  | When the note was last modified                             |
+| `created_by`        | string     | Staff member who created the note                           |
+| `last_updated_by`   | string     | Staff member who last updated the note                      |
+
+#### Enum Definitions
+
+##### `AppointmentNote.Type`
+
+- `APPOINTMENT_NOTE_TYPE_UNSPECIFIED`
+- `ALERT_NOTES`: Alert or reminder note
+- `COMMENT`: General comment or description
+- `CANCEL`: Cancellation reason
+- `ADDITIONAL`: Additional information
+
+---
+
 ## 📦 4. API Interface Descriptions
 
 ### 1. Get Appointment (`GetAppointment`)
@@ -479,6 +509,106 @@ Lists grooming reports for specified appointments.
 #### 📌 Return Value:
 
 Returns a list of `GroomingReport` objects.
+
+#### ⚠️ Error Code:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 8. Create Appointment Note (`CreateAppointmentNote`)
+
+- **Method**: `CreateAppointmentNote`
+- **HTTP Method**: POST
+- **Path**: `/v1/appointments/notes`
+
+#### ✅ Functionality:
+
+Creates a new note associated with a specific appointment.
+
+#### 🎯 Use Cases:
+
+- Add alerts or comments related to an appointment.
+- Record cancellation reasons or additional notes from customers.
+
+#### 🔧 Request Parameters:
+
+| Field Name       | Type                       | Required | Description                               |
+|------------------|----------------------------|----------|-------------------------------------------|
+| `appointment_id` | string                     | Yes      | The appointment ID to associate this note |
+| `note`           | string                     | Yes      | Content of the note                       |
+| `type`           | enum(AppointmentNote.Type) | Yes      | Type of note                              |
+
+#### 📌 Return Value:
+
+Returns the created `AppointmentNote` object.
+
+#### ⚠️ Error Codes:
+
+- `INVALID_ARGUMENT`: Missing required fields.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 9. Update Appointment Note (`UpdateAppointmentNote`)
+
+- **Method**: `UpdateAppointmentNote`
+- **HTTP Method**: PUT
+- **Path**: `/v1/appointments/notes/{id}`
+
+#### ✅ Functionality:
+
+Updates an existing appointment note by its ID.
+
+#### 🎯 Use Cases:
+
+- Modify previously added notes.
+- Correct errors in alert messages or comments.
+
+#### 🔧 Request Parameters:
+
+| Field Name | Type   | Required | Description                       |
+|------------|--------|----------|-----------------------------------|
+| `id`       | string | Yes      | The unique identifier of the note |
+| `note`     | string | Yes      | Updated content of the note       |
+
+#### 📌 Return Value:
+
+Returns the updated `AppointmentNote` object.
+
+#### ⚠️ Error Codes:
+
+- `NOT_FOUND`: Specified note ID does not exist.
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 10. List Appointment Notes (`ListAppointmentNotes`)
+
+- **Method**: `ListAppointmentNotes`
+- **HTTP Method**: POST
+- **Path**: `/v1/appointments/notes:list`
+
+#### ✅ Functionality:
+
+Lists all notes matching specified criteria, including company, customer, and optional filters like note type or
+appointment ID.
+
+#### 🎯 Use Cases:
+
+- Retrieve notes for reporting or audit purposes.
+- View historical notes related to specific appointments.
+
+#### 🔧 Request Parameters:
+
+| Field Name       | Type                       | Required | Description                       |
+|------------------|----------------------------|----------|-----------------------------------|
+| `appointment_id` | string                     | Yes      | Appointment ID for access control |
+| `type`           | enum(AppointmentNote.Type) | Yes      | Filter by note type               |
+
+#### 📌 Return Value:
+
+Returns a list of `AppointmentNote` objects.
 
 #### ⚠️ Error Code:
 

@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/appointment/v1/appointment_note.proto";
 import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
@@ -98,6 +99,30 @@ service AppointmentService {
   rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {
     option (google.api.http) = {
       post: "/v1/grooming_reports:list"
+      body: "*"
+    };
+  }
+
+  // Create an appointment note
+  rpc CreateAppointmentNote(CreateAppointmentNoteRequest) returns (AppointmentNote) {
+    option (google.api.http) = {
+      post: "/v1/appointments/notes"
+      body: "*"
+    };
+  }
+
+  // Update an appointment note
+  rpc UpdateAppointmentNote(UpdateAppointmentNoteRequest) returns (AppointmentNote) {
+    option (google.api.http) = {
+      put: "/v1/appointments/notes/{id}"
+      body: "*"
+    };
+  }
+
+  // List appointment notes
+  rpc ListAppointmentNotes(ListAppointmentNotesRequest) returns (ListAppointmentNotesResponse) {
+    option (google.api.http) = {
+      post: "/v1/appointments/notes:list"
       body: "*"
     };
   }
@@ -309,3 +334,41 @@ message ListGroomingReportsResponse {
   repeated GroomingReport grooming_reports = 1;
 }
 
+// Request to create an appointment note
+message CreateAppointmentNoteRequest {
+
+  // string, The unique identifier of the appointment.
+  string appointment_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The note.
+  string note = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // enum(AppointmentNote.Type), The type of note. Only ALERT_NOTES and COMMENT are supported.
+  AppointmentNote.Type type = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request to update an appointment note
+message UpdateAppointmentNoteRequest {
+  // string, The unique identifier of the appointment notes
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The note.
+  string note = 2 [(google.api.field_behavior) = REQUIRED];
+
+}
+
+// Request to list appointment notes
+message ListAppointmentNotesRequest {
+  // string, The unique identifier of the appointment.
+  string appointment_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // enum(AppointmentNote.Type), The type of note.
+  AppointmentNote.Type type = 2 [(google.api.field_behavior) = OPTIONAL];
+
+}
+
+// Response to list appointment notes
+message ListAppointmentNotesResponse {
+  // array(AppointmentNote), The appointment notes.
+  repeated AppointmentNote notes = 1;
+}
