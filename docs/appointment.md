@@ -407,13 +407,14 @@ issues.
 
 #### 🔧 Request Parameters:
 
-| Field Name       | Type          | Required | Description           |
-|------------------|---------------|----------|-----------------------|
-| `business_id`    | string        | Yes      | Business location ID  |
-| `date_range`     | Interval      | Yes      | Appointment time slot |
-| `pet_ids`        | Array(string) | No       | List of pets ids      |
-| `customer_id`    | string        | No       | Customer ID           |
-| `appointment_id` | string        | No       | Appointment ID        |
+| Field Name         | Type          | Required | Description           |
+|--------------------|---------------|----------|-----------------------|
+| `business_id`      | string        | Yes      | Business location ID  |
+| `date_range`       | Interval      | Yes      | Appointment time slot |
+| `pet_ids`          | Array(string) | No       | List of pets ids      |
+| `customer_id`      | string        | No       | Customer ID           |
+| `appointment_id`   | string        | No       | Appointment ID        |
+| `lodging_unit_ids` | Array(string) | No       | Lodging  Unit ID      |
 
 #### 📌 Return Value:
 
@@ -431,10 +432,11 @@ components:
 
 ###### Fields:
 
-| Field Name                   | Type                                 | Description                                                                 |
-|------------------------------|--------------------------------------|-----------------------------------------------------------------------------|
-| `appointment_conflict_check` | `AppointmentDateConflictCheckResult` | Contains information about conflicting appointments for each pet.           |
-| `business_closed_date_check` | `BusinessClosedDateCheckResult`      | Contains information about business closed dates during the requested time. |
+| Field Name                    | Type                                 | Description                                                                 |
+|-------------------------------|--------------------------------------|-----------------------------------------------------------------------------|
+| `appointment_conflict_check`  | `AppointmentDateConflictCheckResult` | Contains information about conflicting appointments for each pet.           |
+| `business_closed_date_check`  | `BusinessClosedDateCheckResult`      | Contains information about business closed dates during the requested time. |
+| `lodging_over_capacity_check` | `LodgingOverCapacityCheckResult`     | Contains information about lodging over capacity during the requested time. |
 
 ---
 
@@ -460,6 +462,20 @@ components:
 | Field Name     | Type                      | Description                                                  |
 |----------------|---------------------------|--------------------------------------------------------------|
 | `closed_dates` | Array(`google.type.Date`) | A list of business closed dates during the requested period. |
+
+---
+
+###### 4. `LodgingOverCapacityCheckResult`
+
+This structure is used to indicate whether lodging units are over capacity during the specified time period. When an
+appointment involves pet boarding services, the system checks if the business has exceeded its lodging capacity during
+the requested time.
+
+| Field Name | Type                                       | Description                          |
+|------------|--------------------------------------------|--------------------------------------|
+| `lodgings` | Array(`moego.business.setting.v1.Lodging`) | List of lodging that exceed capacity |
+
+---
 
 #### ⚠️ Error Codes:
 

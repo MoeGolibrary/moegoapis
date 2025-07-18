@@ -57,6 +57,39 @@
         ]
       }
     },
+    "/v1/setting/companies/{companyId}/lodgings": {
+      "get": {
+        "summary": "List lodgings",
+        "description": "Returns a list of lodgings.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.\nReturns NOT_FOUND if the company does not exist.",
+        "operationId": "SettingService_ListLodgings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListLodgingsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company that owns the service.\nRequired. Must be a valid company ID.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
     "/v1/setting/companies/{companyId}/pet/codes:list": {
       "post": {
         "summary": "Lists all available pet codes for a company.",
@@ -657,6 +690,26 @@
         "type": "ListCustomerTagResponse"
       }
     },
+    "v1ListLodgingsResponse": {
+      "type": "object",
+      "properties": {
+        "lodgings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Lodging"
+          },
+          "title": "List of lodgings"
+        }
+      },
+      "title": "Response to list lodgings",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLodgingsResponse"
+      }
+    },
     "v1ListPetCodeResponse": {
       "type": "object",
       "properties": {
@@ -719,6 +772,101 @@
         },
         "type": "ListServicesResponse"
       }
+    },
+    "v1Lodging": {
+      "type": "object",
+      "properties": {
+        "lodgingType": {
+          "$ref": "#/definitions/v1LodgingType",
+          "title": "Lodging type"
+        },
+        "lodgingUnits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1LodgingUnit"
+          },
+          "description": "array(LodgingUnit), The lodging units available for booking."
+        }
+      },
+      "title": "Lodging",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Lodging"
+      }
+    },
+    "v1LodgingType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the lodging type."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the lodging type."
+        },
+        "description": {
+          "type": "string",
+          "title": "string, description of the lodging type"
+        },
+        "photoList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Array(string), image urls of this lodging type"
+        },
+        "maxPetNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "max pet number of this lodging type"
+        },
+        "lodgingUnitType": {
+          "$ref": "#/definitions/v1LodgingUnitType",
+          "title": "lodging unit type in this lodging type"
+        }
+      },
+      "title": "Lodging type",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LodgingType"
+      }
+    },
+    "v1LodgingUnit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the lodging unit."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the lodging unit."
+        }
+      },
+      "title": "Lodging unit",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LodgingUnit"
+      }
+    },
+    "v1LodgingUnitType": {
+      "type": "string",
+      "enum": [
+        "LODGING_UNIT_TYPE_UNSPECIFIED",
+        "ROOM",
+        "AREA"
+      ],
+      "default": "LODGING_UNIT_TYPE_UNSPECIFIED",
+      "description": "- LODGING_UNIT_TYPE_UNSPECIFIED: Unspecified lodging unit type\n - ROOM: Room/kennel type\n - AREA: Area type",
+      "title": "type enum for lodging type\nproperty of all lodging unit under one lodging type"
     },
     "v1Pagination": {
       "type": "object",

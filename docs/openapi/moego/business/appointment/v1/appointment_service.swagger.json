@@ -494,6 +494,26 @@
         "type": "BusinessClosedDateCheckResult"
       }
     },
+    "CheckAppointmentAvailabilityResponseLodgingOverCapacityCheckResult": {
+      "type": "object",
+      "properties": {
+        "lodgings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Lodging"
+          },
+          "title": "lodging over capacity list"
+        }
+      },
+      "title": "lodging over capacity check result",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "LodgingOverCapacityCheckResult"
+      }
+    },
     "CheckAppointmentAvailabilityResponsePetAppointmentsOverview": {
       "type": "object",
       "properties": {
@@ -1147,6 +1167,13 @@
         "appointmentId": {
           "type": "string",
           "description": "optional(string), The appointment identifier to exclude from availability check."
+        },
+        "lodgingUnitIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), The lodging unit identifiers to check availability for."
         }
       },
       "title": "Request to check appointment availability",
@@ -1171,6 +1198,10 @@
         "businessClosedDateCheck": {
           "$ref": "#/definitions/CheckAppointmentAvailabilityResponseBusinessClosedDateCheckResult",
           "title": "business closed date check result"
+        },
+        "lodgingOverCapacityCheck": {
+          "$ref": "#/definitions/CheckAppointmentAvailabilityResponseLodgingOverCapacityCheckResult",
+          "title": "lodging over capacity check result"
         }
       },
       "title": "Response for check appointment availability",
@@ -1554,6 +1585,101 @@
         },
         "type": "ListGroomingReportsResponse"
       }
+    },
+    "v1Lodging": {
+      "type": "object",
+      "properties": {
+        "lodgingType": {
+          "$ref": "#/definitions/v1LodgingType",
+          "title": "Lodging type"
+        },
+        "lodgingUnits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1LodgingUnit"
+          },
+          "description": "array(LodgingUnit), The lodging units available for booking."
+        }
+      },
+      "title": "Lodging",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Lodging"
+      }
+    },
+    "v1LodgingType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the lodging type."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the lodging type."
+        },
+        "description": {
+          "type": "string",
+          "title": "string, description of the lodging type"
+        },
+        "photoList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Array(string), image urls of this lodging type"
+        },
+        "maxPetNum": {
+          "type": "integer",
+          "format": "int32",
+          "title": "max pet number of this lodging type"
+        },
+        "lodgingUnitType": {
+          "$ref": "#/definitions/v1LodgingUnitType",
+          "title": "lodging unit type in this lodging type"
+        }
+      },
+      "title": "Lodging type",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LodgingType"
+      }
+    },
+    "v1LodgingUnit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the lodging unit."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the lodging unit."
+        }
+      },
+      "title": "Lodging unit",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LodgingUnit"
+      }
+    },
+    "v1LodgingUnitType": {
+      "type": "string",
+      "enum": [
+        "LODGING_UNIT_TYPE_UNSPECIFIED",
+        "ROOM",
+        "AREA"
+      ],
+      "default": "LODGING_UNIT_TYPE_UNSPECIFIED",
+      "description": "- LODGING_UNIT_TYPE_UNSPECIFIED: Unspecified lodging unit type\n - ROOM: Room/kennel type\n - AREA: Area type",
+      "title": "type enum for lodging type\nproperty of all lodging unit under one lodging type"
     },
     "v1Pagination": {
       "type": "object",

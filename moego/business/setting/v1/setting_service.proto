@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/lodging.proto";
 import "moego/business/setting/v1/service.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/money.proto";
@@ -101,6 +102,18 @@ service SettingService {
     option (google.api.http) = {
       put: "/v1/setting/companies/{company_id}/services/{id}"
       body: "*"
+    };
+  }
+
+  // List lodgings
+  //
+  // Returns a list of lodgings.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns INVALID_ARGUMENT if the request is malformed.
+  // Returns NOT_FOUND if the company does not exist.
+  rpc ListLodgings(ListLodgingsRequest) returns (ListLodgingsResponse) {
+    option (google.api.http) = {
+      get: "/v1/setting/companies/{company_id}/lodgings"
     };
   }
 }
@@ -272,4 +285,19 @@ message UpdateServiceRequest {
 
   // Whether this service is inactive
   bool inactive = 11;
+}
+
+
+// Request to list lodgings
+message ListLodgingsRequest {
+  // ID of the company that owns the service.
+  // Required. Must be a valid company ID.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+}
+
+// Response to list lodgings
+message ListLodgingsResponse {
+  // List of lodgings
+  repeated Lodging lodgings = 1;
 }

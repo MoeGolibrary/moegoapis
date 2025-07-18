@@ -11,6 +11,7 @@ import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
 import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/lodging.proto";
 
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -205,6 +206,9 @@ message CheckAppointmentAvailabilityRequest {
 
   // optional(string), The appointment identifier to exclude from availability check.
   string appointment_id = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // array(string), The lodging unit identifiers to check availability for.
+  repeated string lodging_unit_ids = 6 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Response for check appointment availability
@@ -231,11 +235,20 @@ message CheckAppointmentAvailabilityResponse {
     repeated google.type.Date closed_dates = 1;
   }
 
+  // lodging over capacity check result
+  message LodgingOverCapacityCheckResult {
+    // lodging over capacity list
+    repeated moego.business.setting.v1.Lodging lodgings = 1;
+  }
+
   // appointment date conflict check result
   AppointmentDateConflictCheckResult appointment_conflict_check = 1;
 
   // business closed date check result
   BusinessClosedDateCheckResult business_closed_date_check = 2;
+
+  // lodging over capacity check result
+  LodgingOverCapacityCheckResult lodging_over_capacity_check = 3;
 }
 
 // Request to create a new appointment

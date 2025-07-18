@@ -7,6 +7,7 @@ The `SettingService` provides a centralized interface for managing business conf
 - Managing **Pet Codes** used to flag special handling requirements or medical conditions.
 - Managing **Customer Tags** that categorize clients for marketing and service customization.
 - Managing **Services** offered by the business, such as grooming, boarding, daycare, evaluation, and training.
+- Managing **Lodging Types and Units** for standardizing boarding accommodations.
 - Supporting **creation, updating, listing, and retrieving** of service definitions.
 - Enabling filtering and pagination for scalable data management.
 
@@ -68,6 +69,53 @@ Represents a specific service or add-on that can be provided to pets.
 
 ---
 
+### 2. Lodging
+
+A lodging represents a type of accommodation and its associated units, typically used for boarding services.
+
+| Field Name      | Type               | Description                              |
+|-----------------|--------------------|------------------------------------------|
+| `lodging_type`  | LodgingType        | The type of lodging (e.g., room, area)   |
+| `lodging_units` | Array(LodgingUnit) | List of individual units within the type |
+
+---
+
+#### Message: LodgingType
+
+Describes the type of lodging available.
+
+| Field Name          | Type            | Description                            |
+|---------------------|-----------------|----------------------------------------|
+| `id`                | string          | Unique identifier for the lodging type |
+| `name`              | string          | Name of the lodging type               |
+| `description`       | string          | Optional description                   |
+| `photo_list`        | Array(string)   | URLs to photos of this lodging type    |
+| `max_pet_num`       | int32           | Maximum number of pets allowed         |
+| `lodging_unit_type` | LodgingUnitType | Type of lodging unit                   |
+
+---
+
+#### Message: LodgingUnit
+
+Describes a specific unit within a lodging type.
+
+| Field Name | Type   | Description                |
+|------------|--------|----------------------------|
+| `id`       | string | Unique identifier for unit |
+| `name`     | string | Display name of the unit   |
+
+---
+
+#### Enum: LodgingUnitType
+
+| Value                           | Description                       |
+|---------------------------------|-----------------------------------|
+| `LODGING_UNIT_TYPE_UNSPECIFIED` | Default value; should not be used |
+| `ROOM`                          | Room/kennel type                  |
+| `AREA`                          | Open area for multiple pets       |
+
+---
+
 ## 📈 4. Typical Usage Flow
 
 ### ✅ Scenario: User Integrates and Debugs Setting API
@@ -90,8 +138,8 @@ Here is a typical integration flow:
 5. **Manage Pet Codes & Customer Tags**
     - Retrieve active codes and tags for use in other modules.
 
-6. **Monitoring & Maintenance**
-    - Regularly retrieve and audit service configurations.
+6. Manage Lodging Types and Units
+    - Retrieve lodging types and units for display or booking integration.
 
 ---
 
@@ -310,9 +358,44 @@ Returns a list of `Customer.Tag` objects.
 
 ---
 
+### 7. List Lodgings (`ListLodgings`)
+
+- **Method**: `ListLodgings`
+- **HTTP Method**: GET
+- **Path**: `/v1/setting/companies/{company_id}/lodgings`
+
+#### ✅ Functionality:
+
+Retrieves a list of all lodging configurations defined for the company.
+
+#### 🎯 Use Cases:
+
+- Retrieve lodging types and units for booking or display.
+- Standardize lodging offerings across business locations.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description            |
+|--------------|--------|----------|------------------------|
+| `company_id` | string | Yes      | Company ID to retrieve |
+
+#### 📌 Return Value:
+
+Returns a list of `Lodging` objects, each containing associated lodging types and units.
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+- `INVALID_ARGUMENT`: Malformed request (e.g., invalid company ID).
+- `NOT_FOUND`: The company does not exist.
+
+---
+
 ## 🧪 6. Usage Examples
 
 ### Example 1: Create Service
+
+Request Body:
 
 ```json
 {
@@ -332,6 +415,8 @@ Returns a list of `Customer.Tag` objects.
 
 ### Example 2: List Services
 
+Request Body:
+
 ```json
 {
   "company_id": "cmp_001",
@@ -348,6 +433,47 @@ Returns a list of `Customer.Tag` objects.
       "DAYCARE"
     ]
   }
+}
+```
+
+### Example 3: List Lodgings
+
+Request Body:
+
+```json
+{
+  "company_id": "cmp_001"
+}
+```
+
+Response Body:
+
+```json
+{
+  "lodgings": [
+    {
+      "lodging_type": {
+        "id": "lt_001",
+        "name": "Deluxe Room",
+        "description": "Spacious room with premium amenities.",
+        "photo_list": [
+          "https://example.com/photo1.jpg"
+        ],
+        "max_pet_num": 2,
+        "lodging_unit_type": "ROOM"
+      },
+      "lodging_units": [
+        {
+          "id": "lu_001",
+          "name": "Room 101"
+        },
+        {
+          "id": "lu_002",
+          "name": "Room 102"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -370,6 +496,7 @@ TODO
 | How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                               |
 | Why does updating a service return “not found”?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.                 |
 | How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.             |
+| How can I manage boarding accommodations effectively?                | Use `ListLodgings` to retrieve lodging types and units for consistent boarding management.                              |
 
 ---
 
@@ -388,6 +515,7 @@ TODO
 
 ## 📎 10. Related File References
 
+- [lodging.proto](../moego/business/setting/v1/lodging.proto)
 - [service.proto](../moego/business/setting/v1/service.proto)
 - [setting_service.proto](../moego/business/setting/v1/setting_service.proto)
 

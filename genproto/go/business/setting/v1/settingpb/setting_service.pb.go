@@ -696,6 +696,99 @@ func (x *UpdateServiceRequest) GetInactive() bool {
 	return false
 }
 
+// Request to list lodgings
+type ListLodgingsRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company that owns the service.
+	// Required. Must be a valid company ID.
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLodgingsRequest) Reset() {
+	*x = ListLodgingsRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLodgingsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLodgingsRequest) ProtoMessage() {}
+
+func (x *ListLodgingsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLodgingsRequest.ProtoReflect.Descriptor instead.
+func (*ListLodgingsRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *ListLodgingsRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+// Response to list lodgings
+type ListLodgingsResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of lodgings
+	Lodgings      []*Lodging `protobuf:"bytes,1,rep,name=lodgings,proto3" json:"lodgings,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLodgingsResponse) Reset() {
+	*x = ListLodgingsResponse{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLodgingsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLodgingsResponse) ProtoMessage() {}
+
+func (x *ListLodgingsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLodgingsResponse.ProtoReflect.Descriptor instead.
+func (*ListLodgingsResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *ListLodgingsResponse) GetLodgings() []*Lodging {
+	if x != nil {
+		return x.Lodgings
+	}
+	return nil
+}
+
 // Filter parameters for the service list
 type ListServicesRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -708,7 +801,7 @@ type ListServicesRequest_Filter struct {
 
 func (x *ListServicesRequest_Filter) Reset() {
 	*x = ListServicesRequest_Filter{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -720,7 +813,7 @@ func (x *ListServicesRequest_Filter) String() string {
 func (*ListServicesRequest_Filter) ProtoMessage() {}
 
 func (x *ListServicesRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -747,7 +840,7 @@ var File_moego_business_setting_v1_setting_service_proto protoreflect.FileDescri
 
 const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\x1a\x17google/type/money.proto\"8\n" +
+	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\x1a\x17google/type/money.proto\"8\n" +
 	"\x12ListPetCodeRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"Q\n" +
@@ -803,7 +896,12 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x13available_all_staff\x18\t \x01(\bR\x11availableAllStaff\x12.\n" +
 	"\x13available_staff_ids\x18\n" +
 	" \x03(\tR\x11availableStaffIds\x12\x1a\n" +
-	"\binactive\x18\v \x01(\bR\binactive2\x89\b\n" +
+	"\binactive\x18\v \x01(\bR\binactive\"9\n" +
+	"\x13ListLodgingsRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"V\n" +
+	"\x14ListLodgingsResponse\x12>\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings2\xb0\t\n" +
 	"\x0eSettingService\x12\xab\x01\n" +
 	"\fListPetCodes\x12-.moego.business.setting.v1.ListPetCodeRequest\x1a..moego.business.setting.v1.ListPetCodeResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbb\x01\n" +
 	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\x98\x01\n" +
@@ -811,7 +909,8 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
 	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\x9c\x01\n" +
 	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/setting/companies/{company_id}/services\x12\xa1\x01\n" +
-	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}B\x8a\x01\n" +
+	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}\x12\xa4\x01\n" +
+	"\fListLodgings\x12..moego.business.setting.v1.ListLodgingsRequest\x1a/.moego.business.setting.v1.ListLodgingsResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/setting/companies/{company_id}/lodgingsB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -826,7 +925,7 @@ func file_moego_business_setting_v1_setting_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescData
 }
 
-var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_moego_business_setting_v1_setting_service_proto_goTypes = []any{
 	(*ListPetCodeRequest)(nil),         // 0: moego.business.setting.v1.ListPetCodeRequest
 	(*ListPetCodeResponse)(nil),        // 1: moego.business.setting.v1.ListPetCodeResponse
@@ -837,43 +936,49 @@ var file_moego_business_setting_v1_setting_service_proto_goTypes = []any{
 	(*ListServicesResponse)(nil),       // 6: moego.business.setting.v1.ListServicesResponse
 	(*CreateServiceRequest)(nil),       // 7: moego.business.setting.v1.CreateServiceRequest
 	(*UpdateServiceRequest)(nil),       // 8: moego.business.setting.v1.UpdateServiceRequest
-	(*ListServicesRequest_Filter)(nil), // 9: moego.business.setting.v1.ListServicesRequest.Filter
-	(*customerpb.Pet_Code)(nil),        // 10: moego.business.customer.v1.Pet.Code
-	(*customerpb.Customer_Tag)(nil),    // 11: moego.business.customer.v1.Customer.Tag
-	(*commonpb.Pagination)(nil),        // 12: moego.common.v1.Pagination
-	(*Service)(nil),                    // 13: moego.business.setting.v1.Service
-	(Service_ItemType)(0),              // 14: moego.business.setting.v1.Service.ItemType
-	(*money.Money)(nil),                // 15: google.type.Money
-	(Service_Type)(0),                  // 16: moego.business.setting.v1.Service.Type
+	(*ListLodgingsRequest)(nil),        // 9: moego.business.setting.v1.ListLodgingsRequest
+	(*ListLodgingsResponse)(nil),       // 10: moego.business.setting.v1.ListLodgingsResponse
+	(*ListServicesRequest_Filter)(nil), // 11: moego.business.setting.v1.ListServicesRequest.Filter
+	(*customerpb.Pet_Code)(nil),        // 12: moego.business.customer.v1.Pet.Code
+	(*customerpb.Customer_Tag)(nil),    // 13: moego.business.customer.v1.Customer.Tag
+	(*commonpb.Pagination)(nil),        // 14: moego.common.v1.Pagination
+	(*Service)(nil),                    // 15: moego.business.setting.v1.Service
+	(Service_ItemType)(0),              // 16: moego.business.setting.v1.Service.ItemType
+	(*money.Money)(nil),                // 17: google.type.Money
+	(Service_Type)(0),                  // 18: moego.business.setting.v1.Service.Type
+	(*Lodging)(nil),                    // 19: moego.business.setting.v1.Lodging
 }
 var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
-	10, // 0: moego.business.setting.v1.ListPetCodeResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
-	11, // 1: moego.business.setting.v1.ListCustomerTagResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	12, // 2: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
-	9,  // 3: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
-	13, // 4: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
-	14, // 5: moego.business.setting.v1.CreateServiceRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	15, // 6: moego.business.setting.v1.CreateServiceRequest.price:type_name -> google.type.Money
-	16, // 7: moego.business.setting.v1.CreateServiceRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
-	15, // 8: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
-	14, // 9: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
-	0,  // 10: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodeRequest
-	2,  // 11: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagRequest
-	5,  // 12: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
-	4,  // 13: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
-	7,  // 14: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
-	8,  // 15: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
-	1,  // 16: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodeResponse
-	3,  // 17: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagResponse
-	13, // 18: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
-	6,  // 19: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
-	13, // 20: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
-	13, // 21: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
-	16, // [16:22] is the sub-list for method output_type
-	10, // [10:16] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	12, // 0: moego.business.setting.v1.ListPetCodeResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
+	13, // 1: moego.business.setting.v1.ListCustomerTagResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	14, // 2: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
+	11, // 3: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
+	15, // 4: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
+	16, // 5: moego.business.setting.v1.CreateServiceRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	17, // 6: moego.business.setting.v1.CreateServiceRequest.price:type_name -> google.type.Money
+	18, // 7: moego.business.setting.v1.CreateServiceRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
+	17, // 8: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
+	19, // 9: moego.business.setting.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.setting.v1.Lodging
+	16, // 10: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
+	0,  // 11: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodeRequest
+	2,  // 12: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagRequest
+	5,  // 13: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
+	4,  // 14: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
+	7,  // 15: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
+	8,  // 16: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
+	9,  // 17: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
+	1,  // 18: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodeResponse
+	3,  // 19: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagResponse
+	15, // 20: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
+	6,  // 21: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
+	15, // 22: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
+	15, // 23: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
+	10, // 24: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
+	18, // [18:25] is the sub-list for method output_type
+	11, // [11:18] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_setting_service_proto_init() }
@@ -881,6 +986,7 @@ func file_moego_business_setting_v1_setting_service_proto_init() {
 	if File_moego_business_setting_v1_setting_service_proto != nil {
 		return
 	}
+	file_moego_business_setting_v1_lodging_proto_init()
 	file_moego_business_setting_v1_service_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -888,7 +994,7 @@ func file_moego_business_setting_v1_setting_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_setting_service_proto_rawDesc), len(file_moego_business_setting_v1_setting_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   10,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

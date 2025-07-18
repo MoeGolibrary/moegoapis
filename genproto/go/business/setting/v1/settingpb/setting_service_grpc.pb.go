@@ -25,6 +25,7 @@ const (
 	SettingService_ListServices_FullMethodName     = "/moego.business.setting.v1.SettingService/ListServices"
 	SettingService_CreateService_FullMethodName    = "/moego.business.setting.v1.SettingService/CreateService"
 	SettingService_UpdateService_FullMethodName    = "/moego.business.setting.v1.SettingService/UpdateService"
+	SettingService_ListLodgings_FullMethodName     = "/moego.business.setting.v1.SettingService/ListLodgings"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -87,6 +88,13 @@ type SettingServiceClient interface {
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	// Returns NOT_FOUND if the service does not exist.
 	UpdateService(ctx context.Context, in *UpdateServiceRequest, opts ...grpc.CallOption) (*Service, error)
+	// List lodgings
+	//
+	// Returns a list of lodgings.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	// Returns NOT_FOUND if the company does not exist.
+	ListLodgings(ctx context.Context, in *ListLodgingsRequest, opts ...grpc.CallOption) (*ListLodgingsResponse, error)
 }
 
 type settingServiceClient struct {
@@ -157,6 +165,16 @@ func (c *settingServiceClient) UpdateService(ctx context.Context, in *UpdateServ
 	return out, nil
 }
 
+func (c *settingServiceClient) ListLodgings(ctx context.Context, in *ListLodgingsRequest, opts ...grpc.CallOption) (*ListLodgingsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLodgingsResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListLodgings_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -217,6 +235,13 @@ type SettingServiceServer interface {
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	// Returns NOT_FOUND if the service does not exist.
 	UpdateService(context.Context, *UpdateServiceRequest) (*Service, error)
+	// List lodgings
+	//
+	// Returns a list of lodgings.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	// Returns NOT_FOUND if the company does not exist.
+	ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -244,6 +269,9 @@ func (UnimplementedSettingServiceServer) CreateService(context.Context, *CreateS
 }
 func (UnimplementedSettingServiceServer) UpdateService(context.Context, *UpdateServiceRequest) (*Service, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateService not implemented")
+}
+func (UnimplementedSettingServiceServer) ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLodgings not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -374,6 +402,24 @@ func _SettingService_UpdateService_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_ListLodgings_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLodgingsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListLodgings(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListLodgings_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListLodgings(ctx, req.(*ListLodgingsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -404,6 +450,10 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdateService",
 			Handler:    _SettingService_UpdateService_Handler,
+		},
+		{
+			MethodName: "ListLodgings",
+			Handler:    _SettingService_ListLodgings_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
