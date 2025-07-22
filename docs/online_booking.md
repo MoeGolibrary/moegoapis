@@ -228,6 +228,7 @@ Lists abandoned bookings matching specified criteria including abandon time rang
 | `pagination`   | Pagination    | Yes      | Page size and token                    |
 | `company_id`   | string        | Yes      | Company ID for access control          |
 | `business_ids` | Array(string) | Yes      | List of business IDs to filter results |
+| `filters`      | Filter        | No       | Filter options                         |
 
 #### Filter Options:
 

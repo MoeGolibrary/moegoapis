@@ -125,8 +125,12 @@ type ServiceDetail struct {
 	// Format: "psd_" followed by random characters
 	// It will be changed when pet service detail is updated or deleted.
 	PetServiceDetailId string `protobuf:"bytes,10,opt,name=pet_service_detail_id,json=petServiceDetailId,proto3" json:"pet_service_detail_id,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+	// string, Unique identifier for the lodging unit.
+	// Links this service to a specific lodging unit.
+	// Format: "lodgu_" followed by random characters
+	LodgingUnitId string `protobuf:"bytes,11,opt,name=lodging_unit_id,json=lodgingUnitId,proto3" json:"lodging_unit_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ServiceDetail) Reset() {
@@ -229,6 +233,13 @@ func (x *ServiceDetail) GetPetServiceDetailId() string {
 	return ""
 }
 
+func (x *ServiceDetail) GetLodgingUnitId() string {
+	if x != nil {
+		return x.LodgingUnitId
+	}
+	return ""
+}
+
 var File_moego_business_appointment_v1_pet_service_detail_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
@@ -236,7 +247,7 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"6moego/business/appointment/v1/pet_service_detail.proto\x12\x1dmoego.business.appointment.v1\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\"\x9c\x01\n" +
 	"\x10PetServiceDetail\x121\n" +
 	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetR\x03pet\x12U\n" +
-	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\"\xc4\x03\n" +
+	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\"\xec\x03\n" +
 	"\rServiceDetail\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -248,7 +259,8 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"\fservice_type\x18\b \x01(\x0e2'.moego.business.setting.v1.Service.TypeR\vserviceType\x12!\n" +
 	"\fservice_time\x18\t \x01(\x05R\vserviceTime\x121\n" +
 	"\x15pet_service_detail_id\x18\n" +
-	" \x01(\tR\x12petServiceDetailIdB\xa3\x01\n" +
+	" \x01(\tR\x12petServiceDetailId\x12&\n" +
+	"\x0flodging_unit_id\x18\v \x01(\tR\rlodgingUnitIdB\xa3\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x15PetServiceDetailProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (

@@ -157,18 +157,19 @@ each pet can receive multiple services.
 Represents a specific service booked for a pet. It contains all the information needed to perform the service, including
 timing, pricing, staff assignments, and service-specific parameters.
 
-| Field Name              | Type          | Description                                               |
-|-------------------------|---------------|-----------------------------------------------------------|
-| `id`                    | string        | Unique identifier for the service                         |
-| `name`                  | string        | Display name of the service                               |
-| `service_item_type`     | ItemType      | Category of service item                                  |
-| `category`              | string        | Service category for grouping and filtering               |
-| `price`                 | Money         | Price for this service instance                           |
-| `duration`              | Interval      | Scheduled time window for the service                     |
-| `staff_ids`             | Array(string) | IDs of staff members assigned to this service             |
-| `service_type`          | Type          | Type of service being provided                            |
-| `service_time`          | integer       | Expected duration of the service in minutes               |
-| `pet_service_detail_id` | string        | Unique identifier for this specific pet's service booking |
+| Field Name              | Type          | Description                                                    |
+|-------------------------|---------------|----------------------------------------------------------------|
+| `id`                    | string        | Unique identifier for the service                              |
+| `name`                  | string        | Display name of the service                                    |
+| `service_item_type`     | ItemType      | Category of service item                                       |
+| `category`              | string        | Service category for grouping and filtering                    |
+| `price`                 | Money         | Price for this service instance                                |
+| `duration`              | Interval      | Scheduled time window for the service                          |
+| `staff_ids`             | Array(string) | IDs of staff members assigned to this service                  |
+| `service_type`          | Type          | Type of service being provided                                 |
+| `service_time`          | integer       | Expected duration of the service in minutes                    |
+| `pet_service_detail_id` | string        | Unique identifier for this specific pet's service booking      |
+| `lodging_unit_id`       | string        | Unique identifier for this specific pet's service lodging unit |
 
 ---
 
@@ -259,6 +260,7 @@ Lists appointments matching specified criteria, including company ID and optiona
 | `pagination`   | Pagination    | Yes      | Page size and token                            |
 | `company_id`   | string        | Yes      | Company ID for access control                  |
 | `business_ids` | Array(string) | Yes      | List of business IDs to filter appointments by |
+| `filters`      | Filter        | No       | Filter options                                 |
 
 #### Filter Options:
 
@@ -268,6 +270,7 @@ Lists appointments matching specified criteria, including company ID and optiona
 - `statuses`: Filter by appointment status.
 - `check_in_time`: Filter by check-in time range.
 - `check_out_time`: Filter by check-out time range.
+- `service_types`: Filter by service item type.
 
 #### 📌 Return Value:
 
