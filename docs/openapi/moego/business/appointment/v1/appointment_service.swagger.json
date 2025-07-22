@@ -1951,9 +1951,17 @@
           "type": "string",
           "description": "string, Unique identifier for this specific pet's service booking.\nLinks this service to a specific pet in a multi-pet appointment.\nFormat: \"psd_\" followed by random characters\nIt will be changed when pet service detail is updated or deleted."
         },
-        "lodgingUnitId": {
+        "lodgingId": {
           "type": "string",
           "title": "string, Unique identifier for the lodging unit.\nLinks this service to a specific lodging unit.\nFormat: \"lodgu_\" followed by random characters"
+        },
+        "lodgingUnitName": {
+          "type": "string",
+          "description": "string, Name of the lodging unit.\nUsed for display and lodging unit name."
+        },
+        "lodgingTypeName": {
+          "type": "string",
+          "description": "string, Name of the lodging type.\nUsed for display and lodging type name."
         }
       },
       "description": "The service detail object represents a specific service booked for a pet.\nIt contains all the information needed to perform the service, including\ntiming, pricing, staff assignments, and service-specific parameters.",

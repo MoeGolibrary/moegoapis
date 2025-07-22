@@ -128,9 +128,15 @@ type ServiceDetail struct {
 	// string, Unique identifier for the lodging unit.
 	// Links this service to a specific lodging unit.
 	// Format: "lodgu_" followed by random characters
-	LodgingUnitId string `protobuf:"bytes,11,opt,name=lodging_unit_id,json=lodgingUnitId,proto3" json:"lodging_unit_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	LodgingId string `protobuf:"bytes,11,opt,name=lodging_id,json=lodgingId,proto3" json:"lodging_id,omitempty"`
+	// string, Name of the lodging unit.
+	// Used for display and lodging unit name.
+	LodgingUnitName string `protobuf:"bytes,12,opt,name=lodging_unit_name,json=lodgingUnitName,proto3" json:"lodging_unit_name,omitempty"`
+	// string, Name of the lodging type.
+	// Used for display and lodging type name.
+	LodgingTypeName string `protobuf:"bytes,13,opt,name=lodging_type_name,json=lodgingTypeName,proto3" json:"lodging_type_name,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ServiceDetail) Reset() {
@@ -233,9 +239,23 @@ func (x *ServiceDetail) GetPetServiceDetailId() string {
 	return ""
 }
 
-func (x *ServiceDetail) GetLodgingUnitId() string {
+func (x *ServiceDetail) GetLodgingId() string {
 	if x != nil {
-		return x.LodgingUnitId
+		return x.LodgingId
+	}
+	return ""
+}
+
+func (x *ServiceDetail) GetLodgingUnitName() string {
+	if x != nil {
+		return x.LodgingUnitName
+	}
+	return ""
+}
+
+func (x *ServiceDetail) GetLodgingTypeName() string {
+	if x != nil {
+		return x.LodgingTypeName
 	}
 	return ""
 }
@@ -247,7 +267,7 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"6moego/business/appointment/v1/pet_service_detail.proto\x12\x1dmoego.business.appointment.v1\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\"\x9c\x01\n" +
 	"\x10PetServiceDetail\x121\n" +
 	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetR\x03pet\x12U\n" +
-	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\"\xec\x03\n" +
+	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\"\xbb\x04\n" +
 	"\rServiceDetail\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -259,8 +279,11 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"\fservice_type\x18\b \x01(\x0e2'.moego.business.setting.v1.Service.TypeR\vserviceType\x12!\n" +
 	"\fservice_time\x18\t \x01(\x05R\vserviceTime\x121\n" +
 	"\x15pet_service_detail_id\x18\n" +
-	" \x01(\tR\x12petServiceDetailId\x12&\n" +
-	"\x0flodging_unit_id\x18\v \x01(\tR\rlodgingUnitIdB\xa3\x01\n" +
+	" \x01(\tR\x12petServiceDetailId\x12\x1d\n" +
+	"\n" +
+	"lodging_id\x18\v \x01(\tR\tlodgingId\x12*\n" +
+	"\x11lodging_unit_name\x18\f \x01(\tR\x0flodgingUnitName\x12*\n" +
+	"\x11lodging_type_name\x18\r \x01(\tR\x0flodgingTypeNameB\xa3\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x15PetServiceDetailProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (

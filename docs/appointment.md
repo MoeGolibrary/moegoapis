@@ -169,7 +169,9 @@ timing, pricing, staff assignments, and service-specific parameters.
 | `service_type`          | Type          | Type of service being provided                                 |
 | `service_time`          | integer       | Expected duration of the service in minutes                    |
 | `pet_service_detail_id` | string        | Unique identifier for this specific pet's service booking      |
-| `lodging_unit_id`       | string        | Unique identifier for this specific pet's service lodging unit |
+| `lodging_id`            | string        | Unique identifier for this specific pet's service lodging unit |
+| `lodging_unit_name`     | string        | Name of the lodging unit for this pet's service                |
+| `lodging_type_name`     | string        | Type of lodging unit for this pet's service                    |
 
 ---
 

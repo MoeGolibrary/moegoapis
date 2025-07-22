@@ -78,5 +78,13 @@ message ServiceDetail {
   // string, Unique identifier for the lodging unit.
   // Links this service to a specific lodging unit.
   // Format: "lodgu_" followed by random characters
-  string lodging_unit_id = 11;
+  string lodging_id = 11;
+
+  // string, Name of the lodging unit.
+  // Used for display and lodging unit name.
+  string lodging_unit_name = 12;
+
+  // string, Name of the lodging type.
+  // Used for display and lodging type name.
+  string lodging_type_name = 13;
 }
