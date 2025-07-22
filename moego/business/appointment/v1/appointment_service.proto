@@ -12,6 +12,7 @@ import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/lodging.proto";
+import "moego/business/setting/v1/service.proto";
 
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
@@ -173,6 +174,9 @@ message ListAppointmentsRequest {
 
     // object(Interval), Filter by check-out time range.
     google.type.Interval check_out_time = 6 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(ItemType), Filter by service type.
+    repeated setting.v1.Service.ItemType service_types = 7 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // object(Filter), Optional filters to narrow the results.
