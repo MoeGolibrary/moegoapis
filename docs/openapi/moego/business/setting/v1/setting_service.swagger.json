@@ -428,6 +428,13 @@
           "type": "string",
           "title": "Name of the service (e.g., \"Grooming\", \"Boarding\")\nRequired. Should be human-readable and unique within the company"
         },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of business locations where this service is available\nOptional. If empty, service is available at all locations"
+        },
         "serviceItemType": {
           "$ref": "#/definitions/ServiceItemType",
           "title": "Type of service (e.g., grooming, boarding, daycare)\nRequired. Used for categorization and filtering"
@@ -538,6 +545,13 @@
         "name": {
           "type": "string",
           "title": "Name of the service (e.g., \"Grooming\", \"Boarding\")\nRequired. Should be human-readable and unique within the company"
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of business locations where this service is available\nOptional. If empty, service is available at all locations"
         },
         "price": {
           "$ref": "#/definitions/typeMoney",

@@ -505,30 +505,33 @@ type CreateServiceRequest struct {
 	// Name of the service (e.g., "Grooming", "Boarding")
 	// Required. Should be human-readable and unique within the company
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// List of business locations where this service is available
+	// Optional. If empty, service is available at all locations
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
 	// Type of service (e.g., grooming, boarding, daycare)
 	// Required. Used for categorization and filtering
-	ServiceItemType Service_ItemType `protobuf:"varint,3,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
+	ServiceItemType Service_ItemType `protobuf:"varint,4,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
 	// Base price for the service
 	// Can be adjusted based on pet size, breed, or add-ons
-	Price *money.Money `protobuf:"bytes,4,opt,name=price,proto3" json:"price,omitempty"`
+	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
 	// Whether this is a primary service or an add-on
 	// Affects how the service can be booked
-	ServiceType Service_Type `protobuf:"varint,5,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
+	ServiceType Service_Type `protobuf:"varint,6,opt,name=service_type,json=serviceType,proto3,enum=moego.business.setting.v1.Service_Type" json:"service_type,omitempty"`
 	// Duration of the service in minutes
 	// Used for scheduling and resource allocation
-	ServiceTime int32 `protobuf:"varint,6,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
+	ServiceTime int32 `protobuf:"varint,7,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
 	// Whether this service is available at all business locations
 	// If false, check available_business_ids for specific locations
-	AvailableAllBusiness bool `protobuf:"varint,7,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
+	AvailableAllBusiness bool `protobuf:"varint,8,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
 	// List of business locations where this service is available
 	// Only used when available_all_business is false
-	AvailableBusinessIds []string `protobuf:"bytes,8,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
+	AvailableBusinessIds []string `protobuf:"bytes,9,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
 	// Whether this service can be performed by all staff members
 	// If false, check available_staff_ids for specific staff
-	AvailableAllStaff bool `protobuf:"varint,9,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
+	AvailableAllStaff bool `protobuf:"varint,10,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
 	// List of staff members who can perform this service
 	// Only used when available_all_staff is false
-	AvailableStaffIds []string `protobuf:"bytes,10,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
+	AvailableStaffIds []string `protobuf:"bytes,11,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -575,6 +578,13 @@ func (x *CreateServiceRequest) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *CreateServiceRequest) GetBusinessIds() []string {
+	if x != nil {
+		return x.BusinessIds
+	}
+	return nil
 }
 
 func (x *CreateServiceRequest) GetServiceItemType() Service_ItemType {
@@ -645,26 +655,29 @@ type UpdateServiceRequest struct {
 	// Name of the service (e.g., "Grooming", "Boarding")
 	// Required. Should be human-readable and unique within the company
 	Name string `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	// List of business locations where this service is available
+	// Optional. If empty, service is available at all locations
+	BusinessIds []string `protobuf:"bytes,4,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
 	// Base price for the service
 	// Can be adjusted based on pet size, breed, or add-ons
-	Price *money.Money `protobuf:"bytes,4,opt,name=price,proto3" json:"price,omitempty"`
+	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
 	// Duration of the service in minutes
 	// Used for scheduling and resource allocation
-	ServiceTime int32 `protobuf:"varint,5,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
+	ServiceTime int32 `protobuf:"varint,6,opt,name=service_time,json=serviceTime,proto3" json:"service_time,omitempty"`
 	// Whether this service is available at all business locations
 	// If false, check available_business_ids for specific locations
-	AvailableAllBusiness bool `protobuf:"varint,6,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
+	AvailableAllBusiness bool `protobuf:"varint,7,opt,name=available_all_business,json=availableAllBusiness,proto3" json:"available_all_business,omitempty"`
 	// List of business locations where this service is available
 	// Only used when available_all_business is false
-	AvailableBusinessIds []string `protobuf:"bytes,7,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
+	AvailableBusinessIds []string `protobuf:"bytes,8,rep,name=available_business_ids,json=availableBusinessIds,proto3" json:"available_business_ids,omitempty"`
 	// Whether this service can be performed by all staff members
 	// If false, check available_staff_ids for specific staff
-	AvailableAllStaff bool `protobuf:"varint,8,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
+	AvailableAllStaff bool `protobuf:"varint,9,opt,name=available_all_staff,json=availableAllStaff,proto3" json:"available_all_staff,omitempty"`
 	// List of staff members who can perform this service
 	// Only used when available_all_staff is false
-	AvailableStaffIds []string `protobuf:"bytes,9,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
+	AvailableStaffIds []string `protobuf:"bytes,10,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
 	// Whether this service is inactive
-	Inactive      bool `protobuf:"varint,10,opt,name=inactive,proto3" json:"inactive,omitempty"`
+	Inactive      bool `protobuf:"varint,11,opt,name=inactive,proto3" json:"inactive,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -718,6 +731,13 @@ func (x *UpdateServiceRequest) GetName() string {
 		return x.Name
 	}
 	return ""
+}
+
+func (x *UpdateServiceRequest) GetBusinessIds() []string {
+	if x != nil {
+		return x.BusinessIds
+	}
+	return nil
 }
 
 func (x *UpdateServiceRequest) GetPrice() *money.Money {
@@ -1135,33 +1155,35 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x11GetServiceRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\xa0\x04\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\xc3\x04\n" +
 	"\x14CreateServiceRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tB\x03\xe0A\x02R\x04name\x12\\\n" +
-	"\x11service_item_type\x18\x03 \x01(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x02R\x0fserviceItemType\x12-\n" +
-	"\x05price\x18\x04 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12O\n" +
-	"\fservice_type\x18\x05 \x01(\x0e2'.moego.business.setting.v1.Service.TypeB\x03\xe0A\x02R\vserviceType\x12!\n" +
+	"\x04name\x18\x02 \x01(\tB\x03\xe0A\x02R\x04name\x12!\n" +
+	"\fbusiness_ids\x18\x03 \x03(\tR\vbusinessIds\x12\\\n" +
+	"\x11service_item_type\x18\x04 \x01(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x02R\x0fserviceItemType\x12-\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12O\n" +
+	"\fservice_type\x18\x06 \x01(\x0e2'.moego.business.setting.v1.Service.TypeB\x03\xe0A\x02R\vserviceType\x12!\n" +
+	"\fservice_time\x18\a \x01(\x05R\vserviceTime\x124\n" +
+	"\x16available_all_business\x18\b \x01(\bR\x14availableAllBusiness\x124\n" +
+	"\x16available_business_ids\x18\t \x03(\tR\x14availableBusinessIds\x12.\n" +
+	"\x13available_all_staff\x18\n" +
+	" \x01(\bR\x11availableAllStaff\x12.\n" +
+	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\"\xc5\x03\n" +
+	"\x14UpdateServiceRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
+	"\x04name\x18\x03 \x01(\tB\x03\xe0A\x02R\x04name\x12!\n" +
+	"\fbusiness_ids\x18\x04 \x03(\tR\vbusinessIds\x12-\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12!\n" +
 	"\fservice_time\x18\x06 \x01(\x05R\vserviceTime\x124\n" +
 	"\x16available_all_business\x18\a \x01(\bR\x14availableAllBusiness\x124\n" +
 	"\x16available_business_ids\x18\b \x03(\tR\x14availableBusinessIds\x12.\n" +
 	"\x13available_all_staff\x18\t \x01(\bR\x11availableAllStaff\x12.\n" +
 	"\x13available_staff_ids\x18\n" +
-	" \x03(\tR\x11availableStaffIds\"\xa2\x03\n" +
-	"\x14UpdateServiceRequest\x12\"\n" +
-	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
-	"\x04name\x18\x03 \x01(\tB\x03\xe0A\x02R\x04name\x12-\n" +
-	"\x05price\x18\x04 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x02R\x05price\x12!\n" +
-	"\fservice_time\x18\x05 \x01(\x05R\vserviceTime\x124\n" +
-	"\x16available_all_business\x18\x06 \x01(\bR\x14availableAllBusiness\x124\n" +
-	"\x16available_business_ids\x18\a \x03(\tR\x14availableBusinessIds\x12.\n" +
-	"\x13available_all_staff\x18\b \x01(\bR\x11availableAllStaff\x12.\n" +
-	"\x13available_staff_ids\x18\t \x03(\tR\x11availableStaffIds\x12\x1a\n" +
-	"\binactive\x18\n" +
-	" \x01(\bR\binactive\"9\n" +
+	" \x03(\tR\x11availableStaffIds\x12\x1a\n" +
+	"\binactive\x18\v \x01(\bR\binactive\"9\n" +
 	"\x13ListLodgingsRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"V\n" +
