@@ -7,6 +7,7 @@
 package customerpb
 
 import (
+	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	date "google.golang.org/genproto/googleapis/type/date"
@@ -532,7 +533,7 @@ type AppendPetCodesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Codes that were successfully added
 	// Includes full code details
-	Codes         []*Pet_Code `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
+	Codes         []*settingpb.PetCode `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -567,7 +568,7 @@ func (*AppendPetCodesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_pet_service_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *AppendPetCodesResponse) GetCodes() []*Pet_Code {
+func (x *AppendPetCodesResponse) GetCodes() []*settingpb.PetCode {
 	if x != nil {
 		return x.Codes
 	}
@@ -996,7 +997,7 @@ var File_moego_business_customer_v1_pet_service_proto protoreflect.FileDescripto
 
 const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/customer/v1/pet_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\"p\n" +
+	",moego/business/customer/v1/pet_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\x1a#moego/business/setting/v1/pet.proto\"p\n" +
 	"\x10CreatePetRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x126\n" +
@@ -1047,9 +1048,9 @@ const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"customerId\x12\x13\n" +
 	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12%\n" +
 	"\fpet_code_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\n" +
-	"petCodeIds\"Y\n" +
-	"\x16AppendPetCodesResponse\x12?\n" +
-	"\x05codes\x18\x01 \x03(\v2$.moego.business.customer.v1.Pet.CodeB\x03\xe0A\x03R\x05codes\"\x8e\x01\n" +
+	"petCodeIds\"W\n" +
+	"\x16AppendPetCodesResponse\x12=\n" +
+	"\x05codes\x18\x01 \x03(\v2\".moego.business.setting.v1.PetCodeB\x03\xe0A\x03R\x05codes\"\x8e\x01\n" +
 	"\x15AppendPetNotesRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12\x13\n" +
@@ -1128,7 +1129,7 @@ var file_moego_business_customer_v1_pet_service_proto_goTypes = []any{
 	(*commonpb.Weight)(nil),           // 19: moego.common.v1.Weight
 	(*Pet_Vet)(nil),                   // 20: moego.business.customer.v1.Pet.Vet
 	(Pet_EvaluationStatus)(0),         // 21: moego.business.customer.v1.Pet.EvaluationStatus
-	(*Pet_Code)(nil),                  // 22: moego.business.customer.v1.Pet.Code
+	(*settingpb.PetCode)(nil),         // 22: moego.business.setting.v1.PetCode
 	(*Pet_Note)(nil),                  // 23: moego.business.customer.v1.Pet.Note
 	(*commonpb.Pagination)(nil),       // 24: moego.common.v1.Pagination
 	(*interval.Interval)(nil),         // 25: google.type.Interval
@@ -1143,7 +1144,7 @@ var file_moego_business_customer_v1_pet_service_proto_depIdxs = []int32{
 	20, // 6: moego.business.customer.v1.UpdatePetRequest.vet:type_name -> moego.business.customer.v1.Pet.Vet
 	21, // 7: moego.business.customer.v1.UpdatePetRequest.evaluation_status:type_name -> moego.business.customer.v1.Pet.EvaluationStatus
 	15, // 8: moego.business.customer.v1.ListPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
-	22, // 9: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
+	22, // 9: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.setting.v1.PetCode
 	23, // 10: moego.business.customer.v1.AppendPetNotesRequest.notes:type_name -> moego.business.customer.v1.Pet.Note
 	23, // 11: moego.business.customer.v1.AppendPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
 	24, // 12: moego.business.customer.v1.ListPetNotesRequest.pagination:type_name -> moego.common.v1.Pagination

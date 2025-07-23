@@ -7,6 +7,7 @@
 package customerpb
 
 import (
+	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -132,9 +133,9 @@ type Customer struct {
 	// List of notes about this customer
 	Notes []*Customer_Note `protobuf:"bytes,19,rep,name=notes,proto3" json:"notes,omitempty"`
 	// List of tags applied to this customer
-	Tags []*Customer_Tag `protobuf:"bytes,20,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags []*settingpb.CustomerTag `protobuf:"bytes,20,rep,name=tags,proto3" json:"tags,omitempty"`
 	// The source or channel through which a customer was acquired.
-	ReferralSource *Customer_ReferralSource `protobuf:"bytes,21,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
+	ReferralSource *settingpb.ReferralSource `protobuf:"bytes,21,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
 	// Preferences related to communication and marketing.
 	Preference    *Customer_Preference `protobuf:"bytes,22,opt,name=preference,proto3" json:"preference,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -304,14 +305,14 @@ func (x *Customer) GetNotes() []*Customer_Note {
 	return nil
 }
 
-func (x *Customer) GetTags() []*Customer_Tag {
+func (x *Customer) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
 	return nil
 }
 
-func (x *Customer) GetReferralSource() *Customer_ReferralSource {
+func (x *Customer) GetReferralSource() *settingpb.ReferralSource {
 	if x != nil {
 		return x.ReferralSource
 	}
@@ -399,80 +400,6 @@ func (x *Customer_Note) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-// Tag represents a label that can be applied to customers for categorization
-// and filtering purposes.
-type Customer_Tag struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier for this tag
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Display name of the tag
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// ID of the staff member who last modified this tag
-	LastUpdatedBy string `protobuf:"bytes,3,opt,name=last_updated_by,json=lastUpdatedBy,proto3" json:"last_updated_by,omitempty"`
-	// When this tag was last modified
-	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *Customer_Tag) Reset() {
-	*x = Customer_Tag{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Customer_Tag) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Customer_Tag) ProtoMessage() {}
-
-func (x *Customer_Tag) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Customer_Tag.ProtoReflect.Descriptor instead.
-func (*Customer_Tag) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 1}
-}
-
-func (x *Customer_Tag) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *Customer_Tag) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *Customer_Tag) GetLastUpdatedBy() string {
-	if x != nil {
-		return x.LastUpdatedBy
-	}
-	return ""
-}
-
-func (x *Customer_Tag) GetLastUpdatedTime() *timestamppb.Timestamp {
-	if x != nil {
-		return x.LastUpdatedTime
-	}
-	return nil
-}
-
 // Preference stores a customer's communication and marketing preferences.
 // These settings determine how and when we can contact the customer.
 type Customer_Preference struct {
@@ -495,7 +422,7 @@ type Customer_Preference struct {
 
 func (x *Customer_Preference) Reset() {
 	*x = Customer_Preference{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -507,7 +434,7 @@ func (x *Customer_Preference) String() string {
 func (*Customer_Preference) ProtoMessage() {}
 
 func (x *Customer_Preference) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -520,7 +447,7 @@ func (x *Customer_Preference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Customer_Preference.ProtoReflect.Descriptor instead.
 func (*Customer_Preference) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 2}
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 1}
 }
 
 func (x *Customer_Preference) GetReceiveAutoMessage() bool {
@@ -551,67 +478,11 @@ func (x *Customer_Preference) GetReceiveAppointmentReminder() bool {
 	return false
 }
 
-// ReferralSource represents the source or channel through which a customer was acquired.
-// This helps track the origin of new customers and analyze marketing effectiveness.
-type Customer_ReferralSource struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier for the source
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// Display name of the source
-	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Customer_ReferralSource) Reset() {
-	*x = Customer_ReferralSource{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Customer_ReferralSource) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Customer_ReferralSource) ProtoMessage() {}
-
-func (x *Customer_ReferralSource) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Customer_ReferralSource.ProtoReflect.Descriptor instead.
-func (*Customer_ReferralSource) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 3}
-}
-
-func (x *Customer_ReferralSource) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-func (x *Customer_ReferralSource) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
 var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\"\xd8\r\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\x1a(moego/business/setting/v1/customer.proto\"\xfa\v\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -636,9 +507,9 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x15preferred_business_id\x18\x11 \x01(\tR\x13preferredBusinessId\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x12 \x01(\tR\tcompanyId\x12?\n" +
-	"\x05notes\x18\x13 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12<\n" +
-	"\x04tags\x18\x14 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12\\\n" +
-	"\x0freferral_source\x18\x15 \x01(\v23.moego.business.customer.v1.Customer.ReferralSourceR\x0ereferralSource\x12O\n" +
+	"\x05notes\x18\x13 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12:\n" +
+	"\x04tags\x18\x14 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\x12R\n" +
+	"\x0freferral_source\x18\x15 \x01(\v2).moego.business.setting.v1.ReferralSourceR\x0ereferralSource\x12O\n" +
 	"\n" +
 	"preference\x18\x16 \x01(\v2/.moego.business.customer.v1.Customer.PreferenceR\n" +
 	"preference\x1a\x9a\x01\n" +
@@ -646,21 +517,13 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04note\x18\x02 \x01(\tR\x04note\x12&\n" +
 	"\x0flast_updated_by\x18\x03 \x01(\tR\rlastUpdatedBy\x12F\n" +
-	"\x11last_updated_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x1a\x99\x01\n" +
-	"\x03Tag\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12&\n" +
-	"\x0flast_updated_by\x18\x03 \x01(\tR\rlastUpdatedBy\x12F\n" +
 	"\x11last_updated_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x1a\xf1\x01\n" +
 	"\n" +
 	"Preference\x120\n" +
 	"\x14receive_auto_message\x18\x01 \x01(\bR\x12receiveAutoMessage\x12,\n" +
 	"\x12receive_auto_email\x18\x02 \x01(\bR\x10receiveAutoEmail\x12A\n" +
 	"\x1dsubscribe_to_marketing_emails\x18\x03 \x01(\bR\x1asubscribeToMarketingEmails\x12@\n" +
-	"\x1creceive_appointment_reminder\x18\x04 \x01(\bR\x1areceiveAppointmentReminder\x1a4\n" +
-	"\x0eReferralSource\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\":\n" +
+	"\x1creceive_appointment_reminder\x18\x04 \x01(\bR\x1areceiveAppointmentReminder\":\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
@@ -681,35 +544,34 @@ func file_moego_business_customer_v1_customer_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_customer_v1_customer_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_moego_business_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_moego_business_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_customer_v1_customer_proto_goTypes = []any{
-	(Customer_Status)(0),            // 0: moego.business.customer.v1.Customer.Status
-	(*Customer)(nil),                // 1: moego.business.customer.v1.Customer
-	(*Customer_Note)(nil),           // 2: moego.business.customer.v1.Customer.Note
-	(*Customer_Tag)(nil),            // 3: moego.business.customer.v1.Customer.Tag
-	(*Customer_Preference)(nil),     // 4: moego.business.customer.v1.Customer.Preference
-	(*Customer_ReferralSource)(nil), // 5: moego.business.customer.v1.Customer.ReferralSource
-	(*commonpb.Address)(nil),        // 6: moego.common.v1.Address
-	(*timestamppb.Timestamp)(nil),   // 7: google.protobuf.Timestamp
+	(Customer_Status)(0),             // 0: moego.business.customer.v1.Customer.Status
+	(*Customer)(nil),                 // 1: moego.business.customer.v1.Customer
+	(*Customer_Note)(nil),            // 2: moego.business.customer.v1.Customer.Note
+	(*Customer_Preference)(nil),      // 3: moego.business.customer.v1.Customer.Preference
+	(*commonpb.Address)(nil),         // 4: moego.common.v1.Address
+	(*timestamppb.Timestamp)(nil),    // 5: google.protobuf.Timestamp
+	(*settingpb.CustomerTag)(nil),    // 6: moego.business.setting.v1.CustomerTag
+	(*settingpb.ReferralSource)(nil), // 7: moego.business.setting.v1.ReferralSource
 }
 var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
-	6,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
+	4,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
 	0,  // 1: moego.business.customer.v1.Customer.status:type_name -> moego.business.customer.v1.Customer.Status
-	7,  // 2: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
-	7,  // 3: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
-	7,  // 4: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
-	7,  // 5: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
+	5,  // 2: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
+	5,  // 3: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
+	5,  // 4: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
+	5,  // 5: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
 	2,  // 6: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
-	3,  // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	5,  // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.customer.v1.Customer.ReferralSource
-	4,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
-	7,  // 10: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
-	7,  // 11: moego.business.customer.v1.Customer.Tag.last_updated_time:type_name -> google.protobuf.Timestamp
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	6,  // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.setting.v1.CustomerTag
+	7,  // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
+	3,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
+	5,  // 10: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_customer_proto_init() }
@@ -723,7 +585,7 @@ func file_moego_business_customer_v1_customer_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_customer_proto_rawDesc), len(file_moego_business_customer_v1_customer_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   5,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

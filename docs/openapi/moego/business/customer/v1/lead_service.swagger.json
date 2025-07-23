@@ -1,0 +1,1178 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/customer/v1/lead_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.customer.v1.LeadService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/leads": {
+      "post": {
+        "summary": "Creates a new lead",
+        "description": "Returns the created lead.\nReturns INVALID_ARGUMENT if the request is invalid.",
+        "operationId": "LeadService_CreateLead",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Lead"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateLeadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      }
+    },
+    "/v1/leads/{id}": {
+      "get": {
+        "summary": "Get a specific lead by ID",
+        "description": "Returns a lead.\nReturns NOT_FOUND if the lead ID doesn't exist.",
+        "operationId": "LeadService_GetLead",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Lead"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "ID of the lead to retrieve\nRequired.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      },
+      "put": {
+        "summary": "Updates an existing lead",
+        "description": "Returns the updated lead.\nReturns INVALID_ARGUMENT if the request is invalid.\nReturns NOT_FOUND if the lead ID doesn't exist.",
+        "operationId": "LeadService_UpdateLead",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Lead"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "ID of the lead to update\nRequired.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LeadServiceUpdateLeadBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      }
+    },
+    "/v1/leads:convert": {
+      "post": {
+        "summary": "Converts a lead to a customer",
+        "description": "Returns an empty response on success.\nReturns INVALID_ARGUMENT if the request is invalid.\nReturns NOT_FOUND if the lead ID doesn't exist.",
+        "operationId": "LeadService_ConvertLead",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ConvertLeadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ConvertLeadRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      }
+    },
+    "/v1/leads:list": {
+      "get": {
+        "summary": "List leads with pagination and optional filters",
+        "description": "Returns a list of leads. Results are paginated and can be filtered.\nReturns an empty list if no leads match the criteria.",
+        "operationId": "LeadService_ListLeads",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListLeadsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "pagination.pageSize",
+            "description": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pagination.pageToken",
+            "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "companyId",
+            "description": "ID of the company to list leads for\nRequired. Must be a valid company ID",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "filter.lifeCycleId",
+            "description": "ID of the lead's life cycle stage",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter.actionStatusId",
+            "description": "ID of the lead's action status",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "filter.mainPhoneNumber",
+            "description": "Main phone number of the lead",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "CustomerPreference": {
+      "type": "object",
+      "properties": {
+        "receiveAutoMessage": {
+          "type": "boolean",
+          "title": "Whether the customer wants to receive automated SMS messages\nDefault: true"
+        },
+        "receiveAutoEmail": {
+          "type": "boolean",
+          "title": "Whether the customer wants to receive automated emails\nDefault: true"
+        },
+        "subscribeToMarketingEmails": {
+          "type": "boolean",
+          "title": "Whether the customer has opted in to marketing emails\nDefault: false"
+        },
+        "receiveAppointmentReminder": {
+          "type": "boolean",
+          "title": "Whether the customer wants appointment reminders\nDefault: true"
+        }
+      },
+      "description": "Preference stores a customer's communication and marketing preferences.\nThese settings determine how and when we can contact the customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Preference"
+      }
+    },
+    "LeadServiceUpdateLeadBody": {
+      "type": "object",
+      "properties": {
+        "lead": {
+          "$ref": "#/definitions/v1Lead",
+          "description": "The updated lead information\nRequired."
+        }
+      },
+      "title": "Request message for updating an existing lead",
+      "required": [
+        "lead"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "UpdateLeadRequest"
+      }
+    },
+    "PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
+    "PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
+    "PetVaccination": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the vaccination\nExample: \"Rabies\", \"DHPP\", \"Bordetella\""
+        },
+        "expiredAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this vaccination expires\nStaff are notified before expiration"
+        }
+      },
+      "title": "Vaccination record for the pet\nUsed to ensure compliance with service requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vaccination"
+      }
+    },
+    "PetVet": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the veterinary practice or doctor"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "title": "Contact number for the veterinarian\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "address": {
+          "type": "string",
+          "title": "Physical location of the veterinary practice"
+        }
+      },
+      "title": "Veterinary care provider information\nUsed for emergencies and health verifications",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vet"
+      }
+    },
+    "WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
+      }
+    },
+    "typeLatLng": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The latitude in degrees. It must be in the range [-90.0, +90.0]."
+        },
+        "longitude": {
+          "type": "number",
+          "format": "double",
+          "description": "The longitude in degrees. It must be in the range [-180.0, +180.0]."
+        }
+      },
+      "description": "An object that represents a latitude/longitude pair. This is expressed as a\npair of doubles to represent degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/latlng"
+        },
+        "type": "LatLng"
+      }
+    },
+    "v1ActionStatus": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the ActionStatus."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the ActionStatus."
+        },
+        "color": {
+          "type": "string",
+          "description": "string, The color of the ActionStatus."
+        }
+      },
+      "title": "ActionStatus",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ActionStatus"
+      }
+    },
+    "v1Address": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, Unique identifier for the address."
+        },
+        "address1": {
+          "type": "string",
+          "title": "string, Street address including house number and street name.\nExample: \"123 Main Street\", \"Unit 4B, 567 Park Avenue\""
+        },
+        "address2": {
+          "type": "string",
+          "title": "string, Additional address details like apartment, suite, or unit number.\nExample: \"Floor 3\", \"Building B\""
+        },
+        "city": {
+          "type": "string",
+          "title": "string, City or locality name.\nExample: \"San Francisco\", \"New York City\""
+        },
+        "state": {
+          "type": "string",
+          "title": "string, State, province, or region.\nExample: \"CA\", \"NY\""
+        },
+        "postalCode": {
+          "type": "string",
+          "title": "string, Postal or ZIP code.\nExample: \"94105\", \"10001\""
+        },
+        "country": {
+          "type": "string",
+          "title": "string, Country name or ISO country code.\nExample: \"US\", \"United States\""
+        },
+        "coordinate": {
+          "$ref": "#/definitions/typeLatLng",
+          "description": "object(LatLng), Latitude and Longitude coordinate for mapping.\nLatitude Range: -90 to 90. Longitude Range: -180 to 180."
+        },
+        "type": {
+          "$ref": "#/definitions/v1AddressType",
+          "title": "enum(Type), represents the importance of the address"
+        }
+      },
+      "description": "The address object represents a physical location used throughout the system.\nIt provides a standardized way to store and validate address information for\nbusinesses, customers, and service locations. The address format follows\ncommon postal standards and includes geocoding information for mapping.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Address"
+      }
+    },
+    "v1AddressType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "PRIMARY",
+        "SECONDARY"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
+      "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
+    },
+    "v1ConvertLeadRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the lead to convert\nRequired."
+        }
+      },
+      "title": "Request message for converting a lead to a customer",
+      "required": [
+        "id"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ConvertLeadRequest"
+      }
+    },
+    "v1ConvertLeadResponse": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/v1Customer",
+          "title": "The newly created customer from the converted lead"
+        }
+      },
+      "title": "Response message for converting a lead to a customer",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ConvertLeadResponse"
+      }
+    },
+    "v1CreateLeadRequest": {
+      "type": "object",
+      "properties": {
+        "lead": {
+          "$ref": "#/definitions/v1Lead",
+          "description": "The lead to create\nRequired."
+        }
+      },
+      "title": "Request message for creating a new lead",
+      "required": [
+        "lead"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CreateLeadRequest"
+      }
+    },
+    "v1Customer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the customer\nFormat: \"cus_\" followed by random characters"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Customer's first name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Customer's last name"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "URL to the customer's profile picture\nOptional. Must be a valid HTTPS URL"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Customer's phone number\nFormat: E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Customer's email address\nFormat: Must be a valid email address"
+        },
+        "address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Address"
+          },
+          "title": "List of customer's addresses\nCan include home, work, or other addresses"
+        },
+        "status": {
+          "$ref": "#/definitions/v1CustomerStatus",
+          "title": "Current status of the customer's account"
+        },
+        "colorCode": {
+          "type": "string",
+          "title": "Color code for visual identification in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        },
+        "source": {
+          "type": "string",
+          "title": "How the customer was acquired\nExamples: \"referral\", \"website\", \"walk-in\""
+        },
+        "lastAppointmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the customer last had an appointment"
+        },
+        "nextAppointmentDate": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the customer's next appointment is scheduled"
+        },
+        "createdBy": {
+          "type": "string",
+          "title": "ID of the staff member who created this customer"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this customer was created"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this customer"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this customer was last modified"
+        },
+        "preferredBusinessId": {
+          "type": "string",
+          "title": "ID of the customer's preferred business location"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company this customer belongs to"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerNote"
+          },
+          "title": "List of notes about this customer"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerTag"
+          },
+          "title": "List of tags applied to this customer"
+        },
+        "referralSource": {
+          "$ref": "#/definitions/v1ReferralSource",
+          "description": "The source or channel through which a customer was acquired."
+        },
+        "preference": {
+          "$ref": "#/definitions/CustomerPreference",
+          "description": "Preferences related to communication and marketing."
+        }
+      },
+      "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Customer"
+      }
+    },
+    "v1CustomerNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this note"
+        },
+        "note": {
+          "type": "string",
+          "title": "The content of the note"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this note"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this note was last modified"
+        }
+      },
+      "description": "Note represents a comment or observation about a customer.\nNotes help track important customer information, preferences, and history.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Note"
+      }
+    },
+    "v1CustomerStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ACTIVE",
+        "INACTIVE"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status represents the current state of a customer's account.\nThis affects their ability to book appointments and access services.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\nNew customers should not be created with this status.\n - ACTIVE: ACTIVE indicates the customer can book appointments and use services.\nThis is the default status for new customers.\n - INACTIVE: INACTIVE indicates the customer cannot book new appointments.\nExisting appointments may still be honored based on business policy."
+    },
+    "v1CustomerTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this tag"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the tag"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this tag"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tag was last modified"
+        }
+      },
+      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomerTag"
+      }
+    },
+    "v1Lead": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the lead\nFormat: \"lcus_\" followed by random characters"
+        },
+        "firstName": {
+          "type": "string",
+          "title": "Lead's first name"
+        },
+        "lastName": {
+          "type": "string",
+          "title": "Lead's last name"
+        },
+        "avatar": {
+          "type": "string",
+          "title": "URL to the lead's profile picture\nOptional. Must be a valid HTTPS URL"
+        },
+        "phone": {
+          "type": "string",
+          "title": "Lead's phone number in E.164 format (e.g., +12125551234)"
+        },
+        "email": {
+          "type": "string",
+          "title": "Lead's email address\nFormat: Must be a valid email address"
+        },
+        "address": {
+          "$ref": "#/definitions/v1Address",
+          "title": "Lead's addresses\nCan include home, work, or other addresses"
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Pet"
+          },
+          "title": "List of pets belonging to the lead\nMay be empty if the lead has no pets"
+        },
+        "preferredBusinessId": {
+          "type": "string",
+          "title": "ID of the lead's preferred business location"
+        },
+        "allocateStaffId": {
+          "type": "string",
+          "title": "ID of the staff member assigned to the lead"
+        },
+        "lifeCycle": {
+          "$ref": "#/definitions/v1LifeCycle",
+          "title": "Lead's current lifecycle stage"
+        },
+        "actionStatus": {
+          "$ref": "#/definitions/v1ActionStatus",
+          "title": "Lead's action status"
+        },
+        "referralSource": {
+          "$ref": "#/definitions/v1ReferralSource",
+          "title": "The source or channel through which the lead was acquired"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Creation timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Last modification timestamp"
+        }
+      },
+      "title": "Lead represents a potential customer in the sales pipeline",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Lead"
+      }
+    },
+    "v1LifeCycle": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the LifeCycle."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the LifeCycle."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "title": "bool, is default"
+        }
+      },
+      "title": "LifeCycle",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LifeCycle"
+      }
+    },
+    "v1ListLeadsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "lifeCycleId": {
+          "type": "string",
+          "title": "ID of the lead's life cycle stage"
+        },
+        "actionStatusId": {
+          "type": "string",
+          "title": "ID of the lead's action status"
+        },
+        "mainPhoneNumber": {
+          "type": "string",
+          "title": "Main phone number of the lead"
+        }
+      },
+      "title": "Filter parameters for the leads list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListLeadsResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "leads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Lead"
+          },
+          "title": "List of leads matching the request criteria"
+        }
+      },
+      "title": "Response message for listing leads",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListLeadsResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Pet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the pet\nFormat: \"pet_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "Pet's given name"
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "title": "Pet's date of birth\nUsed for age-appropriate service modifications"
+        },
+        "status": {
+          "$ref": "#/definitions/v1PetStatus",
+          "title": "Current status of the pet"
+        },
+        "type": {
+          "$ref": "#/definitions/v1PetType",
+          "title": "Species of the pet\nRequired. Determines available services"
+        },
+        "breed": {
+          "type": "string",
+          "title": "Specific breed within the pet type\nRequired. Helps determine grooming requirements"
+        },
+        "gender": {
+          "$ref": "#/definitions/PetGender",
+          "title": "Pet's gender\nUsed for service assignments"
+        },
+        "weight": {
+          "$ref": "#/definitions/v1Weight",
+          "title": "Pet's current weight\nUsed for equipment selection and health monitoring"
+        },
+        "fixed": {
+          "type": "string",
+          "title": "Spay/neuter status\nValues: \"yes\", \"no\", \"unknown\""
+        },
+        "coat": {
+          "type": "string",
+          "title": "Description of the pet's coat\nExample: \"long double coat\", \"short hair\""
+        },
+        "behavior": {
+          "type": "string",
+          "title": "General temperament and behavior notes\nExample: \"friendly\", \"nervous with new people\""
+        },
+        "petCodes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetCode"
+          },
+          "title": "Special handling codes for this pet\nDisplayed prominently during service"
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetNote"
+          },
+          "title": "Staff observations and special instructions"
+        },
+        "vaccinations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetVaccination"
+          },
+          "title": "Current vaccination records\nRequired for certain services"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the pet's owner\nSystem-managed, do not set manually",
+          "readOnly": true
+        },
+        "vet": {
+          "$ref": "#/definitions/PetVet",
+          "title": "Primary veterinary care provider\nUsed for emergencies and health verifications"
+        },
+        "evaluationStatus": {
+          "$ref": "#/definitions/PetEvaluationStatus",
+          "title": "Current evaluation status for services\nDetermines service availability"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was created."
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "timestamp, When the pet was last modified."
+        },
+        "photo": {
+          "type": "string",
+          "description": "photo url of pet."
+        }
+      },
+      "description": "Pet represents a customer's pet that receives services at your business.\nEach pet has its own profile containing essential information for providing\nappropriate care, including health records, behavior notes, and service preferences.",
+      "required": [
+        "name",
+        "type",
+        "breed"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Pet"
+      }
+    },
+    "v1PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCode"
+      }
+    },
+    "v1PetNote": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this note"
+        },
+        "content": {
+          "type": "string",
+          "title": "The content of the note"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this note"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this note was last modified"
+        }
+      },
+      "title": "Note contains observations about the pet's behavior,\npreferences, or special requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Note"
+      }
+    },
+    "v1PetStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ALIVE",
+        "PASSED_AWAY"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status indicates whether the pet is currently receiving services.\nThis affects appointment scheduling and service availability.\n\n - STATUS_UNSPECIFIED: Unknown or unspecified status\n - ALIVE: Pet is currently receiving services\nDefault status for new pets\n - PASSED_AWAY: Pet is no longer receiving services\nHistorical records are maintained"
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    },
+    "v1ReferralSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the source"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the source"
+        }
+      },
+      "description": "ReferralSource represents the source or channel through which a customer was acquired.\nThis helps track the origin of new customers and analyze marketing effectiveness.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ReferralSource"
+      }
+    },
+    "v1Weight": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": "uint32, The numeric value of the weight."
+        },
+        "unit": {
+          "$ref": "#/definitions/WeightUnit",
+          "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
+        }
+      },
+      "description": "The weight object provides a standardized way to represent and convert\nweight measurements throughout the system. It supports multiple units\nand ensures consistent weight tracking for pets, products, and other\nresources that require weight measurements.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Weight"
+      }
+    }
+  }
+}

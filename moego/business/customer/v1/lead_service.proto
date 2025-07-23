@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/customer/v1/lead.proto";
+import "moego/business/customer/v1/customer.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
+option java_multiple_files = true;
+option java_outer_classname = "CustomerServiceProto";
+option java_package = "com.moego.api.business.customer.v1";
+
+
+// LeadService provides methods for managing leads in the sales pipeline
+service LeadService {
+  // List leads with pagination and optional filters
+  //
+  // Returns a list of leads. Results are paginated and can be filtered.
+  // Returns an empty list if no leads match the criteria.
+  rpc ListLeads(ListLeadsRequest) returns (ListLeadsResponse) {
+    option (google.api.http) = {
+      get: "/v1/leads:list"
+    };
+  }
+
+  // Get a specific lead by ID
+  //
+  // Returns a lead.
+  // Returns NOT_FOUND if the lead ID doesn't exist.
+  rpc GetLead(GetLeadRequest) returns (Lead) {
+    option (google.api.http) = {
+      get: "/v1/leads/{id}"
+    };
+  }
+
+  // Creates a new lead
+  //
+  // Returns the created lead.
+  // Returns INVALID_ARGUMENT if the request is invalid.
+  rpc CreateLead(CreateLeadRequest) returns (Lead) {
+    option (google.api.http) = {
+      post: "/v1/leads"
+      body: "*"
+    };
+  }
+
+  // Updates an existing lead
+  //
+  // Returns the updated lead.
+  // Returns INVALID_ARGUMENT if the request is invalid.
+  // Returns NOT_FOUND if the lead ID doesn't exist.
+  rpc UpdateLead(UpdateLeadRequest) returns (Lead) {
+    option (google.api.http) = {
+      put: "/v1/leads/{id}"
+      body: "*"
+    };
+  }
+
+  // Converts a lead to a customer
+  //
+  // Returns an empty response on success.
+  // Returns INVALID_ARGUMENT if the request is invalid.
+  // Returns NOT_FOUND if the lead ID doesn't exist.
+  rpc ConvertLead(ConvertLeadRequest) returns (ConvertLeadResponse) {
+    option (google.api.http) = {
+      post: "/v1/leads:convert"
+      body: "*"
+    };
+  }
+}
+
+// Request message for listing leads
+message ListLeadsRequest {
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the company to list leads for
+  // Required. Must be a valid company ID
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the leads list
+  message Filter {
+    // ID of the lead's life cycle stage
+    string life_cycle_id = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // ID of the lead's action status
+    string action_status_id = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Main phone number of the lead
+    string main_phone_number = 3 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the leads list
+  Filter filter = 3;
+}
+
+// Response message for listing leads
+message ListLeadsResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // List of leads matching the request criteria
+  repeated Lead leads = 2;
+}
+
+// Request message for getting a specific lead
+message GetLeadRequest {
+  // ID of the lead to retrieve
+  // Required.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for creating a new lead
+message CreateLeadRequest {
+  // The lead to create
+  // Required.
+  Lead lead = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for updating an existing lead
+message UpdateLeadRequest {
+  // ID of the lead to update
+  // Required.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The updated lead information
+  // Required.
+  Lead lead = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for converting a lead to a customer
+message ConvertLeadRequest {
+  // ID of the lead to convert
+  // Required.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for converting a lead to a customer
+message ConvertLeadResponse {
+  // The newly created customer from the converted lead
+  Customer customer = 1;
+}

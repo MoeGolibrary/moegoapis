@@ -4,8 +4,8 @@ package moego.business.setting.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "moego/business/customer/v1/customer.proto";
-import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/customer.proto";
+import "moego/business/setting/v1/pet.proto";
 import "moego/business/setting/v1/lodging.proto";
 import "moego/business/setting/v1/service.proto";
 import "moego/common/v1/pagination.proto";
@@ -29,7 +29,7 @@ service SettingService {
   //
   // Returns all active codes for the specified company.
   // Returns PERMISSION_DENIED if the caller lacks access rights.
-  rpc ListPetCodes(ListPetCodeRequest) returns (ListPetCodeResponse) {
+  rpc ListPetCodes(ListPetCodesRequest) returns (ListPetCodesResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/pet/codes:list"
       body: "*"
@@ -44,9 +44,23 @@ service SettingService {
   //
   // Returns all active tags for the specified company.
   // Returns PERMISSION_DENIED if the caller lacks access rights.
-  rpc ListCustomerTags(ListCustomerTagRequest) returns (ListCustomerTagResponse) {
+  rpc ListCustomerTags(ListCustomerTagsRequest) returns (ListCustomerTagsResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/customer/tags:list"
+      body: "*"
+    };
+  }
+
+  // Lists all available customer referral sources for a company.
+  //
+  // Referral sources help track the origin of new customers and analyze marketing effectiveness.
+  // These sources can be used for lead generation, marketing campaigns, and customer analytics.
+  //
+  // Returns all active referral sources for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListCustomerReferralSources(ListCustomerReferralSourcesRequest) returns (ListCustomerReferralSourcesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/customer/referral_sources:list"
       body: "*"
     };
   }
@@ -105,9 +119,11 @@ service SettingService {
     };
   }
 
-  // List lodgings
+  // Lists all available lodgings for a company.
   //
-  // Returns a list of lodgings.
+  // Lodgings represent different types of accommodation options for pet boarding services.
+  //
+  // Returns all active lodgings for the specified company.
   // Returns PERMISSION_DENIED if the caller lacks access rights.
   // Returns INVALID_ARGUMENT if the request is malformed.
   // Returns NOT_FOUND if the company does not exist.
@@ -116,34 +132,74 @@ service SettingService {
       get: "/v1/setting/companies/{company_id}/lodgings"
     };
   }
+
+  // Lists all available lead lifecycle stages for a company.
+  //
+  // Lifecycle stages help track the progression of leads through the sales pipeline.
+  //
+  // Returns all active lifecycle stages for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns INVALID_ARGUMENT if the request is malformed.
+  rpc ListLeadsLifeCycles(ListLeadsLifeCyclesRequest) returns (ListLeadsLifeCyclesResponse) {
+    option (google.api.http) = {
+      get: "/v1/setting/companies/{company_id}/leads/life_cycles"
+    };
+  }
+
+  // Lists all available lead action statuses for a company.
+  //
+  // Action statuses help track what actions need to be taken on leads.
+  //
+  // Returns all active action statuses for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns INVALID_ARGUMENT if the request is malformed.
+  rpc ListLeadsActionStatus(ListLeadsActionStatusRequest) returns (ListLeadsActionStatusResponse) {
+    option (google.api.http) = {
+      get: "/v1/setting/companies/{company_id}/leads/action_status"
+    };
+  }
 }
 
 // Request message for listing pet codes.
-message ListPetCodeRequest {
+message ListPetCodesRequest {
   // ID of the company to list pet codes for
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing pet codes.
-message ListPetCodeResponse {
+message ListPetCodesResponse {
   // List of available pet codes
   // May be empty if no codes are defined
-  repeated customer.v1.Pet.Code codes = 1;
+  repeated PetCode codes = 1;
 }
 
 // Request message for listing customer tags.
-message ListCustomerTagRequest {
+message ListCustomerTagsRequest {
   // ID of the company to list customer tags for
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing customer tags.
-message ListCustomerTagResponse {
+message ListCustomerTagsResponse {
   // List of available customer tags
   // May be empty if no tags are defined
-  repeated customer.v1.Customer.Tag tags = 2;
+  repeated CustomerTag tags = 1;
+}
+
+// Request message for listing customer referral sources.
+message ListCustomerReferralSourcesRequest {
+  // ID of the company to list referral sources for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing customer referral sources.
+message ListCustomerReferralSourcesResponse {
+  // List of available referral sources
+  // May be empty if no sources are defined
+  repeated ReferralSource referral_sources = 1;
 }
 
 // Request message for listing services.
@@ -171,16 +227,6 @@ message ListServicesRequest {
   Filter filter = 4;
 }
 
-// Request message for getting a service.
-message GetServiceRequest {
-  // ID of the company that owns the service.
-  // Required. Must be a valid company ID.
-  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // ID of the service to retrieve.
-  // Required. Must be a valid service ID.
-  string id = 2 [(google.api.field_behavior) = REQUIRED];
-}
 
 // Response message for listing services.
 message ListServicesResponse {
@@ -193,10 +239,21 @@ message ListServicesResponse {
   repeated Service services = 2;
 }
 
+// Request message for getting a service.
+message GetServiceRequest {
+  // ID of the company that owns the service
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the service to retrieve
+  // Required. Must be a valid service ID
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
 // Request message for creating a service.
 message CreateServiceRequest {
-  // ID of the company to create the service under.
-  // Required. Must be a valid company ID.
+  // ID of the company to create the service under
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the service (e.g., "Grooming", "Boarding")
@@ -242,12 +299,12 @@ message CreateServiceRequest {
 
 // Request message for updating a service.
 message UpdateServiceRequest {
-  // ID of the company that owns the service.
-  // Required. Must be a valid company ID.
+  // ID of the company that owns the service
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Unique identifier of the service to update.
-  // Required. Must be a valid service ID.
+  // Unique identifier of the service to update
+  // Required. Must be a valid service ID
   string id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Name of the service (e.g., "Grooming", "Boarding")
@@ -260,8 +317,7 @@ message UpdateServiceRequest {
 
   // Base price for the service
   // Can be adjusted based on pet size, breed, or add-ons
-  google.type.Money price = 5  [(google.api.field_behavior) = REQUIRED];
-
+  google.type.Money price = 5 [(google.api.field_behavior) = REQUIRED];
 
   // Duration of the service in minutes
   // Used for scheduling and resource allocation
@@ -287,17 +343,44 @@ message UpdateServiceRequest {
   bool inactive = 11;
 }
 
-
-// Request to list lodgings
+// Request message for listing lodgings.
 message ListLodgingsRequest {
-  // ID of the company that owns the service.
-  // Required. Must be a valid company ID.
+  // ID of the company to list lodgings for
+  // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-
 }
 
-// Response to list lodgings
+// Response message for listing lodgings.
 message ListLodgingsResponse {
-  // List of lodgings
+  // List of available lodgings
+  // May be empty if no lodgings are defined
   repeated Lodging lodgings = 1;
+}
+
+// Request message for listing lead lifecycle stages.
+message ListLeadsLifeCyclesRequest {
+  // ID of the company to list lead lifecycle stages for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing lead lifecycle stages.
+message ListLeadsLifeCyclesResponse {
+  // List of available lead lifecycle stages
+  // May be empty if no lifecycle stages are defined
+  repeated LifeCycle life_cycles = 1;
+}
+
+// Request message for listing lead action statuses.
+message ListLeadsActionStatusRequest {
+  // ID of the company to list lead action statuses for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing lead action statuses.
+message ListLeadsActionStatusResponse {
+  // List of available lead action statuses
+  // May be empty if no action statuses are defined
+  repeated ActionStatus action_status = 1;
 }

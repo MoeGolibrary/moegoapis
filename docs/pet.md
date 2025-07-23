@@ -32,41 +32,30 @@ Applicable to scenarios such as pet grooming, medical care tracking, behavioral 
 Represents a customer's pet that receives services at your business. Each pet has its own profile containing essential
 information for providing appropriate care.
 
-| Field Name          | Type               | Description                                        |
-|---------------------|--------------------|----------------------------------------------------|
-| `id`                | string             | Unique identifier                                  |
-| `name`              | string             | Pet's given name                                   |
-| `birthday`          | Date               | Pet's date of birth                                |
-| `status`            | Status             | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`              | Type               | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`             | string             | Specific breed within the pet type                 |
-| `gender`            | Gender             | Gender of the pet                                  |
-| `weight`            | Weight             | Pet's current weight                               |
-| `fixed`             | string             | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`              | string             | Description of the coat (e.g., "long double coat") |
-| `behavior`          | string             | General temperament and behavior                   |
-| `pet_codes`         | Array(Code)        | Special handling instructions or medical alerts    |
-| `notes`             | Array(Note)        | Staff observations and special instructions        |
-| `vaccinations`      | Array(Vaccination) | Vaccination records                                |
-| `customer_id`       | string             | ID of the pet’s owner                              |
-| `vet`               | Vet                | Primary veterinary care provider                   |
-| `evaluation_status` | EvaluationStatus   | Service eligibility status                         |
-| `created_time`      | Timestamp          | When the pet was created                           |
-| `last_updated_time` | Timestamp          | When the pet was last modified                     |
-| `photo`             | string             | Photo URL of the pet                               |
+| Field Name          | Type                                             | Description                                        |
+|---------------------|--------------------------------------------------|----------------------------------------------------|
+| `id`                | string                                           | Unique identifier                                  |
+| `name`              | string                                           | Pet's given name                                   |
+| `birthday`          | Date                                             | Pet's date of birth                                |
+| `status`            | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`              | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`             | string                                           | Specific breed within the pet type                 |
+| `gender`            | Gender                                           | Gender of the pet                                  |
+| `weight`            | Weight                                           | Pet's current weight                               |
+| `fixed`             | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`              | string                                           | Description of the coat (e.g., "long double coat") |
+| `behavior`          | string                                           | General temperament and behavior                   |
+| `pet_codes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
+| `notes`             | Array(Note)                                      | Staff observations and special instructions        |
+| `vaccinations`      | Array(Vaccination)                               | Vaccination records                                |
+| `customer_id`       | string                                           | ID of the pet’s owner                              |
+| `vet`               | Vet                                              | Primary veterinary care provider                   |
+| `evaluation_status` | EvaluationStatus                                 | Service eligibility status                         |
+| `created_time`      | Timestamp                                        | When the pet was created                           |
+| `last_updated_time` | Timestamp                                        | When the pet was last modified                     |
+| `photo`             | string                                           | Photo URL of the pet                               |
 
-### 2. Code
-
-Represents special handling instructions or medical alerts for the pet.
-
-| Field Name     | Type   | Description                          |
-|----------------|--------|--------------------------------------|
-| `id`           | string | Unique identifier                    |
-| `abbreviation` | string | Short form (e.g., AG for Aggressive) |
-| `description`  | string | Detailed explanation                 |
-| `color`        | string | Highlight color in UI                |
-
-### 3. Note
+### 2. Note
 
 Contains staff observations about the pet’s behavior, preferences, or special requirements.
 
@@ -77,7 +66,7 @@ Contains staff observations about the pet’s behavior, preferences, or special 
 | `last_updated_by`   | string    | Staff member who last updated it |
 | `last_updated_time` | Timestamp | Last modification timestamp      |
 
-### 4. Vaccination
+### 3. Vaccination
 
 Tracks vaccination records for compliance with service requirements.
 
@@ -86,7 +75,7 @@ Tracks vaccination records for compliance with service requirements.
 | `name`       | string    | Vaccination name (e.g., Rabies) |
 | `expired_at` | Timestamp | Expiration date                 |
 
-### 5. Vet
+### 4. Vet
 
 Represents veterinary care provider information for emergencies.
 
@@ -96,7 +85,7 @@ Represents veterinary care provider information for emergencies.
 | `phone_number` | string | Contact number (E.164 format) |
 | `address`      | string | Physical location             |
 
-### 6. Weight
+### 5. Weight
 
 Represents pet weight measurements.
 

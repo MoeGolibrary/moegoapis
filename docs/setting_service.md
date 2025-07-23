@@ -80,6 +80,65 @@ A lodging represents a type of accommodation and its associated units, typically
 
 ---
 
+### 3. PetCode
+
+Represents special handling instructions or medical alerts for a pet.
+
+| Field Name     | Type   | Description                          |
+|----------------|--------|--------------------------------------|
+| `id`           | string | Unique identifier                    |
+| `abbreviation` | string | Short form (e.g., AG for Aggressive) |
+| `description`  | string | Detailed explanation                 |
+| `color`        | string | Highlight color in UI                |
+
+---
+
+### 4. CustomerTag
+
+Represents a label that can be applied to customers for categorization and filtering purposes.
+
+| Field Name          | Type      | Description                                       |
+|---------------------|-----------|---------------------------------------------------|
+| `id`                | string    | Unique identifier                                 |
+| `name`              | string    | Display name of the tag                           |
+| `last_updated_by`   | string    | ID of the staff member who last modified this tag |
+| `last_updated_time` | Timestamp | When this tag was last modified                   |
+
+---
+
+### 5. ReferralSource
+
+Represents the source or channel through which a customer was acquired.
+
+| Field Name | Type   | Description                |
+|------------|--------|----------------------------|
+| `id`       | string | Unique identifier          |
+| `name`     | string | Display name of the source |
+
+---
+
+### 6. LifeCycle
+
+Represents a stage in the lead management process.
+
+| Field Name | Type   | Description           |
+|------------|--------|-----------------------|
+| `id`       | string | Unique identifier     |
+| `name`     | string | Display name          |
+
+---
+
+### 7. ActionStatus
+
+Represents the status of an action taken on a lead.
+
+| Field Name | Type   | Description           |
+|------------|--------|-----------------------|
+| `id`       | string | Unique identifier     |
+| `name`     | string | Display name          |
+
+---
+
 #### Message: LodgingType
 
 Describes the type of lodging available.
@@ -319,7 +378,7 @@ Retrieves all active pet codes defined for the company.
 
 #### 📌 Return Value:
 
-Returns a list of `Pet.Code` objects.
+Returns a list of `PetCode` objects.
 
 #### ⚠️ Error Code:
 
@@ -350,7 +409,7 @@ Retrieves all active customer tags defined for the company.
 
 #### 📌 Return Value:
 
-Returns a list of `Customer.Tag` objects.
+Returns a list of `CustomerTag` objects.
 
 #### ⚠️ Error Code:
 
@@ -388,6 +447,101 @@ Returns a list of `Lodging` objects, each containing associated lodging types an
 - `PERMISSION_DENIED`: Permission denied.
 - `INVALID_ARGUMENT`: Malformed request (e.g., invalid company ID).
 - `NOT_FOUND`: The company does not exist.
+
+---
+
+### 8. List Customer Referral Sources (`ListCustomerReferralSources`)
+
+- **Method**: `ListCustomerReferralSources`
+- **HTTP Method**: POST
+- **Path**: `/v1/setting/companies/{company_id}/customer/referral_sources:list`
+
+#### ✅ Functionality:
+
+Lists all available customer referral sources for a company.
+
+#### 🎯 Use Cases:
+
+- Track the origin of new customers.
+- Analyze marketing effectiveness.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description                               |
+|--------------|--------|----------|-------------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list sources for     |
+
+#### 📌 Return Value:
+
+Returns a list of `ReferralSource` objects.
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 9. List Leads Life Cycles (`ListLeadsLifeCycles`)
+
+- **Method**: `ListLeadsLifeCycles`
+- **HTTP Method**: GET
+- **Path**: `/v1/setting/companies/{company_id}/leads/life_cycles`
+
+#### ✅ Functionality:
+
+Returns a list of lead life cycles.
+
+#### 🎯 Use Cases:
+
+- Understand the stages of a lead's journey.
+- Standardize lead management processes.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description                               |
+|--------------|--------|----------|-------------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list cycles for      |
+
+#### 📌 Return Value:
+
+Returns a list of `LifeCycle` objects.
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+- `INVALID_ARGUMENT`: Malformed request.
+
+---
+
+### 10. List Leads Action Status (`ListLeadsActionStatus`)
+
+- **Method**: `ListLeadsActionStatus`
+- **HTTP Method**: GET
+- **Path**: `/v1/setting/companies/{company_id}/leads/action_status`
+
+#### ✅ Functionality:
+
+Returns a list of lead action statuses.
+
+#### 🎯 Use Cases:
+
+- Track the status of actions taken on leads.
+- Standardize lead follow-up procedures.
+
+#### 🔧 Request Parameters:
+
+| Field Name   | Type   | Required | Description                               |
+|--------------|--------|----------|-------------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list statuses for    |
+
+#### 📌 Return Value:
+
+Returns a list of `ActionStatus` objects.
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+- `INVALID_ARGUMENT`: Malformed request.
 
 ---
 

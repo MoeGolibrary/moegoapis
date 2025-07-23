@@ -9,6 +9,7 @@ import "moego/business/customer/v1/pet.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
 import "moego/common/v1/weight.proto";
+import "moego/business/setting/v1/pet.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -240,7 +241,7 @@ message AppendPetCodesRequest {
 message AppendPetCodesResponse {
   // Codes that were successfully added
   // Includes full code details
-  repeated Pet.Code codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
+  repeated moego.business.setting.v1.PetCode codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // Request message for adding notes to a pet's profile.

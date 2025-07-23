@@ -6,6 +6,7 @@ import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/date.proto";
 import "moego/common/v1/weight.proto";
+import "moego/business/setting/v1/pet.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -98,24 +99,6 @@ message Pet {
 
     // Gender not determined or disclosed
     UNKNOWN = 3;
-  }
-
-  // Code represents special handling instructions or medical alerts
-  // These codes are visible to staff during service delivery
-  message Code {
-    // Unique identifier for this code
-    string id = 1;
-
-    // Short form of the code for quick reference
-    // Example: "AG" for "Aggressive"
-    string abbreviation = 2;
-
-    // Detailed explanation of the code
-    string description = 3;
-
-    // Color used to highlight this code in the UI
-    // Format: Hex color code (e.g., "#FF0000")
-    string color = 4;
   }
 
   // Note contains observations about the pet's behavior,
@@ -217,7 +200,7 @@ message Pet {
 
   // Special handling codes for this pet
   // Displayed prominently during service
-  repeated Code pet_codes = 12;
+  repeated moego.business.setting.v1.PetCode pet_codes = 12;
 
   // Staff observations and special instructions
   repeated Note notes = 13;

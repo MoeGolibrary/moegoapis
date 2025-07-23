@@ -8,6 +8,7 @@ import "google/type/interval.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
+import "moego/business/setting/v1/customer.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -157,7 +158,7 @@ message CreateCustomerRequest {
 
   // Initial tags to apply to the customer
   // Optional. Empty list if not provided
-  repeated Customer.Tag tags = 9;
+  repeated moego.business.setting.v1.CustomerTag tags = 9;
 
   // Initial notes about the customer
   // Optional. Empty list if not provided
@@ -205,7 +206,7 @@ message UpdateCustomerRequest {
 
   // Initial tags to apply to the customer
   // Optional. Empty list if not provided
-  repeated Customer.Tag tags = 10;
+  repeated moego.business.setting.v1.CustomerTag tags = 10;
 
   // Initial notes about the customer
   // Optional. Empty list if not provided
@@ -314,14 +315,14 @@ message AppendCustomerTagsRequest {
 
   // Tags to add to the customer's profile
   // Required. At least one tag must be provided
-  repeated Customer.Tag tags = 3;
+  repeated moego.business.setting.v1.CustomerTag tags = 3;
 }
 
 // Response message for adding tags to a customer.
 message AppendCustomerTagsResponse {
   // Tags that were successfully added
   // Includes generated IDs and timestamps
-  repeated Customer.Tag tags = 1;
+  repeated moego.business.setting.v1.CustomerTag tags = 1;
 }
 
 // Request message for listing customer tags.
@@ -335,5 +336,5 @@ message ListCustomerTagsRequest {
 message ListCustomerTagsResponse {
   // List of tags associated with the customer
   // May be empty if the customer has no tags
-  repeated Customer.Tag tags = 2;
+  repeated moego.business.setting.v1.CustomerTag tags = 2;
 }
