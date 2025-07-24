@@ -31,6 +31,7 @@ Represents a potential customer in the sales pipeline
 | Field Name              | Type                                                    | Description                                               |
 |-------------------------|---------------------------------------------------------|-----------------------------------------------------------|
 | `id`                    | string                                                  | Unique identifier                                         |
+| `company_id`            | string                                                  | ID of the company the lead belongs to                     |
 | `first_name`            | string                                                  | Lead's first name                                         |
 | `last_name`             | string                                                  | Lead's last name                                          |
 | `avatar`                | string                                                  | URL to the lead's profile picture                         |

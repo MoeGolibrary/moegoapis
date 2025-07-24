@@ -62,8 +62,10 @@ type Lead struct {
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// Last modification timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// ID of the company associated with the lead
+	CompanyId     string `protobuf:"bytes,16,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Lead) Reset() {
@@ -201,11 +203,18 @@ func (x *Lead) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Lead) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
 var File_moego_business_customer_v1_lead_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\n" +
-	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\"\xcd\x05\n" +
+	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\"\xec\x05\n" +
 	"\x04Lead\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -224,7 +233,9 @@ const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\raction_status\x18\f \x01(\v2'.moego.business.setting.v1.ActionStatusR\factionStatus\x12R\n" +
 	"\x0freferral_source\x18\r \x01(\v2).moego.business.setting.v1.ReferralSourceR\x0ereferralSource\x12=\n" +
 	"\fcreated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
-	"\x11last_updated_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTimeB\x8c\x01\n" +
+	"\x11last_updated_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x10 \x01(\tR\tcompanyIdB\x8c\x01\n" +
 	"\"com.moego.api.business.customer.v1B\n" +
 	"LeadsProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 

@@ -831,6 +831,10 @@
           "type": "string",
           "format": "date-time",
           "title": "Last modification timestamp"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company associated with the lead"
         }
       },
       "title": "Lead represents a potential customer in the sales pipeline",

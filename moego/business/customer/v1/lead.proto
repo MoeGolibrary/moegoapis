@@ -63,4 +63,7 @@ message Lead {
 
   // Last modification timestamp
   google.protobuf.Timestamp last_updated_time = 15;
+
+  // ID of the company associated with the lead
+  string company_id = 16;
 }
