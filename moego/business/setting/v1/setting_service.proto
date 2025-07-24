@@ -384,5 +384,5 @@ message ListLeadsActionStatusRequest {
 message ListLeadsActionStatusResponse {
   // List of available lead action statuses
   // May be empty if no action statuses are defined
-  repeated ActionStatus action_status = 1;
+  repeated ActionStatus action_statuses = 1;
 }

@@ -850,7 +850,7 @@
     "v1ListLeadsActionStatusResponse": {
       "type": "object",
       "properties": {
-        "actionStatus": {
+        "actionStatuses": {
           "type": "array",
           "items": {
             "type": "object",

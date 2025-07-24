@@ -1029,9 +1029,9 @@ type ListLeadsActionStatusResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of available lead action statuses
 	// May be empty if no action statuses are defined
-	ActionStatus  []*ActionStatus `protobuf:"bytes,1,rep,name=action_status,json=actionStatus,proto3" json:"action_status,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	ActionStatuses []*ActionStatus `protobuf:"bytes,1,rep,name=action_statuses,json=actionStatuses,proto3" json:"action_statuses,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ListLeadsActionStatusResponse) Reset() {
@@ -1064,9 +1064,9 @@ func (*ListLeadsActionStatusResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *ListLeadsActionStatusResponse) GetActionStatus() []*ActionStatus {
+func (x *ListLeadsActionStatusResponse) GetActionStatuses() []*ActionStatus {
 	if x != nil {
-		return x.ActionStatus
+		return x.ActionStatuses
 	}
 	return nil
 }
@@ -1197,9 +1197,9 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"lifeCycles\"B\n" +
 	"\x1cListLeadsActionStatusRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"m\n" +
-	"\x1dListLeadsActionStatusResponse\x12L\n" +
-	"\raction_status\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\factionStatus2\xb3\x0e\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"q\n" +
+	"\x1dListLeadsActionStatusResponse\x12P\n" +
+	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses2\xb3\x0e\n" +
 	"\x0eSettingService\x12\xad\x01\n" +
 	"\fListPetCodes\x12..moego.business.setting.v1.ListPetCodesRequest\x1a/.moego.business.setting.v1.ListPetCodesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbd\x01\n" +
 	"\x10ListCustomerTags\x122.moego.business.setting.v1.ListCustomerTagsRequest\x1a3.moego.business.setting.v1.ListCustomerTagsResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\xea\x01\n" +
@@ -1271,7 +1271,7 @@ var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
 	24, // 9: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
 	26, // 10: moego.business.setting.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.setting.v1.Lodging
 	27, // 11: moego.business.setting.v1.ListLeadsLifeCyclesResponse.life_cycles:type_name -> moego.business.setting.v1.LifeCycle
-	28, // 12: moego.business.setting.v1.ListLeadsActionStatusResponse.action_status:type_name -> moego.business.setting.v1.ActionStatus
+	28, // 12: moego.business.setting.v1.ListLeadsActionStatusResponse.action_statuses:type_name -> moego.business.setting.v1.ActionStatus
 	23, // 13: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
 	0,  // 14: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodesRequest
 	2,  // 15: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagsRequest
