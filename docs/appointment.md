@@ -231,7 +231,29 @@ Retrieves a single appointment by its ID.
 
 #### 📌 Return Value:
 
-Returns the complete `Appointment` object.
+| Field Name            | Type                    | Description                                                       |
+|-----------------------|-------------------------|-------------------------------------------------------------------|
+| `id`                  | string                  | Unique identifier of the appointment                              |
+| `business_id`         | string                  | Business location where the service will be performed             |
+| `customer_id`         | string                  | Customer who booked the appointment                               |
+| `address`             | Address                 | Service location details (required for home service appointments) |
+| `duration`            | Interval                | Start and end time of the appointment                             |
+| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                              |
+| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
+| `ticket_comment`      | string                  | Optional notes about the appointment                              |
+| `color_code`          | string                  | UI display color in hex format                                    |
+| `order_id`            | string                  | Identifier of the associated payment order                        |
+| `total_amount`        | Money                   | Total cost for all services                                       |
+| `paid_amount`         | Money                   | Amount received from customer                                     |
+| `refund_amount`       | Money                   | Amount returned to customer                                       |
+| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
+| `created_by`          | string                  | Identifier of the appointment creator                             |
+| `created_time`        | timestamp               | When the appointment was created                                  |
+| `last_updated_by`     | string                  | Identifier of the last modifier                                   |
+| `last_updated_time`   | timestamp               | When the appointment was last modified                            |
+| `check_in_time`       | timestamp               | When the customer arrived with their pet                          |
+| `check_out_time`      | timestamp               | When the service was completed and the pet picked up              |
+| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment           |
 
 #### ⚠️ Error Codes:
 
@@ -276,7 +298,10 @@ Lists appointments matching specified criteria, including company ID and optiona
 
 #### 📌 Return Value:
 
-Returns a list of appointments ordered by start time.
+| Field Name        | Type               | Description                                   |
+|-------------------|--------------------|-----------------------------------------------|
+| `next_page_token` | string             | Token for retrieving the next page of results |
+| `appointments`    | Array(Appointment) | List of appointments matching the criteria    |
 
 #### ⚠️ Error Code:
 
@@ -314,7 +339,29 @@ Creates a new appointment with services for one or more pets.
 
 #### 📌 Return Value:
 
-Returns the newly created `Appointment` object.
+| Field Name            | Type                    | Description                                                       |
+|-----------------------|-------------------------|-------------------------------------------------------------------|
+| `id`                  | string                  | Unique identifier of the appointment                              |
+| `business_id`         | string                  | Business location where the service will be performed             |
+| `customer_id`         | string                  | Customer who booked the appointment                               |
+| `address`             | Address                 | Service location details (required for home service appointments) |
+| `duration`            | Interval                | Start and end time of the appointment                             |
+| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                              |
+| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
+| `ticket_comment`      | string                  | Optional notes about the appointment                              |
+| `color_code`          | string                  | UI display color in hex format                                    |
+| `order_id`            | string                  | Identifier of the associated payment order                        |
+| `total_amount`        | Money                   | Total cost for all services                                       |
+| `paid_amount`         | Money                   | Amount received from customer                                     |
+| `refund_amount`       | Money                   | Amount returned to customer                                       |
+| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
+| `created_by`          | string                  | Identifier of the appointment creator                             |
+| `created_time`        | timestamp               | When the appointment was created                                  |
+| `last_updated_by`     | string                  | Identifier of the last modifier                                   |
+| `last_updated_time`   | timestamp               | When the appointment was last modified                            |
+| `check_in_time`       | timestamp               | When the customer arrived with their pet                          |
+| `check_out_time`      | timestamp               | When the service was completed and the pet picked up              |
+| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment           |
 
 #### ⚠️ Error Codes:
 
@@ -331,7 +378,7 @@ Returns the newly created `Appointment` object.
 
 #### ✅ Functionality:
 
-Updates the appointment’s time slot. All services within the appointment will be moved to the new time.
+Updates the appointment's time slot. All services within the appointment will be moved to the new time.
 
 #### 🎯 Use Cases:
 
@@ -348,7 +395,29 @@ Updates the appointment’s time slot. All services within the appointment will 
 
 #### 📌 Return Value:
 
-Returns the updated `Appointment` object.
+| Field Name            | Type                    | Description                                                       |
+|-----------------------|-------------------------|-------------------------------------------------------------------|
+| `id`                  | string                  | Unique identifier of the appointment                              |
+| `business_id`         | string                  | Business location where the service will be performed             |
+| `customer_id`         | string                  | Customer who booked the appointment                               |
+| `address`             | Address                 | Service location details (required for home service appointments) |
+| `duration`            | Interval                | Start and end time of the appointment                             |
+| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                              |
+| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
+| `ticket_comment`      | string                  | Optional notes about the appointment                              |
+| `color_code`          | string                  | UI display color in hex format                                    |
+| `order_id`            | string                  | Identifier of the associated payment order                        |
+| `total_amount`        | Money                   | Total cost for all services                                       |
+| `paid_amount`         | Money                   | Amount received from customer                                     |
+| `refund_amount`       | Money                   | Amount returned to customer                                       |
+| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
+| `created_by`          | string                  | Identifier of the appointment creator                             |
+| `created_time`        | timestamp               | When the appointment was created                                  |
+| `last_updated_by`     | string                  | Identifier of the last modifier                                   |
+| `last_updated_time`   | timestamp               | When the appointment was last modified                            |
+| `check_in_time`       | timestamp               | When the customer arrived with their pet                          |
+| `check_out_time`      | timestamp               | When the service was completed and the pet picked up              |
+| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment           |
 
 #### ⚠️ Error Codes:
 
@@ -381,7 +450,29 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 
 #### 📌 Return Value:
 
-Returns the canceled `Appointment` object.
+| Field Name            | Type                    | Description                                                       |
+|-----------------------|-------------------------|-------------------------------------------------------------------|
+| `id`                  | string                  | Unique identifier of the appointment                              |
+| `business_id`         | string                  | Business location where the service will be performed             |
+| `customer_id`         | string                  | Customer who booked the appointment                               |
+| `address`             | Address                 | Service location details (required for home service appointments) |
+| `duration`            | Interval                | Start and end time of the appointment                             |
+| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                              |
+| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
+| `ticket_comment`      | string                  | Optional notes about the appointment                              |
+| `color_code`          | string                  | UI display color in hex format                                    |
+| `order_id`            | string                  | Identifier of the associated payment order                        |
+| `total_amount`        | Money                   | Total cost for all services                                       |
+| `paid_amount`         | Money                   | Amount received from customer                                     |
+| `refund_amount`       | Money                   | Amount returned to customer                                       |
+| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
+| `created_by`          | string                  | Identifier of the appointment creator                             |
+| `created_time`        | timestamp               | When the appointment was created                                  |
+| `last_updated_by`     | string                  | Identifier of the last modifier                                   |
+| `last_updated_time`   | timestamp               | When the appointment was last modified                            |
+| `check_in_time`       | timestamp               | When the customer arrived with their pet                          |
+| `check_out_time`      | timestamp               | When the service was completed and the pet picked up              |
+| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment           |
 
 #### ⚠️ Error Codes:
 
@@ -423,35 +514,22 @@ issues.
 
 #### 📌 Return Value:
 
-Returns a `CheckAppointmentAvailabilityResponse` object containing results from:
-
-- **Appointment Date Conflict Check**: List of conflicting appointments (if any).
-- **Business Closed Date Check**: List of closed dates during the requested period.
-
-If both checks return empty results, it means the appointment can be safely created.
-
-##### CheckAppointmentAvailabilityResponse
-
-Represents the result of a pre-check operation before creating or rescheduling an appointment. It includes two main
-components:
-
-###### Fields:
-
 | Field Name                    | Type                                 | Description                                                                 |
 |-------------------------------|--------------------------------------|-----------------------------------------------------------------------------|
 | `appointment_conflict_check`  | `AppointmentDateConflictCheckResult` | Contains information about conflicting appointments for each pet.           |
 | `business_closed_date_check`  | `BusinessClosedDateCheckResult`      | Contains information about business closed dates during the requested time. |
 | `lodging_over_capacity_check` | `LodgingOverCapacityCheckResult`     | Contains information about lodging over capacity during the requested time. |
 
----
+##### CheckAppointmentAvailabilityResponse
+
+Represents the result of a pre-check operation before creating or rescheduling an appointment. It includes two main
+components:
 
 ###### 1. `AppointmentDateConflictCheckResult`
 
 | Field Name  | Type                             | Description                                        |
 |-------------|----------------------------------|----------------------------------------------------|
 | `conflicts` | Array(`PetAppointmentsOverview`) | A list of pets and their conflicting appointments. |
-
----
 
 ###### 2. `PetAppointmentsOverview`
 
@@ -460,15 +538,11 @@ components:
 | `pet`          | `Pet`                | The pet involved in the conflicting appointment. |
 | `appointments` | Array(`Appointment`) | A list of conflicting appointments for this pet. |
 
----
-
 ###### 3. `BusinessClosedDateCheckResult`
 
 | Field Name     | Type                      | Description                                                  |
 |----------------|---------------------------|--------------------------------------------------------------|
 | `closed_dates` | Array(`google.type.Date`) | A list of business closed dates during the requested period. |
-
----
 
 ###### 4. `LodgingOverCapacityCheckResult`
 
@@ -479,8 +553,6 @@ the requested time.
 | Field Name | Type                                       | Description                          |
 |------------|--------------------------------------------|--------------------------------------|
 | `lodgings` | Array(`moego.business.setting.v1.Lodging`) | List of lodging that exceed capacity |
-
----
 
 #### ⚠️ Error Codes:
 
@@ -513,7 +585,9 @@ Lists grooming reports for specified appointments.
 
 #### 📌 Return Value:
 
-Returns a list of `GroomingReport` objects.
+| Field Name         | Type                  | Description              |
+|--------------------|-----------------------|--------------------------|
+| `grooming_reports` | Array(GroomingReport) | List of grooming reports |
 
 #### ⚠️ Error Code:
 
@@ -546,7 +620,19 @@ Creates a new note associated with a specific appointment.
 
 #### 📌 Return Value:
 
-Returns the created `AppointmentNote` object.
+| Field Name          | Type       | Description                                                 |
+|---------------------|------------|-------------------------------------------------------------|
+| `id`                | string     | Unique identifier of the note                               |
+| `business_id`       | string     | Business location ID                                        |
+| `customer_id`       | string     | Customer ID                                                 |
+| `company_id`        | string     | Company ID                                                  |
+| `appointment_id`    | string     | Related appointment ID                                      |
+| `note`              | string     | The content of the note                                     |
+| `type`              | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
+| `created_time`      | timestamp  | When the note was created                                   |
+| `last_updated_time` | timestamp  | When the note was last modified                             |
+| `created_by`        | string     | Staff member who created the note                           |
+| `last_updated_by`   | string     | Staff member who last updated the note                      |
 
 #### ⚠️ Error Codes:
 
@@ -579,7 +665,19 @@ Updates an existing appointment note by its ID.
 
 #### 📌 Return Value:
 
-Returns the updated `AppointmentNote` object.
+| Field Name          | Type       | Description                                                 |
+|---------------------|------------|-------------------------------------------------------------|
+| `id`                | string     | Unique identifier of the note                               |
+| `business_id`       | string     | Business location ID                                        |
+| `customer_id`       | string     | Customer ID                                                 |
+| `company_id`        | string     | Company ID                                                  |
+| `appointment_id`    | string     | Related appointment ID                                      |
+| `note`              | string     | The content of the note                                     |
+| `type`              | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
+| `created_time`      | timestamp  | When the note was created                                   |
+| `last_updated_time` | timestamp  | When the note was last modified                             |
+| `created_by`        | string     | Staff member who created the note                           |
+| `last_updated_by`   | string     | Staff member who last updated the note                      |
 
 #### ⚠️ Error Codes:
 
@@ -613,7 +711,9 @@ appointment ID.
 
 #### 📌 Return Value:
 
-Returns a list of `AppointmentNote` objects.
+| Field Name | Type                   | Description               |
+|------------|------------------------|---------------------------|
+| `notes`    | Array(AppointmentNote) | List of appointment notes |
 
 #### ⚠️ Error Code:
 
@@ -815,5 +915,3 @@ POST /v1/appointments:check
 - [appointment.proto](../moego/business/appointment/v1/appointment.proto)
 - [grooming_report.proto](../moego/business/appointment/v1/grooming_report.proto)
 - [pet_service_detail.proto](../moego/business/appointment/v1/pet_service_detail.proto)
-
-

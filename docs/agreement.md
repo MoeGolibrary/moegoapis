@@ -149,7 +149,22 @@ Retrieves a specific agreement by its ID.
 
 #### 📌 Return Value:
 
-Returns the complete `Agreement` object.
+| Field Name             | Type               | Description                                                       |
+|------------------------|--------------------|-------------------------------------------------------------------|
+| `id`                   | string             | Unique identifier of the agreement                                |
+| `business_id`          | string             | Business location where this agreement is used                    |
+| `creator_id`           | string             | Staff member who created the agreement                            |
+| `status`               | enum(Status)       | Current state of the agreement: `NORMAL`, `DELETED`               |
+| `signed_policy`        | enum(SignedPolicy) | When signatures are required: `FOR_FIRST`, `FOR_EACH`, `OPTIONAL` |
+| `title`                | string             | Display name of the agreement                                     |
+| `content`              | string             | Full text of the agreement                                        |
+| `sms_template`         | string             | Template for SMS notifications                                    |
+| `email_template_title` | string             | Subject line for email notifications                              |
+| `email_template_body`  | string             | Body content for email notifications                              |
+| `last_required_time`   | timestamp          | Customers who signed before this time may need to re-sign         |
+| `last_edit_time`       | timestamp          | When the agreement content was last modified                      |
+| `created_time`         | timestamp          | When the agreement was first created                              |
+| `last_updated_time`    | timestamp          | When any field was last changed                                   |
 
 #### ⚠️ Error Codes:
 
@@ -187,7 +202,10 @@ Lists agreements matching specified criteria, including company ID and optional 
 
 #### 📌 Return Value:
 
-Returns a list of agreements ordered by creation time.
+| Field Name        | Type             | Description                                   |
+|-------------------|------------------|-----------------------------------------------|
+| `next_page_token` | string           | Token for retrieving the next page of results |
+| `agreement`       | Array(Agreement) | List of agreements matching the criteria      |
 
 #### ⚠️ Error Code:
 
@@ -220,10 +238,10 @@ Generates a unique URL where a customer can view and sign the agreement.
 
 #### 📌 Return Value:
 
-Returns a response containing:
-
-- `agreement_record_id`: Identifier of the generated agreement record
-- `sign_url`: Unique URL where the customer can sign the agreement
+| Field Name            | Type   | Description                                          |
+|-----------------------|--------|------------------------------------------------------|
+| `agreement_record_id` | string | Identifier of the generated agreement record         |
+| `sign_url`            | string | Unique URL where the customer can sign the agreement |
 
 #### ⚠️ Error Codes:
 
@@ -311,4 +329,3 @@ GET /v1/agreements/12345/sign_link?customer_id=cus_001&business_id=biz_001
 - [agreement_record.proto](../moego/business/agreement/v1/agreement_record.proto)
 
 ---
-

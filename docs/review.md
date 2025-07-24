@@ -117,7 +117,10 @@ service quality.
 
 #### 📌 Return Value:
 
-Returns a paginated list of reviews matching the request criteria.
+| Field Name        | Type          | Description                                   |
+|-------------------|---------------|-----------------------------------------------|
+| `next_page_token` | string        | Token for retrieving the next page of results |
+| `reviews`         | Array(Review) | List of reviews matching the request criteria |
 
 #### ⚠️ Error Codes:
 
@@ -253,7 +256,7 @@ TODO
 | How do I retrieve all reviews for a business?        | Use `ListReviews` with the `business_id` parameter.                                  |
 | Can I filter reviews by multiple staff members?      | Yes, provide an array of staff IDs in the `filter.staff_ids` field.                  |
 | How are reviews sorted?                              | Results are typically sorted by `review_time` descending unless otherwise specified. |
-| Why does listing reviews return “permission denied”? | Ensure you have the correct access rights for this operation.                        |
+| Why does listing reviews return "permission denied"? | Ensure you have the correct access rights for this operation.                        |
 | How do I handle large result sets efficiently?       | Use pagination via `page_size` and `page_token`.                                     |
 
 ---
@@ -262,7 +265,7 @@ TODO
 
 | Error Code          | Description                          |
 |---------------------|--------------------------------------|
-| `NOT_FOUND`         | The business ID doesn’t exist.       |
+| `NOT_FOUND`         | The business ID doesn't exist.       |
 | `PERMISSION_DENIED` | Caller lacks access rights.          |
 | `INVALID_ARGUMENT`  | Invalid request parameters provided. |
 | `INTERNAL`          | Internal server error occurred.      |

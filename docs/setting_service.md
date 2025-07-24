@@ -1,4 +1,4 @@
-# 🛠️ Setting Service API  Documentation (`moego.business.setting.v1`)
+# 🛠️ Setting Service API Documentation (`moego.business.setting.v1`)
 
 ## 📌 1. Functional Overview
 
@@ -121,10 +121,10 @@ Represents the source or channel through which a customer was acquired.
 
 Represents a stage in the lead management process.
 
-| Field Name | Type   | Description           |
-|------------|--------|-----------------------|
-| `id`       | string | Unique identifier     |
-| `name`     | string | Display name          |
+| Field Name | Type   | Description       |
+|------------|--------|-------------------|
+| `id`       | string | Unique identifier |
+| `name`     | string | Display name      |
 
 ---
 
@@ -132,10 +132,10 @@ Represents a stage in the lead management process.
 
 Represents the status of an action taken on a lead.
 
-| Field Name | Type   | Description           |
-|------------|--------|-----------------------|
-| `id`       | string | Unique identifier     |
-| `name`     | string | Display name          |
+| Field Name | Type   | Description       |
+|------------|--------|-------------------|
+| `id`       | string | Unique identifier |
+| `name`     | string | Display name      |
 
 ---
 
@@ -237,12 +237,16 @@ Registers a new service definition with base attributes.
 
 #### 📌 Return Value:
 
-Returns the created `Service` object.
+| Field Name | Type      | Description                |
+|------------|-----------|----------------------------|
+| `service`  | `Service` | The created service object |
 
 #### ⚠️ Error Codes:
 
-- `INVALID_ARGUMENT`: Missing or invalid fields.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description               |
+|---------------------|---------------------------|
+| `INVALID_ARGUMENT`  | Missing or invalid fields |
+| `PERMISSION_DENIED` | Permission denied         |
 
 ---
 
@@ -270,12 +274,16 @@ Retrieves detailed information about a specific service.
 
 #### 📌 Return Value:
 
-Returns the full `Service` object.
+| Field Name | Type      | Description                  |
+|------------|-----------|------------------------------|
+| `service`  | `Service` | The retrieved service object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Service does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description            |
+|---------------------|------------------------|
+| `NOT_FOUND`         | Service does not exist |
+| `PERMISSION_DENIED` | Permission denied      |
 
 ---
 
@@ -312,12 +320,16 @@ Modifies existing service attributes.
 
 #### 📌 Return Value:
 
-Returns the updated `Service` object.
+| Field Name | Type      | Description                |
+|------------|-----------|----------------------------|
+| `service`  | `Service` | The updated service object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Service does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description            |
+|---------------------|------------------------|
+| `NOT_FOUND`         | Service does not exist |
+| `PERMISSION_DENIED` | Permission denied      |
 
 ---
 
@@ -347,11 +359,16 @@ Lists services matching specified criteria.
 
 #### 📌 Return Value:
 
-Returns paginated results and service list.
+| Field Name        | Type             | Description                        |
+|-------------------|------------------|------------------------------------|
+| `next_page_token` | string           | Token for retrieving the next page |
+| `services`        | Array(`Service`) | List of services matching criteria |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -378,11 +395,15 @@ Retrieves all active pet codes defined for the company.
 
 #### 📌 Return Value:
 
-Returns a list of `PetCode` objects.
+| Field Name | Type             | Description                       |
+|------------|------------------|-----------------------------------|
+| `codes`    | Array(`PetCode`) | List of pet codes for the company |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -409,11 +430,15 @@ Retrieves all active customer tags defined for the company.
 
 #### 📌 Return Value:
 
-Returns a list of `CustomerTag` objects.
+| Field Name | Type                 | Description                           |
+|------------|----------------------|---------------------------------------|
+| `tags`     | Array(`CustomerTag`) | List of customer tags for the company |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -440,13 +465,17 @@ Retrieves a list of all lodging configurations defined for the company.
 
 #### 📌 Return Value:
 
-Returns a list of `Lodging` objects, each containing associated lodging types and units.
+| Field Name | Type             | Description                    |
+|------------|------------------|--------------------------------|
+| `lodgings` | Array(`Lodging`) | List of lodging configurations |
 
 #### ⚠️ Error Codes:
 
-- `PERMISSION_DENIED`: Permission denied.
-- `INVALID_ARGUMENT`: Malformed request (e.g., invalid company ID).
-- `NOT_FOUND`: The company does not exist.
+| Error Code          | Description                |
+|---------------------|----------------------------|
+| `PERMISSION_DENIED` | Permission denied          |
+| `INVALID_ARGUMENT`  | Malformed request          |
+| `NOT_FOUND`         | The company does not exist |
 
 ---
 
@@ -467,17 +496,21 @@ Lists all available customer referral sources for a company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                               |
-|--------------|--------|----------|-------------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list sources for     |
+| Field Name   | Type   | Required | Description                           |
+|--------------|--------|----------|---------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list sources for |
 
 #### 📌 Return Value:
 
-Returns a list of `ReferralSource` objects.
+| Field Name         | Type                    | Description              |
+|--------------------|-------------------------|--------------------------|
+| `referral_sources` | Array(`ReferralSource`) | List of referral sources |
 
 #### ⚠️ Error Codes:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -498,18 +531,22 @@ Returns a list of lead life cycles.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                               |
-|--------------|--------|----------|-------------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list cycles for      |
+| Field Name   | Type   | Required | Description                          |
+|--------------|--------|----------|--------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list cycles for |
 
 #### 📌 Return Value:
 
-Returns a list of `LifeCycle` objects.
+| Field Name    | Type               | Description              |
+|---------------|--------------------|--------------------------|
+| `life_cycles` | Array(`LifeCycle`) | List of lead life cycles |
 
 #### ⚠️ Error Codes:
 
-- `PERMISSION_DENIED`: Permission denied.
-- `INVALID_ARGUMENT`: Malformed request.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
+| `INVALID_ARGUMENT`  | Malformed request |
 
 ---
 
@@ -530,18 +567,22 @@ Returns a list of lead action statuses.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                               |
-|--------------|--------|----------|-------------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list statuses for    |
+| Field Name   | Type   | Required | Description                            |
+|--------------|--------|----------|----------------------------------------|
+| `company_id` | string | Yes      | ID of the company to list statuses for |
 
 #### 📌 Return Value:
 
-Returns a list of `ActionStatus` objects.
+| Field Name        | Type                  | Description                  |
+|-------------------|-----------------------|------------------------------|
+| `action_statuses` | Array(`ActionStatus`) | List of lead action statuses |
 
 #### ⚠️ Error Codes:
 
-- `PERMISSION_DENIED`: Permission denied.
-- `INVALID_ARGUMENT`: Malformed request.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
+| `INVALID_ARGUMENT`  | Malformed request |
 
 ---
 
@@ -648,7 +689,7 @@ TODO
 | What should I do if a service creation returns "resource exhausted"? | Clean up unused services or contact support to request a quota increase.                                                |
 | Can I restrict services to specific business locations?              | Yes, via the `available_business_ids` field. Set `available_all_business = false` and specify the allowed business IDs. |
 | How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                               |
-| Why does updating a service return “not found”?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.                 |
+| Why does updating a service return "not found"?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.                 |
 | How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.             |
 | How can I manage boarding accommodations effectively?                | Use `ListLodgings` to retrieve lodging types and units for consistent boarding management.                              |
 
@@ -672,4 +713,3 @@ TODO
 - [lodging.proto](../moego/business/setting/v1/lodging.proto)
 - [service.proto](../moego/business/setting/v1/service.proto)
 - [setting_service.proto](../moego/business/setting/v1/setting_service.proto)
-

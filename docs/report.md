@@ -146,7 +146,9 @@ Gets the list of all report definitions available to the current company.
 
 #### 📌 Return Value:
 
-Returns an array of `Report` objects.
+| Field Name | Type          | Description                          |
+|------------|---------------|--------------------------------------|
+| `reports`  | Array(Report) | List of available report definitions |
 
 #### ⚠️ Error Codes:
 
@@ -183,7 +185,10 @@ Generates and returns report data based on the specified report ID and parameter
 
 #### 📌 Return Value:
 
-Returns a `TableData` object containing field definitions and data rows.
+| Field Name        | Type      | Description                                      |
+|-------------------|-----------|--------------------------------------------------|
+| `next_page_token` | string    | Token for retrieving the next page of results    |
+| `table_data`      | TableData | Structured report data including fields and rows |
 
 #### ⚠️ Error Codes:
 

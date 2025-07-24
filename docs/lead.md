@@ -1,3 +1,5 @@
+我已经帮您将文档中的 `ConvertLead` 修改为 `PromoteLead`。以下是更新后的文档：
+
 # Lead API Documentation (`moego.business.customer.v1`)
 
 ## 📌 1. Functional Overview
@@ -7,7 +9,7 @@
 - Creating, updating, and retrieving lead information
 - Managing lead contact details, pets, and acquisition source
 - Listing leads with optional filtering
-- Converting leads to customers
+- Promoting leads to customers
 
 ---
 
@@ -70,8 +72,8 @@ Here is a typical integration flow:
     - View all leads in the company
     - Filter by criteria if needed
 
-5. **Convert Lead**
-    - Convert a lead to a customer
+5. **Promote Lead**
+    - Promote a lead to a customer
 
 6. **Monitoring & Maintenance**
     - Regularly retrieve lead data to monitor changes
@@ -218,15 +220,15 @@ Returns paginated results and lead list
 
 ---
 
-### 5. Convert Lead (`ConvertLead`)
+### 5. Promote Lead (`PromoteLead`)
 
-- **Method**: `ConvertLead`
+- **Method**: `PromoteLead`
 - **HTTP Method**: POST
-- **Path**: `/v1/leads:convert`
+- **Path**: `/v1/leads:promote`
 
 #### ✅ Functionality:
 
-Converts a lead to a customer
+Promotes a lead to a customer
 
 #### 🎯 Use Cases:
 
@@ -236,7 +238,7 @@ Converts a lead to a customer
 
 | Field Name | Type   | Required | Description        |
 |------------|--------|----------|--------------------|
-| `id`       | string | Yes      | Lead ID to convert |
+| `id`       | string | Yes      | Lead ID to promote |
 
 #### 📌 Return Value:
 
@@ -315,7 +317,7 @@ Returns the newly created `Customer` object
 }
 ```
 
-### Example 4: Convert Lead
+### Example 4: Promote Lead
 
 ```json
 {
@@ -333,12 +335,12 @@ TODO
 
 ## 📎 8. FAQ
 
-| Question                             | Answer                                                               |
-|--------------------------------------|----------------------------------------------------------------------|
-| How to verify if a lead exists?      | Use `GetLead` to check if the lead ID returns a valid response       |
-| Can I create multiple leads at once? | Currently only single lead creation is supported                     |
-| How to filter leads effectively?     | Use `ListLeads` with appropriate filter parameters                   |
-| What happens when converting a lead? | The lead is converted to a customer and removed from the lead system |
+| Question                             | Answer                                                              |
+|--------------------------------------|---------------------------------------------------------------------|
+| How to verify if a lead exists?      | Use `GetLead` to check if the lead ID returns a valid response      |
+| Can I create multiple leads at once? | Currently only single lead creation is supported                    |
+| How to filter leads effectively?     | Use `ListLeads` with appropriate filter parameters                  |
+| What happens when promoting a lead?  | The lead is promoted to a customer and removed from the lead system |
 
 ---
 

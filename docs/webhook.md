@@ -79,7 +79,7 @@ Event types trigger webhook calls. Examples include:
 - `APPOINTMENT_CREATED`
 - `APPOINTMENT_FINISHED`
 
-Refer to [event.proto](../../moego/business/event/v1/event.proto) for supported event types.
+Refer to [event.proto](../moego/business/event/v1/event.proto) for supported event types.
 
 ---
 
@@ -171,17 +171,19 @@ e.g., authentication token, headers).
 
 #### 📌 Return Value:
 
-Returns the created `Webhook` object.
-
-- Returns `RESOURCE_EXHAUSTED` if the client has reached the maximum number of webhooks allowed.
+| Field Name | Type      | Description                |
+|------------|-----------|----------------------------|
+| `webhook`  | `Webhook` | The created webhook object |
 
 #### ⚠️ Error Codes:
 
-- `ALREADY_EXISTS`: A webhook with the same endpoint URL already exists.
-- `PERMISSION_DENIED`: Permission denied.
-- `INVALID_ARGUMENT`: Invalid request parameters.
-- `NOT_FOUND`: Specified organization does not exist.
-- `RESOURCE_EXHAUSTED`: Maximum webhook count reached.
+| Error Code           | Description                                         |
+|----------------------|-----------------------------------------------------|
+| `ALREADY_EXISTS`     | A webhook with the same endpoint URL already exists |
+| `PERMISSION_DENIED`  | Permission denied                                   |
+| `INVALID_ARGUMENT`   | Invalid request parameters                          |
+| `NOT_FOUND`          | Specified organization does not exist               |
+| `RESOURCE_EXHAUSTED` | Maximum webhook count reached                       |
 
 ---
 
@@ -209,12 +211,16 @@ Retrieves a registered webhook's full configuration, including subscribed event 
 
 #### 📌 Return Value:
 
-Returns the complete `Webhook` object.
+| Field Name | Type      | Description                  |
+|------------|-----------|------------------------------|
+| `webhook`  | `Webhook` | The retrieved webhook object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified webhook ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                         |
+|---------------------|-------------------------------------|
+| `NOT_FOUND`         | Specified webhook ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                   |
 
 ---
 
@@ -251,12 +257,16 @@ secret token.
 
 #### 📌 Return Value:
 
-Returns the updated `Webhook` object.
+| Field Name | Type      | Description                |
+|------------|-----------|----------------------------|
+| `webhook`  | `Webhook` | The updated webhook object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified webhook ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                         |
+|---------------------|-------------------------------------|
+| `NOT_FOUND`         | Specified webhook ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                   |
 
 ---
 
@@ -283,12 +293,16 @@ Deletes a registered webhook and stops all its event pushes.
 
 #### 📌 Return Value:
 
-Returns an empty `DeleteWebhookResponse`.
+| Field Name | Type                    | Description               |
+|------------|-------------------------|---------------------------|
+| (empty)    | `DeleteWebhookResponse` | Empty response on success |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified webhook ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                         |
+|---------------------|-------------------------------------|
+| `NOT_FOUND`         | Specified webhook ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                   |
 
 ---
 
@@ -320,11 +334,16 @@ Lists all webhooks under the current account, supporting filtering by status, ev
 
 #### 📌 Return Value:
 
-Returns paginated results and webhook list.
+| Field Name        | Type             | Description                             |
+|-------------------|------------------|-----------------------------------------|
+| `next_page_token` | string           | Token for next page                     |
+| `webhooks`        | Array(`Webhook`) | List of matching webhook configurations |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -354,12 +373,16 @@ default.
 
 #### 📌 Return Value:
 
-Returns the `WebhookDelivery` log object.
+| Field Name | Type              | Description             |
+|------------|-------------------|-------------------------|
+| `delivery` | `WebhookDelivery` | The delivery log object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified webhook ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                         |
+|---------------------|-------------------------------------|
+| `NOT_FOUND`         | Specified webhook ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                   |
 
 ---
 
@@ -381,18 +404,22 @@ Retrieves a specific webhook push record, including detailed request/response in
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description           |
-|--------------|--------|----------|-----------------------|
-| `id`         | string | Yes      | Delivery log ID       |
+| Field Name | Type   | Required | Description     |
+|------------|--------|----------|-----------------|
+| `id`       | string | Yes      | Delivery log ID |
 
 #### 📌 Return Value:
 
-Returns the `WebhookDelivery` object.
+| Field Name | Type              | Description                   |
+|------------|-------------------|-------------------------------|
+| `delivery` | `WebhookDelivery` | The retrieved delivery object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified log ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                     |
+|---------------------|---------------------------------|
+| `NOT_FOUND`         | Specified log ID does not exist |
+| `PERMISSION_DENIED` | Permission denied               |
 
 ---
 
@@ -424,11 +451,16 @@ Lists all push records for a given webhook, supports filtering by event type, su
 
 #### 📌 Return Value:
 
-Returns pagination result and `WebhookDelivery` list.
+| Field Name        | Type                     | Description                       |
+|-------------------|--------------------------|-----------------------------------|
+| `next_page_token` | string                   | Token for next page               |
+| `deliveries`      | Array(`WebhookDelivery`) | List of matching delivery objects |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -456,11 +488,15 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 #### 📌 Return Value:
 
-Returns the redelivered `WebhookDelivery` object.
+| Field Name | Type              | Description                     |
+|------------|-------------------|---------------------------------|
+| `delivery` | `WebhookDelivery` | The redelivered delivery object |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -574,7 +610,7 @@ To ensure system stability and fair resource usage, the following default limits
 | What content formats does webhook support?                      | Currently supports JSON, default `CONTENT_TYPE_JSON`                                                                                             |
 | How to view failed records?                                     | Use `ListWebhookDeliveries` with `filter.success = false`                                                                                        |
 | Can webhook limit events from specific companies or businesses? | Yes, via the `organizations` field                                                                                                               |
-| Why does creating a webhook return “resource exhausted”?        | The client may have reached the maximum allowed webhook count. Clean up unused webhooks or contact admin to increase quota.                      |
+| Why does creating a webhook return "resource exhausted"?        | The client may have reached the maximum allowed webhook count. Clean up unused webhooks or contact admin to increase quota.                      |
 | Why does webhook delivery fail with status RESOURCE_EXHAUSTED?  | Indicates push frequency or total volume has exceeded platform limits. Try again later or optimize push logic to avoid triggering rate limiting. |
 
 ---

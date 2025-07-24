@@ -63,8 +63,8 @@ Represents a product supplier.
 |--------------|--------|------------------------------------|
 | `id`         | string | Unique identifier for the supplier |
 | `name`       | string | Name of the supplier               |
-| `first_name` | string | Contact person’s first name        |
-| `last_name`  | string | Contact person’s last name         |
+| `first_name` | string | Contact person's first name        |
+| `last_name`  | string | Contact person's last name         |
 | `telephone`  | string | Landline telephone number          |
 | `mobile`     | string | Mobile phone number                |
 | `email`      | string | Email address                      |
@@ -122,8 +122,6 @@ Retrieves a paginated list of products based on specified criteria. Supports fil
 
 #### 📌 Return Value:
 
-Returns a paginated list of products and a token for retrieving the next page.
-
 | Field Name        | Type           | Description                                                          |
 |-------------------|----------------|----------------------------------------------------------------------|
 | `next_page_token` | string         | Token for retrieving the next page of results (empty if none remain) |
@@ -168,7 +166,7 @@ TODO
 | How to verify if a product exists?                       | Use `ListProducts` with specific filters                           |
 | Can I list products for multiple companies at once?      | Currently only supports listing products for one company at a time |
 | How to filter products by business location?             | Use `ListProducts` with `business_ids`                             |
-| Why does creating a product return “resource exhausted”? | Not applicable — products are typically not created via this API   |
+| Why does creating a product return "resource exhausted"? | Not applicable — products are typically not created via this API   |
 | How to handle out-of-stock products?                     | Use `ListProducts` with `stock = 0` filter                         |
 
 ---

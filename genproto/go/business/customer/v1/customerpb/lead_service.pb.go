@@ -296,30 +296,30 @@ func (x *UpdateLeadRequest) GetLead() *Lead {
 	return nil
 }
 
-// Request message for converting a lead to a customer
-type ConvertLeadRequest struct {
+// Request message for promoting a lead to a customer
+type PromoteLeadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID of the lead to convert
+	// ID of the lead to promote
 	// Required.
 	Id            string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ConvertLeadRequest) Reset() {
-	*x = ConvertLeadRequest{}
+func (x *PromoteLeadRequest) Reset() {
+	*x = PromoteLeadRequest{}
 	mi := &file_moego_business_customer_v1_lead_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConvertLeadRequest) String() string {
+func (x *PromoteLeadRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConvertLeadRequest) ProtoMessage() {}
+func (*PromoteLeadRequest) ProtoMessage() {}
 
-func (x *ConvertLeadRequest) ProtoReflect() protoreflect.Message {
+func (x *PromoteLeadRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_customer_v1_lead_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -331,41 +331,41 @@ func (x *ConvertLeadRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConvertLeadRequest.ProtoReflect.Descriptor instead.
-func (*ConvertLeadRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use PromoteLeadRequest.ProtoReflect.Descriptor instead.
+func (*PromoteLeadRequest) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_lead_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ConvertLeadRequest) GetId() string {
+func (x *PromoteLeadRequest) GetId() string {
 	if x != nil {
 		return x.Id
 	}
 	return ""
 }
 
-// Response message for converting a lead to a customer
-type ConvertLeadResponse struct {
+// Response message for promoting a lead to a customer
+type PromoteLeadResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// The newly created customer from the converted lead
+	// The newly created customer from the promoted lead
 	Customer      *Customer `protobuf:"bytes,1,opt,name=customer,proto3" json:"customer,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ConvertLeadResponse) Reset() {
-	*x = ConvertLeadResponse{}
+func (x *PromoteLeadResponse) Reset() {
+	*x = PromoteLeadResponse{}
 	mi := &file_moego_business_customer_v1_lead_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConvertLeadResponse) String() string {
+func (x *PromoteLeadResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConvertLeadResponse) ProtoMessage() {}
+func (*PromoteLeadResponse) ProtoMessage() {}
 
-func (x *ConvertLeadResponse) ProtoReflect() protoreflect.Message {
+func (x *PromoteLeadResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_customer_v1_lead_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -377,12 +377,12 @@ func (x *ConvertLeadResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConvertLeadResponse.ProtoReflect.Descriptor instead.
-func (*ConvertLeadResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use PromoteLeadResponse.ProtoReflect.Descriptor instead.
+func (*PromoteLeadResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_lead_service_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ConvertLeadResponse) GetCustomer() *Customer {
+func (x *PromoteLeadResponse) GetCustomer() *Customer {
 	if x != nil {
 		return x.Customer
 	}
@@ -479,9 +479,9 @@ const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"\x11UpdateLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x129\n" +
 	"\x04lead\x18\x02 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\")\n" +
-	"\x12ConvertLeadRequest\x12\x13\n" +
+	"\x12PromoteLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"W\n" +
-	"\x13ConvertLeadResponse\x12@\n" +
+	"\x13PromoteLeadResponse\x12@\n" +
 	"\bcustomer\x18\x01 \x01(\v2$.moego.business.customer.v1.CustomerR\bcustomer2\xff\x04\n" +
 	"\vLeadService\x12\x80\x01\n" +
 	"\tListLeads\x12,.moego.business.customer.v1.ListLeadsRequest\x1a-.moego.business.customer.v1.ListLeadsResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/leads:list\x12o\n" +
@@ -490,7 +490,7 @@ const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"CreateLead\x12-.moego.business.customer.v1.CreateLeadRequest\x1a .moego.business.customer.v1.Lead\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/leads\x12x\n" +
 	"\n" +
 	"UpdateLead\x12-.moego.business.customer.v1.UpdateLeadRequest\x1a .moego.business.customer.v1.Lead\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\x1a\x0e/v1/leads/{id}\x12\x8c\x01\n" +
-	"\vConvertLead\x12..moego.business.customer.v1.ConvertLeadRequest\x1a/.moego.business.customer.v1.ConvertLeadResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/leads:convertB\x96\x01\n" +
+	"\vPromoteLead\x12..moego.business.customer.v1.PromoteLeadRequest\x1a/.moego.business.customer.v1.PromoteLeadResponse\"\x1c\x82\xd3\xe4\x93\x02\x16:\x01*\"\x11/v1/leads:promoteB\x96\x01\n" +
 	"\"com.moego.api.business.customer.v1B\x14CustomerServiceProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 
 var (
@@ -512,8 +512,8 @@ var file_moego_business_customer_v1_lead_service_proto_goTypes = []any{
 	(*GetLeadRequest)(nil),          // 2: moego.business.customer.v1.GetLeadRequest
 	(*CreateLeadRequest)(nil),       // 3: moego.business.customer.v1.CreateLeadRequest
 	(*UpdateLeadRequest)(nil),       // 4: moego.business.customer.v1.UpdateLeadRequest
-	(*ConvertLeadRequest)(nil),      // 5: moego.business.customer.v1.ConvertLeadRequest
-	(*ConvertLeadResponse)(nil),     // 6: moego.business.customer.v1.ConvertLeadResponse
+	(*PromoteLeadRequest)(nil),      // 5: moego.business.customer.v1.PromoteLeadRequest
+	(*PromoteLeadResponse)(nil),     // 6: moego.business.customer.v1.PromoteLeadResponse
 	(*ListLeadsRequest_Filter)(nil), // 7: moego.business.customer.v1.ListLeadsRequest.Filter
 	(*commonpb.Pagination)(nil),     // 8: moego.common.v1.Pagination
 	(*Lead)(nil),                    // 9: moego.business.customer.v1.Lead
@@ -525,17 +525,17 @@ var file_moego_business_customer_v1_lead_service_proto_depIdxs = []int32{
 	9,  // 2: moego.business.customer.v1.ListLeadsResponse.leads:type_name -> moego.business.customer.v1.Lead
 	9,  // 3: moego.business.customer.v1.CreateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
 	9,  // 4: moego.business.customer.v1.UpdateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
-	10, // 5: moego.business.customer.v1.ConvertLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
+	10, // 5: moego.business.customer.v1.PromoteLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
 	0,  // 6: moego.business.customer.v1.LeadService.ListLeads:input_type -> moego.business.customer.v1.ListLeadsRequest
 	2,  // 7: moego.business.customer.v1.LeadService.GetLead:input_type -> moego.business.customer.v1.GetLeadRequest
 	3,  // 8: moego.business.customer.v1.LeadService.CreateLead:input_type -> moego.business.customer.v1.CreateLeadRequest
 	4,  // 9: moego.business.customer.v1.LeadService.UpdateLead:input_type -> moego.business.customer.v1.UpdateLeadRequest
-	5,  // 10: moego.business.customer.v1.LeadService.ConvertLead:input_type -> moego.business.customer.v1.ConvertLeadRequest
+	5,  // 10: moego.business.customer.v1.LeadService.PromoteLead:input_type -> moego.business.customer.v1.PromoteLeadRequest
 	1,  // 11: moego.business.customer.v1.LeadService.ListLeads:output_type -> moego.business.customer.v1.ListLeadsResponse
 	9,  // 12: moego.business.customer.v1.LeadService.GetLead:output_type -> moego.business.customer.v1.Lead
 	9,  // 13: moego.business.customer.v1.LeadService.CreateLead:output_type -> moego.business.customer.v1.Lead
 	9,  // 14: moego.business.customer.v1.LeadService.UpdateLead:output_type -> moego.business.customer.v1.Lead
-	6,  // 15: moego.business.customer.v1.LeadService.ConvertLead:output_type -> moego.business.customer.v1.ConvertLeadResponse
+	6,  // 15: moego.business.customer.v1.LeadService.PromoteLead:output_type -> moego.business.customer.v1.PromoteLeadResponse
 	11, // [11:16] is the sub-list for method output_type
 	6,  // [6:11] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name

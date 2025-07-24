@@ -98,12 +98,16 @@ Retrieves detailed information about a specific business location.
 
 #### 📌 Return Value:
 
-Returns the complete `Business` object.
+| Field Name | Type       | Description                   |
+|------------|------------|-------------------------------|
+| `business` | `Business` | The retrieved business object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified business ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                          |
+|---------------------|--------------------------------------|
+| `NOT_FOUND`         | Specified business ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                    |
 
 ---
 
@@ -134,11 +138,16 @@ customer-facing location directories.
 
 #### 📌 Return Value:
 
-Returns a paginated list of business locations.
+| Field Name        | Type              | Description                          |
+|-------------------|-------------------|--------------------------------------|
+| `next_page_token` | string            | Token for retrieving the next page   |
+| `businesses`      | Array(`Business`) | List of businesses matching criteria |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -244,7 +253,7 @@ TODO
 |---------------------------------------------------------|-------------------------------------------------------------------------|
 | How can I verify if a business exists?                  | Use `GetBusiness` to check if the business ID returns a valid response. |
 | Can I list all businesses at once?                      | No. Results are paginated. Use `page_token` to fetch next set.          |
-| Why does listing businesses return “permission denied”? | Ensure you have the correct access rights for this operation.           |
+| Why does listing businesses return "permission denied"? | Ensure you have the correct access rights for this operation.           |
 | How to handle large result sets efficiently?            | Use pagination via `page_size` and `page_token`.                        |
 
 ---

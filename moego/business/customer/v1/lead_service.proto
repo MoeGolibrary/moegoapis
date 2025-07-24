@@ -61,12 +61,12 @@ service LeadService {
 
   // Converts a lead to a customer
   //
-  // Returns an empty response on success.
+  // Returns the created customer on success.
   // Returns INVALID_ARGUMENT if the request is invalid.
   // Returns NOT_FOUND if the lead ID doesn't exist.
-  rpc ConvertLead(ConvertLeadRequest) returns (ConvertLeadResponse) {
+  rpc PromoteLead(PromoteLeadRequest) returns (PromoteLeadResponse) {
     option (google.api.http) = {
-      post: "/v1/leads:convert"
+      post: "/v1/leads:promote"
       body: "*"
     };
   }
@@ -133,15 +133,15 @@ message UpdateLeadRequest {
   Lead lead = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Request message for converting a lead to a customer
-message ConvertLeadRequest {
-  // ID of the lead to convert
+// Request message for promoting a lead to a customer
+message PromoteLeadRequest {
+  // ID of the lead to promote
   // Required.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Response message for converting a lead to a customer
-message ConvertLeadResponse {
-  // The newly created customer from the converted lead
+// Response message for promoting a lead to a customer
+message PromoteLeadResponse {
+  // The newly created customer from the promoted lead
   Customer customer = 1;
 }

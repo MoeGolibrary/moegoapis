@@ -23,7 +23,7 @@ const (
 	LeadService_GetLead_FullMethodName     = "/moego.business.customer.v1.LeadService/GetLead"
 	LeadService_CreateLead_FullMethodName  = "/moego.business.customer.v1.LeadService/CreateLead"
 	LeadService_UpdateLead_FullMethodName  = "/moego.business.customer.v1.LeadService/UpdateLead"
-	LeadService_ConvertLead_FullMethodName = "/moego.business.customer.v1.LeadService/ConvertLead"
+	LeadService_PromoteLead_FullMethodName = "/moego.business.customer.v1.LeadService/PromoteLead"
 )
 
 // LeadServiceClient is the client API for LeadService service.
@@ -55,10 +55,10 @@ type LeadServiceClient interface {
 	UpdateLead(ctx context.Context, in *UpdateLeadRequest, opts ...grpc.CallOption) (*Lead, error)
 	// Converts a lead to a customer
 	//
-	// Returns an empty response on success.
+	// Returns the created customer on success.
 	// Returns INVALID_ARGUMENT if the request is invalid.
 	// Returns NOT_FOUND if the lead ID doesn't exist.
-	ConvertLead(ctx context.Context, in *ConvertLeadRequest, opts ...grpc.CallOption) (*ConvertLeadResponse, error)
+	PromoteLead(ctx context.Context, in *PromoteLeadRequest, opts ...grpc.CallOption) (*PromoteLeadResponse, error)
 }
 
 type leadServiceClient struct {
@@ -109,10 +109,10 @@ func (c *leadServiceClient) UpdateLead(ctx context.Context, in *UpdateLeadReques
 	return out, nil
 }
 
-func (c *leadServiceClient) ConvertLead(ctx context.Context, in *ConvertLeadRequest, opts ...grpc.CallOption) (*ConvertLeadResponse, error) {
+func (c *leadServiceClient) PromoteLead(ctx context.Context, in *PromoteLeadRequest, opts ...grpc.CallOption) (*PromoteLeadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ConvertLeadResponse)
-	err := c.cc.Invoke(ctx, LeadService_ConvertLead_FullMethodName, in, out, cOpts...)
+	out := new(PromoteLeadResponse)
+	err := c.cc.Invoke(ctx, LeadService_PromoteLead_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -148,10 +148,10 @@ type LeadServiceServer interface {
 	UpdateLead(context.Context, *UpdateLeadRequest) (*Lead, error)
 	// Converts a lead to a customer
 	//
-	// Returns an empty response on success.
+	// Returns the created customer on success.
 	// Returns INVALID_ARGUMENT if the request is invalid.
 	// Returns NOT_FOUND if the lead ID doesn't exist.
-	ConvertLead(context.Context, *ConvertLeadRequest) (*ConvertLeadResponse, error)
+	PromoteLead(context.Context, *PromoteLeadRequest) (*PromoteLeadResponse, error)
 	mustEmbedUnimplementedLeadServiceServer()
 }
 
@@ -174,8 +174,8 @@ func (UnimplementedLeadServiceServer) CreateLead(context.Context, *CreateLeadReq
 func (UnimplementedLeadServiceServer) UpdateLead(context.Context, *UpdateLeadRequest) (*Lead, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateLead not implemented")
 }
-func (UnimplementedLeadServiceServer) ConvertLead(context.Context, *ConvertLeadRequest) (*ConvertLeadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ConvertLead not implemented")
+func (UnimplementedLeadServiceServer) PromoteLead(context.Context, *PromoteLeadRequest) (*PromoteLeadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method PromoteLead not implemented")
 }
 func (UnimplementedLeadServiceServer) mustEmbedUnimplementedLeadServiceServer() {}
 func (UnimplementedLeadServiceServer) testEmbeddedByValue()                     {}
@@ -270,20 +270,20 @@ func _LeadService_UpdateLead_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LeadService_ConvertLead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ConvertLeadRequest)
+func _LeadService_PromoteLead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PromoteLeadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LeadServiceServer).ConvertLead(ctx, in)
+		return srv.(LeadServiceServer).PromoteLead(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LeadService_ConvertLead_FullMethodName,
+		FullMethod: LeadService_PromoteLead_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LeadServiceServer).ConvertLead(ctx, req.(*ConvertLeadRequest))
+		return srv.(LeadServiceServer).PromoteLead(ctx, req.(*PromoteLeadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -312,8 +312,8 @@ var LeadService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LeadService_UpdateLead_Handler,
 		},
 		{
-			MethodName: "ConvertLead",
-			Handler:    _LeadService_ConvertLead_Handler,
+			MethodName: "PromoteLead",
+			Handler:    _LeadService_PromoteLead_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

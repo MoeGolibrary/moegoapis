@@ -130,7 +130,15 @@ Creates a new discount with the specified configuration.
 
 #### 📌 Return Value:
 
-Returns the created `Discount` object with full configuration details.
+| Field Name     | Type                      | Description                                                                                                |
+|----------------|---------------------------|------------------------------------------------------------------------------------------------------------|
+| `code`         | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
+| `description`  | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
+| `value`        | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
+| `valid_period` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
+| `limitation`   | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
+| `settings`     | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
+| `expiry_time`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
 
 #### ⚠️ Error Codes:
 
@@ -165,7 +173,15 @@ Retrieves detailed information about a specific discount by its code.
 
 #### 📌 Return Value:
 
-Returns the complete `Discount` object with all configuration details.
+| Field Name     | Type                      | Description                                                                                                |
+|----------------|---------------------------|------------------------------------------------------------------------------------------------------------|
+| `code`         | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
+| `description`  | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
+| `value`        | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
+| `valid_period` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
+| `limitation`   | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
+| `settings`     | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
+| `expiry_time`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
 
 #### ⚠️ Error Codes:
 
@@ -199,8 +215,6 @@ for historical reference.
 | `company_id` | string     | Yes      | Company identifier for scoping the discount listing |
 
 #### 📌 Return Value:
-
-Returns a paginated list of discounts and a token for retrieving the next page.
 
 | Field Name        | Type            | Description                                                          |
 |-------------------|-----------------|----------------------------------------------------------------------|
@@ -283,7 +297,7 @@ TODO
 | How to verify if a discount exists?                       | Use `GetDiscount` to check if the discount code returns a valid response                                           |
 | Can I create multiple discounts with the same code?       | No, each discount code must be unique within a company                                                             |
 | How to limit discount usage to specific customers?        | Use `limitation.customer_ids` to specify eligible customers                                                        |
-| Why does creating a discount return “resource exhausted”? | Not applicable — discounts typically don't have hard limits unless configured                                      |
+| Why does creating a discount return "resource exhausted"? | Not applicable — discounts typically don't have hard limits unless configured                                      |
 | How to handle expired discounts?                          | Use `ListDiscounts` to view expired discounts for historical reference; they cannot be applied to new appointments |
 
 ---

@@ -122,40 +122,6 @@
         ]
       }
     },
-    "/v1/leads:convert": {
-      "post": {
-        "summary": "Converts a lead to a customer",
-        "description": "Returns an empty response on success.\nReturns INVALID_ARGUMENT if the request is invalid.\nReturns NOT_FOUND if the lead ID doesn't exist.",
-        "operationId": "LeadService_ConvertLead",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1ConvertLeadResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/googlerpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1ConvertLeadRequest"
-            }
-          }
-        ],
-        "tags": [
-          "moego.business.customer.v1.LeadService"
-        ]
-      }
-    },
     "/v1/leads:list": {
       "get": {
         "summary": "List leads with pagination and optional filters",
@@ -218,6 +184,40 @@
             "in": "query",
             "required": false,
             "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.LeadService"
+        ]
+      }
+    },
+    "/v1/leads:promote": {
+      "post": {
+        "summary": "Converts a lead to a customer",
+        "description": "Returns the created customer on success.\nReturns INVALID_ARGUMENT if the request is invalid.\nReturns NOT_FOUND if the lead ID doesn't exist.",
+        "operationId": "LeadService_PromoteLead",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1PromoteLeadResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1PromoteLeadRequest"
+            }
           }
         ],
         "tags": [
@@ -524,41 +524,6 @@
       "default": "TYPE_UNSPECIFIED",
       "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
       "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
-    },
-    "v1ConvertLeadRequest": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "description": "ID of the lead to convert\nRequired."
-        }
-      },
-      "title": "Request message for converting a lead to a customer",
-      "required": [
-        "id"
-      ],
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ConvertLeadRequest"
-      }
-    },
-    "v1ConvertLeadResponse": {
-      "type": "object",
-      "properties": {
-        "customer": {
-          "$ref": "#/definitions/v1Customer",
-          "title": "The newly created customer from the converted lead"
-        }
-      },
-      "title": "Response message for converting a lead to a customer",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ConvertLeadResponse"
-      }
     },
     "v1CreateLeadRequest": {
       "type": "object",
@@ -1136,6 +1101,41 @@
       ],
       "default": "TYPE_UNSPECIFIED",
       "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    },
+    "v1PromoteLeadRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID of the lead to promote\nRequired."
+        }
+      },
+      "title": "Request message for promoting a lead to a customer",
+      "required": [
+        "id"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "PromoteLeadRequest"
+      }
+    },
+    "v1PromoteLeadResponse": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/v1Customer",
+          "title": "The newly created customer from the promoted lead"
+        }
+      },
+      "title": "Response message for promoting a lead to a customer",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "PromoteLeadResponse"
+      }
     },
     "v1ReferralSource": {
       "type": "object",

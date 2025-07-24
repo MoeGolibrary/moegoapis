@@ -157,7 +157,29 @@ Retrieves detailed information about a specific order by its ID.
 
 #### 📌 Return Value:
 
-Returns the complete `Order` object.
+| Field Name          | Type                      | Description                                                                                            |
+|---------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
+| `id`                | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
+| `business_id`       | string                    | ID of the business location where services were provided                                               |
+| `customer_id`       | string                    | ID of the customer who received services                                                               |
+| `status`            | Status                    | Current status of the order                                                                            |
+| `title`             | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
+| `description`       | string                    | Detailed notes about the order                                                                         |
+| `tips_amount`       | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
+| `tax_amount`        | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
+| `discount_amount`   | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
+| `extra_fee_amount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
+| `sub_total_amount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
+| `tips_based_amount` | google.type.Money         | Amount used as basis for calculating tips (usually equals sub_total_amount)                            |
+| `total_amount`      | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
+| `paid_amount`       | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
+| `remain_amount`     | google.type.Money         | Amount still due on the order (formula: total_amount - paid_amount)                                    |
+| `refunded_amount`   | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
+| `created_by`        | string                    | ID of the staff member who created the order                                                           |
+| `created_time`      | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
+| `last_updated_by`   | string                    | ID of the staff member who last modified the order                                                     |
+| `last_updated_time` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
+| `sales_datetime`    | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
 
 #### ⚠️ Error Codes:
 
@@ -196,8 +218,6 @@ update time.
 
 #### 📌 Return Value:
 
-Returns a paginated list of orders and a token for retrieving the next page.
-
 | Field Name        | Type         | Description                                                          |
 |-------------------|--------------|----------------------------------------------------------------------|
 | `next_page_token` | string       | Token for retrieving the next page of results (empty if none remain) |
@@ -235,8 +255,6 @@ revenue analysis.
 | `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by |
 
 #### 📌 Return Value:
-
-Returns a list of `OrderLineItem` objects matching the request criteria.
 
 | Field Name         | Type                 | Description                              |
 |--------------------|----------------------|------------------------------------------|
@@ -312,7 +330,7 @@ TODO
 | How to verify if an order exists?                       | Use `GetOrder` to check if the order ID returns a valid response                         |
 | Can I list orders for multiple companies at once?       | Currently only supports listing orders for one company at a time                         |
 | How to filter orders by business location?              | Use `ListOrders` with `business_ids`                                                     |
-| Why does creating an order return “resource exhausted”? | Not applicable — orders are typically not created via this API                           |
+| Why does creating an order return "resource exhausted"? | Not applicable — orders are typically not created via this API                           |
 | How to handle incomplete orders?                        | Use `ListOrders` with `STATUS_PROCESSING` to identify and follow up on incomplete orders |
 
 ---

@@ -48,7 +48,7 @@ information for providing appropriate care.
 | `pet_codes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
 | `notes`             | Array(Note)                                      | Staff observations and special instructions        |
 | `vaccinations`      | Array(Vaccination)                               | Vaccination records                                |
-| `customer_id`       | string                                           | ID of the pet’s owner                              |
+| `customer_id`       | string                                           | ID of the pet's owner                              |
 | `vet`               | Vet                                              | Primary veterinary care provider                   |
 | `evaluation_status` | EvaluationStatus                                 | Service eligibility status                         |
 | `created_time`      | Timestamp                                        | When the pet was created                           |
@@ -57,7 +57,7 @@ information for providing appropriate care.
 
 ### 2. Note
 
-Contains staff observations about the pet’s behavior, preferences, or special requirements.
+Contains staff observations about the pet's behavior, preferences, or special requirements.
 
 | Field Name          | Type      | Description                      |
 |---------------------|-----------|----------------------------------|
@@ -189,7 +189,28 @@ Registers a new pet with basic details, health records, and optionally initial n
 
 #### 📌 Return Value:
 
-Returns the created `Pet` object.
+| Field Name          | Type                                             | Description                                        |
+|---------------------|--------------------------------------------------|----------------------------------------------------|
+| `id`                | string                                           | Unique identifier                                  |
+| `name`              | string                                           | Pet's given name                                   |
+| `birthday`          | Date                                             | Pet's date of birth                                |
+| `status`            | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`              | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`             | string                                           | Specific breed within the pet type                 |
+| `gender`            | Gender                                           | Gender of the pet                                  |
+| `weight`            | Weight                                           | Pet's current weight                               |
+| `fixed`             | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`              | string                                           | Description of the coat (e.g., "long double coat") |
+| `behavior`          | string                                           | General temperament and behavior                   |
+| `pet_codes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
+| `notes`             | Array(Note)                                      | Staff observations and special instructions        |
+| `vaccinations`      | Array(Vaccination)                               | Vaccination records                                |
+| `customer_id`       | string                                           | ID of the pet's owner                              |
+| `vet`               | Vet                                              | Primary veterinary care provider                   |
+| `evaluation_status` | EvaluationStatus                                 | Service eligibility status                         |
+| `created_time`      | Timestamp                                        | When the pet was created                           |
+| `last_updated_time` | Timestamp                                        | When the pet was last modified                     |
+| `photo`             | string                                           | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -223,7 +244,28 @@ Retrieves detailed information about a specific pet.
 
 #### 📌 Return Value:
 
-Returns the complete `Pet` object.
+| Field Name          | Type                                             | Description                                        |
+|---------------------|--------------------------------------------------|----------------------------------------------------|
+| `id`                | string                                           | Unique identifier                                  |
+| `name`              | string                                           | Pet's given name                                   |
+| `birthday`          | Date                                             | Pet's date of birth                                |
+| `status`            | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`              | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`             | string                                           | Specific breed within the pet type                 |
+| `gender`            | Gender                                           | Gender of the pet                                  |
+| `weight`            | Weight                                           | Pet's current weight                               |
+| `fixed`             | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`              | string                                           | Description of the coat (e.g., "long double coat") |
+| `behavior`          | string                                           | General temperament and behavior                   |
+| `pet_codes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
+| `notes`             | Array(Note)                                      | Staff observations and special instructions        |
+| `vaccinations`      | Array(Vaccination)                               | Vaccination records                                |
+| `customer_id`       | string                                           | ID of the pet's owner                              |
+| `vet`               | Vet                                              | Primary veterinary care provider                   |
+| `evaluation_status` | EvaluationStatus                                 | Service eligibility status                         |
+| `created_time`      | Timestamp                                        | When the pet was created                           |
+| `last_updated_time` | Timestamp                                        | When the pet was last modified                     |
+| `photo`             | string                                           | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -269,7 +311,28 @@ Updates an existing pet's information.
 
 #### 📌 Return Value:
 
-Returns the updated `Pet` object.
+| Field Name          | Type                                             | Description                                        |
+|---------------------|--------------------------------------------------|----------------------------------------------------|
+| `id`                | string                                           | Unique identifier                                  |
+| `name`              | string                                           | Pet's given name                                   |
+| `birthday`          | Date                                             | Pet's date of birth                                |
+| `status`            | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`              | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`             | string                                           | Specific breed within the pet type                 |
+| `gender`            | Gender                                           | Gender of the pet                                  |
+| `weight`            | Weight                                           | Pet's current weight                               |
+| `fixed`             | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`              | string                                           | Description of the coat (e.g., "long double coat") |
+| `behavior`          | string                                           | General temperament and behavior                   |
+| `pet_codes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
+| `notes`             | Array(Note)                                      | Staff observations and special instructions        |
+| `vaccinations`      | Array(Vaccination)                               | Vaccination records                                |
+| `customer_id`       | string                                           | ID of the pet's owner                              |
+| `vet`               | Vet                                              | Primary veterinary care provider                   |
+| `evaluation_status` | EvaluationStatus                                 | Service eligibility status                         |
+| `created_time`      | Timestamp                                        | When the pet was created                           |
+| `last_updated_time` | Timestamp                                        | When the pet was last modified                     |
+| `photo`             | string                                           | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -301,7 +364,9 @@ Lists all pets belonging to a specific customer.
 
 #### 📌 Return Value:
 
-Returns a list of pets belonging to the customer.
+| Field Name | Type       | Description                            |
+|------------|------------|----------------------------------------|
+| `pets`     | Array(Pet) | List of pets belonging to the customer |
 
 #### ⚠️ Error Code:
 
@@ -334,7 +399,9 @@ Adds new notes to a pet's profile.
 
 #### 📌 Return Value:
 
-Returns the newly created notes with generated IDs.
+| Field Name | Type            | Description                        |
+|------------|-----------------|------------------------------------|
+| `notes`    | Array(Pet.Note) | Notes that were successfully added |
 
 #### ⚠️ Error Codes:
 
@@ -368,7 +435,10 @@ Retrieves a paginated list of notes for a specific pet.
 
 #### 📌 Return Value:
 
-Returns a list of notes in reverse chronological order.
+| Field Name        | Type            | Description                                   |
+|-------------------|-----------------|-----------------------------------------------|
+| `next_page_token` | string          | Token for retrieving the next page of results |
+| `notes`           | Array(Pet.Note) | List of notes for the pet                     |
 
 #### ⚠️ Error Codes:
 
@@ -402,7 +472,9 @@ Adds special handling codes or medical alerts to a pet's profile.
 
 #### 📌 Return Value:
 
-Returns the newly added codes with full details.
+| Field Name | Type                                             | Description                        |
+|------------|--------------------------------------------------|------------------------------------|
+| `codes`    | Array([PetCode](./setting_service.md#3-petcode)) | Codes that were successfully added |
 
 #### ⚠️ Error Codes:
 
@@ -441,7 +513,10 @@ Lists all pets across all customers in the company.
 
 #### 📌 Return Value:
 
-Returns a list of pets matching criteria.
+| Field Name        | Type       | Description                                   |
+|-------------------|------------|-----------------------------------------------|
+| `next_page_token` | string     | Token for retrieving the next page of results |
+| `pets`            | Array(Pet) | List of pets matching the request criteria    |
 
 #### ⚠️ Error Code:
 
@@ -534,7 +609,7 @@ TODO
 | How to verify if a pet exists?                       | Use `GetPet` to check if the pet ID returns a valid response                                                          |
 | Can I create multiple pets at once?                  | Currently only single pet creation is supported. Use batch processing if needed                                       |
 | How to manage pet notes effectively?                 | Use `AppendPetNotes` to add new entries                                                                               |
-| Why does creating a pet return “resource exhausted”? | The customer may have reached the maximum allowed pet count. Clean up unused pets or contact admin to increase quota. |
+| Why does creating a pet return "resource exhausted"? | The customer may have reached the maximum allowed pet count. Clean up unused pets or contact admin to increase quota. |
 | How to handle expired vaccinations?                  | System notifies staff before expiration; use `UpdatePet` to update vaccination records                                |
 
 ---
