@@ -140,7 +140,7 @@ Contains customer-specific data collected during the booking flow.
 
 | Field Name                 | Type                   | Description                                                     |
 |----------------------------|------------------------|-----------------------------------------------------------------|
-| `customer_id`              | string                 | Customer’s unique ID                                            |
+| `customer_id`              | string                 | Customer's unique ID                                            |
 | `email`                    | string                 | Email address                                                   |
 | `first_name`               | string                 | First name                                                      |
 | `last_name`                | string                 | Last name                                                       |
@@ -202,7 +202,28 @@ Retrieves detailed information about a specific abandoned booking.
 
 #### 📌 Return Value
 
-Returns the complete `AbandonedBooking` object.
+| Field Name          | Type                       | Description                                           |
+|---------------------|----------------------------|-------------------------------------------------------|
+| `id`                | string                     | Unique identifier                                     |
+| `business_id`       | string                     | Business location ID                                  |
+| `customer`          | AbandonedBookingCustomer   | Customer details                                      |
+| `pets`              | Array(AbandonedBookingPet) | Pets and related services involved                    |
+| `address`           | Address                    | Service location details                              |
+| `abandon_step`      | Step                       | Stage at which the booking was abandoned              |
+| `abandon_time`      | timestamp                  | Time when the booking was abandoned                   |
+| `abandon_status`    | Status                     | Current status: `ABANDONED`, `CONTACTED`, `RECOVERED` |
+| `last_texted_time`  | timestamp                  | Last SMS contact attempt regarding this booking       |
+| `last_emailed_time` | timestamp                  | Last email sent about this booking                    |
+| `recovery_type`     | RecoverType                | How the booking was recovered (if applicable)         |
+| `recovery_time`     | timestamp                  | Time when the booking was recovered                   |
+| `staff_id`          | string                     | Staff member who handled recovery                     |
+| `appointment_id`    | string                     | Appointment ID if booking was converted               |
+| `appointment_time`  | timestamp                  | Scheduled appointment time if one was set             |
+| `lead_type`         | LeadType                   | How the customer was acquired                         |
+| `create_time`       | timestamp                  | When this record was created                          |
+| `update_time`       | timestamp                  | When this record was last updated                     |
+| `additional_note`   | string                     | Notes added by staff or system                        |
+| `care_type`         | ItemType                   | Type of service selected by the customer              |
 
 #### ⚠️ Error Codes
 
@@ -239,7 +260,10 @@ Lists abandoned bookings matching specified criteria including abandon time rang
 
 #### 📌 Return Value
 
-Returns a paginated list of `AbandonedBooking` objects.
+| Field Name        | Type                  | Description                                  |
+|-------------------|-----------------------|----------------------------------------------|
+| `next_page_token` | string                | Token for retrieving the next page of results|
+| `bookings`        | Array(AbandonedBooking)| List of abandoned bookings matching criteria|
 
 #### ⚠️ Error Code
 
@@ -254,6 +278,7 @@ Returns a paginated list of `AbandonedBooking` objects.
 ```http
 GET /v1/abandoned_bookings/abk_12345
 ```
+
 
 **Response:**
 
@@ -302,12 +327,12 @@ GET /v1/abandoned_bookings/abk_12345
 }
 ```
 
+
 ### Example 2: List Abandoned Bookings
 
 ```http
 POST /v1/abandoned_bookings:list
 ```
-
 ```json
 {
   "company_id": "cmp_001",
@@ -337,6 +362,7 @@ POST /v1/abandoned_bookings:list
 }
 ```
 
+
 **Response:**
 
 ```json
@@ -364,6 +390,7 @@ POST /v1/abandoned_bookings:list
   ]
 }
 ```
+
 
 ---
 
@@ -399,12 +426,3 @@ Use `GetAbandonedBooking` to review details of an abandoned booking and determin
 outreach or re-engagement campaigns.
 
 ---
-
-## 📝 Summary
-
-This documentation covers the core types and APIs for managing online and abandoned bookings in the Moego platform. It
-enables businesses to track and recover lost opportunities, understand customer behavior, and improve conversion rates
-through targeted follow-ups.
-
-If you'd like, I can also generate OpenAPI/Swagger specs or Markdown tables for proto messages to assist developers in
-understanding field usage and constraints.

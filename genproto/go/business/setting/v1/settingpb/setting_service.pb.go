@@ -7,7 +7,6 @@
 package settingpb
 
 import (
-	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	money "google.golang.org/genproto/googleapis/type/money"
@@ -26,7 +25,7 @@ const (
 )
 
 // Request message for listing pet codes.
-type ListPetCodeRequest struct {
+type ListPetCodesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the company to list pet codes for
 	// Required. Must be a valid company ID
@@ -35,20 +34,20 @@ type ListPetCodeRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListPetCodeRequest) Reset() {
-	*x = ListPetCodeRequest{}
+func (x *ListPetCodesRequest) Reset() {
+	*x = ListPetCodesRequest{}
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListPetCodeRequest) String() string {
+func (x *ListPetCodesRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListPetCodeRequest) ProtoMessage() {}
+func (*ListPetCodesRequest) ProtoMessage() {}
 
-func (x *ListPetCodeRequest) ProtoReflect() protoreflect.Message {
+func (x *ListPetCodesRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -60,12 +59,12 @@ func (x *ListPetCodeRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListPetCodeRequest.ProtoReflect.Descriptor instead.
-func (*ListPetCodeRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListPetCodesRequest.ProtoReflect.Descriptor instead.
+func (*ListPetCodesRequest) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ListPetCodeRequest) GetCompanyId() string {
+func (x *ListPetCodesRequest) GetCompanyId() string {
 	if x != nil {
 		return x.CompanyId
 	}
@@ -73,29 +72,29 @@ func (x *ListPetCodeRequest) GetCompanyId() string {
 }
 
 // Response message for listing pet codes.
-type ListPetCodeResponse struct {
+type ListPetCodesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of available pet codes
 	// May be empty if no codes are defined
-	Codes         []*customerpb.Pet_Code `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
+	Codes         []*PetCode `protobuf:"bytes,1,rep,name=codes,proto3" json:"codes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListPetCodeResponse) Reset() {
-	*x = ListPetCodeResponse{}
+func (x *ListPetCodesResponse) Reset() {
+	*x = ListPetCodesResponse{}
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListPetCodeResponse) String() string {
+func (x *ListPetCodesResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListPetCodeResponse) ProtoMessage() {}
+func (*ListPetCodesResponse) ProtoMessage() {}
 
-func (x *ListPetCodeResponse) ProtoReflect() protoreflect.Message {
+func (x *ListPetCodesResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -107,12 +106,12 @@ func (x *ListPetCodeResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListPetCodeResponse.ProtoReflect.Descriptor instead.
-func (*ListPetCodeResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListPetCodesResponse.ProtoReflect.Descriptor instead.
+func (*ListPetCodesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *ListPetCodeResponse) GetCodes() []*customerpb.Pet_Code {
+func (x *ListPetCodesResponse) GetCodes() []*PetCode {
 	if x != nil {
 		return x.Codes
 	}
@@ -120,7 +119,7 @@ func (x *ListPetCodeResponse) GetCodes() []*customerpb.Pet_Code {
 }
 
 // Request message for listing customer tags.
-type ListCustomerTagRequest struct {
+type ListCustomerTagsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the company to list customer tags for
 	// Required. Must be a valid company ID
@@ -129,20 +128,20 @@ type ListCustomerTagRequest struct {
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListCustomerTagRequest) Reset() {
-	*x = ListCustomerTagRequest{}
+func (x *ListCustomerTagsRequest) Reset() {
+	*x = ListCustomerTagsRequest{}
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListCustomerTagRequest) String() string {
+func (x *ListCustomerTagsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListCustomerTagRequest) ProtoMessage() {}
+func (*ListCustomerTagsRequest) ProtoMessage() {}
 
-func (x *ListCustomerTagRequest) ProtoReflect() protoreflect.Message {
+func (x *ListCustomerTagsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -154,12 +153,12 @@ func (x *ListCustomerTagRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListCustomerTagRequest.ProtoReflect.Descriptor instead.
-func (*ListCustomerTagRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListCustomerTagsRequest.ProtoReflect.Descriptor instead.
+func (*ListCustomerTagsRequest) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *ListCustomerTagRequest) GetCompanyId() string {
+func (x *ListCustomerTagsRequest) GetCompanyId() string {
 	if x != nil {
 		return x.CompanyId
 	}
@@ -167,29 +166,29 @@ func (x *ListCustomerTagRequest) GetCompanyId() string {
 }
 
 // Response message for listing customer tags.
-type ListCustomerTagResponse struct {
+type ListCustomerTagsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of available customer tags
 	// May be empty if no tags are defined
-	Tags          []*customerpb.Customer_Tag `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags          []*CustomerTag `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListCustomerTagResponse) Reset() {
-	*x = ListCustomerTagResponse{}
+func (x *ListCustomerTagsResponse) Reset() {
+	*x = ListCustomerTagsResponse{}
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListCustomerTagResponse) String() string {
+func (x *ListCustomerTagsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListCustomerTagResponse) ProtoMessage() {}
+func (*ListCustomerTagsResponse) ProtoMessage() {}
 
-func (x *ListCustomerTagResponse) ProtoReflect() protoreflect.Message {
+func (x *ListCustomerTagsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -201,14 +200,108 @@ func (x *ListCustomerTagResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListCustomerTagResponse.ProtoReflect.Descriptor instead.
-func (*ListCustomerTagResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use ListCustomerTagsResponse.ProtoReflect.Descriptor instead.
+func (*ListCustomerTagsResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListCustomerTagResponse) GetTags() []*customerpb.Customer_Tag {
+func (x *ListCustomerTagsResponse) GetTags() []*CustomerTag {
 	if x != nil {
 		return x.Tags
+	}
+	return nil
+}
+
+// Request message for listing customer referral sources.
+type ListCustomerReferralSourcesRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list referral sources for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListCustomerReferralSourcesRequest) Reset() {
+	*x = ListCustomerReferralSourcesRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomerReferralSourcesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomerReferralSourcesRequest) ProtoMessage() {}
+
+func (x *ListCustomerReferralSourcesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomerReferralSourcesRequest.ProtoReflect.Descriptor instead.
+func (*ListCustomerReferralSourcesRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *ListCustomerReferralSourcesRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+// Response message for listing customer referral sources.
+type ListCustomerReferralSourcesResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of available referral sources
+	// May be empty if no sources are defined
+	ReferralSources []*ReferralSource `protobuf:"bytes,1,rep,name=referral_sources,json=referralSources,proto3" json:"referral_sources,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *ListCustomerReferralSourcesResponse) Reset() {
+	*x = ListCustomerReferralSourcesResponse{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListCustomerReferralSourcesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListCustomerReferralSourcesResponse) ProtoMessage() {}
+
+func (x *ListCustomerReferralSourcesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListCustomerReferralSourcesResponse.ProtoReflect.Descriptor instead.
+func (*ListCustomerReferralSourcesResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *ListCustomerReferralSourcesResponse) GetReferralSources() []*ReferralSource {
+	if x != nil {
+		return x.ReferralSources
 	}
 	return nil
 }
@@ -233,7 +326,7 @@ type ListServicesRequest struct {
 
 func (x *ListServicesRequest) Reset() {
 	*x = ListServicesRequest{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[4]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -245,7 +338,7 @@ func (x *ListServicesRequest) String() string {
 func (*ListServicesRequest) ProtoMessage() {}
 
 func (x *ListServicesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[4]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -258,7 +351,7 @@ func (x *ListServicesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListServicesRequest.ProtoReflect.Descriptor instead.
 func (*ListServicesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{4}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *ListServicesRequest) GetCompanyId() string {
@@ -289,63 +382,6 @@ func (x *ListServicesRequest) GetFilter() *ListServicesRequest_Filter {
 	return nil
 }
 
-// Request message for getting a service.
-type GetServiceRequest struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID of the company that owns the service.
-	// Required. Must be a valid company ID.
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// ID of the service to retrieve.
-	// Required. Must be a valid service ID.
-	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetServiceRequest) Reset() {
-	*x = GetServiceRequest{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetServiceRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetServiceRequest) ProtoMessage() {}
-
-func (x *GetServiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetServiceRequest.ProtoReflect.Descriptor instead.
-func (*GetServiceRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *GetServiceRequest) GetCompanyId() string {
-	if x != nil {
-		return x.CompanyId
-	}
-	return ""
-}
-
-func (x *GetServiceRequest) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
 // Response message for listing services.
 type ListServicesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -361,7 +397,7 @@ type ListServicesResponse struct {
 
 func (x *ListServicesResponse) Reset() {
 	*x = ListServicesResponse{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -373,7 +409,7 @@ func (x *ListServicesResponse) String() string {
 func (*ListServicesResponse) ProtoMessage() {}
 
 func (x *ListServicesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[6]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -386,7 +422,7 @@ func (x *ListServicesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListServicesResponse.ProtoReflect.Descriptor instead.
 func (*ListServicesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{6}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *ListServicesResponse) GetNextPageToken() string {
@@ -403,11 +439,68 @@ func (x *ListServicesResponse) GetServices() []*Service {
 	return nil
 }
 
+// Request message for getting a service.
+type GetServiceRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company that owns the service
+	// Required. Must be a valid company ID
+	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// ID of the service to retrieve
+	// Required. Must be a valid service ID
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetServiceRequest) Reset() {
+	*x = GetServiceRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetServiceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetServiceRequest) ProtoMessage() {}
+
+func (x *GetServiceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetServiceRequest.ProtoReflect.Descriptor instead.
+func (*GetServiceRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetServiceRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *GetServiceRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
 // Request message for creating a service.
 type CreateServiceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID of the company to create the service under.
-	// Required. Must be a valid company ID.
+	// ID of the company to create the service under
+	// Required. Must be a valid company ID
 	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// Name of the service (e.g., "Grooming", "Boarding")
 	// Required. Should be human-readable and unique within the company
@@ -445,7 +538,7 @@ type CreateServiceRequest struct {
 
 func (x *CreateServiceRequest) Reset() {
 	*x = CreateServiceRequest{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -457,7 +550,7 @@ func (x *CreateServiceRequest) String() string {
 func (*CreateServiceRequest) ProtoMessage() {}
 
 func (x *CreateServiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[7]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -470,7 +563,7 @@ func (x *CreateServiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateServiceRequest.ProtoReflect.Descriptor instead.
 func (*CreateServiceRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{7}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CreateServiceRequest) GetCompanyId() string {
@@ -553,11 +646,11 @@ func (x *CreateServiceRequest) GetAvailableStaffIds() []string {
 // Request message for updating a service.
 type UpdateServiceRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID of the company that owns the service.
-	// Required. Must be a valid company ID.
+	// ID of the company that owns the service
+	// Required. Must be a valid company ID
 	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// Unique identifier of the service to update.
-	// Required. Must be a valid service ID.
+	// Unique identifier of the service to update
+	// Required. Must be a valid service ID
 	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	// Name of the service (e.g., "Grooming", "Boarding")
 	// Required. Should be human-readable and unique within the company
@@ -591,7 +684,7 @@ type UpdateServiceRequest struct {
 
 func (x *UpdateServiceRequest) Reset() {
 	*x = UpdateServiceRequest{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -603,7 +696,7 @@ func (x *UpdateServiceRequest) String() string {
 func (*UpdateServiceRequest) ProtoMessage() {}
 
 func (x *UpdateServiceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[8]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -616,7 +709,7 @@ func (x *UpdateServiceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateServiceRequest.ProtoReflect.Descriptor instead.
 func (*UpdateServiceRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{8}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *UpdateServiceRequest) GetCompanyId() string {
@@ -696,11 +789,11 @@ func (x *UpdateServiceRequest) GetInactive() bool {
 	return false
 }
 
-// Request to list lodgings
+// Request message for listing lodgings.
 type ListLodgingsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// ID of the company that owns the service.
-	// Required. Must be a valid company ID.
+	// ID of the company to list lodgings for
+	// Required. Must be a valid company ID
 	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -708,7 +801,7 @@ type ListLodgingsRequest struct {
 
 func (x *ListLodgingsRequest) Reset() {
 	*x = ListLodgingsRequest{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -720,7 +813,7 @@ func (x *ListLodgingsRequest) String() string {
 func (*ListLodgingsRequest) ProtoMessage() {}
 
 func (x *ListLodgingsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[9]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -733,7 +826,7 @@ func (x *ListLodgingsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLodgingsRequest.ProtoReflect.Descriptor instead.
 func (*ListLodgingsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{9}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListLodgingsRequest) GetCompanyId() string {
@@ -743,10 +836,11 @@ func (x *ListLodgingsRequest) GetCompanyId() string {
 	return ""
 }
 
-// Response to list lodgings
+// Response message for listing lodgings.
 type ListLodgingsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// List of lodgings
+	// List of available lodgings
+	// May be empty if no lodgings are defined
 	Lodgings      []*Lodging `protobuf:"bytes,1,rep,name=lodgings,proto3" json:"lodgings,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -754,7 +848,7 @@ type ListLodgingsResponse struct {
 
 func (x *ListLodgingsResponse) Reset() {
 	*x = ListLodgingsResponse{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -766,7 +860,7 @@ func (x *ListLodgingsResponse) String() string {
 func (*ListLodgingsResponse) ProtoMessage() {}
 
 func (x *ListLodgingsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[10]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -779,12 +873,200 @@ func (x *ListLodgingsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListLodgingsResponse.ProtoReflect.Descriptor instead.
 func (*ListLodgingsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{10}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ListLodgingsResponse) GetLodgings() []*Lodging {
 	if x != nil {
 		return x.Lodgings
+	}
+	return nil
+}
+
+// Request message for listing lead lifecycle stages.
+type ListLeadsLifeCyclesRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list lead lifecycle stages for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLeadsLifeCyclesRequest) Reset() {
+	*x = ListLeadsLifeCyclesRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLeadsLifeCyclesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLeadsLifeCyclesRequest) ProtoMessage() {}
+
+func (x *ListLeadsLifeCyclesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLeadsLifeCyclesRequest.ProtoReflect.Descriptor instead.
+func (*ListLeadsLifeCyclesRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *ListLeadsLifeCyclesRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+// Response message for listing lead lifecycle stages.
+type ListLeadsLifeCyclesResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of available lead lifecycle stages
+	// May be empty if no lifecycle stages are defined
+	LifeCycles    []*LifeCycle `protobuf:"bytes,1,rep,name=life_cycles,json=lifeCycles,proto3" json:"life_cycles,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLeadsLifeCyclesResponse) Reset() {
+	*x = ListLeadsLifeCyclesResponse{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLeadsLifeCyclesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLeadsLifeCyclesResponse) ProtoMessage() {}
+
+func (x *ListLeadsLifeCyclesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLeadsLifeCyclesResponse.ProtoReflect.Descriptor instead.
+func (*ListLeadsLifeCyclesResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListLeadsLifeCyclesResponse) GetLifeCycles() []*LifeCycle {
+	if x != nil {
+		return x.LifeCycles
+	}
+	return nil
+}
+
+// Request message for listing lead action statuses.
+type ListLeadsActionStatusRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID of the company to list lead action statuses for
+	// Required. Must be a valid company ID
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLeadsActionStatusRequest) Reset() {
+	*x = ListLeadsActionStatusRequest{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLeadsActionStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLeadsActionStatusRequest) ProtoMessage() {}
+
+func (x *ListLeadsActionStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLeadsActionStatusRequest.ProtoReflect.Descriptor instead.
+func (*ListLeadsActionStatusRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListLeadsActionStatusRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+// Response message for listing lead action statuses.
+type ListLeadsActionStatusResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of available lead action statuses
+	// May be empty if no action statuses are defined
+	ActionStatuses []*ActionStatus `protobuf:"bytes,1,rep,name=action_statuses,json=actionStatuses,proto3" json:"action_statuses,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *ListLeadsActionStatusResponse) Reset() {
+	*x = ListLeadsActionStatusResponse{}
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLeadsActionStatusResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLeadsActionStatusResponse) ProtoMessage() {}
+
+func (x *ListLeadsActionStatusResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLeadsActionStatusResponse.ProtoReflect.Descriptor instead.
+func (*ListLeadsActionStatusResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ListLeadsActionStatusResponse) GetActionStatuses() []*ActionStatus {
+	if x != nil {
+		return x.ActionStatuses
 	}
 	return nil
 }
@@ -801,7 +1083,7 @@ type ListServicesRequest_Filter struct {
 
 func (x *ListServicesRequest_Filter) Reset() {
 	*x = ListServicesRequest_Filter{}
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -813,7 +1095,7 @@ func (x *ListServicesRequest_Filter) String() string {
 func (*ListServicesRequest_Filter) ProtoMessage() {}
 
 func (x *ListServicesRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[11]
+	mi := &file_moego_business_setting_v1_setting_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -826,7 +1108,7 @@ func (x *ListServicesRequest_Filter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListServicesRequest_Filter.ProtoReflect.Descriptor instead.
 func (*ListServicesRequest_Filter) Descriptor() ([]byte, []int) {
-	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{4, 0}
+	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{6, 0}
 }
 
 func (x *ListServicesRequest_Filter) GetItemTypes() []Service_ItemType {
@@ -840,17 +1122,22 @@ var File_moego_business_setting_v1_setting_service_proto protoreflect.FileDescri
 
 const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\x1a\x17google/type/money.proto\"8\n" +
-	"\x12ListPetCodeRequest\x12\"\n" +
+	"/moego/business/setting/v1/setting_service.proto\x12\x19moego.business.setting.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a(moego/business/setting/v1/customer.proto\x1a#moego/business/setting/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\x1a\x17google/type/money.proto\"9\n" +
+	"\x13ListPetCodesRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"Q\n" +
-	"\x13ListPetCodeResponse\x12:\n" +
-	"\x05codes\x18\x01 \x03(\v2$.moego.business.customer.v1.Pet.CodeR\x05codes\"<\n" +
-	"\x16ListCustomerTagRequest\x12\"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"P\n" +
+	"\x14ListPetCodesResponse\x128\n" +
+	"\x05codes\x18\x01 \x03(\v2\".moego.business.setting.v1.PetCodeR\x05codes\"=\n" +
+	"\x17ListCustomerTagsRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"W\n" +
-	"\x17ListCustomerTagResponse\x12<\n" +
-	"\x04tags\x18\x02 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\"\xc8\x02\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"V\n" +
+	"\x18ListCustomerTagsResponse\x12:\n" +
+	"\x04tags\x18\x01 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\"H\n" +
+	"\"ListCustomerReferralSourcesRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"{\n" +
+	"#ListCustomerReferralSourcesResponse\x12T\n" +
+	"\x10referral_sources\x18\x01 \x03(\v2).moego.business.setting.v1.ReferralSourceR\x0freferralSources\"\xc8\x02\n" +
 	"\x13ListServicesRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12@\n" +
@@ -861,14 +1148,14 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x06filter\x18\x04 \x01(\v25.moego.business.setting.v1.ListServicesRequest.FilterR\x06filter\x1aY\n" +
 	"\x06Filter\x12O\n" +
 	"\n" +
-	"item_types\x18\x01 \x03(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x01R\titemTypes\"L\n" +
+	"item_types\x18\x01 \x03(\x0e2+.moego.business.setting.v1.Service.ItemTypeB\x03\xe0A\x01R\titemTypes\"~\n" +
+	"\x14ListServicesResponse\x12&\n" +
+	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
+	"\bservices\x18\x02 \x03(\v2\".moego.business.setting.v1.ServiceR\bservices\"L\n" +
 	"\x11GetServiceRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"~\n" +
-	"\x14ListServicesResponse\x12&\n" +
-	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12>\n" +
-	"\bservices\x18\x02 \x03(\v2\".moego.business.setting.v1.ServiceR\bservices\"\xc3\x04\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\xc3\x04\n" +
 	"\x14CreateServiceRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12\x17\n" +
@@ -901,10 +1188,24 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"V\n" +
 	"\x14ListLodgingsResponse\x12>\n" +
-	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings2\xb0\t\n" +
-	"\x0eSettingService\x12\xab\x01\n" +
-	"\fListPetCodes\x12-.moego.business.setting.v1.ListPetCodeRequest\x1a..moego.business.setting.v1.ListPetCodeResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbb\x01\n" +
-	"\x10ListCustomerTags\x121.moego.business.setting.v1.ListCustomerTagRequest\x1a2.moego.business.setting.v1.ListCustomerTagResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\x98\x01\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"@\n" +
+	"\x1aListLeadsLifeCyclesRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"d\n" +
+	"\x1bListLeadsLifeCyclesResponse\x12E\n" +
+	"\vlife_cycles\x18\x01 \x03(\v2$.moego.business.setting.v1.LifeCycleR\n" +
+	"lifeCycles\"B\n" +
+	"\x1cListLeadsActionStatusRequest\x12\"\n" +
+	"\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"q\n" +
+	"\x1dListLeadsActionStatusResponse\x12P\n" +
+	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses2\xb3\x0e\n" +
+	"\x0eSettingService\x12\xad\x01\n" +
+	"\fListPetCodes\x12..moego.business.setting.v1.ListPetCodesRequest\x1a/.moego.business.setting.v1.ListPetCodesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbd\x01\n" +
+	"\x10ListCustomerTags\x122.moego.business.setting.v1.ListCustomerTagsRequest\x1a3.moego.business.setting.v1.ListCustomerTagsResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\xea\x01\n" +
+	"\x1bListCustomerReferralSources\x12=.moego.business.setting.v1.ListCustomerReferralSourcesRequest\x1a>.moego.business.setting.v1.ListCustomerReferralSourcesResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/v1/setting/companies/{company_id}/customer/referral_sources:list\x12\xc2\x01\n" +
+	"\x13ListLeadsLifeCycles\x125.moego.business.setting.v1.ListLeadsLifeCyclesRequest\x1a6.moego.business.setting.v1.ListLeadsLifeCyclesResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/setting/companies/{company_id}/leads/life_cycles\x12\xca\x01\n" +
+	"\x15ListLeadsActionStatus\x127.moego.business.setting.v1.ListLeadsActionStatusRequest\x1a8.moego.business.setting.v1.ListLeadsActionStatusResponse\">\x82\xd3\xe4\x93\x028\x126/v1/setting/companies/{company_id}/leads/action_status\x12\x98\x01\n" +
 	"\n" +
 	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
 	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\x9c\x01\n" +
@@ -925,60 +1226,78 @@ func file_moego_business_setting_v1_setting_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescData
 }
 
-var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
+var file_moego_business_setting_v1_setting_service_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_moego_business_setting_v1_setting_service_proto_goTypes = []any{
-	(*ListPetCodeRequest)(nil),         // 0: moego.business.setting.v1.ListPetCodeRequest
-	(*ListPetCodeResponse)(nil),        // 1: moego.business.setting.v1.ListPetCodeResponse
-	(*ListCustomerTagRequest)(nil),     // 2: moego.business.setting.v1.ListCustomerTagRequest
-	(*ListCustomerTagResponse)(nil),    // 3: moego.business.setting.v1.ListCustomerTagResponse
-	(*ListServicesRequest)(nil),        // 4: moego.business.setting.v1.ListServicesRequest
-	(*GetServiceRequest)(nil),          // 5: moego.business.setting.v1.GetServiceRequest
-	(*ListServicesResponse)(nil),       // 6: moego.business.setting.v1.ListServicesResponse
-	(*CreateServiceRequest)(nil),       // 7: moego.business.setting.v1.CreateServiceRequest
-	(*UpdateServiceRequest)(nil),       // 8: moego.business.setting.v1.UpdateServiceRequest
-	(*ListLodgingsRequest)(nil),        // 9: moego.business.setting.v1.ListLodgingsRequest
-	(*ListLodgingsResponse)(nil),       // 10: moego.business.setting.v1.ListLodgingsResponse
-	(*ListServicesRequest_Filter)(nil), // 11: moego.business.setting.v1.ListServicesRequest.Filter
-	(*customerpb.Pet_Code)(nil),        // 12: moego.business.customer.v1.Pet.Code
-	(*customerpb.Customer_Tag)(nil),    // 13: moego.business.customer.v1.Customer.Tag
-	(*commonpb.Pagination)(nil),        // 14: moego.common.v1.Pagination
-	(*Service)(nil),                    // 15: moego.business.setting.v1.Service
-	(Service_ItemType)(0),              // 16: moego.business.setting.v1.Service.ItemType
-	(*money.Money)(nil),                // 17: google.type.Money
-	(Service_Type)(0),                  // 18: moego.business.setting.v1.Service.Type
-	(*Lodging)(nil),                    // 19: moego.business.setting.v1.Lodging
+	(*ListPetCodesRequest)(nil),                 // 0: moego.business.setting.v1.ListPetCodesRequest
+	(*ListPetCodesResponse)(nil),                // 1: moego.business.setting.v1.ListPetCodesResponse
+	(*ListCustomerTagsRequest)(nil),             // 2: moego.business.setting.v1.ListCustomerTagsRequest
+	(*ListCustomerTagsResponse)(nil),            // 3: moego.business.setting.v1.ListCustomerTagsResponse
+	(*ListCustomerReferralSourcesRequest)(nil),  // 4: moego.business.setting.v1.ListCustomerReferralSourcesRequest
+	(*ListCustomerReferralSourcesResponse)(nil), // 5: moego.business.setting.v1.ListCustomerReferralSourcesResponse
+	(*ListServicesRequest)(nil),                 // 6: moego.business.setting.v1.ListServicesRequest
+	(*ListServicesResponse)(nil),                // 7: moego.business.setting.v1.ListServicesResponse
+	(*GetServiceRequest)(nil),                   // 8: moego.business.setting.v1.GetServiceRequest
+	(*CreateServiceRequest)(nil),                // 9: moego.business.setting.v1.CreateServiceRequest
+	(*UpdateServiceRequest)(nil),                // 10: moego.business.setting.v1.UpdateServiceRequest
+	(*ListLodgingsRequest)(nil),                 // 11: moego.business.setting.v1.ListLodgingsRequest
+	(*ListLodgingsResponse)(nil),                // 12: moego.business.setting.v1.ListLodgingsResponse
+	(*ListLeadsLifeCyclesRequest)(nil),          // 13: moego.business.setting.v1.ListLeadsLifeCyclesRequest
+	(*ListLeadsLifeCyclesResponse)(nil),         // 14: moego.business.setting.v1.ListLeadsLifeCyclesResponse
+	(*ListLeadsActionStatusRequest)(nil),        // 15: moego.business.setting.v1.ListLeadsActionStatusRequest
+	(*ListLeadsActionStatusResponse)(nil),       // 16: moego.business.setting.v1.ListLeadsActionStatusResponse
+	(*ListServicesRequest_Filter)(nil),          // 17: moego.business.setting.v1.ListServicesRequest.Filter
+	(*PetCode)(nil),                             // 18: moego.business.setting.v1.PetCode
+	(*CustomerTag)(nil),                         // 19: moego.business.setting.v1.CustomerTag
+	(*ReferralSource)(nil),                      // 20: moego.business.setting.v1.ReferralSource
+	(*commonpb.Pagination)(nil),                 // 21: moego.common.v1.Pagination
+	(*Service)(nil),                             // 22: moego.business.setting.v1.Service
+	(Service_ItemType)(0),                       // 23: moego.business.setting.v1.Service.ItemType
+	(*money.Money)(nil),                         // 24: google.type.Money
+	(Service_Type)(0),                           // 25: moego.business.setting.v1.Service.Type
+	(*Lodging)(nil),                             // 26: moego.business.setting.v1.Lodging
+	(*LifeCycle)(nil),                           // 27: moego.business.setting.v1.LifeCycle
+	(*ActionStatus)(nil),                        // 28: moego.business.setting.v1.ActionStatus
 }
 var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
-	12, // 0: moego.business.setting.v1.ListPetCodeResponse.codes:type_name -> moego.business.customer.v1.Pet.Code
-	13, // 1: moego.business.setting.v1.ListCustomerTagResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	14, // 2: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
-	11, // 3: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
-	15, // 4: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
-	16, // 5: moego.business.setting.v1.CreateServiceRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	17, // 6: moego.business.setting.v1.CreateServiceRequest.price:type_name -> google.type.Money
-	18, // 7: moego.business.setting.v1.CreateServiceRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
-	17, // 8: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
-	19, // 9: moego.business.setting.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.setting.v1.Lodging
-	16, // 10: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
-	0,  // 11: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodeRequest
-	2,  // 12: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagRequest
-	5,  // 13: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
-	4,  // 14: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
-	7,  // 15: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
-	8,  // 16: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
-	9,  // 17: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
-	1,  // 18: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodeResponse
-	3,  // 19: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagResponse
-	15, // 20: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
-	6,  // 21: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
-	15, // 22: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
-	15, // 23: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
-	10, // 24: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
-	18, // [18:25] is the sub-list for method output_type
-	11, // [11:18] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	18, // 0: moego.business.setting.v1.ListPetCodesResponse.codes:type_name -> moego.business.setting.v1.PetCode
+	19, // 1: moego.business.setting.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.setting.v1.CustomerTag
+	20, // 2: moego.business.setting.v1.ListCustomerReferralSourcesResponse.referral_sources:type_name -> moego.business.setting.v1.ReferralSource
+	21, // 3: moego.business.setting.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
+	17, // 4: moego.business.setting.v1.ListServicesRequest.filter:type_name -> moego.business.setting.v1.ListServicesRequest.Filter
+	22, // 5: moego.business.setting.v1.ListServicesResponse.services:type_name -> moego.business.setting.v1.Service
+	23, // 6: moego.business.setting.v1.CreateServiceRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	24, // 7: moego.business.setting.v1.CreateServiceRequest.price:type_name -> google.type.Money
+	25, // 8: moego.business.setting.v1.CreateServiceRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
+	24, // 9: moego.business.setting.v1.UpdateServiceRequest.price:type_name -> google.type.Money
+	26, // 10: moego.business.setting.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.setting.v1.Lodging
+	27, // 11: moego.business.setting.v1.ListLeadsLifeCyclesResponse.life_cycles:type_name -> moego.business.setting.v1.LifeCycle
+	28, // 12: moego.business.setting.v1.ListLeadsActionStatusResponse.action_statuses:type_name -> moego.business.setting.v1.ActionStatus
+	23, // 13: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
+	0,  // 14: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodesRequest
+	2,  // 15: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagsRequest
+	4,  // 16: moego.business.setting.v1.SettingService.ListCustomerReferralSources:input_type -> moego.business.setting.v1.ListCustomerReferralSourcesRequest
+	13, // 17: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:input_type -> moego.business.setting.v1.ListLeadsLifeCyclesRequest
+	15, // 18: moego.business.setting.v1.SettingService.ListLeadsActionStatus:input_type -> moego.business.setting.v1.ListLeadsActionStatusRequest
+	8,  // 19: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
+	6,  // 20: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
+	9,  // 21: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
+	10, // 22: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
+	11, // 23: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
+	1,  // 24: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodesResponse
+	3,  // 25: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagsResponse
+	5,  // 26: moego.business.setting.v1.SettingService.ListCustomerReferralSources:output_type -> moego.business.setting.v1.ListCustomerReferralSourcesResponse
+	14, // 27: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:output_type -> moego.business.setting.v1.ListLeadsLifeCyclesResponse
+	16, // 28: moego.business.setting.v1.SettingService.ListLeadsActionStatus:output_type -> moego.business.setting.v1.ListLeadsActionStatusResponse
+	22, // 29: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
+	7,  // 30: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
+	22, // 31: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
+	22, // 32: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
+	12, // 33: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
+	24, // [24:34] is the sub-list for method output_type
+	14, // [14:24] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_setting_service_proto_init() }
@@ -986,6 +1305,8 @@ func file_moego_business_setting_v1_setting_service_proto_init() {
 	if File_moego_business_setting_v1_setting_service_proto != nil {
 		return
 	}
+	file_moego_business_setting_v1_customer_proto_init()
+	file_moego_business_setting_v1_pet_proto_init()
 	file_moego_business_setting_v1_lodging_proto_init()
 	file_moego_business_setting_v1_service_proto_init()
 	type x struct{}
@@ -994,7 +1315,7 @@ func file_moego_business_setting_v1_setting_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_setting_service_proto_rawDesc), len(file_moego_business_setting_v1_setting_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   12,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

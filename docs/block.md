@@ -96,7 +96,14 @@ Creates a new block in a staff member's schedule.
 
 #### 📌 Return Value:
 
-Returns the created `Block` object with full configuration details.
+| Field Name    | Type                 | Description                                                                                                                            |
+|---------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `id`          | string               | Unique identifier for the block                                                                                                        |
+| `staff_id`    | string               | ID of the staff member whose schedule is being blocked                                                                                 |
+| `duration`    | google.type.Interval | The time interval during which the staff member is unavailable (uses Google's standard Interval type to represent start and end times) |
+| `description` | string               | Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting")                                              |
+| `color_code`  | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
+| `business_id` | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
 
 #### ⚠️ Error Codes:
 
@@ -130,7 +137,14 @@ Retrieves detailed information about a specific block by its ID.
 
 #### 📌 Return Value:
 
-Returns the complete `Block` object with all configuration details.
+| Field Name    | Type                 | Description                                                                                                                            |
+|---------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `id`          | string               | Unique identifier for the block                                                                                                        |
+| `staff_id`    | string               | ID of the staff member whose schedule is being blocked                                                                                 |
+| `duration`    | google.type.Interval | The time interval during which the staff member is unavailable (uses Google's standard Interval type to represent start and end times) |
+| `description` | string               | Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting")                                              |
+| `color_code`  | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
+| `business_id` | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
 
 #### ⚠️ Error Codes:
 
@@ -179,7 +193,7 @@ TODO
 | How to verify if a block exists?                      | Use `GetBlock` to check if the block ID returns a valid response                                              |
 | Can I create overlapping blocks?                      | While technically possible, it's recommended to avoid creating overlapping blocks for the same staff member   |
 | How to manage staff availability effectively?         | Use `CreateBlock` to define all unavailable time periods and check them before scheduling appointments        |
-| Why does creating a block return “permission denied”? | You may lack the necessary permissions for the specified business ID or staff member                          |
+| Why does creating a block return "permission denied"? | You may lack the necessary permissions for the specified business ID or staff member                          |
 | How to handle time zone differences?                  | All times should be specified in UTC format with proper time zone conversion handled at the application level |
 
 ---

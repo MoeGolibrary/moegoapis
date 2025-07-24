@@ -7,6 +7,7 @@
 package customerpb
 
 import (
+	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	interval "google.golang.org/genproto/googleapis/type/interval"
@@ -51,7 +52,7 @@ type CreateCustomerRequest struct {
 	Preference *Customer_Preference `protobuf:"bytes,8,opt,name=preference,proto3" json:"preference,omitempty"`
 	// Initial tags to apply to the customer
 	// Optional. Empty list if not provided
-	Tags []*Customer_Tag `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags []*settingpb.CustomerTag `protobuf:"bytes,9,rep,name=tags,proto3" json:"tags,omitempty"`
 	// Initial notes about the customer
 	// Optional. Empty list if not provided
 	Notes         []*Customer_Note `protobuf:"bytes,10,rep,name=notes,proto3" json:"notes,omitempty"`
@@ -145,7 +146,7 @@ func (x *CreateCustomerRequest) GetPreference() *Customer_Preference {
 	return nil
 }
 
-func (x *CreateCustomerRequest) GetTags() []*Customer_Tag {
+func (x *CreateCustomerRequest) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
@@ -191,7 +192,7 @@ type UpdateCustomerRequest struct {
 	Address *commonpb.Address `protobuf:"bytes,9,opt,name=address,proto3,oneof" json:"address,omitempty"`
 	// Initial tags to apply to the customer
 	// Optional. Empty list if not provided
-	Tags []*Customer_Tag `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags []*settingpb.CustomerTag `protobuf:"bytes,10,rep,name=tags,proto3" json:"tags,omitempty"`
 	// Initial notes about the customer
 	// Optional. Empty list if not provided
 	Notes         []*Customer_Note `protobuf:"bytes,11,rep,name=notes,proto3" json:"notes,omitempty"`
@@ -292,7 +293,7 @@ func (x *UpdateCustomerRequest) GetAddress() *commonpb.Address {
 	return nil
 }
 
-func (x *UpdateCustomerRequest) GetTags() []*Customer_Tag {
+func (x *UpdateCustomerRequest) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
@@ -796,7 +797,7 @@ type AppendCustomerTagsRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Tags to add to the customer's profile
 	// Required. At least one tag must be provided
-	Tags          []*Customer_Tag `protobuf:"bytes,3,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags          []*settingpb.CustomerTag `protobuf:"bytes,3,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -838,7 +839,7 @@ func (x *AppendCustomerTagsRequest) GetId() string {
 	return ""
 }
 
-func (x *AppendCustomerTagsRequest) GetTags() []*Customer_Tag {
+func (x *AppendCustomerTagsRequest) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
@@ -850,7 +851,7 @@ type AppendCustomerTagsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Tags that were successfully added
 	// Includes generated IDs and timestamps
-	Tags          []*Customer_Tag `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags          []*settingpb.CustomerTag `protobuf:"bytes,1,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -885,7 +886,7 @@ func (*AppendCustomerTagsResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *AppendCustomerTagsResponse) GetTags() []*Customer_Tag {
+func (x *AppendCustomerTagsResponse) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
@@ -944,7 +945,7 @@ type ListCustomerTagsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of tags associated with the customer
 	// May be empty if the customer has no tags
-	Tags          []*Customer_Tag `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
+	Tags          []*settingpb.CustomerTag `protobuf:"bytes,2,rep,name=tags,proto3" json:"tags,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -979,7 +980,7 @@ func (*ListCustomerTagsResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_customer_v1_customer_service_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *ListCustomerTagsResponse) GetTags() []*Customer_Tag {
+func (x *ListCustomerTagsResponse) GetTags() []*settingpb.CustomerTag {
 	if x != nil {
 		return x.Tags
 	}
@@ -1037,7 +1038,7 @@ var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDesc
 
 const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\n" +
-	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xef\x03\n" +
+	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\x1a(moego/business/setting/v1/customer.proto\"\xed\x03\n" +
 	"\x15CreateCustomerRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x127\n" +
@@ -1050,10 +1051,10 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\aaddress\x18\a \x01(\v2\x18.moego.common.v1.AddressR\aaddress\x12O\n" +
 	"\n" +
 	"preference\x18\b \x01(\v2/.moego.business.customer.v1.Customer.PreferenceR\n" +
-	"preference\x12<\n" +
-	"\x04tags\x18\t \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12?\n" +
+	"preference\x12:\n" +
+	"\x04tags\x18\t \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\x12?\n" +
 	"\x05notes\x18\n" +
-	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"\xcf\x04\n" +
+	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"\xcd\x04\n" +
 	"\x15UpdateCustomerRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
 	"\n" +
@@ -1066,9 +1067,9 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\tlast_name\x18\x06 \x01(\tH\x03R\blastName\x88\x01\x01\x12\x1e\n" +
 	"\x05phone\x18\a \x01(\tB\x03\xe0A\x02H\x04R\x05phone\x88\x01\x01\x12\x19\n" +
 	"\x05email\x18\b \x01(\tH\x05R\x05email\x88\x01\x01\x127\n" +
-	"\aaddress\x18\t \x01(\v2\x18.moego.common.v1.AddressH\x06R\aaddress\x88\x01\x01\x12<\n" +
+	"\aaddress\x18\t \x01(\v2\x18.moego.common.v1.AddressH\x06R\aaddress\x88\x01\x01\x12:\n" +
 	"\x04tags\x18\n" +
-	" \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\x12?\n" +
+	" \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\x12?\n" +
 	"\x05notes\x18\v \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notesB\x18\n" +
 	"\x16_preferred_business_idB\x0e\n" +
 	"\f_avatar_pathB\r\n" +
@@ -1109,16 +1110,16 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\x84\x01\n" +
 	"\x19ListCustomerNotesResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12?\n" +
-	"\x05notes\x18\x02 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"n\n" +
+	"\x05notes\x18\x02 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"l\n" +
 	"\x19AppendCustomerTagsRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12<\n" +
-	"\x04tags\x18\x03 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\"Z\n" +
-	"\x1aAppendCustomerTagsResponse\x12<\n" +
-	"\x04tags\x18\x01 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags\".\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12:\n" +
+	"\x04tags\x18\x03 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\"X\n" +
+	"\x1aAppendCustomerTagsResponse\x12:\n" +
+	"\x04tags\x18\x01 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\".\n" +
 	"\x17ListCustomerTagsRequest\x12\x13\n" +
-	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"X\n" +
-	"\x18ListCustomerTagsResponse\x12<\n" +
-	"\x04tags\x18\x02 \x03(\v2(.moego.business.customer.v1.Customer.TagR\x04tags2\x92\v\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"V\n" +
+	"\x18ListCustomerTagsResponse\x12:\n" +
+	"\x04tags\x18\x02 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags2\x92\v\n" +
 	"\x0fCustomerService\x12\x83\x01\n" +
 	"\x0eCreateCustomer\x121.moego.business.customer.v1.CreateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/customers\x12\x88\x01\n" +
 	"\x0eUpdateCustomer\x121.moego.business.customer.v1.UpdateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/v1/customers/{id}\x12\x7f\n" +
@@ -1163,7 +1164,7 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 	(*ListCustomersRequest_Filter)(nil), // 15: moego.business.customer.v1.ListCustomersRequest.Filter
 	(*commonpb.Address)(nil),            // 16: moego.common.v1.Address
 	(*Customer_Preference)(nil),         // 17: moego.business.customer.v1.Customer.Preference
-	(*Customer_Tag)(nil),                // 18: moego.business.customer.v1.Customer.Tag
+	(*settingpb.CustomerTag)(nil),       // 18: moego.business.setting.v1.CustomerTag
 	(*Customer_Note)(nil),               // 19: moego.business.customer.v1.Customer.Note
 	(*commonpb.Pagination)(nil),         // 20: moego.common.v1.Pagination
 	(*Customer)(nil),                    // 21: moego.business.customer.v1.Customer
@@ -1172,10 +1173,10 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	16, // 0: moego.business.customer.v1.CreateCustomerRequest.address:type_name -> moego.common.v1.Address
 	17, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.Customer.Preference
-	18, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	18, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
 	19, // 3: moego.business.customer.v1.CreateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
 	16, // 4: moego.business.customer.v1.UpdateCustomerRequest.address:type_name -> moego.common.v1.Address
-	18, // 5: moego.business.customer.v1.UpdateCustomerRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	18, // 5: moego.business.customer.v1.UpdateCustomerRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
 	19, // 6: moego.business.customer.v1.UpdateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
 	20, // 7: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination
 	15, // 8: moego.business.customer.v1.ListCustomersRequest.filter:type_name -> moego.business.customer.v1.ListCustomersRequest.Filter
@@ -1184,9 +1185,9 @@ var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	19, // 11: moego.business.customer.v1.AppendCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
 	20, // 12: moego.business.customer.v1.ListCustomerNotesRequest.pagination:type_name -> moego.common.v1.Pagination
 	19, // 13: moego.business.customer.v1.ListCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
-	18, // 14: moego.business.customer.v1.AppendCustomerTagsRequest.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	18, // 15: moego.business.customer.v1.AppendCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
-	18, // 16: moego.business.customer.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.customer.v1.Customer.Tag
+	18, // 14: moego.business.customer.v1.AppendCustomerTagsRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
+	18, // 15: moego.business.customer.v1.AppendCustomerTagsResponse.tags:type_name -> moego.business.setting.v1.CustomerTag
+	18, // 16: moego.business.customer.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.setting.v1.CustomerTag
 	22, // 17: moego.business.customer.v1.ListCustomersRequest.Filter.last_updated_time:type_name -> google.type.Interval
 	0,  // 18: moego.business.customer.v1.CustomerService.CreateCustomer:input_type -> moego.business.customer.v1.CreateCustomerRequest
 	1,  // 19: moego.business.customer.v1.CustomerService.UpdateCustomer:input_type -> moego.business.customer.v1.UpdateCustomerRequest

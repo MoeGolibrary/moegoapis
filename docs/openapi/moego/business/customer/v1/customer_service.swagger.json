@@ -288,7 +288,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListCustomerTagsResponse"
+              "$ref": "#/definitions/businesscustomerv1ListCustomerTagsResponse"
             }
           },
           "default": {
@@ -385,26 +385,6 @@
         "type": "Preference"
       }
     },
-    "CustomerReferralSource": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for the source"
-        },
-        "name": {
-          "type": "string",
-          "title": "Display name of the source"
-        }
-      },
-      "description": "ReferralSource represents the source or channel through which a customer was acquired.\nThis helps track the origin of new customers and analyze marketing effectiveness.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ReferralSource"
-      }
-    },
     "CustomerServiceAppendCustomerNotesBody": {
       "type": "object",
       "properties": {
@@ -432,7 +412,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CustomerTag"
+            "$ref": "#/definitions/v1CustomerTag"
           },
           "title": "Tags to add to the customer's profile\nRequired. At least one tag must be provided"
         }
@@ -510,7 +490,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CustomerTag"
+            "$ref": "#/definitions/v1CustomerTag"
           },
           "title": "Initial tags to apply to the customer\nOptional. Empty list if not provided"
         },
@@ -535,33 +515,24 @@
         "type": "UpdateCustomerRequest"
       }
     },
-    "CustomerTag": {
+    "businesscustomerv1ListCustomerTagsResponse": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for this tag"
-        },
-        "name": {
-          "type": "string",
-          "title": "Display name of the tag"
-        },
-        "lastUpdatedBy": {
-          "type": "string",
-          "title": "ID of the staff member who last modified this tag"
-        },
-        "lastUpdatedTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "When this tag was last modified"
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerTag"
+          },
+          "title": "List of tags associated with the customer\nMay be empty if the customer has no tags"
         }
       },
-      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
+      "description": "Response message for listing customer tags.",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
-        "type": "Tag"
+        "type": "ListCustomerTagsResponse"
       }
     },
     "googlerpcStatus": {
@@ -734,7 +705,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CustomerTag"
+            "$ref": "#/definitions/v1CustomerTag"
           },
           "title": "Tags that were successfully added\nIncludes generated IDs and timestamps"
         }
@@ -786,7 +757,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CustomerTag"
+            "$ref": "#/definitions/v1CustomerTag"
           },
           "title": "Initial tags to apply to the customer\nOptional. Empty list if not provided"
         },
@@ -909,12 +880,12 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/CustomerTag"
+            "$ref": "#/definitions/v1CustomerTag"
           },
           "title": "List of tags applied to this customer"
         },
         "referralSource": {
-          "$ref": "#/definitions/CustomerReferralSource",
+          "$ref": "#/definitions/v1ReferralSource",
           "description": "The source or channel through which a customer was acquired."
         },
         "preference": {
@@ -979,6 +950,35 @@
       "default": "STATUS_UNSPECIFIED",
       "description": "Status represents the current state of a customer's account.\nThis affects their ability to book appointments and access services.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\nNew customers should not be created with this status.\n - ACTIVE: ACTIVE indicates the customer can book appointments and use services.\nThis is the default status for new customers.\n - INACTIVE: INACTIVE indicates the customer cannot book new appointments.\nExisting appointments may still be honored based on business policy."
     },
+    "v1CustomerTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this tag"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the tag"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this tag"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tag was last modified"
+        }
+      },
+      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomerTag"
+      }
+    },
     "v1GenCustomerCofLinkResponse": {
       "type": "object",
       "properties": {
@@ -1017,26 +1017,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "ListCustomerNotesResponse"
-      }
-    },
-    "v1ListCustomerTagsResponse": {
-      "type": "object",
-      "properties": {
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/CustomerTag"
-          },
-          "title": "List of tags associated with the customer\nMay be empty if the customer has no tags"
-        }
-      },
-      "description": "Response message for listing customer tags.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ListCustomerTagsResponse"
       }
     },
     "v1ListCustomersRequest": {
@@ -1127,6 +1107,26 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
         },
         "type": "Pagination"
+      }
+    },
+    "v1ReferralSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the source"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the source"
+        }
+      },
+      "description": "ReferralSource represents the source or channel through which a customer was acquired.\nThis helps track the origin of new customers and analyze marketing effectiveness.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ReferralSource"
       }
     }
   }

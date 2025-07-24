@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package moego.business.setting.v1;
+
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
+option java_multiple_files = true;
+option java_outer_classname = "SettingProto";
+option java_package = "com.moego.api.business.setting.v1";
+
+
+// Code represents special handling instructions or medical alerts
+// These codes are visible to staff during service delivery
+message PetCode {
+  // Unique identifier for this code
+  string id = 1;
+
+  // Short form of the code for quick reference
+  // Example: "AG" for "Aggressive"
+  string abbreviation = 2;
+
+  // Detailed explanation of the code
+  string description = 3;
+
+  // Color used to highlight this code in the UI
+  // Format: Hex color code (e.g., "#FF0000")
+  string color = 4;
+}

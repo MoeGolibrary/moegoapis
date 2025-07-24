@@ -636,34 +636,6 @@
       "default": "SEND_TYPE_UNSPECIFIED",
       "description": "Type of send action that triggered the report delivery.\n\n - SEND_TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - MANUAL: Report was manually sent by a user.\n - AUTO: Report was automatically sent by the system."
     },
-    "PetCode": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for this code"
-        },
-        "abbreviation": {
-          "type": "string",
-          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
-        },
-        "description": {
-          "type": "string",
-          "title": "Detailed explanation of the code"
-        },
-        "color": {
-          "type": "string",
-          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
-        }
-      },
-      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "Code"
-      }
-    },
     "PetEvaluationStatus": {
       "type": "string",
       "enum": [
@@ -1761,7 +1733,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/PetCode"
+            "$ref": "#/definitions/v1PetCode"
           },
           "title": "Special handling codes for this pet\nDisplayed prominently during service"
         },
@@ -1820,6 +1792,34 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "Pet"
+      }
+    },
+    "v1PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCode"
       }
     },
     "v1PetNote": {

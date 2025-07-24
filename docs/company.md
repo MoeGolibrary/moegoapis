@@ -103,12 +103,16 @@ Retrieves detailed information about a specific company.
 
 #### 📌 Return Value:
 
-Returns the complete `Company` object.
+| Field Name | Type      | Description                  |
+|------------|-----------|------------------------------|
+| `company`  | `Company` | The retrieved company object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified company ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                         |
+|---------------------|-------------------------------------|
+| `NOT_FOUND`         | Specified company ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                   |
 
 ---
 
@@ -140,12 +144,17 @@ returned in alphabetical order by name.
 
 #### 📌 Return Value:
 
-Returns a list of companies matching the request criteria.
+| Field Name        | Type             | Description                         |
+|-------------------|------------------|-------------------------------------|
+| `next_page_token` | `string`         | Token for retrieving the next page  |
+| `companies`       | Array(`Company`) | List of companies matching criteria |
 
 #### ⚠️ Error Codes:
 
-- `INVALID_ARGUMENT`: Invalid pagination parameters.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                   |
+|---------------------|-------------------------------|
+| `INVALID_ARGUMENT`  | Invalid pagination parameters |
+| `PERMISSION_DENIED` | Permission denied             |
 
 ---
 
@@ -230,7 +239,7 @@ TODO
 |--------------------------------------------------------|-----------------------------------------------------------------------|
 | How to verify if a company exists?                     | Use `GetCompany` to check if the company ID returns a valid response. |
 | Can I list all companies at once?                      | No. Results are paginated. Use `page_token` to fetch next set.        |
-| Why does listing companies return “permission denied”? | Ensure you have the correct access rights for this operation.         |
+| Why does listing companies return "permission denied"? | Ensure you have the correct access rights for this operation.         |
 | How to handle large result sets efficiently?           | Use pagination via `page_size` and `page_token`.                      |
 
 ---

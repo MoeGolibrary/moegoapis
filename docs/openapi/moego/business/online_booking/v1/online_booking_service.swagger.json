@@ -165,34 +165,6 @@
       "default": "ABANDON_STEP_UNSPECIFIED",
       "description": "Step represents the stage in the booking process where the abandonment occurred.\n\n - ABANDON_STEP_UNSPECIFIED: Default value. This value is unused.\n - WELCOME_PAGE: Customer visited the welcome page.\n - BASIC_INFO: Customer filled out basic info.\n - SELECT_CARE_TYPE: Customer selected care type.\n - SELECT_ADDRESS: Customer selected address.\n - SELECT_PET: Customer selected pet.\n - SELECT_DATE: Customer selected date.\n - SELECT_SERVICE: Customer selected service.\n - SELECT_GROOMER: Customer selected groomer.\n - SELECT_TIME: Customer selected time.\n - ADDITIONAL_PET_INFO: Customer provided additional pet info.\n - PERSONAL_INFO: Customer entered personal info.\n - CARD_ON_FILE: Customer provided card on file.\n - PREPAY: Customer initiated prepay.\n - PRE_AUTH: Customer initiated pre-auth.\n - SUBMIT_APPT: Customer submitted the appointment."
     },
-    "PetCode": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for this code"
-        },
-        "abbreviation": {
-          "type": "string",
-          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
-        },
-        "description": {
-          "type": "string",
-          "title": "Detailed explanation of the code"
-        },
-        "color": {
-          "type": "string",
-          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
-        }
-      },
-      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "Code"
-      }
-    },
     "PetEvaluationStatus": {
       "type": "string",
       "enum": [
@@ -878,7 +850,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/PetCode"
+            "$ref": "#/definitions/v1PetCode"
           },
           "title": "Special handling codes for this pet\nDisplayed prominently during service"
         },
@@ -937,6 +909,34 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "Pet"
+      }
+    },
+    "v1PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCode"
       }
     },
     "v1PetNote": {

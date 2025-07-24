@@ -16,6 +16,47 @@
     "application/json"
   ],
   "paths": {
+    "/v1/setting/companies/{companyId}/customer/referral_sources:list": {
+      "post": {
+        "summary": "Lists all available customer referral sources for a company.",
+        "description": "Referral sources help track the origin of new customers and analyze marketing effectiveness.\nThese sources can be used for lead generation, marketing campaigns, and customer analytics.\n\nReturns all active referral sources for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "SettingService_ListCustomerReferralSources",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomerReferralSourcesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list referral sources for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListCustomerReferralSourcesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
     "/v1/setting/companies/{companyId}/customer/tags:list": {
       "post": {
         "summary": "Lists all available customer tags for a company.",
@@ -25,7 +66,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListCustomerTagResponse"
+              "$ref": "#/definitions/businesssettingv1ListCustomerTagsResponse"
             }
           },
           "default": {
@@ -57,10 +98,76 @@
         ]
       }
     },
+    "/v1/setting/companies/{companyId}/leads/action_status": {
+      "get": {
+        "summary": "Lists all available lead action statuses for a company.",
+        "description": "Action statuses help track what actions need to be taken on leads.\n\nReturns all active action statuses for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.",
+        "operationId": "SettingService_ListLeadsActionStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListLeadsActionStatusResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list lead action statuses for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
+    "/v1/setting/companies/{companyId}/leads/life_cycles": {
+      "get": {
+        "summary": "Lists all available lead lifecycle stages for a company.",
+        "description": "Lifecycle stages help track the progression of leads through the sales pipeline.\n\nReturns all active lifecycle stages for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.",
+        "operationId": "SettingService_ListLeadsLifeCycles",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListLeadsLifeCyclesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list lead lifecycle stages for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
     "/v1/setting/companies/{companyId}/lodgings": {
       "get": {
-        "summary": "List lodgings",
-        "description": "Returns a list of lodgings.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.\nReturns NOT_FOUND if the company does not exist.",
+        "summary": "Lists all available lodgings for a company.",
+        "description": "Lodgings represent different types of accommodation options for pet boarding services.\n\nReturns all active lodgings for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.\nReturns NOT_FOUND if the company does not exist.",
         "operationId": "SettingService_ListLodgings",
         "responses": {
           "200": {
@@ -79,7 +186,7 @@
         "parameters": [
           {
             "name": "companyId",
-            "description": "ID of the company that owns the service.\nRequired. Must be a valid company ID.",
+            "description": "ID of the company to list lodgings for\nRequired. Must be a valid company ID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -99,7 +206,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/v1ListPetCodeResponse"
+              "$ref": "#/definitions/v1ListPetCodesResponse"
             }
           },
           "default": {
@@ -153,7 +260,7 @@
         "parameters": [
           {
             "name": "companyId",
-            "description": "ID of the company to create the service under.\nRequired. Must be a valid company ID.",
+            "description": "ID of the company to create the service under\nRequired. Must be a valid company ID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -194,14 +301,14 @@
         "parameters": [
           {
             "name": "companyId",
-            "description": "ID of the company that owns the service.\nRequired. Must be a valid company ID.",
+            "description": "ID of the company that owns the service\nRequired. Must be a valid company ID",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
-            "description": "ID of the service to retrieve.\nRequired. Must be a valid service ID.",
+            "description": "ID of the service to retrieve\nRequired. Must be a valid service ID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -232,14 +339,14 @@
         "parameters": [
           {
             "name": "companyId",
-            "description": "ID of the company that owns the service.\nRequired. Must be a valid company ID.",
+            "description": "ID of the company that owns the service\nRequired. Must be a valid company ID",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "id",
-            "description": "Unique identifier of the service to update.\nRequired. Must be a valid service ID.",
+            "description": "Unique identifier of the service to update\nRequired. Must be a valid service ID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -301,63 +408,6 @@
     }
   },
   "definitions": {
-    "CustomerTag": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for this tag"
-        },
-        "name": {
-          "type": "string",
-          "title": "Display name of the tag"
-        },
-        "lastUpdatedBy": {
-          "type": "string",
-          "title": "ID of the staff member who last modified this tag"
-        },
-        "lastUpdatedTime": {
-          "type": "string",
-          "format": "date-time",
-          "title": "When this tag was last modified"
-        }
-      },
-      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "Tag"
-      }
-    },
-    "PetCode": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for this code"
-        },
-        "abbreviation": {
-          "type": "string",
-          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
-        },
-        "description": {
-          "type": "string",
-          "title": "Detailed explanation of the code"
-        },
-        "color": {
-          "type": "string",
-          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
-        }
-      },
-      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "Code"
-      }
-    },
     "ServiceItemType": {
       "type": "string",
       "enum": [
@@ -439,6 +489,16 @@
         "type": "CreateServiceRequest"
       }
     },
+    "SettingServiceListCustomerReferralSourcesBody": {
+      "type": "object",
+      "description": "Request message for listing customer referral sources.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListCustomerReferralSourcesRequest"
+      }
+    },
     "SettingServiceListPetCodesBody": {
       "type": "object",
       "description": "Request message for listing pet codes.",
@@ -446,7 +506,7 @@
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
-        "type": "ListPetCodeRequest"
+        "type": "ListPetCodesRequest"
       }
     },
     "SettingServiceListServicesBody": {
@@ -539,6 +599,26 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "UpdateServiceRequest"
+      }
+    },
+    "businesssettingv1ListCustomerTagsResponse": {
+      "type": "object",
+      "properties": {
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomerTag"
+          },
+          "title": "List of available customer tags\nMay be empty if no tags are defined"
+        }
+      },
+      "description": "Response message for listing customer tags.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListCustomerTagsResponse"
       }
     },
     "googlerpcStatus": {
@@ -670,24 +750,141 @@
         "type": "Money"
       }
     },
-    "v1ListCustomerTagResponse": {
+    "v1ActionStatus": {
       "type": "object",
       "properties": {
-        "tags": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/CustomerTag"
-          },
-          "title": "List of available customer tags\nMay be empty if no tags are defined"
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the ActionStatus."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the ActionStatus."
+        },
+        "color": {
+          "type": "string",
+          "description": "string, The color of the ActionStatus."
         }
       },
-      "description": "Response message for listing customer tags.",
+      "title": "ActionStatus",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
-        "type": "ListCustomerTagResponse"
+        "type": "ActionStatus"
+      }
+    },
+    "v1CustomerTag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this tag"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the tag"
+        },
+        "lastUpdatedBy": {
+          "type": "string",
+          "title": "ID of the staff member who last modified this tag"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tag was last modified"
+        }
+      },
+      "description": "Tag represents a label that can be applied to customers for categorization\nand filtering purposes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomerTag"
+      }
+    },
+    "v1LifeCycle": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "string, The unique identifier of the LifeCycle."
+        },
+        "name": {
+          "type": "string",
+          "description": "string, The name of the LifeCycle."
+        },
+        "isDefault": {
+          "type": "boolean",
+          "title": "bool, is default"
+        }
+      },
+      "title": "LifeCycle",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "LifeCycle"
+      }
+    },
+    "v1ListCustomerReferralSourcesResponse": {
+      "type": "object",
+      "properties": {
+        "referralSources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ReferralSource"
+          },
+          "title": "List of available referral sources\nMay be empty if no sources are defined"
+        }
+      },
+      "description": "Response message for listing customer referral sources.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListCustomerReferralSourcesResponse"
+      }
+    },
+    "v1ListLeadsActionStatusResponse": {
+      "type": "object",
+      "properties": {
+        "actionStatuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ActionStatus"
+          },
+          "title": "List of available lead action statuses\nMay be empty if no action statuses are defined"
+        }
+      },
+      "description": "Response message for listing lead action statuses.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLeadsActionStatusResponse"
+      }
+    },
+    "v1ListLeadsLifeCyclesResponse": {
+      "type": "object",
+      "properties": {
+        "lifeCycles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1LifeCycle"
+          },
+          "title": "List of available lead lifecycle stages\nMay be empty if no lifecycle stages are defined"
+        }
+      },
+      "description": "Response message for listing lead lifecycle stages.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLeadsLifeCyclesResponse"
       }
     },
     "v1ListLodgingsResponse": {
@@ -699,10 +896,10 @@
             "type": "object",
             "$ref": "#/definitions/v1Lodging"
           },
-          "title": "List of lodgings"
+          "title": "List of available lodgings\nMay be empty if no lodgings are defined"
         }
       },
-      "title": "Response to list lodgings",
+      "description": "Response message for listing lodgings.",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
@@ -710,14 +907,14 @@
         "type": "ListLodgingsResponse"
       }
     },
-    "v1ListPetCodeResponse": {
+    "v1ListPetCodesResponse": {
       "type": "object",
       "properties": {
         "codes": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/PetCode"
+            "$ref": "#/definitions/v1PetCode"
           },
           "title": "List of available pet codes\nMay be empty if no codes are defined"
         }
@@ -727,7 +924,7 @@
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
-        "type": "ListPetCodeResponse"
+        "type": "ListPetCodesResponse"
       }
     },
     "v1ListServicesRequestFilter": {
@@ -890,6 +1087,54 @@
         "type": "Pagination"
       }
     },
+    "v1PetCode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this code"
+        },
+        "abbreviation": {
+          "type": "string",
+          "title": "Short form of the code for quick reference\nExample: \"AG\" for \"Aggressive\""
+        },
+        "description": {
+          "type": "string",
+          "title": "Detailed explanation of the code"
+        },
+        "color": {
+          "type": "string",
+          "title": "Color used to highlight this code in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+        }
+      },
+      "title": "Code represents special handling instructions or medical alerts\nThese codes are visible to staff during service delivery",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCode"
+      }
+    },
+    "v1ReferralSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the source"
+        },
+        "name": {
+          "type": "string",
+          "title": "Display name of the source"
+        }
+      },
+      "description": "ReferralSource represents the source or channel through which a customer was acquired.\nThis helps track the origin of new customers and analyze marketing effectiveness.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ReferralSource"
+      }
+    },
     "v1ServiceType": {
       "type": "string",
       "enum": [
@@ -907,7 +1152,7 @@
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
-        "type": "ListCustomerTagRequest"
+        "type": "ListCustomerTagsRequest"
       }
     }
   }

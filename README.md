@@ -46,6 +46,7 @@ notifications.
 
 - [Customer](docs/customer.md): Manage customer profiles, tags, notes, and related operations.
 - [Pet](docs/pet.md): Animal companion information, including coat type, behavior, and vet details.
+- [Lead](docs/lead.md): Potential customers in the sales pipeline with lifecycle and action status tracking.
 
 ### 📅 Scheduling & Availability
 

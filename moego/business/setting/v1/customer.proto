@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package moego.business.setting.v1;
+
+import "google/protobuf/timestamp.proto";
+
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
+option java_multiple_files = true;
+option java_outer_classname = "SettingProto";
+option java_package = "com.moego.api.business.setting.v1";
+
+
+// Tag represents a label that can be applied to customers for categorization
+// and filtering purposes.
+message CustomerTag {
+  // Unique identifier for this tag
+  string id = 1;
+
+  // Display name of the tag
+  string name = 2;
+
+  // ID of the staff member who last modified this tag
+  string last_updated_by = 3;
+
+  // When this tag was last modified
+  google.protobuf.Timestamp last_updated_time = 4;
+}
+
+// ReferralSource represents the source or channel through which a customer was acquired.
+// This helps track the origin of new customers and analyze marketing effectiveness.
+message ReferralSource {
+  // Unique identifier for the source
+  string id = 1;
+  // Display name of the source
+  string name = 2;
+}
+
+
+// LifeCycle
+message LifeCycle {
+  // string, The unique identifier of the LifeCycle.
+  string id = 1;
+  // string, The name of the LifeCycle.
+  string name = 2;
+
+  // bool, is default
+  bool is_default = 3;
+}
+
+// ActionStatus
+message ActionStatus {
+  // string, The unique identifier of the ActionStatus.
+  string id = 1;
+  // string, The name of the ActionStatus.
+  string name = 2;
+  // string, The color of the ActionStatus.
+  string color = 3;
+}
+
+
+

@@ -4,6 +4,7 @@ package moego.business.customer.v1;
 
 import "google/protobuf/timestamp.proto";
 import "moego/common/v1/address.proto";
+import "moego/business/setting/v1/customer.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -47,21 +48,6 @@ message Customer {
     google.protobuf.Timestamp last_updated_time = 4;
   }
 
-  // Tag represents a label that can be applied to customers for categorization
-  // and filtering purposes.
-  message Tag {
-    // Unique identifier for this tag
-    string id = 1;
-
-    // Display name of the tag
-    string name = 2;
-
-    // ID of the staff member who last modified this tag
-    string last_updated_by = 3;
-
-    // When this tag was last modified
-    google.protobuf.Timestamp last_updated_time = 4;
-  }
 
   // Preference stores a customer's communication and marketing preferences.
   // These settings determine how and when we can contact the customer.
@@ -81,15 +67,6 @@ message Customer {
     // Whether the customer wants appointment reminders
     // Default: true
     bool receive_appointment_reminder = 4;
-  }
-
-  // ReferralSource represents the source or channel through which a customer was acquired.
-  // This helps track the origin of new customers and analyze marketing effectiveness.
-  message ReferralSource {
-    // Unique identifier for the source
-    string id = 1;
-    // Display name of the source
-    string name = 2;
   }
 
   // Unique identifier for the customer
@@ -157,10 +134,10 @@ message Customer {
   repeated Note notes = 19;
 
   // List of tags applied to this customer
-  repeated Tag tags = 20;
+  repeated moego.business.setting.v1.CustomerTag tags = 20;
 
   // The source or channel through which a customer was acquired.
-  ReferralSource referral_source = 21;
+  moego.business.setting.v1.ReferralSource referral_source = 21;
 
   // Preferences related to communication and marketing.
   Preference preference = 22;

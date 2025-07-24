@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package moego.business.customer.v1;
+
+import "google/protobuf/timestamp.proto";
+import "moego/common/v1/address.proto";
+import "moego/business/customer/v1/pet.proto";
+import "moego/business/setting/v1/customer.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
+option java_multiple_files = true;
+option java_outer_classname = "LeadsProto";
+option java_package = "com.moego.api.business.customer.v1";
+
+// Lead represents a potential customer in the sales pipeline
+message Lead {
+  // Unique identifier for the lead
+  // Format: "lcus_" followed by random characters
+  string id = 1;
+
+  // Lead's first name
+  string first_name = 2;
+
+  // Lead's last name
+  string last_name = 3;
+
+  // URL to the lead's profile picture
+  // Optional. Must be a valid HTTPS URL
+  string avatar = 4;
+
+  // Lead's phone number in E.164 format (e.g., +12125551234)
+  string phone = 5;
+
+  // Lead's email address
+  // Format: Must be a valid email address
+  string email = 6;
+
+  // Lead's addresses
+  // Can include home, work, or other addresses
+  moego.common.v1.Address address = 7;
+
+  // List of pets belonging to the lead
+  // May be empty if the lead has no pets
+  repeated Pet pets = 8;
+
+  // ID of the lead's preferred business location
+  string preferred_business_id = 9;
+
+  // ID of the staff member assigned to the lead
+  string allocate_staff_id = 10;
+
+  // Lead's current lifecycle stage
+  moego.business.setting.v1.LifeCycle life_cycle = 11;
+
+  // Lead's action status
+  moego.business.setting.v1.ActionStatus action_status = 12;
+
+  // The source or channel through which the lead was acquired
+  moego.business.setting.v1.ReferralSource referral_source = 13;
+
+  // Creation timestamp
+  google.protobuf.Timestamp created_time = 14;
+
+  // Last modification timestamp
+  google.protobuf.Timestamp last_updated_time = 15;
+
+  // ID of the company associated with the lead
+  string company_id = 16;
+}

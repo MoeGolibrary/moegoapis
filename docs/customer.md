@@ -32,30 +32,30 @@ Represents a client who uses your services. A customer can have multiple pets, a
 are the core entity in the pet service business and are used throughout the system for booking appointments, managing
 pets, and tracking service history.
 
-| Field Name              | Type           | Description                                                           |
-|-------------------------|----------------|-----------------------------------------------------------------------|
-| `id`                    | string         | Unique identifier                                                     |
-| `first_name`            | string         | Customer's first name                                                 |
-| `last_name`             | string         | Customer's last name                                                  |
-| `avatar`                | string         | URL to the customer's profile picture                                 |
-| `phone`                 | string         | Customer's phone number. Must be in E.164 format (e.g., +12125551234) |
-| `email`                 | string         | Customer's email address. Must be valid                               |
-| `address`               | Array(Address) | List of customer’s addresses                                          |
-| `status`                | Status         | Current status of the customer                                        |
-| `color_code`            | string         | Color code for visual identification in the UI                        |
-| `source`                | string         | How the customer was acquired                                         |
-| `last_appointment_date` | Timestamp      | When the customer had their last appointment                          |
-| `next_appointment_date` | Timestamp      | When the customer's next appointment is scheduled                     |
-| `created_by`            | string         | ID of the staff member who created this customer                      |
-| `created_time`          | Timestamp      | When this customer was created                                        |
-| `last_updated_by`       | string         | ID of the staff member who last modified this customer                |
-| `last_updated_time`     | Timestamp      | When this customer was last modified                                  |
-| `preferred_business_id` | string         | ID of the customer's preferred business location                      |
-| `company_id`            | string         | ID of the company this customer belongs to                            |
-| `notes`                 | Array(Note)    | List of notes about this customer                                     |
-| `tags`                  | Array(Tag)     | List of tags applied to this customer                                 |
-| `referral_source`       | ReferralSource | The source or channel through which a customer was acquired           |
-| `preference`            | Preference     | Customer's communication and marketing preferences                    |
+| Field Name              | Type                                                     | Description                                                           |
+|-------------------------|----------------------------------------------------------|-----------------------------------------------------------------------|
+| `id`                    | string                                                   | Unique identifier                                                     |
+| `first_name`            | string                                                   | Customer's first name                                                 |
+| `last_name`             | string                                                   | Customer's last name                                                  |
+| `avatar`                | string                                                   | URL to the customer's profile picture                                 |
+| `phone`                 | string                                                   | Customer's phone number. Must be in E.164 format (e.g., +12125551234) |
+| `email`                 | string                                                   | Customer's email address. Must be valid                               |
+| `address`               | Array(Address)                                           | List of customer's addresses                                          |
+| `status`                | Status                                                   | Current status of the customer                                        |
+| `color_code`            | string                                                   | Color code for visual identification in the UI                        |
+| `source`                | string                                                   | How the customer was acquired                                         |
+| `last_appointment_date` | Timestamp                                                | When the customer had their last appointment                          |
+| `next_appointment_date` | Timestamp                                                | When the customer's next appointment is scheduled                     |
+| `created_by`            | string                                                   | ID of the staff member who created this customer                      |
+| `created_time`          | Timestamp                                                | When this customer was created                                        |
+| `last_updated_by`       | string                                                   | ID of the staff member who last modified this customer                |
+| `last_updated_time`     | Timestamp                                                | When this customer was last modified                                  |
+| `preferred_business_id` | string                                                   | ID of the customer's preferred business location                      |
+| `company_id`            | string                                                   | ID of the company this customer belongs to                            |
+| `notes`                 | Array(Note)                                              | List of notes about this customer                                     |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                                 |
+| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired           |
+| `preference`            | Preference                                               | Customer's communication and marketing preferences                    |
 
 ### 2. Note
 
@@ -69,18 +69,7 @@ history.
 | `last_updated_by`   | string    | ID of the staff member who last modified this note |
 | `last_updated_time` | Timestamp | When this note was last modified                   |
 
-### 3. Tag
-
-Represents a label that can be applied to customers for categorization and filtering purposes.
-
-| Field Name          | Type      | Description                                       |
-|---------------------|-----------|---------------------------------------------------|
-| `id`                | string    | Unique identifier                                 |
-| `name`              | string    | Display name of the tag                           |
-| `last_updated_by`   | string    | ID of the staff member who last modified this tag |
-| `last_updated_time` | Timestamp | When this tag was last modified                   |
-
-### 4. Preference
+### 3. Preference
 
 Stores a customer's communication and marketing preferences. These settings determine how and when we can contact the
 customer.
@@ -92,17 +81,7 @@ customer.
 | `subscribe_to_marketing_emails` | bool | Whether the customer has opted in to marketing emails        |
 | `receive_appointment_reminder`  | bool | Whether the customer wants appointment reminders             |
 
-### 5. ReferralSource
-
-Represents the source or channel through which a customer was acquired. This helps track the origin of new customers and
-analyze marketing effectiveness.
-
-| Field Name | Type   | Description                |
-|------------|--------|----------------------------|
-| `id`       | string | Unique identifier          |
-| `name`     | string | Display name of the source |
-
-### 6. Address
+### 4. Address
 
 Represents a customer's physical address.
 
@@ -163,18 +142,18 @@ Registers a new customer with basic details, preferences, and optionally initial
 
 #### 🔧 Request Parameters:
 
-| Field Name              | Type        | Required | Description                                           |
-|-------------------------|-------------|----------|-------------------------------------------------------|
-| `company_id`            | string      | Yes      | ID of the company creating the customer               |
-| `preferred_business_id` | string      | Yes      | ID of the business location preferred by the customer |
-| `first_name`            | string      | Yes      | Customer's first name                                 |
-| `last_name`             | string      | Yes      | Customer's last name                                  |
-| `phone`                 | string      | Yes      | Customer's phone number                               |
-| `email`                 | string      | No       | Customer's email address                              |
-| `address`               | Address     | No       | Customer's primary address                            |
-| `preference`            | Preference  | No       | Customer's communication and marketing preferences    |
-| `tags`                  | Array(Tag)  | No       | Initial tags to apply to the customer                 |
-| `notes`                 | Array(Note) | No       | Initial notes about the customer                      |
+| Field Name              | Type                                                     | Required | Description                                           |
+|-------------------------|----------------------------------------------------------|----------|-------------------------------------------------------|
+| `company_id`            | string                                                   | Yes      | ID of the company creating the customer               |
+| `preferred_business_id` | string                                                   | Yes      | ID of the business location preferred by the customer |
+| `first_name`            | string                                                   | Yes      | Customer's first name                                 |
+| `last_name`             | string                                                   | Yes      | Customer's last name                                  |
+| `phone`                 | string                                                   | Yes      | Customer's phone number                               |
+| `email`                 | string                                                   | No       | Customer's email address                              |
+| `address`               | Address                                                  | No       | Customer's primary address                            |
+| `preference`            | Preference                                               | No       | Customer's communication and marketing preferences    |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | No       | Initial tags to apply to the customer                 |
+| `notes`                 | Array(Note)                                              | No       | Initial notes about the customer                      |
 
 #### 💡 Example Request:
 
@@ -213,7 +192,30 @@ Registers a new customer with basic details, preferences, and optionally initial
 
 #### 📌 Return Value:
 
-Returns the created `Customer` object.
+| Field Name              | Type                                                     | Description                                                 |
+|-------------------------|----------------------------------------------------------|-------------------------------------------------------------|
+| `id`                    | string                                                   | Unique identifier for the customer                          |
+| `first_name`            | string                                                   | Customer's first name                                       |
+| `last_name`             | string                                                   | Customer's last name                                        |
+| `avatar`                | string                                                   | URL to the customer's profile picture                       |
+| `phone`                 | string                                                   | Customer's phone number                                     |
+| `email`                 | string                                                   | Customer's email address                                    |
+| `address`               | Array(Address)                                           | List of customer's addresses                                |
+| `status`                | Status                                                   | Current status of the customer                              |
+| `color_code`            | string                                                   | Color code for visual identification in the UI              |
+| `source`                | string                                                   | How the customer was acquired                               |
+| `last_appointment_date` | Timestamp                                                | When the customer had their last appointment                |
+| `next_appointment_date` | Timestamp                                                | When the customer's next appointment is scheduled           |
+| `created_by`            | string                                                   | ID of the staff member who created this customer            |
+| `created_time`          | Timestamp                                                | When this customer was created                              |
+| `last_updated_by`       | string                                                   | ID of the staff member who last modified this customer      |
+| `last_updated_time`     | Timestamp                                                | When this customer was last modified                        |
+| `preferred_business_id` | string                                                   | ID of the customer's preferred business location            |
+| `company_id`            | string                                                   | ID of the company this customer belongs to                  |
+| `notes`                 | Array(Note)                                              | List of notes about this customer                           |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                       |
+| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired |
+| `preference`            | Preference                                               | Customer's communication and marketing preferences          |
 
 #### ⚠️ Error Codes:
 
@@ -246,7 +248,30 @@ Retrieves detailed information about a specific customer, including preferences,
 
 #### 📌 Return Value:
 
-Returns the complete `Customer` object.
+| Field Name              | Type                                                     | Description                                                 |
+|-------------------------|----------------------------------------------------------|-------------------------------------------------------------|
+| `id`                    | string                                                   | Unique identifier for the customer                          |
+| `first_name`            | string                                                   | Customer's first name                                       |
+| `last_name`             | string                                                   | Customer's last name                                        |
+| `avatar`                | string                                                   | URL to the customer's profile picture                       |
+| `phone`                 | string                                                   | Customer's phone number                                     |
+| `email`                 | string                                                   | Customer's email address                                    |
+| `address`               | Array(Address)                                           | List of customer's addresses                                |
+| `status`                | Status                                                   | Current status of the customer                              |
+| `color_code`            | string                                                   | Color code for visual identification in the UI              |
+| `source`                | string                                                   | How the customer was acquired                               |
+| `last_appointment_date` | Timestamp                                                | When the customer had their last appointment                |
+| `next_appointment_date` | Timestamp                                                | When the customer's next appointment is scheduled           |
+| `created_by`            | string                                                   | ID of the staff member who created this customer            |
+| `created_time`          | Timestamp                                                | When this customer was created                              |
+| `last_updated_by`       | string                                                   | ID of the staff member who last modified this customer      |
+| `last_updated_time`     | Timestamp                                                | When this customer was last modified                        |
+| `preferred_business_id` | string                                                   | ID of the customer's preferred business location            |
+| `company_id`            | string                                                   | ID of the company this customer belongs to                  |
+| `notes`                 | Array(Note)                                              | List of notes about this customer                           |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                       |
+| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired |
+| `preference`            | Preference                                               | Customer's communication and marketing preferences          |
 
 #### ⚠️ Error Codes:
 
@@ -273,23 +298,46 @@ Updates an existing customer's information, including basic details, preferences
 
 #### 🔧 Request Parameters:
 
-| Field Name              | Type        | Required | Description                                           |
-|-------------------------|-------------|----------|-------------------------------------------------------|
-| `id`                    | string      | Yes      | Unique identifier of the customer to update           |
-| `company_id`            | string      | Yes      | ID of the company that owns the customer              |
-| `preferred_business_id` | string      | No       | ID of the business location preferred by the customer |
-| `avatar_path`           | string      | No       | URL to the customer's profile picture                 |
-| `first_name`            | string      | No       | Customer's first name                                 |
-| `last_name`             | string      | No       | Customer's last name                                  |
-| `phone`                 | string      | No       | Customer's phone number                               |
-| `email`                 | string      | No       | Customer's email address                              |
-| `address`               | Address     | No       | Customer's primary address                            |
-| `tags`                  | Array(Tag)  | No       | Tags to apply to the customer                         |
-| `notes`                 | Array(Note) | No       | Notes about the customer                              |
+| Field Name              | Type                                                     | Required | Description                                           |
+|-------------------------|----------------------------------------------------------|----------|-------------------------------------------------------|
+| `id`                    | string                                                   | Yes      | Unique identifier of the customer to update           |
+| `company_id`            | string                                                   | Yes      | ID of the company that owns the customer              |
+| `preferred_business_id` | string                                                   | No       | ID of the business location preferred by the customer |
+| `avatar_path`           | string                                                   | No       | URL to the customer's profile picture                 |
+| `first_name`            | string                                                   | No       | Customer's first name                                 |
+| `last_name`             | string                                                   | No       | Customer's last name                                  |
+| `phone`                 | string                                                   | No       | Customer's phone number                               |
+| `email`                 | string                                                   | No       | Customer's email address                              |
+| `address`               | Address                                                  | No       | Customer's primary address                            |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | No       | Tags to apply to the customer                         |
+| `notes`                 | Array(Note)                                              | No       | Notes about the customer                              |
 
 #### 📌 Return Value:
 
-Returns the updated `Customer` object.
+| Field Name              | Type                                                     | Description                                                 |
+|-------------------------|----------------------------------------------------------|-------------------------------------------------------------|
+| `id`                    | string                                                   | Unique identifier for the customer                          |
+| `first_name`            | string                                                   | Customer's first name                                       |
+| `last_name`             | string                                                   | Customer's last name                                        |
+| `avatar`                | string                                                   | URL to the customer's profile picture                       |
+| `phone`                 | string                                                   | Customer's phone number                                     |
+| `email`                 | string                                                   | Customer's email address                                    |
+| `address`               | Array(Address)                                           | List of customer's addresses                                |
+| `status`                | Status                                                   | Current status of the customer                              |
+| `color_code`            | string                                                   | Color code for visual identification in the UI              |
+| `source`                | string                                                   | How the customer was acquired                               |
+| `last_appointment_date` | Timestamp                                                | When the customer had their last appointment                |
+| `next_appointment_date` | Timestamp                                                | When the customer's next appointment is scheduled           |
+| `created_by`            | string                                                   | ID of the staff member who created this customer            |
+| `created_time`          | Timestamp                                                | When this customer was created                              |
+| `last_updated_by`       | string                                                   | ID of the staff member who last modified this customer      |
+| `last_updated_time`     | Timestamp                                                | When this customer was last modified                        |
+| `preferred_business_id` | string                                                   | ID of the customer's preferred business location            |
+| `company_id`            | string                                                   | ID of the company this customer belongs to                  |
+| `notes`                 | Array(Note)                                              | List of notes about this customer                           |
+| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                       |
+| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired |
+| `preference`            | Preference                                               | Customer's communication and marketing preferences          |
 
 #### ⚠️ Error Codes:
 
@@ -335,7 +383,10 @@ Lists customers matching the specified criteria, supporting pagination and filte
 
 #### 📌 Return Value:
 
-Returns paginated results and customer list.
+| Field Name        | Type            | Description                                     |
+|-------------------|-----------------|-------------------------------------------------|
+| `next_page_token` | string          | Token for retrieving the next page of results   |
+| `customers`       | Array(Customer) | List of customers matching the request criteria |
 
 #### ⚠️ Error Code:
 
@@ -366,7 +417,9 @@ Generates a secure link for adding customer card-on-file information.
 
 #### 📌 Return Value:
 
-Returns a secure URL valid for 24 hours.
+| Field Name | Type   | Description                                    |
+|------------|--------|------------------------------------------------|
+| `link`     | string | Secure URL for adding card-on-file information |
 
 #### ⚠️ Error Codes:
 
@@ -399,7 +452,9 @@ Adds new notes to a customer's profile.
 
 #### 📌 Return Value:
 
-Returns the newly created notes with generated IDs.
+| Field Name | Type        | Description                        |
+|------------|-------------|------------------------------------|
+| `notes`    | Array(Note) | Notes that were successfully added |
 
 #### ⚠️ Error Codes:
 
@@ -432,7 +487,10 @@ Retrieves a paginated list of notes for a specific customer.
 
 #### 📌 Return Value:
 
-Returns a list of notes in reverse chronological order.
+| Field Name        | Type        | Description                                   |
+|-------------------|-------------|-----------------------------------------------|
+| `next_page_token` | string      | Token for retrieving the next page of results |
+| `notes`           | Array(Note) | List of notes for the customer                |
 
 #### ⚠️ Error Codes:
 
@@ -458,14 +516,16 @@ Adds new tags to a customer's profile.
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type       | Required | Description                 |
-|------------|------------|----------|-----------------------------|
-| `id`       | string     | Yes      | Customer ID to add tags to  |
-| `tags`     | Array(Tag) | Yes      | Tags to add to the customer |
+| Field Name | Type                                                     | Required | Description                 |
+|------------|----------------------------------------------------------|----------|-----------------------------|
+| `id`       | string                                                   | Yes      | Customer ID to add tags to  |
+| `tags`     | Array([CustomerTag](./setting_service.md#4-customertag)) | Yes      | Tags to add to the customer |
 
 #### 📌 Return Value:
 
-Returns the newly created tags with generated IDs.
+| Field Name | Type                                                     | Description                       |
+|------------|----------------------------------------------------------|-----------------------------------|
+| `tags`     | Array([CustomerTag](./setting_service.md#4-customertag)) | Tags that were successfully added |
 
 #### ⚠️ Error Codes:
 
@@ -497,7 +557,9 @@ Retrieves all tags associated with a specific customer.
 
 #### 📌 Return Value:
 
-Returns a list of tags associated with the customer.
+| Field Name | Type                                                     | Description                               |
+|------------|----------------------------------------------------------|-------------------------------------------|
+| `tags`     | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags associated with the customer |
 
 #### ⚠️ Error Codes:
 
@@ -605,7 +667,7 @@ TODO
 | How to verify if a customer exists?                       | Use `GetCustomer` to check if the customer ID returns a valid response                                                         |
 | Can I create multiple customers at once?                  | Currently only single customer creation is supported. Use batch processing if needed                                           |
 | How to filter customers by update time?                   | Use `ListCustomers` with `filter.last_updated_time`                                                                            |
-| Why does creating a customer return “resource exhausted”? | The company may have reached the maximum allowed customer count. Clean up unused customers or contact admin to increase quota. |
+| Why does creating a customer return "resource exhausted"? | The company may have reached the maximum allowed customer count. Clean up unused customers or contact admin to increase quota. |
 | How to manage customer tags and notes effectively?        | Use `AppendCustomerTags` and `AppendCustomerNotes` to add new entries                                                          |
 
 ---

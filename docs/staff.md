@@ -118,12 +118,16 @@ Retrieves detailed information about a specific staff member.
 
 #### 📌 Return Value:
 
-Returns the complete `Staff` object.
+| Field Name | Type    | Description                |
+|------------|---------|----------------------------|
+| `staff`    | `Staff` | The retrieved staff object |
 
 #### ⚠️ Error Codes:
 
-- `NOT_FOUND`: Specified staff ID does not exist.
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description                       |
+|---------------------|-----------------------------------|
+| `NOT_FOUND`         | Specified staff ID does not exist |
+| `PERMISSION_DENIED` | Permission denied                 |
 
 ---
 
@@ -154,11 +158,16 @@ reporting purposes.
 
 #### 📌 Return Value:
 
-Returns a paginated list of staff members.
+| Field Name        | Type           | Description                             |
+|-------------------|----------------|-----------------------------------------|
+| `next_page_token` | string         | Token for retrieving the next page      |
+| `staffs`          | Array(`Staff`) | List of staff members matching criteria |
 
 #### ⚠️ Error Code:
 
-- `PERMISSION_DENIED`: Permission denied.
+| Error Code          | Description       |
+|---------------------|-------------------|
+| `PERMISSION_DENIED` | Permission denied |
 
 ---
 
@@ -272,7 +281,7 @@ TODO
 |----------------------------------------------------|-------------------------------------------------------------------|
 | How can I verify if a staff member exists?         | Use `GetStaff` to check if the staff ID returns a valid response. |
 | Can I list all staff members at once?              | No. Results are paginated. Use `page_token` to fetch next set.    |
-| Why does listing staff return “permission denied”? | Ensure you have the correct access rights for this operation.     |
+| Why does listing staff return "permission denied"? | Ensure you have the correct access rights for this operation.     |
 | How to handle large result sets efficiently?       | Use pagination via `page_size` and `page_token`.                  |
 
 ---
@@ -293,4 +302,3 @@ TODO
 - [staff.proto](../moego/business/staff/v1/staff.proto)
 - [staff_service.proto](../moego/business/staff/v1/staff_service.proto)
 - [pagination.proto](../moego/common/v1/pagination.proto)
-
