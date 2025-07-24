@@ -22,13 +22,13 @@ const (
 	SettingService_ListPetCodes_FullMethodName                = "/moego.business.setting.v1.SettingService/ListPetCodes"
 	SettingService_ListCustomerTags_FullMethodName            = "/moego.business.setting.v1.SettingService/ListCustomerTags"
 	SettingService_ListCustomerReferralSources_FullMethodName = "/moego.business.setting.v1.SettingService/ListCustomerReferralSources"
+	SettingService_ListLeadsLifeCycles_FullMethodName         = "/moego.business.setting.v1.SettingService/ListLeadsLifeCycles"
+	SettingService_ListLeadsActionStatus_FullMethodName       = "/moego.business.setting.v1.SettingService/ListLeadsActionStatus"
 	SettingService_GetService_FullMethodName                  = "/moego.business.setting.v1.SettingService/GetService"
 	SettingService_ListServices_FullMethodName                = "/moego.business.setting.v1.SettingService/ListServices"
 	SettingService_CreateService_FullMethodName               = "/moego.business.setting.v1.SettingService/CreateService"
 	SettingService_UpdateService_FullMethodName               = "/moego.business.setting.v1.SettingService/UpdateService"
 	SettingService_ListLodgings_FullMethodName                = "/moego.business.setting.v1.SettingService/ListLodgings"
-	SettingService_ListLeadsLifeCycles_FullMethodName         = "/moego.business.setting.v1.SettingService/ListLeadsLifeCycles"
-	SettingService_ListLeadsActionStatus_FullMethodName       = "/moego.business.setting.v1.SettingService/ListLeadsActionStatus"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -66,6 +66,22 @@ type SettingServiceClient interface {
 	// Returns all active referral sources for the specified company.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerReferralSources(ctx context.Context, in *ListCustomerReferralSourcesRequest, opts ...grpc.CallOption) (*ListCustomerReferralSourcesResponse, error)
+	// Lists all available lead lifecycle stages for a company.
+	//
+	// Lifecycle stages help track the progression of leads through the sales pipeline.
+	//
+	// Returns all active lifecycle stages for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	ListLeadsLifeCycles(ctx context.Context, in *ListLeadsLifeCyclesRequest, opts ...grpc.CallOption) (*ListLeadsLifeCyclesResponse, error)
+	// Lists all available lead action statuses for a company.
+	//
+	// Action statuses help track what actions need to be taken on leads.
+	//
+	// Returns all active action statuses for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	ListLeadsActionStatus(ctx context.Context, in *ListLeadsActionStatusRequest, opts ...grpc.CallOption) (*ListLeadsActionStatusResponse, error)
 	// Gets the details of a specific service.
 	//
 	// Retrieves detailed information about a service identified by its ID.
@@ -108,22 +124,6 @@ type SettingServiceClient interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(ctx context.Context, in *ListLodgingsRequest, opts ...grpc.CallOption) (*ListLodgingsResponse, error)
-	// Lists all available lead lifecycle stages for a company.
-	//
-	// Lifecycle stages help track the progression of leads through the sales pipeline.
-	//
-	// Returns all active lifecycle stages for the specified company.
-	// Returns PERMISSION_DENIED if the caller lacks access rights.
-	// Returns INVALID_ARGUMENT if the request is malformed.
-	ListLeadsLifeCycles(ctx context.Context, in *ListLeadsLifeCyclesRequest, opts ...grpc.CallOption) (*ListLeadsLifeCyclesResponse, error)
-	// Lists all available lead action statuses for a company.
-	//
-	// Action statuses help track what actions need to be taken on leads.
-	//
-	// Returns all active action statuses for the specified company.
-	// Returns PERMISSION_DENIED if the caller lacks access rights.
-	// Returns INVALID_ARGUMENT if the request is malformed.
-	ListLeadsActionStatus(ctx context.Context, in *ListLeadsActionStatusRequest, opts ...grpc.CallOption) (*ListLeadsActionStatusResponse, error)
 }
 
 type settingServiceClient struct {
@@ -158,6 +158,26 @@ func (c *settingServiceClient) ListCustomerReferralSources(ctx context.Context, 
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListCustomerReferralSourcesResponse)
 	err := c.cc.Invoke(ctx, SettingService_ListCustomerReferralSources_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) ListLeadsLifeCycles(ctx context.Context, in *ListLeadsLifeCyclesRequest, opts ...grpc.CallOption) (*ListLeadsLifeCyclesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLeadsLifeCyclesResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListLeadsLifeCycles_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) ListLeadsActionStatus(ctx context.Context, in *ListLeadsActionStatusRequest, opts ...grpc.CallOption) (*ListLeadsActionStatusResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLeadsActionStatusResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListLeadsActionStatus_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -214,26 +234,6 @@ func (c *settingServiceClient) ListLodgings(ctx context.Context, in *ListLodging
 	return out, nil
 }
 
-func (c *settingServiceClient) ListLeadsLifeCycles(ctx context.Context, in *ListLeadsLifeCyclesRequest, opts ...grpc.CallOption) (*ListLeadsLifeCyclesResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListLeadsLifeCyclesResponse)
-	err := c.cc.Invoke(ctx, SettingService_ListLeadsLifeCycles_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *settingServiceClient) ListLeadsActionStatus(ctx context.Context, in *ListLeadsActionStatusRequest, opts ...grpc.CallOption) (*ListLeadsActionStatusResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListLeadsActionStatusResponse)
-	err := c.cc.Invoke(ctx, SettingService_ListLeadsActionStatus_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -269,6 +269,22 @@ type SettingServiceServer interface {
 	// Returns all active referral sources for the specified company.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListCustomerReferralSources(context.Context, *ListCustomerReferralSourcesRequest) (*ListCustomerReferralSourcesResponse, error)
+	// Lists all available lead lifecycle stages for a company.
+	//
+	// Lifecycle stages help track the progression of leads through the sales pipeline.
+	//
+	// Returns all active lifecycle stages for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	ListLeadsLifeCycles(context.Context, *ListLeadsLifeCyclesRequest) (*ListLeadsLifeCyclesResponse, error)
+	// Lists all available lead action statuses for a company.
+	//
+	// Action statuses help track what actions need to be taken on leads.
+	//
+	// Returns all active action statuses for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	// Returns INVALID_ARGUMENT if the request is malformed.
+	ListLeadsActionStatus(context.Context, *ListLeadsActionStatusRequest) (*ListLeadsActionStatusResponse, error)
 	// Gets the details of a specific service.
 	//
 	// Retrieves detailed information about a service identified by its ID.
@@ -311,22 +327,6 @@ type SettingServiceServer interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error)
-	// Lists all available lead lifecycle stages for a company.
-	//
-	// Lifecycle stages help track the progression of leads through the sales pipeline.
-	//
-	// Returns all active lifecycle stages for the specified company.
-	// Returns PERMISSION_DENIED if the caller lacks access rights.
-	// Returns INVALID_ARGUMENT if the request is malformed.
-	ListLeadsLifeCycles(context.Context, *ListLeadsLifeCyclesRequest) (*ListLeadsLifeCyclesResponse, error)
-	// Lists all available lead action statuses for a company.
-	//
-	// Action statuses help track what actions need to be taken on leads.
-	//
-	// Returns all active action statuses for the specified company.
-	// Returns PERMISSION_DENIED if the caller lacks access rights.
-	// Returns INVALID_ARGUMENT if the request is malformed.
-	ListLeadsActionStatus(context.Context, *ListLeadsActionStatusRequest) (*ListLeadsActionStatusResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -346,6 +346,12 @@ func (UnimplementedSettingServiceServer) ListCustomerTags(context.Context, *List
 func (UnimplementedSettingServiceServer) ListCustomerReferralSources(context.Context, *ListCustomerReferralSourcesRequest) (*ListCustomerReferralSourcesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListCustomerReferralSources not implemented")
 }
+func (UnimplementedSettingServiceServer) ListLeadsLifeCycles(context.Context, *ListLeadsLifeCyclesRequest) (*ListLeadsLifeCyclesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLeadsLifeCycles not implemented")
+}
+func (UnimplementedSettingServiceServer) ListLeadsActionStatus(context.Context, *ListLeadsActionStatusRequest) (*ListLeadsActionStatusResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListLeadsActionStatus not implemented")
+}
 func (UnimplementedSettingServiceServer) GetService(context.Context, *GetServiceRequest) (*Service, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetService not implemented")
 }
@@ -360,12 +366,6 @@ func (UnimplementedSettingServiceServer) UpdateService(context.Context, *UpdateS
 }
 func (UnimplementedSettingServiceServer) ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLodgings not implemented")
-}
-func (UnimplementedSettingServiceServer) ListLeadsLifeCycles(context.Context, *ListLeadsLifeCyclesRequest) (*ListLeadsLifeCyclesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListLeadsLifeCycles not implemented")
-}
-func (UnimplementedSettingServiceServer) ListLeadsActionStatus(context.Context, *ListLeadsActionStatusRequest) (*ListLeadsActionStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListLeadsActionStatus not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -438,6 +438,42 @@ func _SettingService_ListCustomerReferralSources_Handler(srv interface{}, ctx co
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SettingServiceServer).ListCustomerReferralSources(ctx, req.(*ListCustomerReferralSourcesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_ListLeadsLifeCycles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLeadsLifeCyclesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListLeadsLifeCycles(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListLeadsLifeCycles_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListLeadsLifeCycles(ctx, req.(*ListLeadsLifeCyclesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_ListLeadsActionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLeadsActionStatusRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListLeadsActionStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListLeadsActionStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListLeadsActionStatus(ctx, req.(*ListLeadsActionStatusRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -532,42 +568,6 @@ func _SettingService_ListLodgings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SettingService_ListLeadsLifeCycles_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListLeadsLifeCyclesRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingServiceServer).ListLeadsLifeCycles(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SettingService_ListLeadsLifeCycles_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingServiceServer).ListLeadsLifeCycles(ctx, req.(*ListLeadsLifeCyclesRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SettingService_ListLeadsActionStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListLeadsActionStatusRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SettingServiceServer).ListLeadsActionStatus(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: SettingService_ListLeadsActionStatus_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SettingServiceServer).ListLeadsActionStatus(ctx, req.(*ListLeadsActionStatusRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -588,6 +588,14 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _SettingService_ListCustomerReferralSources_Handler,
 		},
 		{
+			MethodName: "ListLeadsLifeCycles",
+			Handler:    _SettingService_ListLeadsLifeCycles_Handler,
+		},
+		{
+			MethodName: "ListLeadsActionStatus",
+			Handler:    _SettingService_ListLeadsActionStatus_Handler,
+		},
+		{
 			MethodName: "GetService",
 			Handler:    _SettingService_GetService_Handler,
 		},
@@ -606,14 +614,6 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListLodgings",
 			Handler:    _SettingService_ListLodgings_Handler,
-		},
-		{
-			MethodName: "ListLeadsLifeCycles",
-			Handler:    _SettingService_ListLeadsLifeCycles_Handler,
-		},
-		{
-			MethodName: "ListLeadsActionStatus",
-			Handler:    _SettingService_ListLeadsActionStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1203,15 +1203,15 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\x0eSettingService\x12\xad\x01\n" +
 	"\fListPetCodes\x12..moego.business.setting.v1.ListPetCodesRequest\x1a/.moego.business.setting.v1.ListPetCodesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbd\x01\n" +
 	"\x10ListCustomerTags\x122.moego.business.setting.v1.ListCustomerTagsRequest\x1a3.moego.business.setting.v1.ListCustomerTagsResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\xea\x01\n" +
-	"\x1bListCustomerReferralSources\x12=.moego.business.setting.v1.ListCustomerReferralSourcesRequest\x1a>.moego.business.setting.v1.ListCustomerReferralSourcesResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/v1/setting/companies/{company_id}/customer/referral_sources:list\x12\x98\x01\n" +
+	"\x1bListCustomerReferralSources\x12=.moego.business.setting.v1.ListCustomerReferralSourcesRequest\x1a>.moego.business.setting.v1.ListCustomerReferralSourcesResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/v1/setting/companies/{company_id}/customer/referral_sources:list\x12\xc2\x01\n" +
+	"\x13ListLeadsLifeCycles\x125.moego.business.setting.v1.ListLeadsLifeCyclesRequest\x1a6.moego.business.setting.v1.ListLeadsLifeCyclesResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/setting/companies/{company_id}/leads/life_cycles\x12\xca\x01\n" +
+	"\x15ListLeadsActionStatus\x127.moego.business.setting.v1.ListLeadsActionStatusRequest\x1a8.moego.business.setting.v1.ListLeadsActionStatusResponse\">\x82\xd3\xe4\x93\x028\x126/v1/setting/companies/{company_id}/leads/action_status\x12\x98\x01\n" +
 	"\n" +
 	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
 	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\x9c\x01\n" +
 	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/setting/companies/{company_id}/services\x12\xa1\x01\n" +
 	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}\x12\xa4\x01\n" +
-	"\fListLodgings\x12..moego.business.setting.v1.ListLodgingsRequest\x1a/.moego.business.setting.v1.ListLodgingsResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/setting/companies/{company_id}/lodgings\x12\xc2\x01\n" +
-	"\x13ListLeadsLifeCycles\x125.moego.business.setting.v1.ListLeadsLifeCyclesRequest\x1a6.moego.business.setting.v1.ListLeadsLifeCyclesResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/setting/companies/{company_id}/leads/life_cycles\x12\xca\x01\n" +
-	"\x15ListLeadsActionStatus\x127.moego.business.setting.v1.ListLeadsActionStatusRequest\x1a8.moego.business.setting.v1.ListLeadsActionStatusResponse\">\x82\xd3\xe4\x93\x028\x126/v1/setting/companies/{company_id}/leads/action_statusB\x8a\x01\n" +
+	"\fListLodgings\x12..moego.business.setting.v1.ListLodgingsRequest\x1a/.moego.business.setting.v1.ListLodgingsResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/setting/companies/{company_id}/lodgingsB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -1276,23 +1276,23 @@ var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
 	0,  // 14: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodesRequest
 	2,  // 15: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagsRequest
 	4,  // 16: moego.business.setting.v1.SettingService.ListCustomerReferralSources:input_type -> moego.business.setting.v1.ListCustomerReferralSourcesRequest
-	8,  // 17: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
-	6,  // 18: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
-	9,  // 19: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
-	10, // 20: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
-	11, // 21: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
-	13, // 22: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:input_type -> moego.business.setting.v1.ListLeadsLifeCyclesRequest
-	15, // 23: moego.business.setting.v1.SettingService.ListLeadsActionStatus:input_type -> moego.business.setting.v1.ListLeadsActionStatusRequest
+	13, // 17: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:input_type -> moego.business.setting.v1.ListLeadsLifeCyclesRequest
+	15, // 18: moego.business.setting.v1.SettingService.ListLeadsActionStatus:input_type -> moego.business.setting.v1.ListLeadsActionStatusRequest
+	8,  // 19: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
+	6,  // 20: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
+	9,  // 21: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
+	10, // 22: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
+	11, // 23: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
 	1,  // 24: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodesResponse
 	3,  // 25: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagsResponse
 	5,  // 26: moego.business.setting.v1.SettingService.ListCustomerReferralSources:output_type -> moego.business.setting.v1.ListCustomerReferralSourcesResponse
-	22, // 27: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
-	7,  // 28: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
-	22, // 29: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
-	22, // 30: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
-	12, // 31: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
-	14, // 32: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:output_type -> moego.business.setting.v1.ListLeadsLifeCyclesResponse
-	16, // 33: moego.business.setting.v1.SettingService.ListLeadsActionStatus:output_type -> moego.business.setting.v1.ListLeadsActionStatusResponse
+	14, // 27: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:output_type -> moego.business.setting.v1.ListLeadsLifeCyclesResponse
+	16, // 28: moego.business.setting.v1.SettingService.ListLeadsActionStatus:output_type -> moego.business.setting.v1.ListLeadsActionStatusResponse
+	22, // 29: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
+	7,  // 30: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
+	22, // 31: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
+	22, // 32: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
+	12, // 33: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
 	24, // [24:34] is the sub-list for method output_type
 	14, // [14:24] is the sub-list for method input_type
 	14, // [14:14] is the sub-list for extension type_name

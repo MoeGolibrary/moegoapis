@@ -65,6 +65,33 @@ service SettingService {
     };
   }
 
+
+  // Lists all available lead lifecycle stages for a company.
+  //
+  // Lifecycle stages help track the progression of leads through the sales pipeline.
+  //
+  // Returns all active lifecycle stages for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns INVALID_ARGUMENT if the request is malformed.
+  rpc ListLeadsLifeCycles(ListLeadsLifeCyclesRequest) returns (ListLeadsLifeCyclesResponse) {
+    option (google.api.http) = {
+      get: "/v1/setting/companies/{company_id}/leads/life_cycles"
+    };
+  }
+
+  // Lists all available lead action statuses for a company.
+  //
+  // Action statuses help track what actions need to be taken on leads.
+  //
+  // Returns all active action statuses for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  // Returns INVALID_ARGUMENT if the request is malformed.
+  rpc ListLeadsActionStatus(ListLeadsActionStatusRequest) returns (ListLeadsActionStatusResponse) {
+    option (google.api.http) = {
+      get: "/v1/setting/companies/{company_id}/leads/action_status"
+    };
+  }
+
   // Gets the details of a specific service.
   //
   // Retrieves detailed information about a service identified by its ID.
@@ -133,31 +160,6 @@ service SettingService {
     };
   }
 
-  // Lists all available lead lifecycle stages for a company.
-  //
-  // Lifecycle stages help track the progression of leads through the sales pipeline.
-  //
-  // Returns all active lifecycle stages for the specified company.
-  // Returns PERMISSION_DENIED if the caller lacks access rights.
-  // Returns INVALID_ARGUMENT if the request is malformed.
-  rpc ListLeadsLifeCycles(ListLeadsLifeCyclesRequest) returns (ListLeadsLifeCyclesResponse) {
-    option (google.api.http) = {
-      get: "/v1/setting/companies/{company_id}/leads/life_cycles"
-    };
-  }
-
-  // Lists all available lead action statuses for a company.
-  //
-  // Action statuses help track what actions need to be taken on leads.
-  //
-  // Returns all active action statuses for the specified company.
-  // Returns PERMISSION_DENIED if the caller lacks access rights.
-  // Returns INVALID_ARGUMENT if the request is malformed.
-  rpc ListLeadsActionStatus(ListLeadsActionStatusRequest) returns (ListLeadsActionStatusResponse) {
-    option (google.api.http) = {
-      get: "/v1/setting/companies/{company_id}/leads/action_status"
-    };
-  }
 }
 
 // Request message for listing pet codes.
