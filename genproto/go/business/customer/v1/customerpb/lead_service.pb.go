@@ -482,9 +482,9 @@ const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"\x12PromoteLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"W\n" +
 	"\x13PromoteLeadResponse\x12@\n" +
-	"\bcustomer\x18\x01 \x01(\v2$.moego.business.customer.v1.CustomerR\bcustomer2\xff\x04\n" +
-	"\vLeadService\x12\x80\x01\n" +
-	"\tListLeads\x12,.moego.business.customer.v1.ListLeadsRequest\x1a-.moego.business.customer.v1.ListLeadsResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/leads:list\x12o\n" +
+	"\bcustomer\x18\x01 \x01(\v2$.moego.business.customer.v1.CustomerR\bcustomer2\x82\x05\n" +
+	"\vLeadService\x12\x83\x01\n" +
+	"\tListLeads\x12,.moego.business.customer.v1.ListLeadsRequest\x1a-.moego.business.customer.v1.ListLeadsResponse\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/leads:list\x12o\n" +
 	"\aGetLead\x12*.moego.business.customer.v1.GetLeadRequest\x1a .moego.business.customer.v1.Lead\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/leads/{id}\x12s\n" +
 	"\n" +
 	"CreateLead\x12-.moego.business.customer.v1.CreateLeadRequest\x1a .moego.business.customer.v1.Lead\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/leads\x12x\n" +

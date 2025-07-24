@@ -184,7 +184,7 @@ Returns the updated `Lead` object
 ### 4. List Leads (`ListLeads`)
 
 - **Method**: `ListLeads`
-- **HTTP Method**: GET
+- **HTTP Method**: POST
 - **Path**: `/v1/leads:list`
 
 #### ✅ Functionality:

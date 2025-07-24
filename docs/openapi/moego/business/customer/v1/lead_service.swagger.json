@@ -123,7 +123,7 @@
       }
     },
     "/v1/leads:list": {
-      "get": {
+      "post": {
         "summary": "List leads with pagination and optional filters",
         "description": "Returns a list of leads. Results are paginated and can be filtered.\nReturns an empty list if no leads match the criteria.",
         "operationId": "LeadService_ListLeads",
@@ -143,47 +143,12 @@
         },
         "parameters": [
           {
-            "name": "pagination.pageSize",
-            "description": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500",
-            "in": "query",
-            "required": false,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "pagination.pageToken",
-            "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page.",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "companyId",
-            "description": "ID of the company to list leads for\nRequired. Must be a valid company ID",
-            "in": "query",
+            "name": "body",
+            "in": "body",
             "required": true,
-            "type": "string"
-          },
-          {
-            "name": "filter.lifeCycleId",
-            "description": "ID of the lead's life cycle stage",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "filter.actionStatusId",
-            "description": "ID of the lead's action status",
-            "in": "query",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "filter.mainPhoneNumber",
-            "description": "Main phone number of the lead",
-            "in": "query",
-            "required": false,
-            "type": "string"
+            "schema": {
+              "$ref": "#/definitions/v1ListLeadsRequest"
+            }
           }
         ],
         "tags": [
@@ -832,6 +797,34 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "LifeCycle"
+      }
+    },
+    "v1ListLeadsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list leads for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListLeadsRequestFilter",
+          "title": "Optional filters to apply to the leads list"
+        }
+      },
+      "title": "Request message for listing leads",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ListLeadsRequest"
       }
     },
     "v1ListLeadsRequestFilter": {

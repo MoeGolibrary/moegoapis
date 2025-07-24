@@ -22,7 +22,8 @@ service LeadService {
   // Returns an empty list if no leads match the criteria.
   rpc ListLeads(ListLeadsRequest) returns (ListLeadsResponse) {
     option (google.api.http) = {
-      get: "/v1/leads:list"
+      post: "/v1/leads:list"
+      body: "*"
     };
   }
 
