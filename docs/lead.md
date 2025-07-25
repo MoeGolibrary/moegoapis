@@ -1,5 +1,3 @@
-我已经帮您将文档中的 `ConvertLead` 修改为 `PromoteLead`。以下是更新后的文档：
-
 # Lead API Documentation (`moego.business.customer.v1`)
 
 ## 📌 1. Functional Overview
