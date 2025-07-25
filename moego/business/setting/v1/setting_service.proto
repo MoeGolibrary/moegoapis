@@ -75,7 +75,8 @@ service SettingService {
   // Returns INVALID_ARGUMENT if the request is malformed.
   rpc ListLeadsLifeCycles(ListLeadsLifeCyclesRequest) returns (ListLeadsLifeCyclesResponse) {
     option (google.api.http) = {
-      get: "/v1/setting/companies/{company_id}/leads/life_cycles"
+      post: "/v1/setting/companies/{company_id}/leads/life_cycles"
+      body: "*"
     };
   }
 
@@ -88,7 +89,8 @@ service SettingService {
   // Returns INVALID_ARGUMENT if the request is malformed.
   rpc ListLeadsActionStatus(ListLeadsActionStatusRequest) returns (ListLeadsActionStatusResponse) {
     option (google.api.http) = {
-      get: "/v1/setting/companies/{company_id}/leads/action_status"
+      post: "/v1/setting/companies/{company_id}/leads/action_status"
+      body: "*"
     };
   }
 
@@ -156,7 +158,8 @@ service SettingService {
   // Returns NOT_FOUND if the company does not exist.
   rpc ListLodgings(ListLodgingsRequest) returns (ListLodgingsResponse) {
     option (google.api.http) = {
-      get: "/v1/setting/companies/{company_id}/lodgings"
+      post: "/v1/setting/companies/{company_id}/lodgings"
+      body: "*"
     };
   }
 

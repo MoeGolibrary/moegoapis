@@ -99,7 +99,7 @@
       }
     },
     "/v1/setting/companies/{companyId}/leads/action_status": {
-      "get": {
+      "post": {
         "summary": "Lists all available lead action statuses for a company.",
         "description": "Action statuses help track what actions need to be taken on leads.\n\nReturns all active action statuses for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.",
         "operationId": "SettingService_ListLeadsActionStatus",
@@ -124,6 +124,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListLeadsActionStatusBody"
+            }
           }
         ],
         "tags": [
@@ -132,7 +140,7 @@
       }
     },
     "/v1/setting/companies/{companyId}/leads/life_cycles": {
-      "get": {
+      "post": {
         "summary": "Lists all available lead lifecycle stages for a company.",
         "description": "Lifecycle stages help track the progression of leads through the sales pipeline.\n\nReturns all active lifecycle stages for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.",
         "operationId": "SettingService_ListLeadsLifeCycles",
@@ -157,6 +165,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListLeadsLifeCyclesBody"
+            }
           }
         ],
         "tags": [
@@ -165,7 +181,7 @@
       }
     },
     "/v1/setting/companies/{companyId}/lodgings": {
-      "get": {
+      "post": {
         "summary": "Lists all available lodgings for a company.",
         "description": "Lodgings represent different types of accommodation options for pet boarding services.\n\nReturns all active lodgings for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.\nReturns INVALID_ARGUMENT if the request is malformed.\nReturns NOT_FOUND if the company does not exist.",
         "operationId": "SettingService_ListLodgings",
@@ -190,6 +206,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListLodgingsBody"
+            }
           }
         ],
         "tags": [
@@ -497,6 +521,36 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListCustomerReferralSourcesRequest"
+      }
+    },
+    "SettingServiceListLeadsActionStatusBody": {
+      "type": "object",
+      "description": "Request message for listing lead action statuses.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLeadsActionStatusRequest"
+      }
+    },
+    "SettingServiceListLeadsLifeCyclesBody": {
+      "type": "object",
+      "description": "Request message for listing lead lifecycle stages.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLeadsLifeCyclesRequest"
+      }
+    },
+    "SettingServiceListLodgingsBody": {
+      "type": "object",
+      "description": "Request message for listing lodgings.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLodgingsRequest"
       }
     },
     "SettingServiceListPetCodesBody": {

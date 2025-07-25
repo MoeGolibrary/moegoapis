@@ -1199,19 +1199,19 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"q\n" +
 	"\x1dListLeadsActionStatusResponse\x12P\n" +
-	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses2\xb3\x0e\n" +
+	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses2\xbc\x0e\n" +
 	"\x0eSettingService\x12\xad\x01\n" +
 	"\fListPetCodes\x12..moego.business.setting.v1.ListPetCodesRequest\x1a/.moego.business.setting.v1.ListPetCodesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xbd\x01\n" +
 	"\x10ListCustomerTags\x122.moego.business.setting.v1.ListCustomerTagsRequest\x1a3.moego.business.setting.v1.ListCustomerTagsResponse\"@\x82\xd3\xe4\x93\x02::\x01*\"5/v1/setting/companies/{company_id}/customer/tags:list\x12\xea\x01\n" +
-	"\x1bListCustomerReferralSources\x12=.moego.business.setting.v1.ListCustomerReferralSourcesRequest\x1a>.moego.business.setting.v1.ListCustomerReferralSourcesResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/v1/setting/companies/{company_id}/customer/referral_sources:list\x12\xc2\x01\n" +
-	"\x13ListLeadsLifeCycles\x125.moego.business.setting.v1.ListLeadsLifeCyclesRequest\x1a6.moego.business.setting.v1.ListLeadsLifeCyclesResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/setting/companies/{company_id}/leads/life_cycles\x12\xca\x01\n" +
-	"\x15ListLeadsActionStatus\x127.moego.business.setting.v1.ListLeadsActionStatusRequest\x1a8.moego.business.setting.v1.ListLeadsActionStatusResponse\">\x82\xd3\xe4\x93\x028\x126/v1/setting/companies/{company_id}/leads/action_status\x12\x98\x01\n" +
+	"\x1bListCustomerReferralSources\x12=.moego.business.setting.v1.ListCustomerReferralSourcesRequest\x1a>.moego.business.setting.v1.ListCustomerReferralSourcesResponse\"L\x82\xd3\xe4\x93\x02F:\x01*\"A/v1/setting/companies/{company_id}/customer/referral_sources:list\x12\xc5\x01\n" +
+	"\x13ListLeadsLifeCycles\x125.moego.business.setting.v1.ListLeadsLifeCyclesRequest\x1a6.moego.business.setting.v1.ListLeadsLifeCyclesResponse\"?\x82\xd3\xe4\x93\x029:\x01*\"4/v1/setting/companies/{company_id}/leads/life_cycles\x12\xcd\x01\n" +
+	"\x15ListLeadsActionStatus\x127.moego.business.setting.v1.ListLeadsActionStatusRequest\x1a8.moego.business.setting.v1.ListLeadsActionStatusResponse\"A\x82\xd3\xe4\x93\x02;:\x01*\"6/v1/setting/companies/{company_id}/leads/action_status\x12\x98\x01\n" +
 	"\n" +
 	"GetService\x12,.moego.business.setting.v1.GetServiceRequest\x1a\".moego.business.setting.v1.Service\"8\x82\xd3\xe4\x93\x022\x120/v1/setting/companies/{company_id}/services/{id}\x12\xac\x01\n" +
 	"\fListServices\x12..moego.business.setting.v1.ListServicesRequest\x1a/.moego.business.setting.v1.ListServicesResponse\";\x82\xd3\xe4\x93\x025:\x01*\"0/v1/setting/companies/{company_id}/services:list\x12\x9c\x01\n" +
 	"\rCreateService\x12/.moego.business.setting.v1.CreateServiceRequest\x1a\".moego.business.setting.v1.Service\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/setting/companies/{company_id}/services\x12\xa1\x01\n" +
-	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}\x12\xa4\x01\n" +
-	"\fListLodgings\x12..moego.business.setting.v1.ListLodgingsRequest\x1a/.moego.business.setting.v1.ListLodgingsResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/setting/companies/{company_id}/lodgingsB\x8a\x01\n" +
+	"\rUpdateService\x12/.moego.business.setting.v1.UpdateServiceRequest\x1a\".moego.business.setting.v1.Service\";\x82\xd3\xe4\x93\x025:\x01*\x1a0/v1/setting/companies/{company_id}/services/{id}\x12\xa7\x01\n" +
+	"\fListLodgings\x12..moego.business.setting.v1.ListLodgingsRequest\x1a/.moego.business.setting.v1.ListLodgingsResponse\"6\x82\xd3\xe4\x93\x020:\x01*\"+/v1/setting/companies/{company_id}/lodgingsB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (

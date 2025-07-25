@@ -445,7 +445,7 @@ Retrieves all active customer tags defined for the company.
 ### 7. List Lodgings (`ListLodgings`)
 
 - **Method**: `ListLodgings`
-- **HTTP Method**: GET
+- **HTTP Method**: POST
 - **Path**: `/v1/setting/companies/{company_id}/lodgings`
 
 #### ✅ Functionality:
@@ -517,7 +517,7 @@ Lists all available customer referral sources for a company.
 ### 9. List Leads Life Cycles (`ListLeadsLifeCycles`)
 
 - **Method**: `ListLeadsLifeCycles`
-- **HTTP Method**: GET
+- **HTTP Method**: POST
 - **Path**: `/v1/setting/companies/{company_id}/leads/life_cycles`
 
 #### ✅ Functionality:
@@ -553,7 +553,7 @@ Returns a list of lead life cycles.
 ### 10. List Leads Action Status (`ListLeadsActionStatus`)
 
 - **Method**: `ListLeadsActionStatus`
-- **HTTP Method**: GET
+- **HTTP Method**: POST
 - **Path**: `/v1/setting/companies/{company_id}/leads/action_status`
 
 #### ✅ Functionality:
