@@ -34,29 +34,30 @@ This API provides operations for:
 Represents a scheduled pet service booking. An appointment can include multiple pets and services, and tracks the entire
 lifecycle from creation to completion.
 
-| Field Name            | Type                    | Description                                                       |
-|-----------------------|-------------------------|-------------------------------------------------------------------|
-| `id`                  | string                  | Unique identifier of the appointment                              |
-| `business_id`         | string                  | Business location where the service will be performed             |
-| `customer_id`         | string                  | Customer who booked the appointment                               |
-| `address`             | Address                 | Service location details (required for home service appointments) |
-| `duration`            | Interval                | Start and end time of the appointment                             |
-| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                              |
-| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
-| `ticket_comment`      | string                  | Optional notes about the appointment                              |
-| `color_code`          | string                  | UI display color in hex format                                    |
-| `order_id`            | string                  | Identifier of the associated payment order                        |
-| `total_amount`        | Money                   | Total cost for all services                                       |
-| `paid_amount`         | Money                   | Amount received from customer                                     |
-| `refund_amount`       | Money                   | Amount returned to customer                                       |
-| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
-| `created_by`          | string                  | Identifier of the appointment creator                             |
-| `created_time`        | timestamp               | When the appointment was created                                  |
-| `last_updated_by`     | string                  | Identifier of the last modifier                                   |
-| `last_updated_time`   | timestamp               | When the appointment was last modified                            |
-| `check_in_time`       | timestamp               | When the customer arrived with their pet                          |
-| `check_out_time`      | timestamp               | When the service was completed and the pet picked up              |
-| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment           |
+| Field Name            | Type                    | Description                                                             |
+|-----------------------|-------------------------|-------------------------------------------------------------------------|
+| `id`                  | string                  | Unique identifier of the appointment                                    |
+| `business_id`         | string                  | Business location where the service will be performed                   |
+| `customer_id`         | string                  | Customer who booked the appointment                                     |
+| `address`             | Address                 | Service location details (required for home service appointments)       |
+| `duration`            | Interval                | Start and end time of the appointment                                   |
+| `pet_service_details` | Array(PetServiceDetail) | List of services booked for each pet                                    |
+| `status`              | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.             |
+| `ticket_comment`      | string                  | Optional notes about the appointment                                    |
+| `color_code`          | string                  | UI display color in hex format                                          |
+| `order_id`            | string                  | Identifier of the associated payment order                              |
+| `total_amount`        | Money                   | Total cost for all services                                             |
+| `paid_amount`         | Money                   | Amount received from customer                                           |
+| `refund_amount`       | Money                   | Amount returned to customer                                             |
+| `payment_status`      | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                    |
+| `created_by`          | string                  | Identifier of the appointment creator                                   |
+| `created_time`        | timestamp               | When the appointment was created                                        |
+| `last_updated_by`     | string                  | Identifier of the last modifier                                         |
+| `last_updated_time`   | timestamp               | When the appointment was last modified                                  |
+| `check_in_time`       | timestamp               | When the customer arrived with their pet                                |
+| `check_out_time`      | timestamp               | When the service was completed and the pet picked up                    |
+| `booking_request_id`  | string (optional)       | The booking request ID associated with this appointment                 |
+| `raw_id`              | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users. |
 
 #### Enum Definitions
 

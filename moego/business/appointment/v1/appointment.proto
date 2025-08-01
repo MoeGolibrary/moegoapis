@@ -124,4 +124,9 @@ message Appointment {
 
   // string, The booking request id associated with this appointment.
   optional string booking_request_id = 21;
+
+  // int64, The raw numeric ID of the appointment.
+  // This field is restricted and only populated for API consumers
+  // with specific permissions. For all other users, this field will be 0.
+  optional int64 raw_id = 22;
 }

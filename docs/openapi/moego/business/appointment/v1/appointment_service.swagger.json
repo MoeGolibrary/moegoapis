@@ -1019,6 +1019,12 @@
           "type": "string",
           "x-nullable": true,
           "description": "string, The booking request id associated with this appointment."
+        },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "x-nullable": true,
+          "description": "int64, The raw numeric ID of the appointment.\nThis field is restricted and only populated for API consumers\nwith specific permissions. For all other users, this field will be 0."
         }
       },
       "description": "The appointment object represents a scheduled pet service booking. When an appointment is created,\nit will transition through various states from unconfirmed to finished. Each appointment is associated\nwith exactly one customer and one business location, but can include multiple pets and services.\nThe appointment tracks both the service status and payment status throughout its lifecycle.",
