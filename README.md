@@ -40,7 +40,8 @@ notifications.
 
 ### 🔐 Authentication & Authorization
 
-- [Authentication](moego/auth/README.md): User/system authentication mechanisms.
+- [Authentication](./moego/auth/README.md): An overview of authentication methods.
+- [API Key](./moego/auth/apikey/README.md): Details on how to use API keys for authentication.
 
 ### 👥 Customer & Pet Management
 
