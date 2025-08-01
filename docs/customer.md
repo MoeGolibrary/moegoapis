@@ -685,6 +685,6 @@ TODO
 
 ## 📎 10. Related File References
 
-- [pagination.md](../docs/common/address.md)
+- [pagination.md](../docs/common/pagination.md)
 - [customer_service.proto](../moego/business/customer/v1/customer_service.proto)
 - [customer.proto](../moego/business/customer/v1/customer.proto)
