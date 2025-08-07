@@ -32,30 +32,31 @@ Represents a client who uses your services. A customer can have multiple pets, a
 are the core entity in the pet service business and are used throughout the system for booking appointments, managing
 pets, and tracking service history.
 
-| Field Name              | Type                                                     | Description                                                           |
-|-------------------------|----------------------------------------------------------|-----------------------------------------------------------------------|
-| `id`                    | string                                                   | Unique identifier                                                     |
-| `first_name`            | string                                                   | Customer's first name                                                 |
-| `last_name`             | string                                                   | Customer's last name                                                  |
-| `avatar`                | string                                                   | URL to the customer's profile picture                                 |
-| `phone`                 | string                                                   | Customer's phone number. Must be in E.164 format (e.g., +12125551234) |
-| `email`                 | string                                                   | Customer's email address. Must be valid                               |
-| `address`               | Array(Address)                                           | List of customer's addresses                                          |
-| `status`                | Status                                                   | Current status of the customer                                        |
-| `color_code`            | string                                                   | Color code for visual identification in the UI                        |
-| `source`                | string                                                   | How the customer was acquired                                         |
-| `last_appointment_date` | Timestamp                                                | When the customer had their last appointment                          |
-| `next_appointment_date` | Timestamp                                                | When the customer's next appointment is scheduled                     |
-| `created_by`            | string                                                   | ID of the staff member who created this customer                      |
-| `created_time`          | Timestamp                                                | When this customer was created                                        |
-| `last_updated_by`       | string                                                   | ID of the staff member who last modified this customer                |
-| `last_updated_time`     | Timestamp                                                | When this customer was last modified                                  |
-| `preferred_business_id` | string                                                   | ID of the customer's preferred business location                      |
-| `company_id`            | string                                                   | ID of the company this customer belongs to                            |
-| `notes`                 | Array(Note)                                              | List of notes about this customer                                     |
-| `tags`                  | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                                 |
-| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired           |
-| `preference`            | Preference                                               | Customer's communication and marketing preferences                    |
+| Field Name                  | Type                                                     | Description                                                           |
+|-----------------------------|----------------------------------------------------------|-----------------------------------------------------------------------|
+| `id`                        | string                                                   | Unique identifier                                                     |
+| `first_name`                | string                                                   | Customer's first name                                                 |
+| `last_name`                 | string                                                   | Customer's last name                                                  |
+| `avatar`                    | string                                                   | URL to the customer's profile picture                                 |
+| `phone`                     | string                                                   | Customer's phone number. Must be in E.164 format (e.g., +12125551234) |
+| `email`                     | string                                                   | Customer's email address. Must be valid                               |
+| `address`                   | Array(Address)                                           | List of customer's addresses                                          |
+| `status`                    | Status                                                   | Current status of the customer                                        |
+| `color_code`                | string                                                   | Color code for visual identification in the UI                        |
+| `source`                    | string                                                   | How the customer was acquired                                         |
+| `last_appointment_date`     | Timestamp                                                | When the customer had their last appointment                          |
+| `next_appointment_date`     | Timestamp                                                | When the customer's next appointment is scheduled                     |
+| `created_by`                | string                                                   | ID of the staff member who created this customer                      |
+| `created_time`              | Timestamp                                                | When this customer was created                                        |
+| `last_updated_by`           | string                                                   | ID of the staff member who last modified this customer                |
+| `last_updated_time`         | Timestamp                                                | When this customer was last modified                                  |
+| `preferred_business_id`     | string                                                   | ID of the customer's preferred business location                      |
+| `company_id`                | string                                                   | ID of the company this customer belongs to                            |
+| `notes`                     | Array(Note)                                              | List of notes about this customer                                     |
+| `tags`                      | Array([CustomerTag](./setting_service.md#4-customertag)) | List of tags applied to this customer                                 |
+| `referral_source`           | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired           |
+| `preference`                | Preference                                               | Customer's communication and marketing preferences                    |
+| `upcoming_appointments_url` | string                                                   | URL to a page where the customer can view their upcoming appointments |
 
 ### 2. Note
 

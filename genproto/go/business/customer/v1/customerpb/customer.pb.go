@@ -137,9 +137,11 @@ type Customer struct {
 	// The source or channel through which a customer was acquired.
 	ReferralSource *settingpb.ReferralSource `protobuf:"bytes,21,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
 	// Preferences related to communication and marketing.
-	Preference    *Customer_Preference `protobuf:"bytes,22,opt,name=preference,proto3" json:"preference,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Preference *Customer_Preference `protobuf:"bytes,22,opt,name=preference,proto3" json:"preference,omitempty"`
+	// upcoming_appointments_url is a URL to the customer's upcoming appointments.
+	UpcomingAppointmentsUrl string `protobuf:"bytes,23,opt,name=upcoming_appointments_url,json=upcomingAppointmentsUrl,proto3" json:"upcoming_appointments_url,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -326,6 +328,13 @@ func (x *Customer) GetPreference() *Customer_Preference {
 	return nil
 }
 
+func (x *Customer) GetUpcomingAppointmentsUrl() string {
+	if x != nil {
+		return x.UpcomingAppointmentsUrl
+	}
+	return ""
+}
+
 // Note represents a comment or observation about a customer.
 // Notes help track important customer information, preferences, and history.
 type Customer_Note struct {
@@ -482,7 +491,7 @@ var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\x1a(moego/business/setting/v1/customer.proto\"\xfa\v\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1dmoego/common/v1/address.proto\x1a(moego/business/setting/v1/customer.proto\"\xb6\f\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -512,7 +521,8 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x0freferral_source\x18\x15 \x01(\v2).moego.business.setting.v1.ReferralSourceR\x0ereferralSource\x12O\n" +
 	"\n" +
 	"preference\x18\x16 \x01(\v2/.moego.business.customer.v1.Customer.PreferenceR\n" +
-	"preference\x1a\x9a\x01\n" +
+	"preference\x12:\n" +
+	"\x19upcoming_appointments_url\x18\x17 \x01(\tR\x17upcomingAppointmentsUrl\x1a\x9a\x01\n" +
 	"\x04Note\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04note\x18\x02 \x01(\tR\x04note\x12&\n" +

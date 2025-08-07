@@ -141,4 +141,7 @@ message Customer {
 
   // Preferences related to communication and marketing.
   Preference preference = 22;
+
+  // URL to a page where the customer can view their upcoming appointments
+  string upcoming_appointments_url = 23;
 }
