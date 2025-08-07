@@ -138,7 +138,7 @@ type Customer struct {
 	ReferralSource *settingpb.ReferralSource `protobuf:"bytes,21,opt,name=referral_source,json=referralSource,proto3" json:"referral_source,omitempty"`
 	// Preferences related to communication and marketing.
 	Preference *Customer_Preference `protobuf:"bytes,22,opt,name=preference,proto3" json:"preference,omitempty"`
-	// upcoming_appointments_url is a URL to the customer's upcoming appointments.
+	// URL to a page where the customer can view their upcoming appointments
 	UpcomingAppointmentsUrl string `protobuf:"bytes,23,opt,name=upcoming_appointments_url,json=upcomingAppointmentsUrl,proto3" json:"upcoming_appointments_url,omitempty"`
 	unknownFields           protoimpl.UnknownFields
 	sizeCache               protoimpl.SizeCache
