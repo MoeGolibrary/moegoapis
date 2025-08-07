@@ -47,29 +47,29 @@ business location and customer.
 | `COMPLETED`          | Order has been fully completed; all services delivered and payments processed            |
 | `REMOVED`            | Order has been removed from active records; historical data is maintained for reporting  |
 
-| Field Name          | Type                      | Description                                                                                            |
-|---------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
-| `id`                | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
-| `business_id`       | string                    | ID of the business location where services were provided                                               |
-| `customer_id`       | string                    | ID of the customer who received services                                                               |
-| `status`            | Status                    | Current status of the order                                                                            |
-| `title`             | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
-| `description`       | string                    | Detailed notes about the order                                                                         |
-| `tips_amount`       | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
-| `tax_amount`        | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
-| `discount_amount`   | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
-| `extra_fee_amount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
-| `sub_total_amount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
-| `tips_based_amount` | google.type.Money         | Amount used as basis for calculating tips (usually equals sub_total_amount)                            |
-| `total_amount`      | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
-| `paid_amount`       | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
-| `remain_amount`     | google.type.Money         | Amount still due on the order (formula: total_amount - paid_amount)                                    |
-| `refunded_amount`   | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
-| `created_by`        | string                    | ID of the staff member who created the order                                                           |
-| `created_time`      | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
-| `last_updated_by`   | string                    | ID of the staff member who last modified the order                                                     |
-| `last_updated_time` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
-| `sales_datetime`    | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
+| Field Name        | Type                      | Description                                                                                            |
+|-------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
+| `businessId`      | string                    | ID of the business location where services were provided                                               |
+| `customerId`      | string                    | ID of the customer who received services                                                               |
+| `status`          | Status                    | Current status of the order                                                                            |
+| `title`           | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
+| `description`     | string                    | Detailed notes about the order                                                                         |
+| `tipsAmount`      | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
+| `taxAmount`       | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
+| `discountAmount`  | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
+| `extraFeeAmount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
+| `subTotalAmount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
+| `tipsBasedAmount` | google.type.Money         | Amount used as basis for calculating tips (usually equals subTotalAmount)                              |
+| `totalAmount`     | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
+| `paidAmount`      | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
+| `remainAmount`    | google.type.Money         | Amount still due on the order (formula: totalAmount - paidAmount)                                      |
+| `refundedAmount`  | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
+| `createdBy`       | string                    | ID of the staff member who created the order                                                           |
+| `createdTime`     | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
+| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order                                                     |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
+| `salesDatetime`   | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
 
 ### 2. OrderLineItem
 
@@ -88,19 +88,19 @@ contributes to the total order amount. Line items track individual pricing, quan
 | `SERVICE_CHARGE`          | Additional service-related fee (e.g., holiday surcharge, rush fee)              |
 | `EVALUATION_SERVICE`      | Initial pet evaluation service (required for new clients or services)           |
 
-| Field Name          | Type                      | Description                                                                   |
-|---------------------|---------------------------|-------------------------------------------------------------------------------|
-| `id`                | string                    | Unique identifier for the line item (format: "li_" + random characters)       |
-| `order_id`          | string                    | ID of the parent order                                                        |
-| `object_id`         | string                    | ID of the referenced service, product, or package                             |
-| `object_type`       | ObjectType                | Category of the line item (determines business rules and processing)          |
-| `name`              | string                    | Display name of the item (e.g., "Premium Dog Grooming")                       |
-| `description`       | string                    | Additional details about the item                                             |
-| `unit_price`        | google.type.Money         | Price per unit of the item (before any discounts or adjustments)              |
-| `quantity`          | int32                     | Number of units purchased (must be greater than 0)                            |
-| `created_time`      | google.protobuf.Timestamp | When this line item was created (system-generated timestamp)                  |
-| `last_updated_time` | google.protobuf.Timestamp | When this line item was last modified (system-generated timestamp)            |
-| `paid_amount`       | google.type.Money         | Amount that has been paid for this item (updated when payments are processed) |
+| Field Name        | Type                      | Description                                                                   |
+|-------------------|---------------------------|-------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the line item (format: "li_" + random characters)       |
+| `orderId`         | string                    | ID of the parent order                                                        |
+| `objectId`        | string                    | ID of the referenced service, product, or package                             |
+| `objectType`      | ObjectType                | Category of the line item (determines business rules and processing)          |
+| `name`            | string                    | Display name of the item (e.g., "Premium Dog Grooming")                       |
+| `description`     | string                    | Additional details about the item                                             |
+| `unitPrice`       | google.type.Money         | Price per unit of the item (before any discounts or adjustments)              |
+| `quantity`        | int32                     | Number of units purchased (must be greater than 0)                            |
+| `createdTime`     | google.protobuf.Timestamp | When this line item was created (system-generated timestamp)                  |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this line item was last modified (system-generated timestamp)            |
+| `paidAmount`      | google.type.Money         | Amount that has been paid for this item (updated when payments are processed) |
 
 ---
 
@@ -157,29 +157,29 @@ Retrieves detailed information about a specific order by its ID.
 
 #### 📌 Return Value:
 
-| Field Name          | Type                      | Description                                                                                            |
-|---------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
-| `id`                | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
-| `business_id`       | string                    | ID of the business location where services were provided                                               |
-| `customer_id`       | string                    | ID of the customer who received services                                                               |
-| `status`            | Status                    | Current status of the order                                                                            |
-| `title`             | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
-| `description`       | string                    | Detailed notes about the order                                                                         |
-| `tips_amount`       | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
-| `tax_amount`        | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
-| `discount_amount`   | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
-| `extra_fee_amount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
-| `sub_total_amount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
-| `tips_based_amount` | google.type.Money         | Amount used as basis for calculating tips (usually equals sub_total_amount)                            |
-| `total_amount`      | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
-| `paid_amount`       | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
-| `remain_amount`     | google.type.Money         | Amount still due on the order (formula: total_amount - paid_amount)                                    |
-| `refunded_amount`   | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
-| `created_by`        | string                    | ID of the staff member who created the order                                                           |
-| `created_time`      | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
-| `last_updated_by`   | string                    | ID of the staff member who last modified the order                                                     |
-| `last_updated_time` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
-| `sales_datetime`    | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
+| Field Name        | Type                      | Description                                                                                            |
+|-------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
+| `businessId`      | string                    | ID of the business location where services were provided                                               |
+| `customerId`      | string                    | ID of the customer who received services                                                               |
+| `status`          | Status                    | Current status of the order                                                                            |
+| `title`           | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
+| `description`     | string                    | Detailed notes about the order                                                                         |
+| `tipsAmount`      | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
+| `taxAmount`       | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
+| `discountAmount`  | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
+| `extraFeeAmount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
+| `subTotalAmount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
+| `tipsBasedAmount` | google.type.Money         | Amount used as basis for calculating tips (usually equals subTotalAmount)                              |
+| `totalAmount`     | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
+| `paidAmount`      | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
+| `remainAmount`    | google.type.Money         | Amount still due on the order (formula: totalAmount - paidAmount)                                      |
+| `refundedAmount`  | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
+| `createdBy`       | string                    | ID of the staff member who created the order                                                           |
+| `createdTime`     | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
+| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order                                                     |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
+| `salesDatetime`   | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
 
 #### ⚠️ Error Codes:
 
@@ -209,19 +209,19 @@ update time.
 
 | Field Name                 | Type                | Required | Description                                                             |
 |----------------------------|---------------------|----------|-------------------------------------------------------------------------|
-| `pagination`               | Pagination          | Yes      | Pagination info: page_size, page_token                                  |
-| `company_id`               | string              | Yes      | Company ID to scope orders                                              |
-| `business_ids`             | Array(string)       | Yes      | List of business locations to filter orders by                          |
+| `pagination`               | Pagination          | Yes      | Pagination info: pageSize, pageToken                                    |
+| `companyId`                | string              | Yes      | Company ID to scope orders                                              |
+| `businessIds`              | Array(string)       | Yes      | List of business locations to filter orders by                          |
 | `filter.ids`               | Array(string)       | No       | Specific order IDs to retrieve (if provided, other filters are ignored) |
 | `filter.statuses`          | Array(Order.Status) | No       | Order statuses to include in results                                    |
 | `filter.last_updated_time` | Interval            | No       | Time range for filtering orders by last update time                     |
 
 #### 📌 Return Value:
 
-| Field Name        | Type         | Description                                                          |
-|-------------------|--------------|----------------------------------------------------------------------|
-| `next_page_token` | string       | Token for retrieving the next page of results (empty if none remain) |
-| `orders`          | Array(Order) | List of orders matching the request criteria                         |
+| Field Name      | Type         | Description                                                          |
+|-----------------|--------------|----------------------------------------------------------------------|
+| `nextPageToken` | string       | Token for retrieving the next page of results (empty if none remain) |
+| `orders`        | Array(Order) | List of orders matching the request criteria                         |
 
 #### ⚠️ Error Codes:
 
@@ -251,14 +251,14 @@ revenue analysis.
 
 | Field Name         | Type          | Required | Description                                        |
 |--------------------|---------------|----------|----------------------------------------------------|
-| `company_id`       | string        | Yes      | Company ID to scope line items                     |
+| `companyId`        | string        | Yes      | Company ID to scope line items                     |
 | `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by |
 
 #### 📌 Return Value:
 
-| Field Name         | Type                 | Description                              |
-|--------------------|----------------------|------------------------------------------|
-| `order_line_items` | Array(OrderLineItem) | List of line items matching the criteria |
+| Field Name       | Type                 | Description                              |
+|------------------|----------------------|------------------------------------------|
+| `orderLineItems` | Array(OrderLineItem) | List of line items matching the criteria |
 
 #### ⚠️ Error Codes:
 
@@ -281,10 +281,10 @@ revenue analysis.
 ```json
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001",
-  "business_ids": [
+  "companyId": "cmp_001",
+  "businessIds": [
     "biz_001",
     "biz_002"
   ],
@@ -293,21 +293,22 @@ revenue analysis.
       "CREATED",
       "PROCESSING"
     ],
-    "last_updated_time": {
-      "start_time": "2024-08-01T00:00:00Z",
-      "end_time": "2024-08-02T00:00:00Z"
+    "lastUpdatedTime": {
+      "startTime": "2024-08-01T00:00:00Z",
+      "endTime": "2024-08-02T00:00:00Z"
     }
   }
 }
+
 ```
 
 ### Example 3: ListOrderLineItems
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "filter": {
-    "order_ids": [
+    "orderIds": [
       "ord_001",
       "ord_002"
     ]
@@ -329,7 +330,7 @@ TODO
 |---------------------------------------------------------|------------------------------------------------------------------------------------------|
 | How to verify if an order exists?                       | Use `GetOrder` to check if the order ID returns a valid response                         |
 | Can I list orders for multiple companies at once?       | Currently only supports listing orders for one company at a time                         |
-| How to filter orders by business location?              | Use `ListOrders` with `business_ids`                                                     |
+| How to filter orders by business location?              | Use `ListOrders` with `businessIds`                                                      |
 | Why does creating an order return "resource exhausted"? | Not applicable — orders are typically not created via this API                           |
 | How to handle incomplete orders?                        | Use `ListOrders` with `STATUS_PROCESSING` to identify and follow up on incomplete orders |
 

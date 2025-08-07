@@ -43,36 +43,36 @@ business locations.
 | `amount`     | Fixed amount to deduct from the service price (must be in the same currency as the service) |
 | `percentage` | Percentage to deduct from the service price (range: 1-100)                                  |
 
-| Field Name     | Type                      | Description                                                                                                |
-|----------------|---------------------------|------------------------------------------------------------------------------------------------------------|
-| `code`         | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
-| `description`  | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
-| `valid_period` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
-| `limitation`   | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
-| `settings`     | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
-| `expiry_time`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| Field Name    | Type                      | Description                                                                                                |
+|---------------|---------------------------|------------------------------------------------------------------------------------------------------------|
+| `code`        | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
+| `description` | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
+| `validPeriod` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
+| `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
+| `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
+| `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
 
 ### 2. DiscountLimitation
 
 Defines usage restrictions for a discount. These limitations help control discount usage and target specific customer
 segments or business locations.
 
-| Field Name                 | Type          | Description                                                                                 |
-|----------------------------|---------------|---------------------------------------------------------------------------------------------|
-| `max_redeem_times`         | uint32        | Maximum number of times this discount can be used (set to 0 for unlimited usage)            |
-| `business_ids`             | Array(string) | Business locations where this discount is valid (empty list means valid at all locations)   |
-| `redeem_once_per_customer` | bool          | Whether each customer can use this discount only once (helps prevent discount abuse)        |
-| `customer_ids`             | Array(string) | Specific customers eligible for this discount (empty list means all customers are eligible) |
+| Field Name              | Type          | Description                                                                                 |
+|-------------------------|---------------|---------------------------------------------------------------------------------------------|
+| `maxRedeemTimes`        | uint32        | Maximum number of times this discount can be used (set to 0 for unlimited usage)            |
+| `businessIds`           | Array(string) | Business locations where this discount is valid (empty list means valid at all locations)   |
+| `redeemOncePerCustomer` | bool          | Whether each customer can use this discount only once (helps prevent discount abuse)        |
+| `customerIds`           | Array(string) | Specific customers eligible for this discount (empty list means all customers are eligible) |
 
 ### 3. DiscountSettings
 
 Configures how the discount is applied and presented. These settings control the discount's behavior in different
 booking channels and scenarios.
 
-| Field Name                           | Type | Description                                                                                                              |
-|--------------------------------------|------|--------------------------------------------------------------------------------------------------------------------------|
-| `auto_apply_on_eligible_appointment` | bool | Whether to apply the discount automatically when conditions are met (used for promotional campaigns and loyalty rewards) |
-| `allow_for_online_booking`           | bool | Whether this discount can be used in online bookings (controls discount visibility in customer portal)                   |
+| Field Name                       | Type | Description                                                                                                              |
+|----------------------------------|------|--------------------------------------------------------------------------------------------------------------------------|
+| `autoApplyOnEligibleAppointment` | bool | Whether to apply the discount automatically when conditions are met (used for promotional campaigns and loyalty rewards) |
+| `allowForOnlineBooking`          | bool | Whether this discount can be used in online bookings (controls discount visibility in customer portal)                   |
 
 ---
 
@@ -123,22 +123,22 @@ Creates a new discount with the specified configuration.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type     | Required | Description                                                                                |
-|--------------|----------|----------|--------------------------------------------------------------------------------------------|
-| `company_id` | string   | Yes      | Company identifier for scoping the discount creation                                       |
-| `discount`   | Discount | Yes      | Complete discount configuration to create including all required fields and valid settings |
+| Field Name  | Type     | Required | Description                                                                                |
+|-------------|----------|----------|--------------------------------------------------------------------------------------------|
+| `companyId` | string   | Yes      | Company identifier for scoping the discount creation                                       |
+| `discount`  | Discount | Yes      | Complete discount configuration to create including all required fields and valid settings |
 
 #### 📌 Return Value:
 
-| Field Name     | Type                      | Description                                                                                                |
-|----------------|---------------------------|------------------------------------------------------------------------------------------------------------|
-| `code`         | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
-| `description`  | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
-| `value`        | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
-| `valid_period` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
-| `limitation`   | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
-| `settings`     | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
-| `expiry_time`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| Field Name    | Type                      | Description                                                                                                |
+|---------------|---------------------------|------------------------------------------------------------------------------------------------------------|
+| `code`        | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
+| `description` | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
+| `value`       | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
+| `validPeriod` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
+| `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
+| `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
+| `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
 
 #### ⚠️ Error Codes:
 
@@ -166,22 +166,22 @@ Retrieves detailed information about a specific discount by its code.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                                   |
-|--------------|--------|----------|-----------------------------------------------|
-| `company_id` | string | Yes      | Company identifier for scoping the request    |
-| `code`       | string | Yes      | Unique identifier of the discount to retrieve |
+| Field Name  | Type   | Required | Description                                   |
+|-------------|--------|----------|-----------------------------------------------|
+| `companyId` | string | Yes      | Company identifier for scoping the request    |
+| `code`      | string | Yes      | Unique identifier of the discount to retrieve |
 
 #### 📌 Return Value:
 
-| Field Name     | Type                      | Description                                                                                                |
-|----------------|---------------------------|------------------------------------------------------------------------------------------------------------|
-| `code`         | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
-| `description`  | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
-| `value`        | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
-| `valid_period` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
-| `limitation`   | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
-| `settings`     | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
-| `expiry_time`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| Field Name    | Type                      | Description                                                                                                |
+|---------------|---------------------------|------------------------------------------------------------------------------------------------------------|
+| `code`        | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
+| `description` | string                    | Human-readable explanation of the discount used in customer communications and UI                          |
+| `value`       | oneof(amount, percentage) | Discount value, either a fixed amount or percentage                                                        |
+| `validPeriod` | google.type.Interval      | Time period during which the discount is valid for controlling seasonal or promotional offers              |
+| `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
+| `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
+| `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
 
 #### ⚠️ Error Codes:
 
@@ -211,15 +211,15 @@ for historical reference.
 
 | Field Name   | Type       | Required | Description                                         |
 |--------------|------------|----------|-----------------------------------------------------|
-| `pagination` | Pagination | Yes      | Pagination info: page_size, page_token              |
-| `company_id` | string     | Yes      | Company identifier for scoping the discount listing |
+| `pagination` | Pagination | Yes      | Pagination info: pageSize, pageToken                |
+| `companyId`  | string     | Yes      | Company identifier for scoping the discount listing |
 
 #### 📌 Return Value:
 
-| Field Name        | Type            | Description                                                          |
-|-------------------|-----------------|----------------------------------------------------------------------|
-| `next_page_token` | string          | Token for retrieving the next page of results (empty if none remain) |
-| `discounts`       | Array(Discount) | List of discounts matching the request criteria                      |
+| Field Name      | Type            | Description                                                          |
+|-----------------|-----------------|----------------------------------------------------------------------|
+| `nextPageToken` | string          | Token for retrieving the next page of results (empty if none remain) |
+| `discounts`     | Array(Discount) | List of discounts matching the request criteria                      |
 
 #### ⚠️ Error Codes:
 
@@ -234,30 +234,30 @@ for historical reference.
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "discount": {
     "code": "SUMMER25",
     "description": "Summer Special - 25% off grooming services",
     "value": {
       "percentage": 25
     },
-    "valid_period": {
-      "start_time": "2024-06-01T00:00:00Z",
-      "end_time": "2024-08-31T23:59:59Z"
+    "validPeriod": {
+      "startTime": "2024-06-01T00:00:00Z",
+      "endTime": "2024-08-31T23:59:59Z"
     },
     "limitation": {
-      "max_redeem_times": 500,
-      "business_ids": [
+      "maxRedeemTimes": 500,
+      "businessIds": [
         "biz_001",
         "biz_002"
       ],
-      "redeem_once_per_customer": true
+      "redeemOncePerCustomer": true
     },
     "settings": {
-      "auto_apply_on_eligible_appointment": true,
-      "allow_for_online_booking": true
+      "autoApplyOnEligibleAppointment": true,
+      "allowForOnlineBooking": true
     },
-    "expiry_time": "2024-09-15T00:00:00Z"
+    "expiryTime": "2024-09-15T00:00:00Z"
   }
 }
 ```
@@ -266,7 +266,7 @@ for historical reference.
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "code": "SUMMER25"
 }
 ```
@@ -276,9 +276,9 @@ for historical reference.
 ```json
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001"
+  "companyId": "cmp_001"
 }
 ```
 
@@ -296,7 +296,7 @@ TODO
 |-----------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|
 | How to verify if a discount exists?                       | Use `GetDiscount` to check if the discount code returns a valid response                                           |
 | Can I create multiple discounts with the same code?       | No, each discount code must be unique within a company                                                             |
-| How to limit discount usage to specific customers?        | Use `limitation.customer_ids` to specify eligible customers                                                        |
+| How to limit discount usage to specific customers?        | Use `limitation.customerIds` to specify eligible customers                                                         |
 | Why does creating a discount return "resource exhausted"? | Not applicable — discounts typically don't have hard limits unless configured                                      |
 | How to handle expired discounts?                          | Use `ListDiscounts` to view expired discounts for historical reference; they cannot be applied to new appointments |
 

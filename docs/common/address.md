@@ -8,17 +8,17 @@ postal standards and includes geocoding information for mapping.
 
 ## 🧩 2. Core Fields
 
-| Field Name    | Type   | Description                                                      |
-|---------------|--------|------------------------------------------------------------------|
-| `id`          | string | Unique identifier                                                |
-| `address1`    | string | Street address including house number and street name            |
-| `address2`    | string | Additional address details like apartment, suite, or unit number |
-| `city`        | string | City or locality name                                            |
-| `state`       | string | State, province, or region                                       |
-| `postal_code` | string | Postal or ZIP code                                               |
-| `country`     | string | Country name or ISO country code                                 |
-| `coordinate`  | LatLng | Latitude and longitude coordinate for mapping                    |
-| `type`        | Type   | Represents the importance of the address (PRIMARY / SECONDARY)   |
+| Field Name   | Type   | Description                                                      |
+|--------------|--------|------------------------------------------------------------------|
+| `id`         | string | Unique identifier                                                |
+| `address1`   | string | Street address including house number and street name            |
+| `address2`   | string | Additional address details like apartment, suite, or unit number |
+| `city`       | string | City or locality name                                            |
+| `state`      | string | State, province, or region                                       |
+| `postalCode` | string | Postal or ZIP code                                               |
+| `country`    | string | Country name or ISO country code                                 |
+| `coordinate` | LatLng | Latitude and longitude coordinate for mapping                    |
+| `type`       | Type   | Represents the importance of the address (PRIMARY / SECONDARY)   |
 
 ### Enum: Type
 
@@ -35,7 +35,7 @@ postal standards and includes geocoding information for mapping.
   "address2": "Floor 3",
   "city": "New York",
   "state": "NY",
-  "postal_code": "10001",
+  "postalCode": "10001",
   "country": "US",
   "coordinate": {
     "latitude": 40.7128,

@@ -8,19 +8,19 @@ and efficient data retrieval for large result sets.
 
 ## 🧩 2. Core Fields
 
-| Field Name   | Type   | Required | Description                                                      |
-|--------------|--------|----------|------------------------------------------------------------------|
-| `page_size`  | int32  | Yes      | Number of items to return per page (1~500)                       |
-| `page_token` | string | No       | Token for retrieving the next page (min length 1, max length 64) |
+| Field Name  | Type   | Required | Description                                                      |
+|-------------|--------|----------|------------------------------------------------------------------|
+| `pageSize`  | int32  | Yes      | Number of items to return per page (1~500)                       |
+| `pageToken` | string | No       | Token for retrieving the next page (min length 1, max length 64) |
 
-> ⚠️ `page_token` is optional. Leave empty for the first page. Obtain from previous response for subsequent pages.
+> ⚠️ `pageToken` is optional. Leave empty for the first page. Obtain from previous response for subsequent pages.
 
 ## 📦 3. Example JSON
 
 ```json
 {
-  "page_size": 20,
-  "page_token": "next_page_token_here"
+  "pageSize": 20,
+  "pageToken": "next_page_token_here"
 }
 ```
 

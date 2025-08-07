@@ -894,7 +894,7 @@
         },
         "upcomingAppointmentsUrl": {
           "type": "string",
-          "description": "upcoming_appointments_url is a URL to the customer's upcoming appointments."
+          "title": "URL to a page where the customer can view their upcoming appointments"
         }
       },
       "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",

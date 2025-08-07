@@ -33,22 +33,22 @@ This API provides operations for:
 Represents a legal document requiring customer consent. A single agreement can be reused across multiple customers and
 transactions.
 
-| Field Name             | Type               | Description                                                       |
-|------------------------|--------------------|-------------------------------------------------------------------|
-| `id`                   | string             | Unique identifier of the agreement                                |
-| `business_id`          | string             | Business location where this agreement is used                    |
-| `creator_id`           | string             | Staff member who created the agreement                            |
-| `status`               | enum(Status)       | Current state of the agreement: `NORMAL`, `DELETED`               |
-| `signed_policy`        | enum(SignedPolicy) | When signatures are required: `FOR_FIRST`, `FOR_EACH`, `OPTIONAL` |
-| `title`                | string             | Display name of the agreement                                     |
-| `content`              | string             | Full text of the agreement                                        |
-| `sms_template`         | string             | Template for SMS notifications                                    |
-| `email_template_title` | string             | Subject line for email notifications                              |
-| `email_template_body`  | string             | Body content for email notifications                              |
-| `last_required_time`   | timestamp          | Customers who signed before this time may need to re-sign         |
-| `last_edit_time`       | timestamp          | When the agreement content was last modified                      |
-| `created_time`         | timestamp          | When the agreement was first created                              |
-| `last_updated_time`    | timestamp          | When any field was last changed                                   |
+| Field Name           | Type               | Description                                                       |
+|----------------------|--------------------|-------------------------------------------------------------------|
+| `id`                 | string             | Unique identifier of the agreement                                |
+| `businessId`         | string             | Business location where this agreement is used                    |
+| `creatorId`          | string             | Staff member who created the agreement                            |
+| `status`             | enum(Status)       | Current state of the agreement: `NORMAL`, `DELETED`               |
+| `signedPolicy`       | enum(SignedPolicy) | When signatures are required: `FOR_FIRST`, `FOR_EACH`, `OPTIONAL` |
+| `title`              | string             | Display name of the agreement                                     |
+| `content`            | string             | Full text of the agreement                                        |
+| `smsTemplate`        | string             | Template for SMS notifications                                    |
+| `emailTemplateTitle` | string             | Subject line for email notifications                              |
+| `emailTemplateBody`  | string             | Body content for email notifications                              |
+| `lastRequiredTime`   | timestamp          | Customers who signed before this time may need to re-sign         |
+| `lastEditTime`       | timestamp          | When the agreement content was last modified                      |
+| `createdTime`        | timestamp          | When the agreement was first created                              |
+| `lastUpdatedTime`    | timestamp          | When any field was last changed                                   |
 
 #### Enum Definitions
 
@@ -72,26 +72,26 @@ transactions.
 Tracks individual instances of customer interactions with agreements. It maintains the history of when and how customers
 signed agreements, including the specific version they saw and their signature method.
 
-| Field Name      | Type               | Description                                                           |
-|-----------------|--------------------|-----------------------------------------------------------------------|
-| `id`            | string             | Unique identifier of the record                                       |
-| `uuid`          | string             | External reference UUID                                               |
-| `agreement_id`  | string             | Reference to the original agreement                                   |
-| `business_id`   | string             | Business location where signing occurred                              |
-| `company_id`    | string             | Parent company identifier                                             |
-| `customer_id`   | string             | Customer who signed or viewed the agreement                           |
-| `target_id`     | string             | Related object ID (e.g., appointment, form)                           |
-| `status`        | enum(Status)       | Current state of the record: `NORMAL`, `DELETED`                      |
-| `signed_status` | enum(SignedStatus) | Whether the agreement has been signed: `UNSIGNED`, `SIGNED`           |
-| `signed_type`   | enum(SignedType)   | How the agreement was signed: `CUSTOMER_SIGNED`, `BY_BUSINESS_UPLOAD` |
-| `source_type`   | enum(SourceType)   | Where the agreement was presented: `URL`, `MOBILE`, etc.              |
-| `link`          | string             | URL where the agreement can be viewed                                 |
-| `title`         | string             | Agreement title at time of signing                                    |
-| `content`       | string             | Agreement content at time of signing                                  |
-| `signature`     | string             | Customer's signature data                                             |
-| `signed_time`   | timestamp          | When the agreement was signed                                         |
-| `created_time`  | timestamp          | When this record was created                                          |
-| `updated_time`  | timestamp          | When this record was last modified                                    |
+| Field Name     | Type               | Description                                                           |
+|----------------|--------------------|-----------------------------------------------------------------------|
+| `id`           | string             | Unique identifier of the record                                       |
+| `uuid`         | string             | External reference UUID                                               |
+| `agreementId`  | string             | Reference to the original agreement                                   |
+| `businessId`   | string             | Business location where signing occurred                              |
+| `companyId`    | string             | Parent company identifier                                             |
+| `customerId`   | string             | Customer who signed or viewed the agreement                           |
+| `targetId`     | string             | Related object ID (e.g., appointment, form)                           |
+| `status`       | enum(Status)       | Current state of the record: `NORMAL`, `DELETED`                      |
+| `signedStatus` | enum(SignedStatus) | Whether the agreement has been signed: `UNSIGNED`, `SIGNED`           |
+| `signedType`   | enum(SignedType)   | How the agreement was signed: `CUSTOMER_SIGNED`, `BY_BUSINESS_UPLOAD` |
+| `sourceType`   | enum(SourceType)   | Where the agreement was presented: `URL`, `MOBILE`, etc.              |
+| `link`         | string             | URL where the agreement can be viewed                                 |
+| `title`        | string             | Agreement title at time of signing                                    |
+| `content`      | string             | Agreement content at time of signing                                  |
+| `signature`    | string             | Customer's signature data                                             |
+| `signedTime`   | timestamp          | When the agreement was signed                                         |
+| `createdTime`  | timestamp          | When this record was created                                          |
+| `updatedTime`  | timestamp          | When this record was last modified                                    |
 
 #### Enum Definitions
 
@@ -142,29 +142,29 @@ Retrieves a specific agreement by its ID.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                   |
-|--------------|--------|----------|-------------------------------|
-| `id`         | string | Yes      | Agreement ID to retrieve      |
-| `company_id` | string | Yes      | Company ID for access control |
+| Field Name  | Type   | Required | Description                   |
+|-------------|--------|----------|-------------------------------|
+| `id`        | string | Yes      | Agreement ID to retrieve      |
+| `companyId` | string | Yes      | Company ID for access control |
 
 #### 📌 Return Value:
 
-| Field Name             | Type               | Description                                                       |
-|------------------------|--------------------|-------------------------------------------------------------------|
-| `id`                   | string             | Unique identifier of the agreement                                |
-| `business_id`          | string             | Business location where this agreement is used                    |
-| `creator_id`           | string             | Staff member who created the agreement                            |
-| `status`               | enum(Status)       | Current state of the agreement: `NORMAL`, `DELETED`               |
-| `signed_policy`        | enum(SignedPolicy) | When signatures are required: `FOR_FIRST`, `FOR_EACH`, `OPTIONAL` |
-| `title`                | string             | Display name of the agreement                                     |
-| `content`              | string             | Full text of the agreement                                        |
-| `sms_template`         | string             | Template for SMS notifications                                    |
-| `email_template_title` | string             | Subject line for email notifications                              |
-| `email_template_body`  | string             | Body content for email notifications                              |
-| `last_required_time`   | timestamp          | Customers who signed before this time may need to re-sign         |
-| `last_edit_time`       | timestamp          | When the agreement content was last modified                      |
-| `created_time`         | timestamp          | When the agreement was first created                              |
-| `last_updated_time`    | timestamp          | When any field was last changed                                   |
+| Field Name           | Type               | Description                                                       |
+|----------------------|--------------------|-------------------------------------------------------------------|
+| `id`                 | string             | Unique identifier of the agreement                                |
+| `businessId`         | string             | Business location where this agreement is used                    |
+| `creatorId`          | string             | Staff member who created the agreement                            |
+| `status`             | enum(Status)       | Current state of the agreement: `NORMAL`, `DELETED`               |
+| `signedPolicy`       | enum(SignedPolicy) | When signatures are required: `FOR_FIRST`, `FOR_EACH`, `OPTIONAL` |
+| `title`              | string             | Display name of the agreement                                     |
+| `content`            | string             | Full text of the agreement                                        |
+| `smsTemplate`        | string             | Template for SMS notifications                                    |
+| `emailTemplateTitle` | string             | Subject line for email notifications                              |
+| `emailTemplateBody`  | string             | Body content for email notifications                              |
+| `lastRequiredTime`   | timestamp          | Customers who signed before this time may need to re-sign         |
+| `lastEditTime`       | timestamp          | When the agreement content was last modified                      |
+| `createdTime`        | timestamp          | When the agreement was first created                              |
+| `lastUpdatedTime`    | timestamp          | When any field was last changed                                   |
 
 #### ⚠️ Error Codes:
 
@@ -190,22 +190,22 @@ Lists agreements matching specified criteria, including company ID and optional 
 
 #### 🔧 Request Parameters:
 
-| Field Name     | Type          | Required | Description                                           |
-|----------------|---------------|----------|-------------------------------------------------------|
-| `pagination`   | Pagination    | Yes      | Page size and token                                   |
-| `company_id`   | string        | Yes      | Company ID for access control                         |
-| `business_ids` | Array(string) | No       | Optional list of business IDs to filter agreements by |
+| Field Name    | Type          | Required | Description                                           |
+|---------------|---------------|----------|-------------------------------------------------------|
+| `pagination`  | Pagination    | Yes      | Page size and token                                   |
+| `companyId`   | string        | Yes      | Company ID for access control                         |
+| `businessIds` | Array(string) | No       | Optional list of business IDs to filter agreements by |
 
 > **Note**: The `pagination` field is used for pagination.
-> The `page_size` field specifies the number of results to return per page. Maximum value is 500.
-> The `page_token` field is used to retrieve the next page of results.
+> The `pageSize` field specifies the number of results to return per page. Maximum value is 500.
+> The `pageToken` field is used to retrieve the next page of results.
 
 #### 📌 Return Value:
 
-| Field Name        | Type             | Description                                   |
-|-------------------|------------------|-----------------------------------------------|
-| `next_page_token` | string           | Token for retrieving the next page of results |
-| `agreement`       | Array(Agreement) | List of agreements matching the criteria      |
+| Field Name      | Type             | Description                                   |
+|-----------------|------------------|-----------------------------------------------|
+| `nextPageToken` | string           | Token for retrieving the next page of results |
+| `agreement`     | Array(Agreement) | List of agreements matching the criteria      |
 
 #### ⚠️ Error Code:
 
@@ -230,18 +230,18 @@ Generates a unique URL where a customer can view and sign the agreement.
 
 #### 🔧 Request Parameters:
 
-| Field Name    | Type   | Required | Description                          |
-|---------------|--------|----------|--------------------------------------|
-| `id`          | string | Yes      | Agreement ID to generate link for    |
-| `customer_id` | string | Yes      | Customer who will sign the agreement |
-| `business_id` | string | Yes      | Business context for the agreement   |
+| Field Name   | Type   | Required | Description                          |
+|--------------|--------|----------|--------------------------------------|
+| `id`         | string | Yes      | Agreement ID to generate link for    |
+| `customerId` | string | Yes      | Customer who will sign the agreement |
+| `businessId` | string | Yes      | Business context for the agreement   |
 
 #### 📌 Return Value:
 
-| Field Name            | Type   | Description                                          |
-|-----------------------|--------|------------------------------------------------------|
-| `agreement_record_id` | string | Identifier of the generated agreement record         |
-| `sign_url`            | string | Unique URL where the customer can sign the agreement |
+| Field Name          | Type   | Description                                          |
+|---------------------|--------|------------------------------------------------------|
+| `agreementRecordId` | string | Identifier of the generated agreement record         |
+| `signUrl`           | string | Unique URL where the customer can sign the agreement |
 
 #### ⚠️ Error Codes:
 
@@ -263,19 +263,19 @@ GET /v1/agreements/12345?company_id=cmp_001
 ```json
 {
   "id": "12345",
-  "business_id": "biz_001",
-  "creator_id": "staff_001",
+  "businessId": "biz_001",
+  "creatorId": "staff_001",
   "status": "NORMAL",
-  "signed_policy": "FOR_FIRST",
+  "signedPolicy": "FOR_FIRST",
   "title": "Privacy Policy v2",
   "content": "This Privacy Policy explains how we collect...",
-  "sms_template": "Please review and sign the latest privacy policy.",
-  "email_template_title": "Action Required: New Privacy Policy",
-  "email_template_body": "Dear customer, please review and sign our updated privacy policy...",
-  "last_required_time": "2024-08-01T00:00:00Z",
-  "last_edit_time": "2024-07-20T10:00:00Z",
-  "created_time": "2024-06-15T09:00:00Z",
-  "last_updated_time": "2024-08-01T14:30:00Z"
+  "smsTemplate": "Please review and sign the latest privacy policy.",
+  "emailTemplateTitle": "Action Required: New Privacy Policy",
+  "emailTemplateBody": "Dear customer, please review and sign our updated privacy policy...",
+  "lastRequiredTime": "2024-08-01T00:00:00Z",
+  "lastEditTime": "2024-07-20T10:00:00Z",
+  "createdTime": "2024-06-15T09:00:00Z",
+  "lastUpdatedTime": "2024-08-01T14:30:00Z"
 }
 ```
 
@@ -283,11 +283,11 @@ GET /v1/agreements/12345?company_id=cmp_001
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "business_ids": [
+  "businessIds": [
     "biz_001",
     "biz_002"
   ]
@@ -304,8 +304,8 @@ GET /v1/agreements/12345/sign_link?customer_id=cus_001&business_id=biz_001
 
 ```json
 {
-  "agreement_record_id": "record_001",
-  "sign_url": "https://example.com/agreements/sign/abcxyz"
+  "agreementRecordId": "record_001",
+  "signUrl": "https://example.com/agreements/sign/abcxyz"
 }
 ```
 

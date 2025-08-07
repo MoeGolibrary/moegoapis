@@ -15,6 +15,38 @@ explore and test APIs without writing any code.
 
 ---
 
+## 📌 Important Notes
+
+- **Obfuscated IDs**: All our identifiers (e.g., `CompanyID`, `BusinessID`) are obfuscated for security purposes. Please
+  ensure that you use the obfuscated versions of these IDs when making API requests.
+
+- **API Limitations**: If any of the current APIs do not meet your requirements or if you need additional functionality,
+  please reach out to your **Customer Success Manager** for assistance and further guidance.
+
+---
+
+## 🚀 Getting Started
+
+To begin using the MoeGo APIs effectively, follow these steps:
+
+1. **Request API Access**
+
+    - For all API key requests, we kindly ask you to work directly with your dedicated **Customer Success Manager**.
+      They
+      will guide you through our API key application process.
+
+2. **Retrieve Required Information**
+
+    - Use the [`ListCompany`](docs/company.md) and [`ListBusiness`](docs/business.md) APIs to retrieve the necessary
+      obfuscated IDs (`CompanyID`, `BusinessID`) and verify that your requests are targeting the correct entities.
+
+3. **(Optional) Configure Webhooks**
+
+    - Set up [Webhooks](docs/webhook.md) to subscribe to events you care about, such as `APPOINTMENT_CREATED` or
+      `APPOINTMENT_UPDATED`. This enables real-time notifications for key business events.
+
+---
+
 ## 🌐 Domain Structure
 
 MoeGo APIs are organized under the following domain:

@@ -136,18 +136,18 @@ returned in alphabetical order by name.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description                            |
-|--------------|------------|----------|----------------------------------------|
-| `pagination` | Pagination | Yes      | Pagination info: page_size, page_token |
+| Field Name   | Type       | Required | Description                          |
+|--------------|------------|----------|--------------------------------------|
+| `pagination` | Pagination | Yes      | Pagination info: pageSize, pageToken |
 
-> ⚠️ `page_token` is optional. Leave empty for the first page. Obtain from previous response for subsequent pages.
+> ⚠️ `pageToken` is optional. Leave empty for the first page. Obtain from previous response for subsequent pages.
 
 #### 📌 Return Value:
 
-| Field Name        | Type             | Description                         |
-|-------------------|------------------|-------------------------------------|
-| `next_page_token` | `string`         | Token for retrieving the next page  |
-| `companies`       | Array(`Company`) | List of companies matching criteria |
+| Field Name      | Type             | Description                         |
+|-----------------|------------------|-------------------------------------|
+| `nextPageToken` | `string`         | Token for retrieving the next page  |
+| `companies`     | Array(`Company`) | List of companies matching criteria |
 
 #### ⚠️ Error Codes:
 
@@ -193,8 +193,8 @@ Content-Type: application/json
 
 {
   "pagination": {
-    "page_size": 20,
-    "page_token": ""
+    "pageSize": 20,
+    "pageToken": ""
   }
 }
 ```
@@ -203,7 +203,7 @@ Content-Type: application/json
 
 ```json
 {
-  "next_page_token": "CBAQAA==",
+  "nextPageToken": "CBAQAA==",
   "companies": [
     {
       "id": "cmp_001",
@@ -238,9 +238,9 @@ TODO
 | Question                                               | Answer                                                                |
 |--------------------------------------------------------|-----------------------------------------------------------------------|
 | How to verify if a company exists?                     | Use `GetCompany` to check if the company ID returns a valid response. |
-| Can I list all companies at once?                      | No. Results are paginated. Use `page_token` to fetch next set.        |
+| Can I list all companies at once?                      | No. Results are paginated. Use `pageToken` to fetch next set.         |
 | Why does listing companies return "permission denied"? | Ensure you have the correct access rights for this operation.         |
-| How to handle large result sets efficiently?           | Use pagination via `page_size` and `page_token`.                      |
+| How to handle large result sets efficiently?           | Use pagination via `pageSize` and `pageToken`.                        |
 
 ---
 

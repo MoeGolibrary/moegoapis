@@ -28,24 +28,24 @@ Applicable to scenarios such as lead management, sales pipeline tracking, and ma
 
 Represents a potential customer in the sales pipeline
 
-| Field Name              | Type                                                    | Description                                               |
-|-------------------------|---------------------------------------------------------|-----------------------------------------------------------|
-| `id`                    | string                                                  | Unique identifier                                         |
-| `company_id`            | string                                                  | ID of the company the lead belongs to                     |
-| `first_name`            | string                                                  | Lead's first name                                         |
-| `last_name`             | string                                                  | Lead's last name                                          |
-| `avatar`                | string                                                  | URL to the lead's profile picture                         |
-| `phone`                 | string                                                  | Lead's phone number. Must be in E.164 format              |
-| `email`                 | string                                                  | Lead's email address. Must be valid                       |
-| `address`               | Address                                                 | Lead's address                                            |
-| `pets`                  | Array(Pet)                                              | List of pets belonging to the lead                        |
-| `preferred_business_id` | string                                                  | ID of the lead's preferred business location              |
-| `allocate_staff_id`     | string                                                  | ID of the staff member assigned to the lead               |
-| `life_cycle`            | [LifeCycle](./setting_service.md#6-lifecycle)           | Lead's current lifecycle stage                            |
-| `action_status`         | [ActionStatus](./setting_service.md#7-actionstatus)     | Lead's action status                                      |
-| `referral_source`       | [ReferralSource](./setting_service.md#5-referralsource) | The source or channel through which the lead was acquired |
-| `created_time`          | Timestamp                                               | Creation timestamp                                        |
-| `last_updated_time`     | Timestamp                                               | Last modification timestamp                               |
+| Field Name            | Type                                                    | Description                                               |
+|-----------------------|---------------------------------------------------------|-----------------------------------------------------------|
+| `id`                  | string                                                  | Unique identifier                                         |
+| `companyId`           | string                                                  | ID of the company the lead belongs to                     |
+| `firstName`           | string                                                  | Lead's first name                                         |
+| `lastName`            | string                                                  | Lead's last name                                          |
+| `avatar`              | string                                                  | URL to the lead's profile picture                         |
+| `phone`               | string                                                  | Lead's phone number. Must be in E.164 format              |
+| `email`               | string                                                  | Lead's email address. Must be valid                       |
+| `address`             | Address                                                 | Lead's address                                            |
+| `pets`                | Array(Pet)                                              | List of pets belonging to the lead                        |
+| `preferredBusinessId` | string                                                  | ID of the lead's preferred business location              |
+| `allocateStaffId`     | string                                                  | ID of the staff member assigned to the lead               |
+| `lifeCycle`           | [LifeCycle](./setting_service.md#6-lifecycle)           | Lead's current lifecycle stage                            |
+| `actionStatus`        | [ActionStatus](./setting_service.md#7-actionstatus)     | Lead's action status                                      |
+| `referralSource`      | [ReferralSource](./setting_service.md#5-referralsource) | The source or channel through which the lead was acquired |
+| `createdTime`         | Timestamp                                               | Creation timestamp                                        |
+| `lastUpdatedTime`     | Timestamp                                               | Last modification timestamp                               |
 
 ---
 
@@ -196,17 +196,17 @@ Lists leads with pagination and optional filters
 
 #### 🔧 Request Parameters:
 
-| Field Name                 | Type       | Required | Description                            |
-|----------------------------|------------|----------|----------------------------------------|
-| `pagination`               | Pagination | Yes      | Pagination info: page_size, page_token |
-| `company_id`               | string     | Yes      | ID of the company to list leads for    |
-| `filter.life_cycle_id`     | string     | No       | ID of the lead's life cycle stage      |
-| `filter.action_status_id`  | string     | No       | ID of the lead's action status         |
-| `filter.main_phone_number` | string     | No       | Main phone number of the lead          |
+| Field Name               | Type       | Required | Description                          |
+|--------------------------|------------|----------|--------------------------------------|
+| `pagination`             | Pagination | Yes      | Pagination info: pageSize, pageToken |
+| `companyId`              | string     | Yes      | ID of the company to list leads for  |
+| `filter.lifeCycleId`     | string     | No       | ID of the lead's life cycle stage    |
+| `filter.actionStatusId`  | string     | No       | ID of the lead's action status       |
+| `filter.mainPhoneNumber` | string     | No       | Main phone number of the lead        |
 
 > **Note**: The `pagination` field is used for pagination.
-> The `page_size` field specifies the number of results to return per page. Maximum value is 500.
-> The `page_token` field is used to retrieve the next page of results.
+> The `pageSize` field specifies the number of results to return per page. Maximum value is 500.
+> The `pageToken` field is used to retrieve the next page of results.
 
 #### 📌 Return Value:
 
@@ -257,8 +257,8 @@ Returns the newly created `Customer` object
 ```json
 {
   "lead": {
-    "first_name": "John",
-    "last_name": "Doe",
+    "firstName": "John",
+    "lastName": "Doe",
     "phone": "+12125551234",
     "email": "john.doe@example.com",
     "address": {
@@ -284,15 +284,15 @@ Returns the newly created `Customer` object
 {
   "id": "lcus_001",
   "lead": {
-    "first_name": "John",
-    "last_name": "Doe",
+    "firstName": "John",
+    "lastName": "Doe",
     "phone": "+12125551234",
     "email": "john.doe@example.com",
-    "life_cycle": {
+    "lifeCycle": {
       "id": "lc_001",
       "name": "Qualified"
     },
-    "action_status": {
+    "actionStatus": {
       "id": "as_001",
       "name": "Contacted",
       "color": "#00FF00"
@@ -305,12 +305,12 @@ Returns the newly created `Customer` object
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
   "filter": {
-    "life_cycle_id": "lc_001"
+    "lifeCycleId": "lc_001"
   }
 }
 ```

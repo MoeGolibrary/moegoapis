@@ -55,12 +55,12 @@ Defines a single column of data in a report, including data type and display pro
 | `DURATION`         | Represents time duration in minutes                                                    |
 | `DATETIME`         | Represents full date and time values                                                   |
 
-| Field Name        | Type       | Description                                                                                          |
-|-------------------|------------|------------------------------------------------------------------------------------------------------|
-| `label`           | string     | Display label for the field, used in report headers and UI elements                                  |
-| `type`            | Field.Type | Data type of the field, determining value formatting and validation rules                            |
-| `key`             | string     | Unique identifier for the field within the report, used to reference field values in data structures |
-| `group_by_enable` | bool       | Whether this field can be used as a grouping criterion, affecting report aggregation options         |
+| Field Name      | Type       | Description                                                                                          |
+|-----------------|------------|------------------------------------------------------------------------------------------------------|
+| `label`         | string     | Display label for the field, used in report headers and UI elements                                  |
+| `type`          | Field.Type | Data type of the field, determining value formatting and validation rules                            |
+| `key`           | string     | Unique identifier for the field within the report, used to reference field values in data structures |
+| `groupByEnable` | bool       | Whether this field can be used as a grouping criterion, affecting report aggregation options         |
 
 ### 3. TableData
 
@@ -83,11 +83,11 @@ Represents a single row of data in a report, containing values for each field de
 
 Represents a single cell value in a report table, including both the field metadata and the actual value.
 
-| Field Name   | Type       | Description                                                                      |
-|--------------|------------|----------------------------------------------------------------------------------|
-| `field_key`  | string     | Reference to the field definition, must match a field key in the table structure |
-| `field_type` | Field.Type | Data type of the value, must match the field definition                          |
-| `value`      | Value      | Actual value of the cell, type must match `field_type`                           |
+| Field Name  | Type       | Description                                                                      |
+|-------------|------------|----------------------------------------------------------------------------------|
+| `fieldKey`  | string     | Reference to the field definition, must match a field key in the table structure |
+| `fieldType` | Field.Type | Data type of the value, must match the field definition                          |
+| `value`     | Value      | Actual value of the cell, type must match `fieldType`                            |
 
 ### 6. Value
 
@@ -140,9 +140,9 @@ Gets the list of all report definitions available to the current company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                             |
-|--------------|--------|----------|-----------------------------------------|
-| `company_id` | string | Yes      | Company ID, used for permission control |
+| Field Name  | Type   | Required | Description                             |
+|-------------|--------|----------|-----------------------------------------|
+| `companyId` | string | Yes      | Company ID, used for permission control |
 
 #### 📌 Return Value:
 
@@ -152,7 +152,7 @@ Gets the list of all report definitions available to the current company.
 
 #### ⚠️ Error Codes:
 
-- `INVALID_ARGUMENT`: company_id is invalid
+- `INVALID_ARGUMENT`: companyId is invalid
 - `PERMISSION_DENIED`: Permission denied
 
 ---
@@ -174,21 +174,21 @@ Generates and returns report data based on the specified report ID and parameter
 
 #### 🔧 Request Parameters:
 
-| Field Name                      | Type       | Required | Description                                                                |
-|---------------------------------|------------|----------|----------------------------------------------------------------------------|
-| `pagination`                    | Pagination | Yes      | Pagination parameters (page_size, page_token)                              |
-| `company_id`                    | string     | Yes      | Company ID, used for permission control                                    |
-| `business_ids`                  | string[]   | No       | List of business unit IDs to include in the report (if null, includes all) |
-| `condition.id`                  | string     | Yes      | Report definition ID                                                       |
-| `condition.query_period`        | Interval   | Yes      | Time period for data collection                                            |
-| `condition.group_by_field_keys` | string[]   | No       | Optional list of field keys to group data by                               |
+| Field Name                   | Type       | Required | Description                                                                |
+|------------------------------|------------|----------|----------------------------------------------------------------------------|
+| `pagination`                 | Pagination | Yes      | Pagination parameters (pageSize, pageToken)                                |
+| `companyId`                  | string     | Yes      | Company ID, used for permission control                                    |
+| `businessIds`                | string[]   | No       | List of business unit IDs to include in the report (if null, includes all) |
+| `condition.id`               | string     | Yes      | Report definition ID                                                       |
+| `condition.queryPeriod`      | Interval   | Yes      | Time period for data collection                                            |
+| `condition.groupByFieldKeys` | string[]   | No       | Optional list of field keys to group data by                               |
 
 #### 📌 Return Value:
 
-| Field Name        | Type      | Description                                      |
-|-------------------|-----------|--------------------------------------------------|
-| `next_page_token` | string    | Token for retrieving the next page of results    |
-| `table_data`      | TableData | Structured report data including fields and rows |
+| Field Name      | Type      | Description                                      |
+|-----------------|-----------|--------------------------------------------------|
+| `nextPageToken` | string    | Token for retrieving the next page of results    |
+| `tableData`     | TableData | Structured report data including fields and rows |
 
 #### ⚠️ Error Codes:
 
@@ -204,7 +204,7 @@ Generates and returns report data based on the specified report ID and parameter
 
 ```json
 {
-  "company_id": "cmp_001"
+  "companyId": "cmp_001"
 }
 ```
 
@@ -213,16 +213,16 @@ Generates and returns report data based on the specified report ID and parameter
 ```json
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "condition": {
     "id": "rpt_sales_summary",
-    "query_period": {
-      "start_time": "2024-09-01T00:00:00Z",
-      "end_time": "2024-09-30T23:59:59Z"
+    "queryPeriod": {
+      "startTime": "2024-09-01T00:00:00Z",
+      "endTime": "2024-09-30T23:59:59Z"
     },
-    "group_by_field_keys": [
+    "groupByFieldKeys": [
       "product",
       "region"
     ]
@@ -244,9 +244,9 @@ TODO
 |----------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | How to determine if a report exists?                     | Use the `ListReports` interface to check if the report with the corresponding ID exists          |
 | Is it possible to get data for multiple reports at once? | Currently only supports querying a single report, need to call `FetchReportData` multiple times  |
-| How to group report data?                                | Pass the `group_by_field_keys` parameter in the `FetchReportData` request                        |
+| How to group report data?                                | Pass the `groupByFieldKeys` parameter in the `FetchReportData` request                           |
 | What data types are supported for report fields?         | Includes money, text, date, time, integer, decimal, percentage, duration, and complete date-time |
-| How to implement paginated queries?                      | Use `pagination.page_size` and `pagination.page_token` to implement pagination                   |
+| How to implement paginated queries?                      | Use `pagination.pageSize` and `pagination.pageToken` to implement pagination                     |
 
 ---
 

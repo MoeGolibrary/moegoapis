@@ -34,15 +34,15 @@ method, etc.
 |-----------------|---------------------------|------------------------|
 | `id`            | string                    | Unique identifier      |
 | `organizations` | Array(Organization)       | List of organizations  |
-| `event_types`   | Array(EventType)          | Subscribed event types |
-| `endpoint_url`  | string                    | URL to receive webhook |
-| `secret_token`  | string                    | Optional HMAC token    |
-| `content_type`  | ContentType               | Default is JSON        |
-| `is_active`     | bool                      | Whether active         |
-| `verify_ssl`    | bool                      | Whether to verify SSL  |
+| `eventTypes`    | Array(EventType)          | Subscribed event types |
+| `endpointUrl`   | string                    | URL to receive webhook |
+| `secretToken`   | string                    | Optional HMAC token    |
+| `contentType`   | ContentType               | Default is JSON        |
+| `isActive`      | bool                      | Whether active         |
+| `verifySsl`     | bool                      | Whether to verify SSL  |
 | `headers`       | map(string, HeaderValues) | Custom HTTP headers    |
-| `created_time`  | Timestamp                 | Creation time          |
-| `updated_time`  | Timestamp                 | Last update time       |
+| `createdTime`   | Timestamp                 | Creation time          |
+| `updatedTime`   | Timestamp                 | Last update time       |
 
 ### 2. WebhookDelivery
 
@@ -50,26 +50,26 @@ Represents a specific webhook push record.
 
 > By default, delivery logs are retained for up to **15 days**
 
-| Field Name         | Type                      | Description                         |
-|--------------------|---------------------------|-------------------------------------|
-| `id`               | string                    | Delivery log ID                     |
-| `webhook_id`       | string                    | Associated webhook ID               |
-| `event_type`       | EventType                 | Event type                          |
-| `event_id`         | string                    | Unique event ID                     |
-| `request_url`      | string                    | Request URL                         |
-| `delivered_to`     | string                    | Actual destination address          |
-| `request_headers`  | map(string, HeaderValues) | Request headers                     |
-| `request_body`     | bytes                     | The request body encoded in base64  |
-| `response_status`  | int32                     | HTTP status code                    |
-| `response_headers` | map(string, HeaderValues) | Response headers                    |
-| `response_body`    | bytes                     | The Response body encoded in base64 |
-| `delivered_at`     | Timestamp                 | Delivery timestamp                  |
-| `duration_ms`      | int64                     | Duration in milliseconds            |
-| `success`          | bool                      | Whether successful                  |
-| `error`            | string                    | Error message                       |
-| `retry_count`      | int32                     | Retry count                         |
-| `request_format`   | ContentType               | Request format                      |
-| `response_format`  | ContentType               | Response format                     |
+| Field Name        | Type                      | Description                         |
+|-------------------|---------------------------|-------------------------------------|
+| `id`              | string                    | Delivery log ID                     |
+| `webhookId`       | string                    | Associated webhook ID               |
+| `eventType`       | EventType                 | Event type                          |
+| `eventId`         | string                    | Unique event ID                     |
+| `requestUrl`      | string                    | Request URL                         |
+| `deliveredTo`     | string                    | Actual destination address          |
+| `requestHeaders`  | map(string, HeaderValues) | Request headers                     |
+| `requestBody`     | bytes                     | The request body encoded in base64  |
+| `responseStatus`  | int32                     | HTTP status code                    |
+| `responseHeaders` | map(string, HeaderValues) | Response headers                    |
+| `responseBody`    | bytes                     | The Response body encoded in base64 |
+| `deliveredAt`     | Timestamp                 | Delivery timestamp                  |
+| `durationMs`      | int64                     | Duration in milliseconds            |
+| `success`         | bool                      | Whether successful                  |
+| `error`           | string                    | Error message                       |
+| `retryCount`      | int32                     | Retry count                         |
+| `requestFormat`   | ContentType               | Request format                      |
+| `responseFormat`  | ContentType               | Response format                     |
 
 ### 3. Event Type
 
@@ -133,32 +133,32 @@ e.g., authentication token, headers).
 
 | Field Name      | Type                      | Required | Description                         |
 |-----------------|---------------------------|----------|-------------------------------------|
-| `endpoint_url`  | string                    | Yes      | URL to receive webhook              |
+| `endpointUrl`   | string                    | Yes      | URL to receive webhook              |
 | `organizations` | Array(Organization)       | No       | Organization list (empty means all) |
-| `event_types`   | Array(EventType)          | Yes      | List of event types (empty = none)  |
-| `secret_token`  | string                    | No       | Optional HMAC token                 |
-| `content_type`  | ContentType               | No       | Content format, default JSON        |
-| `is_active`     | bool                      | No       | Whether active, default true        |
-| `verify_ssl`    | bool                      | No       | Whether to verify SSL (recommended) |
+| `eventTypes`    | Array(EventType)          | Yes      | List of event types (empty = none)  |
+| `secretToken`   | string                    | No       | Optional HMAC token                 |
+| `contentType`   | ContentType               | No       | Content format, default JSON        |
+| `isActive`      | bool                      | No       | Whether active, default true        |
+| `verifySsl`     | bool                      | No       | Whether to verify SSL (recommended) |
 | `headers`       | map(string, HeaderValues) | No       | Custom HTTP headers                 |
 
 #### 💡 Example Request:
 
 ```json
 {
-  "endpoint_url": "https://your-service.com/webhook",
+  "endpointUrl": "https://your-service.com/webhook",
   "organizations": [
     {
       "id": "org_001"
     }
   ],
-  "event_types": [
+  "eventTypes": [
     "ORDER_CREATED",
     "PAYMENT_SUCCESS"
   ],
-  "secret_token": "my-secret-token",
-  "is_active": true,
-  "verify_ssl": true,
+  "secretToken": "my-secret-token",
+  "isActive": true,
+  "verifySsl": true,
   "headers": {
     "Authorization": {
       "values": [
@@ -246,13 +246,13 @@ secret token.
 | Field Name      | Type                      | Required | Description               |
 |-----------------|---------------------------|----------|---------------------------|
 | `id`            | string                    | Yes      | Webhook ID to update      |
-| `endpoint_url`  | string                    | Yes      | New endpoint URL          |
+| `endpointUrl`   | string                    | Yes      | New endpoint URL          |
 | `organizations` | Array(Organization)       | No       | Updated organization list |
-| `event_types`   | Array(EventType)          | Yes      | Updated event types       |
-| `secret_token`  | string                    | No       | Updated secret token      |
-| `content_type`  | ContentType               | No       | Updated content type      |
-| `is_active`     | bool                      | No       | Whether active            |
-| `verify_ssl`    | bool                      | No       | Whether to verify SSL     |
+| `eventTypes`    | Array(EventType)          | Yes      | Updated event types       |
+| `secretToken`   | string                    | No       | Updated secret token      |
+| `contentType`   | ContentType               | No       | Updated content type      |
+| `isActive`      | bool                      | No       | Whether active            |
+| `verifySsl`     | bool                      | No       | Whether to verify SSL     |
 | `headers`       | map(string, HeaderValues) | No       | Custom HTTP headers       |
 
 #### 📌 Return Value:
@@ -324,20 +324,20 @@ Lists all webhooks under the current account, supporting filtering by status, ev
 
 #### 🔧 Request Parameters:
 
-| Field Name            | Type             | Required | Description                            |
-|-----------------------|------------------|----------|----------------------------------------|
-| `pagination`          | Pagination       | Yes      | Pagination info: page_size, page_token |
-| `filter.is_active`    | bool             | No       | Filter by active status                |
-| `filter.event_types`  | Array(EventType) | No       | Filter by event types                  |
-| `filter.created_time` | Interval         | No       | Filter by creation time                |
-| `filter.updated_time` | Interval         | No       | Filter by update time                  |
+| Field Name           | Type             | Required | Description                          |
+|----------------------|------------------|----------|--------------------------------------|
+| `pagination`         | Pagination       | Yes      | Pagination info: pageSize, pageToken |
+| `filter.isActive`    | bool             | No       | Filter by active status              |
+| `filter.eventTypes`  | Array(EventType) | No       | Filter by event types                |
+| `filter.createdTime` | Interval         | No       | Filter by creation time              |
+| `filter.updatedTime` | Interval         | No       | Filter by update time                |
 
 #### 📌 Return Value:
 
-| Field Name        | Type             | Description                             |
-|-------------------|------------------|-----------------------------------------|
-| `next_page_token` | string           | Token for next page                     |
-| `webhooks`        | Array(`Webhook`) | List of matching webhook configurations |
+| Field Name      | Type             | Description                             |
+|-----------------|------------------|-----------------------------------------|
+| `nextPageToken` | string           | Token for next page                     |
+| `webhooks`      | Array(`Webhook`) | List of matching webhook configurations |
 
 #### ⚠️ Error Code:
 
@@ -365,11 +365,11 @@ default.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type      | Required | Description                       |
-|--------------|-----------|----------|-----------------------------------|
-| `id`         | string    | Yes      | Webhook ID to test                |
-| `event_type` | EventType | No       | Custom event type (default: PING) |
-| `payload`    | bytes     | No       | Custom payload content            |
+| Field Name  | Type      | Required | Description                       |
+|-------------|-----------|----------|-----------------------------------|
+| `id`        | string    | Yes      | Webhook ID to test                |
+| `eventType` | EventType | No       | Custom event type (default: PING) |
+| `payload`   | bytes     | No       | Custom payload content            |
 
 #### 📌 Return Value:
 
@@ -441,20 +441,20 @@ Lists all push records for a given webhook, supports filtering by event type, su
 
 #### 🔧 Request Parameters:
 
-| Field Name             | Type             | Required | Description                   |
-|------------------------|------------------|----------|-------------------------------|
-| `pagination`           | Pagination       | Yes      | Pagination info               |
-| `webhook_id`           | string           | Yes      | Associated webhook ID         |
-| `filter.event_types`   | Array(EventType) | No       | Filter by event types         |
-| `filter.success`       | bool             | No       | Filter by success status      |
-| `filter.delivery_time` | Interval         | No       | Filter by delivery time range |
+| Field Name            | Type             | Required | Description                   |
+|-----------------------|------------------|----------|-------------------------------|
+| `pagination`          | Pagination       | Yes      | Pagination info               |
+| `webhookId`           | string           | Yes      | Associated webhook ID         |
+| `filter.eventTypes`   | Array(EventType) | No       | Filter by event types         |
+| `filter.success`      | bool             | No       | Filter by success status      |
+| `filter.deliveryTime` | Interval         | No       | Filter by delivery time range |
 
 #### 📌 Return Value:
 
-| Field Name        | Type                     | Description                       |
-|-------------------|--------------------------|-----------------------------------|
-| `next_page_token` | string                   | Token for next page               |
-| `deliveries`      | Array(`WebhookDelivery`) | List of matching delivery objects |
+| Field Name      | Type                     | Description                       |
+|-----------------|--------------------------|-----------------------------------|
+| `nextPageToken` | string                   | Token for next page               |
+| `deliveries`    | Array(`WebhookDelivery`) | List of matching delivery objects |
 
 #### ⚠️ Error Code:
 
@@ -481,10 +481,10 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description              |
-|--------------|--------|----------|--------------------------|
-| `id`         | string | Yes      | Delivery log ID to retry |
-| `webhook_id` | string | Yes      | Associated webhook ID    |
+| Field Name  | Type   | Required | Description              |
+|-------------|--------|----------|--------------------------|
+| `id`        | string | Yes      | Delivery log ID to retry |
+| `webhookId` | string | Yes      | Associated webhook ID    |
 
 #### 📌 Return Value:
 
@@ -506,7 +506,7 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 ```json
 {
-  "endpoint_url": "https://your-service.com/webhook",
+  "endpointUrl": "https://your-service.com/webhook",
   "organizations": [
     {
       "id": "org_001"
@@ -515,13 +515,13 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
       "id": "org_002"
     }
   ],
-  "event_types": [
+  "eventTypes": [
     "ORDER_CREATED",
     "PAYMENT_SUCCESS"
   ],
-  "secret_token": "my-secret-token",
-  "is_active": true,
-  "verify_ssl": true,
+  "secretToken": "my-secret-token",
+  "isActive": true,
+  "verifySsl": true,
   "headers": {
     "Authorization": {
       "values": [
@@ -537,7 +537,7 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 ```json
 {
   "id": "whk_001",
-  "event_type": "PING",
+  "eventType": "PING",
   "payload": "{ \"test\": \"hello world\" }"
 }
 ```
@@ -546,15 +546,15 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 ```json
 {
-  "webhook_id": "whk_001",
+  "webhookId": "whk_001",
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
   "filter": {
     "success": false,
-    "delivery_time": {
-      "start_time": "2024-08-01T00:00:00Z",
-      "end_time": "2024-08-02T00:00:00Z"
+    "deliveryTime": {
+      "startTime": "2024-08-01T00:00:00Z",
+      "endTime": "2024-08-02T00:00:00Z"
     }
   }
 }
@@ -617,8 +617,8 @@ To ensure system stability and fair resource usage, the following default limits
 
 ## 🛡️ 9. Security Recommendations
 
-- ✅ Enable `verify_ssl` to prevent man-in-the-middle attacks.
-- ✅ Use `secret_token` to sign payloads (e.g., HMAC).
+- ✅ Enable `verifySsl` to prevent man-in-the-middle attacks.
+- ✅ Use `secretToken` to sign payloads (e.g., HMAC).
 - ✅ Set reasonable HTTP headers, such as Bearer Token.
 - ✅ Control access to ensure only authorized users can operate webhooks.
 - ✅ Avoid exposing sensitive information in `headers` or `payload`.

@@ -108,23 +108,23 @@ You can register a new Webhook using Moego's RESTful API.
 
 #### ✅ Required Fields
 
-| Field          | Type   | Description                      |
-|----------------|--------|----------------------------------|
-| `endpoint_url` | string | Webhook receiving endpoint URL   |
-| `event_types`  | array  | List of event types to subscribe |
+| Field         | Type   | Description                      |
+|---------------|--------|----------------------------------|
+| `endpointUrl` | string | Webhook receiving endpoint URL   |
+| `eventTypes`  | array  | List of event types to subscribe |
 
 #### 🎨 Example Request
 
 ```json
 {
-  "endpoint_url": "https://your-service.com/webhook-endpoint",
-  "event_types": [
+  "endpointUrl": "https://your-service.com/webhook-endpoint",
+  "eventTypes": [
     "HEALTH_CHECK",
     "APPOINTMENT_CREATED"
   ],
-  "secret_token": "your_secure_token_here",
-  "is_active": true,
-  "verify_ssl": true,
+  "secretToken": "your_secure_token_here",
+  "isActive": true,
+  "verifySsl": true,
   "headers": {
     "Authorization": {
       "values": [
@@ -140,13 +140,13 @@ You can register a new Webhook using Moego's RESTful API.
 ```json
 {
   "id": "whk_001",
-  "endpoint_url": "https://your-service.com/webhook-endpoint",
-  "event_types": [
+  "endpointUrl": "https://your-service.com/webhook-endpoint",
+  "eventTypes": [
     "HEALTH_CHECK",
     "APPOINTMENT_CREATED"
   ],
-  "is_active": true,
-  "created_time": "2025-06-30T11:58:36Z"
+  "isActive": true,
+  "createdTime": "2025-06-30T11:58:36Z"
 }
 ```
 
@@ -205,7 +205,7 @@ return hmac.Equal([]byte(receivedSig), []byte(expectedSig))
 
 ```json
 {
-  "event_type": "HEALTH_CHECK",
+  "eventType": "HEALTH_CHECK",
   "payload": "aGVsbG8gd29ybGQ="
 }
 ```
@@ -240,7 +240,7 @@ Use `ListWebhookDeliveries` to retrieve historical records:
 
 ```json
 {
-  "webhook_id": "whk_001",
+  "webhookId": "whk_001",
   "filter": {
     "success": false
   }
@@ -295,7 +295,7 @@ Key steps to successfully integrate with Moego Webhook:
 
 | Error Code           | Description                                                               |
 |----------------------|---------------------------------------------------------------------------|
-| `ALREADY_EXISTS`     | A Webhook with the same `endpoint_url` already exists                     |
+| `ALREADY_EXISTS`     | A Webhook with the same `endpointUrl` already exists                      |
 | `NOT_FOUND`          | Requested Webhook ID or Delivery ID does not exist                        |
 | `PERMISSION_DENIED`  | Current user lacks permission to perform this action                      |
 | `INVALID_ARGUMENT`   | Invalid request parameters (e.g., malformed URL or missing fields)        |

@@ -30,26 +30,26 @@ Represents a retail product available for sale.
 
 #### Fields
 
-| Field Name                | Type                      | Description                                              |
-|---------------------------|---------------------------|----------------------------------------------------------|
-| `id`                      | string                    | Unique identifier for the product                        |
-| `business_id`             | string                    | ID of the business location associated with this product |
-| `name`                    | string                    | Name of the product                                      |
-| `description`             | string                    | Description of the product                               |
-| `sku`                     | string                    | Stock Keeping Unit (SKU)                                 |
-| `barcode`                 | string                    | Barcode used for scanning                                |
-| `image_url`               | string                    | URL to the product's image                               |
-| `category_name`           | string                    | Name of the category the product belongs to              |
-| `supplier`                | Supplier                  | Associated supplier information                          |
-| `supply_price`            | google.type.Money         | Cost price from the supplier                             |
-| `retail_price`            | google.type.Money         | Selling price to customers                               |
-| `special_price`           | google.type.Money         | Discounted price for limited time                        |
-| `tax_rate`                | double                    | Tax rate applied to this product                         |
-| `enable_staff_commission` | bool                      | Whether staff commission is enabled                      |
-| `stock`                   | int32                     | Current stock quantity                                   |
-| `deleted`                 | bool                      | Whether the product has been marked as deleted           |
-| `create_time`             | google.protobuf.Timestamp | When the product was created                             |
-| `update_time`             | google.protobuf.Timestamp | When the product was last updated                        |
+| Field Name              | Type                      | Description                                              |
+|-------------------------|---------------------------|----------------------------------------------------------|
+| `id`                    | string                    | Unique identifier for the product                        |
+| `businessId`            | string                    | ID of the business location associated with this product |
+| `name`                  | string                    | Name of the product                                      |
+| `description`           | string                    | Description of the product                               |
+| `sku`                   | string                    | Stock Keeping Unit (SKU)                                 |
+| `barcode`               | string                    | Barcode used for scanning                                |
+| `imageUrl`              | string                    | URL to the product's image                               |
+| `categoryName`          | string                    | Name of the category the product belongs to              |
+| `supplier`              | Supplier                  | Associated supplier information                          |
+| `supplyPrice`           | google.type.Money         | Cost price from the supplier                             |
+| `retailPrice`           | google.type.Money         | Selling price to customers                               |
+| `specialPrice`          | google.type.Money         | Discounted price for limited time                        |
+| `taxRate`               | double                    | Tax rate applied to this product                         |
+| `enableStaffCommission` | bool                      | Whether staff commission is enabled                      |
+| `stock`                 | int32                     | Current stock quantity                                   |
+| `deleted`               | bool                      | Whether the product has been marked as deleted           |
+| `createTime`            | google.protobuf.Timestamp | When the product was created                             |
+| `updateTime`            | google.protobuf.Timestamp | When the product was last updated                        |
 
 ---
 
@@ -59,17 +59,17 @@ Represents a product supplier.
 
 #### Fields
 
-| Field Name   | Type   | Description                        |
-|--------------|--------|------------------------------------|
-| `id`         | string | Unique identifier for the supplier |
-| `name`       | string | Name of the supplier               |
-| `first_name` | string | Contact person's first name        |
-| `last_name`  | string | Contact person's last name         |
-| `telephone`  | string | Landline telephone number          |
-| `mobile`     | string | Mobile phone number                |
-| `email`      | string | Email address                      |
-| `website`    | string | Website URL                        |
-| `address`    | string | Physical address                   |
+| Field Name  | Type   | Description                        |
+|-------------|--------|------------------------------------|
+| `id`        | string | Unique identifier for the supplier |
+| `name`      | string | Name of the supplier               |
+| `firstName` | string | Contact person's first name        |
+| `lastName`  | string | Contact person's last name         |
+| `telephone` | string | Landline telephone number          |
+| `mobile`    | string | Mobile phone number                |
+| `email`     | string | Email address                      |
+| `website`   | string | Website URL                        |
+| `address`   | string | Physical address                   |
 
 ---
 
@@ -114,18 +114,18 @@ Retrieves a paginated list of products based on specified criteria. Supports fil
 
 #### 🔧 Request Parameters:
 
-| Field Name     | Type          | Required | Description                                      |
-|----------------|---------------|----------|--------------------------------------------------|
-| `pagination`   | Pagination    | Yes      | Pagination info: page_size, page_token           |
-| `company_id`   | string        | Yes      | Company ID to scope products                     |
-| `business_ids` | Array(string) | Yes      | List of business locations to filter products by |
+| Field Name    | Type          | Required | Description                                      |
+|---------------|---------------|----------|--------------------------------------------------|
+| `pagination`  | Pagination    | Yes      | Pagination info: pageSize, pageToken             |
+| `companyId`   | string        | Yes      | Company ID to scope products                     |
+| `businessIds` | Array(string) | Yes      | List of business locations to filter products by |
 
 #### 📌 Return Value:
 
-| Field Name        | Type           | Description                                                          |
-|-------------------|----------------|----------------------------------------------------------------------|
-| `next_page_token` | string         | Token for retrieving the next page of results (empty if none remain) |
-| `products`        | Array(Product) | List of products matching the request criteria                       |
+| Field Name      | Type           | Description                                                          |
+|-----------------|----------------|----------------------------------------------------------------------|
+| `nextPageToken` | string         | Token for retrieving the next page of results (empty if none remain) |
+| `products`      | Array(Product) | List of products matching the request criteria                       |
 
 #### ⚠️ Error Codes:
 
@@ -141,10 +141,10 @@ Retrieves a paginated list of products based on specified criteria. Supports fil
 ```json
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001",
-  "business_ids": [
+  "companyId": "cmp_001",
+  "businessIds": [
     "biz_001",
     "biz_002"
   ]
@@ -165,7 +165,7 @@ TODO
 |----------------------------------------------------------|--------------------------------------------------------------------|
 | How to verify if a product exists?                       | Use `ListProducts` with specific filters                           |
 | Can I list products for multiple companies at once?      | Currently only supports listing products for one company at a time |
-| How to filter products by business location?             | Use `ListProducts` with `business_ids`                             |
+| How to filter products by business location?             | Use `ListProducts` with `businessIds`                              |
 | Why does creating a product return "resource exhausted"? | Not applicable — products are typically not created via this API   |
 | How to handle out-of-stock products?                     | Use `ListProducts` with `stock = 0` filter                         |
 

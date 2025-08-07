@@ -36,11 +36,11 @@ other time when the staff member is not available for appointments.
 | Field Name    | Type                 | Description                                                                                                                            |
 |---------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `id`          | string               | Unique identifier for the block                                                                                                        |
-| `staff_id`    | string               | ID of the staff member whose schedule is being blocked                                                                                 |
+| `staffId`     | string               | ID of the staff member whose schedule is being blocked                                                                                 |
 | `duration`    | google.type.Interval | The time interval during which the staff member is unavailable (uses Google's standard Interval type to represent start and end times) |
 | `description` | string               | Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting")                                              |
-| `color_code`  | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
-| `business_id` | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
+| `colorCode`   | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
+| `businessId`  | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
 
 ---
 
@@ -88,22 +88,22 @@ Creates a new block in a staff member's schedule.
 
 | Field Name    | Type     | Required | Description                                                                                                                     |
 |---------------|----------|----------|---------------------------------------------------------------------------------------------------------------------------------|
-| `business_id` | string   | Yes      | Company identifier for scoping the block creation                                                                               |
-| `staff_id`    | string   | Yes      | ID of the staff member whose schedule will be blocked                                                                           |
+| `businessId`  | string   | Yes      | Company identifier for scoping the block creation                                                                               |
+| `staffId`     | string   | Yes      | ID of the staff member whose schedule will be blocked                                                                           |
 | `duration`    | Interval | Yes      | Time interval during which the staff member will be unavailable (must have both start and end times specified)                  |
 | `description` | string   | No       | Optional description explaining why the time is being blocked off (examples: "Lunch break", "Team meeting", "Training session") |
-| `color_code`  | string   | No       | Optional color code for visual distinction in the calendar UI (should be a valid hex color code like "#FF0000" for red)         |
+| `colorCode`   | string   | No       | Optional color code for visual distinction in the calendar UI (should be a valid hex color code like "#FF0000" for red)         |
 
 #### 📌 Return Value:
 
 | Field Name    | Type                 | Description                                                                                                                            |
 |---------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `id`          | string               | Unique identifier for the block                                                                                                        |
-| `staff_id`    | string               | ID of the staff member whose schedule is being blocked                                                                                 |
+| `staffId`     | string               | ID of the staff member whose schedule is being blocked                                                                                 |
 | `duration`    | google.type.Interval | The time interval during which the staff member is unavailable (uses Google's standard Interval type to represent start and end times) |
 | `description` | string               | Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting")                                              |
-| `color_code`  | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
-| `business_id` | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
+| `colorCode`   | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
+| `businessId`  | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
 
 #### ⚠️ Error Codes:
 
@@ -140,11 +140,11 @@ Retrieves detailed information about a specific block by its ID.
 | Field Name    | Type                 | Description                                                                                                                            |
 |---------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
 | `id`          | string               | Unique identifier for the block                                                                                                        |
-| `staff_id`    | string               | ID of the staff member whose schedule is being blocked                                                                                 |
+| `staffId`     | string               | ID of the staff member whose schedule is being blocked                                                                                 |
 | `duration`    | google.type.Interval | The time interval during which the staff member is unavailable (uses Google's standard Interval type to represent start and end times) |
 | `description` | string               | Optional description of why the time is blocked off (e.g., "Lunch break", "Team meeting")                                              |
-| `color_code`  | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
-| `business_id` | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
+| `colorCode`   | string               | Color code used to visually distinguish this block in the calendar UI (should be a valid hex color code like "#FF0000" for red)        |
+| `businessId`  | string               | ID of the business where this block is created (used for access control and filtering blocks by business)                              |
 
 #### ⚠️ Error Codes:
 
@@ -159,14 +159,14 @@ Retrieves detailed information about a specific block by its ID.
 
 ```json
 {
-  "business_id": "biz_001",
-  "staff_id": "staff_001",
+  "businessId": "biz_001",
+  "staffId": "staff_001",
   "duration": {
-    "start_time": "2024-09-15T12:00:00Z",
-    "end_time": "2024-09-15T13:00:00Z"
+    "startTime": "2024-09-15T12:00:00Z",
+    "endTime": "2024-09-15T13:00:00Z"
   },
   "description": "Lunch break",
-  "color_code": "#FFA500"
+  "colorCode": "#FFA500"
 }
 ```
 

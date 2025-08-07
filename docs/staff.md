@@ -33,19 +33,19 @@ Applicable to scenarios like staff assignment, permission configuration, and sys
 
 Represents an employee or contractor who provides services in your business.
 
-| Field Name             | Type          | Description                                                 |
-|------------------------|---------------|-------------------------------------------------------------|
-| `id`                   | string        | Unique identifier (e.g., `"stf_001"`).                      |
-| `first_name`           | string        | First name of the staff member                              |
-| `last_name`            | string        | Last name of the staff member                               |
-| `avatar`               | string        | Photo URL of the staff member                               |
-| `phone`                | string        | Contact phone number (E.164 format)                         |
-| `email`                | string        | Email address                                               |
-| `role`                 | Role          | Assigned role and permissions                               |
-| `hired_time`           | Timestamp     | When the staff member was hired                             |
-| `working_business_ids` | Array(string) | List of business locations where this staff works           |
-| `mobile_van_id`        | string        | ID of the mobile van assigned to this staff (if applicable) |
-| `company_id`           | string        | ID of the parent company                                    |
+| Field Name           | Type          | Description                                                 |
+|----------------------|---------------|-------------------------------------------------------------|
+| `id`                 | string        | Unique identifier (e.g., `"stf_001"`).                      |
+| `firstName`          | string        | First name of the staff member                              |
+| `lastName`           | string        | Last name of the staff member                               |
+| `avatar`             | string        | Photo URL of the staff member                               |
+| `phone`              | string        | Contact phone number (E.164 format)                         |
+| `email`              | string        | Email address                                               |
+| `role`               | Role          | Assigned role and permissions                               |
+| `hiredTime`          | Timestamp     | When the staff member was hired                             |
+| `workingBusinessIds` | Array(string) | List of business locations where this staff works           |
+| `mobileVanId`        | string        | ID of the mobile van assigned to this staff (if applicable) |
+| `companyId`          | string        | ID of the parent company                                    |
 
 ---
 
@@ -154,14 +154,14 @@ reporting purposes.
 | Field Name   | Type       | Required | Description               |
 |--------------|------------|----------|---------------------------|
 | `pagination` | Pagination | Yes      | Page size and token       |
-| `company_id` | string     | Yes      | Company ID to list staffs |
+| `companyId`  | string     | Yes      | Company ID to list staffs |
 
 #### 📌 Return Value:
 
-| Field Name        | Type           | Description                             |
-|-------------------|----------------|-----------------------------------------|
-| `next_page_token` | string         | Token for retrieving the next page      |
-| `staffs`          | Array(`Staff`) | List of staff members matching criteria |
+| Field Name      | Type           | Description                             |
+|-----------------|----------------|-----------------------------------------|
+| `nextPageToken` | string         | Token for retrieving the next page      |
+| `staffs`        | Array(`Staff`) | List of staff members matching criteria |
 
 #### ⚠️ Error Code:
 
@@ -186,8 +186,8 @@ GET /v1/staffs/stf_001
 ```json
 {
   "id": "stf_001",
-  "first_name": "John",
-  "last_name": "Doe",
+  "firstName": "John",
+  "lastName": "Doe",
   "avatar": "https://example.com/images/john.jpg",
   "phone": "+12125551234",
   "email": "john.doe@example.com",
@@ -196,13 +196,13 @@ GET /v1/staffs/stf_001
     "name": "Administrator",
     "permissions": []
   },
-  "hired_time": "2020-01-15T08:00:00Z",
-  "working_business_ids": [
+  "hiredTime": "2020-01-15T08:00:00Z",
+  "workingBusinessIds": [
     "bus_001",
     "bus_002"
   ],
-  "mobile_van_id": "",
-  "company_id": "cmp_001"
+  "mobileVanId": "",
+  "companyId": "cmp_001"
 }
 ```
 
@@ -218,9 +218,9 @@ Content-Type: application/json
 
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001"
+  "companyId": "cmp_001"
 }
 ```
 
@@ -228,40 +228,40 @@ Content-Type: application/json
 
 ```json
 {
-  "next_page_token": "CBAQAA==",
+  "nextPageToken": "CBAQAA==",
   "staffs": [
     {
       "id": "stf_001",
-      "first_name": "John",
-      "last_name": "Doe",
+      "firstName": "John",
+      "lastName": "Doe",
       "email": "john.doe@example.com",
       "role": {
         "id": "rol_001",
         "name": "Administrator",
         "permissions": []
       },
-      "hired_time": "2020-01-15T08:00:00Z",
-      "working_business_ids": [
+      "hiredTime": "2020-01-15T08:00:00Z",
+      "workingBusinessIds": [
         "bus_001",
         "bus_002"
       ],
-      "company_id": "cmp_001"
+      "companyId": "cmp_001"
     },
     {
       "id": "stf_002",
-      "first_name": "Jane",
-      "last_name": "Smith",
+      "firstName": "Jane",
+      "lastName": "Smith",
       "email": "jane.smith@example.com",
       "role": {
         "id": "rol_002",
         "name": "Groomer",
         "permissions": []
       },
-      "hired_time": "2021-03-10T08:00:00Z",
-      "working_business_ids": [
+      "hiredTime": "2021-03-10T08:00:00Z",
+      "workingBusinessIds": [
         "bus_001"
       ],
-      "company_id": "cmp_001"
+      "companyId": "cmp_001"
     }
   ]
 }
@@ -280,9 +280,9 @@ TODO
 | Question                                           | Answer                                                            |
 |----------------------------------------------------|-------------------------------------------------------------------|
 | How can I verify if a staff member exists?         | Use `GetStaff` to check if the staff ID returns a valid response. |
-| Can I list all staff members at once?              | No. Results are paginated. Use `page_token` to fetch next set.    |
+| Can I list all staff members at once?              | No. Results are paginated. Use `pageToken` to fetch next set.     |
 | Why does listing staff return "permission denied"? | Ensure you have the correct access rights for this operation.     |
-| How to handle large result sets efficiently?       | Use pagination via `page_size` and `page_token`.                  |
+| How to handle large result sets efficiently?       | Use pagination via `pageSize` and `pageToken`.                    |
 
 ---
 

@@ -33,13 +33,13 @@ management.
 Represents a significant occurrence within the system that requires notification or processing. Events can be
 system-level operations, appointment status changes, or customer interactions.
 
-| Field Name   | Type      | Description                                                               |
-|--------------|-----------|---------------------------------------------------------------------------|
-| `id`         | string    | Unique identifier for the event (format: "evt_" followed by random chars) |
-| `type`       | Type      | Category of the event determining payload type and processing rules       |
-| `timestamp`  | Timestamp | When this event occurred (for ordering and processing)                    |
-| `company_id` | string    | ID of the company associated with the event (for routing/access control)  |
-| `payload`    | oneof     | Event-specific data based on the event type                               |
+| Field Name  | Type      | Description                                                               |
+|-------------|-----------|---------------------------------------------------------------------------|
+| `id`        | string    | Unique identifier for the event (format: "evt_" followed by random chars) |
+| `type`      | Type      | Category of the event determining payload type and processing rules       |
+| `timestamp` | Timestamp | When this event occurred (for ordering and processing)                    |
+| `companyId` | string    | ID of the company associated with the event (for routing/access control)  |
+| `payload`   | oneof     | Event-specific data based on the event type                               |
 
 ### 2. Event Types
 
@@ -119,8 +119,8 @@ message HealthCheck {
   "id": "evt_abc123",
   "type": "HEALTH_CHECK",
   "timestamp": "2024-08-01T12:00:00Z",
-  "company_id": "cmp_001",
-  "health_check": {
+  "companyId": "cmp_001",
+  "healthCheck": {
     "validation": "test_validation_string"
   }
 }
@@ -133,7 +133,7 @@ message HealthCheck {
   "id": "evt_def456",
   "type": "APPOINTMENT_CREATED",
   "timestamp": "2024-08-01T12:05:00Z",
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "appointment": {
     // Full appointment details from moego.business.appointment.v1.Appointment
   }
@@ -147,8 +147,8 @@ message HealthCheck {
   "id": "evt_ghi789",
   "type": "ONLINE_BOOKING_RECEIVED",
   "timestamp": "2024-08-01T12:10:00Z",
-  "company_id": "cmp_001",
-  "online_booking": {
+  "companyId": "cmp_001",
+  "onlineBooking": {
     // Full online booking details from moego.business.online_booking.v1.OnlineBooking
   }
 }

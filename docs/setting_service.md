@@ -38,19 +38,19 @@ Applicable to scenarios such as:
 
 Represents a specific service or add-on that can be provided to pets.
 
-| Field Name               | Type          | Description                                                  |
-|--------------------------|---------------|--------------------------------------------------------------|
-| `id`                     | string        | Unique identifier (`srv_` prefix)                            |
-| `name`                   | string        | Display name of the service                                  |
-| `service_item_type`      | ItemType      | Primary category of the service                              |
-| `category`               | string        | Subcategory for further classification                       |
-| `price`                  | Money         | Base price for the service                                   |
-| `service_type`           | Type          | Whether it's a standalone service or an add-on               |
-| `service_time`           | int32         | Duration in minutes                                          |
-| `available_all_business` | bool          | Whether available at all business locations                  |
-| `available_business_ids` | Array(string) | List of specific business IDs where the service is available |
-| `available_all_staff`    | bool          | Whether available to all staff                               |
-| `available_staff_ids`    | Array(string) | List of staff members who can perform this service           |
+| Field Name             | Type          | Description                                                  |
+|------------------------|---------------|--------------------------------------------------------------|
+| `id`                   | string        | Unique identifier (`srv_` prefix)                            |
+| `name`                 | string        | Display name of the service                                  |
+| `serviceItemType`      | ItemType      | Primary category of the service                              |
+| `category`             | string        | Subcategory for further classification                       |
+| `price`                | Money         | Base price for the service                                   |
+| `serviceType`          | Type          | Whether it's a standalone service or an add-on               |
+| `serviceTime`          | int32         | Duration in minutes                                          |
+| `availableAllBusiness` | bool          | Whether available at all business locations                  |
+| `availableBusinessIds` | Array(string) | List of specific business IDs where the service is available |
+| `availableAllStaff`    | bool          | Whether available to all staff                               |
+| `availableStaffIds`    | Array(string) | List of staff members who can perform this service           |
 
 #### Enum: ItemType
 
@@ -73,10 +73,10 @@ Represents a specific service or add-on that can be provided to pets.
 
 A lodging represents a type of accommodation and its associated units, typically used for boarding services.
 
-| Field Name      | Type               | Description                              |
-|-----------------|--------------------|------------------------------------------|
-| `lodging_type`  | LodgingType        | The type of lodging (e.g., room, area)   |
-| `lodging_units` | Array(LodgingUnit) | List of individual units within the type |
+| Field Name     | Type               | Description                              |
+|----------------|--------------------|------------------------------------------|
+| `lodgingType`  | LodgingType        | The type of lodging (e.g., room, area)   |
+| `lodgingUnits` | Array(LodgingUnit) | List of individual units within the type |
 
 ---
 
@@ -97,12 +97,12 @@ Represents special handling instructions or medical alerts for a pet.
 
 Represents a label that can be applied to customers for categorization and filtering purposes.
 
-| Field Name          | Type      | Description                                       |
-|---------------------|-----------|---------------------------------------------------|
-| `id`                | string    | Unique identifier                                 |
-| `name`              | string    | Display name of the tag                           |
-| `last_updated_by`   | string    | ID of the staff member who last modified this tag |
-| `last_updated_time` | Timestamp | When this tag was last modified                   |
+| Field Name        | Type      | Description                                       |
+|-------------------|-----------|---------------------------------------------------|
+| `id`              | string    | Unique identifier                                 |
+| `name`            | string    | Display name of the tag                           |
+| `lastUpdatedBy`   | string    | ID of the staff member who last modified this tag |
+| `lastUpdatedTime` | Timestamp | When this tag was last modified                   |
 
 ---
 
@@ -143,14 +143,14 @@ Represents the status of an action taken on a lead.
 
 Describes the type of lodging available.
 
-| Field Name          | Type            | Description                            |
-|---------------------|-----------------|----------------------------------------|
-| `id`                | string          | Unique identifier for the lodging type |
-| `name`              | string          | Name of the lodging type               |
-| `description`       | string          | Optional description                   |
-| `photo_list`        | Array(string)   | URLs to photos of this lodging type    |
-| `max_pet_num`       | int32           | Maximum number of pets allowed         |
-| `lodging_unit_type` | LodgingUnitType | Type of lodging unit                   |
+| Field Name        | Type            | Description                            |
+|-------------------|-----------------|----------------------------------------|
+| `id`              | string          | Unique identifier for the lodging type |
+| `name`            | string          | Name of the lodging type               |
+| `description`     | string          | Optional description                   |
+| `photoList`       | Array(string)   | URLs to photos of this lodging type    |
+| `maxPetNum`       | int32           | Maximum number of pets allowed         |
+| `lodgingUnitType` | LodgingUnitType | Type of lodging unit                   |
 
 ---
 
@@ -221,19 +221,19 @@ Registers a new service definition with base attributes.
 
 #### 🔧 Request Parameters:
 
-| Field Name               | Type          | Required | Description                                   |
-|--------------------------|---------------|----------|-----------------------------------------------|
-| `company_id`             | string        | Yes      | ID of the company creating the service        |
-| `name`                   | string        | Yes      | Service name                                  |
-| `business_ids`           | Array(string) | No       | Business locations where service is available |
-| `service_item_type`      | ItemType      | Yes      | Service category                              |
-| `price`                  | Money         | Yes      | Base price                                    |
-| `service_type`           | Type          | Yes      | Whether primary or add-on                     |
-| `service_time`           | int32         | No       | Duration in minutes                           |
-| `available_all_business` | bool          | No       | Available at all locations                    |
-| `available_business_ids` | Array(string) | No       | Specific business IDs if not all              |
-| `available_all_staff`    | bool          | No       | Available to all staff                        |
-| `available_staff_ids`    | Array(string) | No       | Specific staff IDs                            |
+| Field Name             | Type          | Required | Description                                   |
+|------------------------|---------------|----------|-----------------------------------------------|
+| `companyId`            | string        | Yes      | ID of the company creating the service        |
+| `name`                 | string        | Yes      | Service name                                  |
+| `businessIds`          | Array(string) | No       | Business locations where service is available |
+| `serviceItemType`      | ItemType      | Yes      | Service category                              |
+| `price`                | Money         | Yes      | Base price                                    |
+| `serviceType`          | Type          | Yes      | Whether primary or add-on                     |
+| `serviceTime`          | int32         | No       | Duration in minutes                           |
+| `availableAllBusiness` | bool          | No       | Available at all locations                    |
+| `availableBusinessIds` | Array(string) | No       | Specific business IDs if not all              |
+| `availableAllStaff`    | bool          | No       | Available to all staff                        |
+| `availableStaffIds`    | Array(string) | No       | Specific staff IDs                            |
 
 #### 📌 Return Value:
 
@@ -267,10 +267,10 @@ Retrieves detailed information about a specific service.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description            |
-|--------------|--------|----------|------------------------|
-| `company_id` | string | Yes      | Company owning service |
-| `id`         | string | Yes      | Service ID to retrieve |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company owning service |
+| `id`        | string | Yes      | Service ID to retrieve |
 
 #### 📌 Return Value:
 
@@ -304,19 +304,19 @@ Modifies existing service attributes.
 
 #### 🔧 Request Parameters:
 
-| Field Name               | Type          | Required | Description                 |
-|--------------------------|---------------|----------|-----------------------------|
-| `company_id`             | string        | Yes      | Company owning service      |
-| `id`                     | string        | Yes      | Service ID to update        |
-| `name`                   | string        | Yes      | Updated service name        |
-| `business_ids`           | Array(string) | No       | Updated business locations  |
-| `price`                  | Money         | Yes      | Updated base price          |
-| `service_time`           | int32         | No       | Updated duration            |
-| `available_all_business` | bool          | No       | Updated availability status |
-| `available_business_ids` | Array(string) | No       | Updated business IDs        |
-| `available_all_staff`    | bool          | No       | Updated staff availability  |
-| `available_staff_ids`    | Array(string) | No       | Updated staff member list   |
-| `inactive`               | bool          | No       | Mark service as inactive    |
+| Field Name             | Type          | Required | Description                 |
+|------------------------|---------------|----------|-----------------------------|
+| `companyId`            | string        | Yes      | Company owning service      |
+| `id`                   | string        | Yes      | Service ID to update        |
+| `name`                 | string        | Yes      | Updated service name        |
+| `businessIds`          | Array(string) | No       | Updated business locations  |
+| `price`                | Money         | Yes      | Updated base price          |
+| `serviceTime`          | int32         | No       | Updated duration            |
+| `availableAllBusiness` | bool          | No       | Updated availability status |
+| `availableBusinessIds` | Array(string) | No       | Updated business IDs        |
+| `availableAllStaff`    | bool          | No       | Updated staff availability  |
+| `availableStaffIds`    | Array(string) | No       | Updated staff member list   |
+| `inactive`             | bool          | No       | Mark service as inactive    |
 
 #### 📌 Return Value:
 
@@ -350,19 +350,19 @@ Lists services matching specified criteria.
 
 #### 🔧 Request Parameters:
 
-| Field Name          | Type            | Required | Description                  |
-|---------------------|-----------------|----------|------------------------------|
-| `company_id`        | string          | Yes      | Company owning services      |
-| `pagination`        | Pagination      | Yes      | Page size and token          |
-| `business_ids`      | Array(string)   | No       | Filter by business locations |
-| `filter.item_types` | Array(ItemType) | No       | Filter by service types      |
+| Field Name         | Type            | Required | Description                  |
+|--------------------|-----------------|----------|------------------------------|
+| `companyId`        | string          | Yes      | Company owning services      |
+| `pagination`       | Pagination      | Yes      | Page size and token          |
+| `businessIds`      | Array(string)   | No       | Filter by business locations |
+| `filter.itemTypes` | Array(ItemType) | No       | Filter by service types      |
 
 #### 📌 Return Value:
 
-| Field Name        | Type             | Description                        |
-|-------------------|------------------|------------------------------------|
-| `next_page_token` | string           | Token for retrieving the next page |
-| `services`        | Array(`Service`) | List of services matching criteria |
+| Field Name      | Type             | Description                        |
+|-----------------|------------------|------------------------------------|
+| `nextPageToken` | string           | Token for retrieving the next page |
+| `services`      | Array(`Service`) | List of services matching criteria |
 
 #### ⚠️ Error Code:
 
@@ -389,9 +389,9 @@ Retrieves all active pet codes defined for the company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description            |
-|--------------|--------|----------|------------------------|
-| `company_id` | string | Yes      | Company ID to retrieve |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
@@ -424,9 +424,9 @@ Retrieves all active customer tags defined for the company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description            |
-|--------------|--------|----------|------------------------|
-| `company_id` | string | Yes      | Company ID to retrieve |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
@@ -459,9 +459,9 @@ Retrieves a list of all lodging configurations defined for the company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description            |
-|--------------|--------|----------|------------------------|
-| `company_id` | string | Yes      | Company ID to retrieve |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
@@ -496,15 +496,15 @@ Lists all available customer referral sources for a company.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                           |
-|--------------|--------|----------|---------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list sources for |
+| Field Name  | Type   | Required | Description                           |
+|-------------|--------|----------|---------------------------------------|
+| `companyId` | string | Yes      | ID of the company to list sources for |
 
 #### 📌 Return Value:
 
-| Field Name         | Type                    | Description              |
-|--------------------|-------------------------|--------------------------|
-| `referral_sources` | Array(`ReferralSource`) | List of referral sources |
+| Field Name        | Type                    | Description              |
+|-------------------|-------------------------|--------------------------|
+| `referralSources` | Array(`ReferralSource`) | List of referral sources |
 
 #### ⚠️ Error Codes:
 
@@ -531,15 +531,15 @@ Returns a list of lead life cycles.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                          |
-|--------------|--------|----------|--------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list cycles for |
+| Field Name  | Type   | Required | Description                          |
+|-------------|--------|----------|--------------------------------------|
+| `companyId` | string | Yes      | ID of the company to list cycles for |
 
 #### 📌 Return Value:
 
-| Field Name    | Type               | Description              |
-|---------------|--------------------|--------------------------|
-| `life_cycles` | Array(`LifeCycle`) | List of lead life cycles |
+| Field Name   | Type               | Description              |
+|--------------|--------------------|--------------------------|
+| `lifeCycles` | Array(`LifeCycle`) | List of lead life cycles |
 
 #### ⚠️ Error Codes:
 
@@ -567,15 +567,15 @@ Returns a list of lead action statuses.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                            |
-|--------------|--------|----------|----------------------------------------|
-| `company_id` | string | Yes      | ID of the company to list statuses for |
+| Field Name  | Type   | Required | Description                            |
+|-------------|--------|----------|----------------------------------------|
+| `companyId` | string | Yes      | ID of the company to list statuses for |
 
 #### 📌 Return Value:
 
-| Field Name        | Type                  | Description                  |
-|-------------------|-----------------------|------------------------------|
-| `action_statuses` | Array(`ActionStatus`) | List of lead action statuses |
+| Field Name       | Type                  | Description                  |
+|------------------|-----------------------|------------------------------|
+| `actionStatuses` | Array(`ActionStatus`) | List of lead action statuses |
 
 #### ⚠️ Error Codes:
 
@@ -594,17 +594,17 @@ Request Body:
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "name": "Premium Grooming",
-  "service_item_type": "GROOMING",
+  "serviceItemType": "GROOMING",
   "price": {
-    "currency_code": "USD",
+    "currencyCode": "USD",
     "units": 75,
     "nanos": 0
   },
-  "service_type": "SERVICE",
-  "service_time": 90,
-  "available_all_business": true
+  "serviceType": "SERVICE",
+  "serviceTime": 90,
+  "availableAllBusiness": true
 }
 ```
 
@@ -614,16 +614,16 @@ Request Body:
 
 ```json
 {
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "business_ids": [
+  "businessIds": [
     "biz_001",
     "biz_002"
   ],
   "filter": {
-    "item_types": [
+    "itemTypes": [
       "GROOMING",
       "DAYCARE"
     ]
@@ -637,7 +637,7 @@ Request Body:
 
 ```json
 {
-  "company_id": "cmp_001"
+  "companyId": "cmp_001"
 }
 ```
 
@@ -647,17 +647,17 @@ Response Body:
 {
   "lodgings": [
     {
-      "lodging_type": {
+      "lodgingType": {
         "id": "lt_001",
         "name": "Deluxe Room",
         "description": "Spacious room with premium amenities.",
-        "photo_list": [
+        "photoList": [
           "https://example.com/photo1.jpg"
         ],
-        "max_pet_num": 2,
-        "lodging_unit_type": "ROOM"
+        "maxPetNum": 2,
+        "lodgingUnitType": "ROOM"
       },
-      "lodging_units": [
+      "lodgingUnits": [
         {
           "id": "lu_001",
           "name": "Room 101"
@@ -682,16 +682,16 @@ TODO
 
 ## ❓ 8. FAQ
 
-| Question                                                             | Answer                                                                                                                  |
-|----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------|
-| How can I verify if a service configuration is effective?            | Use `ListServices` to check if the service appears in the response with expected attributes.                            |
-| How can I prevent duplicate services from being created?             | Ensure that your system checks for existing services before creating new ones.                                          |
-| What should I do if a service creation returns "resource exhausted"? | Clean up unused services or contact support to request a quota increase.                                                |
-| Can I restrict services to specific business locations?              | Yes, via the `available_business_ids` field. Set `available_all_business = false` and specify the allowed business IDs. |
-| How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                               |
-| Why does updating a service return "not found"?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.                 |
-| How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.             |
-| How can I manage boarding accommodations effectively?                | Use `ListLodgings` to retrieve lodging types and units for consistent boarding management.                              |
+| Question                                                             | Answer                                                                                                              |
+|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|
+| How can I verify if a service configuration is effective?            | Use `ListServices` to check if the service appears in the response with expected attributes.                        |
+| How can I prevent duplicate services from being created?             | Ensure that your system checks for existing services before creating new ones.                                      |
+| What should I do if a service creation returns "resource exhausted"? | Clean up unused services or contact support to request a quota increase.                                            |
+| Can I restrict services to specific business locations?              | Yes, via the `availableBusinessIds` field. Set `availableAllBusiness = false` and specify the allowed business IDs. |
+| How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                           |
+| Why does updating a service return "not found"?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.             |
+| How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.         |
+| How can I manage boarding accommodations effectively?                | Use `ListLodgings` to retrieve lodging types and units for consistent boarding management.                          |
 
 ---
 

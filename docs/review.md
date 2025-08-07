@@ -39,19 +39,19 @@ Applicable to scenarios like:
 
 Represents customer feedback submitted after receiving services.
 
-| Field Name          | Type          | Description                                    |
-|---------------------|---------------|------------------------------------------------|
-| `id`                | string        | Unique identifier (e.g., `"rev_001"`).         |
-| `customer_id`       | string        | ID of the customer who submitted the review    |
-| `appointment_id`    | string        | ID of the appointment being reviewed           |
-| `staff_ids`         | Array(string) | IDs of staff members included in the review    |
-| `pet_ids`           | Array(string) | IDs of pets involved in the reviewed service   |
-| `source`            | Source        | Channel through which the review was submitted |
-| `score`             | uint32        | Customer satisfaction rating (scale: 1–5)      |
-| `content`           | string        | Detailed feedback content                      |
-| `review_time`       | Timestamp     | When the review was submitted by the customer  |
-| `created_time`      | Timestamp     | When this review was created in the system     |
-| `last_updated_time` | Timestamp     | When this review was last modified             |
+| Field Name        | Type          | Description                                    |
+|-------------------|---------------|------------------------------------------------|
+| `id`              | string        | Unique identifier (e.g., `"rev_001"`).         |
+| `customerId`      | string        | ID of the customer who submitted the review    |
+| `appointmentId`   | string        | ID of the appointment being reviewed           |
+| `staffIds`        | Array(string) | IDs of staff members included in the review    |
+| `petIds`          | Array(string) | IDs of pets involved in the reviewed service   |
+| `source`          | Source        | Channel through which the review was submitted |
+| `score`           | uint32        | Customer satisfaction rating (scale: 1–5)      |
+| `content`         | string        | Detailed feedback content                      |
+| `reviewTime`      | Timestamp     | When the review was submitted by the customer  |
+| `createdTime`     | Timestamp     | When this review was created in the system     |
+| `lastUpdatedTime` | Timestamp     | When this review was last modified             |
 
 #### Enum: Source
 
@@ -108,19 +108,19 @@ service quality.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                             |
-|--------------------|---------------|----------|-----------------------------------------|
-| `pagination`       | Pagination    | Yes      | Page size and token                     |
-| `business_id`      | string        | Yes      | Business location ID to scope reviews   |
-| `filter.sources`   | Array(Source) | No       | Feedback channels to include in results |
-| `filter.staff_ids` | Array(string) | No       | Staff members to filter reviews by      |
+| Field Name        | Type          | Required | Description                             |
+|-------------------|---------------|----------|-----------------------------------------|
+| `pagination`      | Pagination    | Yes      | Page size and token                     |
+| `businessId`      | string        | Yes      | Business location ID to scope reviews   |
+| `filter.sources`  | Array(Source) | No       | Feedback channels to include in results |
+| `filter.staffIds` | Array(string) | No       | Staff members to filter reviews by      |
 
 #### 📌 Return Value:
 
-| Field Name        | Type          | Description                                   |
-|-------------------|---------------|-----------------------------------------------|
-| `next_page_token` | string        | Token for retrieving the next page of results |
-| `reviews`         | Array(Review) | List of reviews matching the request criteria |
+| Field Name      | Type          | Description                                   |
+|-----------------|---------------|-----------------------------------------------|
+| `nextPageToken` | string        | Token for retrieving the next page of results |
+| `reviews`       | Array(Review) | List of reviews matching the request criteria |
 
 #### ⚠️ Error Codes:
 
@@ -142,9 +142,9 @@ Content-Type: application/json
 
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "business_id": "bus_001"
+  "businessId": "bus_001"
 }
 ```
 
@@ -152,41 +152,41 @@ Content-Type: application/json
 
 ```json
 {
-  "next_page_token": "CBAQAA==",
+  "nextPageToken": "CBAQAA==",
   "reviews": [
     {
       "id": "rev_001",
-      "customer_id": "cus_001",
-      "appointment_id": "apt_001",
-      "staff_ids": [
+      "customerId": "cus_001",
+      "appointmentId": "apt_001",
+      "staffIds": [
         "stf_001"
       ],
-      "pet_ids": [
+      "petIds": [
         "pet_001"
       ],
       "source": "PET_PARENT_PORTAL",
       "score": 5,
       "content": "Excellent service! My dog looked amazing.",
-      "review_time": "2023-09-15T10:00:00Z",
-      "created_time": "2023-09-15T10:05:00Z",
-      "last_updated_time": "2023-09-15T10:05:00Z"
+      "reviewTime": "2023-09-15T10:00:00Z",
+      "createdTime": "2023-09-15T10:05:00Z",
+      "lastUpdatedTime": "2023-09-15T10:05:00Z"
     },
     {
       "id": "rev_002",
-      "customer_id": "cus_002",
-      "appointment_id": "apt_002",
-      "staff_ids": [
+      "customerId": "cus_002",
+      "appointmentId": "apt_002",
+      "staffIds": [
         "stf_002"
       ],
-      "pet_ids": [
+      "petIds": [
         "pet_002"
       ],
       "source": "SMS",
       "score": 4,
       "content": "Good experience overall.",
-      "review_time": "2023-09-16T11:00:00Z",
-      "created_time": "2023-09-16T11:05:00Z",
-      "last_updated_time": "2023-09-16T11:05:00Z"
+      "reviewTime": "2023-09-16T11:00:00Z",
+      "createdTime": "2023-09-16T11:05:00Z",
+      "lastUpdatedTime": "2023-09-16T11:05:00Z"
     }
   ]
 }
@@ -204,12 +204,12 @@ Content-Type: application/json
 
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "business_id": "bus_001",
+  "businessId": "bus_001",
   "filter": {
     "sources": ["SMS", "PET_PARENT_PORTAL"],
-    "staff_ids": ["stf_001"]
+    "staffIds": ["stf_001"]
   }
 }
 ```
@@ -218,24 +218,24 @@ Content-Type: application/json
 
 ```json
 {
-  "next_page_token": "",
+  "nextPageToken": "",
   "reviews": [
     {
       "id": "rev_001",
-      "customer_id": "cus_001",
-      "appointment_id": "apt_001",
-      "staff_ids": [
+      "customerId": "cus_001",
+      "appointmentId": "apt_001",
+      "staffIds": [
         "stf_001"
       ],
-      "pet_ids": [
+      "petIds": [
         "pet_001"
       ],
       "source": "PET_PARENT_PORTAL",
       "score": 5,
       "content": "Excellent service! My dog looked amazing.",
-      "review_time": "2023-09-15T10:00:00Z",
-      "created_time": "2023-09-15T10:05:00Z",
-      "last_updated_time": "2023-09-15T10:05:00Z"
+      "reviewTime": "2023-09-15T10:00:00Z",
+      "createdTime": "2023-09-15T10:05:00Z",
+      "lastUpdatedTime": "2023-09-15T10:05:00Z"
     }
   ]
 }
@@ -251,13 +251,13 @@ TODO
 
 ## ❓ 8. FAQ
 
-| Question                                             | Answer                                                                               |
-|------------------------------------------------------|--------------------------------------------------------------------------------------|
-| How do I retrieve all reviews for a business?        | Use `ListReviews` with the `business_id` parameter.                                  |
-| Can I filter reviews by multiple staff members?      | Yes, provide an array of staff IDs in the `filter.staff_ids` field.                  |
-| How are reviews sorted?                              | Results are typically sorted by `review_time` descending unless otherwise specified. |
-| Why does listing reviews return "permission denied"? | Ensure you have the correct access rights for this operation.                        |
-| How do I handle large result sets efficiently?       | Use pagination via `page_size` and `page_token`.                                     |
+| Question                                             | Answer                                                                              |
+|------------------------------------------------------|-------------------------------------------------------------------------------------|
+| How do I retrieve all reviews for a business?        | Use `ListReviews` with the `businessId` parameter.                                  |
+| Can I filter reviews by multiple staff members?      | Yes, provide an array of staff IDs in the `filter.staffIds` field.                  |
+| How are reviews sorted?                              | Results are typically sorted by `reviewTime` descending unless otherwise specified. |
+| Why does listing reviews return "permission denied"? | Ensure you have the correct access rights for this operation.                       |
+| How do I handle large result sets efficiently?       | Use pagination via `pageSize` and `pageToken`.                                      |
 
 ---
 

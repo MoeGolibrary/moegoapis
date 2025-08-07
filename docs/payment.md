@@ -54,21 +54,21 @@ and associated fees.
 | `RETAIL`             | Payment for retail product purchases                           |
 | `MEMBERSHIP`         | Payment for membership fees or subscriptions                   |
 
-| Field Name          | Type                      | Description                                                      |
-|---------------------|---------------------------|------------------------------------------------------------------|
-| `id`                | string                    | Unique identifier for the payment (format: "py_" + random chars) |
-| `business_id`       | string                    | ID of the business location processing the payment               |
-| `order_id`          | string                    | ID of the order being paid for                                   |
-| `customer_id`       | string                    | ID of the customer making the payment                            |
-| `customer_name`     | string                    | Display name of the customer                                     |
-| `method`            | string                    | Payment method used (e.g., "credit_card", "cash", "check")       |
-| `status`            | Status                    | Current status of the payment                                    |
-| `module`            | Module                    | Business module associated with the payment                      |
-| `amount`            | google.type.Money         | Amount being processed                                           |
-| `processing_fee`    | google.type.Money         | Fees charged by payment processor                                |
-| `refund_amount`     | google.type.Money         | Amount that has been refunded                                    |
-| `created_time`      | google.protobuf.Timestamp | When this payment was created                                    |
-| `last_updated_time` | google.protobuf.Timestamp | When this payment was last modified                              |
+| Field Name        | Type                      | Description                                                      |
+|-------------------|---------------------------|------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the payment (format: "py_" + random chars) |
+| `businessId`      | string                    | ID of the business location processing the payment               |
+| `orderId`         | string                    | ID of the order being paid for                                   |
+| `customerId`      | string                    | ID of the customer making the payment                            |
+| `customerName`    | string                    | Display name of the customer                                     |
+| `method`          | string                    | Payment method used (e.g., "credit_card", "cash", "check")       |
+| `status`          | Status                    | Current status of the payment                                    |
+| `module`          | Module                    | Business module associated with the payment                      |
+| `amount`          | google.type.Money         | Amount being processed                                           |
+| `processingFee`   | google.type.Money         | Fees charged by payment processor                                |
+| `refundAmount`    | google.type.Money         | Amount that has been refunded                                    |
+| `createdTime`     | google.protobuf.Timestamp | When this payment was created                                    |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this payment was last modified                              |
 
 ---
 
@@ -120,21 +120,21 @@ Retrieves detailed information about a specific payment by its ID.
 
 #### 📌 Return Value:
 
-| Field Name          | Type                      | Description                                                      |
-|---------------------|---------------------------|------------------------------------------------------------------|
-| `id`                | string                    | Unique identifier for the payment (format: "py_" + random chars) |
-| `business_id`       | string                    | ID of the business location processing the payment               |
-| `order_id`          | string                    | ID of the order being paid for                                   |
-| `customer_id`       | string                    | ID of the customer making the payment                            |
-| `customer_name`     | string                    | Display name of the customer                                     |
-| `method`            | string                    | Payment method used (e.g., "credit_card", "cash", "check")       |
-| `status`            | Status                    | Current status of the payment                                    |
-| `module`            | Module                    | Business module associated with the payment                      |
-| `amount`            | google.type.Money         | Amount being processed                                           |
-| `processing_fee`    | google.type.Money         | Fees charged by payment processor                                |
-| `refund_amount`     | google.type.Money         | Amount that has been refunded                                    |
-| `created_time`      | google.protobuf.Timestamp | When this payment was created                                    |
-| `last_updated_time` | google.protobuf.Timestamp | When this payment was last modified                              |
+| Field Name        | Type                      | Description                                                      |
+|-------------------|---------------------------|------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the payment (format: "py_" + random chars) |
+| `businessId`      | string                    | ID of the business location processing the payment               |
+| `orderId`         | string                    | ID of the order being paid for                                   |
+| `customerId`      | string                    | ID of the customer making the payment                            |
+| `customerName`    | string                    | Display name of the customer                                     |
+| `method`          | string                    | Payment method used (e.g., "credit_card", "cash", "check")       |
+| `status`          | Status                    | Current status of the payment                                    |
+| `module`          | Module                    | Business module associated with the payment                      |
+| `amount`          | google.type.Money         | Amount being processed                                           |
+| `processingFee`   | google.type.Money         | Fees charged by payment processor                                |
+| `refundAmount`    | google.type.Money         | Amount that has been refunded                                    |
+| `createdTime`     | google.protobuf.Timestamp | When this payment was created                                    |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this payment was last modified                              |
 
 #### ⚠️ Error Codes:
 
@@ -161,18 +161,18 @@ Retrieves a paginated list of payments based on specified criteria. Supports fil
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                                      |
-|--------------------|---------------|----------|--------------------------------------------------|
-| `pagination`       | Pagination    | Yes      | Pagination info: page_size, page_token           |
-| `company_id`       | string        | Yes      | Company ID to scope payments                     |
-| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter payments by |
+| Field Name        | Type          | Required | Description                                      |
+|-------------------|---------------|----------|--------------------------------------------------|
+| `pagination`      | Pagination    | Yes      | Pagination info: pageSize, pageToken             |
+| `companyId`       | string        | Yes      | Company ID to scope payments                     |
+| `filter.orderIds` | Array(string) | No       | Optional list of order IDs to filter payments by |
 
 #### 📌 Return Value:
 
-| Field Name        | Type           | Description                                                          |
-|-------------------|----------------|----------------------------------------------------------------------|
-| `next_page_token` | string         | Token for retrieving the next page of results (empty if none remain) |
-| `payments`        | Array(Payment) | List of payments matching the request criteria                       |
+| Field Name      | Type           | Description                                                          |
+|-----------------|----------------|----------------------------------------------------------------------|
+| `nextPageToken` | string         | Token for retrieving the next page of results (empty if none remain) |
+| `payments`      | Array(Payment) | List of payments matching the request criteria                       |
 
 #### ⚠️ Error Codes:
 
@@ -196,11 +196,11 @@ Retrieves a paginated list of payments based on specified criteria. Supports fil
 ```json
 {
   "pagination": {
-    "page_size": 20
+    "pageSize": 20
   },
-  "company_id": "cmp_001",
+  "companyId": "cmp_001",
   "filter": {
-    "order_ids": [
+    "orderIds": [
       "ord_001",
       "ord_002"
     ]
@@ -222,7 +222,7 @@ TODO
 |----------------------------------------------------------|------------------------------------------------------------------------------------------|
 | How to verify if a payment exists?                       | Use `GetPayment` to check if the payment ID returns a valid response                     |
 | Can I list payments for multiple companies at once?      | Currently only supports listing payments for one company at a time                       |
-| How to filter payments by order?                         | Use `ListPayments` with `filter.order_ids`                                               |
+| How to filter payments by order?                         | Use `ListPayments` with `filter.orderIds`                                                |
 | Why does creating a payment return "resource exhausted"? | Not applicable — payments are typically not created via this API                         |
 | How to handle failed payments?                           | Use `GetPayment` to check status and determine next steps based on business requirements |
 
