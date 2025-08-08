@@ -207,7 +207,13 @@ type Appointment struct {
 	// int64, The raw numeric ID of the appointment.
 	// This field is restricted and only populated for API consumers
 	// with specific permissions. For all other users, this field will be 0.
-	RawId         *int64 `protobuf:"varint,22,opt,name=raw_id,json=rawId,proto3,oneof" json:"raw_id,omitempty"`
+	RawId *int64 `protobuf:"varint,22,opt,name=raw_id,json=rawId,proto3,oneof" json:"raw_id,omitempty"`
+	// timestamp, When the appointment was confirmed.
+	ConfirmedTime *timestamppb.Timestamp `protobuf:"bytes,23,opt,name=confirmed_time,json=confirmedTime,proto3,oneof" json:"confirmed_time,omitempty"`
+	// timestamp, When the appointment was ready.
+	ReadyTime *timestamppb.Timestamp `protobuf:"bytes,24,opt,name=ready_time,json=readyTime,proto3,oneof" json:"ready_time,omitempty"`
+	// timestamp, When the appointment was canceled.
+	CanceledTime  *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=canceled_time,json=canceledTime,proto3,oneof" json:"canceled_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -396,12 +402,32 @@ func (x *Appointment) GetRawId() int64 {
 	return 0
 }
 
+func (x *Appointment) GetConfirmedTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ConfirmedTime
+	}
+	return nil
+}
+
+func (x *Appointment) GetReadyTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ReadyTime
+	}
+	return nil
+}
+
+func (x *Appointment) GetCanceledTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CanceledTime
+	}
+	return nil
+}
+
 var File_moego_business_appointment_v1_appointment_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xf1\n" +
-	"\n" +
+	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xf3\f\n" +
 	"\vAppointment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -430,7 +456,11 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\rcheck_in_time\x18\x13 \x01(\v2\x1a.google.protobuf.TimestampR\vcheckInTime\x12@\n" +
 	"\x0echeck_out_time\x18\x14 \x01(\v2\x1a.google.protobuf.TimestampR\fcheckOutTime\x121\n" +
 	"\x12booking_request_id\x18\x15 \x01(\tH\x00R\x10bookingRequestId\x88\x01\x01\x12\x1a\n" +
-	"\x06raw_id\x18\x16 \x01(\x03H\x01R\x05rawId\x88\x01\x01\"w\n" +
+	"\x06raw_id\x18\x16 \x01(\x03H\x01R\x05rawId\x88\x01\x01\x12F\n" +
+	"\x0econfirmed_time\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\rconfirmedTime\x88\x01\x01\x12>\n" +
+	"\n" +
+	"ready_time\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\x03R\treadyTime\x88\x01\x01\x12D\n" +
+	"\rcanceled_time\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\fcanceledTime\x88\x01\x01\"w\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x0f\n" +
 	"\vUNCONFIRMED\x10\x01\x12\r\n" +
@@ -447,7 +477,10 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\fPARTIAL_PAID\x10\x02\x12\r\n" +
 	"\tFULL_PAID\x10\x03B\x15\n" +
 	"\x13_booking_request_idB\t\n" +
-	"\a_raw_idB\x9e\x01\n" +
+	"\a_raw_idB\x11\n" +
+	"\x0f_confirmed_timeB\r\n" +
+	"\v_ready_timeB\x10\n" +
+	"\x0e_canceled_timeB\x9e\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x10AppointmentProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (
@@ -487,11 +520,14 @@ var file_moego_business_appointment_v1_appointment_proto_depIdxs = []int32{
 	7,  // 9: moego.business.appointment.v1.Appointment.last_updated_time:type_name -> google.protobuf.Timestamp
 	7,  // 10: moego.business.appointment.v1.Appointment.check_in_time:type_name -> google.protobuf.Timestamp
 	7,  // 11: moego.business.appointment.v1.Appointment.check_out_time:type_name -> google.protobuf.Timestamp
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	7,  // 12: moego.business.appointment.v1.Appointment.confirmed_time:type_name -> google.protobuf.Timestamp
+	7,  // 13: moego.business.appointment.v1.Appointment.ready_time:type_name -> google.protobuf.Timestamp
+	7,  // 14: moego.business.appointment.v1.Appointment.canceled_time:type_name -> google.protobuf.Timestamp
+	15, // [15:15] is the sub-list for method output_type
+	15, // [15:15] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_appointment_proto_init() }

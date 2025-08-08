@@ -129,4 +129,14 @@ message Appointment {
   // This field is restricted and only populated for API consumers
   // with specific permissions. For all other users, this field will be 0.
   optional int64 raw_id = 22;
+
+  // timestamp, When the appointment was confirmed.
+  optional google.protobuf.Timestamp confirmed_time = 23;
+
+  // timestamp, When the appointment was ready.
+  optional google.protobuf.Timestamp ready_time = 24;
+
+  // timestamp, When the appointment was canceled.
+  optional google.protobuf.Timestamp canceled_time = 25;
+
 }

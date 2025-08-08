@@ -58,6 +58,9 @@ lifecycle from creation to completion.
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                    |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment                 |
 | `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users. |
+| `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                      |
+| `readyTime`         | timestamp (optional)    | When the appointment was ready                                          |
+| `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                       |
 
 #### Enum Definitions
 
