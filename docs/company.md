@@ -35,7 +35,7 @@ Represents a business entity in the system.
 
 | Field Name | Type       | Description                                                                  |
 |------------|------------|------------------------------------------------------------------------------|
-| `id`       | `string`   | Unique identifier (e.g., `"cmp_001"`).                                       |
+| `id`       | `string`   | Unique identifier (e.g., `"cmp_001"`), obfuscated ID string                  |
 | `name`     | `string`   | Legal name used in official communications and documents.                    |
 | `country`  | `string`   | ISO 3166-1 alpha-2 country code indicating where the company is registered.  |
 | `timezone` | `TimeZone` | Primary timezone for company operations (used for scheduling and reporting). |
@@ -97,9 +97,9 @@ Retrieves detailed information about a specific company.
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type     | Required | Description                      |
-|------------|----------|----------|----------------------------------|
-| `id`       | `string` | Yes      | Unique identifier of the company |
+| Field Name | Type     | Required | Description                                            |
+|------------|----------|----------|--------------------------------------------------------|
+| `id`       | `string` | Yes      | Unique identifier of the company, obfuscated ID string |
 
 #### 📌 Return Value:
 

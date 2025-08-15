@@ -40,9 +40,24 @@ To begin using the MoeGo APIs effectively, follow these steps:
     - Use the [`ListCompany`](docs/company.md) and [`ListBusiness`](docs/business.md) APIs to retrieve the necessary
       obfuscated IDs (`CompanyID`, `BusinessID`) and verify that your requests are targeting the correct entities.
 
-3. **(Optional) Configure Webhooks**
+3. **Validate with Postman**
 
-    - Set up [Webhooks](docs/webhook.md) to subscribe to events you care about, such as `APPOINTMENT_CREATED` or
+    - Use the [Postman collection](#try-it-now) to test and validate API calls before integrating them into your application.
+    - Replace the placeholder authorization token with your Base64-encoded API key.
+    - Review example requests and responses to understand API behavior and expected data formats.
+
+4. **Explore OpenAPI Specifications**
+
+    - Check the [OpenAPI specifications](#-openapi-specifications) to understand detailed API contracts, including request/response schemas, error codes, and endpoint parameters.
+    - Use these specifications with tools like Swagger UI or OpenAPI Generator to create client SDKs in your preferred programming language.
+
+5. **(Optional) Use Example Scripts**
+
+    - Use the provided example scripts like [`export_orders.py`](examples/export_orders.py) to quickly get started with common tasks such as exporting order data to CSV format.
+
+6. **(Optional) Configure Webhooks**
+
+    - Set up [Webhooks](#-webhook-integration) to subscribe to events you care about, such as `APPOINTMENT_CREATED` or
       `APPOINTMENT_UPDATED`. This enables real-time notifications for key business events.
 
 ---

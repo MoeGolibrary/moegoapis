@@ -33,21 +33,21 @@ Applicable to scenarios like location setup, customer-facing directories, and sy
 
 Represents a physical or virtual location where services are provided.
 
-| Field Name      | Type    | Description                                 |
-|-----------------|---------|---------------------------------------------|
-| `id`            | string  | Unique identifier (e.g., `"bus_001"`).      |
-| `name`          | string  | Display name of the business location       |
-| `avatar`        | string  | Photo URL of the business                   |
-| `phone`         | string  | Primary contact phone number (E.164 format) |
-| `businessPhone` | string  | Public business phone number                |
-| `email`         | string  | Contact email address                       |
-| `address`       | Address | Physical location details                   |
-| `website`       | string  | Official website URL                        |
-| `facebook`      | string  | Facebook page URL                           |
-| `instagram`     | string  | Instagram profile URL                       |
-| `yelp`          | string  | Yelp business page URL                      |
-| `google`        | string  | Google Business Profile URL                 |
-| `companyId`     | string  | ID of the parent company                    |
+| Field Name      | Type    | Description                                                 |
+|-----------------|---------|-------------------------------------------------------------|
+| `id`            | string  | Unique identifier (e.g., `"bus_001"`), obfuscated ID string |
+| `name`          | string  | Display name of the business location                       |
+| `avatar`        | string  | Photo URL of the business                                   |
+| `phone`         | string  | Primary contact phone number (E.164 format)                 |
+| `businessPhone` | string  | Public business phone number                                |
+| `email`         | string  | Contact email address                                       |
+| `address`       | Address | Physical location details                                   |
+| `website`       | string  | Official website URL                                        |
+| `facebook`      | string  | Facebook page URL                                           |
+| `instagram`     | string  | Instagram profile URL                                       |
+| `yelp`          | string  | Yelp business page URL                                      |
+| `google`        | string  | Google Business Profile URL                                 |
+| `companyId`     | string  | ID of the parent company, obfuscated ID string              |
 
 > 📝 **Note**: The `Address` type is defined in `common.v1.Address`.
 
@@ -92,9 +92,9 @@ Retrieves detailed information about a specific business location.
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type   | Required | Description             |
-|------------|--------|----------|-------------------------|
-| `id`       | string | Yes      | Business ID to retrieve |
+| Field Name | Type   | Required | Description                                   |
+|------------|--------|----------|-----------------------------------------------|
+| `id`       | string | Yes      | Business ID to retrieve, obfuscated ID string |
 
 #### 📌 Return Value:
 
@@ -131,10 +131,10 @@ customer-facing location directories.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description                   |
-|--------------|------------|----------|-------------------------------|
-| `pagination` | Pagination | Yes      | Page size and token           |
-| `companyId`  | string     | Yes      | Company ID to list businesses |
+| Field Name   | Type       | Required | Description                                         |
+|--------------|------------|----------|-----------------------------------------------------|
+| `pagination` | Pagination | Yes      | Page size and token                                 |
+| `companyId`  | string     | Yes      | Company ID to list businesses, obfuscated ID string |
 
 #### 📌 Return Value:
 

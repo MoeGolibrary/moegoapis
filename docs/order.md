@@ -49,9 +49,9 @@ business location and customer.
 
 | Field Name        | Type                      | Description                                                                                            |
 |-------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
-| `id`              | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
-| `businessId`      | string                    | ID of the business location where services were provided                                               |
-| `customerId`      | string                    | ID of the customer who received services                                                               |
+| `id`              | string                    | Unique identifier for the order, obfuscated ID string (format: "ord_" + random characters)             |
+| `businessId`      | string                    | ID of the business location where services were provided, obfuscated ID string                         |
+| `customerId`      | string                    | ID of the customer who received services, obfuscated ID string                                         |
 | `status`          | Status                    | Current status of the order                                                                            |
 | `title`           | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
 | `description`     | string                    | Detailed notes about the order                                                                         |
@@ -65,9 +65,9 @@ business location and customer.
 | `paidAmount`      | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
 | `remainAmount`    | google.type.Money         | Amount still due on the order (formula: totalAmount - paidAmount)                                      |
 | `refundedAmount`  | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
-| `createdBy`       | string                    | ID of the staff member who created the order                                                           |
+| `createdBy`       | string                    | ID of the staff member who created the order, obfuscated ID string                                     |
 | `createdTime`     | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
-| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order                                                     |
+| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order, obfuscated ID string                               |
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
 | `salesDatetime`   | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
 
@@ -88,19 +88,19 @@ contributes to the total order amount. Line items track individual pricing, quan
 | `SERVICE_CHARGE`          | Additional service-related fee (e.g., holiday surcharge, rush fee)              |
 | `EVALUATION_SERVICE`      | Initial pet evaluation service (required for new clients or services)           |
 
-| Field Name        | Type                      | Description                                                                   |
-|-------------------|---------------------------|-------------------------------------------------------------------------------|
-| `id`              | string                    | Unique identifier for the line item (format: "li_" + random characters)       |
-| `orderId`         | string                    | ID of the parent order                                                        |
-| `objectId`        | string                    | ID of the referenced service, product, or package                             |
-| `objectType`      | ObjectType                | Category of the line item (determines business rules and processing)          |
-| `name`            | string                    | Display name of the item (e.g., "Premium Dog Grooming")                       |
-| `description`     | string                    | Additional details about the item                                             |
-| `unitPrice`       | google.type.Money         | Price per unit of the item (before any discounts or adjustments)              |
-| `quantity`        | int32                     | Number of units purchased (must be greater than 0)                            |
-| `createdTime`     | google.protobuf.Timestamp | When this line item was created (system-generated timestamp)                  |
-| `lastUpdatedTime` | google.protobuf.Timestamp | When this line item was last modified (system-generated timestamp)            |
-| `paidAmount`      | google.type.Money         | Amount that has been paid for this item (updated when payments are processed) |
+| Field Name        | Type                      | Description                                                                                   |
+|-------------------|---------------------------|-----------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the line item, obfuscated ID string (format: "li_" + random characters) |
+| `orderId`         | string                    | ID of the parent order, obfuscated ID string                                                  |
+| `objectId`        | string                    | ID of the referenced service, product, or package, obfuscated ID string                       |
+| `objectType`      | ObjectType                | Category of the line item (determines business rules and processing)                          |
+| `name`            | string                    | Display name of the item (e.g., "Premium Dog Grooming")                                       |
+| `description`     | string                    | Additional details about the item                                                             |
+| `unitPrice`       | google.type.Money         | Price per unit of the item (before any discounts or adjustments)                              |
+| `quantity`        | int32                     | Number of units purchased (must be greater than 0)                                            |
+| `createdTime`     | google.protobuf.Timestamp | When this line item was created (system-generated timestamp)                                  |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this line item was last modified (system-generated timestamp)                            |
+| `paidAmount`      | google.type.Money         | Amount that has been paid for this item (updated when payments are processed)                 |
 
 ---
 
@@ -151,17 +151,17 @@ Retrieves detailed information about a specific order by its ID.
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type   | Required | Description                                |
-|------------|--------|----------|--------------------------------------------|
-| `id`       | string | Yes      | Unique identifier of the order to retrieve |
+| Field Name | Type   | Required | Description                                                      |
+|------------|--------|----------|------------------------------------------------------------------|
+| `id`       | string | Yes      | Unique identifier of the order to retrieve, obfuscated ID string |
 
 #### 📌 Return Value:
 
 | Field Name        | Type                      | Description                                                                                            |
 |-------------------|---------------------------|--------------------------------------------------------------------------------------------------------|
-| `id`              | string                    | Unique identifier for the order (format: "ord_" + random characters)                                   |
-| `businessId`      | string                    | ID of the business location where services were provided                                               |
-| `customerId`      | string                    | ID of the customer who received services                                                               |
+| `id`              | string                    | Unique identifier for the order, obfuscated ID string (format: "ord_" + random characters)             |
+| `businessId`      | string                    | ID of the business location where services were provided, obfuscated ID string                         |
+| `customerId`      | string                    | ID of the customer who received services, obfuscated ID string                                         |
 | `status`          | Status                    | Current status of the order                                                                            |
 | `title`           | string                    | Short description of the order (e.g., "Full Grooming Package - Max")                                   |
 | `description`     | string                    | Detailed notes about the order                                                                         |
@@ -175,9 +175,9 @@ Retrieves detailed information about a specific order by its ID.
 | `paidAmount`      | google.type.Money         | Amount that has been paid so far (updated when payments are processed)                                 |
 | `remainAmount`    | google.type.Money         | Amount still due on the order (formula: totalAmount - paidAmount)                                      |
 | `refundedAmount`  | google.type.Money         | Amount that has been refunded (tracks any refunds issued to the customer)                              |
-| `createdBy`       | string                    | ID of the staff member who created the order                                                           |
+| `createdBy`       | string                    | ID of the staff member who created the order, obfuscated ID string                                     |
 | `createdTime`     | google.protobuf.Timestamp | When this order was created (system-generated timestamp)                                               |
-| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order                                                     |
+| `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order, obfuscated ID string                               |
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
 | `salesDatetime`   | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
 
@@ -207,14 +207,14 @@ update time.
 
 #### 🔧 Request Parameters:
 
-| Field Name                 | Type                | Required | Description                                                             |
-|----------------------------|---------------------|----------|-------------------------------------------------------------------------|
-| `pagination`               | Pagination          | Yes      | Pagination info: pageSize, pageToken                                    |
-| `companyId`                | string              | Yes      | Company ID to scope orders                                              |
-| `businessIds`              | Array(string)       | Yes      | List of business locations to filter orders by                          |
-| `filter.ids`               | Array(string)       | No       | Specific order IDs to retrieve (if provided, other filters are ignored) |
-| `filter.statuses`          | Array(Order.Status) | No       | Order statuses to include in results                                    |
-| `filter.last_updated_time` | Interval            | No       | Time range for filtering orders by last update time                     |
+| Field Name                 | Type                | Required | Description                                                                                    |
+|----------------------------|---------------------|----------|------------------------------------------------------------------------------------------------|
+| `pagination`               | Pagination          | Yes      | Pagination info: pageSize, pageToken                                                           |
+| `companyId`                | string              | Yes      | Company ID to scope orders, obfuscated ID string                                               |
+| `businessIds`              | Array(string)       | Yes      | List of business locations to filter orders by, obfuscated ID strings                          |
+| `filter.ids`               | Array(string)       | No       | Specific order IDs to retrieve (if provided, other filters are ignored), obfuscated ID strings |
+| `filter.statuses`          | Array(Order.Status) | No       | Order statuses to include in results                                                           |
+| `filter.last_updated_time` | Interval            | No       | Time range for filtering orders by last update time                                            |
 
 #### 📌 Return Value:
 
@@ -249,10 +249,10 @@ revenue analysis.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                                        |
-|--------------------|---------------|----------|----------------------------------------------------|
-| `companyId`        | string        | Yes      | Company ID to scope line items                     |
-| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by |
+| Field Name         | Type          | Required | Description                                                               |
+|--------------------|---------------|----------|---------------------------------------------------------------------------|
+| `companyId`        | string        | Yes      | Company ID to scope line items                                            |
+| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by, obfuscated ID strings |
 
 #### 📌 Return Value:
 

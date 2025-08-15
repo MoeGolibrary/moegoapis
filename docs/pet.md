@@ -34,7 +34,7 @@ information for providing appropriate care.
 
 | Field Name         | Type                                             | Description                                        |
 |--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier                                  |
+| `id`               | string                                           | Unique identifier (obfuscated string)              |
 | `name`             | string                                           | Pet's given name                                   |
 | `birthday`         | Date                                             | Pet's date of birth                                |
 | `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
@@ -48,7 +48,7 @@ information for providing appropriate care.
 | `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
 | `notes`            | Array(Note)                                      | Staff observations and special instructions        |
 | `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner                              |
+| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
 | `vet`              | Vet                                              | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
 | `createdTime`      | Timestamp                                        | When the pet was created                           |
@@ -182,16 +182,16 @@ Registers a new pet with basic details, health records, and optionally initial n
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                        |
-|--------------|--------|----------|------------------------------------|
-| `customerId` | string | Yes      | Owner customer ID                  |
-| `pet`        | Pet    | Yes      | Complete pet information to create |
+| Field Name   | Type   | Required | Description                           |
+|--------------|--------|----------|---------------------------------------|
+| `customerId` | string | Yes      | Owner customer ID (obfuscated string) |
+| `pet`        | Pet    | Yes      | Complete pet information to create    |
 
 #### 📌 Return Value:
 
 | Field Name         | Type                                             | Description                                        |
 |--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier                                  |
+| `id`               | string                                           | Unique identifier (obfuscated string)              |
 | `name`             | string                                           | Pet's given name                                   |
 | `birthday`         | Date                                             | Pet's date of birth                                |
 | `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
@@ -205,7 +205,7 @@ Registers a new pet with basic details, health records, and optionally initial n
 | `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
 | `notes`            | Array(Note)                                      | Staff observations and special instructions        |
 | `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner                              |
+| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
 | `vet`              | Vet                                              | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
 | `createdTime`      | Timestamp                                        | When the pet was created                           |
@@ -237,16 +237,16 @@ Retrieves detailed information about a specific pet.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description        |
-|--------------|--------|----------|--------------------|
-| `customerId` | string | Yes      | Owner customer ID  |
-| `id`         | string | Yes      | Pet ID to retrieve |
+| Field Name   | Type   | Required | Description                            |
+|--------------|--------|----------|----------------------------------------|
+| `customerId` | string | Yes      | Owner customer ID (obfuscated string)  |
+| `id`         | string | Yes      | Pet ID to retrieve (obfuscated string) |
 
 #### 📌 Return Value:
 
 | Field Name         | Type                                             | Description                                        |
 |--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier                                  |
+| `id`               | string                                           | Unique identifier (obfuscated string)              |
 | `name`             | string                                           | Pet's given name                                   |
 | `birthday`         | Date                                             | Pet's date of birth                                |
 | `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
@@ -260,7 +260,7 @@ Retrieves detailed information about a specific pet.
 | `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
 | `notes`            | Array(Note)                                      | Staff observations and special instructions        |
 | `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner                              |
+| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
 | `vet`              | Vet                                              | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
 | `createdTime`      | Timestamp                                        | When the pet was created                           |
@@ -292,28 +292,28 @@ Updates an existing pet's information.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type             | Required | Description                            |
-|--------------------|------------------|----------|----------------------------------------|
-| `customerId`       | string           | Yes      | Owner customer ID                      |
-| `id`               | string           | Yes      | Unique identifier of the pet to update |
-| `name`             | string           | No       | Pet's name                             |
-| `birthday`         | Date             | No       | Pet's date of birth                    |
-| `type`             | Pet.Type         | No       | Pet's species                          |
-| `breed`            | string           | No       | Pet's breed                            |
-| `gender`           | Pet.Gender       | No       | Pet's gender                           |
-| `weight`           | Weight           | No       | Pet's weight                           |
-| `fixed`            | string           | No       | Spay/neuter status                     |
-| `coat`             | string           | No       | Coat description                       |
-| `behavior`         | string           | No       | Behavior notes                         |
-| `vet`              | Pet.Vet          | No       | Veterinary care provider               |
-| `evaluationStatus` | EvaluationStatus | No       | Service eligibility status             |
-| `photo`            | string           | No       | Pet photo URL                          |
+| Field Name         | Type             | Required | Description                                                |
+|--------------------|------------------|----------|------------------------------------------------------------|
+| `customerId`       | string           | Yes      | Owner customer ID (obfuscated string)                      |
+| `id`               | string           | Yes      | Unique identifier of the pet to update (obfuscated string) |
+| `name`             | string           | No       | Pet's name                                                 |
+| `birthday`         | Date             | No       | Pet's date of birth                                        |
+| `type`             | Pet.Type         | No       | Pet's species                                              |
+| `breed`            | string           | No       | Pet's breed                                                |
+| `gender`           | Pet.Gender       | No       | Pet's gender                                               |
+| `weight`           | Weight           | No       | Pet's weight                                               |
+| `fixed`            | string           | No       | Spay/neuter status                                         |
+| `coat`             | string           | No       | Coat description                                           |
+| `behavior`         | string           | No       | Behavior notes                                             |
+| `vet`              | Pet.Vet          | No       | Veterinary care provider                                   |
+| `evaluationStatus` | EvaluationStatus | No       | Service eligibility status                                 |
+| `photo`            | string           | No       | Pet photo URL                                              |
 
 #### 📌 Return Value:
 
 | Field Name         | Type                                             | Description                                        |
 |--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier                                  |
+| `id`               | string                                           | Unique identifier (obfuscated string)              |
 | `name`             | string                                           | Pet's given name                                   |
 | `birthday`         | Date                                             | Pet's date of birth                                |
 | `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
@@ -327,7 +327,7 @@ Updates an existing pet's information.
 | `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
 | `notes`            | Array(Note)                                      | Staff observations and special instructions        |
 | `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner                              |
+| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
 | `vet`              | Vet                                              | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
 | `createdTime`      | Timestamp                                        | When the pet was created                           |
@@ -358,9 +358,9 @@ Lists all pets belonging to a specific customer.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                  |
-|--------------|--------|----------|------------------------------|
-| `customerId` | string | Yes      | Customer ID to list pets for |
+| Field Name   | Type   | Required | Description                                      |
+|--------------|--------|----------|--------------------------------------------------|
+| `customerId` | string | Yes      | Customer ID to list pets for (obfuscated string) |
 
 #### 📌 Return Value:
 
@@ -391,11 +391,11 @@ Adds new notes to a pet's profile.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type            | Required | Description             |
-|--------------|-----------------|----------|-------------------------|
-| `customerId` | string          | Yes      | Owner customer ID       |
-| `id`         | string          | Yes      | Pet ID to add notes to  |
-| `notes`      | Array(Pet.Note) | Yes      | Notes to add to the pet |
+| Field Name   | Type            | Required | Description                                  |
+|--------------|-----------------|----------|----------------------------------------------|
+| `customerId` | string          | Yes      | Owner customer ID (obfuscated string)        |
+| `id`         | string          | Yes      | Pet ID to add notes to (obfuscated string)   |
+| `notes`      | Array(Pet.Note) | Yes      | Notes to add to the pet  (obfuscated string) |
 
 #### 📌 Return Value:
 
@@ -427,11 +427,11 @@ Retrieves a paginated list of notes for a specific pet.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description                  |
-|--------------|------------|----------|------------------------------|
-| `pagination` | Pagination | Yes      | Page size and token          |
-| `customerId` | string     | Yes      | Owner customer ID            |
-| `id`         | string     | Yes      | Pet ID to retrieve notes for |
+| Field Name   | Type       | Required | Description                                      |
+|--------------|------------|----------|--------------------------------------------------|
+| `pagination` | Pagination | Yes      | Page size and token                              |
+| `customerId` | string     | Yes      | Owner customer ID (obfuscated string)            |
+| `id`         | string     | Yes      | Pet ID to retrieve notes for (obfuscated string) |
 
 #### 📌 Return Value:
 
@@ -464,11 +464,11 @@ Adds special handling codes or medical alerts to a pet's profile.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type          | Required | Description                  |
-|--------------|---------------|----------|------------------------------|
-| `customerId` | string        | Yes      | Owner customer ID            |
-| `id`         | string        | Yes      | Pet ID to add codes to       |
-| `petCodeIds` | Array(string) | Yes      | Code IDs to apply to the pet |
+| Field Name   | Type          | Required | Description                                      |
+|--------------|---------------|----------|--------------------------------------------------|
+| `customerId` | string        | Yes      | Owner customer ID (obfuscated string)            |
+| `id`         | string        | Yes      | Pet ID to add codes to (obfuscated string)       |
+| `petCodeIds` | Array(string) | Yes      | Code IDs to apply to the pet (obfuscated string) |
 
 #### 📌 Return Value:
 
@@ -500,12 +500,12 @@ Lists all pets across all customers in the company.
 
 #### 🔧 Request Parameters:
 
-| Field Name               | Type          | Required | Description                   |
-|--------------------------|---------------|----------|-------------------------------|
-| `pagination`             | Pagination    | Yes      | Page size and token           |
-| `companyId`              | string        | Yes      | Company ID to list pets for   |
-| `filter.customerIds`     | Array(string) | No       | Optional list of customer IDs |
-| `filter.lastUpdatedTime` | Interval      | No       | Time range filter             |
+| Field Name               | Type          | Required | Description                                        |
+|--------------------------|---------------|----------|----------------------------------------------------|
+| `pagination`             | Pagination    | Yes      | Page size and token                                |
+| `companyId`              | string        | Yes      | Company ID to list pets for (obfuscated string)    |
+| `filter.customerIds`     | Array(string) | No       | Optional list of customer IDs (obfuscated strings) |
+| `filter.lastUpdatedTime` | Interval      | No       | Time range filter                                  |
 
 > **Note**:The `pagination` field is used for pagination.
 > The `pageSize` field specifies the number of results to return per page. Maximum value is 500.

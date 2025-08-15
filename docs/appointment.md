@@ -34,33 +34,33 @@ This API provides operations for:
 Represents a scheduled pet service booking. An appointment can include multiple pets and services, and tracks the entire
 lifecycle from creation to completion.
 
-| Field Name          | Type                    | Description                                                             |
-|---------------------|-------------------------|-------------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment                                    |
-| `businessId`        | string                  | Business location where the service will be performed                   |
-| `customerId`        | string                  | Customer who booked the appointment                                     |
-| `address`           | Address                 | Service location details (required for home service appointments)       |
-| `duration`          | Interval                | Start and end time of the appointment                                   |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                    |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.             |
-| `ticketComment`     | string                  | Optional notes about the appointment                                    |
-| `colorCode`         | string                  | UI display color in hex format                                          |
-| `orderId`           | string                  | Identifier of the associated payment order                              |
-| `totalAmount`       | Money                   | Total cost for all services                                             |
-| `paidAmount`        | Money                   | Amount received from customer                                           |
-| `refundAmount`      | Money                   | Amount returned to customer                                             |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                    |
-| `createdBy`         | string                  | Identifier of the appointment creator                                   |
-| `createdTime`       | timestamp               | When the appointment was created                                        |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier                                         |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                  |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                                |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                    |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment                 |
-| `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users. |
-| `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                      |
-| `readyTime`         | timestamp (optional)    | When the appointment was ready                                          |
-| `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                       |
+| Field Name          | Type                    | Description                                                                   |
+|---------------------|-------------------------|-------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
+| `address`           | Address                 | Service location details (required for home service appointments)             |
+| `duration`          | Interval                | Start and end time of the appointment                                         |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
+| `ticketComment`     | string                  | Optional notes about the appointment                                          |
+| `colorCode`         | string                  | UI display color in hex format                                                |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
+| `totalAmount`       | Money                   | Total cost for all services                                                   |
+| `paidAmount`        | Money                   | Amount received from customer                                                 |
+| `refundAmount`      | Money                   | Amount returned to customer                                                   |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
+| `createdTime`       | timestamp               | When the appointment was created                                              |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
+| `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users.       |
+| `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                            |
+| `readyTime`         | timestamp (optional)    | When the appointment was ready                                                |
+| `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                             |
 
 #### Enum Definitions
 
@@ -90,11 +90,11 @@ status, sending methods and logs, and is used for customer communication and int
 
 | Field Name              | Type              | Description                                                                    |
 |-------------------------|-------------------|--------------------------------------------------------------------------------|
-| `id`                    | string            | Unique identifier of the grooming report                                       |
-| `appointmentId`         | string            | Associated appointment ID                                                      |
-| `businessId`            | string            | Business location ID                                                           |
-| `customerId`            | string            | Owner customer ID                                                              |
-| `petId`                 | string            | Pet ID                                                                         |
+| `id`                    | string            | Unique identifier of the grooming report, obfuscated ID string                 |
+| `appointmentId`         | string            | Associated appointment ID, obfuscated ID string                                |
+| `businessId`            | string            | Business location ID, obfuscated ID string                                     |
+| `customerId`            | string            | Owner customer ID, obfuscated ID string                                        |
+| `petId`                 | string            | Pet ID, obfuscated ID string                                                   |
 | `templateJson`          | string            | JSON-formatted template content                                                |
 | `contentJson`           | string            | JSON-formatted actual content filled in based on the template and service data |
 | `status`                | enum(Status)      | Current status: `CREATED`, `DRAFT`, `SUBMITTED`, `SENT`                        |
@@ -179,23 +179,23 @@ timing, pricing, staff assignments, and service-specific parameters.
 
 ---
 
-### 5. AppointmentNote
+### 4. AppointmentNote
 
 Represents notes associated with an appointment, used for internal communication or customer information tracking.
 
-| Field Name        | Type       | Description                                                 |
-|-------------------|------------|-------------------------------------------------------------|
-| `id`              | string     | Unique identifier of the note                               |
-| `businessId`      | string     | Business location ID                                        |
-| `customerId`      | string     | Customer ID                                                 |
-| `companyId`       | string     | Company ID                                                  |
-| `appointmentId`   | string     | Related appointment ID                                      |
-| `note`            | string     | The content of the note                                     |
-| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
-| `createdTime`     | timestamp  | When the note was created                                   |
-| `lastUpdatedTime` | timestamp  | When the note was last modified                             |
-| `createdBy`       | string     | Staff member who created the note                           |
-| `lastUpdatedBy`   | string     | Staff member who last updated the note                      |
+| Field Name        | Type       | Description                                                  |
+|-------------------|------------|--------------------------------------------------------------|
+| `id`              | string     | Unique identifier of the note, obfuscated ID string          |
+| `businessId`      | string     | Business location ID, obfuscated ID string                   |
+| `customerId`      | string     | Customer ID, obfuscated ID string                            |
+| `companyId`       | string     | Company ID, obfuscated ID string                             |
+| `appointmentId`   | string     | Related appointment ID, obfuscated ID string                 |
+| `note`            | string     | The content of the note                                      |
+| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL`  |
+| `createdTime`     | timestamp  | When the note was created                                    |
+| `lastUpdatedTime` | timestamp  | When the note was last modified                              |
+| `createdBy`       | string     | Staff member who created the note, obfuscated ID string      |
+| `lastUpdatedBy`   | string     | Staff member who last updated the note, obfuscated ID string |
 
 #### Enum Definitions
 
@@ -235,29 +235,29 @@ Retrieves a single appointment by its ID.
 
 #### 📌 Return Value:
 
-| Field Name          | Type                    | Description                                                       |
-|---------------------|-------------------------|-------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment                              |
-| `businessId`        | string                  | Business location where the service will be performed             |
-| `customerId`        | string                  | Customer who booked the appointment                               |
-| `address`           | Address                 | Service location details (required for home service appointments) |
-| `duration`          | Interval                | Start and end time of the appointment                             |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                              |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
-| `ticketComment`     | string                  | Optional notes about the appointment                              |
-| `colorCode`         | string                  | UI display color in hex format                                    |
-| `orderId`           | string                  | Identifier of the associated payment order                        |
-| `totalAmount`       | Money                   | Total cost for all services                                       |
-| `paidAmount`        | Money                   | Amount received from customer                                     |
-| `refundAmount`      | Money                   | Amount returned to customer                                       |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
-| `createdBy`         | string                  | Identifier of the appointment creator                             |
-| `createdTime`       | timestamp               | When the appointment was created                                  |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier                                   |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                            |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                          |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up              |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment           |
+| Field Name          | Type                    | Description                                                                   |
+|---------------------|-------------------------|-------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
+| `address`           | Address                 | Service location details (required for home service appointments)             |
+| `duration`          | Interval                | Start and end time of the appointment                                         |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
+| `ticketComment`     | string                  | Optional notes about the appointment                                          |
+| `colorCode`         | string                  | UI display color in hex format                                                |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
+| `totalAmount`       | Money                   | Total cost for all services                                                   |
+| `paidAmount`        | Money                   | Amount received from customer                                                 |
+| `refundAmount`      | Money                   | Amount returned to customer                                                   |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
+| `createdTime`       | timestamp               | When the appointment was created                                              |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
@@ -343,29 +343,29 @@ Creates a new appointment with services for one or more pets.
 
 #### 📌 Return Value:
 
-| Field Name          | Type                    | Description                                                       |
-|---------------------|-------------------------|-------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment                              |
-| `businessId`        | string                  | Business location where the service will be performed             |
-| `customerId`        | string                  | Customer who booked the appointment                               |
-| `address`           | Address                 | Service location details (required for home service appointments) |
-| `duration`          | Interval                | Start and end time of the appointment                             |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                              |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
-| `ticketComment`     | string                  | Optional notes about the appointment                              |
-| `colorCode`         | string                  | UI display color in hex format                                    |
-| `orderId`           | string                  | Identifier of the associated payment order                        |
-| `totalAmount`       | Money                   | Total cost for all services                                       |
-| `paidAmount`        | Money                   | Amount received from customer                                     |
-| `refundAmount`      | Money                   | Amount returned to customer                                       |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
-| `createdBy`         | string                  | Identifier of the appointment creator                             |
-| `createdTime`       | timestamp               | When the appointment was created                                  |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier                                   |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                            |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                          |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up              |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment           |
+| Field Name          | Type                    | Description                                                                   |
+|---------------------|-------------------------|-------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
+| `address`           | Address                 | Service location details (required for home service appointments)             |
+| `duration`          | Interval                | Start and end time of the appointment                                         |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
+| `ticketComment`     | string                  | Optional notes about the appointment                                          |
+| `colorCode`         | string                  | UI display color in hex format                                                |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
+| `totalAmount`       | Money                   | Total cost for all services                                                   |
+| `paidAmount`        | Money                   | Amount received from customer                                                 |
+| `refundAmount`      | Money                   | Amount returned to customer                                                   |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
+| `createdTime`       | timestamp               | When the appointment was created                                              |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
@@ -399,29 +399,29 @@ Updates the appointment's time slot. All services within the appointment will be
 
 #### 📌 Return Value:
 
-| Field Name          | Type                    | Description                                                       |
-|---------------------|-------------------------|-------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment                              |
-| `businessId`        | string                  | Business location where the service will be performed             |
-| `customerId`        | string                  | Customer who booked the appointment                               |
-| `address`           | Address                 | Service location details (required for home service appointments) |
-| `duration`          | Interval                | Start and end time of the appointment                             |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                              |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
-| `ticketComment`     | string                  | Optional notes about the appointment                              |
-| `colorCode`         | string                  | UI display color in hex format                                    |
-| `orderId`           | string                  | Identifier of the associated payment order                        |
-| `totalAmount`       | Money                   | Total cost for all services                                       |
-| `paidAmount`        | Money                   | Amount received from customer                                     |
-| `refundAmount`      | Money                   | Amount returned to customer                                       |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
-| `createdBy`         | string                  | Identifier of the appointment creator                             |
-| `createdTime`       | timestamp               | When the appointment was created                                  |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier                                   |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                            |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                          |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up              |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment           |
+| Field Name          | Type                    | Description                                                                   |
+|---------------------|-------------------------|-------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
+| `address`           | Address                 | Service location details (required for home service appointments)             |
+| `duration`          | Interval                | Start and end time of the appointment                                         |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
+| `ticketComment`     | string                  | Optional notes about the appointment                                          |
+| `colorCode`         | string                  | UI display color in hex format                                                |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
+| `totalAmount`       | Money                   | Total cost for all services                                                   |
+| `paidAmount`        | Money                   | Amount received from customer                                                 |
+| `refundAmount`      | Money                   | Amount returned to customer                                                   |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
+| `createdTime`       | timestamp               | When the appointment was created                                              |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
@@ -454,29 +454,29 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 
 #### 📌 Return Value:
 
-| Field Name          | Type                    | Description                                                       |
-|---------------------|-------------------------|-------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment                              |
-| `businessId`        | string                  | Business location where the service will be performed             |
-| `customerId`        | string                  | Customer who booked the appointment                               |
-| `address`           | Address                 | Service location details (required for home service appointments) |
-| `duration`          | Interval                | Start and end time of the appointment                             |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                              |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.       |
-| `ticketComment`     | string                  | Optional notes about the appointment                              |
-| `colorCode`         | string                  | UI display color in hex format                                    |
-| `orderId`           | string                  | Identifier of the associated payment order                        |
-| `totalAmount`       | Money                   | Total cost for all services                                       |
-| `paidAmount`        | Money                   | Amount received from customer                                     |
-| `refundAmount`      | Money                   | Amount returned to customer                                       |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`              |
-| `createdBy`         | string                  | Identifier of the appointment creator                             |
-| `createdTime`       | timestamp               | When the appointment was created                                  |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier                                   |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                            |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                          |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up              |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment           |
+| Field Name          | Type                    | Description                                                                   |
+|---------------------|-------------------------|-------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
+| `address`           | Address                 | Service location details (required for home service appointments)             |
+| `duration`          | Interval                | Start and end time of the appointment                                         |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
+| `ticketComment`     | string                  | Optional notes about the appointment                                          |
+| `colorCode`         | string                  | UI display color in hex format                                                |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
+| `totalAmount`       | Money                   | Total cost for all services                                                   |
+| `paidAmount`        | Money                   | Amount received from customer                                                 |
+| `refundAmount`      | Money                   | Amount returned to customer                                                   |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
+| `createdTime`       | timestamp               | When the appointment was created                                              |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
@@ -624,19 +624,19 @@ Creates a new note associated with a specific appointment.
 
 #### 📌 Return Value:
 
-| Field Name        | Type       | Description                                                 |
-|-------------------|------------|-------------------------------------------------------------|
-| `id`              | string     | Unique identifier of the note                               |
-| `businessId`      | string     | Business location ID                                        |
-| `customerId`      | string     | Customer ID                                                 |
-| `companyId`       | string     | Company ID                                                  |
-| `appointmentId`   | string     | Related appointment ID                                      |
-| `note`            | string     | The content of the note                                     |
-| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
-| `createdTime`     | timestamp  | When the note was created                                   |
-| `lastUpdatedTime` | timestamp  | When the note was last modified                             |
-| `createdBy`       | string     | Staff member who created the note                           |
-| `lastUpdatedBy`   | string     | Staff member who last updated the note                      |
+| Field Name        | Type       | Description                                                  |
+|-------------------|------------|--------------------------------------------------------------|
+| `id`              | string     | Unique identifier of the note, obfuscated ID string          |
+| `businessId`      | string     | Business location ID, obfuscated ID string                   |
+| `customerId`      | string     | Customer ID, obfuscated ID string                            |
+| `companyId`       | string     | Company ID, obfuscated ID string                             |
+| `appointmentId`   | string     | Related appointment ID, obfuscated ID string                 |
+| `note`            | string     | The content of the note                                      |
+| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL`  |
+| `createdTime`     | timestamp  | When the note was created                                    |
+| `lastUpdatedTime` | timestamp  | When the note was last modified                              |
+| `createdBy`       | string     | Staff member who created the note, obfuscated ID string      |
+| `lastUpdatedBy`   | string     | Staff member who last updated the note, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
@@ -669,19 +669,19 @@ Updates an existing appointment note by its ID.
 
 #### 📌 Return Value:
 
-| Field Name        | Type       | Description                                                 |
-|-------------------|------------|-------------------------------------------------------------|
-| `id`              | string     | Unique identifier of the note                               |
-| `businessId`      | string     | Business location ID                                        |
-| `customerId`      | string     | Customer ID                                                 |
-| `companyId`       | string     | Company ID                                                  |
-| `appointmentId`   | string     | Related appointment ID                                      |
-| `note`            | string     | The content of the note                                     |
-| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL` |
-| `createdTime`     | timestamp  | When the note was created                                   |
-| `lastUpdatedTime` | timestamp  | When the note was last modified                             |
-| `createdBy`       | string     | Staff member who created the note                           |
-| `lastUpdatedBy`   | string     | Staff member who last updated the note                      |
+| Field Name        | Type       | Description                                                  |
+|-------------------|------------|--------------------------------------------------------------|
+| `id`              | string     | Unique identifier of the note, obfuscated ID string          |
+| `businessId`      | string     | Business location ID, obfuscated ID string                   |
+| `customerId`      | string     | Customer ID, obfuscated ID string                            |
+| `companyId`       | string     | Company ID, obfuscated ID string                             |
+| `appointmentId`   | string     | Related appointment ID, obfuscated ID string                 |
+| `note`            | string     | The content of the note                                      |
+| `type`            | enum(Type) | Note type: `ALERT_NOTES`, `COMMENT`, `CANCEL`, `ADDITIONAL`  |
+| `createdTime`     | timestamp  | When the note was created                                    |
+| `lastUpdatedTime` | timestamp  | When the note was last modified                              |
+| `createdBy`       | string     | Staff member who created the note, obfuscated ID string      |
+| `lastUpdatedBy`   | string     | Staff member who last updated the note, obfuscated ID string |
 
 #### ⚠️ Error Codes:
 
