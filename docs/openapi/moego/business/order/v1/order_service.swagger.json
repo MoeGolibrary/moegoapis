@@ -896,26 +896,6 @@
           "type": "string",
           "format": "date-time",
           "title": "When this tax record was last updated\nSystem-generated timestamp"
-        },
-        "taxName": {
-          "type": "string",
-          "title": "Name of the tax"
-        },
-        "taxCode": {
-          "type": "string",
-          "title": "Tax code for categorization"
-        },
-        "taxDescription": {
-          "type": "string",
-          "title": "Description of the tax"
-        },
-        "isCompound": {
-          "type": "boolean",
-          "title": "Flag indicating if this is a compound tax"
-        },
-        "taxCategory": {
-          "type": "string",
-          "title": "Category of the tax"
         }
       },
       "description": "OrderLineTax represents tax information for an individual line item within an order.",

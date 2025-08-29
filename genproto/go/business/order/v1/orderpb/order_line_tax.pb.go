@@ -132,18 +132,8 @@ type OrderLineTax struct {
 	// When this tax record was last updated
 	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	// Name of the tax
-	TaxName string `protobuf:"bytes,14,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
-	// Tax code for categorization
-	TaxCode string `protobuf:"bytes,15,opt,name=tax_code,json=taxCode,proto3" json:"tax_code,omitempty"`
-	// Description of the tax
-	TaxDescription string `protobuf:"bytes,16,opt,name=tax_description,json=taxDescription,proto3" json:"tax_description,omitempty"`
-	// Flag indicating if this is a compound tax
-	IsCompound bool `protobuf:"varint,17,opt,name=is_compound,json=isCompound,proto3" json:"is_compound,omitempty"`
-	// Category of the tax
-	TaxCategory   string `protobuf:"bytes,18,opt,name=tax_category,json=taxCategory,proto3" json:"tax_category,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *OrderLineTax) Reset() {
@@ -267,46 +257,11 @@ func (x *OrderLineTax) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *OrderLineTax) GetTaxName() string {
-	if x != nil {
-		return x.TaxName
-	}
-	return ""
-}
-
-func (x *OrderLineTax) GetTaxCode() string {
-	if x != nil {
-		return x.TaxCode
-	}
-	return ""
-}
-
-func (x *OrderLineTax) GetTaxDescription() string {
-	if x != nil {
-		return x.TaxDescription
-	}
-	return ""
-}
-
-func (x *OrderLineTax) GetIsCompound() bool {
-	if x != nil {
-		return x.IsCompound
-	}
-	return false
-}
-
-func (x *OrderLineTax) GetTaxCategory() string {
-	if x != nil {
-		return x.TaxCategory
-	}
-	return ""
-}
-
 var File_moego_business_order_v1_order_line_tax_proto protoreflect.FileDescriptor
 
 const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xd0\x06\n" +
+	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xad\x05\n" +
 	"\fOrderLineTax\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -325,13 +280,7 @@ const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	" \x01(\tR\aapplyBy\x12%\n" +
 	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12=\n" +
 	"\fcreated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
-	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x19\n" +
-	"\btax_name\x18\x0e \x01(\tR\ataxName\x12\x19\n" +
-	"\btax_code\x18\x0f \x01(\tR\ataxCode\x12'\n" +
-	"\x0ftax_description\x18\x10 \x01(\tR\x0etaxDescription\x12\x1f\n" +
-	"\vis_compound\x18\x11 \x01(\bR\n" +
-	"isCompound\x12!\n" +
-	"\ftax_category\x18\x12 \x01(\tR\vtaxCategory\"\x8f\x01\n" +
+	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\"\x8f\x01\n" +
 	"\tApplyType\x12\x1a\n" +
 	"\x16APPLY_TYPE_UNSPECIFIED\x10\x00\x12\a\n" +
 	"\x03ALL\x10\x01\x12\x0e\n" +

@@ -129,8 +129,6 @@ Represents a discount applied to an order or order line item.
 | `ITEM`                   | Applied to specific item         |
 | `NONE`                   | No application                   |
 
-
-
 | Field Name        | Type                      | Description                                                                                                      |
 |-------------------|---------------------------|------------------------------------------------------------------------------------------------------------------|
 | `id`              | string                    | Unique identifier for the discount record, obfuscated ID string (format: "od_" + random characters)              |
@@ -166,8 +164,6 @@ Represents tax information for an individual line item within an order.
 | `ITEM`                   | Applied to specific item         |
 | `NONE`                   | No application                   |
 
-
-
 | Field Name        | Type                      | Description                                                                                          |
 |-------------------|---------------------------|------------------------------------------------------------------------------------------------------|
 | `id`              | string                    | Unique identifier for the line tax record, obfuscated ID string (format: "olt_" + random characters) |
@@ -184,10 +180,6 @@ Represents tax information for an individual line item within an order.
 | `createdTime`     | google.protobuf.Timestamp | When this tax record was created (system-generated timestamp)                                        |
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this tax record was last updated (system-generated timestamp)                                   |
 | `taxName`         | string                    | Name of the tax                                                                                      |
-| `taxCode`         | string                    | Tax code for categorization                                                                          |
-| `taxDescription`  | string                    | Description of the tax                                                                               |
-| `isCompound`      | bool                      | Flag indicating if this is a compound tax                                                            |
-| `taxCategory`     | string                    | Category of the tax                                                                                  |
 
 ### 5. OrderRedeemPackage
 

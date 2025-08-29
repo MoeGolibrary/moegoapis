@@ -83,19 +83,4 @@ message OrderLineTax {
   // When this tax record was last updated
   // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 13;
-
-  // Name of the tax
-  string tax_name = 14;
-
-  // Tax code for categorization
-  string tax_code = 15;
-
-  // Description of the tax
-  string tax_description = 16;
-
-  // Flag indicating if this is a compound tax
-  bool is_compound = 17;
-
-  // Category of the tax
-  string tax_category = 18;
 }
