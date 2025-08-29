@@ -7,6 +7,8 @@ import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/order/v1/order.proto";
 import "moego/business/order/v1/order_line_item.proto";
+import "moego/business/order/v1/order_line_tax.proto";
+import "moego/business/order/v1/order_discount.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
@@ -56,6 +58,34 @@ service OrderService {
   rpc ListOrderLineItems(ListOrderLineItemsRequest) returns (ListOrderLineItemsResponse) {
     option (google.api.http) = {
       post: "/v1/orders/items:list"
+      body: "*"
+    };
+  }
+
+  // Lists discounts matching the specified criteria.
+  //
+  // Retrieves detailed information about discounts applied to orders or order line items.
+  // This method is useful for discount reporting and analysis.
+  //
+  // Returns an empty list if no discounts match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListOrderDiscounts(ListOrderDiscountsRequest) returns (ListOrderDiscountsResponse) {
+    option (google.api.http) = {
+      post: "/v1/orders/discounts:list"
+      body: "*"
+    };
+  }
+
+  // Lists redeemed packages that have been applied to orders.
+  //
+  // Retrieves detailed information about packages that have been redeemed and applied
+  // to specific orders. This method is useful for tracking package usage and reporting.
+  //
+  // Returns an empty list if no redeemed packages match the criteria.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListOrderRedeemPackages(ListOrderRedeemPackagesRequest) returns (ListOrderRedeemPackagesResponse) {
+    option (google.api.http) = {
+      post: "/v1/orders/redeemPackages:list"
       body: "*"
     };
   }
@@ -118,6 +148,10 @@ message ListOrderLineItemsRequest {
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 
+  // Include tax information in the response
+  // Optional. If true, the response will include tax details
+  bool include_tax = 2 [(google.api.field_behavior) = OPTIONAL];
+
   // Filter parameters for the line item list
   message Filter {
     // Specific order IDs to retrieve line items for
@@ -126,7 +160,7 @@ message ListOrderLineItemsRequest {
   }
 
   // Optional filters to apply to the line item list
-  Filter filter = 2;
+  Filter filter = 3;
 }
 
 // Response message for listing order line items.
@@ -134,4 +168,57 @@ message ListOrderLineItemsResponse {
   // List of line items matching the request criteria
   // May be empty if no items match
   repeated OrderLineItem order_line_items = 1;
+
+  // List of line items with tax information matching the request criteria
+  // May be empty if no items match or if include_tax was false
+  repeated OrderLineTax order_line_item_taxes = 2;
+}
+
+
+// Request message for listing order discounts.
+message ListOrderDiscountsRequest {
+  // ID of the company to list discounts for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the discount list
+  message Filter {
+    // Specific order IDs to retrieve discounts for
+    // Optional. If empty, returns discounts from all orders
+    repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the discount list
+  Filter filter = 2;
+}
+
+// Response message for listing order discounts.
+message ListOrderDiscountsResponse {
+  // List of discounts matching the request criteria
+  // May be empty if no discounts match
+  repeated OrderDiscount order_discounts = 1;
+}
+
+// Request message for listing order redeem packages.
+message ListOrderRedeemPackagesRequest {
+  // ID of the company to list redeem packages for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the redeem package list
+  message Filter {
+    // Specific order IDs to retrieve redeem packages for
+    // Optional. If empty, returns redeem packages from all orders
+    repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the redeem package list
+  Filter filter = 2;
+}
+
+// Response message for listing order redeem packages.
+message ListOrderRedeemPackagesResponse {
+  // List of redeem packages matching the request criteria
+  // May be empty if no redeem packages match
+  repeated OrderRedeemPackage order_redeem_packages = 1;
 }

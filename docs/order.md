@@ -102,6 +102,108 @@ contributes to the total order amount. Line items track individual pricing, quan
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this line item was last modified (system-generated timestamp)                            |
 | `paidAmount`      | google.type.Money         | Amount that has been paid for this item (updated when payments are processed)                 |
 
+### 3. OrderDiscount
+
+Represents a discount applied to an order or order line item.
+
+#### OrderDiscount.DiscountType (enum)
+
+| Value                | Description             |
+|----------------------|-------------------------|
+| `DISCOUNT_TYPE_UNSPECIFIED` | Unknown or invalid discount type |
+| `AMOUNT`             | Fixed amount discount (e.g., $10 off) |
+| `PERCENTAGE`         | Percentage discount (e.g., 15% off) |
+| `CREDIT`             | Credit discount (e.g., store credit) |
+
+#### OrderDiscount.ApplyType (enum)
+
+| Value                | Description                          |
+|----------------------|--------------------------------------|
+| `APPLY_TYPE_UNSPECIFIED` | Unknown or invalid apply type |
+| `ALL`                | Applied to all items                 |
+| `ALL_NO_TIP`         | Applied to all items except tips     |
+| `SERVICE`            | Applied to service items             |
+| `PRODUCT`            | Applied to product items             |
+| `PACKAGE`            | Applied to package items             |
+| `SERVICE_CHARGE`     | Applied to service charge items      |
+| `ITEM`               | Applied to specific item             |
+| `NONE`               | No application                       |
+
+| Field Name        | Type                      | Description                                                                                   |
+|-------------------|---------------------------|-----------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the discount record, obfuscated ID string (format: "od_" + random characters) |
+| `businessId`      | string                    | ID of the business where the discount is applied, obfuscated ID string                        |
+| `orderId`         | string                    | ID of the order associated with this discount, obfuscated ID string                           |
+| `orderItemId`     | string                    | ID of the order line item this discount is applied to; empty string means the discount is applied at order level |
+| `applyType`       | ApplyType                 | Type of discount application                                                                  |
+| `isDeleted`       | bool                      | Flag indicating if this discount record is deleted                                            |
+| `discountType`    | DiscountType              | Type of discount                                                                              |
+| `discountAmount`  | google.type.Money         | Discount amount applied                                                                       |
+| `discountRate`    | google.type.Decimal       | Discount rate applied (e.g., 0.5 for 50%)                                                     |
+| `applyBy`         | string                    | ID of the entity that applied the discount, obfuscated ID string                              |
+| `applySequence`   | int32                     | Sequence in which the discount is applied                                                     |
+| `createTime`      | google.protobuf.Timestamp | When this discount record was created (system-generated timestamp)                            |
+| `updateTime`      | google.protobuf.Timestamp | When this discount record was last updated (system-generated timestamp)                       |
+| `discountCodeId`  | string                    | ID of the discount code used, obfuscated ID string                                            |
+
+### 4. OrderLineTax
+
+Represents tax information for an individual line item within an order.
+
+#### OrderLineTax.ApplyType (enum)
+
+| Value                | Description                          |
+|----------------------|--------------------------------------|
+| `APPLY_TYPE_UNSPECIFIED` | Unknown or invalid apply type |
+| `ALL`                | Applied to all items                 |
+| `ALL_NO_TIP`         | Applied to all items except tips     |
+| `SERVICE`            | Applied to service items             |
+| `PRODUCT`            | Applied to product items             |
+| `PACKAGE`            | Applied to package items             |
+| `SERVICE_CHARGE`     | Applied to service charge items      |
+| `ITEM`               | Applied to specific item             |
+| `NONE`               | No application                       |
+
+| Field Name        | Type                      | Description                                                                                   |
+|-------------------|---------------------------|-----------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the line tax record, obfuscated ID string (format: "olt_" + random characters) |
+| `businessId`      | string                    | ID of the business where the tax is applied, obfuscated ID string                             |
+| `orderId`         | string                    | ID of the order associated with this tax, obfuscated ID string                                |
+| `orderItemId`     | string                    | ID of the order line item this tax is applied to, obfuscated ID string                        |
+| `applyType`       | ApplyType                 | Type of tax application                                                                       |
+| `isDeleted`       | bool                      | Flag indicating if this tax record is deleted                                                 |
+| `taxId`           | string                    | ID of the tax configuration, obfuscated ID string                                             |
+| `taxRate`         | google.type.Decimal       | Tax rate (e.g., 0.08 for 8%)                                                                  |
+| `taxAmount`       | google.type.Money         | Actual tax amount applied                                                                     |
+| `applyBy`         | string                    | ID of the entity that applied the tax, obfuscated ID string                                   |
+| `applySequence`   | int32                     | Sequence in which the tax is applied                                                          |
+| `createTime`      | google.protobuf.Timestamp | When this tax record was created (system-generated timestamp)                                 |
+| `updateTime`      | google.protobuf.Timestamp | When this tax record was last updated (system-generated timestamp)                            |
+| `taxName`         | string                    | Name of the tax                                                                               |
+| `taxCode`         | string                    | Tax code for categorization                                                                   |
+| `taxDescription`  | string                    | Description of the tax                                                                        |
+| `isCompound`      | bool                      | Flag indicating if this is a compound tax                                                     |
+| `taxCategory`     | string                    | Category of the tax                                                                           |
+
+### 5. OrderRedeemPackage
+
+Represents a service within a package that has been applied to an order.
+
+| Field Name           | Type                      | Description                                                                                   |
+|----------------------|---------------------------|-----------------------------------------------------------------------------------------------|
+| `id`                 | string                    | Unique identifier for the package service record, obfuscated ID string (format: "ps_" + random characters) |
+| `orderId`            | string                    | ID of the order this package service is associated with, obfuscated ID string                 |
+| `orderLineItemId`    | string                    | ID of the order line item this package service is associated with, obfuscated ID string       |
+| `packageId`          | string                    | ID of the package, obfuscated ID string                                                       |
+| `serviceId`          | string                    | ID of the service within the package, obfuscated ID string                                    |
+| `servicePrice`       | google.type.Money         | Price of the service                                                                          |
+| `packageServiceId`   | string                    | ID of the package service, obfuscated ID string                                               |
+| `packageName`        | string                    | Name of the package                                                                           |
+| `serviceName`        | string                    | Name of the service                                                                           |
+| `quantity`           | int32                     | Quantity of the service                                                                       |
+| `createTime`         | google.protobuf.Timestamp | When this package service record was created (system-generated timestamp)                     |
+| `lastUpdatedTime`    | google.protobuf.Timestamp | When this package service record was last updated (system-generated timestamp)                |
+
 ---
 
 ## 📈 4. Typical Usage Flow
@@ -123,8 +225,19 @@ Here is a typical integration flow:
     - Retrieve detailed information about individual items within orders.
     - Useful for itemized reporting and revenue analysis.
     - Filter line items by order IDs if needed.
+    - Optionally include tax information for each line item.
 
-4. **Monitoring & Reconciliation**
+4. **ListOrderDiscounts**
+    - Retrieve detailed information about discounts applied to orders or order line items.
+    - Useful for discount reporting and analysis.
+    - Filter discounts by order IDs if needed.
+
+5. **ListOrderRedeemPackages**
+    - Retrieve detailed information about packages that have been redeemed and applied to specific orders.
+    - Useful for tracking package usage and reporting.
+    - Filter redeemed packages by order IDs if needed.
+
+6. **Monitoring & Reconciliation**
     - Regularly retrieve order data to monitor transaction statuses.
     - Check financial amounts and ensure accuracy.
     - Track payments and refunds for reconciliation purposes.
@@ -239,26 +352,102 @@ update time.
 #### ✅ Functionality:
 
 Retrieves detailed information about individual items within orders. This method is useful for itemized reporting and
-revenue analysis.
+revenue analysis. When the `include_tax` parameter is set to true, the response will also include tax details for each
+line item.
 
 #### 🎯 Use Cases:
 
 - Analyze revenue by service type or product.
 - Track usage of specific services or products.
 - Generate detailed financial reports.
+- Retrieve tax information for line items when needed.
 
 #### 🔧 Request Parameters:
 
 | Field Name         | Type          | Required | Description                                                               |
 |--------------------|---------------|----------|---------------------------------------------------------------------------|
 | `companyId`        | string        | Yes      | Company ID to scope line items                                            |
+| `includeTax`       | bool          | No       | Include tax information in the response (default: false)                  |
 | `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by, obfuscated ID strings |
 
 #### 📌 Return Value:
 
-| Field Name       | Type                 | Description                              |
-|------------------|----------------------|------------------------------------------|
-| `orderLineItems` | Array(OrderLineItem) | List of line items matching the criteria |
+| Field Name           | Type                 | Description                                                    |
+|----------------------|----------------------|----------------------------------------------------------------|
+| `orderLineItems`     | Array(OrderLineItem) | List of line items matching the criteria                       |
+| `orderLineItemTaxes` | Array(OrderLineTax)  | List of line item taxes matching the criteria (when includeTax is true) |
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 4. ListOrderDiscounts (`ListOrderDiscounts`)
+
+- **Method**: `ListOrderDiscounts`
+- **HTTP Method**: POST
+- **Path**: `/v1/orders/discounts:list`
+
+#### ✅ Functionality:
+
+Retrieves detailed information about discounts applied to orders or order line items. This method is useful for discount
+reporting and analysis.
+
+#### 🎯 Use Cases:
+
+- Analyze discount usage and effectiveness.
+- Track discount application across orders.
+- Generate discount-related financial reports.
+
+#### 🔧 Request Parameters:
+
+| Field Name         | Type          | Required | Description                                                               |
+|--------------------|---------------|----------|---------------------------------------------------------------------------|
+| `companyId`        | string        | Yes      | Company ID to scope discounts                                             |
+| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter discounts by, obfuscated ID strings  |
+
+#### 📌 Return Value:
+
+| Field Name       | Type              | Description                              |
+|------------------|-------------------|------------------------------------------|
+| `orderDiscounts` | Array(OrderDiscount) | List of discounts matching the criteria |
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied.
+
+---
+
+### 5. ListOrderRedeemPackages (`ListOrderRedeemPackages`)
+
+- **Method**: `ListOrderRedeemPackages`
+- **HTTP Method**: POST
+- **Path**: `/v1/orders/redeemPackages:list`
+
+#### ✅ Functionality:
+
+Retrieves detailed information about packages that have been redeemed and applied to specific orders. This method is
+useful for tracking package usage and reporting.
+
+#### 🎯 Use Cases:
+
+- Track package redemption and usage.
+- Analyze package popularity and effectiveness.
+- Generate package-related reports.
+
+#### 🔧 Request Parameters:
+
+| Field Name         | Type          | Required | Description                                                               |
+|--------------------|---------------|----------|---------------------------------------------------------------------------|
+| `companyId`        | string        | Yes      | Company ID to scope redeemed packages                                     |
+| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter redeemed packages by, obfuscated ID strings |
+
+#### 📌 Return Value:
+
+| Field Name            | Type                   | Description                                        |
+|-----------------------|------------------------|----------------------------------------------------|
+| `orderRedeemPackages` | Array(OrderRedeemPackage) | List of redeemed packages matching the criteria |
 
 #### ⚠️ Error Codes:
 
@@ -307,6 +496,35 @@ revenue analysis.
 ```json
 {
   "companyId": "cmp_001",
+  "includeTax": true,
+  "filter": {
+    "orderIds": [
+      "ord_001",
+      "ord_002"
+    ]
+  }
+}
+```
+
+### Example 4: ListOrderDiscounts
+
+```json
+{
+  "companyId": "cmp_001",
+  "filter": {
+    "orderIds": [
+      "ord_001",
+      "ord_002"
+    ]
+  }
+}
+```
+
+### Example 5: ListOrderRedeemPackages
+
+```json
+{
+  "companyId": "cmp_001",
   "filter": {
     "orderIds": [
       "ord_001",
@@ -333,6 +551,7 @@ TODO
 | How to filter orders by business location?              | Use `ListOrders` with `businessIds`                                                      |
 | Why does creating an order return "resource exhausted"? | Not applicable — orders are typically not created via this API                           |
 | How to handle incomplete orders?                        | Use `ListOrders` with `STATUS_PROCESSING` to identify and follow up on incomplete orders |
+| How to get tax information for line items?              | Use `ListOrderLineItems` with `includeTax` set to true                                   |
 
 ---
 
@@ -353,3 +572,5 @@ TODO
 - [order_service.proto](../moego/business/order/v1/order_service.proto)
 - [order.proto](../moego/business/order/v1/order.proto)
 - [order_line_item.proto](../moego/business/order/v1/order_line_item.proto)
+- [order_discount.proto](../moego/business/order/v1/order_discount.proto)
+- [order_line_tax.proto](../moego/business/order/v1/order_line_tax.proto)

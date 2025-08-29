@@ -122,3 +122,46 @@ message Order {
   // Used for financial reporting and reconciliation
   google.protobuf.Timestamp sales_datetime = 21;
 }
+
+
+// OrderRedeemPackage represents a service within a package that has been applied to an order.
+message OrderRedeemPackage {
+  // Unique identifier for the package service record
+  // Format: "ps_" followed by random characters
+  string id = 1;
+
+  // ID of the order this package service is associated with
+  string order_id = 2;
+
+  // ID of the order line item this package service is associated with
+  string order_line_item_id = 3;
+
+  // ID of the package
+  string package_id = 4;
+
+  // ID of the service within the package
+  string service_id = 5;
+
+  // Price of the service
+  google.type.Money service_price = 6;
+
+  // ID of the package service
+  string package_service_id = 7;
+
+  // Name of the package
+  string package_name = 8;
+
+  // Name of the service
+  string service_name = 9;
+
+  // Quantity of the service
+  int32 quantity = 10;
+
+  // When this package service record was created
+  // System-generated timestamp
+  google.protobuf.Timestamp created_time = 11;
+
+  // When this package service record was last updated
+  // System-generated timestamp
+  google.protobuf.Timestamp last_updated_time = 12;
+}
