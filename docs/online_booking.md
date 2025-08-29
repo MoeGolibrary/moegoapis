@@ -76,8 +76,8 @@ Captures information about a booking that was not completed by the customer.
 | `appointmentId`   | string                     | Appointment ID if booking was converted               |
 | `appointmentTime` | timestamp                  | Scheduled appointment time if one was set             |
 | `leadType`        | LeadType                   | How the customer was acquired                         |
-| `createTime`      | timestamp                  | When this record was created                          |
-| `updateTime`      | timestamp                  | When this record was last updated                     |
+| `createdTime`      | timestamp                  | When this record was created                          |
+| `lastUpdatedTime`      | timestamp                  | When this record was last updated                     |
 | `additionalNote`  | string                     | Notes added by staff or system                        |
 | `careType`        | ItemType                   | Type of service selected by the customer              |
 
@@ -220,8 +220,8 @@ Retrieves detailed information about a specific abandoned booking.
 | `appointmentId`   | string                     | Appointment ID if booking was converted               |
 | `appointmentTime` | timestamp                  | Scheduled appointment time if one was set             |
 | `leadType`        | LeadType                   | How the customer was acquired                         |
-| `createTime`      | timestamp                  | When this record was created                          |
-| `updateTime`      | timestamp                  | When this record was last updated                     |
+| `createdTime`      | timestamp                  | When this record was created                          |
+| `lastUpdatedTime`      | timestamp                  | When this record was last updated                     |
 | `additionalNote`  | string                     | Notes added by staff or system                        |
 | `careType`        | ItemType                   | Type of service selected by the customer              |
 
@@ -321,8 +321,8 @@ GET /v1/abandoned_bookings/abk_12345
   "abandonTime": "2024-08-15T10:00:00Z",
   "abandonStatus": "ABANDONED",
   "leadType": "NEW_VISITOR",
-  "createTime": "2024-08-15T09:50:00Z",
-  "updateTime": "2024-08-15T09:55:00Z"
+  "createdTime": "2024-08-15T09:50:00Z",
+  "lastUpdatedTime": "2024-08-15T09:55:00Z"
 }
 ```
 
@@ -383,7 +383,7 @@ POST /v1/abandoned_bookings:list
       "abandonTime": "2024-08-05T14:30:00Z",
       "abandonStatus": "ABANDONED",
       "leadType": "NEW_VISITOR",
-      "createTime": "2024-08-05T14:25:00Z"
+      "createdTime": "2024-08-05T14:25:00Z"
     }
   ]
 }

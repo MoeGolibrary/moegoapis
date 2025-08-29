@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderService_GetOrder_FullMethodName           = "/moego.business.order.v1.OrderService/GetOrder"
-	OrderService_ListOrders_FullMethodName         = "/moego.business.order.v1.OrderService/ListOrders"
-	OrderService_ListOrderLineItems_FullMethodName = "/moego.business.order.v1.OrderService/ListOrderLineItems"
+	OrderService_GetOrder_FullMethodName                = "/moego.business.order.v1.OrderService/GetOrder"
+	OrderService_ListOrders_FullMethodName              = "/moego.business.order.v1.OrderService/ListOrders"
+	OrderService_ListOrderLineItems_FullMethodName      = "/moego.business.order.v1.OrderService/ListOrderLineItems"
+	OrderService_ListOrderDiscounts_FullMethodName      = "/moego.business.order.v1.OrderService/ListOrderDiscounts"
+	OrderService_ListOrderRedeemPackages_FullMethodName = "/moego.business.order.v1.OrderService/ListOrderRedeemPackages"
 )
 
 // OrderServiceClient is the client API for OrderService service.
@@ -59,6 +61,22 @@ type OrderServiceClient interface {
 	// Returns an empty list if no line items match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrderLineItems(ctx context.Context, in *ListOrderLineItemsRequest, opts ...grpc.CallOption) (*ListOrderLineItemsResponse, error)
+	// Lists discounts matching the specified criteria.
+	//
+	// Retrieves detailed information about discounts applied to orders or order line items.
+	// This method is useful for discount reporting and analysis.
+	//
+	// Returns an empty list if no discounts match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListOrderDiscounts(ctx context.Context, in *ListOrderDiscountsRequest, opts ...grpc.CallOption) (*ListOrderDiscountsResponse, error)
+	// Lists redeemed packages that have been applied to orders.
+	//
+	// Retrieves detailed information about packages that have been redeemed and applied
+	// to specific orders. This method is useful for tracking package usage and reporting.
+	//
+	// Returns an empty list if no redeemed packages match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListOrderRedeemPackages(ctx context.Context, in *ListOrderRedeemPackagesRequest, opts ...grpc.CallOption) (*ListOrderRedeemPackagesResponse, error)
 }
 
 type orderServiceClient struct {
@@ -93,6 +111,26 @@ func (c *orderServiceClient) ListOrderLineItems(ctx context.Context, in *ListOrd
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(ListOrderLineItemsResponse)
 	err := c.cc.Invoke(ctx, OrderService_ListOrderLineItems_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderServiceClient) ListOrderDiscounts(ctx context.Context, in *ListOrderDiscountsRequest, opts ...grpc.CallOption) (*ListOrderDiscountsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOrderDiscountsResponse)
+	err := c.cc.Invoke(ctx, OrderService_ListOrderDiscounts_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderServiceClient) ListOrderRedeemPackages(ctx context.Context, in *ListOrderRedeemPackagesRequest, opts ...grpc.CallOption) (*ListOrderRedeemPackagesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListOrderRedeemPackagesResponse)
+	err := c.cc.Invoke(ctx, OrderService_ListOrderRedeemPackages_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -134,6 +172,22 @@ type OrderServiceServer interface {
 	// Returns an empty list if no line items match the criteria.
 	// Returns PERMISSION_DENIED if the caller lacks access rights.
 	ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error)
+	// Lists discounts matching the specified criteria.
+	//
+	// Retrieves detailed information about discounts applied to orders or order line items.
+	// This method is useful for discount reporting and analysis.
+	//
+	// Returns an empty list if no discounts match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListOrderDiscounts(context.Context, *ListOrderDiscountsRequest) (*ListOrderDiscountsResponse, error)
+	// Lists redeemed packages that have been applied to orders.
+	//
+	// Retrieves detailed information about packages that have been redeemed and applied
+	// to specific orders. This method is useful for tracking package usage and reporting.
+	//
+	// Returns an empty list if no redeemed packages match the criteria.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListOrderRedeemPackages(context.Context, *ListOrderRedeemPackagesRequest) (*ListOrderRedeemPackagesResponse, error)
 	mustEmbedUnimplementedOrderServiceServer()
 }
 
@@ -152,6 +206,12 @@ func (UnimplementedOrderServiceServer) ListOrders(context.Context, *ListOrdersRe
 }
 func (UnimplementedOrderServiceServer) ListOrderLineItems(context.Context, *ListOrderLineItemsRequest) (*ListOrderLineItemsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListOrderLineItems not implemented")
+}
+func (UnimplementedOrderServiceServer) ListOrderDiscounts(context.Context, *ListOrderDiscountsRequest) (*ListOrderDiscountsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrderDiscounts not implemented")
+}
+func (UnimplementedOrderServiceServer) ListOrderRedeemPackages(context.Context, *ListOrderRedeemPackagesRequest) (*ListOrderRedeemPackagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListOrderRedeemPackages not implemented")
 }
 func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
 func (UnimplementedOrderServiceServer) testEmbeddedByValue()                      {}
@@ -228,6 +288,42 @@ func _OrderService_ListOrderLineItems_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderService_ListOrderDiscounts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOrderDiscountsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServiceServer).ListOrderDiscounts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderService_ListOrderDiscounts_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServiceServer).ListOrderDiscounts(ctx, req.(*ListOrderDiscountsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderService_ListOrderRedeemPackages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListOrderRedeemPackagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderServiceServer).ListOrderRedeemPackages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderService_ListOrderRedeemPackages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderServiceServer).ListOrderRedeemPackages(ctx, req.(*ListOrderRedeemPackagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -246,6 +342,14 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListOrderLineItems",
 			Handler:    _OrderService_ListOrderLineItems_Handler,
+		},
+		{
+			MethodName: "ListOrderDiscounts",
+			Handler:    _OrderService_ListOrderDiscounts_Handler,
+		},
+		{
+			MethodName: "ListOrderRedeemPackages",
+			Handler:    _OrderService_ListOrderRedeemPackages_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -1,0 +1,109 @@
+syntax = "proto3";
+
+package moego.business.order.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
+option java_multiple_files = true;
+option java_outer_classname = "OrderDiscountProto";
+option java_package = "com.moego.api.business.order.v1";
+
+// OrderDiscount represents a discount applied to an order or order line item.
+message OrderDiscount {
+  // DiscountType defines the category of discount being applied.
+  enum DiscountType {
+    // Unknown or invalid discount type
+    DISCOUNT_TYPE_UNSPECIFIED = 0;
+
+    // Fixed amount discount
+    // Example: $10 off
+    AMOUNT = 1;
+
+    // Percentage discount
+    // Example: 15% off
+    PERCENTAGE = 2;
+
+    // Credit discount
+    // Example: Store credit
+    CREDIT = 3;
+  }
+
+  // ApplyType defines how the discount is applied.
+  enum ApplyType {
+    // Unknown or invalid apply type
+    APPLY_TYPE_UNSPECIFIED = 0;
+
+    // Applied to all items
+    ALL = 1;
+
+    // Applied to all items except tips
+    ALL_NO_TIP = 2;
+
+    // Applied to service items
+    SERVICE = 3;
+
+    // Applied to product items
+    PRODUCT = 4;
+
+    // Applied to package items
+    PACKAGE = 5;
+
+    // Applied to service charge items
+    SERVICE_CHARGE = 6;
+
+    // Applied to specific item
+    ITEM = 7;
+
+    // No application
+    NONE = 8;
+  }
+
+  // Unique identifier for the discount record
+  // Format: "od_" followed by random characters
+  string id = 1;
+
+  // ID of the business where the discount is applied
+  string business_id = 2;
+
+  // ID of the order associated with this discount
+  string order_id = 3;
+
+  // ID of the order line item this discount is applied to
+  // Empty string means the discount is applied at order level
+  // Non-empty means the discount is applied to a specific order line item
+  string order_item_id = 4;
+
+  // Type of discount application
+  ApplyType apply_type = 5;
+
+  // Flag indicating if this discount record is deleted
+  bool deleted = 6;
+
+  // Type of discount
+  DiscountType discount_type = 7;
+
+  // Discount amount applied
+  google.type.Money discount_amount = 8;
+
+  // Discount rate applied (e.g., 0.5 for 50%)
+  double discount_rate = 9;
+
+  // ID of the staff member who applied the discount
+  string apply_by = 10;
+
+  // Sequence in which the discount is applied
+  int32 apply_sequence = 11;
+
+  // When this discount record was created
+  // System-generated timestamp
+  google.protobuf.Timestamp created_time = 12;
+
+  // When this discount record was last updated
+  // System-generated timestamp
+  google.protobuf.Timestamp last_updated_time = 13;
+
+  // the discount code used
+  string discount_code = 14;
+}

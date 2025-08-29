@@ -57,6 +57,7 @@ pets, and tracking service history.
 | `referralSource`          | [ReferralSource](./setting_service.md#5-referralsource)  | The source or channel through which a customer was acquired           |
 | `preference`              | Preference                                               | Customer's communication and marketing preferences                    |
 | `upcomingAppointmentsUrl` | string                                                   | URL to a page where the customer can view their upcoming appointments |
+| `deleted`                 | bool                                                     | Flag indicating if this customer record is deleted                    |
 
 ### 2. Note
 

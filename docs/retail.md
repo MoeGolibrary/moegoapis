@@ -48,8 +48,8 @@ Represents a retail product available for sale.
 | `enableStaffCommission` | bool                      | Whether staff commission is enabled                      |
 | `stock`                 | int32                     | Current stock quantity                                   |
 | `deleted`               | bool                      | Whether the product has been marked as deleted           |
-| `createTime`            | google.protobuf.Timestamp | When the product was created                             |
-| `updateTime`            | google.protobuf.Timestamp | When the product was last updated                        |
+| `createdTime`           | google.protobuf.Timestamp | When the product was created                             |
+| `lastUpdatedTime`       | google.protobuf.Timestamp | When the product was last updated                        |
 
 ---
 

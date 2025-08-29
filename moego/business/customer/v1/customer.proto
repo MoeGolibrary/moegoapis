@@ -144,4 +144,7 @@ message Customer {
 
   // URL to a page where the customer can view their upcoming appointments
   string upcoming_appointments_url = 23;
+
+  // Flag indicating if this customer record is deleted
+  bool deleted = 24;
 }

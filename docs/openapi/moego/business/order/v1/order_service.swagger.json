@@ -16,6 +16,41 @@
     "application/json"
   ],
   "paths": {
+    "/v1/orders/discounts:list": {
+      "post": {
+        "summary": "Lists discounts matching the specified criteria.",
+        "description": "Retrieves detailed information about discounts applied to orders or order line items.\nThis method is useful for discount reporting and analysis.\n\nReturns an empty list if no discounts match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "OrderService_ListOrderDiscounts",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderDiscountsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing order discounts.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderDiscountsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.order.v1.OrderService"
+        ]
+      }
+    },
     "/v1/orders/items:list": {
       "post": {
         "summary": "Lists line items matching the specified criteria.",
@@ -43,6 +78,41 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/v1ListOrderLineItemsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.order.v1.OrderService"
+        ]
+      }
+    },
+    "/v1/orders/redeemPackages:list": {
+      "post": {
+        "summary": "Lists redeemed packages that have been applied to orders.",
+        "description": "Retrieves detailed information about packages that have been redeemed and applied\nto specific orders. This method is useful for tracking package usage and reporting.\n\nReturns an empty list if no redeemed packages match the criteria.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "OrderService_ListOrderRedeemPackages",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderRedeemPackagesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing order redeem packages.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListOrderRedeemPackagesRequest"
             }
           }
         ],
@@ -121,6 +191,17 @@
     }
   },
   "definitions": {
+    "OrderDiscountDiscountType": {
+      "type": "string",
+      "enum": [
+        "DISCOUNT_TYPE_UNSPECIFIED",
+        "AMOUNT",
+        "PERCENTAGE",
+        "CREDIT"
+      ],
+      "default": "DISCOUNT_TYPE_UNSPECIFIED",
+      "description": "DiscountType defines the category of discount being applied.\n\n - DISCOUNT_TYPE_UNSPECIFIED: Unknown or invalid discount type\n - AMOUNT: Fixed amount discount\nExample: $10 off\n - PERCENTAGE: Percentage discount\nExample: 15% off\n - CREDIT: Credit discount\nExample: Store credit"
+    },
     "OrderLineItemObjectType": {
       "type": "string",
       "enum": [
@@ -223,6 +304,68 @@
         "type": "Money"
       }
     },
+    "v1ListOrderDiscountsRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list discounts for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListOrderDiscountsRequestFilter",
+          "title": "Optional filters to apply to the discount list"
+        }
+      },
+      "description": "Request message for listing order discounts.",
+      "required": [
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderDiscountsRequest"
+      }
+    },
+    "v1ListOrderDiscountsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "orderIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Specific order IDs to retrieve discounts for\nOptional. If empty, returns discounts from all orders"
+        }
+      },
+      "title": "Filter parameters for the discount list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListOrderDiscountsResponse": {
+      "type": "object",
+      "properties": {
+        "orderDiscounts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1OrderDiscount"
+          },
+          "title": "List of discounts matching the request criteria\nMay be empty if no discounts match"
+        }
+      },
+      "description": "Response message for listing order discounts.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderDiscountsResponse"
+      }
+    },
     "v1ListOrderLineItemsRequest": {
       "type": "object",
       "properties": {
@@ -275,6 +418,14 @@
             "$ref": "#/definitions/v1OrderLineItem"
           },
           "title": "List of line items matching the request criteria\nMay be empty if no items match"
+        },
+        "orderLineItemTaxes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1OrderLineTax"
+          },
+          "title": "List of line items with tax information matching the request criteria\nMay be empty if no items match or if include_tax was false"
         }
       },
       "description": "Response message for listing order line items.",
@@ -283,6 +434,68 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
         },
         "type": "ListOrderLineItemsResponse"
+      }
+    },
+    "v1ListOrderRedeemPackagesRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company to list redeem packages for\nRequired. Must be a valid company ID"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListOrderRedeemPackagesRequestFilter",
+          "title": "Optional filters to apply to the redeem package list"
+        }
+      },
+      "description": "Request message for listing order redeem packages.",
+      "required": [
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderRedeemPackagesRequest"
+      }
+    },
+    "v1ListOrderRedeemPackagesRequestFilter": {
+      "type": "object",
+      "properties": {
+        "orderIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Specific order IDs to retrieve redeem packages for\nOptional. If empty, returns redeem packages from all orders"
+        }
+      },
+      "title": "Filter parameters for the redeem package list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListOrderRedeemPackagesResponse": {
+      "type": "object",
+      "properties": {
+        "orderRedeemPackages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1OrderRedeemPackage"
+          },
+          "title": "List of redeem packages matching the request criteria\nMay be empty if no redeem packages match"
+        }
+      },
+      "description": "Response message for listing order redeem packages.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "ListOrderRedeemPackagesResponse"
       }
     },
     "v1ListOrdersRequest": {
@@ -474,6 +687,94 @@
         "type": "Order"
       }
     },
+    "v1OrderDiscount": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the discount record\nFormat: \"od_\" followed by random characters"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business where the discount is applied"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "ID of the order associated with this discount"
+        },
+        "orderItemId": {
+          "type": "string",
+          "title": "ID of the order line item this discount is applied to\nEmpty string means the discount is applied at order level\nNon-empty means the discount is applied to a specific order line item"
+        },
+        "applyType": {
+          "$ref": "#/definitions/v1OrderDiscountApplyType",
+          "title": "Type of discount application"
+        },
+        "deleted": {
+          "type": "boolean",
+          "title": "Flag indicating if this discount record is deleted"
+        },
+        "discountType": {
+          "$ref": "#/definitions/OrderDiscountDiscountType",
+          "title": "Type of discount"
+        },
+        "discountAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Discount amount applied"
+        },
+        "discountRate": {
+          "type": "number",
+          "format": "double",
+          "title": "Discount rate applied (e.g., 0.5 for 50%)"
+        },
+        "applyBy": {
+          "type": "string",
+          "title": "ID of the staff member who applied the discount"
+        },
+        "applySequence": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Sequence in which the discount is applied"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this discount record was created\nSystem-generated timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this discount record was last updated\nSystem-generated timestamp"
+        },
+        "discountCode": {
+          "type": "string",
+          "title": "the discount code used"
+        }
+      },
+      "description": "OrderDiscount represents a discount applied to an order or order line item.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "OrderDiscount"
+      }
+    },
+    "v1OrderDiscountApplyType": {
+      "type": "string",
+      "enum": [
+        "APPLY_TYPE_UNSPECIFIED",
+        "ALL",
+        "ALL_NO_TIP",
+        "SERVICE",
+        "PRODUCT",
+        "PACKAGE",
+        "SERVICE_CHARGE",
+        "ITEM",
+        "NONE"
+      ],
+      "default": "APPLY_TYPE_UNSPECIFIED",
+      "description": "ApplyType defines how the discount is applied.\n\n - APPLY_TYPE_UNSPECIFIED: Unknown or invalid apply type\n - ALL: Applied to all items\n - ALL_NO_TIP: Applied to all items except tips\n - SERVICE: Applied to service items\n - PRODUCT: Applied to product items\n - PACKAGE: Applied to package items\n - SERVICE_CHARGE: Applied to service charge items\n - ITEM: Applied to specific item\n - NONE: No application"
+    },
     "v1OrderLineItem": {
       "type": "object",
       "properties": {
@@ -531,6 +832,157 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
         },
         "type": "OrderLineItem"
+      }
+    },
+    "v1OrderLineTax": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the line tax record\nFormat: \"olt_\" followed by random characters"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business where the tax is applied"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "ID of the order associated with this tax"
+        },
+        "orderItemId": {
+          "type": "string",
+          "title": "ID of the order line item this tax is applied to"
+        },
+        "applyType": {
+          "$ref": "#/definitions/v1OrderLineTaxApplyType",
+          "title": "Type of tax application"
+        },
+        "deleted": {
+          "type": "boolean",
+          "title": "Flag indicating if this tax record is deleted"
+        },
+        "taxId": {
+          "type": "string",
+          "title": "ID of the tax configuration"
+        },
+        "taxRate": {
+          "type": "number",
+          "format": "double",
+          "title": "Tax rate (e.g., 0.08 for 8%)"
+        },
+        "taxAmount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Actual tax amount applied"
+        },
+        "taxName": {
+          "type": "string",
+          "title": "Name of the tax"
+        },
+        "applyBy": {
+          "type": "string",
+          "title": "ID of the staff member who applied the tax"
+        },
+        "applySequence": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Sequence in which the tax is applied"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tax record was created\nSystem-generated timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this tax record was last updated\nSystem-generated timestamp"
+        }
+      },
+      "description": "OrderLineTax represents tax information for an individual line item within an order.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "OrderLineTax"
+      }
+    },
+    "v1OrderLineTaxApplyType": {
+      "type": "string",
+      "enum": [
+        "APPLY_TYPE_UNSPECIFIED",
+        "ALL",
+        "ALL_NO_TIP",
+        "SERVICE",
+        "PRODUCT",
+        "PACKAGE",
+        "SERVICE_CHARGE",
+        "ITEM",
+        "NONE"
+      ],
+      "default": "APPLY_TYPE_UNSPECIFIED",
+      "description": "ApplyType defines how the tax is applied.\n\n - APPLY_TYPE_UNSPECIFIED: Unknown or invalid apply type\n - ALL: Applied to all items\n - ALL_NO_TIP: Applied to all items except tips\n - SERVICE: Applied to service items\n - PRODUCT: Applied to product items\n - PACKAGE: Applied to package items\n - SERVICE_CHARGE: Applied to service charge items\n - ITEM: Applied to specific item\n - NONE: No application"
+    },
+    "v1OrderRedeemPackage": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the package service record\nFormat: \"ps_\" followed by random characters"
+        },
+        "orderId": {
+          "type": "string",
+          "title": "ID of the order this package service is associated with"
+        },
+        "orderItemId": {
+          "type": "string",
+          "title": "ID of the order line item this package service is associated with"
+        },
+        "packageId": {
+          "type": "string",
+          "title": "ID of the package"
+        },
+        "serviceId": {
+          "type": "string",
+          "title": "ID of the service within the package"
+        },
+        "servicePrice": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Price of the service"
+        },
+        "packageServiceId": {
+          "type": "string",
+          "title": "ID of the package service"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "Name of the package"
+        },
+        "serviceName": {
+          "type": "string",
+          "title": "Name of the service"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Quantity of the service"
+        },
+        "createdTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this package service record was created\nSystem-generated timestamp"
+        },
+        "lastUpdatedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this package service record was last updated\nSystem-generated timestamp"
+        }
+      },
+      "description": "OrderRedeemPackage represents a service within a package that has been applied to an order.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
+        },
+        "type": "OrderRedeemPackage"
       }
     },
     "v1OrderStatus": {

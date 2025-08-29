@@ -265,12 +265,12 @@
           "type": "boolean",
           "title": "Whether the product has been marked as deleted"
         },
-        "createTime": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this product was created"
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this product was last updated"

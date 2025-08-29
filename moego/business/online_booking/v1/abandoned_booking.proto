@@ -193,10 +193,10 @@ message AbandonedBooking {
   LeadType lead_type = 16;
 
   // Timestamp when this record was created.
-  google.protobuf.Timestamp create_time = 17;
+  google.protobuf.Timestamp created_time = 17;
 
   // Timestamp when this record was last updated.
-  google.protobuf.Timestamp update_time = 18;
+  google.protobuf.Timestamp last_updated_time = 18;
 
   // Additional notes added by staff or system.
   string additional_note = 19;

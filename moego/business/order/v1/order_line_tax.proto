@@ -1,0 +1,89 @@
+syntax = "proto3";
+
+package moego.business.order.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
+option java_multiple_files = true;
+option java_outer_classname = "OrderLineTaxProto";
+option java_package = "com.moego.api.business.order.v1";
+
+// OrderLineTax represents tax information for an individual line item within an order.
+message OrderLineTax {
+  // ApplyType defines how the tax is applied.
+  enum ApplyType {
+    // Unknown or invalid apply type
+    APPLY_TYPE_UNSPECIFIED = 0;
+
+    // Applied to all items
+    ALL = 1;
+
+    // Applied to all items except tips
+    ALL_NO_TIP = 2;
+
+    // Applied to service items
+    SERVICE = 3;
+
+    // Applied to product items
+    PRODUCT = 4;
+
+    // Applied to package items
+    PACKAGE = 5;
+
+    // Applied to service charge items
+    SERVICE_CHARGE = 6;
+
+    // Applied to specific item
+    ITEM = 7;
+
+    // No application
+    NONE = 8;
+  }
+
+  // Unique identifier for the line tax record
+  // Format: "olt_" followed by random characters
+  string id = 1;
+
+  // ID of the business where the tax is applied
+  string business_id = 2;
+
+  // ID of the order associated with this tax
+  string order_id = 3;
+
+  // ID of the order line item this tax is applied to
+  string order_item_id = 4;
+
+  // Type of tax application
+  ApplyType apply_type = 5;
+
+  // Flag indicating if this tax record is deleted
+  bool deleted = 6;
+
+  // ID of the tax configuration
+  string tax_id = 7;
+
+  // Tax rate (e.g., 0.08 for 8%)
+  double tax_rate = 8;
+
+  // Actual tax amount applied
+  google.type.Money tax_amount = 9;
+
+  // Name of the tax
+  string tax_name = 14;
+
+  // ID of the staff member who applied the tax
+  string apply_by = 10;
+
+  // Sequence in which the tax is applied
+  int32 apply_sequence = 11;
+
+  // When this tax record was created
+  // System-generated timestamp
+  google.protobuf.Timestamp created_time = 12;
+
+  // When this tax record was last updated
+  // System-generated timestamp
+  google.protobuf.Timestamp last_updated_time = 13;
+}

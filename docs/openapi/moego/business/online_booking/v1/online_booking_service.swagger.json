@@ -470,12 +470,12 @@
           "$ref": "#/definitions/AbandonedBookingLeadType",
           "description": "How the customer was acquired."
         },
-        "createTime": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when this record was created."
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when this record was last updated."
@@ -896,6 +896,10 @@
         "photo": {
           "type": "string",
           "description": "photo url of pet."
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "Flag indicating if this pet record is deleted."
         }
       },
       "description": "Pet represents a customer's pet that receives services at your business.\nEach pet has its own profile containing essential information for providing\nappropriate care, including health records, behavior notes, and service preferences.",
