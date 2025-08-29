@@ -363,7 +363,6 @@ line item.
 | Field Name         | Type          | Required | Description                                                               |
 |--------------------|---------------|----------|---------------------------------------------------------------------------|
 | `companyId`        | string        | Yes      | Company ID to scope line items                                            |
-| `includeTax`       | bool          | No       | Include tax information in the response (default: false)                  |
 | `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by, obfuscated ID strings |
 
 #### 📌 Return Value:

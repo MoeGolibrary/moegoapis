@@ -373,10 +373,6 @@
           "type": "string",
           "title": "ID of the company to list line items for\nRequired. Must be a valid company ID"
         },
-        "includeTax": {
-          "type": "boolean",
-          "title": "Include tax information in the response\nOptional. If true, the response will include tax details"
-        },
         "filter": {
           "$ref": "#/definitions/v1ListOrderLineItemsRequestFilter",
           "title": "Optional filters to apply to the line item list"

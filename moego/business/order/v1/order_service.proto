@@ -148,10 +148,6 @@ message ListOrderLineItemsRequest {
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Include tax information in the response
-  // Optional. If true, the response will include tax details
-  bool include_tax = 2 [(google.api.field_behavior) = OPTIONAL];
-
   // Filter parameters for the line item list
   message Filter {
     // Specific order IDs to retrieve line items for
@@ -160,7 +156,7 @@ message ListOrderLineItemsRequest {
   }
 
   // Optional filters to apply to the line item list
-  Filter filter = 3;
+  Filter filter = 2;
 }
 
 // Response message for listing order line items.

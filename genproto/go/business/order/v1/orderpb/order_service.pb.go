@@ -210,11 +210,8 @@ type ListOrderLineItemsRequest struct {
 	// ID of the company to list line items for
 	// Required. Must be a valid company ID
 	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// Include tax information in the response
-	// Optional. If true, the response will include tax details
-	IncludeTax bool `protobuf:"varint,2,opt,name=include_tax,json=includeTax,proto3" json:"include_tax,omitempty"`
 	// Optional filters to apply to the line item list
-	Filter        *ListOrderLineItemsRequest_Filter `protobuf:"bytes,3,opt,name=filter,proto3" json:"filter,omitempty"`
+	Filter        *ListOrderLineItemsRequest_Filter `protobuf:"bytes,2,opt,name=filter,proto3" json:"filter,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -254,13 +251,6 @@ func (x *ListOrderLineItemsRequest) GetCompanyId() string {
 		return x.CompanyId
 	}
 	return ""
-}
-
-func (x *ListOrderLineItemsRequest) GetIncludeTax() bool {
-	if x != nil {
-		return x.IncludeTax
-	}
-	return false
 }
 
 func (x *ListOrderLineItemsRequest) GetFilter() *ListOrderLineItemsRequest_Filter {
@@ -762,13 +752,11 @@ const file_moego_business_order_v1_order_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x126\n" +
 	"\x06orders\x18\x02 \x03(\v2\x1e.moego.business.order.v1.OrderR\x06orders\"&\n" +
 	"\x0fGetOrderRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xe4\x01\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xbe\x01\n" +
 	"\x19ListOrderLineItemsRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
-	"\vinclude_tax\x18\x02 \x01(\bB\x03\xe0A\x01R\n" +
-	"includeTax\x12Q\n" +
-	"\x06filter\x18\x03 \x01(\v29.moego.business.order.v1.ListOrderLineItemsRequest.FilterR\x06filter\x1a*\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12Q\n" +
+	"\x06filter\x18\x02 \x01(\v29.moego.business.order.v1.ListOrderLineItemsRequest.FilterR\x06filter\x1a*\n" +
 	"\x06Filter\x12 \n" +
 	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x01R\borderIds\"\xc8\x01\n" +
 	"\x1aListOrderLineItemsResponse\x12P\n" +
