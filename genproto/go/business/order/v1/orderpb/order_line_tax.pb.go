@@ -122,6 +122,9 @@ type OrderLineTax struct {
 	TaxRate float64 `protobuf:"fixed64,8,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
 	// Actual tax amount applied
 	TaxAmount *money.Money `protobuf:"bytes,9,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`
+	// Name of the tax
+	TaxName string `protobuf:"bytes,14,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
+	// ID of the staff member
 	// ID of the staff member who applied the tax
 	ApplyBy string `protobuf:"bytes,10,opt,name=apply_by,json=applyBy,proto3" json:"apply_by,omitempty"`
 	// Sequence in which the tax is applied
@@ -228,6 +231,14 @@ func (x *OrderLineTax) GetTaxAmount() *money.Money {
 	}
 	return nil
 }
+TaxName() string {
+	if x != nil {
+		return x.TaxName
+	}
+	return ""
+}
+
+func (x *OrderLineTax) Ge
 
 func (x *OrderLineTax) GetApplyBy() string {
 	if x != nil {
@@ -259,7 +270,7 @@ func (x *OrderLineTax) GetLastUpdatedTime() *timestamppb.Timestamp {
 
 var File_moego_business_order_v1_order_line_tax_proto protoreflect.FileDescriptor
 
-const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
+	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc8\x05\n" +
 	"\n" +
 	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xad\x05\n" +
 	"\fOrderLineTax\x12\x0e\n" +
@@ -274,6 +285,7 @@ const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x12\x15\n" +
 	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12\x19\n" +
 	"\btax_rate\x18\b \x01(\x01R\ataxRate\x121\n" +
+e\x12\x
 	"\n" +
 	"tax_amount\x18\t \x01(\v2\x12.google.type.MoneyR\ttaxAmount\x12\x19\n" +
 	"\bapply_by\x18\n" +

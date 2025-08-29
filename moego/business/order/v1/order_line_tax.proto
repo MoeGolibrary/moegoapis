@@ -70,6 +70,9 @@ message OrderLineTax {
   // Actual tax amount applied
   google.type.Money tax_amount = 9;
 
+  // Name of the tax
+  string tax_name = 14;
+
   // ID of the staff member who applied the tax
   string apply_by = 10;
 

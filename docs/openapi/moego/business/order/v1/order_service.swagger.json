@@ -878,6 +878,10 @@
           "$ref": "#/definitions/typeMoney",
           "title": "Actual tax amount applied"
         },
+        "taxName": {
+          "type": "string",
+          "title": "Name of the tax"
+        },
         "applyBy": {
           "type": "string",
           "title": "ID of the staff member who applied the tax"
