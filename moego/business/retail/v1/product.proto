@@ -61,7 +61,7 @@ message Product {
   bool deleted = 18;
 
   // When this product was created
-  google.protobuf.Timestamp create_time = 14;
+  google.protobuf.Timestamp created_time = 14;
 
   // When this product was last updated
   google.protobuf.Timestamp update_time = 15;

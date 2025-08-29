@@ -98,11 +98,11 @@ message OrderDiscount {
 
   // When this discount record was created
   // System-generated timestamp
-  google.protobuf.Timestamp create_time = 12;
+  google.protobuf.Timestamp created_time = 12;
 
   // When this discount record was last updated
   // System-generated timestamp
-  google.protobuf.Timestamp update_time = 13;
+  google.protobuf.Timestamp last_updated_time = 13;
 
   // ID of the discount code used
   string discount_code_id = 14;

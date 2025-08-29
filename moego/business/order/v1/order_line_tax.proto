@@ -78,11 +78,11 @@ message OrderLineTax {
 
   // When this tax record was created
   // System-generated timestamp
-  google.protobuf.Timestamp create_time = 12;
+  google.protobuf.Timestamp created_time = 12;
 
   // When this tax record was last updated
   // System-generated timestamp
-  google.protobuf.Timestamp update_time = 13;
+  google.protobuf.Timestamp last_updated_time = 13;
 
   // Name of the tax
   string tax_name = 14;

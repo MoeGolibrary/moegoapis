@@ -129,22 +129,24 @@ Represents a discount applied to an order or order line item.
 | `ITEM`                   | Applied to specific item         |
 | `NONE`                   | No application                   |
 
-| Field Name       | Type                      | Description                                                                                                      |
-|------------------|---------------------------|------------------------------------------------------------------------------------------------------------------|
-| `id`             | string                    | Unique identifier for the discount record, obfuscated ID string (format: "od_" + random characters)              |
-| `businessId`     | string                    | ID of the business where the discount is applied, obfuscated ID string                                           |
-| `orderId`        | string                    | ID of the order associated with this discount, obfuscated ID string                                              |
-| `orderItemId`    | string                    | ID of the order line item this discount is applied to; empty string means the discount is applied at order level |
-| `applyType`      | ApplyType                 | Type of discount application                                                                                     |
-| `isDeleted`      | bool                      | Flag indicating if this discount record is deleted                                                               |
-| `discountType`   | DiscountType              | Type of discount                                                                                                 |
-| `discountAmount` | google.type.Money         | Discount amount applied                                                                                          |
-| `discountRate`   | double                    | Discount rate applied (e.g., 0.5 for 50%)                                                                        |
-| `applyBy`        | string                    | ID of the entity that applied the discount, obfuscated ID string                                                 |
-| `applySequence`  | int32                     | Sequence in which the discount is applied                                                                        |
-| `createTime`     | google.protobuf.Timestamp | When this discount record was created (system-generated timestamp)                                               |
-| `updateTime`     | google.protobuf.Timestamp | When this discount record was last updated (system-generated timestamp)                                          |
-| `discountCodeId` | string                    | ID of the discount code used, obfuscated ID string                                                               |
+
+
+| Field Name        | Type                      | Description                                                                                                      |
+|-------------------|---------------------------|------------------------------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the discount record, obfuscated ID string (format: "od_" + random characters)              |
+| `businessId`      | string                    | ID of the business where the discount is applied, obfuscated ID string                                           |
+| `orderId`         | string                    | ID of the order associated with this discount, obfuscated ID string                                              |
+| `orderItemId`     | string                    | ID of the order line item this discount is applied to; empty string means the discount is applied at order level |
+| `applyType`       | ApplyType                 | Type of discount application                                                                                     |
+| `isDeleted`       | bool                      | Flag indicating if this discount record is deleted                                                               |
+| `discountType`    | DiscountType              | Type of discount                                                                                                 |
+| `discountAmount`  | google.type.Money         | Discount amount applied                                                                                          |
+| `discountRate`    | double                    | Discount rate applied (e.g., 0.5 for 50%)                                                                        |
+| `applyBy`         | string                    | ID of the entity that applied the discount, obfuscated ID string                                                 |
+| `applySequence`   | int32                     | Sequence in which the discount is applied                                                                        |
+| `createdTime`     | google.protobuf.Timestamp | When this discount record was created (system-generated timestamp)                                               |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this discount record was last updated (system-generated timestamp)                                          |
+| `discountCodeId`  | string                    | ID of the discount code used, obfuscated ID string                                                               |
 
 ### 4. OrderLineTax
 
@@ -164,26 +166,28 @@ Represents tax information for an individual line item within an order.
 | `ITEM`                   | Applied to specific item         |
 | `NONE`                   | No application                   |
 
-| Field Name       | Type                      | Description                                                                                          |
-|------------------|---------------------------|------------------------------------------------------------------------------------------------------|
-| `id`             | string                    | Unique identifier for the line tax record, obfuscated ID string (format: "olt_" + random characters) |
-| `businessId`     | string                    | ID of the business where the tax is applied, obfuscated ID string                                    |
-| `orderId`        | string                    | ID of the order associated with this tax, obfuscated ID string                                       |
-| `orderItemId`    | string                    | ID of the order line item this tax is applied to, obfuscated ID string                               |
-| `applyType`      | ApplyType                 | Type of tax application                                                                              |
-| `isDeleted`      | bool                      | Flag indicating if this tax record is deleted                                                        |
-| `taxId`          | string                    | ID of the tax configuration, obfuscated ID string                                                    |
-| `taxRate`        | double                    | Tax rate (e.g., 0.08 for 8%)                                                                         |
-| `taxAmount`      | google.type.Money         | Actual tax amount applied                                                                            |
-| `applyBy`        | string                    | ID of the entity that applied the tax, obfuscated ID string                                          |
-| `applySequence`  | int32                     | Sequence in which the tax is applied                                                                 |
-| `createTime`     | google.protobuf.Timestamp | When this tax record was created (system-generated timestamp)                                        |
-| `updateTime`     | google.protobuf.Timestamp | When this tax record was last updated (system-generated timestamp)                                   |
-| `taxName`        | string                    | Name of the tax                                                                                      |
-| `taxCode`        | string                    | Tax code for categorization                                                                          |
-| `taxDescription` | string                    | Description of the tax                                                                               |
-| `isCompound`     | bool                      | Flag indicating if this is a compound tax                                                            |
-| `taxCategory`    | string                    | Category of the tax                                                                                  |
+
+
+| Field Name        | Type                      | Description                                                                                          |
+|-------------------|---------------------------|------------------------------------------------------------------------------------------------------|
+| `id`              | string                    | Unique identifier for the line tax record, obfuscated ID string (format: "olt_" + random characters) |
+| `businessId`      | string                    | ID of the business where the tax is applied, obfuscated ID string                                    |
+| `orderId`         | string                    | ID of the order associated with this tax, obfuscated ID string                                       |
+| `orderItemId`     | string                    | ID of the order line item this tax is applied to, obfuscated ID string                               |
+| `applyType`       | ApplyType                 | Type of tax application                                                                              |
+| `isDeleted`       | bool                      | Flag indicating if this tax record is deleted                                                        |
+| `taxId`           | string                    | ID of the tax configuration, obfuscated ID string                                                    |
+| `taxRate`         | double                    | Tax rate (e.g., 0.08 for 8%)                                                                         |
+| `taxAmount`       | google.type.Money         | Actual tax amount applied                                                                            |
+| `applyBy`         | string                    | ID of the entity that applied the tax, obfuscated ID string                                          |
+| `applySequence`   | int32                     | Sequence in which the tax is applied                                                                 |
+| `createdTime`     | google.protobuf.Timestamp | When this tax record was created (system-generated timestamp)                                        |
+| `lastUpdatedTime` | google.protobuf.Timestamp | When this tax record was last updated (system-generated timestamp)                                   |
+| `taxName`         | string                    | Name of the tax                                                                                      |
+| `taxCode`         | string                    | Tax code for categorization                                                                          |
+| `taxDescription`  | string                    | Description of the tax                                                                               |
+| `isCompound`      | bool                      | Flag indicating if this is a compound tax                                                            |
+| `taxCategory`     | string                    | Category of the tax                                                                                  |
 
 ### 5. OrderRedeemPackage
 
@@ -201,7 +205,7 @@ Represents a service within a package that has been applied to an order.
 | `packageName`      | string                    | Name of the package                                                                                        |
 | `serviceName`      | string                    | Name of the service                                                                                        |
 | `quantity`         | int32                     | Quantity of the service                                                                                    |
-| `createTime`       | google.protobuf.Timestamp | When this package service record was created (system-generated timestamp)                                  |
+| `createdTime`      | google.protobuf.Timestamp | When this package service record was created (system-generated timestamp)                                  |
 | `lastUpdatedTime`  | google.protobuf.Timestamp | When this package service record was last updated (system-generated timestamp)                             |
 
 ---

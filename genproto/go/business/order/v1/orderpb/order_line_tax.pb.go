@@ -128,10 +128,10 @@ type OrderLineTax struct {
 	ApplySequence int32 `protobuf:"varint,11,opt,name=apply_sequence,json=applySequence,proto3" json:"apply_sequence,omitempty"`
 	// When this tax record was created
 	// System-generated timestamp
-	CreateTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// When this tax record was last updated
 	// System-generated timestamp
-	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// Name of the tax
 	TaxName string `protobuf:"bytes,14,opt,name=tax_name,json=taxName,proto3" json:"tax_name,omitempty"`
 	// Tax code for categorization
@@ -253,16 +253,16 @@ func (x *OrderLineTax) GetApplySequence() int32 {
 	return 0
 }
 
-func (x *OrderLineTax) GetCreateTime() *timestamppb.Timestamp {
+func (x *OrderLineTax) GetCreatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreateTime
+		return x.CreatedTime
 	}
 	return nil
 }
 
-func (x *OrderLineTax) GetUpdateTime() *timestamppb.Timestamp {
+func (x *OrderLineTax) GetLastUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdateTime
+		return x.LastUpdatedTime
 	}
 	return nil
 }
@@ -306,7 +306,7 @@ var File_moego_business_order_v1_order_line_tax_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc3\x06\n" +
+	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xd0\x06\n" +
 	"\fOrderLineTax\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -323,11 +323,9 @@ const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"tax_amount\x18\t \x01(\v2\x12.google.type.MoneyR\ttaxAmount\x12\x19\n" +
 	"\bapply_by\x18\n" +
 	" \x01(\tR\aapplyBy\x12%\n" +
-	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12;\n" +
-	"\vcreate_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\x12;\n" +
-	"\vupdate_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\x12\x19\n" +
+	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12=\n" +
+	"\fcreated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
+	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x19\n" +
 	"\btax_name\x18\x0e \x01(\tR\ataxName\x12\x19\n" +
 	"\btax_code\x18\x0f \x01(\tR\ataxCode\x12'\n" +
 	"\x0ftax_description\x18\x10 \x01(\tR\x0etaxDescription\x12\x1f\n" +
@@ -370,8 +368,8 @@ var file_moego_business_order_v1_order_line_tax_proto_goTypes = []any{
 var file_moego_business_order_v1_order_line_tax_proto_depIdxs = []int32{
 	0, // 0: moego.business.order.v1.OrderLineTax.apply_type:type_name -> moego.business.order.v1.OrderLineTax.ApplyType
 	2, // 1: moego.business.order.v1.OrderLineTax.tax_amount:type_name -> google.type.Money
-	3, // 2: moego.business.order.v1.OrderLineTax.create_time:type_name -> google.protobuf.Timestamp
-	3, // 3: moego.business.order.v1.OrderLineTax.update_time:type_name -> google.protobuf.Timestamp
+	3, // 2: moego.business.order.v1.OrderLineTax.created_time:type_name -> google.protobuf.Timestamp
+	3, // 3: moego.business.order.v1.OrderLineTax.last_updated_time:type_name -> google.protobuf.Timestamp
 	4, // [4:4] is the sub-list for method output_type
 	4, // [4:4] is the sub-list for method input_type
 	4, // [4:4] is the sub-list for extension type_name

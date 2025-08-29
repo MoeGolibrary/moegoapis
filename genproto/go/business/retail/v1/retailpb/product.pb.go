@@ -59,7 +59,7 @@ type Product struct {
 	// Whether the product has been marked as deleted
 	Deleted bool `protobuf:"varint,18,opt,name=deleted,proto3" json:"deleted,omitempty"`
 	// When this product was created
-	CreateTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// When this product was last updated
 	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -208,9 +208,9 @@ func (x *Product) GetDeleted() bool {
 	return false
 }
 
-func (x *Product) GetCreateTime() *timestamppb.Timestamp {
+func (x *Product) GetCreatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreateTime
+		return x.CreatedTime
 	}
 	return nil
 }
@@ -344,7 +344,7 @@ var File_moego_business_retail_v1_product_proto protoreflect.FileDescriptor
 
 const file_moego_business_retail_v1_product_proto_rawDesc = "" +
 	"\n" +
-	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc2\x05\n" +
+	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc4\x05\n" +
 	"\aProduct\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -363,9 +363,8 @@ const file_moego_business_retail_v1_product_proto_rawDesc = "" +
 	" \x01(\x01R\ataxRate\x126\n" +
 	"\x17enable_staff_commission\x18\r \x01(\bR\x15enableStaffCommission\x12\x14\n" +
 	"\x05stock\x18\x11 \x01(\x05R\x05stock\x12\x18\n" +
-	"\adeleted\x18\x12 \x01(\bR\adeleted\x12;\n" +
-	"\vcreate_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\x12;\n" +
+	"\adeleted\x18\x12 \x01(\bR\adeleted\x12=\n" +
+	"\fcreated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12;\n" +
 	"\vupdate_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"updateTime\"\xea\x01\n" +
 	"\bSupplier\x12\x0e\n" +
@@ -405,7 +404,7 @@ var file_moego_business_retail_v1_product_proto_depIdxs = []int32{
 	2, // 1: moego.business.retail.v1.Product.supply_price:type_name -> google.type.Money
 	2, // 2: moego.business.retail.v1.Product.retail_price:type_name -> google.type.Money
 	2, // 3: moego.business.retail.v1.Product.special_price:type_name -> google.type.Money
-	3, // 4: moego.business.retail.v1.Product.create_time:type_name -> google.protobuf.Timestamp
+	3, // 4: moego.business.retail.v1.Product.created_time:type_name -> google.protobuf.Timestamp
 	3, // 5: moego.business.retail.v1.Product.update_time:type_name -> google.protobuf.Timestamp
 	6, // [6:6] is the sub-list for method output_type
 	6, // [6:6] is the sub-list for method input_type

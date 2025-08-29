@@ -190,10 +190,10 @@ type OrderDiscount struct {
 	ApplySequence int32 `protobuf:"varint,11,opt,name=apply_sequence,json=applySequence,proto3" json:"apply_sequence,omitempty"`
 	// When this discount record was created
 	// System-generated timestamp
-	CreateTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// When this discount record was last updated
 	// System-generated timestamp
-	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// ID of the discount code used
 	DiscountCodeId string `protobuf:"bytes,14,opt,name=discount_code_id,json=discountCodeId,proto3" json:"discount_code_id,omitempty"`
 	unknownFields  protoimpl.UnknownFields
@@ -307,16 +307,16 @@ func (x *OrderDiscount) GetApplySequence() int32 {
 	return 0
 }
 
-func (x *OrderDiscount) GetCreateTime() *timestamppb.Timestamp {
+func (x *OrderDiscount) GetCreatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreateTime
+		return x.CreatedTime
 	}
 	return nil
 }
 
-func (x *OrderDiscount) GetUpdateTime() *timestamppb.Timestamp {
+func (x *OrderDiscount) GetLastUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdateTime
+		return x.LastUpdatedTime
 	}
 	return nil
 }
@@ -332,7 +332,7 @@ var File_moego_business_order_v1_order_discount_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xfa\x06\n" +
+	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x87\a\n" +
 	"\rOrderDiscount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -348,11 +348,9 @@ const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\rdiscount_rate\x18\t \x01(\x01R\fdiscountRate\x12\x19\n" +
 	"\bapply_by\x18\n" +
 	" \x01(\tR\aapplyBy\x12%\n" +
-	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12;\n" +
-	"\vcreate_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\x12;\n" +
-	"\vupdate_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\x12(\n" +
+	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12=\n" +
+	"\fcreated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
+	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12(\n" +
 	"\x10discount_code_id\x18\x0e \x01(\tR\x0ediscountCodeId\"U\n" +
 	"\fDiscountType\x12\x1d\n" +
 	"\x19DISCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\n" +
@@ -400,8 +398,8 @@ var file_moego_business_order_v1_order_discount_proto_depIdxs = []int32{
 	1, // 0: moego.business.order.v1.OrderDiscount.apply_type:type_name -> moego.business.order.v1.OrderDiscount.ApplyType
 	0, // 1: moego.business.order.v1.OrderDiscount.discount_type:type_name -> moego.business.order.v1.OrderDiscount.DiscountType
 	3, // 2: moego.business.order.v1.OrderDiscount.discount_amount:type_name -> google.type.Money
-	4, // 3: moego.business.order.v1.OrderDiscount.create_time:type_name -> google.protobuf.Timestamp
-	4, // 4: moego.business.order.v1.OrderDiscount.update_time:type_name -> google.protobuf.Timestamp
+	4, // 3: moego.business.order.v1.OrderDiscount.created_time:type_name -> google.protobuf.Timestamp
+	4, // 4: moego.business.order.v1.OrderDiscount.last_updated_time:type_name -> google.protobuf.Timestamp
 	5, // [5:5] is the sub-list for method output_type
 	5, // [5:5] is the sub-list for method input_type
 	5, // [5:5] is the sub-list for extension type_name

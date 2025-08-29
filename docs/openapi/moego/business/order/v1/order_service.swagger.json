@@ -740,12 +740,12 @@
           "format": "int32",
           "title": "Sequence in which the discount is applied"
         },
-        "createTime": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this discount record was created\nSystem-generated timestamp"
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this discount record was last updated\nSystem-generated timestamp"
@@ -887,12 +887,12 @@
           "format": "int32",
           "title": "Sequence in which the tax is applied"
         },
-        "createTime": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this tax record was created\nSystem-generated timestamp"
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this tax record was last updated\nSystem-generated timestamp"

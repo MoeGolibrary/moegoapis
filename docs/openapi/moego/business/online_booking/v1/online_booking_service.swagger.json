@@ -470,12 +470,12 @@
           "$ref": "#/definitions/AbandonedBookingLeadType",
           "description": "How the customer was acquired."
         },
-        "createTime": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when this record was created."
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when this record was last updated."
