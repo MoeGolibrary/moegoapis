@@ -189,7 +189,7 @@ Represents a service within a package that has been applied to an order.
 |--------------------|---------------------------|------------------------------------------------------------------------------------------------------------|
 | `id`               | string                    | Unique identifier for the package service record, obfuscated ID string (format: "ps_" + random characters) |
 | `orderId`          | string                    | ID of the order this package service is associated with, obfuscated ID string                              |
-| `orderLineItemId`  | string                    | ID of the order line item this package service is associated with, obfuscated ID string                    |
+| `orderItemId`      | string                    | ID of the order line item this package service is associated with, obfuscated ID string                    |
 | `packageId`        | string                    | ID of the package, obfuscated ID string                                                                    |
 | `serviceId`        | string                    | ID of the service within the package, obfuscated ID string                                                 |
 | `servicePrice`     | google.type.Money         | Price of the service                                                                                       |

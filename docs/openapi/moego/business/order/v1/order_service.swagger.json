@@ -937,7 +937,7 @@
           "type": "string",
           "title": "ID of the order this package service is associated with"
         },
-        "orderLineItemId": {
+        "orderItemId": {
           "type": "string",
           "title": "ID of the order line item this package service is associated with"
         },

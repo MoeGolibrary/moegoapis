@@ -134,7 +134,7 @@ message OrderRedeemPackage {
   string order_id = 2;
 
   // ID of the order line item this package service is associated with
-  string order_line_item_id = 3;
+  string order_item_id = 3;
 
   // ID of the package
   string package_id = 4;

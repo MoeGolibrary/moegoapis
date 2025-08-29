@@ -348,7 +348,7 @@ type OrderRedeemPackage struct {
 	// ID of the order this package service is associated with
 	OrderId string `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	// ID of the order line item this package service is associated with
-	OrderLineItemId string `protobuf:"bytes,3,opt,name=order_line_item_id,json=orderLineItemId,proto3" json:"order_line_item_id,omitempty"`
+	OrderItemId string `protobuf:"bytes,3,opt,name=order_item_id,json=orderItemId,proto3" json:"order_item_id,omitempty"`
 	// ID of the package
 	PackageId string `protobuf:"bytes,4,opt,name=package_id,json=packageId,proto3" json:"package_id,omitempty"`
 	// ID of the service within the package
@@ -417,9 +417,9 @@ func (x *OrderRedeemPackage) GetOrderId() string {
 	return ""
 }
 
-func (x *OrderRedeemPackage) GetOrderLineItemId() string {
+func (x *OrderRedeemPackage) GetOrderItemId() string {
 	if x != nil {
-		return x.OrderLineItemId
+		return x.OrderItemId
 	}
 	return ""
 }
@@ -527,11 +527,11 @@ const file_moego_business_order_v1_order_proto_rawDesc = "" +
 	"\n" +
 	"PROCESSING\x10\x02\x12\r\n" +
 	"\tCOMPLETED\x10\x03\x12\v\n" +
-	"\aREMOVED\x10\x04\"\xfa\x03\n" +
+	"\aREMOVED\x10\x04\"\xf1\x03\n" +
 	"\x12OrderRedeemPackage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
-	"\border_id\x18\x02 \x01(\tR\aorderId\x12+\n" +
-	"\x12order_line_item_id\x18\x03 \x01(\tR\x0forderLineItemId\x12\x1d\n" +
+	"\border_id\x18\x02 \x01(\tR\aorderId\x12\"\n" +
+	"\rorder_item_id\x18\x03 \x01(\tR\vorderItemId\x12\x1d\n" +
 	"\n" +
 	"package_id\x18\x04 \x01(\tR\tpackageId\x12\x1d\n" +
 	"\n" +
