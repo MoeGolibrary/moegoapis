@@ -64,7 +64,7 @@ message Product {
   google.protobuf.Timestamp created_time = 14;
 
   // When this product was last updated
-  google.protobuf.Timestamp update_time = 15;
+  google.protobuf.Timestamp last_updated_time = 15;
 }
 
 // Supplier represents detailed information about a product supplier.

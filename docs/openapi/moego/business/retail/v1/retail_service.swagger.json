@@ -270,7 +270,7 @@
           "format": "date-time",
           "title": "When this product was created"
         },
-        "updateTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "title": "When this product was last updated"
