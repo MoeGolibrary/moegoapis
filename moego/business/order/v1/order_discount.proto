@@ -4,7 +4,6 @@ package moego.business.order.v1;
 
 import "google/protobuf/timestamp.proto";
 import "google/type/money.proto";
-import "google/type/decimal.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
 option java_multiple_files = true;
@@ -89,7 +88,7 @@ message OrderDiscount {
   google.type.Money discount_amount = 8;
 
   // Discount rate applied (e.g., 0.5 for 50%)
-  google.type.Decimal discount_rate = 9;
+  double discount_rate = 9;
 
   // ID of the staff member who applied the discount
   string apply_by = 10;

@@ -7,7 +7,6 @@
 package orderpb
 
 import (
-	decimal "google.golang.org/genproto/googleapis/type/decimal"
 	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -184,7 +183,7 @@ type OrderDiscount struct {
 	// Discount amount applied
 	DiscountAmount *money.Money `protobuf:"bytes,8,opt,name=discount_amount,json=discountAmount,proto3" json:"discount_amount,omitempty"`
 	// Discount rate applied (e.g., 0.5 for 50%)
-	DiscountRate *decimal.Decimal `protobuf:"bytes,9,opt,name=discount_rate,json=discountRate,proto3" json:"discount_rate,omitempty"`
+	DiscountRate float64 `protobuf:"fixed64,9,opt,name=discount_rate,json=discountRate,proto3" json:"discount_rate,omitempty"`
 	// ID of the staff member who applied the discount
 	ApplyBy string `protobuf:"bytes,10,opt,name=apply_by,json=applyBy,proto3" json:"apply_by,omitempty"`
 	// Sequence in which the discount is applied
@@ -287,11 +286,11 @@ func (x *OrderDiscount) GetDiscountAmount() *money.Money {
 	return nil
 }
 
-func (x *OrderDiscount) GetDiscountRate() *decimal.Decimal {
+func (x *OrderDiscount) GetDiscountRate() float64 {
 	if x != nil {
 		return x.DiscountRate
 	}
-	return nil
+	return 0
 }
 
 func (x *OrderDiscount) GetApplyBy() string {
@@ -333,7 +332,7 @@ var File_moego_business_order_v1_order_discount_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x19google/type/decimal.proto\"\x90\a\n" +
+	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xfa\x06\n" +
 	"\rOrderDiscount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -345,8 +344,8 @@ const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\n" +
 	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x12X\n" +
 	"\rdiscount_type\x18\a \x01(\x0e23.moego.business.order.v1.OrderDiscount.DiscountTypeR\fdiscountType\x12;\n" +
-	"\x0fdiscount_amount\x18\b \x01(\v2\x12.google.type.MoneyR\x0ediscountAmount\x129\n" +
-	"\rdiscount_rate\x18\t \x01(\v2\x14.google.type.DecimalR\fdiscountRate\x12\x19\n" +
+	"\x0fdiscount_amount\x18\b \x01(\v2\x12.google.type.MoneyR\x0ediscountAmount\x12#\n" +
+	"\rdiscount_rate\x18\t \x01(\x01R\fdiscountRate\x12\x19\n" +
 	"\bapply_by\x18\n" +
 	" \x01(\tR\aapplyBy\x12%\n" +
 	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12;\n" +
@@ -395,21 +394,19 @@ var file_moego_business_order_v1_order_discount_proto_goTypes = []any{
 	(OrderDiscount_ApplyType)(0),    // 1: moego.business.order.v1.OrderDiscount.ApplyType
 	(*OrderDiscount)(nil),           // 2: moego.business.order.v1.OrderDiscount
 	(*money.Money)(nil),             // 3: google.type.Money
-	(*decimal.Decimal)(nil),         // 4: google.type.Decimal
-	(*timestamppb.Timestamp)(nil),   // 5: google.protobuf.Timestamp
+	(*timestamppb.Timestamp)(nil),   // 4: google.protobuf.Timestamp
 }
 var file_moego_business_order_v1_order_discount_proto_depIdxs = []int32{
 	1, // 0: moego.business.order.v1.OrderDiscount.apply_type:type_name -> moego.business.order.v1.OrderDiscount.ApplyType
 	0, // 1: moego.business.order.v1.OrderDiscount.discount_type:type_name -> moego.business.order.v1.OrderDiscount.DiscountType
 	3, // 2: moego.business.order.v1.OrderDiscount.discount_amount:type_name -> google.type.Money
-	4, // 3: moego.business.order.v1.OrderDiscount.discount_rate:type_name -> google.type.Decimal
-	5, // 4: moego.business.order.v1.OrderDiscount.create_time:type_name -> google.protobuf.Timestamp
-	5, // 5: moego.business.order.v1.OrderDiscount.update_time:type_name -> google.protobuf.Timestamp
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	4, // 3: moego.business.order.v1.OrderDiscount.create_time:type_name -> google.protobuf.Timestamp
+	4, // 4: moego.business.order.v1.OrderDiscount.update_time:type_name -> google.protobuf.Timestamp
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_order_v1_order_discount_proto_init() }

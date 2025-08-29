@@ -3,7 +3,6 @@ syntax = "proto3";
 package moego.business.order.v1;
 
 import "google/protobuf/timestamp.proto";
-import "google/type/decimal.proto";
 import "google/type/money.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
@@ -66,7 +65,7 @@ message OrderLineTax {
   string tax_id = 7;
 
   // Tax rate (e.g., 0.08 for 8%)
-  google.type.Decimal tax_rate = 8;
+  double tax_rate = 8;
 
   // Actual tax amount applied
   google.type.Money tax_amount = 9;

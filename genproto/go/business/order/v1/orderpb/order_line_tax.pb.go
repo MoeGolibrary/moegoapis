@@ -7,7 +7,6 @@
 package orderpb
 
 import (
-	decimal "google.golang.org/genproto/googleapis/type/decimal"
 	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -120,7 +119,7 @@ type OrderLineTax struct {
 	// ID of the tax configuration
 	TaxId string `protobuf:"bytes,7,opt,name=tax_id,json=taxId,proto3" json:"tax_id,omitempty"`
 	// Tax rate (e.g., 0.08 for 8%)
-	TaxRate *decimal.Decimal `protobuf:"bytes,8,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
+	TaxRate float64 `protobuf:"fixed64,8,opt,name=tax_rate,json=taxRate,proto3" json:"tax_rate,omitempty"`
 	// Actual tax amount applied
 	TaxAmount *money.Money `protobuf:"bytes,9,opt,name=tax_amount,json=taxAmount,proto3" json:"tax_amount,omitempty"`
 	// ID of the staff member who applied the tax
@@ -226,11 +225,11 @@ func (x *OrderLineTax) GetTaxId() string {
 	return ""
 }
 
-func (x *OrderLineTax) GetTaxRate() *decimal.Decimal {
+func (x *OrderLineTax) GetTaxRate() float64 {
 	if x != nil {
 		return x.TaxRate
 	}
-	return nil
+	return 0
 }
 
 func (x *OrderLineTax) GetTaxAmount() *money.Money {
@@ -307,7 +306,7 @@ var File_moego_business_order_v1_order_line_tax_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x19google/type/decimal.proto\x1a\x17google/type/money.proto\"\xd9\x06\n" +
+	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc3\x06\n" +
 	"\fOrderLineTax\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -318,8 +317,8 @@ const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"apply_type\x18\x05 \x01(\x0e2/.moego.business.order.v1.OrderLineTax.ApplyTypeR\tapplyType\x12\x1d\n" +
 	"\n" +
 	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x12\x15\n" +
-	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12/\n" +
-	"\btax_rate\x18\b \x01(\v2\x14.google.type.DecimalR\ataxRate\x121\n" +
+	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12\x19\n" +
+	"\btax_rate\x18\b \x01(\x01R\ataxRate\x121\n" +
 	"\n" +
 	"tax_amount\x18\t \x01(\v2\x12.google.type.MoneyR\ttaxAmount\x12\x19\n" +
 	"\bapply_by\x18\n" +
@@ -365,21 +364,19 @@ var file_moego_business_order_v1_order_line_tax_proto_msgTypes = make([]protoimp
 var file_moego_business_order_v1_order_line_tax_proto_goTypes = []any{
 	(OrderLineTax_ApplyType)(0),   // 0: moego.business.order.v1.OrderLineTax.ApplyType
 	(*OrderLineTax)(nil),          // 1: moego.business.order.v1.OrderLineTax
-	(*decimal.Decimal)(nil),       // 2: google.type.Decimal
-	(*money.Money)(nil),           // 3: google.type.Money
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*money.Money)(nil),           // 2: google.type.Money
+	(*timestamppb.Timestamp)(nil), // 3: google.protobuf.Timestamp
 }
 var file_moego_business_order_v1_order_line_tax_proto_depIdxs = []int32{
 	0, // 0: moego.business.order.v1.OrderLineTax.apply_type:type_name -> moego.business.order.v1.OrderLineTax.ApplyType
-	2, // 1: moego.business.order.v1.OrderLineTax.tax_rate:type_name -> google.type.Decimal
-	3, // 2: moego.business.order.v1.OrderLineTax.tax_amount:type_name -> google.type.Money
-	4, // 3: moego.business.order.v1.OrderLineTax.create_time:type_name -> google.protobuf.Timestamp
-	4, // 4: moego.business.order.v1.OrderLineTax.update_time:type_name -> google.protobuf.Timestamp
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	2, // 1: moego.business.order.v1.OrderLineTax.tax_amount:type_name -> google.type.Money
+	3, // 2: moego.business.order.v1.OrderLineTax.create_time:type_name -> google.protobuf.Timestamp
+	3, // 3: moego.business.order.v1.OrderLineTax.update_time:type_name -> google.protobuf.Timestamp
+	4, // [4:4] is the sub-list for method output_type
+	4, // [4:4] is the sub-list for method input_type
+	4, // [4:4] is the sub-list for extension type_name
+	4, // [4:4] is the sub-list for extension extendee
+	0, // [0:4] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_order_v1_order_line_tax_proto_init() }
