@@ -750,9 +750,9 @@
           "format": "date-time",
           "title": "When this discount record was last updated\nSystem-generated timestamp"
         },
-        "discountCodeId": {
+        "discountCode": {
           "type": "string",
-          "title": "ID of the discount code used"
+          "title": "the discount code used"
         }
       },
       "description": "OrderDiscount represents a discount applied to an order or order line item.",

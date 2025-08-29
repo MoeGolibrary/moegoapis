@@ -194,10 +194,10 @@ type OrderDiscount struct {
 	// When this discount record was last updated
 	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	// ID of the discount code used
-	DiscountCodeId string `protobuf:"bytes,14,opt,name=discount_code_id,json=discountCodeId,proto3" json:"discount_code_id,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// the discount code used
+	DiscountCode  string `protobuf:"bytes,14,opt,name=discount_code,json=discountCode,proto3" json:"discount_code,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *OrderDiscount) Reset() {
@@ -321,9 +321,9 @@ func (x *OrderDiscount) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *OrderDiscount) GetDiscountCodeId() string {
+func (x *OrderDiscount) GetDiscountCode() string {
 	if x != nil {
-		return x.DiscountCodeId
+		return x.DiscountCode
 	}
 	return ""
 }
@@ -332,7 +332,7 @@ var File_moego_business_order_v1_order_discount_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x87\a\n" +
+	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x82\a\n" +
 	"\rOrderDiscount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -350,8 +350,8 @@ const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	" \x01(\tR\aapplyBy\x12%\n" +
 	"\x0eapply_sequence\x18\v \x01(\x05R\rapplySequence\x12=\n" +
 	"\fcreated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
-	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12(\n" +
-	"\x10discount_code_id\x18\x0e \x01(\tR\x0ediscountCodeId\"U\n" +
+	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12#\n" +
+	"\rdiscount_code\x18\x0e \x01(\tR\fdiscountCode\"U\n" +
 	"\fDiscountType\x12\x1d\n" +
 	"\x19DISCOUNT_TYPE_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +

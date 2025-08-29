@@ -144,7 +144,7 @@ Represents a discount applied to an order or order line item.
 | `applySequence`   | int32                     | Sequence in which the discount is applied                                                                        |
 | `createdTime`     | google.protobuf.Timestamp | When this discount record was created (system-generated timestamp)                                               |
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this discount record was last updated (system-generated timestamp)                                          |
-| `discountCodeId`  | string                    | ID of the discount code used, obfuscated ID string                                                               |
+| `discountCode`    | string                    | The discount code used, obfuscated ID string                                                                     |
 
 ### 4. OrderLineTax
 

@@ -104,6 +104,6 @@ message OrderDiscount {
   // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 13;
 
-  // ID of the discount code used
-  string discount_code_id = 14;
+  // the discount code used
+  string discount_code = 14;
 }
