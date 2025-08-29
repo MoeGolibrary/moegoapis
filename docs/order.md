@@ -136,7 +136,7 @@ Represents a discount applied to an order or order line item.
 | `orderId`         | string                    | ID of the order associated with this discount, obfuscated ID string                                              |
 | `orderItemId`     | string                    | ID of the order line item this discount is applied to; empty string means the discount is applied at order level |
 | `applyType`       | ApplyType                 | Type of discount application                                                                                     |
-| `isDeleted`       | bool                      | Flag indicating if this discount record is deleted                                                               |
+| `deleted`         | bool                      | Flag indicating if this discount record is deleted                                                               |
 | `discountType`    | DiscountType              | Type of discount                                                                                                 |
 | `discountAmount`  | google.type.Money         | Discount amount applied                                                                                          |
 | `discountRate`    | double                    | Discount rate applied (e.g., 0.5 for 50%)                                                                        |
@@ -171,7 +171,7 @@ Represents tax information for an individual line item within an order.
 | `orderId`         | string                    | ID of the order associated with this tax, obfuscated ID string                                       |
 | `orderItemId`     | string                    | ID of the order line item this tax is applied to, obfuscated ID string                               |
 | `applyType`       | ApplyType                 | Type of tax application                                                                              |
-| `isDeleted`       | bool                      | Flag indicating if this tax record is deleted                                                        |
+| `deleted`         | bool                      | Flag indicating if this tax record is deleted                                                        |
 | `taxId`           | string                    | ID of the tax configuration, obfuscated ID string                                                    |
 | `taxRate`         | double                    | Tax rate (e.g., 0.08 for 8%)                                                                         |
 | `taxAmount`       | google.type.Money         | Actual tax amount applied                                                                            |

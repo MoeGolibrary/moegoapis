@@ -229,4 +229,7 @@ message Pet {
 
   // photo url of pet.
   string photo = 20;
+
+  // Flag indicating if this pet record is deleted.
+  bool deleted = 21;
 }

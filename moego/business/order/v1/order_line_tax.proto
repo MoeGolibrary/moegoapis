@@ -59,7 +59,7 @@ message OrderLineTax {
   ApplyType apply_type = 5;
 
   // Flag indicating if this tax record is deleted
-  bool is_deleted = 6;
+  bool deleted = 6;
 
   // ID of the tax configuration
   string tax_id = 7;

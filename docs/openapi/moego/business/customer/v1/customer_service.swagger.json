@@ -895,6 +895,10 @@
         "upcomingAppointmentsUrl": {
           "type": "string",
           "title": "URL to a page where the customer can view their upcoming appointments"
+        },
+        "deleted": {
+          "type": "boolean",
+          "title": "Flag indicating if this customer record is deleted"
         }
       },
       "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",

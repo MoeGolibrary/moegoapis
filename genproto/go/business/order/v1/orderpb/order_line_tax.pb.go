@@ -115,7 +115,7 @@ type OrderLineTax struct {
 	// Type of tax application
 	ApplyType OrderLineTax_ApplyType `protobuf:"varint,5,opt,name=apply_type,json=applyType,proto3,enum=moego.business.order.v1.OrderLineTax_ApplyType" json:"apply_type,omitempty"`
 	// Flag indicating if this tax record is deleted
-	IsDeleted bool `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	Deleted bool `protobuf:"varint,6,opt,name=deleted,proto3" json:"deleted,omitempty"`
 	// ID of the tax configuration
 	TaxId string `protobuf:"bytes,7,opt,name=tax_id,json=taxId,proto3" json:"tax_id,omitempty"`
 	// Tax rate (e.g., 0.08 for 8%)
@@ -203,9 +203,9 @@ func (x *OrderLineTax) GetApplyType() OrderLineTax_ApplyType {
 	return OrderLineTax_APPLY_TYPE_UNSPECIFIED
 }
 
-func (x *OrderLineTax) GetIsDeleted() bool {
+func (x *OrderLineTax) GetDeleted() bool {
 	if x != nil {
-		return x.IsDeleted
+		return x.Deleted
 	}
 	return false
 }
@@ -270,7 +270,7 @@ var File_moego_business_order_v1_order_line_tax_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc8\x05\n" +
+	",moego/business/order/v1/order_line_tax.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc3\x05\n" +
 	"\fOrderLineTax\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -278,9 +278,8 @@ const file_moego_business_order_v1_order_line_tax_proto_rawDesc = "" +
 	"\border_id\x18\x03 \x01(\tR\aorderId\x12\"\n" +
 	"\rorder_item_id\x18\x04 \x01(\tR\vorderItemId\x12N\n" +
 	"\n" +
-	"apply_type\x18\x05 \x01(\x0e2/.moego.business.order.v1.OrderLineTax.ApplyTypeR\tapplyType\x12\x1d\n" +
-	"\n" +
-	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x12\x15\n" +
+	"apply_type\x18\x05 \x01(\x0e2/.moego.business.order.v1.OrderLineTax.ApplyTypeR\tapplyType\x12\x18\n" +
+	"\adeleted\x18\x06 \x01(\bR\adeleted\x12\x15\n" +
 	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12\x19\n" +
 	"\btax_rate\x18\b \x01(\x01R\ataxRate\x121\n" +
 	"\n" +

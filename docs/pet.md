@@ -54,6 +54,7 @@ information for providing appropriate care.
 | `createdTime`      | Timestamp                                        | When the pet was created                           |
 | `lastUpdatedTime`  | Timestamp                                        | When the pet was last modified                     |
 | `photo`            | string                                           | Photo URL of the pet                               |
+| `deleted`          | bool                                             | Flag indicating if this pet record is deleted      |
 
 ### 2. Note
 

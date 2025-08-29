@@ -714,7 +714,7 @@
           "$ref": "#/definitions/v1OrderDiscountApplyType",
           "title": "Type of discount application"
         },
-        "isDeleted": {
+        "deleted": {
           "type": "boolean",
           "title": "Flag indicating if this discount record is deleted"
         },
@@ -861,7 +861,7 @@
           "$ref": "#/definitions/v1OrderLineTaxApplyType",
           "title": "Type of tax application"
         },
-        "isDeleted": {
+        "deleted": {
           "type": "boolean",
           "title": "Flag indicating if this tax record is deleted"
         },

@@ -177,7 +177,7 @@ type OrderDiscount struct {
 	// Type of discount application
 	ApplyType OrderDiscount_ApplyType `protobuf:"varint,5,opt,name=apply_type,json=applyType,proto3,enum=moego.business.order.v1.OrderDiscount_ApplyType" json:"apply_type,omitempty"`
 	// Flag indicating if this discount record is deleted
-	IsDeleted bool `protobuf:"varint,6,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
+	Deleted bool `protobuf:"varint,6,opt,name=deleted,proto3" json:"deleted,omitempty"`
 	// Type of discount
 	DiscountType OrderDiscount_DiscountType `protobuf:"varint,7,opt,name=discount_type,json=discountType,proto3,enum=moego.business.order.v1.OrderDiscount_DiscountType" json:"discount_type,omitempty"`
 	// Discount amount applied
@@ -265,9 +265,9 @@ func (x *OrderDiscount) GetApplyType() OrderDiscount_ApplyType {
 	return OrderDiscount_APPLY_TYPE_UNSPECIFIED
 }
 
-func (x *OrderDiscount) GetIsDeleted() bool {
+func (x *OrderDiscount) GetDeleted() bool {
 	if x != nil {
-		return x.IsDeleted
+		return x.Deleted
 	}
 	return false
 }
@@ -332,7 +332,7 @@ var File_moego_business_order_v1_order_discount_proto protoreflect.FileDescripto
 
 const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\n" +
-	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x82\a\n" +
+	",moego/business/order/v1/order_discount.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xfd\x06\n" +
 	"\rOrderDiscount\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -340,9 +340,8 @@ const file_moego_business_order_v1_order_discount_proto_rawDesc = "" +
 	"\border_id\x18\x03 \x01(\tR\aorderId\x12\"\n" +
 	"\rorder_item_id\x18\x04 \x01(\tR\vorderItemId\x12O\n" +
 	"\n" +
-	"apply_type\x18\x05 \x01(\x0e20.moego.business.order.v1.OrderDiscount.ApplyTypeR\tapplyType\x12\x1d\n" +
-	"\n" +
-	"is_deleted\x18\x06 \x01(\bR\tisDeleted\x12X\n" +
+	"apply_type\x18\x05 \x01(\x0e20.moego.business.order.v1.OrderDiscount.ApplyTypeR\tapplyType\x12\x18\n" +
+	"\adeleted\x18\x06 \x01(\bR\adeleted\x12X\n" +
 	"\rdiscount_type\x18\a \x01(\x0e23.moego.business.order.v1.OrderDiscount.DiscountTypeR\fdiscountType\x12;\n" +
 	"\x0fdiscount_amount\x18\b \x01(\v2\x12.google.type.MoneyR\x0ediscountAmount\x12#\n" +
 	"\rdiscount_rate\x18\t \x01(\x01R\fdiscountRate\x12\x19\n" +
