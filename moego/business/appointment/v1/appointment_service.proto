@@ -96,6 +96,16 @@ service AppointmentService {
     };
   }
 
+  // Update appointment status
+  //
+  // Updates the status of an appointment and optionally sends notifications.
+  rpc UpdateAppointmentStatus(UpdateAppointmentStatusRequest) returns (Appointment) {
+    option (google.api.http) = {
+      post: "/v1/appointments/{id}:updateStatus"
+      body: "*"
+    };
+  }
+
   // List grooming reports of appointments
   rpc ListGroomingReports(ListGroomingReportsRequest) returns (ListGroomingReportsResponse) {
     option (google.api.http) = {
@@ -128,15 +138,6 @@ service AppointmentService {
     };
   }
 
-  // Update appointment status
-  //
-  // Updates the status of an appointment and optionally sends notifications.
-  rpc UpdateAppointmentStatus(UpdateAppointmentStatusRequest) returns (Appointment) {
-    option (google.api.http) = {
-      post: "/v1/appointments/{id}:updateStatus"
-      body: "*"
-    };
-  }
 }
 
 // Request to retrieve a specific appointment.

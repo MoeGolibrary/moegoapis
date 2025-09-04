@@ -1617,12 +1617,12 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x1cCheckAppointmentAvailability\x12B.moego.business.appointment.v1.CheckAppointmentAvailabilityRequest\x1aC.moego.business.appointment.v1.CheckAppointmentAvailabilityResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/appointments:check\x12\x95\x01\n" +
 	"\x11CreateAppointment\x127.moego.business.appointment.v1.CreateAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/appointments\x12\xad\x01\n" +
 	"\x15RescheduleAppointment\x12;.moego.business.appointment.v1.RescheduleAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/appointments/{id}:reschedule\x12\xa1\x01\n" +
-	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\xb2\x01\n" +
+	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\xb3\x01\n" +
+	"\x17UpdateAppointmentStatus\x12=.moego.business.appointment.v1.UpdateAppointmentStatusRequest\x1a*.moego.business.appointment.v1.Appointment\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/appointments/{id}:updateStatus\x12\xb2\x01\n" +
 	"\x13ListGroomingReports\x129.moego.business.appointment.v1.ListGroomingReportsRequest\x1a:.moego.business.appointment.v1.ListGroomingReportsResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/grooming_reports:list\x12\xa7\x01\n" +
 	"\x15CreateAppointmentNote\x12;.moego.business.appointment.v1.CreateAppointmentNoteRequest\x1a..moego.business.appointment.v1.AppointmentNote\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/appointments/notes\x12\xac\x01\n" +
 	"\x15UpdateAppointmentNote\x12;.moego.business.appointment.v1.UpdateAppointmentNoteRequest\x1a..moego.business.appointment.v1.AppointmentNote\"&\x82\xd3\xe4\x93\x02 :\x01*\x1a\x1b/v1/appointments/notes/{id}\x12\xb7\x01\n" +
-	"\x14ListAppointmentNotes\x12:.moego.business.appointment.v1.ListAppointmentNotesRequest\x1a;.moego.business.appointment.v1.ListAppointmentNotesResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/appointments/notes:list\x12\xb3\x01\n" +
-	"\x17UpdateAppointmentStatus\x12=.moego.business.appointment.v1.UpdateAppointmentStatusRequest\x1a*.moego.business.appointment.v1.Appointment\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/appointments/{id}:updateStatusB\xa5\x01\n" +
+	"\x14ListAppointmentNotes\x12:.moego.business.appointment.v1.ListAppointmentNotesRequest\x1a;.moego.business.appointment.v1.ListAppointmentNotesResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/appointments/notes:listB\xa5\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x17AppointmentServiceProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (
@@ -1714,22 +1714,22 @@ var file_moego_business_appointment_v1_appointment_service_proto_depIdxs = []int
 	6,  // 34: moego.business.appointment.v1.AppointmentService.CreateAppointment:input_type -> moego.business.appointment.v1.CreateAppointmentRequest
 	7,  // 35: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:input_type -> moego.business.appointment.v1.RescheduleAppointmentRequest
 	8,  // 36: moego.business.appointment.v1.AppointmentService.CancelAppointment:input_type -> moego.business.appointment.v1.CancelAppointmentRequest
-	10, // 37: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
-	12, // 38: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
-	13, // 39: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
-	14, // 40: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
-	9,  // 41: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:input_type -> moego.business.appointment.v1.UpdateAppointmentStatusRequest
+	9,  // 37: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:input_type -> moego.business.appointment.v1.UpdateAppointmentStatusRequest
+	10, // 38: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
+	12, // 39: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
+	13, // 40: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
+	14, // 41: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
 	25, // 42: moego.business.appointment.v1.AppointmentService.GetAppointment:output_type -> moego.business.appointment.v1.Appointment
 	3,  // 43: moego.business.appointment.v1.AppointmentService.ListAppointments:output_type -> moego.business.appointment.v1.ListAppointmentsResponse
 	5,  // 44: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:output_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
 	25, // 45: moego.business.appointment.v1.AppointmentService.CreateAppointment:output_type -> moego.business.appointment.v1.Appointment
 	25, // 46: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:output_type -> moego.business.appointment.v1.Appointment
 	25, // 47: moego.business.appointment.v1.AppointmentService.CancelAppointment:output_type -> moego.business.appointment.v1.Appointment
-	11, // 48: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
-	30, // 49: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	30, // 50: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	15, // 51: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
-	25, // 52: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:output_type -> moego.business.appointment.v1.Appointment
+	25, // 48: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:output_type -> moego.business.appointment.v1.Appointment
+	11, // 49: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
+	30, // 50: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	30, // 51: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	15, // 52: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
 	42, // [42:53] is the sub-list for method output_type
 	31, // [31:42] is the sub-list for method input_type
 	31, // [31:31] is the sub-list for extension type_name
