@@ -127,6 +127,16 @@ service AppointmentService {
       body: "*"
     };
   }
+
+  // Update appointment status
+  //
+  // Updates the status of an appointment and optionally sends notifications.
+  rpc UpdateAppointmentStatus(UpdateAppointmentStatusRequest) returns (Appointment) {
+    option (google.api.http) = {
+      post: "/v1/appointments/{id}:updateStatus"
+      body: "*"
+    };
+  }
 }
 
 // Request to retrieve a specific appointment.
@@ -321,6 +331,50 @@ message CancelAppointmentRequest {
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
+// Request to update appointment status
+message UpdateAppointmentStatusRequest {
+  // Message method types for notifications
+  enum MessageMethod {
+    // Unknown or unspecified message method
+    MESSAGE_METHOD_UNSPECIFIED = 0;
+
+    // SMS message
+    SMS = 1;
+
+    // Email message
+    EMAIL = 2;
+
+    // Phone call
+    CALL = 4;
+
+    // In-app notification
+    APP = 5;
+  }
+
+  // string, The unique identifier of the appointment to update.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The business location's identifier.
+  // Must match the business_id of the appointment.
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // enum(Status), The target status for the appointment.
+  Appointment.Status status = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // enum(MessageMethod), The method to use for sending notifications.
+  // MESSAGE_METHOD_UNSPECIFIED - Do not send notifications
+  MessageMethod message_method = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // object(CheckOut), Check out details for when status is FINISHED.
+  CheckOut check_out = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // Check out details
+  message CheckOut {
+    // date, Actual check out date. If provided, updates boarding appointment check out date
+    // and corresponding order price.
+    google.type.Date end_date = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+}
 
 // Request to list grooming reports
 message ListGroomingReportsRequest {

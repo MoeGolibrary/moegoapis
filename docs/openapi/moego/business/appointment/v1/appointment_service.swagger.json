@@ -278,6 +278,47 @@
         ]
       }
     },
+    "/v1/appointments/{id}:updateStatus": {
+      "post": {
+        "summary": "Update appointment status",
+        "description": "Updates the status of an appointment and optionally sends notifications.",
+        "operationId": "AppointmentService_UpdateAppointmentStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Appointment"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "string, The unique identifier of the appointment to update.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentServiceUpdateAppointmentStatusBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.appointment.v1.AppointmentService"
+        ]
+      }
+    },
     "/v1/appointments:check": {
       "post": {
         "summary": "Check appointment availability",
@@ -452,6 +493,38 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
         },
         "type": "UpdateAppointmentNoteRequest"
+      }
+    },
+    "AppointmentServiceUpdateAppointmentStatusBody": {
+      "type": "object",
+      "properties": {
+        "businessId": {
+          "type": "string",
+          "description": "string, The business location's identifier.\nMust match the business_id of the appointment."
+        },
+        "status": {
+          "$ref": "#/definitions/v1AppointmentStatus",
+          "description": "enum(Status), The target status for the appointment."
+        },
+        "messageMethod": {
+          "$ref": "#/definitions/UpdateAppointmentStatusRequestMessageMethod",
+          "title": "enum(MessageMethod), The method to use for sending notifications.\nMESSAGE_METHOD_UNSPECIFIED - Do not send notifications"
+        },
+        "checkOut": {
+          "$ref": "#/definitions/UpdateAppointmentStatusRequestCheckOut",
+          "description": "object(CheckOut), Check out details for when status is FINISHED."
+        }
+      },
+      "title": "Request to update appointment status",
+      "required": [
+        "businessId",
+        "status"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "UpdateAppointmentStatusRequest"
       }
     },
     "CheckAppointmentAvailabilityResponseAppointmentDateConflictCheckResult": {
@@ -716,6 +789,35 @@
       ],
       "default": "SERVICE_ITEM_TYPE_UNSPECIFIED",
       "description": "ItemType categorizes the primary type of service being offered.\nThis helps organize services in the system and determines applicable business rules.\n\n - SERVICE_ITEM_TYPE_UNSPECIFIED: Unknown or unspecified service type\nShould not be used when creating new services\n - GROOMING: Pet grooming services\nIncludes bathing, haircuts, nail trimming, etc.\n - BOARDING: Pet boarding services\nOvernight or extended stay care\n - DAYCARE: Daytime pet care services\nSupervised play and care during business hours\n - EVALUATION: Pet evaluation services\nBehavior assessment and service compatibility check\n - TRAINING: Pet training services\nIndividual or group training sessions"
+    },
+    "UpdateAppointmentStatusRequestCheckOut": {
+      "type": "object",
+      "properties": {
+        "endDate": {
+          "$ref": "#/definitions/typeDate",
+          "description": "date, Actual check out date. If provided, updates boarding appointment check out date\nand corresponding order price."
+        }
+      },
+      "title": "Check out details",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "CheckOut"
+      }
+    },
+    "UpdateAppointmentStatusRequestMessageMethod": {
+      "type": "string",
+      "enum": [
+        "MESSAGE_METHOD_UNSPECIFIED",
+        "SMS",
+        "EMAIL",
+        "CALL",
+        "APP"
+      ],
+      "default": "MESSAGE_METHOD_UNSPECIFIED",
+      "description": "- MESSAGE_METHOD_UNSPECIFIED: Unknown or unspecified message method\n - SMS: SMS message\n - EMAIL: Email message\n - CALL: Phone call\n - APP: In-app notification",
+      "title": "Message method types for notifications"
     },
     "WeightUnit": {
       "type": "string",

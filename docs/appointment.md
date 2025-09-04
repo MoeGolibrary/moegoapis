@@ -485,7 +485,60 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 
 ---
 
-### 6. Check Appointment Availability (`CheckAppointmentAvailability`)
+### 6. Update Appointment Status (`UpdateAppointmentStatus`)
+
+- **Method**: `UpdateAppointmentStatus`
+- **HTTP Method**: POST
+- **Path**: `/v1/appointments/{id}:updateStatus`
+
+#### ✅ Functionality:
+
+Updates the status of an appointment and optionally sends notifications to the customer. This method allows moving an appointment through its lifecycle by changing its status to one of the valid states.
+
+#### 🎯 Use Cases:
+
+- Move an appointment from `CONFIRMED` to `CHECKED_IN` when the customer arrives.
+- Update an appointment to `READY` when services are completed but pet is not yet picked up.
+- Mark an appointment as `FINISHED` when the customer picks up their pet.
+- Change an appointment status to `CANCELED` (alternative to Cancel Appointment).
+
+#### 🔧 Request Parameters:
+
+| Field Name      | Type                       | Required | Description                                                    |
+|-----------------|----------------------------|----------|----------------------------------------------------------------|
+| `id`            | string                     | Yes      | Appointment ID to update                                       |
+| `businessId`    | string                     | Yes      | Business ID for access control                                 |
+| `status`        | enum(Status)               | Yes      | Target status for the appointment                              |
+| `messageMethod` | enum(MessageMethod)        | No       | Method to use for sending notifications (SMS, EMAIL, etc.)     |
+| `checkOut`      | object(CheckOut)           | No       | Check out details for when status is FINISHED                  |
+
+##### MessageMethod Enum:
+
+- `MESSAGE_METHOD_UNSPECIFIED`: Do not send notifications
+- `SMS`: Send notification via SMS
+- `EMAIL`: Send notification via Email
+- `CALL`: Send notification via Phone call
+- `APP`: Send in-app notification
+
+##### CheckOut Object:
+
+| Field Name | Type | Required | Description |
+|------------|------|----------|-------------|
+| `endDate`  | Date | No       | Actual check out date. Updates boarding appointment check out date and corresponding order price |
+
+#### 📌 Return Value:
+
+Returns the updated `Appointment` object with the new status and all associated details.
+
+#### ⚠️ Error Codes:
+
+- `NOT_FOUND`: Specified appointment ID does not exist.
+- `PERMISSION_DENIED`: Permission denied.
+- `INVALID_ARGUMENT`: Invalid status transition or other validation errors.
+
+---
+
+### 7. Check Appointment Availability (`CheckAppointmentAvailability`)
 
 - **Method**: `CheckAppointmentAvailability`
 - **HTTP Method**: POST
