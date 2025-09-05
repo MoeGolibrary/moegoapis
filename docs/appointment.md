@@ -517,8 +517,6 @@ Updates the status of an appointment and optionally sends notifications to the c
 - `MESSAGE_METHOD_UNSPECIFIED`: Do not send notifications
 - `SMS`: Send notification via SMS
 - `EMAIL`: Send notification via Email
-- `CALL`: Send notification via Phone call
-- `APP`: Send in-app notification
 
 ##### CheckOut Object:
 

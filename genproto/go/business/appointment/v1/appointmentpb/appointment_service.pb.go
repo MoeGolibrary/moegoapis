@@ -37,10 +37,6 @@ const (
 	UpdateAppointmentStatusRequest_SMS UpdateAppointmentStatusRequest_MessageMethod = 1
 	// Email message
 	UpdateAppointmentStatusRequest_EMAIL UpdateAppointmentStatusRequest_MessageMethod = 2
-	// Phone call
-	UpdateAppointmentStatusRequest_CALL UpdateAppointmentStatusRequest_MessageMethod = 4
-	// In-app notification
-	UpdateAppointmentStatusRequest_APP UpdateAppointmentStatusRequest_MessageMethod = 5
 )
 
 // Enum value maps for UpdateAppointmentStatusRequest_MessageMethod.
@@ -49,15 +45,11 @@ var (
 		0: "MESSAGE_METHOD_UNSPECIFIED",
 		1: "SMS",
 		2: "EMAIL",
-		4: "CALL",
-		5: "APP",
 	}
 	UpdateAppointmentStatusRequest_MessageMethod_value = map[string]int32{
 		"MESSAGE_METHOD_UNSPECIFIED": 0,
 		"SMS":                        1,
 		"EMAIL":                      2,
-		"CALL":                       4,
-		"APP":                        5,
 	}
 )
 
@@ -1577,7 +1569,7 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x18CancelAppointmentRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId\"\xa5\x04\n" +
+	"businessId\"\x92\x04\n" +
 	"\x1eUpdateAppointmentStatusRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
@@ -1586,13 +1578,11 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x0emessage_method\x18\x04 \x01(\x0e2K.moego.business.appointment.v1.UpdateAppointmentStatusRequest.MessageMethodB\x03\xe0A\x01R\rmessageMethod\x12h\n" +
 	"\tcheck_out\x18\x05 \x01(\v2F.moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOutB\x03\xe0A\x01R\bcheckOut\x1a=\n" +
 	"\bCheckOut\x121\n" +
-	"\bend_date\x18\x01 \x01(\v2\x11.google.type.DateB\x03\xe0A\x01R\aendDate\"V\n" +
+	"\bend_date\x18\x01 \x01(\v2\x11.google.type.DateB\x03\xe0A\x01R\aendDate\"C\n" +
 	"\rMessageMethod\x12\x1e\n" +
 	"\x1aMESSAGE_METHOD_UNSPECIFIED\x10\x00\x12\a\n" +
 	"\x03SMS\x10\x01\x12\t\n" +
-	"\x05EMAIL\x10\x02\x12\b\n" +
-	"\x04CALL\x10\x04\x12\a\n" +
-	"\x03APP\x10\x05\"p\n" +
+	"\x05EMAIL\x10\x02\"p\n" +
 	"\x1aListGroomingReportsRequest\x12,\n" +
 	"\x0fappointment_ids\x18\x01 \x03(\tB\x03\xe0A\x02R\x0eappointmentIds\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +

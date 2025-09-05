@@ -811,12 +811,10 @@
       "enum": [
         "MESSAGE_METHOD_UNSPECIFIED",
         "SMS",
-        "EMAIL",
-        "CALL",
-        "APP"
+        "EMAIL"
       ],
       "default": "MESSAGE_METHOD_UNSPECIFIED",
-      "description": "- MESSAGE_METHOD_UNSPECIFIED: Unknown or unspecified message method\n - SMS: SMS message\n - EMAIL: Email message\n - CALL: Phone call\n - APP: In-app notification",
+      "description": "- MESSAGE_METHOD_UNSPECIFIED: Unknown or unspecified message method\n - SMS: SMS message\n - EMAIL: Email message",
       "title": "Message method types for notifications"
     },
     "WeightUnit": {

@@ -344,12 +344,6 @@ message UpdateAppointmentStatusRequest {
 
     // Email message
     EMAIL = 2;
-
-    // Phone call
-    CALL = 4;
-
-    // In-app notification
-    APP = 5;
   }
 
   // string, The unique identifier of the appointment to update.
