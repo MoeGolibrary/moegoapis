@@ -27,6 +27,59 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Message method types for notifications
+type UpdateAppointmentStatusRequest_MessageMethod int32
+
+const (
+	// Unknown or unspecified message method
+	UpdateAppointmentStatusRequest_MESSAGE_METHOD_UNSPECIFIED UpdateAppointmentStatusRequest_MessageMethod = 0
+	// SMS message
+	UpdateAppointmentStatusRequest_SMS UpdateAppointmentStatusRequest_MessageMethod = 1
+	// Email message
+	UpdateAppointmentStatusRequest_EMAIL UpdateAppointmentStatusRequest_MessageMethod = 2
+)
+
+// Enum value maps for UpdateAppointmentStatusRequest_MessageMethod.
+var (
+	UpdateAppointmentStatusRequest_MessageMethod_name = map[int32]string{
+		0: "MESSAGE_METHOD_UNSPECIFIED",
+		1: "SMS",
+		2: "EMAIL",
+	}
+	UpdateAppointmentStatusRequest_MessageMethod_value = map[string]int32{
+		"MESSAGE_METHOD_UNSPECIFIED": 0,
+		"SMS":                        1,
+		"EMAIL":                      2,
+	}
+)
+
+func (x UpdateAppointmentStatusRequest_MessageMethod) Enum() *UpdateAppointmentStatusRequest_MessageMethod {
+	p := new(UpdateAppointmentStatusRequest_MessageMethod)
+	*p = x
+	return p
+}
+
+func (x UpdateAppointmentStatusRequest_MessageMethod) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (UpdateAppointmentStatusRequest_MessageMethod) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_appointment_v1_appointment_service_proto_enumTypes[0].Descriptor()
+}
+
+func (UpdateAppointmentStatusRequest_MessageMethod) Type() protoreflect.EnumType {
+	return &file_moego_business_appointment_v1_appointment_service_proto_enumTypes[0]
+}
+
+func (x UpdateAppointmentStatusRequest_MessageMethod) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use UpdateAppointmentStatusRequest_MessageMethod.Descriptor instead.
+func (UpdateAppointmentStatusRequest_MessageMethod) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{8, 0}
+}
+
 // Request to retrieve a specific appointment.
 type GetAppointmentRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -569,6 +622,90 @@ func (x *CancelAppointmentRequest) GetBusinessId() string {
 	return ""
 }
 
+// Request to update appointment status
+type UpdateAppointmentStatusRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, The unique identifier of the appointment to update.
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, The business location's identifier.
+	// Must match the business_id of the appointment.
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// enum(Status), The target status for the appointment.
+	Status Appointment_Status `protobuf:"varint,3,opt,name=status,proto3,enum=moego.business.appointment.v1.Appointment_Status" json:"status,omitempty"`
+	// enum(MessageMethod), The method to use for sending notifications.
+	// MESSAGE_METHOD_UNSPECIFIED - Do not send notifications
+	MessageMethod UpdateAppointmentStatusRequest_MessageMethod `protobuf:"varint,4,opt,name=message_method,json=messageMethod,proto3,enum=moego.business.appointment.v1.UpdateAppointmentStatusRequest_MessageMethod" json:"message_method,omitempty"`
+	// object(CheckOut), Check out details for when status is FINISHED.
+	CheckOut      *UpdateAppointmentStatusRequest_CheckOut `protobuf:"bytes,5,opt,name=check_out,json=checkOut,proto3" json:"check_out,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAppointmentStatusRequest) Reset() {
+	*x = UpdateAppointmentStatusRequest{}
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAppointmentStatusRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAppointmentStatusRequest) ProtoMessage() {}
+
+func (x *UpdateAppointmentStatusRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAppointmentStatusRequest.ProtoReflect.Descriptor instead.
+func (*UpdateAppointmentStatusRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *UpdateAppointmentStatusRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateAppointmentStatusRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
+func (x *UpdateAppointmentStatusRequest) GetStatus() Appointment_Status {
+	if x != nil {
+		return x.Status
+	}
+	return Appointment_STATUS_UNSPECIFIED
+}
+
+func (x *UpdateAppointmentStatusRequest) GetMessageMethod() UpdateAppointmentStatusRequest_MessageMethod {
+	if x != nil {
+		return x.MessageMethod
+	}
+	return UpdateAppointmentStatusRequest_MESSAGE_METHOD_UNSPECIFIED
+}
+
+func (x *UpdateAppointmentStatusRequest) GetCheckOut() *UpdateAppointmentStatusRequest_CheckOut {
+	if x != nil {
+		return x.CheckOut
+	}
+	return nil
+}
+
 // Request to list grooming reports
 type ListGroomingReportsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -583,7 +720,7 @@ type ListGroomingReportsRequest struct {
 
 func (x *ListGroomingReportsRequest) Reset() {
 	*x = ListGroomingReportsRequest{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[8]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -595,7 +732,7 @@ func (x *ListGroomingReportsRequest) String() string {
 func (*ListGroomingReportsRequest) ProtoMessage() {}
 
 func (x *ListGroomingReportsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[8]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -608,7 +745,7 @@ func (x *ListGroomingReportsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGroomingReportsRequest.ProtoReflect.Descriptor instead.
 func (*ListGroomingReportsRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{8}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ListGroomingReportsRequest) GetAppointmentIds() []string {
@@ -636,7 +773,7 @@ type ListGroomingReportsResponse struct {
 
 func (x *ListGroomingReportsResponse) Reset() {
 	*x = ListGroomingReportsResponse{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[9]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -648,7 +785,7 @@ func (x *ListGroomingReportsResponse) String() string {
 func (*ListGroomingReportsResponse) ProtoMessage() {}
 
 func (x *ListGroomingReportsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[9]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,7 +798,7 @@ func (x *ListGroomingReportsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListGroomingReportsResponse.ProtoReflect.Descriptor instead.
 func (*ListGroomingReportsResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{9}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListGroomingReportsResponse) GetGroomingReports() []*GroomingReport {
@@ -686,7 +823,7 @@ type CreateAppointmentNoteRequest struct {
 
 func (x *CreateAppointmentNoteRequest) Reset() {
 	*x = CreateAppointmentNoteRequest{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[10]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -698,7 +835,7 @@ func (x *CreateAppointmentNoteRequest) String() string {
 func (*CreateAppointmentNoteRequest) ProtoMessage() {}
 
 func (x *CreateAppointmentNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[10]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -711,7 +848,7 @@ func (x *CreateAppointmentNoteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateAppointmentNoteRequest.ProtoReflect.Descriptor instead.
 func (*CreateAppointmentNoteRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{10}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *CreateAppointmentNoteRequest) GetAppointmentId() string {
@@ -748,7 +885,7 @@ type UpdateAppointmentNoteRequest struct {
 
 func (x *UpdateAppointmentNoteRequest) Reset() {
 	*x = UpdateAppointmentNoteRequest{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[11]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -760,7 +897,7 @@ func (x *UpdateAppointmentNoteRequest) String() string {
 func (*UpdateAppointmentNoteRequest) ProtoMessage() {}
 
 func (x *UpdateAppointmentNoteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[11]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -773,7 +910,7 @@ func (x *UpdateAppointmentNoteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpdateAppointmentNoteRequest.ProtoReflect.Descriptor instead.
 func (*UpdateAppointmentNoteRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{11}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *UpdateAppointmentNoteRequest) GetId() string {
@@ -803,7 +940,7 @@ type ListAppointmentNotesRequest struct {
 
 func (x *ListAppointmentNotesRequest) Reset() {
 	*x = ListAppointmentNotesRequest{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[12]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -815,7 +952,7 @@ func (x *ListAppointmentNotesRequest) String() string {
 func (*ListAppointmentNotesRequest) ProtoMessage() {}
 
 func (x *ListAppointmentNotesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[12]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -828,7 +965,7 @@ func (x *ListAppointmentNotesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAppointmentNotesRequest.ProtoReflect.Descriptor instead.
 func (*ListAppointmentNotesRequest) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{12}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *ListAppointmentNotesRequest) GetAppointmentId() string {
@@ -856,7 +993,7 @@ type ListAppointmentNotesResponse struct {
 
 func (x *ListAppointmentNotesResponse) Reset() {
 	*x = ListAppointmentNotesResponse{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[13]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -868,7 +1005,7 @@ func (x *ListAppointmentNotesResponse) String() string {
 func (*ListAppointmentNotesResponse) ProtoMessage() {}
 
 func (x *ListAppointmentNotesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[13]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +1018,7 @@ func (x *ListAppointmentNotesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListAppointmentNotesResponse.ProtoReflect.Descriptor instead.
 func (*ListAppointmentNotesResponse) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{13}
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListAppointmentNotesResponse) GetNotes() []*AppointmentNote {
@@ -915,7 +1052,7 @@ type ListAppointmentsRequest_Filter struct {
 
 func (x *ListAppointmentsRequest_Filter) Reset() {
 	*x = ListAppointmentsRequest_Filter{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[14]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -927,7 +1064,7 @@ func (x *ListAppointmentsRequest_Filter) String() string {
 func (*ListAppointmentsRequest_Filter) ProtoMessage() {}
 
 func (x *ListAppointmentsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[14]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1003,7 +1140,7 @@ type CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult str
 
 func (x *CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult) Reset() {
 	*x = CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[15]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1015,7 +1152,7 @@ func (x *CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult
 func (*CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult) ProtoMessage() {}
 
 func (x *CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[15]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1052,7 +1189,7 @@ type CheckAppointmentAvailabilityResponse_PetAppointmentsOverview struct {
 
 func (x *CheckAppointmentAvailabilityResponse_PetAppointmentsOverview) Reset() {
 	*x = CheckAppointmentAvailabilityResponse_PetAppointmentsOverview{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[16]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1064,7 +1201,7 @@ func (x *CheckAppointmentAvailabilityResponse_PetAppointmentsOverview) String() 
 func (*CheckAppointmentAvailabilityResponse_PetAppointmentsOverview) ProtoMessage() {}
 
 func (x *CheckAppointmentAvailabilityResponse_PetAppointmentsOverview) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[16]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1105,7 +1242,7 @@ type CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult struct {
 
 func (x *CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult) Reset() {
 	*x = CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[17]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1117,7 +1254,7 @@ func (x *CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult) Str
 func (*CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult) ProtoMessage() {}
 
 func (x *CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[17]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1151,7 +1288,7 @@ type CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult struct 
 
 func (x *CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult) Reset() {
 	*x = CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[18]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1163,7 +1300,7 @@ func (x *CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult) St
 func (*CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult) ProtoMessage() {}
 
 func (x *CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[18]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1200,7 +1337,7 @@ type CreateAppointmentRequest_PetService struct {
 
 func (x *CreateAppointmentRequest_PetService) Reset() {
 	*x = CreateAppointmentRequest_PetService{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[19]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1212,7 +1349,7 @@ func (x *CreateAppointmentRequest_PetService) String() string {
 func (*CreateAppointmentRequest_PetService) ProtoMessage() {}
 
 func (x *CreateAppointmentRequest_PetService) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[19]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1260,7 +1397,7 @@ type CreateAppointmentRequest_Service struct {
 
 func (x *CreateAppointmentRequest_Service) Reset() {
 	*x = CreateAppointmentRequest_Service{}
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[20]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1272,7 +1409,7 @@ func (x *CreateAppointmentRequest_Service) String() string {
 func (*CreateAppointmentRequest_Service) ProtoMessage() {}
 
 func (x *CreateAppointmentRequest_Service) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[20]
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1305,6 +1442,53 @@ func (x *CreateAppointmentRequest_Service) GetDuration() *interval.Interval {
 func (x *CreateAppointmentRequest_Service) GetStaffIds() []string {
 	if x != nil {
 		return x.StaffIds
+	}
+	return nil
+}
+
+// Check out details
+type UpdateAppointmentStatusRequest_CheckOut struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// date, Actual check out date. If provided, updates boarding appointment check out date
+	// and corresponding order price.
+	EndDate       *date.Date `protobuf:"bytes,1,opt,name=end_date,json=endDate,proto3" json:"end_date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateAppointmentStatusRequest_CheckOut) Reset() {
+	*x = UpdateAppointmentStatusRequest_CheckOut{}
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateAppointmentStatusRequest_CheckOut) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateAppointmentStatusRequest_CheckOut) ProtoMessage() {}
+
+func (x *UpdateAppointmentStatusRequest_CheckOut) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_appointment_v1_appointment_service_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateAppointmentStatusRequest_CheckOut.ProtoReflect.Descriptor instead.
+func (*UpdateAppointmentStatusRequest_CheckOut) Descriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP(), []int{8, 0}
+}
+
+func (x *UpdateAppointmentStatusRequest_CheckOut) GetEndDate() *date.Date {
+	if x != nil {
+		return x.EndDate
 	}
 	return nil
 }
@@ -1385,7 +1569,20 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x18CancelAppointmentRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId\"p\n" +
+	"businessId\"\x92\x04\n" +
+	"\x1eUpdateAppointmentStatusRequest\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
+	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
+	"businessId\x12N\n" +
+	"\x06status\x18\x03 \x01(\x0e21.moego.business.appointment.v1.Appointment.StatusB\x03\xe0A\x02R\x06status\x12w\n" +
+	"\x0emessage_method\x18\x04 \x01(\x0e2K.moego.business.appointment.v1.UpdateAppointmentStatusRequest.MessageMethodB\x03\xe0A\x01R\rmessageMethod\x12h\n" +
+	"\tcheck_out\x18\x05 \x01(\v2F.moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOutB\x03\xe0A\x01R\bcheckOut\x1a=\n" +
+	"\bCheckOut\x121\n" +
+	"\bend_date\x18\x01 \x01(\v2\x11.google.type.DateB\x03\xe0A\x01R\aendDate\"C\n" +
+	"\rMessageMethod\x12\x1e\n" +
+	"\x1aMESSAGE_METHOD_UNSPECIFIED\x10\x00\x12\a\n" +
+	"\x03SMS\x10\x01\x12\t\n" +
+	"\x05EMAIL\x10\x02\"p\n" +
 	"\x1aListGroomingReportsRequest\x12,\n" +
 	"\x0fappointment_ids\x18\x01 \x03(\tB\x03\xe0A\x02R\x0eappointmentIds\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
@@ -1403,14 +1600,15 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x0eappointment_id\x18\x01 \x01(\tB\x03\xe0A\x02R\rappointmentId\x12L\n" +
 	"\x04type\x18\x02 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x01R\x04type\"d\n" +
 	"\x1cListAppointmentNotesResponse\x12D\n" +
-	"\x05notes\x18\x01 \x03(\v2..moego.business.appointment.v1.AppointmentNoteR\x05notes2\xd1\r\n" +
+	"\x05notes\x18\x01 \x03(\v2..moego.business.appointment.v1.AppointmentNoteR\x05notes2\x87\x0f\n" +
 	"\x12AppointmentService\x12\x91\x01\n" +
 	"\x0eGetAppointment\x124.moego.business.appointment.v1.GetAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/appointments/{id}\x12\xa5\x01\n" +
 	"\x10ListAppointments\x126.moego.business.appointment.v1.ListAppointmentsRequest\x1a7.moego.business.appointment.v1.ListAppointmentsResponse\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/appointments:list\x12\xca\x01\n" +
 	"\x1cCheckAppointmentAvailability\x12B.moego.business.appointment.v1.CheckAppointmentAvailabilityRequest\x1aC.moego.business.appointment.v1.CheckAppointmentAvailabilityResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/appointments:check\x12\x95\x01\n" +
 	"\x11CreateAppointment\x127.moego.business.appointment.v1.CreateAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/appointments\x12\xad\x01\n" +
 	"\x15RescheduleAppointment\x12;.moego.business.appointment.v1.RescheduleAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/appointments/{id}:reschedule\x12\xa1\x01\n" +
-	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\xb2\x01\n" +
+	"\x11CancelAppointment\x127.moego.business.appointment.v1.CancelAppointmentRequest\x1a*.moego.business.appointment.v1.Appointment\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/appointments/{id}:cancel\x12\xb3\x01\n" +
+	"\x17UpdateAppointmentStatus\x12=.moego.business.appointment.v1.UpdateAppointmentStatusRequest\x1a*.moego.business.appointment.v1.Appointment\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/appointments/{id}:updateStatus\x12\xb2\x01\n" +
 	"\x13ListGroomingReports\x129.moego.business.appointment.v1.ListGroomingReportsRequest\x1a:.moego.business.appointment.v1.ListGroomingReportsResponse\"$\x82\xd3\xe4\x93\x02\x1e:\x01*\"\x19/v1/grooming_reports:list\x12\xa7\x01\n" +
 	"\x15CreateAppointmentNote\x12;.moego.business.appointment.v1.CreateAppointmentNoteRequest\x1a..moego.business.appointment.v1.AppointmentNote\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/appointments/notes\x12\xac\x01\n" +
 	"\x15UpdateAppointmentNote\x12;.moego.business.appointment.v1.UpdateAppointmentNoteRequest\x1a..moego.business.appointment.v1.AppointmentNote\"&\x82\xd3\xe4\x93\x02 :\x01*\x1a\x1b/v1/appointments/notes/{id}\x12\xb7\x01\n" +
@@ -1429,94 +1627,104 @@ func file_moego_business_appointment_v1_appointment_service_proto_rawDescGZIP() 
 	return file_moego_business_appointment_v1_appointment_service_proto_rawDescData
 }
 
-var file_moego_business_appointment_v1_appointment_service_proto_msgTypes = make([]protoimpl.MessageInfo, 21)
+var file_moego_business_appointment_v1_appointment_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_moego_business_appointment_v1_appointment_service_proto_msgTypes = make([]protoimpl.MessageInfo, 23)
 var file_moego_business_appointment_v1_appointment_service_proto_goTypes = []any{
-	(*GetAppointmentRequest)(nil),                                                   // 0: moego.business.appointment.v1.GetAppointmentRequest
-	(*ListAppointmentsRequest)(nil),                                                 // 1: moego.business.appointment.v1.ListAppointmentsRequest
-	(*ListAppointmentsResponse)(nil),                                                // 2: moego.business.appointment.v1.ListAppointmentsResponse
-	(*CheckAppointmentAvailabilityRequest)(nil),                                     // 3: moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
-	(*CheckAppointmentAvailabilityResponse)(nil),                                    // 4: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
-	(*CreateAppointmentRequest)(nil),                                                // 5: moego.business.appointment.v1.CreateAppointmentRequest
-	(*RescheduleAppointmentRequest)(nil),                                            // 6: moego.business.appointment.v1.RescheduleAppointmentRequest
-	(*CancelAppointmentRequest)(nil),                                                // 7: moego.business.appointment.v1.CancelAppointmentRequest
-	(*ListGroomingReportsRequest)(nil),                                              // 8: moego.business.appointment.v1.ListGroomingReportsRequest
-	(*ListGroomingReportsResponse)(nil),                                             // 9: moego.business.appointment.v1.ListGroomingReportsResponse
-	(*CreateAppointmentNoteRequest)(nil),                                            // 10: moego.business.appointment.v1.CreateAppointmentNoteRequest
-	(*UpdateAppointmentNoteRequest)(nil),                                            // 11: moego.business.appointment.v1.UpdateAppointmentNoteRequest
-	(*ListAppointmentNotesRequest)(nil),                                             // 12: moego.business.appointment.v1.ListAppointmentNotesRequest
-	(*ListAppointmentNotesResponse)(nil),                                            // 13: moego.business.appointment.v1.ListAppointmentNotesResponse
-	(*ListAppointmentsRequest_Filter)(nil),                                          // 14: moego.business.appointment.v1.ListAppointmentsRequest.Filter
-	(*CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult)(nil), // 15: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult
-	(*CheckAppointmentAvailabilityResponse_PetAppointmentsOverview)(nil),            // 16: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview
-	(*CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult)(nil),      // 17: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult
-	(*CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult)(nil),     // 18: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult
-	(*CreateAppointmentRequest_PetService)(nil),                                     // 19: moego.business.appointment.v1.CreateAppointmentRequest.PetService
-	(*CreateAppointmentRequest_Service)(nil),                                        // 20: moego.business.appointment.v1.CreateAppointmentRequest.Service
-	(*commonpb.Pagination)(nil),                                                     // 21: moego.common.v1.Pagination
-	(*Appointment)(nil),                                                             // 22: moego.business.appointment.v1.Appointment
-	(*interval.Interval)(nil),                                                       // 23: google.type.Interval
-	(*GroomingReport)(nil),                                                          // 24: moego.business.appointment.v1.GroomingReport
-	(AppointmentNote_Type)(0),                                                       // 25: moego.business.appointment.v1.AppointmentNote.Type
-	(*AppointmentNote)(nil),                                                         // 26: moego.business.appointment.v1.AppointmentNote
+	(UpdateAppointmentStatusRequest_MessageMethod)(0),                               // 0: moego.business.appointment.v1.UpdateAppointmentStatusRequest.MessageMethod
+	(*GetAppointmentRequest)(nil),                                                   // 1: moego.business.appointment.v1.GetAppointmentRequest
+	(*ListAppointmentsRequest)(nil),                                                 // 2: moego.business.appointment.v1.ListAppointmentsRequest
+	(*ListAppointmentsResponse)(nil),                                                // 3: moego.business.appointment.v1.ListAppointmentsResponse
+	(*CheckAppointmentAvailabilityRequest)(nil),                                     // 4: moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
+	(*CheckAppointmentAvailabilityResponse)(nil),                                    // 5: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
+	(*CreateAppointmentRequest)(nil),                                                // 6: moego.business.appointment.v1.CreateAppointmentRequest
+	(*RescheduleAppointmentRequest)(nil),                                            // 7: moego.business.appointment.v1.RescheduleAppointmentRequest
+	(*CancelAppointmentRequest)(nil),                                                // 8: moego.business.appointment.v1.CancelAppointmentRequest
+	(*UpdateAppointmentStatusRequest)(nil),                                          // 9: moego.business.appointment.v1.UpdateAppointmentStatusRequest
+	(*ListGroomingReportsRequest)(nil),                                              // 10: moego.business.appointment.v1.ListGroomingReportsRequest
+	(*ListGroomingReportsResponse)(nil),                                             // 11: moego.business.appointment.v1.ListGroomingReportsResponse
+	(*CreateAppointmentNoteRequest)(nil),                                            // 12: moego.business.appointment.v1.CreateAppointmentNoteRequest
+	(*UpdateAppointmentNoteRequest)(nil),                                            // 13: moego.business.appointment.v1.UpdateAppointmentNoteRequest
+	(*ListAppointmentNotesRequest)(nil),                                             // 14: moego.business.appointment.v1.ListAppointmentNotesRequest
+	(*ListAppointmentNotesResponse)(nil),                                            // 15: moego.business.appointment.v1.ListAppointmentNotesResponse
+	(*ListAppointmentsRequest_Filter)(nil),                                          // 16: moego.business.appointment.v1.ListAppointmentsRequest.Filter
+	(*CheckAppointmentAvailabilityResponse_AppointmentDateConflictCheckResult)(nil), // 17: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult
+	(*CheckAppointmentAvailabilityResponse_PetAppointmentsOverview)(nil),            // 18: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview
+	(*CheckAppointmentAvailabilityResponse_BusinessClosedDateCheckResult)(nil),      // 19: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult
+	(*CheckAppointmentAvailabilityResponse_LodgingOverCapacityCheckResult)(nil),     // 20: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult
+	(*CreateAppointmentRequest_PetService)(nil),                                     // 21: moego.business.appointment.v1.CreateAppointmentRequest.PetService
+	(*CreateAppointmentRequest_Service)(nil),                                        // 22: moego.business.appointment.v1.CreateAppointmentRequest.Service
+	(*UpdateAppointmentStatusRequest_CheckOut)(nil),                                 // 23: moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOut
+	(*commonpb.Pagination)(nil),                                                     // 24: moego.common.v1.Pagination
+	(*Appointment)(nil),                                                             // 25: moego.business.appointment.v1.Appointment
+	(*interval.Interval)(nil),                                                       // 26: google.type.Interval
 	(Appointment_Status)(0),                                                         // 27: moego.business.appointment.v1.Appointment.Status
-	(settingpb.Service_ItemType)(0),                                                 // 28: moego.business.setting.v1.Service.ItemType
-	(*customerpb.Pet)(nil),                                                          // 29: moego.business.customer.v1.Pet
-	(*date.Date)(nil),                                                               // 30: google.type.Date
-	(*settingpb.Lodging)(nil),                                                       // 31: moego.business.setting.v1.Lodging
+	(*GroomingReport)(nil),                                                          // 28: moego.business.appointment.v1.GroomingReport
+	(AppointmentNote_Type)(0),                                                       // 29: moego.business.appointment.v1.AppointmentNote.Type
+	(*AppointmentNote)(nil),                                                         // 30: moego.business.appointment.v1.AppointmentNote
+	(settingpb.Service_ItemType)(0),                                                 // 31: moego.business.setting.v1.Service.ItemType
+	(*customerpb.Pet)(nil),                                                          // 32: moego.business.customer.v1.Pet
+	(*date.Date)(nil),                                                               // 33: google.type.Date
+	(*settingpb.Lodging)(nil),                                                       // 34: moego.business.setting.v1.Lodging
 }
 var file_moego_business_appointment_v1_appointment_service_proto_depIdxs = []int32{
-	21, // 0: moego.business.appointment.v1.ListAppointmentsRequest.pagination:type_name -> moego.common.v1.Pagination
-	14, // 1: moego.business.appointment.v1.ListAppointmentsRequest.filter:type_name -> moego.business.appointment.v1.ListAppointmentsRequest.Filter
-	22, // 2: moego.business.appointment.v1.ListAppointmentsResponse.appointments:type_name -> moego.business.appointment.v1.Appointment
-	23, // 3: moego.business.appointment.v1.CheckAppointmentAvailabilityRequest.date_range:type_name -> google.type.Interval
-	15, // 4: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.appointment_conflict_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult
-	17, // 5: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.business_closed_date_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult
-	18, // 6: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.lodging_over_capacity_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult
-	19, // 7: moego.business.appointment.v1.CreateAppointmentRequest.pet_services:type_name -> moego.business.appointment.v1.CreateAppointmentRequest.PetService
-	23, // 8: moego.business.appointment.v1.RescheduleAppointmentRequest.duration:type_name -> google.type.Interval
-	24, // 9: moego.business.appointment.v1.ListGroomingReportsResponse.grooming_reports:type_name -> moego.business.appointment.v1.GroomingReport
-	25, // 10: moego.business.appointment.v1.CreateAppointmentNoteRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
-	25, // 11: moego.business.appointment.v1.ListAppointmentNotesRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
-	26, // 12: moego.business.appointment.v1.ListAppointmentNotesResponse.notes:type_name -> moego.business.appointment.v1.AppointmentNote
-	23, // 13: moego.business.appointment.v1.ListAppointmentsRequest.Filter.start_time:type_name -> google.type.Interval
-	23, // 14: moego.business.appointment.v1.ListAppointmentsRequest.Filter.end_time:type_name -> google.type.Interval
-	23, // 15: moego.business.appointment.v1.ListAppointmentsRequest.Filter.last_updated_time:type_name -> google.type.Interval
-	27, // 16: moego.business.appointment.v1.ListAppointmentsRequest.Filter.statuses:type_name -> moego.business.appointment.v1.Appointment.Status
-	23, // 17: moego.business.appointment.v1.ListAppointmentsRequest.Filter.check_in_time:type_name -> google.type.Interval
-	23, // 18: moego.business.appointment.v1.ListAppointmentsRequest.Filter.check_out_time:type_name -> google.type.Interval
-	28, // 19: moego.business.appointment.v1.ListAppointmentsRequest.Filter.service_types:type_name -> moego.business.setting.v1.Service.ItemType
-	16, // 20: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult.conflicts:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview
-	29, // 21: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview.pet:type_name -> moego.business.customer.v1.Pet
-	22, // 22: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview.appointments:type_name -> moego.business.appointment.v1.Appointment
-	30, // 23: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult.closed_dates:type_name -> google.type.Date
-	31, // 24: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult.lodgings:type_name -> moego.business.setting.v1.Lodging
-	20, // 25: moego.business.appointment.v1.CreateAppointmentRequest.PetService.services:type_name -> moego.business.appointment.v1.CreateAppointmentRequest.Service
-	23, // 26: moego.business.appointment.v1.CreateAppointmentRequest.Service.duration:type_name -> google.type.Interval
-	0,  // 27: moego.business.appointment.v1.AppointmentService.GetAppointment:input_type -> moego.business.appointment.v1.GetAppointmentRequest
-	1,  // 28: moego.business.appointment.v1.AppointmentService.ListAppointments:input_type -> moego.business.appointment.v1.ListAppointmentsRequest
-	3,  // 29: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:input_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
-	5,  // 30: moego.business.appointment.v1.AppointmentService.CreateAppointment:input_type -> moego.business.appointment.v1.CreateAppointmentRequest
-	6,  // 31: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:input_type -> moego.business.appointment.v1.RescheduleAppointmentRequest
-	7,  // 32: moego.business.appointment.v1.AppointmentService.CancelAppointment:input_type -> moego.business.appointment.v1.CancelAppointmentRequest
-	8,  // 33: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
-	10, // 34: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
-	11, // 35: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
-	12, // 36: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
-	22, // 37: moego.business.appointment.v1.AppointmentService.GetAppointment:output_type -> moego.business.appointment.v1.Appointment
-	2,  // 38: moego.business.appointment.v1.AppointmentService.ListAppointments:output_type -> moego.business.appointment.v1.ListAppointmentsResponse
-	4,  // 39: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:output_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
-	22, // 40: moego.business.appointment.v1.AppointmentService.CreateAppointment:output_type -> moego.business.appointment.v1.Appointment
-	22, // 41: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:output_type -> moego.business.appointment.v1.Appointment
-	22, // 42: moego.business.appointment.v1.AppointmentService.CancelAppointment:output_type -> moego.business.appointment.v1.Appointment
-	9,  // 43: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
-	26, // 44: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	26, // 45: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	13, // 46: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
-	37, // [37:47] is the sub-list for method output_type
-	27, // [27:37] is the sub-list for method input_type
-	27, // [27:27] is the sub-list for extension type_name
-	27, // [27:27] is the sub-list for extension extendee
-	0,  // [0:27] is the sub-list for field type_name
+	24, // 0: moego.business.appointment.v1.ListAppointmentsRequest.pagination:type_name -> moego.common.v1.Pagination
+	16, // 1: moego.business.appointment.v1.ListAppointmentsRequest.filter:type_name -> moego.business.appointment.v1.ListAppointmentsRequest.Filter
+	25, // 2: moego.business.appointment.v1.ListAppointmentsResponse.appointments:type_name -> moego.business.appointment.v1.Appointment
+	26, // 3: moego.business.appointment.v1.CheckAppointmentAvailabilityRequest.date_range:type_name -> google.type.Interval
+	17, // 4: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.appointment_conflict_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult
+	19, // 5: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.business_closed_date_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult
+	20, // 6: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.lodging_over_capacity_check:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult
+	21, // 7: moego.business.appointment.v1.CreateAppointmentRequest.pet_services:type_name -> moego.business.appointment.v1.CreateAppointmentRequest.PetService
+	26, // 8: moego.business.appointment.v1.RescheduleAppointmentRequest.duration:type_name -> google.type.Interval
+	27, // 9: moego.business.appointment.v1.UpdateAppointmentStatusRequest.status:type_name -> moego.business.appointment.v1.Appointment.Status
+	0,  // 10: moego.business.appointment.v1.UpdateAppointmentStatusRequest.message_method:type_name -> moego.business.appointment.v1.UpdateAppointmentStatusRequest.MessageMethod
+	23, // 11: moego.business.appointment.v1.UpdateAppointmentStatusRequest.check_out:type_name -> moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOut
+	28, // 12: moego.business.appointment.v1.ListGroomingReportsResponse.grooming_reports:type_name -> moego.business.appointment.v1.GroomingReport
+	29, // 13: moego.business.appointment.v1.CreateAppointmentNoteRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
+	29, // 14: moego.business.appointment.v1.ListAppointmentNotesRequest.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
+	30, // 15: moego.business.appointment.v1.ListAppointmentNotesResponse.notes:type_name -> moego.business.appointment.v1.AppointmentNote
+	26, // 16: moego.business.appointment.v1.ListAppointmentsRequest.Filter.start_time:type_name -> google.type.Interval
+	26, // 17: moego.business.appointment.v1.ListAppointmentsRequest.Filter.end_time:type_name -> google.type.Interval
+	26, // 18: moego.business.appointment.v1.ListAppointmentsRequest.Filter.last_updated_time:type_name -> google.type.Interval
+	27, // 19: moego.business.appointment.v1.ListAppointmentsRequest.Filter.statuses:type_name -> moego.business.appointment.v1.Appointment.Status
+	26, // 20: moego.business.appointment.v1.ListAppointmentsRequest.Filter.check_in_time:type_name -> google.type.Interval
+	26, // 21: moego.business.appointment.v1.ListAppointmentsRequest.Filter.check_out_time:type_name -> google.type.Interval
+	31, // 22: moego.business.appointment.v1.ListAppointmentsRequest.Filter.service_types:type_name -> moego.business.setting.v1.Service.ItemType
+	18, // 23: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.AppointmentDateConflictCheckResult.conflicts:type_name -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview
+	32, // 24: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview.pet:type_name -> moego.business.customer.v1.Pet
+	25, // 25: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.PetAppointmentsOverview.appointments:type_name -> moego.business.appointment.v1.Appointment
+	33, // 26: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.BusinessClosedDateCheckResult.closed_dates:type_name -> google.type.Date
+	34, // 27: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult.lodgings:type_name -> moego.business.setting.v1.Lodging
+	22, // 28: moego.business.appointment.v1.CreateAppointmentRequest.PetService.services:type_name -> moego.business.appointment.v1.CreateAppointmentRequest.Service
+	26, // 29: moego.business.appointment.v1.CreateAppointmentRequest.Service.duration:type_name -> google.type.Interval
+	33, // 30: moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOut.end_date:type_name -> google.type.Date
+	1,  // 31: moego.business.appointment.v1.AppointmentService.GetAppointment:input_type -> moego.business.appointment.v1.GetAppointmentRequest
+	2,  // 32: moego.business.appointment.v1.AppointmentService.ListAppointments:input_type -> moego.business.appointment.v1.ListAppointmentsRequest
+	4,  // 33: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:input_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
+	6,  // 34: moego.business.appointment.v1.AppointmentService.CreateAppointment:input_type -> moego.business.appointment.v1.CreateAppointmentRequest
+	7,  // 35: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:input_type -> moego.business.appointment.v1.RescheduleAppointmentRequest
+	8,  // 36: moego.business.appointment.v1.AppointmentService.CancelAppointment:input_type -> moego.business.appointment.v1.CancelAppointmentRequest
+	9,  // 37: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:input_type -> moego.business.appointment.v1.UpdateAppointmentStatusRequest
+	10, // 38: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
+	12, // 39: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
+	13, // 40: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
+	14, // 41: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
+	25, // 42: moego.business.appointment.v1.AppointmentService.GetAppointment:output_type -> moego.business.appointment.v1.Appointment
+	3,  // 43: moego.business.appointment.v1.AppointmentService.ListAppointments:output_type -> moego.business.appointment.v1.ListAppointmentsResponse
+	5,  // 44: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:output_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
+	25, // 45: moego.business.appointment.v1.AppointmentService.CreateAppointment:output_type -> moego.business.appointment.v1.Appointment
+	25, // 46: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:output_type -> moego.business.appointment.v1.Appointment
+	25, // 47: moego.business.appointment.v1.AppointmentService.CancelAppointment:output_type -> moego.business.appointment.v1.Appointment
+	25, // 48: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:output_type -> moego.business.appointment.v1.Appointment
+	11, // 49: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
+	30, // 50: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	30, // 51: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	15, // 52: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
+	42, // [42:53] is the sub-list for method output_type
+	31, // [31:42] is the sub-list for method input_type
+	31, // [31:31] is the sub-list for extension type_name
+	31, // [31:31] is the sub-list for extension extendee
+	0,  // [0:31] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_appointment_service_proto_init() }
@@ -1533,13 +1741,14 @@ func file_moego_business_appointment_v1_appointment_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_appointment_v1_appointment_service_proto_rawDesc), len(file_moego_business_appointment_v1_appointment_service_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   21,
+			NumEnums:      1,
+			NumMessages:   23,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
 		GoTypes:           file_moego_business_appointment_v1_appointment_service_proto_goTypes,
 		DependencyIndexes: file_moego_business_appointment_v1_appointment_service_proto_depIdxs,
+		EnumInfos:         file_moego_business_appointment_v1_appointment_service_proto_enumTypes,
 		MessageInfos:      file_moego_business_appointment_v1_appointment_service_proto_msgTypes,
 	}.Build()
 	File_moego_business_appointment_v1_appointment_service_proto = out.File
