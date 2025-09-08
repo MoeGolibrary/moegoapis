@@ -83,11 +83,12 @@ Services can be restricted to specific pet types and breeds using:
 
 ###### CustomizedBreed Object
 
-| Field Name  | Type          | Description                                     |
-|-------------|---------------|-------------------------------------------------|
-| `petTypeId` | string        | Pet type identifier                             |
-| `breeds`    | Array(string) | List of breed identifiers for this pet type     |
-| `isAll`     | bool          | Whether all breeds of this pet type are allowed |
+| Field Name    | Type          | Description                                     |
+|---------------|---------------|-------------------------------------------------|
+| `petTypeId`   | string        | Pet type identifier                             |
+| `petTypeName` | string        | Name of the pet type                            |
+| `breeds`      | Array(string) | List of breed identifiers for this pet type     |
+| `isAll`       | bool          | Whether all breeds of this pet type are allowed |
 
 ##### Weight/Size Filtering
 

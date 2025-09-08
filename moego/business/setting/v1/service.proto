@@ -137,11 +137,14 @@ message CustomizedBreed {
   // Pet type id
   string pet_type_id = 1;
 
+  // Pet type name
+  string pet_type_name = 2;
+
   // Pet breed ids
-  repeated string breeds = 2;
+  repeated string breeds = 3;
 
   // Allow all breeds for this pet type
-  optional bool is_all = 3;
+  optional bool is_all = 4;
 }
 
 // Pet code filter definition

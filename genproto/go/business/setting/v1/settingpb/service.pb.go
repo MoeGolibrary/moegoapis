@@ -375,10 +375,12 @@ type CustomizedBreed struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Pet type id
 	PetTypeId string `protobuf:"bytes,1,opt,name=pet_type_id,json=petTypeId,proto3" json:"pet_type_id,omitempty"`
+	// Pet type name
+	PetTypeName string `protobuf:"bytes,2,opt,name=pet_type_name,json=petTypeName,proto3" json:"pet_type_name,omitempty"`
 	// Pet breed ids
-	Breeds []string `protobuf:"bytes,2,rep,name=breeds,proto3" json:"breeds,omitempty"`
+	Breeds []string `protobuf:"bytes,3,rep,name=breeds,proto3" json:"breeds,omitempty"`
 	// Allow all breeds for this pet type
-	IsAll         *bool `protobuf:"varint,3,opt,name=is_all,json=isAll,proto3,oneof" json:"is_all,omitempty"`
+	IsAll         *bool `protobuf:"varint,4,opt,name=is_all,json=isAll,proto3,oneof" json:"is_all,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -416,6 +418,13 @@ func (*CustomizedBreed) Descriptor() ([]byte, []int) {
 func (x *CustomizedBreed) GetPetTypeId() string {
 	if x != nil {
 		return x.PetTypeId
+	}
+	return ""
+}
+
+func (x *CustomizedBreed) GetPetTypeName() string {
+	if x != nil {
+		return x.PetTypeName
 	}
 	return ""
 }
@@ -535,11 +544,12 @@ const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\x04Type\x12\x1c\n" +
 	"\x18SERVICE_TYPE_UNSPECIFIED\x10\x00\x12\v\n" +
 	"\aSERVICE\x10\x01\x12\t\n" +
-	"\x05ADDON\x10\x02\"p\n" +
+	"\x05ADDON\x10\x02\"\x94\x01\n" +
 	"\x0fCustomizedBreed\x12\x1e\n" +
-	"\vpet_type_id\x18\x01 \x01(\tR\tpetTypeId\x12\x16\n" +
-	"\x06breeds\x18\x02 \x03(\tR\x06breeds\x12\x1a\n" +
-	"\x06is_all\x18\x03 \x01(\bH\x00R\x05isAll\x88\x01\x01B\t\n" +
+	"\vpet_type_id\x18\x01 \x01(\tR\tpetTypeId\x12\"\n" +
+	"\rpet_type_name\x18\x02 \x01(\tR\vpetTypeName\x12\x16\n" +
+	"\x06breeds\x18\x03 \x03(\tR\x06breeds\x12\x1a\n" +
+	"\x06is_all\x18\x04 \x01(\bH\x00R\x05isAll\x88\x01\x01B\t\n" +
 	"\a_is_all\"|\n" +
 	"\rPetCodeFilter\x12\"\n" +
 	"\ris_white_list\x18\x01 \x01(\bR\visWhiteList\x12%\n" +

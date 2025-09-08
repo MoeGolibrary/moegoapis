@@ -1065,6 +1065,10 @@
           "type": "string",
           "title": "Pet type id"
         },
+        "petTypeName": {
+          "type": "string",
+          "title": "Pet type name"
+        },
         "breeds": {
           "type": "array",
           "items": {
