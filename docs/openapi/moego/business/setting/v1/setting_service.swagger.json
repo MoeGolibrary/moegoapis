@@ -678,16 +678,7 @@
     },
     "SettingServiceListPetCoatTypesBody": {
       "type": "object",
-      "properties": {
-        "pagination": {
-          "$ref": "#/definitions/v1Pagination",
-          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
-        }
-      },
       "description": "Request message for listing pet coat types.",
-      "required": [
-        "pagination"
-      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
@@ -707,16 +698,7 @@
     },
     "SettingServiceListPetSizesBody": {
       "type": "object",
-      "properties": {
-        "pagination": {
-          "$ref": "#/definitions/v1Pagination",
-          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
-        }
-      },
       "description": "Request message for listing pet sizes.",
-      "required": [
-        "pagination"
-      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
@@ -726,16 +708,7 @@
     },
     "SettingServiceListPetTypesBody": {
       "type": "object",
-      "properties": {
-        "pagination": {
-          "$ref": "#/definitions/v1Pagination",
-          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
-        }
-      },
       "description": "Request message for listing pet types.",
-      "required": [
-        "pagination"
-      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
@@ -1220,10 +1193,6 @@
     "v1ListPetCoatTypesResponse": {
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "type": "string",
-          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
-        },
         "petCoatTypes": {
           "type": "array",
           "items": {
@@ -1264,10 +1233,6 @@
     "v1ListPetSizesResponse": {
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "type": "string",
-          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
-        },
         "petSizes": {
           "type": "array",
           "items": {
@@ -1288,10 +1253,6 @@
     "v1ListPetTypesResponse": {
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "type": "string",
-          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
-        },
         "petTypes": {
           "type": "array",
           "items": {

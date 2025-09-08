@@ -1076,10 +1076,7 @@ type ListPetSizesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the company to list pet sizes for
 	// Required. Must be a valid company ID
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// Pagination parameters for the request
-	// Required. Defines page size and token for continuation
-	Pagination    *commonpb.Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1121,22 +1118,12 @@ func (x *ListPetSizesRequest) GetCompanyId() string {
 	return ""
 }
 
-func (x *ListPetSizesRequest) GetPagination() *commonpb.Pagination {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
 // Response message for listing pet sizes.
 type ListPetSizesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Token for retrieving the next page of results
-	// Empty if there are no more results
-	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	// List of pet sizes matching the request criteria
 	// May be empty if no pet sizes match
-	PetSizes      []*PetSize `protobuf:"bytes,2,rep,name=pet_sizes,json=petSizes,proto3" json:"pet_sizes,omitempty"`
+	PetSizes      []*PetSize `protobuf:"bytes,1,rep,name=pet_sizes,json=petSizes,proto3" json:"pet_sizes,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1171,13 +1158,6 @@ func (*ListPetSizesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *ListPetSizesResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
-}
-
 func (x *ListPetSizesResponse) GetPetSizes() []*PetSize {
 	if x != nil {
 		return x.PetSizes
@@ -1190,10 +1170,7 @@ type ListPetTypesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the company to list pet types for
 	// Required. Must be a valid company ID
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// Pagination parameters for the request
-	// Required. Defines page size and token for continuation
-	Pagination    *commonpb.Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1235,22 +1212,12 @@ func (x *ListPetTypesRequest) GetCompanyId() string {
 	return ""
 }
 
-func (x *ListPetTypesRequest) GetPagination() *commonpb.Pagination {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
 // Response message for listing pet types.
 type ListPetTypesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Token for retrieving the next page of results
-	// Empty if there are no more results
-	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	// List of pet types matching the request criteria
 	// May be empty if no pet types match
-	PetTypes      []*PetType `protobuf:"bytes,2,rep,name=pet_types,json=petTypes,proto3" json:"pet_types,omitempty"`
+	PetTypes      []*PetType `protobuf:"bytes,1,rep,name=pet_types,json=petTypes,proto3" json:"pet_types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1285,13 +1252,6 @@ func (*ListPetTypesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{20}
 }
 
-func (x *ListPetTypesResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
-}
-
 func (x *ListPetTypesResponse) GetPetTypes() []*PetType {
 	if x != nil {
 		return x.PetTypes
@@ -1304,10 +1264,7 @@ type ListPetCoatTypesRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// ID of the company to list pet coat types for
 	// Required. Must be a valid company ID
-	CompanyId string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// Pagination parameters for the request
-	// Required. Defines page size and token for continuation
-	Pagination    *commonpb.Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	CompanyId     string `protobuf:"bytes,1,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1349,22 +1306,12 @@ func (x *ListPetCoatTypesRequest) GetCompanyId() string {
 	return ""
 }
 
-func (x *ListPetCoatTypesRequest) GetPagination() *commonpb.Pagination {
-	if x != nil {
-		return x.Pagination
-	}
-	return nil
-}
-
 // Response message for listing pet coat types.
 type ListPetCoatTypesResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Token for retrieving the next page of results
-	// Empty if there are no more results
-	NextPageToken string `protobuf:"bytes,1,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	// List of pet coat types matching the request criteria
 	// May be empty if no pet coat types match
-	PetCoatTypes  []*PetCoatType `protobuf:"bytes,2,rep,name=pet_coat_types,json=petCoatTypes,proto3" json:"pet_coat_types,omitempty"`
+	PetCoatTypes  []*PetCoatType `protobuf:"bytes,1,rep,name=pet_coat_types,json=petCoatTypes,proto3" json:"pet_coat_types,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1397,13 +1344,6 @@ func (x *ListPetCoatTypesResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use ListPetCoatTypesResponse.ProtoReflect.Descriptor instead.
 func (*ListPetCoatTypesResponse) Descriptor() ([]byte, []int) {
 	return file_moego_business_setting_v1_setting_service_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *ListPetCoatTypesResponse) GetNextPageToken() string {
-	if x != nil {
-		return x.NextPageToken
-	}
-	return ""
 }
 
 func (x *ListPetCoatTypesResponse) GetPetCoatTypes() []*PetCoatType {
@@ -1541,34 +1481,22 @@ const file_moego_business_setting_v1_setting_service_proto_rawDesc = "" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"q\n" +
 	"\x1dListLeadsActionStatusResponse\x12P\n" +
-	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses\"{\n" +
+	"\x0faction_statuses\x18\x01 \x03(\v2'.moego.business.setting.v1.ActionStatusR\x0eactionStatuses\"9\n" +
 	"\x13ListPetSizesRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12@\n" +
-	"\n" +
-	"pagination\x18\x02 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
-	"pagination\"\x7f\n" +
-	"\x14ListPetSizesResponse\x12&\n" +
-	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12?\n" +
-	"\tpet_sizes\x18\x02 \x03(\v2\".moego.business.setting.v1.PetSizeR\bpetSizes\"{\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"W\n" +
+	"\x14ListPetSizesResponse\x12?\n" +
+	"\tpet_sizes\x18\x01 \x03(\v2\".moego.business.setting.v1.PetSizeR\bpetSizes\"9\n" +
 	"\x13ListPetTypesRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12@\n" +
-	"\n" +
-	"pagination\x18\x02 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
-	"pagination\"\x7f\n" +
-	"\x14ListPetTypesResponse\x12&\n" +
-	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12?\n" +
-	"\tpet_types\x18\x02 \x03(\v2\".moego.business.setting.v1.PetTypeR\bpetTypes\"\x7f\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"W\n" +
+	"\x14ListPetTypesResponse\x12?\n" +
+	"\tpet_types\x18\x01 \x03(\v2\".moego.business.setting.v1.PetTypeR\bpetTypes\"=\n" +
 	"\x17ListPetCoatTypesRequest\x12\"\n" +
 	"\n" +
-	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12@\n" +
-	"\n" +
-	"pagination\x18\x02 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
-	"pagination\"\x90\x01\n" +
-	"\x18ListPetCoatTypesResponse\x12&\n" +
-	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12L\n" +
-	"\x0epet_coat_types\x18\x02 \x03(\v2&.moego.business.setting.v1.PetCoatTypeR\fpetCoatTypes2\xdd\x12\n" +
+	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\"h\n" +
+	"\x18ListPetCoatTypesResponse\x12L\n" +
+	"\x0epet_coat_types\x18\x01 \x03(\v2&.moego.business.setting.v1.PetCoatTypeR\fpetCoatTypes2\xdd\x12\n" +
 	"\x0eSettingService\x12\xad\x01\n" +
 	"\fListPetCodes\x12..moego.business.setting.v1.ListPetCodesRequest\x1a/.moego.business.setting.v1.ListPetCodesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/codes:list\x12\xad\x01\n" +
 	"\fListPetSizes\x12..moego.business.setting.v1.ListPetSizesRequest\x1a/.moego.business.setting.v1.ListPetSizesResponse\"<\x82\xd3\xe4\x93\x026:\x01*\"1/v1/setting/companies/{company_id}/pet/sizes:list\x12\xad\x01\n" +
@@ -1653,44 +1581,41 @@ var file_moego_business_setting_v1_setting_service_proto_depIdxs = []int32{
 	32, // 10: moego.business.setting.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.setting.v1.Lodging
 	33, // 11: moego.business.setting.v1.ListLeadsLifeCyclesResponse.life_cycles:type_name -> moego.business.setting.v1.LifeCycle
 	34, // 12: moego.business.setting.v1.ListLeadsActionStatusResponse.action_statuses:type_name -> moego.business.setting.v1.ActionStatus
-	27, // 13: moego.business.setting.v1.ListPetSizesRequest.pagination:type_name -> moego.common.v1.Pagination
-	35, // 14: moego.business.setting.v1.ListPetSizesResponse.pet_sizes:type_name -> moego.business.setting.v1.PetSize
-	27, // 15: moego.business.setting.v1.ListPetTypesRequest.pagination:type_name -> moego.common.v1.Pagination
-	36, // 16: moego.business.setting.v1.ListPetTypesResponse.pet_types:type_name -> moego.business.setting.v1.PetType
-	27, // 17: moego.business.setting.v1.ListPetCoatTypesRequest.pagination:type_name -> moego.common.v1.Pagination
-	37, // 18: moego.business.setting.v1.ListPetCoatTypesResponse.pet_coat_types:type_name -> moego.business.setting.v1.PetCoatType
-	29, // 19: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
-	0,  // 20: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodesRequest
-	17, // 21: moego.business.setting.v1.SettingService.ListPetSizes:input_type -> moego.business.setting.v1.ListPetSizesRequest
-	19, // 22: moego.business.setting.v1.SettingService.ListPetTypes:input_type -> moego.business.setting.v1.ListPetTypesRequest
-	21, // 23: moego.business.setting.v1.SettingService.ListPetCoatTypes:input_type -> moego.business.setting.v1.ListPetCoatTypesRequest
-	2,  // 24: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagsRequest
-	4,  // 25: moego.business.setting.v1.SettingService.ListCustomerReferralSources:input_type -> moego.business.setting.v1.ListCustomerReferralSourcesRequest
-	13, // 26: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:input_type -> moego.business.setting.v1.ListLeadsLifeCyclesRequest
-	15, // 27: moego.business.setting.v1.SettingService.ListLeadsActionStatus:input_type -> moego.business.setting.v1.ListLeadsActionStatusRequest
-	8,  // 28: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
-	6,  // 29: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
-	9,  // 30: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
-	10, // 31: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
-	11, // 32: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
-	1,  // 33: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodesResponse
-	18, // 34: moego.business.setting.v1.SettingService.ListPetSizes:output_type -> moego.business.setting.v1.ListPetSizesResponse
-	20, // 35: moego.business.setting.v1.SettingService.ListPetTypes:output_type -> moego.business.setting.v1.ListPetTypesResponse
-	22, // 36: moego.business.setting.v1.SettingService.ListPetCoatTypes:output_type -> moego.business.setting.v1.ListPetCoatTypesResponse
-	3,  // 37: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagsResponse
-	5,  // 38: moego.business.setting.v1.SettingService.ListCustomerReferralSources:output_type -> moego.business.setting.v1.ListCustomerReferralSourcesResponse
-	14, // 39: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:output_type -> moego.business.setting.v1.ListLeadsLifeCyclesResponse
-	16, // 40: moego.business.setting.v1.SettingService.ListLeadsActionStatus:output_type -> moego.business.setting.v1.ListLeadsActionStatusResponse
-	28, // 41: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
-	7,  // 42: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
-	28, // 43: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
-	28, // 44: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
-	12, // 45: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
-	33, // [33:46] is the sub-list for method output_type
-	20, // [20:33] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	35, // 13: moego.business.setting.v1.ListPetSizesResponse.pet_sizes:type_name -> moego.business.setting.v1.PetSize
+	36, // 14: moego.business.setting.v1.ListPetTypesResponse.pet_types:type_name -> moego.business.setting.v1.PetType
+	37, // 15: moego.business.setting.v1.ListPetCoatTypesResponse.pet_coat_types:type_name -> moego.business.setting.v1.PetCoatType
+	29, // 16: moego.business.setting.v1.ListServicesRequest.Filter.item_types:type_name -> moego.business.setting.v1.Service.ItemType
+	0,  // 17: moego.business.setting.v1.SettingService.ListPetCodes:input_type -> moego.business.setting.v1.ListPetCodesRequest
+	17, // 18: moego.business.setting.v1.SettingService.ListPetSizes:input_type -> moego.business.setting.v1.ListPetSizesRequest
+	19, // 19: moego.business.setting.v1.SettingService.ListPetTypes:input_type -> moego.business.setting.v1.ListPetTypesRequest
+	21, // 20: moego.business.setting.v1.SettingService.ListPetCoatTypes:input_type -> moego.business.setting.v1.ListPetCoatTypesRequest
+	2,  // 21: moego.business.setting.v1.SettingService.ListCustomerTags:input_type -> moego.business.setting.v1.ListCustomerTagsRequest
+	4,  // 22: moego.business.setting.v1.SettingService.ListCustomerReferralSources:input_type -> moego.business.setting.v1.ListCustomerReferralSourcesRequest
+	13, // 23: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:input_type -> moego.business.setting.v1.ListLeadsLifeCyclesRequest
+	15, // 24: moego.business.setting.v1.SettingService.ListLeadsActionStatus:input_type -> moego.business.setting.v1.ListLeadsActionStatusRequest
+	8,  // 25: moego.business.setting.v1.SettingService.GetService:input_type -> moego.business.setting.v1.GetServiceRequest
+	6,  // 26: moego.business.setting.v1.SettingService.ListServices:input_type -> moego.business.setting.v1.ListServicesRequest
+	9,  // 27: moego.business.setting.v1.SettingService.CreateService:input_type -> moego.business.setting.v1.CreateServiceRequest
+	10, // 28: moego.business.setting.v1.SettingService.UpdateService:input_type -> moego.business.setting.v1.UpdateServiceRequest
+	11, // 29: moego.business.setting.v1.SettingService.ListLodgings:input_type -> moego.business.setting.v1.ListLodgingsRequest
+	1,  // 30: moego.business.setting.v1.SettingService.ListPetCodes:output_type -> moego.business.setting.v1.ListPetCodesResponse
+	18, // 31: moego.business.setting.v1.SettingService.ListPetSizes:output_type -> moego.business.setting.v1.ListPetSizesResponse
+	20, // 32: moego.business.setting.v1.SettingService.ListPetTypes:output_type -> moego.business.setting.v1.ListPetTypesResponse
+	22, // 33: moego.business.setting.v1.SettingService.ListPetCoatTypes:output_type -> moego.business.setting.v1.ListPetCoatTypesResponse
+	3,  // 34: moego.business.setting.v1.SettingService.ListCustomerTags:output_type -> moego.business.setting.v1.ListCustomerTagsResponse
+	5,  // 35: moego.business.setting.v1.SettingService.ListCustomerReferralSources:output_type -> moego.business.setting.v1.ListCustomerReferralSourcesResponse
+	14, // 36: moego.business.setting.v1.SettingService.ListLeadsLifeCycles:output_type -> moego.business.setting.v1.ListLeadsLifeCyclesResponse
+	16, // 37: moego.business.setting.v1.SettingService.ListLeadsActionStatus:output_type -> moego.business.setting.v1.ListLeadsActionStatusResponse
+	28, // 38: moego.business.setting.v1.SettingService.GetService:output_type -> moego.business.setting.v1.Service
+	7,  // 39: moego.business.setting.v1.SettingService.ListServices:output_type -> moego.business.setting.v1.ListServicesResponse
+	28, // 40: moego.business.setting.v1.SettingService.CreateService:output_type -> moego.business.setting.v1.Service
+	28, // 41: moego.business.setting.v1.SettingService.UpdateService:output_type -> moego.business.setting.v1.Service
+	12, // 42: moego.business.setting.v1.SettingService.ListLodgings:output_type -> moego.business.setting.v1.ListLodgingsResponse
+	30, // [30:43] is the sub-list for method output_type
+	17, // [17:30] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_setting_service_proto_init() }

@@ -147,17 +147,15 @@ services, pricing, or handling requirements.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description            |
-|--------------|------------|----------|------------------------|
-| `companyId`  | string     | Yes      | Company ID to retrieve |
-| `pagination` | Pagination | Yes      | Pagination parameters  |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
-| Field Name      | Type             | Description                       |
-|-----------------|------------------|-----------------------------------|
-| `nextPageToken` | string           | Token for next page               |
-| `petSizes`      | Array(`PetSize`) | List of pet sizes for the company |
+| Field Name | Type             | Description                       |
+|------------|------------------|-----------------------------------|
+| `petSizes` | Array(`PetSize`) | List of pet sizes for the company |
 
 #### ⚠️ Error Codes:
 
@@ -187,17 +185,15 @@ pricing, or handling requirements.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description            |
-|--------------|------------|----------|------------------------|
-| `companyId`  | string     | Yes      | Company ID to retrieve |
-| `pagination` | Pagination | Yes      | Pagination parameters  |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
-| Field Name      | Type             | Description                       |
-|-----------------|------------------|-----------------------------------|
-| `nextPageToken` | string           | Token for next page               |
-| `petTypes`      | Array(`PetType`) | List of pet types for the company |
+| Field Name | Type             | Description                       |
+|------------|------------------|-----------------------------------|
+| `petTypes` | Array(`PetType`) | List of pet types for the company |
 
 #### ⚠️ Error Codes:
 
@@ -227,17 +223,15 @@ customize services, pricing, or handling requirements.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type       | Required | Description            |
-|--------------|------------|----------|------------------------|
-| `companyId`  | string     | Yes      | Company ID to retrieve |
-| `pagination` | Pagination | Yes      | Pagination parameters  |
+| Field Name  | Type   | Required | Description            |
+|-------------|--------|----------|------------------------|
+| `companyId` | string | Yes      | Company ID to retrieve |
 
 #### 📌 Return Value:
 
-| Field Name      | Type                 | Description                            |
-|-----------------|----------------------|----------------------------------------|
-| `nextPageToken` | string               | Token for next page                    |
-| `petCoatTypes`  | Array(`PetCoatType`) | List of pet coat types for the company |
+| Field Name     | Type                 | Description                            |
+|----------------|----------------------|----------------------------------------|
+| `petCoatTypes` | Array(`PetCoatType`) | List of pet coat types for the company |
 
 #### ⚠️ Error Codes:
 

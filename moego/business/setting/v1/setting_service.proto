@@ -438,20 +438,13 @@ message ListPetSizesRequest {
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Pagination parameters for the request
-  // Required. Defines page size and token for continuation
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing pet sizes.
 message ListPetSizesResponse {
-  // Token for retrieving the next page of results
-  // Empty if there are no more results
-  string next_page_token = 1;
-
   // List of pet sizes matching the request criteria
   // May be empty if no pet sizes match
-  repeated PetSize pet_sizes = 2;
+  repeated PetSize pet_sizes = 1;
 }
 
 // Request message for listing pet types.
@@ -459,21 +452,13 @@ message ListPetTypesRequest {
   // ID of the company to list pet types for
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // Pagination parameters for the request
-  // Required. Defines page size and token for continuation
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing pet types.
 message ListPetTypesResponse {
-  // Token for retrieving the next page of results
-  // Empty if there are no more results
-  string next_page_token = 1;
-
   // List of pet types matching the request criteria
   // May be empty if no pet types match
-  repeated PetType pet_types = 2;
+  repeated PetType pet_types = 1;
 }
 
 // Request message for listing pet coat types.
@@ -481,19 +466,11 @@ message ListPetCoatTypesRequest {
   // ID of the company to list pet coat types for
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // Pagination parameters for the request
-  // Required. Defines page size and token for continuation
-  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing pet coat types.
 message ListPetCoatTypesResponse {
-  // Token for retrieving the next page of results
-  // Empty if there are no more results
-  string next_page_token = 1;
-
   // List of pet coat types matching the request criteria
   // May be empty if no pet coat types match
-  repeated PetCoatType pet_coat_types = 2;
+  repeated PetCoatType pet_coat_types = 1;
 }
