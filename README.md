@@ -117,6 +117,9 @@ notifications.
   capabilities.
 - [Event](docs/event.md): List of supported events like `APPOINTMENT_CREATED`, `ORDER_UPDATED`.
 - [SettingService](docs/setting_service.md): Configure business-level settings and preferences.
+- [SettingCustomer](docs/setting_customer.md): Manage customer-related settings including tags, referral sources, and lead management.
+- [SettingLodging](docs/setting_lodging.md): Configure lodging types and units for boarding services.
+- [SettingPet](docs/setting_pet.md): Manage pet-related settings including codes, sizes, types, and coat types.
 
 ### 📋 Agreements & Feedback
 

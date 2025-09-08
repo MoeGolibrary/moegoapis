@@ -835,6 +835,16 @@
         "type": "UpdateServiceRequest"
       }
     },
+    "WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
+    },
     "businesssettingv1ListCustomerTagsResponse": {
       "type": "object",
       "properties": {
@@ -1469,14 +1479,6 @@
         "name": {
           "type": "string",
           "title": "Name of the pet coat type (e.g., \"Short\", \"Long\", \"Curly\", \"Wire\")"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description of this pet coat type"
-        },
-        "isAvailable": {
-          "type": "boolean",
-          "title": "Whether this pet coat type is available for use"
         }
       },
       "description": "PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.\nThese coat types are used to customize services based on the pet's coat characteristics.",
@@ -1553,20 +1555,12 @@
           "type": "string",
           "title": "Name of the pet size (e.g., \"Small\", \"Medium\", \"Large\")"
         },
-        "description": {
-          "type": "string",
-          "title": "Optional description of this pet size"
-        },
         "weightLow": {
-          "type": "integer",
-          "format": "int32",
-          "x-nullable": true,
+          "$ref": "#/definitions/v1Weight",
           "title": "Lower weight limit for this size category in pounds\nThis is for reference only and does not enforce strict boundaries"
         },
         "weightHigh": {
-          "type": "integer",
-          "format": "int32",
-          "x-nullable": true,
+          "$ref": "#/definitions/v1Weight",
           "title": "Upper weight limit for this size category in pounds\nThis is for reference only and does not enforce strict boundaries"
         }
       },
@@ -1588,14 +1582,6 @@
         "name": {
           "type": "string",
           "title": "Name of the pet type (e.g., \"Dog\", \"Cat\", \"Bird\")"
-        },
-        "description": {
-          "type": "string",
-          "title": "Optional description of this pet type"
-        },
-        "isAvailable": {
-          "type": "boolean",
-          "title": "Whether this pet type is available for use"
         }
       },
       "description": "PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.\nThese types are used to categorize pets and can be used to customize services\nbased on the pet's species.",
@@ -1644,6 +1630,27 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListCustomerTagsRequest"
+      }
+    },
+    "v1Weight": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "integer",
+          "format": "int64",
+          "description": "uint32, The numeric value of the weight."
+        },
+        "unit": {
+          "$ref": "#/definitions/WeightUnit",
+          "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
+        }
+      },
+      "description": "The weight object provides a standardized way to represent and convert\nweight measurements throughout the system. It supports multiple units\nand ensures consistent weight tracking for pets, products, and other\nresources that require weight measurements.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Weight"
       }
     }
   }

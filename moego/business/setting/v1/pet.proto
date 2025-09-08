@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package moego.business.setting.v1;
 
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
@@ -37,16 +38,13 @@ message PetSize {
   // Name of the pet size (e.g., "Small", "Medium", "Large")
   string name = 2;
 
-  // Optional description of this pet size
-  string description = 3;
-
   // Lower weight limit for this size category in pounds
   // This is for reference only and does not enforce strict boundaries
-  optional int32 weight_low = 4;
+  moego.common.v1.Weight weight_low = 3;
 
   // Upper weight limit for this size category in pounds
   // This is for reference only and does not enforce strict boundaries
-  optional int32 weight_high = 5;
+  moego.common.v1.Weight weight_high = 4;
 }
 
 // PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.
@@ -58,12 +56,6 @@ message PetType {
 
   // Name of the pet type (e.g., "Dog", "Cat", "Bird")
   string name = 2;
-
-  // Optional description of this pet type
-  string description = 3;
-
-  // Whether this pet type is available for use
-  bool is_available = 4;
 }
 
 // PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.
@@ -74,10 +66,4 @@ message PetCoatType {
 
   // Name of the pet coat type (e.g., "Short", "Long", "Curly", "Wire")
   string name = 2;
-
-  // Optional description of this pet coat type
-  string description = 3;
-
-  // Whether this pet coat type is available for use
-  bool is_available = 4;
 }

@@ -7,6 +7,7 @@
 package settingpb
 
 import (
+	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -106,14 +107,12 @@ type PetSize struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Name of the pet size (e.g., "Small", "Medium", "Large")
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// Optional description of this pet size
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	// Lower weight limit for this size category in pounds
 	// This is for reference only and does not enforce strict boundaries
-	WeightLow *int32 `protobuf:"varint,4,opt,name=weight_low,json=weightLow,proto3,oneof" json:"weight_low,omitempty"`
+	WeightLow *commonpb.Weight `protobuf:"bytes,3,opt,name=weight_low,json=weightLow,proto3" json:"weight_low,omitempty"`
 	// Upper weight limit for this size category in pounds
 	// This is for reference only and does not enforce strict boundaries
-	WeightHigh    *int32 `protobuf:"varint,5,opt,name=weight_high,json=weightHigh,proto3,oneof" json:"weight_high,omitempty"`
+	WeightHigh    *commonpb.Weight `protobuf:"bytes,4,opt,name=weight_high,json=weightHigh,proto3" json:"weight_high,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -162,25 +161,18 @@ func (x *PetSize) GetName() string {
 	return ""
 }
 
-func (x *PetSize) GetDescription() string {
+func (x *PetSize) GetWeightLow() *commonpb.Weight {
 	if x != nil {
-		return x.Description
+		return x.WeightLow
 	}
-	return ""
+	return nil
 }
 
-func (x *PetSize) GetWeightLow() int32 {
-	if x != nil && x.WeightLow != nil {
-		return *x.WeightLow
+func (x *PetSize) GetWeightHigh() *commonpb.Weight {
+	if x != nil {
+		return x.WeightHigh
 	}
-	return 0
-}
-
-func (x *PetSize) GetWeightHigh() int32 {
-	if x != nil && x.WeightHigh != nil {
-		return *x.WeightHigh
-	}
-	return 0
+	return nil
 }
 
 // PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.
@@ -191,11 +183,7 @@ type PetType struct {
 	// Unique identifier for this pet type
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Name of the pet type (e.g., "Dog", "Cat", "Bird")
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// Optional description of this pet type
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Whether this pet type is available for use
-	IsAvailable   bool `protobuf:"varint,4,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"`
+	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -244,20 +232,6 @@ func (x *PetType) GetName() string {
 	return ""
 }
 
-func (x *PetType) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *PetType) GetIsAvailable() bool {
-	if x != nil {
-		return x.IsAvailable
-	}
-	return false
-}
-
 // PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.
 // These coat types are used to customize services based on the pet's coat characteristics.
 type PetCoatType struct {
@@ -265,11 +239,7 @@ type PetCoatType struct {
 	// Unique identifier for this pet coat type
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Name of the pet coat type (e.g., "Short", "Long", "Curly", "Wire")
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	// Optional description of this pet coat type
-	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// Whether this pet coat type is available for use
-	IsAvailable   bool `protobuf:"varint,4,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"`
+	Name          string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -318,50 +288,29 @@ func (x *PetCoatType) GetName() string {
 	return ""
 }
 
-func (x *PetCoatType) GetDescription() string {
-	if x != nil {
-		return x.Description
-	}
-	return ""
-}
-
-func (x *PetCoatType) GetIsAvailable() bool {
-	if x != nil {
-		return x.IsAvailable
-	}
-	return false
-}
-
 var File_moego_business_setting_v1_pet_proto protoreflect.FileDescriptor
 
 const file_moego_business_setting_v1_pet_proto_rawDesc = "" +
 	"\n" +
-	"#moego/business/setting/v1/pet.proto\x12\x19moego.business.setting.v1\"u\n" +
+	"#moego/business/setting/v1/pet.proto\x12\x19moego.business.setting.v1\x1a\x1cmoego/common/v1/weight.proto\"u\n" +
 	"\aPetCode\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\fabbreviation\x18\x02 \x01(\tR\fabbreviation\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x14\n" +
-	"\x05color\x18\x04 \x01(\tR\x05color\"\xb8\x01\n" +
+	"\x05color\x18\x04 \x01(\tR\x05color\"\x9f\x01\n" +
 	"\aPetSize\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\"\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x126\n" +
 	"\n" +
-	"weight_low\x18\x04 \x01(\x05H\x00R\tweightLow\x88\x01\x01\x12$\n" +
-	"\vweight_high\x18\x05 \x01(\x05H\x01R\n" +
-	"weightHigh\x88\x01\x01B\r\n" +
-	"\v_weight_lowB\x0e\n" +
-	"\f_weight_high\"r\n" +
+	"weight_low\x18\x03 \x01(\v2\x17.moego.common.v1.WeightR\tweightLow\x128\n" +
+	"\vweight_high\x18\x04 \x01(\v2\x17.moego.common.v1.WeightR\n" +
+	"weightHigh\"-\n" +
 	"\aPetType\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
-	"\fis_available\x18\x04 \x01(\bR\visAvailable\"v\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"1\n" +
 	"\vPetCoatType\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
-	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
-	"\fis_available\x18\x04 \x01(\bR\visAvailableB\x8a\x01\n" +
+	"\x04name\x18\x02 \x01(\tR\x04nameB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -378,17 +327,20 @@ func file_moego_business_setting_v1_pet_proto_rawDescGZIP() []byte {
 
 var file_moego_business_setting_v1_pet_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_setting_v1_pet_proto_goTypes = []any{
-	(*PetCode)(nil),     // 0: moego.business.setting.v1.PetCode
-	(*PetSize)(nil),     // 1: moego.business.setting.v1.PetSize
-	(*PetType)(nil),     // 2: moego.business.setting.v1.PetType
-	(*PetCoatType)(nil), // 3: moego.business.setting.v1.PetCoatType
+	(*PetCode)(nil),         // 0: moego.business.setting.v1.PetCode
+	(*PetSize)(nil),         // 1: moego.business.setting.v1.PetSize
+	(*PetType)(nil),         // 2: moego.business.setting.v1.PetType
+	(*PetCoatType)(nil),     // 3: moego.business.setting.v1.PetCoatType
+	(*commonpb.Weight)(nil), // 4: moego.common.v1.Weight
 }
 var file_moego_business_setting_v1_pet_proto_depIdxs = []int32{
-	0, // [0:0] is the sub-list for method output_type
-	0, // [0:0] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	4, // 0: moego.business.setting.v1.PetSize.weight_low:type_name -> moego.common.v1.Weight
+	4, // 1: moego.business.setting.v1.PetSize.weight_high:type_name -> moego.common.v1.Weight
+	2, // [2:2] is the sub-list for method output_type
+	2, // [2:2] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_pet_proto_init() }
@@ -396,7 +348,6 @@ func file_moego_business_setting_v1_pet_proto_init() {
 	if File_moego_business_setting_v1_pet_proto != nil {
 		return
 	}
-	file_moego_business_setting_v1_pet_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
