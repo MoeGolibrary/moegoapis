@@ -36,6 +36,48 @@ service SettingService {
     };
   }
 
+  // Lists all available pet sizes for a company.
+  //
+  // Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet sizes for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetSizes(ListPetSizesRequest) returns (ListPetSizesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/sizes:list"
+      body: "*"
+    };
+  }
+
+  // Lists all available pet types for a company.
+  //
+  // Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet types for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetTypes(ListPetTypesRequest) returns (ListPetTypesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/types:list"
+      body: "*"
+    };
+  }
+
+  // Lists all available pet coat types for a company.
+  //
+  // Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet coat types for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetCoatTypes(ListPetCoatTypesRequest) returns (ListPetCoatTypesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/coat_types:list"
+      body: "*"
+    };
+  }
+
   // Lists all available customer tags for a company.
   //
   // Customer tags help categorize clients and can be used for marketing,
@@ -159,48 +201,6 @@ service SettingService {
   rpc ListLodgings(ListLodgingsRequest) returns (ListLodgingsResponse) {
     option (google.api.http) = {
       post: "/v1/setting/companies/{company_id}/lodgings"
-      body: "*"
-    };
-  }
-
-  // Lists all available pet sizes for a company.
-  //
-  // Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)
-  // which can be used to customize services, pricing, or handling requirements.
-  //
-  // Returns all active pet sizes for the specified company.
-  // Returns PERMISSION_DENIED if the caller lacks access rights.
-  rpc ListPetSizes(ListPetSizesRequest) returns (ListPetSizesResponse) {
-    option (google.api.http) = {
-      post: "/v1/setting/companies/{company_id}/pet/sizes:list"
-      body: "*"
-    };
-  }
-
-  // Lists all available pet types for a company.
-  //
-  // Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)
-  // which can be used to customize services, pricing, or handling requirements.
-  //
-  // Returns all active pet types for the specified company.
-  // Returns PERMISSION_DENIED if the caller lacks access rights.
-  rpc ListPetTypes(ListPetTypesRequest) returns (ListPetTypesResponse) {
-    option (google.api.http) = {
-      post: "/v1/setting/companies/{company_id}/pet/types:list"
-      body: "*"
-    };
-  }
-
-  // Lists all available pet coat types for a company.
-  //
-  // Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)
-  // which can be used to customize services, pricing, or handling requirements.
-  //
-  // Returns all active pet coat types for the specified company.
-  // Returns PERMISSION_DENIED if the caller lacks access rights.
-  rpc ListPetCoatTypes(ListPetCoatTypesRequest) returns (ListPetCoatTypesResponse) {
-    option (google.api.http) = {
-      post: "/v1/setting/companies/{company_id}/pet/coat_types:list"
       body: "*"
     };
   }
