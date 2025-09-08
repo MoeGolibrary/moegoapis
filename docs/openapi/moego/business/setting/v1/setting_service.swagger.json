@@ -768,9 +768,47 @@
             "type": "string"
           },
           "title": "List of staff members who can perform this service\nOnly used when available_all_staff is false"
+        },
+        "breedFilter": {
+          "type": "boolean",
+          "title": "Whether the service is available for all pet types and breeds\nIf false, check customized_breeds for specific pet types and breeds"
+        },
+        "customizedBreeds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomizedBreed"
+          },
+          "title": "List of pet types and their breeds that can use this service\nOnly used when breed_filter is false"
+        },
+        "petSizeFilter": {
+          "type": "boolean",
+          "title": "Whether the service is available for all pet sizes\nIf false, check customized_pet_sizes for specific pet sizes"
+        },
+        "customizedPetSizes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of pet sizes that can use this service\nOnly used when pet_size_filter is false"
+        },
+        "coatFilter": {
+          "type": "boolean",
+          "title": "Whether the service is available for all pet coat types\nIf false, check customized_coats for specific coat types"
+        },
+        "customizedCoats": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of pet coat types that can use this service\nOnly used when coat_filter is false"
+        },
+        "petCodeFilter": {
+          "$ref": "#/definitions/v1PetCodeFilter",
+          "title": "Pet code filter related fields\nPet code filter"
         }
       },
-      "description": "Service represents a specific service or add-on that can be provided to pets.\nServices are the core offerings of your business and can be customized based on\nlocation, staff availability, and service type. Each service has its own pricing,\nduration, and availability settings.",
+      "description": "Service represents a specific service or add-on that can be provided to pets.\nServices are the core offerings of your business and can be customized based on\nlocation, staff availability, service type, and pet details. Each service has its own pricing,\nduration, and availability settings.",
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
@@ -855,6 +893,34 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "CustomerTag"
+      }
+    },
+    "v1CustomizedBreed": {
+      "type": "object",
+      "properties": {
+        "petTypeId": {
+          "type": "string",
+          "title": "Pet type id"
+        },
+        "breeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Pet breed ids"
+        },
+        "isAll": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Allow all breeds for this pet type"
+        }
+      },
+      "title": "Customized breed definition",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomizedBreed"
       }
     },
     "v1LifeCycle": {
@@ -1167,6 +1233,33 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "PetCode"
+      }
+    },
+    "v1PetCodeFilter": {
+      "type": "object",
+      "properties": {
+        "isWhiteList": {
+          "type": "boolean",
+          "title": "Whether to filter by white list or black list"
+        },
+        "isAllPetCode": {
+          "type": "boolean",
+          "title": "Whether it applies to all pet codes"
+        },
+        "petCodeIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Pet code list, only valid when is_all_pet_code is false"
+        }
+      },
+      "title": "Pet code filter definition",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCodeFilter"
       }
     },
     "v1ReferralSource": {

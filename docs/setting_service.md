@@ -51,6 +51,13 @@ Represents a specific service or add-on that can be provided to pets.
 | `availableBusinessIds` | Array(string) | List of specific business IDs where the service is available |
 | `availableAllStaff`    | bool          | Whether available to all staff                               |
 | `availableStaffIds`    | Array(string) | List of staff members who can perform this service           |
+| `breedFilter`          | bool          | Whether the service is available for all pet types and breeds |
+| `customizedBreeds`     | Array(CustomizedBreed) | List of pet types and their breeds that can use this service |
+| `petSizeFilter`        | bool          | Whether the service is available for all pet sizes           |
+| `customizedPetSizes`   | Array(string) | List of pet sizes that can use this service                  |
+| `coatFilter`           | bool          | Whether the service is available for all pet coat types      |
+| `customizedCoats`      | Array(string) | List of pet coat types that can use this service             |
+| `petCodeFilter`        | PetCodeFilter | Pet code filter configuration                                |
 
 #### Enum: ItemType
 
@@ -66,6 +73,53 @@ Represents a specific service or add-on that can be provided to pets.
 - `SERVICE_TYPE_UNSPECIFIED`
 - `SERVICE`
 - `ADDON`
+
+#### Pet Details Configuration
+
+Services can be configured to be available only for specific pet characteristics. This allows for fine-grained control over which pets can use which services.
+
+##### Type & Breed Filtering
+
+Services can be restricted to specific pet types and breeds using:
+
+- `breedFilter`: When set to `false`, the service is only available for specific pet types and breeds defined in `customizedBreeds`
+- `customizedBreeds`: An array of `CustomizedBreed` objects that define which pet types and breeds can use this service
+
+###### CustomizedBreed Object
+
+| Field Name   | Type      | Description                              |
+|--------------|-----------|------------------------------------------|
+| `petTypeId`  | string    | Pet type identifier                      |
+| `breeds`     | Array(string) | List of breed identifiers for this pet type |
+| `isAll`      | bool      | Whether all breeds of this pet type are allowed |
+
+##### Weight/Size Filtering
+
+Services can be configured based on pet size using:
+
+- `petSizeFilter`: When set to `false`, the service is only available for specific pet sizes defined in `customizedPetSizes`
+- `customizedPetSizes`: An array of size identifiers that can use this service
+
+##### Coat Type Filtering
+
+Services can be restricted based on pet coat types:
+
+- `coatFilter`: When set to `false`, the service is only available for specific coat types defined in `customizedCoats`
+- `customizedCoats`: An array of coat type identifiers that can use this service
+
+##### Pet Code Filtering
+
+Services can be configured to work only with pets that have specific pet codes:
+
+- `petCodeFilter`: A `PetCodeFilter` object that defines which pet codes are allowed for this service
+
+###### PetCodeFilter Object
+
+| Field Name       | Type      | Description                                           |
+|------------------|-----------|-------------------------------------------------------|
+| `isWhiteList`    | bool      | Whether to use whitelist (true) or blacklist (false)  |
+| `isAllPetCode`   | bool      | Whether the service is available for all pet codes    |
+| `petCodeIds`     | Array(string) | List of pet code identifiers (only valid when isAllPetCode is false) |
 
 ---
 
