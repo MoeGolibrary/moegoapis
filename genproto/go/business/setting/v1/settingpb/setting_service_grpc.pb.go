@@ -29,6 +29,9 @@ const (
 	SettingService_CreateService_FullMethodName               = "/moego.business.setting.v1.SettingService/CreateService"
 	SettingService_UpdateService_FullMethodName               = "/moego.business.setting.v1.SettingService/UpdateService"
 	SettingService_ListLodgings_FullMethodName                = "/moego.business.setting.v1.SettingService/ListLodgings"
+	SettingService_ListPetSizes_FullMethodName                = "/moego.business.setting.v1.SettingService/ListPetSizes"
+	SettingService_ListPetTypes_FullMethodName                = "/moego.business.setting.v1.SettingService/ListPetTypes"
+	SettingService_ListPetCoatTypes_FullMethodName            = "/moego.business.setting.v1.SettingService/ListPetCoatTypes"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -124,6 +127,30 @@ type SettingServiceClient interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(ctx context.Context, in *ListLodgingsRequest, opts ...grpc.CallOption) (*ListLodgingsResponse, error)
+	// Lists all available pet sizes for a company.
+	//
+	// Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet sizes for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetSizes(ctx context.Context, in *ListPetSizesRequest, opts ...grpc.CallOption) (*ListPetSizesResponse, error)
+	// Lists all available pet types for a company.
+	//
+	// Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet types for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetTypes(ctx context.Context, in *ListPetTypesRequest, opts ...grpc.CallOption) (*ListPetTypesResponse, error)
+	// Lists all available pet coat types for a company.
+	//
+	// Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet coat types for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetCoatTypes(ctx context.Context, in *ListPetCoatTypesRequest, opts ...grpc.CallOption) (*ListPetCoatTypesResponse, error)
 }
 
 type settingServiceClient struct {
@@ -234,6 +261,36 @@ func (c *settingServiceClient) ListLodgings(ctx context.Context, in *ListLodging
 	return out, nil
 }
 
+func (c *settingServiceClient) ListPetSizes(ctx context.Context, in *ListPetSizesRequest, opts ...grpc.CallOption) (*ListPetSizesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPetSizesResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListPetSizes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) ListPetTypes(ctx context.Context, in *ListPetTypesRequest, opts ...grpc.CallOption) (*ListPetTypesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPetTypesResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListPetTypes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *settingServiceClient) ListPetCoatTypes(ctx context.Context, in *ListPetCoatTypesRequest, opts ...grpc.CallOption) (*ListPetCoatTypesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPetCoatTypesResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListPetCoatTypes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -327,6 +384,30 @@ type SettingServiceServer interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error)
+	// Lists all available pet sizes for a company.
+	//
+	// Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet sizes for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetSizes(context.Context, *ListPetSizesRequest) (*ListPetSizesResponse, error)
+	// Lists all available pet types for a company.
+	//
+	// Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet types for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetTypes(context.Context, *ListPetTypesRequest) (*ListPetTypesResponse, error)
+	// Lists all available pet coat types for a company.
+	//
+	// Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)
+	// which can be used to customize services, pricing, or handling requirements.
+	//
+	// Returns all active pet coat types for the specified company.
+	// Returns PERMISSION_DENIED if the caller lacks access rights.
+	ListPetCoatTypes(context.Context, *ListPetCoatTypesRequest) (*ListPetCoatTypesResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -366,6 +447,15 @@ func (UnimplementedSettingServiceServer) UpdateService(context.Context, *UpdateS
 }
 func (UnimplementedSettingServiceServer) ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListLodgings not implemented")
+}
+func (UnimplementedSettingServiceServer) ListPetSizes(context.Context, *ListPetSizesRequest) (*ListPetSizesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPetSizes not implemented")
+}
+func (UnimplementedSettingServiceServer) ListPetTypes(context.Context, *ListPetTypesRequest) (*ListPetTypesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPetTypes not implemented")
+}
+func (UnimplementedSettingServiceServer) ListPetCoatTypes(context.Context, *ListPetCoatTypesRequest) (*ListPetCoatTypesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPetCoatTypes not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -568,6 +658,60 @@ func _SettingService_ListLodgings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_ListPetSizes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetSizesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListPetSizes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListPetSizes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListPetSizes(ctx, req.(*ListPetSizesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_ListPetTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetTypesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListPetTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListPetTypes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListPetTypes(ctx, req.(*ListPetTypesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SettingService_ListPetCoatTypes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPetCoatTypesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListPetCoatTypes(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListPetCoatTypes_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListPetCoatTypes(ctx, req.(*ListPetCoatTypesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -614,6 +758,18 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListLodgings",
 			Handler:    _SettingService_ListLodgings_Handler,
+		},
+		{
+			MethodName: "ListPetSizes",
+			Handler:    _SettingService_ListPetSizes_Handler,
+		},
+		{
+			MethodName: "ListPetTypes",
+			Handler:    _SettingService_ListPetTypes_Handler,
+		},
+		{
+			MethodName: "ListPetCoatTypes",
+			Handler:    _SettingService_ListPetCoatTypes_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

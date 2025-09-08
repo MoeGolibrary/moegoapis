@@ -163,6 +163,48 @@ service SettingService {
     };
   }
 
+  // Lists all available pet sizes for a company.
+  //
+  // Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet sizes for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetSizes(ListPetSizesRequest) returns (ListPetSizesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/sizes:list"
+      body: "*"
+    };
+  }
+
+  // Lists all available pet types for a company.
+  //
+  // Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet types for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetTypes(ListPetTypesRequest) returns (ListPetTypesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/types:list"
+      body: "*"
+    };
+  }
+
+  // Lists all available pet coat types for a company.
+  //
+  // Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)
+  // which can be used to customize services, pricing, or handling requirements.
+  //
+  // Returns all active pet coat types for the specified company.
+  // Returns PERMISSION_DENIED if the caller lacks access rights.
+  rpc ListPetCoatTypes(ListPetCoatTypesRequest) returns (ListPetCoatTypesResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/pet/coat_types:list"
+      body: "*"
+    };
+  }
+
 }
 
 // Request message for listing pet codes.
@@ -388,4 +430,70 @@ message ListLeadsActionStatusResponse {
   // List of available lead action statuses
   // May be empty if no action statuses are defined
   repeated ActionStatus action_statuses = 1;
+}
+
+// Request message for listing pet sizes.
+message ListPetSizesRequest {
+  // ID of the company to list pet sizes for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing pet sizes.
+message ListPetSizesResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // List of pet sizes matching the request criteria
+  // May be empty if no pet sizes match
+  repeated PetSize pet_sizes = 2;
+}
+
+// Request message for listing pet types.
+message ListPetTypesRequest {
+  // ID of the company to list pet types for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing pet types.
+message ListPetTypesResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // List of pet types matching the request criteria
+  // May be empty if no pet types match
+  repeated PetType pet_types = 2;
+}
+
+// Request message for listing pet coat types.
+message ListPetCoatTypesRequest {
+  // ID of the company to list pet coat types for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Pagination parameters for the request
+  // Required. Defines page size and token for continuation
+  moego.common.v1.Pagination pagination = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing pet coat types.
+message ListPetCoatTypesResponse {
+  // Token for retrieving the next page of results
+  // Empty if there are no more results
+  string next_page_token = 1;
+
+  // List of pet coat types matching the request criteria
+  // May be empty if no pet coat types match
+  repeated PetCoatType pet_coat_types = 2;
 }

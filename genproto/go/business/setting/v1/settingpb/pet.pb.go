@@ -97,6 +97,241 @@ func (x *PetCode) GetColor() string {
 	return ""
 }
 
+// PetSize represents a size category for pets, which can be used to customize services
+// based on the pet's size. This is different from weight and represents general size
+// categories like "Small", "Medium", "Large", etc.
+type PetSize struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this pet size
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the pet size (e.g., "Small", "Medium", "Large")
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Optional description of this pet size
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Lower weight limit for this size category in pounds
+	// This is for reference only and does not enforce strict boundaries
+	WeightLow *int32 `protobuf:"varint,4,opt,name=weight_low,json=weightLow,proto3,oneof" json:"weight_low,omitempty"`
+	// Upper weight limit for this size category in pounds
+	// This is for reference only and does not enforce strict boundaries
+	WeightHigh    *int32 `protobuf:"varint,5,opt,name=weight_high,json=weightHigh,proto3,oneof" json:"weight_high,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetSize) Reset() {
+	*x = PetSize{}
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetSize) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetSize) ProtoMessage() {}
+
+func (x *PetSize) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetSize.ProtoReflect.Descriptor instead.
+func (*PetSize) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_pet_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PetSize) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PetSize) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PetSize) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *PetSize) GetWeightLow() int32 {
+	if x != nil && x.WeightLow != nil {
+		return *x.WeightLow
+	}
+	return 0
+}
+
+func (x *PetSize) GetWeightHigh() int32 {
+	if x != nil && x.WeightHigh != nil {
+		return *x.WeightHigh
+	}
+	return 0
+}
+
+// PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.
+// These types are used to categorize pets and can be used to customize services
+// based on the pet's species.
+type PetType struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this pet type
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the pet type (e.g., "Dog", "Cat", "Bird")
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Optional description of this pet type
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Whether this pet type is available for use
+	IsAvailable   bool `protobuf:"varint,4,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetType) Reset() {
+	*x = PetType{}
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetType) ProtoMessage() {}
+
+func (x *PetType) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetType.ProtoReflect.Descriptor instead.
+func (*PetType) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_pet_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PetType) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PetType) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PetType) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *PetType) GetIsAvailable() bool {
+	if x != nil {
+		return x.IsAvailable
+	}
+	return false
+}
+
+// PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.
+// These coat types are used to customize services based on the pet's coat characteristics.
+type PetCoatType struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for this pet coat type
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Name of the pet coat type (e.g., "Short", "Long", "Curly", "Wire")
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Optional description of this pet coat type
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// Whether this pet coat type is available for use
+	IsAvailable   bool `protobuf:"varint,4,opt,name=is_available,json=isAvailable,proto3" json:"is_available,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetCoatType) Reset() {
+	*x = PetCoatType{}
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetCoatType) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetCoatType) ProtoMessage() {}
+
+func (x *PetCoatType) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_pet_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetCoatType.ProtoReflect.Descriptor instead.
+func (*PetCoatType) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_pet_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PetCoatType) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *PetCoatType) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *PetCoatType) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *PetCoatType) GetIsAvailable() bool {
+	if x != nil {
+		return x.IsAvailable
+	}
+	return false
+}
+
 var File_moego_business_setting_v1_pet_proto protoreflect.FileDescriptor
 
 const file_moego_business_setting_v1_pet_proto_rawDesc = "" +
@@ -106,7 +341,27 @@ const file_moego_business_setting_v1_pet_proto_rawDesc = "" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\"\n" +
 	"\fabbreviation\x18\x02 \x01(\tR\fabbreviation\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x14\n" +
-	"\x05color\x18\x04 \x01(\tR\x05colorB\x8a\x01\n" +
+	"\x05color\x18\x04 \x01(\tR\x05color\"\xb8\x01\n" +
+	"\aPetSize\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\"\n" +
+	"\n" +
+	"weight_low\x18\x04 \x01(\x05H\x00R\tweightLow\x88\x01\x01\x12$\n" +
+	"\vweight_high\x18\x05 \x01(\x05H\x01R\n" +
+	"weightHigh\x88\x01\x01B\r\n" +
+	"\v_weight_lowB\x0e\n" +
+	"\f_weight_high\"r\n" +
+	"\aPetType\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
+	"\fis_available\x18\x04 \x01(\bR\visAvailable\"v\n" +
+	"\vPetCoatType\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12!\n" +
+	"\fis_available\x18\x04 \x01(\bR\visAvailableB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -121,9 +376,12 @@ func file_moego_business_setting_v1_pet_proto_rawDescGZIP() []byte {
 	return file_moego_business_setting_v1_pet_proto_rawDescData
 }
 
-var file_moego_business_setting_v1_pet_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_moego_business_setting_v1_pet_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_setting_v1_pet_proto_goTypes = []any{
-	(*PetCode)(nil), // 0: moego.business.setting.v1.PetCode
+	(*PetCode)(nil),     // 0: moego.business.setting.v1.PetCode
+	(*PetSize)(nil),     // 1: moego.business.setting.v1.PetSize
+	(*PetType)(nil),     // 2: moego.business.setting.v1.PetType
+	(*PetCoatType)(nil), // 3: moego.business.setting.v1.PetCoatType
 }
 var file_moego_business_setting_v1_pet_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for method output_type
@@ -138,13 +396,14 @@ func file_moego_business_setting_v1_pet_proto_init() {
 	if File_moego_business_setting_v1_pet_proto != nil {
 		return
 	}
+	file_moego_business_setting_v1_pet_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_pet_proto_rawDesc), len(file_moego_business_setting_v1_pet_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

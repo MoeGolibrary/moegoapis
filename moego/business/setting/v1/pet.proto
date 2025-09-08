@@ -26,3 +26,58 @@ message PetCode {
   // Format: Hex color code (e.g., "#FF0000")
   string color = 4;
 }
+
+// PetSize represents a size category for pets, which can be used to customize services
+// based on the pet's size. This is different from weight and represents general size
+// categories like "Small", "Medium", "Large", etc.
+message PetSize {
+  // Unique identifier for this pet size
+  string id = 1;
+
+  // Name of the pet size (e.g., "Small", "Medium", "Large")
+  string name = 2;
+
+  // Optional description of this pet size
+  string description = 3;
+
+  // Lower weight limit for this size category in pounds
+  // This is for reference only and does not enforce strict boundaries
+  optional int32 weight_low = 4;
+
+  // Upper weight limit for this size category in pounds
+  // This is for reference only and does not enforce strict boundaries
+  optional int32 weight_high = 5;
+}
+
+// PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.
+// These types are used to categorize pets and can be used to customize services
+// based on the pet's species.
+message PetType {
+  // Unique identifier for this pet type
+  string id = 1;
+
+  // Name of the pet type (e.g., "Dog", "Cat", "Bird")
+  string name = 2;
+
+  // Optional description of this pet type
+  string description = 3;
+
+  // Whether this pet type is available for use
+  bool is_available = 4;
+}
+
+// PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.
+// These coat types are used to customize services based on the pet's coat characteristics.
+message PetCoatType {
+  // Unique identifier for this pet coat type
+  string id = 1;
+
+  // Name of the pet coat type (e.g., "Short", "Long", "Curly", "Wire")
+  string name = 2;
+
+  // Optional description of this pet coat type
+  string description = 3;
+
+  // Whether this pet coat type is available for use
+  bool is_available = 4;
+}

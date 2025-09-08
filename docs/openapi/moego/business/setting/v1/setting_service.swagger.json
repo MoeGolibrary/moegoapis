@@ -221,6 +221,47 @@
         ]
       }
     },
+    "/v1/setting/companies/{companyId}/pet/coat_types:list": {
+      "post": {
+        "summary": "Lists all available pet coat types for a company.",
+        "description": "Pet coat types are used to categorize pets by their fur characteristics (e.g., Short, Long, Curly)\nwhich can be used to customize services, pricing, or handling requirements.\n\nReturns all active pet coat types for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "SettingService_ListPetCoatTypes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPetCoatTypesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list pet coat types for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListPetCoatTypesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
     "/v1/setting/companies/{companyId}/pet/codes:list": {
       "post": {
         "summary": "Lists all available pet codes for a company.",
@@ -254,6 +295,88 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/SettingServiceListPetCodesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
+    "/v1/setting/companies/{companyId}/pet/sizes:list": {
+      "post": {
+        "summary": "Lists all available pet sizes for a company.",
+        "description": "Pet sizes are used to categorize pets by general size (e.g., Small, Medium, Large)\nwhich can be used to customize services, pricing, or handling requirements.\n\nReturns all active pet sizes for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "SettingService_ListPetSizes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPetSizesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list pet sizes for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListPetSizesBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
+    "/v1/setting/companies/{companyId}/pet/types:list": {
+      "post": {
+        "summary": "Lists all available pet types for a company.",
+        "description": "Pet types are used to categorize pets by species (e.g., Dog, Cat, Bird)\nwhich can be used to customize services, pricing, or handling requirements.\n\nReturns all active pet types for the specified company.\nReturns PERMISSION_DENIED if the caller lacks access rights.",
+        "operationId": "SettingService_ListPetTypes",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPetTypesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list pet types for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListPetTypesBody"
             }
           }
         ],
@@ -553,6 +676,25 @@
         "type": "ListLodgingsRequest"
       }
     },
+    "SettingServiceListPetCoatTypesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        }
+      },
+      "description": "Request message for listing pet coat types.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetCoatTypesRequest"
+      }
+    },
     "SettingServiceListPetCodesBody": {
       "type": "object",
       "description": "Request message for listing pet codes.",
@@ -561,6 +703,44 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListPetCodesRequest"
+      }
+    },
+    "SettingServiceListPetSizesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        }
+      },
+      "description": "Request message for listing pet sizes.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetSizesRequest"
+      }
+    },
+    "SettingServiceListPetTypesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        }
+      },
+      "description": "Request message for listing pet types.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetTypesRequest"
       }
     },
     "SettingServiceListServicesBody": {
@@ -1027,6 +1207,30 @@
         "type": "ListLodgingsResponse"
       }
     },
+    "v1ListPetCoatTypesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "petCoatTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetCoatType"
+          },
+          "title": "List of pet coat types matching the request criteria\nMay be empty if no pet coat types match"
+        }
+      },
+      "description": "Response message for listing pet coat types.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetCoatTypesResponse"
+      }
+    },
     "v1ListPetCodesResponse": {
       "type": "object",
       "properties": {
@@ -1045,6 +1249,54 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListPetCodesResponse"
+      }
+    },
+    "v1ListPetSizesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "petSizes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetSize"
+          },
+          "title": "List of pet sizes matching the request criteria\nMay be empty if no pet sizes match"
+        }
+      },
+      "description": "Response message for listing pet sizes.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetSizesResponse"
+      }
+    },
+    "v1ListPetTypesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "petTypes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetType"
+          },
+          "title": "List of pet types matching the request criteria\nMay be empty if no pet types match"
+        }
+      },
+      "description": "Response message for listing pet types.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListPetTypesResponse"
       }
     },
     "v1ListServicesRequestFilter": {
@@ -1207,6 +1459,34 @@
         "type": "Pagination"
       }
     },
+    "v1PetCoatType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this pet coat type"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the pet coat type (e.g., \"Short\", \"Long\", \"Curly\", \"Wire\")"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description of this pet coat type"
+        },
+        "isAvailable": {
+          "type": "boolean",
+          "title": "Whether this pet coat type is available for use"
+        }
+      },
+      "description": "PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.\nThese coat types are used to customize services based on the pet's coat characteristics.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetCoatType"
+      }
+    },
     "v1PetCode": {
       "type": "object",
       "properties": {
@@ -1260,6 +1540,70 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "PetCodeFilter"
+      }
+    },
+    "v1PetSize": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this pet size"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the pet size (e.g., \"Small\", \"Medium\", \"Large\")"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description of this pet size"
+        },
+        "weightLow": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": true,
+          "title": "Lower weight limit for this size category in pounds\nThis is for reference only and does not enforce strict boundaries"
+        },
+        "weightHigh": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": true,
+          "title": "Upper weight limit for this size category in pounds\nThis is for reference only and does not enforce strict boundaries"
+        }
+      },
+      "description": "PetSize represents a size category for pets, which can be used to customize services\nbased on the pet's size. This is different from weight and represents general size\ncategories like \"Small\", \"Medium\", \"Large\", etc.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetSize"
+      }
+    },
+    "v1PetType": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for this pet type"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the pet type (e.g., \"Dog\", \"Cat\", \"Bird\")"
+        },
+        "description": {
+          "type": "string",
+          "title": "Optional description of this pet type"
+        },
+        "isAvailable": {
+          "type": "boolean",
+          "title": "Whether this pet type is available for use"
+        }
+      },
+      "description": "PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.\nThese types are used to categorize pets and can be used to customize services\nbased on the pet's species.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "PetType"
       }
     },
     "v1ReferralSource": {
