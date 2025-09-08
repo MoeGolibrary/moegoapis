@@ -32,29 +32,29 @@ Applicable to scenarios such as pet grooming, medical care tracking, behavioral 
 Represents a customer's pet that receives services at your business. Each pet has its own profile containing essential
 information for providing appropriate care.
 
-| Field Name         | Type                                             | Description                                        |
-|--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier (obfuscated string)              |
-| `name`             | string                                           | Pet's given name                                   |
-| `birthday`         | Date                                             | Pet's date of birth                                |
-| `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`             | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`            | string                                           | Specific breed within the pet type                 |
-| `gender`           | Gender                                           | Gender of the pet                                  |
-| `weight`           | Weight                                           | Pet's current weight                               |
-| `fixed`            | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`             | string                                           | Description of the coat (e.g., "long double coat") |
-| `behavior`         | string                                           | General temperament and behavior                   |
-| `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
-| `notes`            | Array(Note)                                      | Staff observations and special instructions        |
-| `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
-| `vet`              | Vet                                              | Primary veterinary care provider                   |
-| `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
-| `createdTime`      | Timestamp                                        | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                        | When the pet was last modified                     |
-| `photo`            | string                                           | Photo URL of the pet                               |
-| `deleted`          | bool                                             | Flag indicating if this pet record is deleted      |
+| Field Name         | Type                                         | Description                                        |
+|--------------------|----------------------------------------------|----------------------------------------------------|
+| `id`               | string                                       | Unique identifier (obfuscated string)              |
+| `name`             | string                                       | Pet's given name                                   |
+| `birthday`         | Date                                         | Pet's date of birth                                |
+| `status`           | Status                                       | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`             | Type                                         | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`            | string                                       | Specific breed within the pet type                 |
+| `gender`           | Gender                                       | Gender of the pet                                  |
+| `weight`           | Weight                                       | Pet's current weight                               |
+| `fixed`            | string                                       | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`             | string                                       | Description of the coat (e.g., "long double coat") |
+| `behavior`         | string                                       | General temperament and behavior                   |
+| `petCodes`         | Array([PetCode](./setting_pet.md#1-petcode)) | Special handling instructions or medical alerts    |
+| `notes`            | Array(Note)                                  | Staff observations and special instructions        |
+| `vaccinations`     | Array(Vaccination)                           | Vaccination records                                |
+| `customerId`       | string                                       | ID of the pet's owner (obfuscated string)          |
+| `vet`              | Vet                                          | Primary veterinary care provider                   |
+| `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
+| `createdTime`      | Timestamp                                    | When the pet was created                           |
+| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
+| `photo`            | string                                       | Photo URL of the pet                               |
+| `deleted`          | bool                                         | Flag indicating if this pet record is deleted      |
 
 ### 2. Note
 
@@ -190,28 +190,28 @@ Registers a new pet with basic details, health records, and optionally initial n
 
 #### 📌 Return Value:
 
-| Field Name         | Type                                             | Description                                        |
-|--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier (obfuscated string)              |
-| `name`             | string                                           | Pet's given name                                   |
-| `birthday`         | Date                                             | Pet's date of birth                                |
-| `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`             | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`            | string                                           | Specific breed within the pet type                 |
-| `gender`           | Gender                                           | Gender of the pet                                  |
-| `weight`           | Weight                                           | Pet's current weight                               |
-| `fixed`            | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`             | string                                           | Description of the coat (e.g., "long double coat") |
-| `behavior`         | string                                           | General temperament and behavior                   |
-| `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
-| `notes`            | Array(Note)                                      | Staff observations and special instructions        |
-| `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
-| `vet`              | Vet                                              | Primary veterinary care provider                   |
-| `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
-| `createdTime`      | Timestamp                                        | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                        | When the pet was last modified                     |
-| `photo`            | string                                           | Photo URL of the pet                               |
+| Field Name         | Type                                         | Description                                        |
+|--------------------|----------------------------------------------|----------------------------------------------------|
+| `id`               | string                                       | Unique identifier (obfuscated string)              |
+| `name`             | string                                       | Pet's given name                                   |
+| `birthday`         | Date                                         | Pet's date of birth                                |
+| `status`           | Status                                       | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`             | Type                                         | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`            | string                                       | Specific breed within the pet type                 |
+| `gender`           | Gender                                       | Gender of the pet                                  |
+| `weight`           | Weight                                       | Pet's current weight                               |
+| `fixed`            | string                                       | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`             | string                                       | Description of the coat (e.g., "long double coat") |
+| `behavior`         | string                                       | General temperament and behavior                   |
+| `petCodes`         | Array([PetCode](./setting_pet.md#1-petcode)) | Special handling instructions or medical alerts    |
+| `notes`            | Array(Note)                                  | Staff observations and special instructions        |
+| `vaccinations`     | Array(Vaccination)                           | Vaccination records                                |
+| `customerId`       | string                                       | ID of the pet's owner (obfuscated string)          |
+| `vet`              | Vet                                          | Primary veterinary care provider                   |
+| `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
+| `createdTime`      | Timestamp                                    | When the pet was created                           |
+| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
+| `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -245,28 +245,28 @@ Retrieves detailed information about a specific pet.
 
 #### 📌 Return Value:
 
-| Field Name         | Type                                             | Description                                        |
-|--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier (obfuscated string)              |
-| `name`             | string                                           | Pet's given name                                   |
-| `birthday`         | Date                                             | Pet's date of birth                                |
-| `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`             | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`            | string                                           | Specific breed within the pet type                 |
-| `gender`           | Gender                                           | Gender of the pet                                  |
-| `weight`           | Weight                                           | Pet's current weight                               |
-| `fixed`            | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`             | string                                           | Description of the coat (e.g., "long double coat") |
-| `behavior`         | string                                           | General temperament and behavior                   |
-| `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
-| `notes`            | Array(Note)                                      | Staff observations and special instructions        |
-| `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
-| `vet`              | Vet                                              | Primary veterinary care provider                   |
-| `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
-| `createdTime`      | Timestamp                                        | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                        | When the pet was last modified                     |
-| `photo`            | string                                           | Photo URL of the pet                               |
+| Field Name         | Type                                         | Description                                        |
+|--------------------|----------------------------------------------|----------------------------------------------------|
+| `id`               | string                                       | Unique identifier (obfuscated string)              |
+| `name`             | string                                       | Pet's given name                                   |
+| `birthday`         | Date                                         | Pet's date of birth                                |
+| `status`           | Status                                       | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`             | Type                                         | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`            | string                                       | Specific breed within the pet type                 |
+| `gender`           | Gender                                       | Gender of the pet                                  |
+| `weight`           | Weight                                       | Pet's current weight                               |
+| `fixed`            | string                                       | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`             | string                                       | Description of the coat (e.g., "long double coat") |
+| `behavior`         | string                                       | General temperament and behavior                   |
+| `petCodes`         | Array([PetCode](./setting_pet.md#1-petcode)) | Special handling instructions or medical alerts    |
+| `notes`            | Array(Note)                                  | Staff observations and special instructions        |
+| `vaccinations`     | Array(Vaccination)                           | Vaccination records                                |
+| `customerId`       | string                                       | ID of the pet's owner (obfuscated string)          |
+| `vet`              | Vet                                          | Primary veterinary care provider                   |
+| `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
+| `createdTime`      | Timestamp                                    | When the pet was created                           |
+| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
+| `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -312,28 +312,28 @@ Updates an existing pet's information.
 
 #### 📌 Return Value:
 
-| Field Name         | Type                                             | Description                                        |
-|--------------------|--------------------------------------------------|----------------------------------------------------|
-| `id`               | string                                           | Unique identifier (obfuscated string)              |
-| `name`             | string                                           | Pet's given name                                   |
-| `birthday`         | Date                                             | Pet's date of birth                                |
-| `status`           | Status                                           | Current status (ALIVE/PASSED_AWAY)                 |
-| `type`             | Type                                             | Species type (DOG/CAT/BIRD etc.)                   |
-| `breed`            | string                                           | Specific breed within the pet type                 |
-| `gender`           | Gender                                           | Gender of the pet                                  |
-| `weight`           | Weight                                           | Pet's current weight                               |
-| `fixed`            | string                                           | Spay/neuter status ("yes", "no", "unknown")        |
-| `coat`             | string                                           | Description of the coat (e.g., "long double coat") |
-| `behavior`         | string                                           | General temperament and behavior                   |
-| `petCodes`         | Array([PetCode](./setting_service.md#3-petcode)) | Special handling instructions or medical alerts    |
-| `notes`            | Array(Note)                                      | Staff observations and special instructions        |
-| `vaccinations`     | Array(Vaccination)                               | Vaccination records                                |
-| `customerId`       | string                                           | ID of the pet's owner (obfuscated string)          |
-| `vet`              | Vet                                              | Primary veterinary care provider                   |
-| `evaluationStatus` | EvaluationStatus                                 | Service eligibility status                         |
-| `createdTime`      | Timestamp                                        | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                        | When the pet was last modified                     |
-| `photo`            | string                                           | Photo URL of the pet                               |
+| Field Name         | Type                                         | Description                                        |
+|--------------------|----------------------------------------------|----------------------------------------------------|
+| `id`               | string                                       | Unique identifier (obfuscated string)              |
+| `name`             | string                                       | Pet's given name                                   |
+| `birthday`         | Date                                         | Pet's date of birth                                |
+| `status`           | Status                                       | Current status (ALIVE/PASSED_AWAY)                 |
+| `type`             | Type                                         | Species type (DOG/CAT/BIRD etc.)                   |
+| `breed`            | string                                       | Specific breed within the pet type                 |
+| `gender`           | Gender                                       | Gender of the pet                                  |
+| `weight`           | Weight                                       | Pet's current weight                               |
+| `fixed`            | string                                       | Spay/neuter status ("yes", "no", "unknown")        |
+| `coat`             | string                                       | Description of the coat (e.g., "long double coat") |
+| `behavior`         | string                                       | General temperament and behavior                   |
+| `petCodes`         | Array([PetCode](./setting_pet.md#1-petcode)) | Special handling instructions or medical alerts    |
+| `notes`            | Array(Note)                                  | Staff observations and special instructions        |
+| `vaccinations`     | Array(Vaccination)                           | Vaccination records                                |
+| `customerId`       | string                                       | ID of the pet's owner (obfuscated string)          |
+| `vet`              | Vet                                          | Primary veterinary care provider                   |
+| `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
+| `createdTime`      | Timestamp                                    | When the pet was created                           |
+| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
+| `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
 
@@ -473,9 +473,9 @@ Adds special handling codes or medical alerts to a pet's profile.
 
 #### 📌 Return Value:
 
-| Field Name | Type                                             | Description                        |
-|------------|--------------------------------------------------|------------------------------------|
-| `codes`    | Array([PetCode](./setting_service.md#3-petcode)) | Codes that were successfully added |
+| Field Name | Type                                         | Description                        |
+|------------|----------------------------------------------|------------------------------------|
+| `codes`    | Array([PetCode](./setting_pet.md#1-petcode)) | Codes that were successfully added |
 
 #### ⚠️ Error Codes:
 

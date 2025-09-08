@@ -28,24 +28,24 @@ Applicable to scenarios such as lead management, sales pipeline tracking, and ma
 
 Represents a potential customer in the sales pipeline
 
-| Field Name            | Type                                                    | Description                                               |
-|-----------------------|---------------------------------------------------------|-----------------------------------------------------------|
-| `id`                  | string                                                  | Unique identifier                                         |
-| `companyId`           | string                                                  | ID of the company the lead belongs to                     |
-| `firstName`           | string                                                  | Lead's first name                                         |
-| `lastName`            | string                                                  | Lead's last name                                          |
-| `avatar`              | string                                                  | URL to the lead's profile picture                         |
-| `phone`               | string                                                  | Lead's phone number. Must be in E.164 format              |
-| `email`               | string                                                  | Lead's email address. Must be valid                       |
-| `address`             | Address                                                 | Lead's address                                            |
-| `pets`                | Array(Pet)                                              | List of pets belonging to the lead                        |
-| `preferredBusinessId` | string                                                  | ID of the lead's preferred business location              |
-| `allocateStaffId`     | string                                                  | ID of the staff member assigned to the lead               |
-| `lifeCycle`           | [LifeCycle](./setting_service.md#6-lifecycle)           | Lead's current lifecycle stage                            |
-| `actionStatus`        | [ActionStatus](./setting_service.md#7-actionstatus)     | Lead's action status                                      |
-| `referralSource`      | [ReferralSource](./setting_service.md#5-referralsource) | The source or channel through which the lead was acquired |
-| `createdTime`         | Timestamp                                               | Creation timestamp                                        |
-| `lastUpdatedTime`     | Timestamp                                               | Last modification timestamp                               |
+| Field Name            | Type                                                     | Description                                               |
+|-----------------------|----------------------------------------------------------|-----------------------------------------------------------|
+| `id`                  | string                                                   | Unique identifier                                         |
+| `companyId`           | string                                                   | ID of the company the lead belongs to                     |
+| `firstName`           | string                                                   | Lead's first name                                         |
+| `lastName`            | string                                                   | Lead's last name                                          |
+| `avatar`              | string                                                   | URL to the lead's profile picture                         |
+| `phone`               | string                                                   | Lead's phone number. Must be in E.164 format              |
+| `email`               | string                                                   | Lead's email address. Must be valid                       |
+| `address`             | Address                                                  | Lead's address                                            |
+| `pets`                | Array([Pet](./pet.md#1-pet))                             | List of pets belonging to the lead                        |
+| `preferredBusinessId` | string                                                   | ID of the lead's preferred business location              |
+| `allocateStaffId`     | string                                                   | ID of the staff member assigned to the lead               |
+| `lifeCycle`           | [LifeCycle](./setting_customer.md#3-lifecycle)           | Lead's current lifecycle stage                            |
+| `actionStatus`        | [ActionStatus](./setting_customer.md#4-actionstatus)     | Lead's action status                                      |
+| `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource) | The source or channel through which the lead was acquired |
+| `createdTime`         | Timestamp                                                | Creation timestamp                                        |
+| `lastUpdatedTime`     | Timestamp                                                | Last modification timestamp                               |
 
 ---
 

@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package moego.business.setting.v1;
 
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
@@ -25,4 +26,44 @@ message PetCode {
   // Color used to highlight this code in the UI
   // Format: Hex color code (e.g., "#FF0000")
   string color = 4;
+}
+
+// PetSize represents a size category for pets, which can be used to customize services
+// based on the pet's size. This is different from weight and represents general size
+// categories like "Small", "Medium", "Large", etc.
+message PetSize {
+  // Unique identifier for this pet size
+  string id = 1;
+
+  // Name of the pet size (e.g., "Small", "Medium", "Large")
+  string name = 2;
+
+  // Lower weight limit for this size category in pounds
+  // This is for reference only and does not enforce strict boundaries
+  moego.common.v1.Weight weight_low = 3;
+
+  // Upper weight limit for this size category in pounds
+  // This is for reference only and does not enforce strict boundaries
+  moego.common.v1.Weight weight_high = 4;
+}
+
+// PetType represents a type or species of pet, such as Dog, Cat, Bird, etc.
+// These types are used to categorize pets and can be used to customize services
+// based on the pet's species.
+message PetType {
+  // Unique identifier for this pet type
+  string id = 1;
+
+  // Name of the pet type (e.g., "Dog", "Cat", "Bird")
+  string name = 2;
+}
+
+// PetCoatType represents a coat type or fur type for pets, such as Short, Long, Curly, etc.
+// These coat types are used to customize services based on the pet's coat characteristics.
+message PetCoatType {
+  // Unique identifier for this pet coat type
+  string id = 1;
+
+  // Name of the pet coat type (e.g., "Short", "Long", "Curly", "Wire")
+  string name = 2;
 }

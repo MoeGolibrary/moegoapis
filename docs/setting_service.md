@@ -2,23 +2,18 @@
 
 ## 📌 1. Functional Overview
 
-The `SettingService` provides a centralized interface for managing business configuration settings, including:
+The `SettingService` provides a centralized interface for managing business service configuration settings. This
+includes defining and managing the services offered by the business, such as grooming, boarding, daycare, evaluation,
+and training.
 
-- Managing **Pet Codes** used to flag special handling requirements or medical conditions.
-- Managing **Customer Tags** that categorize clients for marketing and service customization.
-- Managing **Services** offered by the business, such as grooming, boarding, daycare, evaluation, and training.
-- Managing **Lodging Types and Units** for standardizing boarding accommodations.
-- Supporting **creation, updating, listing, and retrieving** of service definitions.
-- Enabling filtering and pagination for scalable data management.
-
-This service is essential for maintaining standardized data across all business locations and ensuring consistent
-service delivery.
+This service is essential for maintaining standardized service data across all business locations and ensuring
+consistent service delivery.
 
 ---
 
 ## 🎯 2. Design Goals
 
-- **Centralized Configuration**: Provides a unified way to manage business-wide settings like services, tags, and codes.
+- **Centralized Configuration**: Provides a unified way to manage business service definitions.
 - **Rich Data Model**: Supports complex relationships like pricing, availability, and staff assignment.
 - **Secure and Reliable**: Ensures access control and data integrity.
 - **Easy Integration**: Offers RESTful APIs compatible with mainstream development frameworks.
@@ -27,8 +22,7 @@ Applicable to scenarios such as:
 
 - Configuring new services before launch.
 - Updating service pricing or availability.
-- Categorizing customers for reporting or marketing campaigns.
-- Standardizing pet handling codes across multiple locations.
+- Standardizing service offerings across multiple locations.
 
 ---
 
@@ -38,19 +32,26 @@ Applicable to scenarios such as:
 
 Represents a specific service or add-on that can be provided to pets.
 
-| Field Name             | Type          | Description                                                  |
-|------------------------|---------------|--------------------------------------------------------------|
-| `id`                   | string        | Unique identifier (`srv_` prefix)                            |
-| `name`                 | string        | Display name of the service                                  |
-| `serviceItemType`      | ItemType      | Primary category of the service                              |
-| `category`             | string        | Subcategory for further classification                       |
-| `price`                | Money         | Base price for the service                                   |
-| `serviceType`          | Type          | Whether it's a standalone service or an add-on               |
-| `serviceTime`          | int32         | Duration in minutes                                          |
-| `availableAllBusiness` | bool          | Whether available at all business locations                  |
-| `availableBusinessIds` | Array(string) | List of specific business IDs where the service is available |
-| `availableAllStaff`    | bool          | Whether available to all staff                               |
-| `availableStaffIds`    | Array(string) | List of staff members who can perform this service           |
+| Field Name             | Type                   | Description                                                   |
+|------------------------|------------------------|---------------------------------------------------------------|
+| `id`                   | string                 | Unique identifier (`srv_` prefix)                             |
+| `name`                 | string                 | Display name of the service                                   |
+| `serviceItemType`      | ItemType               | Primary category of the service                               |
+| `category`             | string                 | Subcategory for further classification                        |
+| `price`                | Money                  | Base price for the service                                    |
+| `serviceType`          | Type                   | Whether it's a standalone service or an add-on                |
+| `serviceTime`          | int32                  | Duration in minutes                                           |
+| `availableAllBusiness` | bool                   | Whether available at all business locations                   |
+| `availableBusinessIds` | Array(string)          | List of specific business IDs where the service is available  |
+| `availableAllStaff`    | bool                   | Whether available to all staff                                |
+| `availableStaffIds`    | Array(string)          | List of staff members who can perform this service            |
+| `breedFilter`          | bool                   | Whether the service is available for all pet types and breeds |
+| `customizedBreeds`     | Array(CustomizedBreed) | List of pet types and their breeds that can use this service  |
+| `petSizeFilter`        | bool                   | Whether the service is available for all pet sizes            |
+| `customizedPetSizes`   | Array(string)          | List of pet sizes that can use this service                   |
+| `coatFilter`           | bool                   | Whether the service is available for all pet coat types       |
+| `customizedCoats`      | Array(string)          | List of pet coat types that can use this service              |
+| `petCodeFilter`        | PetCodeFilter          | Pet code filter configuration                                 |
 
 #### Enum: ItemType
 
@@ -67,117 +68,62 @@ Represents a specific service or add-on that can be provided to pets.
 - `SERVICE`
 - `ADDON`
 
----
+#### Pet Details Configuration
 
-### 2. Lodging
+Services can be configured to be available only for specific pet characteristics. This allows for fine-grained control
+over which pets can use which services.
 
-A lodging represents a type of accommodation and its associated units, typically used for boarding services.
+##### Type & Breed Filtering
 
-| Field Name     | Type               | Description                              |
-|----------------|--------------------|------------------------------------------|
-| `lodgingType`  | LodgingType        | The type of lodging (e.g., room, area)   |
-| `lodgingUnits` | Array(LodgingUnit) | List of individual units within the type |
+Services can be restricted to specific pet types and breeds using:
 
----
+- `breedFilter`: When set to `false`, the service is only available for specific pet types and breeds defined in
+  `customizedBreeds`
+- `customizedBreeds`: An array of `CustomizedBreed` objects that define which pet types and breeds can use this service
 
-### 3. PetCode
+###### CustomizedBreed Object
 
-Represents special handling instructions or medical alerts for a pet.
+| Field Name    | Type          | Description                                     |
+|---------------|---------------|-------------------------------------------------|
+| `petTypeId`   | string        | Pet type identifier                             |
+| `petTypeName` | string        | Name of the pet type                            |
+| `breeds`      | Array(string) | List of breed identifiers for this pet type     |
+| `isAll`       | bool          | Whether all breeds of this pet type are allowed |
 
-| Field Name     | Type   | Description                          |
-|----------------|--------|--------------------------------------|
-| `id`           | string | Unique identifier                    |
-| `abbreviation` | string | Short form (e.g., AG for Aggressive) |
-| `description`  | string | Detailed explanation                 |
-| `color`        | string | Highlight color in UI                |
+##### Weight/Size Filtering
 
----
+Services can be configured based on pet size using:
 
-### 4. CustomerTag
+- `petSizeFilter`: When set to `false`, the service is only available for specific pet sizes defined in
+  `customizedPetSizes`
+- `customizedPetSizes`: An array of size identifiers that can use this service
 
-Represents a label that can be applied to customers for categorization and filtering purposes.
+##### Coat Type Filtering
 
-| Field Name        | Type      | Description                                       |
-|-------------------|-----------|---------------------------------------------------|
-| `id`              | string    | Unique identifier                                 |
-| `name`            | string    | Display name of the tag                           |
-| `lastUpdatedBy`   | string    | ID of the staff member who last modified this tag |
-| `lastUpdatedTime` | Timestamp | When this tag was last modified                   |
+Services can be restricted based on pet coat types:
 
----
+- `coatFilter`: When set to `false`, the service is only available for specific coat types defined in `customizedCoats`
+- `customizedCoats`: An array of coat type identifiers that can use this service
 
-### 5. ReferralSource
+##### Pet Code Filtering
 
-Represents the source or channel through which a customer was acquired.
+Services can be configured to work only with pets that have specific pet codes:
 
-| Field Name | Type   | Description                |
-|------------|--------|----------------------------|
-| `id`       | string | Unique identifier          |
-| `name`     | string | Display name of the source |
+- `petCodeFilter`: A `PetCodeFilter` object that defines which pet codes are allowed for this service
 
----
+###### PetCodeFilter Object
 
-### 6. LifeCycle
-
-Represents a stage in the lead management process.
-
-| Field Name | Type   | Description       |
-|------------|--------|-------------------|
-| `id`       | string | Unique identifier |
-| `name`     | string | Display name      |
-
----
-
-### 7. ActionStatus
-
-Represents the status of an action taken on a lead.
-
-| Field Name | Type   | Description       |
-|------------|--------|-------------------|
-| `id`       | string | Unique identifier |
-| `name`     | string | Display name      |
-
----
-
-#### Message: LodgingType
-
-Describes the type of lodging available.
-
-| Field Name        | Type            | Description                            |
-|-------------------|-----------------|----------------------------------------|
-| `id`              | string          | Unique identifier for the lodging type |
-| `name`            | string          | Name of the lodging type               |
-| `description`     | string          | Optional description                   |
-| `photoList`       | Array(string)   | URLs to photos of this lodging type    |
-| `maxPetNum`       | int32           | Maximum number of pets allowed         |
-| `lodgingUnitType` | LodgingUnitType | Type of lodging unit                   |
-
----
-
-#### Message: LodgingUnit
-
-Describes a specific unit within a lodging type.
-
-| Field Name | Type   | Description                |
-|------------|--------|----------------------------|
-| `id`       | string | Unique identifier for unit |
-| `name`     | string | Display name of the unit   |
-
----
-
-#### Enum: LodgingUnitType
-
-| Value                           | Description                       |
-|---------------------------------|-----------------------------------|
-| `LODGING_UNIT_TYPE_UNSPECIFIED` | Default value; should not be used |
-| `ROOM`                          | Room/kennel type                  |
-| `AREA`                          | Open area for multiple pets       |
+| Field Name     | Type          | Description                                                          |
+|----------------|---------------|----------------------------------------------------------------------|
+| `isWhiteList`  | bool          | Whether to use whitelist (true) or blacklist (false)                 |
+| `isAllPetCode` | bool          | Whether the service is available for all pet codes                   |
+| `petCodeIds`   | Array(string) | List of pet code identifiers (only valid when isAllPetCode is false) |
 
 ---
 
 ## 📈 4. Typical Usage Flow
 
-### ✅ Scenario: User Integrates and Debugs Setting API
+### ✅ Scenario: User Integrates and Debugs Service API
 
 Here is a typical integration flow:
 
@@ -193,12 +139,6 @@ Here is a typical integration flow:
 
 4. **List Services**
     - View all available services, optionally filtered by location or type.
-
-5. **Manage Pet Codes & Customer Tags**
-    - Retrieve active codes and tags for use in other modules.
-
-6. Manage Lodging Types and Units
-    - Retrieve lodging types and units for display or booking integration.
 
 ---
 
@@ -243,10 +183,10 @@ Registers a new service definition with base attributes.
 
 #### ⚠️ Error Codes:
 
-| Error Code          | Description               |
-|---------------------|---------------------------|
-| `INVALID_ARGUMENT`  | Missing or invalid fields |
-| `PERMISSION_DENIED` | Permission denied         |
+| Error Code          | Description            |
+|---------------------|------------------------|
+| `ALREADY_EXISTS`    | Service already exists |
+| `PERMISSION_DENIED` | Permission denied      |
 
 ---
 
@@ -262,8 +202,8 @@ Retrieves detailed information about a specific service.
 
 #### 🎯 Use Cases:
 
-- Verify current service details before updates.
-- Audit service configurations.
+- Display full service details.
+- Verify service configuration.
 
 #### 🔧 Request Parameters:
 
@@ -372,220 +312,6 @@ Lists services matching specified criteria.
 
 ---
 
-### 5. List Pet Codes (`ListPetCodes`)
-
-- **Method**: `ListPetCodes`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/pet/codes:list`
-
-#### ✅ Functionality:
-
-Retrieves all active pet codes defined for the company.
-
-#### 🎯 Use Cases:
-
-- Retrieve special handling instructions.
-- Standardize pet care alerts across locations.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description            |
-|-------------|--------|----------|------------------------|
-| `companyId` | string | Yes      | Company ID to retrieve |
-
-#### 📌 Return Value:
-
-| Field Name | Type             | Description                       |
-|------------|------------------|-----------------------------------|
-| `codes`    | Array(`PetCode`) | List of pet codes for the company |
-
-#### ⚠️ Error Code:
-
-| Error Code          | Description       |
-|---------------------|-------------------|
-| `PERMISSION_DENIED` | Permission denied |
-
----
-
-### 6. List Customer Tags (`ListCustomerTags`)
-
-- **Method**: `ListCustomerTags`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/customer/tags:list`
-
-#### ✅ Functionality:
-
-Retrieves all active customer tags defined for the company.
-
-#### 🎯 Use Cases:
-
-- Categorize customers for marketing.
-- Apply labels for loyalty programs or preferences.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description            |
-|-------------|--------|----------|------------------------|
-| `companyId` | string | Yes      | Company ID to retrieve |
-
-#### 📌 Return Value:
-
-| Field Name | Type                 | Description                           |
-|------------|----------------------|---------------------------------------|
-| `tags`     | Array(`CustomerTag`) | List of customer tags for the company |
-
-#### ⚠️ Error Code:
-
-| Error Code          | Description       |
-|---------------------|-------------------|
-| `PERMISSION_DENIED` | Permission denied |
-
----
-
-### 7. List Lodgings (`ListLodgings`)
-
-- **Method**: `ListLodgings`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/lodgings`
-
-#### ✅ Functionality:
-
-Retrieves a list of all lodging configurations defined for the company.
-
-#### 🎯 Use Cases:
-
-- Retrieve lodging types and units for booking or display.
-- Standardize lodging offerings across business locations.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description            |
-|-------------|--------|----------|------------------------|
-| `companyId` | string | Yes      | Company ID to retrieve |
-
-#### 📌 Return Value:
-
-| Field Name | Type             | Description                    |
-|------------|------------------|--------------------------------|
-| `lodgings` | Array(`Lodging`) | List of lodging configurations |
-
-#### ⚠️ Error Codes:
-
-| Error Code          | Description                |
-|---------------------|----------------------------|
-| `PERMISSION_DENIED` | Permission denied          |
-| `INVALID_ARGUMENT`  | Malformed request          |
-| `NOT_FOUND`         | The company does not exist |
-
----
-
-### 8. List Customer Referral Sources (`ListCustomerReferralSources`)
-
-- **Method**: `ListCustomerReferralSources`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/customer/referral_sources:list`
-
-#### ✅ Functionality:
-
-Lists all available customer referral sources for a company.
-
-#### 🎯 Use Cases:
-
-- Track the origin of new customers.
-- Analyze marketing effectiveness.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description                           |
-|-------------|--------|----------|---------------------------------------|
-| `companyId` | string | Yes      | ID of the company to list sources for |
-
-#### 📌 Return Value:
-
-| Field Name        | Type                    | Description              |
-|-------------------|-------------------------|--------------------------|
-| `referralSources` | Array(`ReferralSource`) | List of referral sources |
-
-#### ⚠️ Error Codes:
-
-| Error Code          | Description       |
-|---------------------|-------------------|
-| `PERMISSION_DENIED` | Permission denied |
-
----
-
-### 9. List Leads Life Cycles (`ListLeadsLifeCycles`)
-
-- **Method**: `ListLeadsLifeCycles`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/leads/life_cycles`
-
-#### ✅ Functionality:
-
-Returns a list of lead life cycles.
-
-#### 🎯 Use Cases:
-
-- Understand the stages of a lead's journey.
-- Standardize lead management processes.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description                          |
-|-------------|--------|----------|--------------------------------------|
-| `companyId` | string | Yes      | ID of the company to list cycles for |
-
-#### 📌 Return Value:
-
-| Field Name   | Type               | Description              |
-|--------------|--------------------|--------------------------|
-| `lifeCycles` | Array(`LifeCycle`) | List of lead life cycles |
-
-#### ⚠️ Error Codes:
-
-| Error Code          | Description       |
-|---------------------|-------------------|
-| `PERMISSION_DENIED` | Permission denied |
-| `INVALID_ARGUMENT`  | Malformed request |
-
----
-
-### 10. List Leads Action Status (`ListLeadsActionStatus`)
-
-- **Method**: `ListLeadsActionStatus`
-- **HTTP Method**: POST
-- **Path**: `/v1/setting/companies/{company_id}/leads/action_status`
-
-#### ✅ Functionality:
-
-Returns a list of lead action statuses.
-
-#### 🎯 Use Cases:
-
-- Track the status of actions taken on leads.
-- Standardize lead follow-up procedures.
-
-#### 🔧 Request Parameters:
-
-| Field Name  | Type   | Required | Description                            |
-|-------------|--------|----------|----------------------------------------|
-| `companyId` | string | Yes      | ID of the company to list statuses for |
-
-#### 📌 Return Value:
-
-| Field Name       | Type                  | Description                  |
-|------------------|-----------------------|------------------------------|
-| `actionStatuses` | Array(`ActionStatus`) | List of lead action statuses |
-
-#### ⚠️ Error Codes:
-
-| Error Code          | Description       |
-|---------------------|-------------------|
-| `PERMISSION_DENIED` | Permission denied |
-| `INVALID_ARGUMENT`  | Malformed request |
-
----
-
 ## 🧪 6. Usage Examples
 
 ### Example 1: Create Service
@@ -631,47 +357,6 @@ Request Body:
 }
 ```
 
-### Example 3: List Lodgings
-
-Request Body:
-
-```json
-{
-  "companyId": "cmp_001"
-}
-```
-
-Response Body:
-
-```json
-{
-  "lodgings": [
-    {
-      "lodgingType": {
-        "id": "lt_001",
-        "name": "Deluxe Room",
-        "description": "Spacious room with premium amenities.",
-        "photoList": [
-          "https://example.com/photo1.jpg"
-        ],
-        "maxPetNum": 2,
-        "lodgingUnitType": "ROOM"
-      },
-      "lodgingUnits": [
-        {
-          "id": "lu_001",
-          "name": "Room 101"
-        },
-        {
-          "id": "lu_002",
-          "name": "Room 102"
-        }
-      ]
-    }
-  ]
-}
-```
-
 ---
 
 ## ⚠️ 7. Usage Limitations
@@ -688,10 +373,8 @@ TODO
 | How can I prevent duplicate services from being created?             | Ensure that your system checks for existing services before creating new ones.                                      |
 | What should I do if a service creation returns "resource exhausted"? | Clean up unused services or contact support to request a quota increase.                                            |
 | Can I restrict services to specific business locations?              | Yes, via the `availableBusinessIds` field. Set `availableAllBusiness = false` and specify the allowed business IDs. |
-| How can I manage service tags effectively?                           | Use `ListCustomerTags` to retrieve available tags and ensure consistency across services.                           |
 | Why does updating a service return "not found"?                      | The specified service ID does not exist. Verify the ID using `GetService` before attempting the update.             |
 | How do I handle failed service operations?                           | Check the error message and logs. For rate limiting issues, implement retry logic with exponential backoff.         |
-| How can I manage boarding accommodations effectively?                | Use `ListLodgings` to retrieve lodging types and units for consistent boarding management.                          |
 
 ---
 
@@ -710,6 +393,5 @@ TODO
 
 ## 📎 10. Related File References
 
-- [lodging.proto](../moego/business/setting/v1/lodging.proto)
 - [service.proto](../moego/business/setting/v1/service.proto)
 - [setting_service.proto](../moego/business/setting/v1/setting_service.proto)

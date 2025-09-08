@@ -153,7 +153,7 @@ func (Service_Type) EnumDescriptor() ([]byte, []int) {
 
 // Service represents a specific service or add-on that can be provided to pets.
 // Services are the core offerings of your business and can be customized based on
-// location, staff availability, and service type. Each service has its own pricing,
+// location, staff availability, service type, and pet details. Each service has its own pricing,
 // duration, and availability settings.
 type Service struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -189,8 +189,29 @@ type Service struct {
 	// List of staff members who can perform this service
 	// Only used when available_all_staff is false
 	AvailableStaffIds []string `protobuf:"bytes,11,rep,name=available_staff_ids,json=availableStaffIds,proto3" json:"available_staff_ids,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	// Whether the service is available for all pet types and breeds
+	// If false, check customized_breeds for specific pet types and breeds
+	BreedFilter bool `protobuf:"varint,12,opt,name=breed_filter,json=breedFilter,proto3" json:"breed_filter,omitempty"`
+	// List of pet types and their breeds that can use this service
+	// Only used when breed_filter is false
+	CustomizedBreeds []*CustomizedBreed `protobuf:"bytes,13,rep,name=customized_breeds,json=customizedBreeds,proto3" json:"customized_breeds,omitempty"`
+	// Whether the service is available for all pet sizes
+	// If false, check customized_pet_sizes for specific pet sizes
+	PetSizeFilter bool `protobuf:"varint,14,opt,name=pet_size_filter,json=petSizeFilter,proto3" json:"pet_size_filter,omitempty"`
+	// List of pet sizes that can use this service
+	// Only used when pet_size_filter is false
+	CustomizedPetSizes []string `protobuf:"bytes,15,rep,name=customized_pet_sizes,json=customizedPetSizes,proto3" json:"customized_pet_sizes,omitempty"`
+	// Whether the service is available for all pet coat types
+	// If false, check customized_coats for specific coat types
+	CoatFilter bool `protobuf:"varint,16,opt,name=coat_filter,json=coatFilter,proto3" json:"coat_filter,omitempty"`
+	// List of pet coat types that can use this service
+	// Only used when coat_filter is false
+	CustomizedCoats []string `protobuf:"bytes,17,rep,name=customized_coats,json=customizedCoats,proto3" json:"customized_coats,omitempty"`
+	// Pet code filter related fields
+	// Pet code filter
+	PetCodeFilter *PetCodeFilter `protobuf:"bytes,18,opt,name=pet_code_filter,json=petCodeFilter,proto3" json:"pet_code_filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Service) Reset() {
@@ -300,11 +321,197 @@ func (x *Service) GetAvailableStaffIds() []string {
 	return nil
 }
 
+func (x *Service) GetBreedFilter() bool {
+	if x != nil {
+		return x.BreedFilter
+	}
+	return false
+}
+
+func (x *Service) GetCustomizedBreeds() []*CustomizedBreed {
+	if x != nil {
+		return x.CustomizedBreeds
+	}
+	return nil
+}
+
+func (x *Service) GetPetSizeFilter() bool {
+	if x != nil {
+		return x.PetSizeFilter
+	}
+	return false
+}
+
+func (x *Service) GetCustomizedPetSizes() []string {
+	if x != nil {
+		return x.CustomizedPetSizes
+	}
+	return nil
+}
+
+func (x *Service) GetCoatFilter() bool {
+	if x != nil {
+		return x.CoatFilter
+	}
+	return false
+}
+
+func (x *Service) GetCustomizedCoats() []string {
+	if x != nil {
+		return x.CustomizedCoats
+	}
+	return nil
+}
+
+func (x *Service) GetPetCodeFilter() *PetCodeFilter {
+	if x != nil {
+		return x.PetCodeFilter
+	}
+	return nil
+}
+
+// Customized breed definition
+type CustomizedBreed struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Pet type id
+	PetTypeId string `protobuf:"bytes,1,opt,name=pet_type_id,json=petTypeId,proto3" json:"pet_type_id,omitempty"`
+	// Pet type name
+	PetTypeName string `protobuf:"bytes,2,opt,name=pet_type_name,json=petTypeName,proto3" json:"pet_type_name,omitempty"`
+	// Pet breed ids
+	Breeds []string `protobuf:"bytes,3,rep,name=breeds,proto3" json:"breeds,omitempty"`
+	// Allow all breeds for this pet type
+	IsAll         *bool `protobuf:"varint,4,opt,name=is_all,json=isAll,proto3,oneof" json:"is_all,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomizedBreed) Reset() {
+	*x = CustomizedBreed{}
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomizedBreed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomizedBreed) ProtoMessage() {}
+
+func (x *CustomizedBreed) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomizedBreed.ProtoReflect.Descriptor instead.
+func (*CustomizedBreed) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CustomizedBreed) GetPetTypeId() string {
+	if x != nil {
+		return x.PetTypeId
+	}
+	return ""
+}
+
+func (x *CustomizedBreed) GetPetTypeName() string {
+	if x != nil {
+		return x.PetTypeName
+	}
+	return ""
+}
+
+func (x *CustomizedBreed) GetBreeds() []string {
+	if x != nil {
+		return x.Breeds
+	}
+	return nil
+}
+
+func (x *CustomizedBreed) GetIsAll() bool {
+	if x != nil && x.IsAll != nil {
+		return *x.IsAll
+	}
+	return false
+}
+
+// Pet code filter definition
+type PetCodeFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Whether to filter by white list or black list
+	IsWhiteList bool `protobuf:"varint,1,opt,name=is_white_list,json=isWhiteList,proto3" json:"is_white_list,omitempty"`
+	// Whether it applies to all pet codes
+	IsAllPetCode bool `protobuf:"varint,2,opt,name=is_all_pet_code,json=isAllPetCode,proto3" json:"is_all_pet_code,omitempty"`
+	// Pet code list, only valid when is_all_pet_code is false
+	PetCodeIds    []string `protobuf:"bytes,3,rep,name=pet_code_ids,json=petCodeIds,proto3" json:"pet_code_ids,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetCodeFilter) Reset() {
+	*x = PetCodeFilter{}
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetCodeFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetCodeFilter) ProtoMessage() {}
+
+func (x *PetCodeFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetCodeFilter.ProtoReflect.Descriptor instead.
+func (*PetCodeFilter) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PetCodeFilter) GetIsWhiteList() bool {
+	if x != nil {
+		return x.IsWhiteList
+	}
+	return false
+}
+
+func (x *PetCodeFilter) GetIsAllPetCode() bool {
+	if x != nil {
+		return x.IsAllPetCode
+	}
+	return false
+}
+
+func (x *PetCodeFilter) GetPetCodeIds() []string {
+	if x != nil {
+		return x.PetCodeIds
+	}
+	return nil
+}
+
 var File_moego_business_setting_v1_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/setting/v1/service.proto\x12\x19moego.business.setting.v1\x1a\x17google/type/money.proto\"\xbb\x05\n" +
+	"'moego/business/setting/v1/service.proto\x12\x19moego.business.setting.v1\x1a\x17google/type/money.proto\"\xaf\b\n" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -317,7 +524,15 @@ const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\x16available_business_ids\x18\t \x03(\tR\x14availableBusinessIds\x12.\n" +
 	"\x13available_all_staff\x18\n" +
 	" \x01(\bR\x11availableAllStaff\x12.\n" +
-	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\"t\n" +
+	"\x13available_staff_ids\x18\v \x03(\tR\x11availableStaffIds\x12!\n" +
+	"\fbreed_filter\x18\f \x01(\bR\vbreedFilter\x12W\n" +
+	"\x11customized_breeds\x18\r \x03(\v2*.moego.business.setting.v1.CustomizedBreedR\x10customizedBreeds\x12&\n" +
+	"\x0fpet_size_filter\x18\x0e \x01(\bR\rpetSizeFilter\x120\n" +
+	"\x14customized_pet_sizes\x18\x0f \x03(\tR\x12customizedPetSizes\x12\x1f\n" +
+	"\vcoat_filter\x18\x10 \x01(\bR\n" +
+	"coatFilter\x12)\n" +
+	"\x10customized_coats\x18\x11 \x03(\tR\x0fcustomizedCoats\x12P\n" +
+	"\x0fpet_code_filter\x18\x12 \x01(\v2(.moego.business.setting.v1.PetCodeFilterR\rpetCodeFilter\"t\n" +
 	"\bItemType\x12!\n" +
 	"\x1dSERVICE_ITEM_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bGROOMING\x10\x01\x12\f\n" +
@@ -329,7 +544,18 @@ const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\x04Type\x12\x1c\n" +
 	"\x18SERVICE_TYPE_UNSPECIFIED\x10\x00\x12\v\n" +
 	"\aSERVICE\x10\x01\x12\t\n" +
-	"\x05ADDON\x10\x02B\x8a\x01\n" +
+	"\x05ADDON\x10\x02\"\x94\x01\n" +
+	"\x0fCustomizedBreed\x12\x1e\n" +
+	"\vpet_type_id\x18\x01 \x01(\tR\tpetTypeId\x12\"\n" +
+	"\rpet_type_name\x18\x02 \x01(\tR\vpetTypeName\x12\x16\n" +
+	"\x06breeds\x18\x03 \x03(\tR\x06breeds\x12\x1a\n" +
+	"\x06is_all\x18\x04 \x01(\bH\x00R\x05isAll\x88\x01\x01B\t\n" +
+	"\a_is_all\"|\n" +
+	"\rPetCodeFilter\x12\"\n" +
+	"\ris_white_list\x18\x01 \x01(\bR\visWhiteList\x12%\n" +
+	"\x0fis_all_pet_code\x18\x02 \x01(\bR\fisAllPetCode\x12 \n" +
+	"\fpet_code_ids\x18\x03 \x03(\tR\n" +
+	"petCodeIdsB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -345,22 +571,26 @@ func file_moego_business_setting_v1_service_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_setting_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_moego_business_setting_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_moego_business_setting_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_setting_v1_service_proto_goTypes = []any{
-	(Service_ItemType)(0), // 0: moego.business.setting.v1.Service.ItemType
-	(Service_Type)(0),     // 1: moego.business.setting.v1.Service.Type
-	(*Service)(nil),       // 2: moego.business.setting.v1.Service
-	(*money.Money)(nil),   // 3: google.type.Money
+	(Service_ItemType)(0),   // 0: moego.business.setting.v1.Service.ItemType
+	(Service_Type)(0),       // 1: moego.business.setting.v1.Service.Type
+	(*Service)(nil),         // 2: moego.business.setting.v1.Service
+	(*CustomizedBreed)(nil), // 3: moego.business.setting.v1.CustomizedBreed
+	(*PetCodeFilter)(nil),   // 4: moego.business.setting.v1.PetCodeFilter
+	(*money.Money)(nil),     // 5: google.type.Money
 }
 var file_moego_business_setting_v1_service_proto_depIdxs = []int32{
 	0, // 0: moego.business.setting.v1.Service.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	3, // 1: moego.business.setting.v1.Service.price:type_name -> google.type.Money
+	5, // 1: moego.business.setting.v1.Service.price:type_name -> google.type.Money
 	1, // 2: moego.business.setting.v1.Service.service_type:type_name -> moego.business.setting.v1.Service.Type
-	3, // [3:3] is the sub-list for method output_type
-	3, // [3:3] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	3, // 3: moego.business.setting.v1.Service.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
+	4, // 4: moego.business.setting.v1.Service.pet_code_filter:type_name -> moego.business.setting.v1.PetCodeFilter
+	5, // [5:5] is the sub-list for method output_type
+	5, // [5:5] is the sub-list for method input_type
+	5, // [5:5] is the sub-list for extension type_name
+	5, // [5:5] is the sub-list for extension extendee
+	0, // [0:5] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_service_proto_init() }
@@ -368,13 +598,14 @@ func file_moego_business_setting_v1_service_proto_init() {
 	if File_moego_business_setting_v1_service_proto != nil {
 		return
 	}
+	file_moego_business_setting_v1_service_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_service_proto_rawDesc), len(file_moego_business_setting_v1_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   1,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
