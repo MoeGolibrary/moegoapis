@@ -213,7 +213,11 @@ type Appointment struct {
 	// timestamp, When the appointment was ready.
 	ReadyTime *timestamppb.Timestamp `protobuf:"bytes,24,opt,name=ready_time,json=readyTime,proto3,oneof" json:"ready_time,omitempty"`
 	// timestamp, When the appointment was canceled.
-	CanceledTime  *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=canceled_time,json=canceledTime,proto3,oneof" json:"canceled_time,omitempty"`
+	CanceledTime *timestamppb.Timestamp `protobuf:"bytes,25,opt,name=canceled_time,json=canceledTime,proto3,oneof" json:"canceled_time,omitempty"`
+	// bool, Indicates if the appointment was marked as no-show.
+	NoShow bool `protobuf:"varint,26,opt,name=no_show,json=noShow,proto3" json:"no_show,omitempty"`
+	// object(Money), The no-show fee charged for this appointment.
+	NoShowFee     *money.Money `protobuf:"bytes,27,opt,name=no_show_fee,json=noShowFee,proto3" json:"no_show_fee,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -423,11 +427,25 @@ func (x *Appointment) GetCanceledTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Appointment) GetNoShow() bool {
+	if x != nil {
+		return x.NoShow
+	}
+	return false
+}
+
+func (x *Appointment) GetNoShowFee() *money.Money {
+	if x != nil {
+		return x.NoShowFee
+	}
+	return nil
+}
+
 var File_moego_business_appointment_v1_appointment_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xf3\f\n" +
+	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xc0\r\n" +
 	"\vAppointment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -460,7 +478,9 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\x0econfirmed_time\x18\x17 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\rconfirmedTime\x88\x01\x01\x12>\n" +
 	"\n" +
 	"ready_time\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\x03R\treadyTime\x88\x01\x01\x12D\n" +
-	"\rcanceled_time\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\fcanceledTime\x88\x01\x01\"w\n" +
+	"\rcanceled_time\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\fcanceledTime\x88\x01\x01\x12\x17\n" +
+	"\ano_show\x18\x1a \x01(\bR\x06noShow\x122\n" +
+	"\vno_show_fee\x18\x1b \x01(\v2\x12.google.type.MoneyR\tnoShowFee\"w\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x0f\n" +
 	"\vUNCONFIRMED\x10\x01\x12\r\n" +
@@ -523,11 +543,12 @@ var file_moego_business_appointment_v1_appointment_proto_depIdxs = []int32{
 	7,  // 12: moego.business.appointment.v1.Appointment.confirmed_time:type_name -> google.protobuf.Timestamp
 	7,  // 13: moego.business.appointment.v1.Appointment.ready_time:type_name -> google.protobuf.Timestamp
 	7,  // 14: moego.business.appointment.v1.Appointment.canceled_time:type_name -> google.protobuf.Timestamp
-	15, // [15:15] is the sub-list for method output_type
-	15, // [15:15] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	6,  // 15: moego.business.appointment.v1.Appointment.no_show_fee:type_name -> google.type.Money
+	16, // [16:16] is the sub-list for method output_type
+	16, // [16:16] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_appointment_proto_init() }

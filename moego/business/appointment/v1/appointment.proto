@@ -139,4 +139,10 @@ message Appointment {
   // timestamp, When the appointment was canceled.
   optional google.protobuf.Timestamp canceled_time = 25;
 
+  // bool, Indicates if the appointment was marked as no-show.
+  bool no_show = 26;
+
+  // object(Money), The no-show fee charged for this appointment.
+  google.type.Money no_show_fee = 27;
+
 }

@@ -76,8 +76,8 @@ Captures information about a booking that was not completed by the customer.
 | `appointmentId`   | string                     | Appointment ID if booking was converted               |
 | `appointmentTime` | timestamp                  | Scheduled appointment time if one was set             |
 | `leadType`        | LeadType                   | How the customer was acquired                         |
-| `createdTime`      | timestamp                  | When this record was created                          |
-| `lastUpdatedTime`      | timestamp                  | When this record was last updated                     |
+| `createdTime`     | timestamp                  | When this record was created                          |
+| `lastUpdatedTime` | timestamp                  | When this record was last updated                     |
 | `additionalNote`  | string                     | Notes added by staff or system                        |
 | `careType`        | ItemType                   | Type of service selected by the customer              |
 
@@ -220,8 +220,8 @@ Retrieves detailed information about a specific abandoned booking.
 | `appointmentId`   | string                     | Appointment ID if booking was converted               |
 | `appointmentTime` | timestamp                  | Scheduled appointment time if one was set             |
 | `leadType`        | LeadType                   | How the customer was acquired                         |
-| `createdTime`      | timestamp                  | When this record was created                          |
-| `lastUpdatedTime`      | timestamp                  | When this record was last updated                     |
+| `createdTime`     | timestamp                  | When this record was created                          |
+| `lastUpdatedTime` | timestamp                  | When this record was last updated                     |
 | `additionalNote`  | string                     | Notes added by staff or system                        |
 | `careType`        | ItemType                   | Type of service selected by the customer              |
 

@@ -61,6 +61,8 @@ lifecycle from creation to completion.
 | `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                            |
 | `readyTime`         | timestamp (optional)    | When the appointment was ready                                                |
 | `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                             |
+| `noShow`            | bool                    | bool, Indicates if the appointment was marked as no-show.                     |
+| `noShowFee`         | Money                   | Amount charged for no-show                                                    |
 
 #### Enum Definitions
 
@@ -493,7 +495,8 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 
 #### ✅ Functionality:
 
-Updates the status of an appointment and optionally sends notifications to the customer. This method allows moving an appointment through its lifecycle by changing its status to one of the valid states.
+Updates the status of an appointment and optionally sends notifications to the customer. This method allows moving an
+appointment through its lifecycle by changing its status to one of the valid states.
 
 #### 🎯 Use Cases:
 
@@ -504,13 +507,13 @@ Updates the status of an appointment and optionally sends notifications to the c
 
 #### 🔧 Request Parameters:
 
-| Field Name      | Type                       | Required | Description                                                    |
-|-----------------|----------------------------|----------|----------------------------------------------------------------|
-| `id`            | string                     | Yes      | Appointment ID to update                                       |
-| `businessId`    | string                     | Yes      | Business ID for access control                                 |
-| `status`        | enum(Status)               | Yes      | Target status for the appointment                              |
-| `messageMethod` | enum(MessageMethod)        | No       | Method to use for sending notifications (SMS, EMAIL, etc.)     |
-| `checkOut`      | object(CheckOut)           | No       | Check out details for when status is FINISHED                  |
+| Field Name      | Type                | Required | Description                                                |
+|-----------------|---------------------|----------|------------------------------------------------------------|
+| `id`            | string              | Yes      | Appointment ID to update                                   |
+| `businessId`    | string              | Yes      | Business ID for access control                             |
+| `status`        | enum(Status)        | Yes      | Target status for the appointment                          |
+| `messageMethod` | enum(MessageMethod) | No       | Method to use for sending notifications (SMS, EMAIL, etc.) |
+| `checkOut`      | object(CheckOut)    | No       | Check out details for when status is FINISHED              |
 
 ##### MessageMethod Enum:
 
@@ -520,8 +523,8 @@ Updates the status of an appointment and optionally sends notifications to the c
 
 ##### CheckOut Object:
 
-| Field Name | Type | Required | Description |
-|------------|------|----------|-------------|
+| Field Name | Type | Required | Description                                                                                      |
+|------------|------|----------|--------------------------------------------------------------------------------------------------|
 | `endDate`  | Date | No       | Actual check out date. Updates boarding appointment check out date and corresponding order price |
 
 #### 📌 Return Value:

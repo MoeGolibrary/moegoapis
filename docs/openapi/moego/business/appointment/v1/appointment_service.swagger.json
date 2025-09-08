@@ -1143,6 +1143,14 @@
           "format": "date-time",
           "x-nullable": true,
           "description": "timestamp, When the appointment was canceled."
+        },
+        "noShow": {
+          "type": "boolean",
+          "description": "bool, Indicates if the appointment was marked as no-show."
+        },
+        "noShowFee": {
+          "$ref": "#/definitions/typeMoney",
+          "description": "object(Money), The no-show fee charged for this appointment."
         }
       },
       "description": "The appointment object represents a scheduled pet service booking. When an appointment is created,\nit will transition through various states from unconfirmed to finished. Each appointment is associated\nwith exactly one customer and one business location, but can include multiple pets and services.\nThe appointment tracks both the service status and payment status throughout its lifecycle.",
