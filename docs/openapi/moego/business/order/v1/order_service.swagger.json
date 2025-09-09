@@ -677,6 +677,11 @@
           "type": "string",
           "format": "date-time",
           "title": "When the sale was recorded\nUsed for financial reporting and reconciliation"
+        },
+        "completedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the sale was completed\nSystem-generated timestamp"
         }
       },
       "description": "Order represents a financial transaction for services provided to a customer.\nOrders track the complete financial details of a transaction, including services,\ntips, taxes, discounts, and payment status. Each order is associated with a\nspecific business location and customer.",

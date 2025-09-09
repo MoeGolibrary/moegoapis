@@ -121,6 +121,10 @@ message Order {
   // When the sale was recorded
   // Used for financial reporting and reconciliation
   google.protobuf.Timestamp sales_datetime = 21;
+
+  // When the sale was completed
+  // System-generated timestamp
+  google.protobuf.Timestamp completed_time = 22;
 }
 
 

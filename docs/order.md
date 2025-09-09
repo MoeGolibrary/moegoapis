@@ -70,6 +70,7 @@ business location and customer.
 | `lastUpdatedBy`   | string                    | ID of the staff member who last modified the order, obfuscated ID string                               |
 | `lastUpdatedTime` | google.protobuf.Timestamp | When this order was last modified (system-generated timestamp)                                         |
 | `salesDatetime`   | google.protobuf.Timestamp | When the sale was recorded (used for financial reporting and reconciliation)                           |
+| `completedTime`   | google.protobuf.Timestamp | When the order was completed (system-generated timestamp)                                              |
 
 ### 2. OrderLineItem
 

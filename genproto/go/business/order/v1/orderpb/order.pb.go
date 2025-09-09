@@ -158,6 +158,9 @@ type Order struct {
 	// When the sale was recorded
 	// Used for financial reporting and reconciliation
 	SalesDatetime *timestamppb.Timestamp `protobuf:"bytes,21,opt,name=sales_datetime,json=salesDatetime,proto3" json:"sales_datetime,omitempty"`
+	// When the sale was completed
+	// System-generated timestamp
+	CompletedTi
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -338,6 +341,25 @@ func (x *Order) GetSalesDatetime() *timestamppb.Timestamp {
 	}
 	return nil
 }
+turn nil
+}
+
+func (x *Order) GetSalesDatetime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.SalesDatetime
+	}
+	return nil
+}
+
+func (x *Order) GetCompletedTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CompletedTime
+	}
+	return nil
+}
+
+// OrderRedeemPackage represents a service within a package that has been applied to an order.
+type Ord
 
 // OrderRedeemPackage represents a service within a package that has been applied to an order.
 type OrderRedeemPackage struct {
@@ -357,11 +379,8 @@ type OrderRedeemPackage struct {
 	ServicePrice *money.Money `protobuf:"bytes,6,opt,name=service_price,json=servicePrice,proto3" json:"service_price,omitempty"`
 	// ID of the package service
 	PackageServiceId string `protobuf:"bytes,7,opt,name=package_service_id,json=packageServiceId,proto3" json:"package_service_id,omitempty"`
-	// Name of the package
-	PackageName string `protobuf:"bytes,8,opt,name=package_name,json=packageName,proto3" json:"package_name,omitempty"`
-	// Name of the service
-	ServiceName string `protobuf:"bytes,9,opt,name=service_name,json=serviceName,proto3" json:"service_name,omitempty"`
-	// Quantity of the service
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 	Quantity int32 `protobuf:"varint,10,opt,name=quantity,proto3" json:"quantity,omitempty"`
 	// When this package service record was created
 	// System-generated timestamp
@@ -369,8 +388,11 @@ type OrderRedeemPackage struct {
 	// When this package service record was last updated
 	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// When this package service record was completed
+	// System-generated timestamp
+	CompleteTime  *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=complete_time,json=completeTime,proto3" json:"complete_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *OrderRedeemPackage) Reset() {
@@ -475,14 +497,14 @@ func (x *OrderRedeemPackage) GetQuantity() int32 {
 
 func (x *OrderRedeemPackage) GetCreatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreatedTime
+		return x.LastUpdatedTime
 	}
 	return nil
 }
-
-func (x *OrderRedeemPackage) GetLastUpdatedTime() *timestamppb.Timestamp {
+	"#moego/business/order/v1/order.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc2\t\n" +
+func (x *OrderRedeemPackage) GetCompleteTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.LastUpdatedTime
+		return x.CompleteTime
 	}
 	return nil
 }
@@ -508,14 +530,15 @@ const file_moego_business_order_v1_order_proto_rawDesc = "" +
 	"\x0fdiscount_amount\x18\t \x01(\v2\x12.google.type.MoneyR\x0ediscountAmount\x12<\n" +
 	"\x10extra_fee_amount\x18\n" +
 	" \x01(\v2\x12.google.type.MoneyR\x0eextraFeeAmount\x12<\n" +
-	"\x10sub_total_amount\x18\v \x01(\v2\x12.google.type.MoneyR\x0esubTotalAmount\x12>\n" +
+	"\x0esales_datetime\x18\x15 \x01(\v2\x1a.google.protobuf.TimestampR\rsalesDatetime\x12A\n" +
+	"\x0ecompleted_time\x18\x16 \x01(\v2\x1a.google.protobuf.TimestampR\rcompletedTime\"Y\n" +
 	"\x11tips_based_amount\x18\f \x01(\v2\x12.google.type.MoneyR\x0ftipsBasedAmount\x125\n" +
 	"\ftotal_amount\x18\r \x01(\v2\x12.google.type.MoneyR\vtotalAmount\x123\n" +
 	"\vpaid_amount\x18\x0e \x01(\v2\x12.google.type.MoneyR\n" +
 	"paidAmount\x127\n" +
 	"\rremain_amount\x18\x0f \x01(\v2\x12.google.type.MoneyR\fremainAmount\x12;\n" +
 	"\x0frefunded_amount\x18\x10 \x01(\v2\x12.google.type.MoneyR\x0erefundedAmount\x12\x1d\n" +
-	"\n" +
+	"\aREMOVED\x10\x04\"\xf1\x03\n" +
 	"created_by\x18\x11 \x01(\tR\tcreatedBy\x12=\n" +
 	"\fcreated_time\x18\x12 \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12&\n" +
 	"\x0flast_updated_by\x18\x13 \x01(\tR\rlastUpdatedBy\x12F\n" +
@@ -527,12 +550,11 @@ const file_moego_business_order_v1_order_proto_rawDesc = "" +
 	"\n" +
 	"PROCESSING\x10\x02\x12\r\n" +
 	"\tCOMPLETED\x10\x03\x12\v\n" +
-	"\aREMOVED\x10\x04\"\xf1\x03\n" +
+	"\aREMOVED\x10\x04\"\xb2\x04\n" +
 	"\x12OrderRedeemPackage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
 	"\border_id\x18\x02 \x01(\tR\aorderId\x12\"\n" +
-	"\rorder_item_id\x18\x03 \x01(\tR\vorderItemId\x12\x1d\n" +
-	"\n" +
+	"\x11last_updated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTimeB\x80\x01\n" +
 	"package_id\x18\x04 \x01(\tR\tpackageId\x12\x1d\n" +
 	"\n" +
 	"service_id\x18\x05 \x01(\tR\tserviceId\x127\n" +
@@ -543,7 +565,8 @@ const file_moego_business_order_v1_order_proto_rawDesc = "" +
 	"\bquantity\x18\n" +
 	" \x01(\x05R\bquantity\x12=\n" +
 	"\fcreated_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
-	"\x11last_updated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTimeB\x80\x01\n" +
+	"\x11last_updated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12?\n" +
+	"\rcomplete_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\fcompleteTimeB\x80\x01\n" +
 	"\x1fcom.moego.api.business.order.v1B\n" +
 	"OrderProtoP\x01ZOgithub.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpbb\x06proto3"
 
@@ -571,10 +594,10 @@ var file_moego_business_order_v1_order_proto_goTypes = []any{
 var file_moego_business_order_v1_order_proto_depIdxs = []int32{
 	0,  // 0: moego.business.order.v1.Order.status:type_name -> moego.business.order.v1.Order.Status
 	3,  // 1: moego.business.order.v1.Order.tips_amount:type_name -> google.type.Money
-	3,  // 2: moego.business.order.v1.Order.tax_amount:type_name -> google.type.Money
-	3,  // 3: moego.business.order.v1.Order.discount_amount:type_name -> google.type.Money
-	3,  // 4: moego.business.order.v1.Order.extra_fee_amount:type_name -> google.type.Money
-	3,  // 5: moego.business.order.v1.Order.sub_total_amount:type_name -> google.type.Money
+	4,  // 14: moego.business.order.v1.Order.completed_time:type_name -> google.protobuf.Timestamp
+	3,  // 15: moego.business.order.v1.OrderRedeemPackage.service_price:type_name -> google.type.Money
+	4,  // 16: moego.business.order.v1.OrderRedeemPackage.created_time:type_name -> google.protobuf.Timestamp
+	4,  // 17: moego.business.order.v1.OrderRedeemPackage.last_updated_time:type_name -> google.protobuf.Timestamp
 	3,  // 6: moego.business.order.v1.Order.tips_based_amount:type_name -> google.type.Money
 	3,  // 7: moego.business.order.v1.Order.total_amount:type_name -> google.type.Money
 	3,  // 8: moego.business.order.v1.Order.paid_amount:type_name -> google.type.Money
@@ -586,11 +609,12 @@ var file_moego_business_order_v1_order_proto_depIdxs = []int32{
 	3,  // 14: moego.business.order.v1.OrderRedeemPackage.service_price:type_name -> google.type.Money
 	4,  // 15: moego.business.order.v1.OrderRedeemPackage.created_time:type_name -> google.protobuf.Timestamp
 	4,  // 16: moego.business.order.v1.OrderRedeemPackage.last_updated_time:type_name -> google.protobuf.Timestamp
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	4,  // 17: moego.business.order.v1.OrderRedeemPackage.complete_time:type_name -> google.protobuf.Timestamp
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_order_v1_order_proto_init() }
