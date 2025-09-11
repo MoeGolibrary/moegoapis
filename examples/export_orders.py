@@ -7,23 +7,25 @@ This script exports order data from the Moego API to a CSV file.
 Features:
 - Automatically retrieves company and business IDs
 - Fetches orders within a specified time range
-- Exports data to CSV format
+- Exports comprehensive order data to CSV format
 - Handles pagination for large datasets
 - Includes security checks for URLs and filenames
+- Optimized to handle large time ranges by splitting into 7-day chunks
 
 Usage:
-python list_order.py --api_key YOUR_API_KEY [--start_time START_TIME] [--end_time END_TIME]
+python export_orders.py --api_key YOUR_API_KEY [--start_time START_TIME] [--end_time END_TIME]
 
 Time format should be ISO format: YYYY-MM-DDTHH:MM:SSZ
-If no time range is specified, it defaults to the last 7 days.
+If no time range is specified, it defaults to the last 3 days.
 """
 
 import argparse
 import csv
-import requests
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
+
+import requests
 
 
 # === CONFIG ===
@@ -115,6 +117,49 @@ def get_company_and_business_ids(headers):
 
 # === FUNCTION TO GET ORDERS ===
 def get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME):
+    """
+    Fetch all orders, splitting large time ranges into 7-day chunks if needed
+    """
+    start_dt = datetime.strptime(START_TIME, '%Y-%m-%dT%H:%M:%SZ')
+    end_dt = datetime.strptime(END_TIME, '%Y-%m-%dT%H:%M:%SZ')
+
+    # If time range is more than 7 days, split into chunks
+    if (end_dt - start_dt).days > 7:
+        print(f"Time range exceeds 7 days. Splitting into 7-day chunks...")
+        return get_orders_in_chunks(company_id, business_ids, headers, start_dt, end_dt)
+    else:
+        # For time ranges <= 7 days, use the original method
+        return get_orders_for_period(company_id, business_ids, headers, START_TIME, END_TIME)
+
+
+def get_orders_in_chunks(company_id, business_ids, headers, start_dt, end_dt):
+    """
+    Split the time range into 7-day chunks and fetch orders for each chunk
+    """
+    orders = []
+    current_start = start_dt
+
+    while current_start < end_dt:
+        current_end = min(current_start + timedelta(days=7), end_dt)
+
+        start_time_str = current_start.strftime('%Y-%m-%dT%H:%M:%SZ')
+        end_time_str = current_end.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+        print(f"Fetching orders from {start_time_str} to {end_time_str}...")
+        chunk_orders = get_orders_for_period(company_id, business_ids, headers, start_time_str, end_time_str)
+        orders.extend(chunk_orders)
+
+        current_start = current_end
+        # Add a small delay between chunks to avoid rate limiting
+        time.sleep(1)
+
+    return orders
+
+
+def get_orders_for_period(company_id, business_ids, headers, START_TIME, END_TIME):
+    """
+    Fetch orders for a specific time period with pagination
+    """
     url = "https://openapi.moego.pet/v1/orders:list"
     orders = []
     page_token = "1"
@@ -138,21 +183,16 @@ def get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME):
                 }
             }
         }
-        if page_token:
-            body["pagination"]["pageToken"] = page_token
-
-        response = requests.post(url, headers=headers, json=body)
-        print("Status code:", response.status_code)
-        print("Response text:", response.text)
 
         try:
             response = requests.post(url, headers=headers, json=body, timeout=30)
-            print("Status code:", response.status_code)
+            print(f"Status code: {response.status_code} for period {START_TIME} to {END_TIME}")
+
             # Limit response output length to avoid overly long output
             response_text = response.text
             if len(response_text) > 500:
                 response_text = response_text[:500] + "...(truncated)"
-            print("Response text:", response_text)
+            print(f"Response text: {response_text}")
 
             data = response.json()
         except Exception as e:
@@ -174,6 +214,7 @@ def get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME):
         if page_token == "":
             break
 
+    print(f"Retrieved {len(orders)} orders for period {START_TIME} to {END_TIME}")
     return orders
 
 
@@ -201,9 +242,11 @@ def write_orders_to_csv(orders, filename):
     with open(filename, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=keys)
         writer.writeheader()
+
         for order in orders:
             flat_order = {key: order.get(key, "") for key in keys}
             writer.writerow(flat_order)
+
     print(f"✅ Saved {len(orders)} orders to {filename}")
 
 
@@ -243,8 +286,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Fetch Moego orders data')
     parser.add_argument('--api_key', required=True, help='API Key for authentication')
     # Calculate default time range (last 3 days instead of 7)
-    default_end_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
-    default_start_time = (datetime.utcnow() - timedelta(days=3)).strftime('%Y-%m-%dT%H:%M:%SZ')
+    default_end_time = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
+    default_start_time = (datetime.now(timezone.utc) - timedelta(days=3)).strftime('%Y-%m-%dT%H:%M:%SZ')
     parser.add_argument('--start_time', default=default_start_time,
                         help='Start time in ISO format (default: 3 days ago)')
     parser.add_argument('--end_time', default=default_end_time, help='End time in ISO format (default: now)')
