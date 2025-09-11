@@ -187,8 +187,17 @@ def write_orders_to_csv(orders, filename):
     if not is_safe_filename(filename):
         raise ValueError("Unsafe filename detected")
 
-    keys = ["id", "status", "totalAmount", "currency", "createdTime", "lastUpdatedTime", "salesTime", "completedTime",
-            "businessId", "clientId"]
+    keys = ["id",
+            "businessId",
+            "customerId",
+            "status",
+            "totalAmount",
+            "createdTime",
+            "lastUpdatedTime",
+            "salesDatetime",
+            "completedTime",
+            "createdBy",
+            "lastUpdatedBy"]
     with open(filename, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=keys)
         writer.writeheader()
