@@ -18,12 +18,13 @@ Time format should be ISO format: YYYY-MM-DDTHH:MM:SSZ
 If no time range is specified, it defaults to the last 7 days.
 """
 
-import requests
-import csv
-import time
 import argparse
+import csv
+import requests
+import time
 from datetime import datetime, timedelta
 from urllib.parse import urlparse
+
 
 # === CONFIG ===
 
@@ -47,7 +48,7 @@ def get_company_and_business_ids(headers):
         # Validate URL safety
         if not is_safe_url(company_url):
             raise ValueError("Unsafe URL detected")
-            
+
         response = requests.post(company_url, headers=headers, json=company_body, timeout=30)
         if response.status_code != 200:
             print("Failed to fetch companies:", response.status_code, response.text)
@@ -85,7 +86,7 @@ def get_company_and_business_ids(headers):
         # Validate URL safety
         if not is_safe_url(business_url):
             raise ValueError("Unsafe URL detected")
-            
+
         response = requests.post(business_url, headers=headers, json=business_body, timeout=30)
         if response.status_code != 200:
             print("Failed to fetch businesses:", response.status_code, response.text)
@@ -101,7 +102,8 @@ def get_company_and_business_ids(headers):
         print(f"curl -X POST '{business_url}' \\")
         print(f"  -H 'Authorization: Basic YOUR_API_KEY' \\")
         print(f"  -H 'Content-Type: application/json' \\")
-        print(f"  -d '{{\"companyId\": \"{company_id}\", \"pagination\": {{\"pageSize\": 100, \"pageToken\": \"1\"}}}}'")
+        print(
+            f"  -d '{{\"companyId\": \"{company_id}\", \"pagination\": {{\"pageSize\": 100, \"pageToken\": \"1\"}}}}'")
         print()
 
         return company_id, business_ids
@@ -120,7 +122,7 @@ def get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME):
     # Validate URL safety
     if not is_safe_url(url):
         raise ValueError("Unsafe URL detected")
-        
+
     while True:
         body = {
             "companyId": company_id,
@@ -130,7 +132,7 @@ def get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME):
                 "pageToken": page_token
             },
             "filter": {
-                "createdTime": {
+                "lastUpdatedTime": {
                     "startTime": START_TIME,
                     "endTime": END_TIME
                 }
@@ -184,8 +186,9 @@ def write_orders_to_csv(orders, filename):
     # Validate filename safety
     if not is_safe_filename(filename):
         raise ValueError("Unsafe filename detected")
-        
-    keys = ["id", "status", "totalAmount", "currency", "createdTime", "updatedTime", "businessId", "clientId"]
+
+    keys = ["id", "status", "totalAmount", "currency", "createdTime", "lastUpdatedTime", "salesTime", "completedTime",
+            "businessId", "clientId"]
     with open(filename, mode="w", newline="", encoding="utf-8") as file:
         writer = csv.DictWriter(file, fieldnames=keys)
         writer.writeheader()
@@ -233,21 +236,22 @@ if __name__ == "__main__":
     # Calculate default time range (last 3 days instead of 7)
     default_end_time = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%SZ')
     default_start_time = (datetime.utcnow() - timedelta(days=3)).strftime('%Y-%m-%dT%H:%M:%SZ')
-    parser.add_argument('--start_time', default=default_start_time, help='Start time in ISO format (default: 3 days ago)')
+    parser.add_argument('--start_time', default=default_start_time,
+                        help='Start time in ISO format (default: 3 days ago)')
     parser.add_argument('--end_time', default=default_end_time, help='End time in ISO format (default: now)')
-    
+
     args = parser.parse_args()
-    
+
     # Use argument values
     API_KEY = args.api_key
     START_TIME = args.start_time
     END_TIME = args.end_time
-    
+
     # Validate input parameters
     if not API_KEY:
         print("❌ API Key is required")
         exit(1)
-        
+
     # Validate time format
     try:
         datetime.strptime(START_TIME, '%Y-%m-%dT%H:%M:%SZ')
@@ -255,12 +259,12 @@ if __name__ == "__main__":
     except ValueError:
         print("❌ Invalid time format. Use ISO format: YYYY-MM-DDTHH:MM:SSZ")
         exit(1)
-    
+
     # Generate CSV filename based on time range
     start_date = START_TIME.replace("T", "_").replace(":", "-").split(".")[0]
     end_date = END_TIME.replace("T", "_").replace(":", "-").split(".")[0]
     OUTPUT_CSV = f"moego_orders_{start_date}_to_{end_date}.csv"
-    
+
     # === HEADERS ===
     headers = {
         "Authorization": f"Basic {API_KEY}",
@@ -282,7 +286,8 @@ if __name__ == "__main__":
         print(f"curl -X POST 'https://openapi.moego.pet/v1/orders:list' \\")
         print(f"  -H 'Authorization: Basic YOUR_API_KEY' \\")
         print(f"  -H 'Content-Type: application/json' \\")
-        print(f"  -d '{{\"companyId\": \"{company_id}\", \"businessIds\": {business_ids}, \"pagination\": {{\"pageSize\": 100, \"pageToken\": \"1\"}}, \"filter\": {{\"createdTime\": {{\"startTime\": \"{START_TIME}\", \"endTime\": \"{END_TIME}\"}}}}}}'")
+        print(
+            f"  -d '{{\"companyId\": \"{company_id}\", \"businessIds\": {business_ids}, \"pagination\": {{\"pageSize\": 100, \"pageToken\": \"1\"}}, \"filter\": {{\"lastUpdatedTime\": {{\"startTime\": \"{START_TIME}\", \"endTime\": \"{END_TIME}\"}}}}}}'")
         print()
         all_orders = get_all_orders(company_id, business_ids, headers, START_TIME, END_TIME)
         write_orders_to_csv(all_orders, OUTPUT_CSV)
