@@ -13,7 +13,6 @@ option java_package = "com.moego.api.business.webhook.v1";
 
 // Webhook represents a webhook configuration for event notifications.
 message Webhook {
-
   // ContentType defines the format of the payload.
   enum ContentType {
     // Default value.
@@ -33,10 +32,8 @@ message Webhook {
   // If it is empty, no events will be subscribed to
   repeated moego.business.event.v1.Event.Type event_types = 3;
 
-
   // URL to receive webhook payloads.
   string endpoint_url = 4;
-
 
   // Optional secret token used to sign payloads (e.g., HMAC).
   string secret_token = 5;
@@ -66,7 +63,6 @@ message Webhook {
 
   // Timestamp when the webhook was last updated.
   google.protobuf.Timestamp updated_time = 11;
-
 }
 
 // WebhookDelivery represents a log entry for a webhook event delivery attempt.

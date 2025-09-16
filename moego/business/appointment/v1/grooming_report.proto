@@ -13,7 +13,6 @@ option java_package = "com.moego.api.business.appointment.v1";
 // It contains information about the pet, report status, sending methods and logs,
 // and is used for customer communication and internal record keeping.
 message GroomingReport {
-
   // Status of the grooming report throughout its lifecycle.
   enum Status {
     // Not intended for direct use. Indicates a system anomaly.
@@ -99,7 +98,6 @@ message GroomingReport {
 
   // object(SendLog), Log entry for each send attempt made for this report.
   message SendLog {
-
     // enum(SendMethod), Method used for this send attempt.
     SendMethod send_method = 1;
 

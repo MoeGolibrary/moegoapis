@@ -2,7 +2,6 @@ syntax = "proto3";
 
 package moego.business.setting.v1;
 
-
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
 option java_outer_classname = "SettingProto";

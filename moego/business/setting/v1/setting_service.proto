@@ -4,12 +4,12 @@ package moego.business.setting.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/money.proto";
 import "moego/business/setting/v1/customer.proto";
-import "moego/business/setting/v1/pet.proto";
 import "moego/business/setting/v1/lodging.proto";
+import "moego/business/setting/v1/pet.proto";
 import "moego/business/setting/v1/service.proto";
 import "moego/common/v1/pagination.proto";
-import "google/type/money.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
@@ -107,7 +107,6 @@ service SettingService {
     };
   }
 
-
   // Lists all available lead lifecycle stages for a company.
   //
   // Lifecycle stages help track the progression of leads through the sales pipeline.
@@ -204,7 +203,6 @@ service SettingService {
       body: "*"
     };
   }
-
 }
 
 // Request message for listing pet codes.
@@ -274,7 +272,6 @@ message ListServicesRequest {
   Filter filter = 4;
 }
 
-
 // Response message for listing services.
 message ListServicesResponse {
   // Token for retrieving the next page of results
@@ -317,11 +314,11 @@ message CreateServiceRequest {
 
   // Base price for the service
   // Can be adjusted based on pet size, breed, or add-ons
-  google.type.Money price = 5  [(google.api.field_behavior) = REQUIRED];
+  google.type.Money price = 5 [(google.api.field_behavior) = REQUIRED];
 
   // Whether this is a primary service or an add-on
   // Affects how the service can be booked
-  Service.Type service_type = 6  [(google.api.field_behavior) = REQUIRED];
+  Service.Type service_type = 6 [(google.api.field_behavior) = REQUIRED];
 
   // Duration of the service in minutes
   // Used for scheduling and resource allocation
@@ -437,7 +434,6 @@ message ListPetSizesRequest {
   // ID of the company to list pet sizes for
   // Required. Must be a valid company ID
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
-
 }
 
 // Response message for listing pet sizes.

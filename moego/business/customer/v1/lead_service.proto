@@ -4,15 +4,14 @@ package moego.business.customer.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "moego/business/customer/v1/lead.proto";
 import "moego/business/customer/v1/customer.proto";
+import "moego/business/customer/v1/lead.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
 option java_outer_classname = "CustomerServiceProto";
 option java_package = "com.moego.api.business.customer.v1";
-
 
 // LeadService provides methods for managing leads in the sales pipeline
 service LeadService {
@@ -32,9 +31,7 @@ service LeadService {
   // Returns a lead.
   // Returns NOT_FOUND if the lead ID doesn't exist.
   rpc GetLead(GetLeadRequest) returns (Lead) {
-    option (google.api.http) = {
-      get: "/v1/leads/{id}"
-    };
+    option (google.api.http) = {get: "/v1/leads/{id}"};
   }
 
   // Creates a new lead

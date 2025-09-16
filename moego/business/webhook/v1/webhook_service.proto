@@ -5,16 +5,15 @@ package moego.business.webhook.v1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
-import "moego/business/webhook/v1/webhook.proto";
-import "moego/common/v1/pagination.proto";
 import "moego/auth/apikey/v1/apikey.proto";
 import "moego/business/event/v1/event.proto";
+import "moego/business/webhook/v1/webhook.proto";
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/webhook/v1/webhookpb;webhookpb";
 option java_multiple_files = true;
 option java_outer_classname = "WebhookServiceProto";
 option java_package = "com.moego.api.business.webhook.v1";
-
 
 // WebhookService is a service for managing webhook configurations and event deliveries.
 service WebhookService {
@@ -119,9 +118,8 @@ service WebhookService {
 
 // CreateWebhookRequest
 message CreateWebhookRequest {
-
   // endpoint_url is the URL where the webhook will be delivered.
-  string endpoint_url = 1  [(google.api.field_behavior) = REQUIRED];
+  string endpoint_url = 1 [(google.api.field_behavior) = REQUIRED];
 
   // List of organizations the webhook is subscribed to.
   // If empty, the webhook is subscribed to all organizations.
@@ -129,13 +127,13 @@ message CreateWebhookRequest {
 
   // event_types is the list of event types this webhook subscribes to.
   // If it is empty, no events will be subscribed to
-  repeated moego.business.event.v1.Event.Type event_types = 3  [(google.api.field_behavior) = REQUIRED];
+  repeated moego.business.event.v1.Event.Type event_types = 3 [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
   optional string secret_token = 4 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
-  Webhook.ContentType content_type = 5  [(google.api.field_behavior) = OPTIONAL];
+  Webhook.ContentType content_type = 5 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
   optional bool is_active = 6 [(google.api.field_behavior) = OPTIONAL];
@@ -148,13 +146,11 @@ message CreateWebhookRequest {
   map<string, Webhook.HeaderValues> headers = 8 [(google.api.field_behavior) = OPTIONAL];
 }
 
-
 // GetWebhookRequest
 message GetWebhookRequest {
   // id is the unique identifier of the webhook.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
-
 
 // UpdateWebhookRequest
 message UpdateWebhookRequest {
@@ -162,7 +158,7 @@ message UpdateWebhookRequest {
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 
   // endpoint_url is the URL where the webhook will be delivered.
-  string endpoint_url = 2  [(google.api.field_behavior) = REQUIRED];
+  string endpoint_url = 2 [(google.api.field_behavior) = REQUIRED];
 
   // List of organizations the webhook is subscribed to.
   // If empty, the webhook is subscribed to all organizations.
@@ -170,13 +166,13 @@ message UpdateWebhookRequest {
 
   // event_types is the list of event types this webhook subscribes to.
   // If it is empty, no events will be subscribed to
-  repeated moego.business.event.v1.Event.Type event_types = 4  [(google.api.field_behavior) = REQUIRED];
+  repeated moego.business.event.v1.Event.Type event_types = 4 [(google.api.field_behavior) = REQUIRED];
 
   // secret_token is an optional HMAC token used to sign payloads.
   optional string secret_token = 5 [(google.api.field_behavior) = OPTIONAL];
 
   // content_type specifies the Content-Type header when delivering payloads.
-  Webhook.ContentType content_type = 6  [(google.api.field_behavior) = OPTIONAL];
+  Webhook.ContentType content_type = 6 [(google.api.field_behavior) = OPTIONAL];
 
   // Whether the webhook is currently active.
   optional bool is_active = 7 [(google.api.field_behavior) = OPTIONAL];
@@ -205,7 +201,6 @@ message ListWebhooksRequest {
   // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
-
   // Filter
   message Filter {
     // filter by active status
@@ -231,7 +226,6 @@ message ListWebhooksResponse {
   // webhooks is the list of matching webhook configurations.
   repeated Webhook webhooks = 2;
 }
-
 
 // TriggerTestWebhookDeliveryRequest defines the request to trigger a test webhook event.
 message TriggerTestWebhookDeliveryRequest {
@@ -276,7 +270,6 @@ message ListWebhookDeliveriesRequest {
 
   // filter options for deliveries
   Filter filter = 3;
-
 }
 
 // ListWebhookEventDeliveriesResponse

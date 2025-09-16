@@ -9,7 +9,6 @@ option java_multiple_files = true;
 option java_outer_classname = "SettingProto";
 option java_package = "com.moego.api.business.setting.v1";
 
-
 // Code represents special handling instructions or medical alerts
 // These codes are visible to staff during service delivery
 message PetCode {

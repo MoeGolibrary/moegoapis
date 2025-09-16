@@ -4,16 +4,15 @@ package moego.business.appointment.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/date.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/appointment_note.proto";
 import "moego/business/appointment/v1/grooming_report.proto";
-import "moego/common/v1/pagination.proto";
-import "google/type/date.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/lodging.proto";
 import "moego/business/setting/v1/service.proto";
-
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpb";
 option java_multiple_files = true;
@@ -137,7 +136,6 @@ service AppointmentService {
       body: "*"
     };
   }
-
 }
 
 // Request to retrieve a specific appointment.
@@ -188,6 +186,15 @@ message ListAppointmentsRequest {
 
     // array(ItemType), Filter by service type.
     repeated setting.v1.Service.ItemType service_types = 7 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(string), Filter by service IDs.
+    repeated string service_ids = 8 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(string), Filter by pet IDs.
+    repeated string pet_ids = 9 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(string), Filter by customer IDs.
+    repeated string customer_ids = 10 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // object(Filter), Optional filters to narrow the results.
@@ -389,7 +396,6 @@ message ListGroomingReportsResponse {
 
 // Request to create an appointment note
 message CreateAppointmentNoteRequest {
-
   // string, The unique identifier of the appointment.
   string appointment_id = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -407,7 +413,6 @@ message UpdateAppointmentNoteRequest {
 
   // string, The note.
   string note = 2 [(google.api.field_behavior) = REQUIRED];
-
 }
 
 // Request to list appointment notes
@@ -417,7 +422,6 @@ message ListAppointmentNotesRequest {
 
   // enum(AppointmentNote.Type), The type of note.
   AppointmentNote.Type type = 2 [(google.api.field_behavior) = OPTIONAL];
-
 }
 
 // Response to list appointment notes

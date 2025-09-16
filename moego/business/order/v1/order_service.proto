@@ -6,9 +6,9 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/order/v1/order.proto";
+import "moego/business/order/v1/order_discount.proto";
 import "moego/business/order/v1/order_line_item.proto";
 import "moego/business/order/v1/order_line_tax.proto";
-import "moego/business/order/v1/order_discount.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb;orderpb";
@@ -169,7 +169,6 @@ message ListOrderLineItemsResponse {
   // May be empty if no items match or if include_tax was false
   repeated OrderLineTax order_line_item_taxes = 2;
 }
-
 
 // Request message for listing order discounts.
 message ListOrderDiscountsRequest {

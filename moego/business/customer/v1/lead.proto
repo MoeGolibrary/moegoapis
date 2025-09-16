@@ -3,9 +3,9 @@ syntax = "proto3";
 package moego.business.customer.v1;
 
 import "google/protobuf/timestamp.proto";
-import "moego/common/v1/address.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/customer.proto";
+import "moego/common/v1/address.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;

@@ -11,7 +11,6 @@ option java_package = "com.moego.api.business.appointment.v1";
 
 // Appointment note
 message AppointmentNote {
-
   // Type of note
   enum Type {
     // unspecified
@@ -59,4 +58,3 @@ message AppointmentNote {
   // string, The staff who last modified the note.
   string last_updated_by = 11;
 }
-

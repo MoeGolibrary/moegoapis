@@ -18,7 +18,6 @@ option java_package = "com.moego.api.business.online_booking.v1";
 // This service allows retrieval of individual abandoned bookings and listing filtered sets.
 // All methods require authentication and proper business context.
 service OnlineBookingService {
-
   // Retrieves a single abandoned booking by ID.
   //
   // Returns detailed information about the abandoned booking including customer info,
@@ -90,5 +89,4 @@ message ListAbandonedBookingsResponse {
 message GetAbandonedBookingRequest {
   // The unique identifier of the abandoned booking to retrieve.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
-
 }

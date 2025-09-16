@@ -109,7 +109,6 @@ message AbandonedBooking {
     RECOVERED = 3;
   }
 
-
   // Frequency type of the abandonment process.
   enum PreferredFrequencyType {
     // Default value. This value is unused.
@@ -208,7 +207,6 @@ message AbandonedBooking {
 // AbandonedBookingCustomer contains information about the customer associated with an abandoned booking.
 // It includes both core customer data and additional booking-specific preferences and metadata.
 message AbandonedBookingCustomer {
-
   // The unique identifier for the customer.
   string customer_id = 1;
 
@@ -249,11 +247,9 @@ message AbandonedBookingCustomer {
   repeated AbandonedBooking.QuestionAnswer question_answer_list = 13;
 }
 
-
 // AbandonedBookingPet represents a pet involved in an abandoned booking.
 // It captures service-related details along with emergency contact and health information.
 message AbandonedBookingPet {
-
   // Pet and service detail information used in the booking flow.
   moego.business.appointment.v1.PetServiceDetail pet_service_detail = 1;
 

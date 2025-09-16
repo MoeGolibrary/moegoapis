@@ -127,7 +127,6 @@ message Order {
   google.protobuf.Timestamp completed_time = 22;
 }
 
-
 // OrderRedeemPackage represents a service within a package that has been applied to an order.
 message OrderRedeemPackage {
   // Unique identifier for the package service record

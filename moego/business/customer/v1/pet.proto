@@ -5,8 +5,8 @@ package moego.business.customer.v1;
 import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/date.proto";
-import "moego/common/v1/weight.proto";
 import "moego/business/setting/v1/pet.proto";
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;

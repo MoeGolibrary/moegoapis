@@ -4,12 +4,10 @@ package moego.business.setting.v1;
 
 import "google/protobuf/timestamp.proto";
 
-
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
 option java_outer_classname = "SettingProto";
 option java_package = "com.moego.api.business.setting.v1";
-
 
 // Tag represents a label that can be applied to customers for categorization
 // and filtering purposes.
@@ -36,7 +34,6 @@ message ReferralSource {
   string name = 2;
 }
 
-
 // LifeCycle
 message LifeCycle {
   // string, The unique identifier of the LifeCycle.
@@ -57,6 +54,3 @@ message ActionStatus {
   // string, The color of the ActionStatus.
   string color = 3;
 }
-
-
-

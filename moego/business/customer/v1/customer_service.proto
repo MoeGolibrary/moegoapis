@@ -6,9 +6,9 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/customer/v1/customer.proto";
+import "moego/business/setting/v1/customer.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
-import "moego/business/setting/v1/customer.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -48,7 +48,6 @@ service CustomerService {
       body: "*"
     };
   }
-
 
   // Retrieves detailed information about a specific customer.
   //
@@ -195,7 +194,6 @@ message UpdateCustomerRequest {
   // Optional. If not provided, current value will be retained
   optional string phone = 7 [(google.api.field_behavior) = REQUIRED];
 
-
   // email, optional
   // Optional. If not provided, current value will be retained
   optional string email = 8;
@@ -212,7 +210,6 @@ message UpdateCustomerRequest {
   // Optional. Empty list if not provided
   repeated Customer.Note notes = 11;
 }
-
 
 // Request message for retrieving a specific customer.
 message GetCustomerRequest {

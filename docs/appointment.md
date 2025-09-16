@@ -301,6 +301,9 @@ Lists appointments matching specified criteria, including company ID and optiona
 - `checkInTime`: Filter by check-in time range.
 - `checkOutTime`: Filter by check-out time range.
 - `serviceTypes`: Filter by service item type.
+- `serviceIds`: Filter by service item ID.
+- `petIds`: Filter by pet ID.
+- `customerIds`: Filter by customer ID.
 
 #### 📌 Return Value:
 

@@ -3,8 +3,8 @@ syntax = "proto3";
 package moego.business.customer.v1;
 
 import "google/protobuf/timestamp.proto";
-import "moego/common/v1/address.proto";
 import "moego/business/setting/v1/customer.proto";
+import "moego/common/v1/address.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -47,7 +47,6 @@ message Customer {
     // When this note was last modified
     google.protobuf.Timestamp last_updated_time = 4;
   }
-
 
   // Preference stores a customer's communication and marketing preferences.
   // These settings determine how and when we can contact the customer.

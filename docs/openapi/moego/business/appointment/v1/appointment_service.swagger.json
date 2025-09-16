@@ -1616,6 +1616,27 @@
             "$ref": "#/definitions/ServiceItemType"
           },
           "description": "array(ItemType), Filter by service type."
+        },
+        "serviceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), Filter by service IDs."
+        },
+        "petIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), Filter by pet IDs."
+        },
+        "customerIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), Filter by customer IDs."
         }
       },
       "title": "Filter parameters for the appointment list",
