@@ -993,6 +993,9 @@ type ListCustomersRequest_Filter struct {
 	// Time range for filtering customers by last update time
 	// Optional. If not provided, returns all customers
 	LastUpdatedTime *interval.Interval `protobuf:"bytes,1,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
+	// Main phone number for filtering customers
+	// Optional. If not provided, returns all customers
+	MainPhoneNumber string `protobuf:"bytes,2,opt,name=mainPhoneNumber,proto3" json:"mainPhoneNumber,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -1032,6 +1035,13 @@ func (x *ListCustomersRequest_Filter) GetLastUpdatedTime() *interval.Interval {
 		return x.LastUpdatedTime
 	}
 	return nil
+}
+
+func (x *ListCustomersRequest_Filter) GetMainPhoneNumber() string {
+	if x != nil {
+		return x.MainPhoneNumber
+	}
+	return ""
 }
 
 var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDescriptor
@@ -1081,16 +1091,17 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\n" +
 	"\b_address\")\n" +
 	"\x12GetCustomerRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x9f\x02\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xce\x02\n" +
 	"\x14ListCustomersRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12O\n" +
-	"\x06filter\x18\x03 \x01(\v27.moego.business.customer.v1.ListCustomersRequest.FilterR\x06filter\x1aP\n" +
+	"\x06filter\x18\x03 \x01(\v27.moego.business.customer.v1.ListCustomersRequest.FilterR\x06filter\x1a\x7f\n" +
 	"\x06Filter\x12F\n" +
-	"\x11last_updated_time\x18\x01 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\x0flastUpdatedTime\"\x83\x01\n" +
+	"\x11last_updated_time\x18\x01 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\x0flastUpdatedTime\x12-\n" +
+	"\x0fmainPhoneNumber\x18\x02 \x01(\tB\x03\xe0A\x01R\x0fmainPhoneNumber\"\x83\x01\n" +
 	"\x15ListCustomersResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12B\n" +
 	"\tcustomers\x18\x02 \x03(\v2$.moego.business.customer.v1.CustomerR\tcustomers\"0\n" +

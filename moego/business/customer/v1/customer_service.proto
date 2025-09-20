@@ -233,6 +233,10 @@ message ListCustomersRequest {
     // Time range for filtering customers by last update time
     // Optional. If not provided, returns all customers
     google.type.Interval last_updated_time = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // Main phone number for filtering customers
+    // Optional. If not provided, returns all customers
+    string mainPhoneNumber = 2 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the customer list

@@ -1061,6 +1061,10 @@
         "lastUpdatedTime": {
           "$ref": "#/definitions/typeInterval",
           "title": "Time range for filtering customers by last update time\nOptional. If not provided, returns all customers"
+        },
+        "mainPhoneNumber": {
+          "type": "string",
+          "title": "Main phone number for filtering customers\nOptional. If not provided, returns all customers"
         }
       },
       "title": "Filter parameters for the customer list",
