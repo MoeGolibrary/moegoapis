@@ -176,3 +176,44 @@ understanding.
 
 Each JSON file corresponds to a core module and follows the OpenAPI 3.0 specification, making it easy to integrate into
 various development toolchains.
+
+## 📛 Common Error Responses
+
+When using the MoeGo APIs, you may encounter the following common error responses:
+
+### Invalid Obfuscated ID
+
+```json
+{
+    "code": 13,
+    "message": "invalid obfuscate",
+    "details": []
+}
+```
+
+This error occurs when you use an incorrectly formatted ID that does not conform to the expected obfuscation format.
+
+### No Permission to Access Resource
+
+```json
+{
+    "code": 7,
+    "message": "no permission to access the resource",
+    "details": []
+}
+```
+
+This error occurs when you do not have permission to access the corresponding ID.
+
+### Unauthorized Access to Resources
+
+```json
+{
+  "code":  16,
+  "message":  "Authentication failed. Cause: no authorization found in headers. please check your credentials and try again."
+}
+```
+
+This error occurs when you use an incorrect API Key.
+
+---
