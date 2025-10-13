@@ -42,18 +42,18 @@ Defines a single column of data in a report, including data type and display pro
 
 #### Field.Type (enum)
 
-| Value              | Description                                                                            |
-|--------------------|----------------------------------------------------------------------------------------|
-| `TYPE_UNSPECIFIED` | Default value when type is not specified; should not be used when creating new fields  |
-| `MONEY`            | Represents monetary values with currency information, stored using `google.type.Money` |
-| `TEXT`             | Represents text or string values                                                       |
-| `DATE`             | Represents date values without time, stored as `Timestamp` with time set to midnight   |
-| `TIME`             | Represents time values without date, stored as `Timestamp` with date set to epoch      |
-| `NUMBER`           | Represents whole numbers                                                               |
-| `DECIMAL_NUMBER`   | Represents numbers with decimal points                                                 |
-| `PERCENTAGE`       | Represents percentage values, stored as decimal (e.g., 0.75 for 75%)                   |
-| `DURATION`         | Represents time duration in minutes                                                    |
-| `DATETIME`         | Represents full date and time values                                                   |
+| Value              | Description                                                                                                                                                      |
+|--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `TYPE_UNSPECIFIED` | Default value when type is not specified; should not be used when creating new fields                                                                            |
+| `MONEY`            | Represents monetary values with currency information, stored using `google.type.Money`                                                                           |
+| `TEXT`             | Represents text or string values                                                                                                                                 |
+| `DATE`             | Represents date-only value (yyyy-MM-dd), based on the local timezone; no conversion needed                                                                       |
+| `TIME`             | Represents full datetime value (yyyy-MM-dd hh:mm) but display as time-only (hh:mm), based on UTC+0 timezone; convert according to the company's timezone setting |
+| `NUMBER`           | Represents whole numbers                                                                                                                                         |
+| `DECIMAL_NUMBER`   | Represents numbers with decimal points                                                                                                                           |
+| `PERCENTAGE`       | Represents percentage values, stored as decimal (e.g., 0.75 for 75%)                                                                                             |
+| `DURATION`         | Represents time duration in minutes                                                                                                                              |
+| `DATETIME`         | Represents full datetime value (yyyy-MM-dd hh:mm), based on UTC+0 timezone; convert according to the company's timezone setting                                  |
 
 | Field Name      | Type       | Description                                                                                          |
 |-----------------|------------|------------------------------------------------------------------------------------------------------|
