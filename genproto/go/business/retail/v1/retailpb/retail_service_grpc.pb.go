@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion9
 
 const (
 	RetailService_ListProducts_FullMethodName = "/moego.business.retail.v1.RetailService/ListProducts"
+	RetailService_ListPackages_FullMethodName = "/moego.business.retail.v1.RetailService/ListPackages"
 )
 
 // RetailServiceClient is the client API for RetailService service.
@@ -32,6 +33,10 @@ type RetailServiceClient interface {
 	//
 	// Returns a list of products.
 	ListProducts(ctx context.Context, in *ListProductsRequest, opts ...grpc.CallOption) (*ListProductsResponse, error)
+	// Lists packages
+	//
+	// Returns a list of packages.
+	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesResponse, error)
 }
 
 type retailServiceClient struct {
@@ -52,6 +57,16 @@ func (c *retailServiceClient) ListProducts(ctx context.Context, in *ListProducts
 	return out, nil
 }
 
+func (c *retailServiceClient) ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListPackagesResponse)
+	err := c.cc.Invoke(ctx, RetailService_ListPackages_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // RetailServiceServer is the server API for RetailService service.
 // All implementations must embed UnimplementedRetailServiceServer
 // for forward compatibility.
@@ -62,6 +77,10 @@ type RetailServiceServer interface {
 	//
 	// Returns a list of products.
 	ListProducts(context.Context, *ListProductsRequest) (*ListProductsResponse, error)
+	// Lists packages
+	//
+	// Returns a list of packages.
+	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesResponse, error)
 	mustEmbedUnimplementedRetailServiceServer()
 }
 
@@ -74,6 +93,9 @@ type UnimplementedRetailServiceServer struct{}
 
 func (UnimplementedRetailServiceServer) ListProducts(context.Context, *ListProductsRequest) (*ListProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProducts not implemented")
+}
+func (UnimplementedRetailServiceServer) ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPackages not implemented")
 }
 func (UnimplementedRetailServiceServer) mustEmbedUnimplementedRetailServiceServer() {}
 func (UnimplementedRetailServiceServer) testEmbeddedByValue()                       {}
@@ -114,6 +136,24 @@ func _RetailService_ListProducts_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RetailService_ListPackages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPackagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RetailServiceServer).ListPackages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RetailService_ListPackages_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RetailServiceServer).ListPackages(ctx, req.(*ListPackagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // RetailService_ServiceDesc is the grpc.ServiceDesc for RetailService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -124,6 +164,10 @@ var RetailService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListProducts",
 			Handler:    _RetailService_ListProducts_Handler,
+		},
+		{
+			MethodName: "ListPackages",
+			Handler:    _RetailService_ListPackages_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

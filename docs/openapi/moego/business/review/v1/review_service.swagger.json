@@ -53,17 +53,6 @@
     }
   },
   "definitions": {
-    "ReviewSource": {
-      "type": "string",
-      "enum": [
-        "SOURCE_UNSPECIFIED",
-        "SMS",
-        "GROOMING_REPORT",
-        "PET_PARENT_PORTAL"
-      ],
-      "default": "SOURCE_UNSPECIFIED",
-      "description": "Source identifies the channel through which the review was submitted.\nThis helps track engagement across different feedback collection methods\nand analyze response patterns.\n\n - SOURCE_UNSPECIFIED: Unknown or invalid source\nShould not be used when creating new reviews\n - SMS: Review submitted via SMS message\nTypically sent after service completion\n - GROOMING_REPORT: Review submitted through grooming report\nCollected during service documentation\n - PET_PARENT_PORTAL: Review submitted through customer portal\nDirect customer feedback channel"
-    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -138,7 +127,7 @@
         "sources": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/ReviewSource"
+            "$ref": "#/definitions/v1ReviewSource"
           },
           "title": "Feedback channels to include in results\nOptional. If empty, includes reviews from all sources"
         },
@@ -234,7 +223,7 @@
           "title": "IDs of pets involved in the reviewed service\nMay include multiple pets for group appointments"
         },
         "source": {
-          "$ref": "#/definitions/ReviewSource",
+          "$ref": "#/definitions/v1ReviewSource",
           "title": "Channel through which the review was submitted\nUsed for tracking feedback collection methods"
         },
         "score": {
@@ -269,6 +258,17 @@
         },
         "type": "Review"
       }
+    },
+    "v1ReviewSource": {
+      "type": "string",
+      "enum": [
+        "SOURCE_UNSPECIFIED",
+        "SMS",
+        "GROOMING_REPORT",
+        "PET_PARENT_PORTAL"
+      ],
+      "default": "SOURCE_UNSPECIFIED",
+      "description": "Source identifies the channel through which the review was submitted.\nThis helps track engagement across different feedback collection methods\nand analyze response patterns.\n\n - SOURCE_UNSPECIFIED: Unknown or invalid source\nShould not be used when creating new reviews\n - SMS: Review submitted via SMS message\nTypically sent after service completion\n - GROOMING_REPORT: Review submitted through grooming report\nCollected during service documentation\n - PET_PARENT_PORTAL: Review submitted through customer portal\nDirect customer feedback channel"
     }
   }
 }

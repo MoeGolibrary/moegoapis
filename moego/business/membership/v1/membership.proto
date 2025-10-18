@@ -1,0 +1,218 @@
+syntax = "proto3";
+
+package moego.business.membership.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+import "google/type/dayofweek.proto";
+import "google/type/timeofday.proto";
+import "google/type/interval.proto";
+import "moego/common/v1/time_period.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
+option java_multiple_files = true;
+option java_outer_classname = "MembershipProto";
+option java_package = "com.moego.api.business.membership.v1";
+
+// Membership represents a membership plan that customers can purchase and use for benefits.
+message Membership {
+  // Status represents the current state of a membership plan.
+  enum Status {
+    // STATUS_UNSPECIFIED indicates an unknown or invalid status.
+    STATUS_UNSPECIFIED = 0;
+
+    // ACTIVE indicates the membership plan is currently available for purchase and use.
+    ACTIVE = 1;
+
+    // INACTIVE indicates the membership plan is not available for new purchases
+    // but existing memberships may still be valid.
+    INACTIVE = 2;
+    
+    // DELETED indicates the membership plan has been removed from the system.
+    DELETED = 3;
+  }
+
+  // Source represents where the membership plan originates from.
+  enum Source {
+    // SOURCE_UNSPECIFIED indicates an unknown or invalid source.
+    SOURCE_UNSPECIFIED = 0;
+
+    // MOEGO_PLATFORM indicates the membership plan is created from MoeGo platform.
+    MOEGO_PLATFORM = 1;
+
+    // ENTERPRISE_HUB indicates the membership plan is created from Enterprise Hub.
+    ENTERPRISE_HUB = 2;
+  }
+
+  // BillingCycle represents the billing cycle options for a membership plan.
+  enum BillingCycle {
+    // BILLING_CYCLE_UNSPECIFIED indicates an unknown or invalid billing cycle.
+    BILLING_CYCLE_UNSPECIFIED = 0;
+
+    // MONTHLY indicates the membership is billed monthly.
+    MONTHLY = 1;
+
+    // ANNUALLY indicates the membership is billed annually.
+    ANNUALLY = 2;
+
+    // WEEKLY indicates the membership is billed weekly.
+    WEEKLY = 3;
+  }
+
+  // Unique identifier for the membership plan.
+  // Format: "mem_" followed by random characters.
+  string id = 1;
+
+  // The product id in subscription service
+  string internal_product_id = 2;
+
+  // Display name of the membership plan.
+  string name = 3;
+
+  // Detailed description of the membership plan.
+  string description = 4;
+
+  // Current status of the membership plan.
+  Status status = 5;
+
+  // Price of the membership plan.
+  // Uses google.type.Money for proper currency handling.
+  google.type.Money price = 6;
+
+  // The tax id associated with the membership.
+  string tax_id = 7;
+
+  // Deprecated billing cycle for the membership.
+  BillingCycle billing_cycle = 8 [deprecated = true];
+
+  // Policy information for the membership.
+  string policy = 9;
+
+  // The company id that owns this membership.
+  string company_id = 10;
+
+  // The price id
+  string price_id = 11;
+
+  // Billing cycle period
+  moego.common.v1.TimePeriod billing_cycle_period = 12;
+
+  // Timestamp when the membership plan was created.
+  google.protobuf.Timestamp created_time = 13;
+
+  // Timestamp when the membership plan was last updated.
+  google.protobuf.Timestamp updated_time = 14;
+
+  // Timestamp when the membership plan was deleted (if applicable).
+  google.protobuf.Timestamp deleted_time = 15;
+
+  // Revision number for tracking updates.
+  int32 revision = 16;
+
+  // Total price including taxes.
+  google.type.Money total_price = 17;
+
+  // Total tax amount.
+  google.type.Money total_tax = 18;
+
+  // Whether this membership can be purchased through online booking.
+  bool enable_online_booking = 19;
+
+  // Whether discount benefits are enabled for this membership.
+  bool enable_discount_benefits = 20;
+
+  // Whether quantity benefits are enabled for this membership.
+  bool enable_quantity_benefits = 21;
+
+  // Billing cycle day of week.
+  google.type.DayOfWeek billing_cycle_day_of_week = 22;
+
+  // Breed filter
+  bool breed_filter = 23;
+
+  // Customized breed
+  repeated string customized_breed = 24;
+
+  // Available for all pet size
+  bool pet_size_filter = 25;
+
+  // Available pet size (only if is_available_for_all_pet_size is false)
+  repeated string customized_pet_sizes = 26;
+
+  // Available for all pet coat type
+  bool coat_filter = 27;
+
+  // Available pet coat type (only if is_available_for_all_pet_coat_type is false)
+  repeated string customized_coat = 28;
+
+  // Source of the membership
+  Source source = 29;
+
+  // Billing cycle time of day.
+  google.type.TimeOfDay billing_cycle_time_of_day = 30;
+
+  // Allow billing cycle time of day.
+  bool allow_billing_cycle_time_of_day = 31;
+}
+
+// Subscription represents a customer's subscription to a membership plan.
+message Subscription {
+  // Status represents the current state of a subscription.
+  enum Status {
+    // STATUS_UNSPECIFIED indicates an unknown or invalid status.
+    STATUS_UNSPECIFIED = 0;
+
+    // PENDING indicates the subscription is waiting for the first charge result.
+    PENDING = 1;
+
+    // ACTIVE indicates the subscription is charged and in validity period.
+    // Cancel in validity period will not change the status,
+    // just change the cancel_at_period_end value to true.
+    ACTIVE = 2;
+
+    // CANCELLED indicates the subscription is manually cancelled and out of validity period.
+    CANCELLED = 3;
+
+    // PAUSED indicates the subscription is currently paused.
+    PAUSED = 4;
+  }
+
+  // Unique identifier for the subscription.
+  string id = 1;
+
+  // The customer identifier.
+  string customer_id = 2;
+
+  // The membership identifier.
+  string membership_id = 3;
+
+  // The company identifier.
+  string company_id = 4;
+
+  // The price of the subscription.
+  google.type.Money price = 5;
+
+  // The create time.
+  google.protobuf.Timestamp created_at = 6;
+
+  // The update time.
+  google.protobuf.Timestamp updated_at = 7;
+
+  // The delete time, non-null means is deleted.
+  optional google.protobuf.Timestamp deleted_at = 8;
+
+  // Validity period.
+  google.type.Interval validity_period = 9;
+
+  // Next billing date.
+  google.protobuf.Timestamp next_billing_date = 10;
+
+  // Expire date.
+  google.protobuf.Timestamp expires_at = 11;
+
+  // Cancelled but in active status.
+  bool cancel_at_period_end = 12;
+
+  // Status of the subscription.
+  Status status = 13;
+}

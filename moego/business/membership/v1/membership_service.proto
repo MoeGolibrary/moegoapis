@@ -1,0 +1,122 @@
+syntax = "proto3";
+
+package moego.business.membership.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/membership/v1/membership.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
+option java_multiple_files = true;
+option java_outer_classname = "MembershipServiceProto";
+option java_package = "com.moego.api.business.membership.v1";
+
+// MembershipService provides methods for managing membership plans.
+// This service handles the creation, retrieval, and listing of membership plans.
+// It supports filtering and pagination for efficient data access.
+service MembershipService {
+  // ListMemberships retrieves a paginated list of memberships based on specified criteria.
+  // Supports filtering by name, status, and IDs to facilitate targeted queries.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc ListMemberships(ListMembershipsRequest) returns (ListMembershipsResponse) {
+    option (google.api.http) = {
+      post: "/v1/memberships:list"
+      body: "*"
+    };
+  }
+
+  // ListSubscriptions retrieves a paginated list of subscriptions based on specified criteria.
+  // Supports filtering by customer, membership, and status to facilitate targeted queries.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
+    option (google.api.http) = {
+      post: "/v1/memberships/subscriptions:list"
+      body: "*"
+    };
+  }
+}
+
+// Request message for listing memberships.
+message ListMembershipsRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The company identifier for multi-location businesses.
+  // Required for company-wide membership listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the membership list
+  message Filter {
+    // string, Partial name match to filter memberships by name (case-insensitive).
+    // Optional. Maximum 50 characters.
+    string name_like = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(enum), List of membership statuses to include in results.
+    // Optional. If not provided, memberships of all statuses are returned.
+    repeated Membership.Status status_in = 2 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the membership list
+  Filter filter = 3;
+}
+
+// Response message for listing memberships.
+message ListMembershipsResponse {
+  // array(Membership), List of memberships matching the request criteria.
+  repeated Membership memberships = 1;
+
+  // string, Token for retrieving the next page.
+  // Obtained from the previous page's response.
+  // Empty if there are no more results.
+  string next_page_token = 2;
+}
+
+// Request message for listing subscriptions.
+message ListSubscriptionsRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The company identifier for multi-location businesses.
+  // Required for company-wide subscription listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Filter parameters for the subscription list
+  message Filter {
+    // array(string), List of customer IDs to include in results.
+    // Optional. Maximum 1000 items.
+    repeated string customer_id_in = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(string), List of membership IDs to include in results.
+    // Optional. Maximum 1000 items.
+    repeated string membership_id_in = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // array(enum), List of subscription statuses to include in results.
+    // Optional. If not provided, subscriptions of all statuses are returned.
+    repeated moego.business.membership.v1.Subscription.Status status_in = 3 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the subscription list
+  optional Filter filter = 3;
+}
+
+// Response message for listing subscriptions.
+message ListSubscriptionsResponse {
+  // array(Subscription), List of subscriptions matching the request criteria.
+  repeated Subscription subscriptions = 1;
+
+  // string, Token for retrieving the next page.
+  // Obtained from the previous page's response.
+  // Empty if there are no more results.
+  string next_page_token = 2;
+}

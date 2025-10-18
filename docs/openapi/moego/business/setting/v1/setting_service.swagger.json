@@ -394,7 +394,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -435,7 +435,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -473,7 +473,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -808,16 +808,6 @@
         "type": "UpdateServiceRequest"
       }
     },
-    "WeightUnit": {
-      "type": "string",
-      "enum": [
-        "UNIT_UNSPECIFIED",
-        "KILOGRAM",
-        "POUND"
-      ],
-      "default": "UNIT_UNSPECIFIED",
-      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
-    },
     "businesssettingv1ListCustomerTagsResponse": {
       "type": "object",
       "properties": {
@@ -838,47 +828,7 @@
         "type": "ListCustomerTagsResponse"
       }
     },
-    "googlerpcStatus": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      },
-      "x-go-type": {
-        "import": {
-          "package": "google.golang.org/genproto/googleapis/rpc/status"
-        },
-        "type": "Status"
-      }
-    },
-    "protobufAny": {
-      "type": "object",
-      "properties": {
-        "@type": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {},
-      "x-go-type": {
-        "import": {
-          "package": "google.golang.org/protobuf/types/known/anypb"
-        },
-        "type": "Any"
-      }
-    },
-    "settingv1Service": {
+    "businesssettingv1Service": {
       "type": "object",
       "properties": {
         "id": {
@@ -977,6 +927,46 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "Service"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
       }
     },
     "typeMoney": {
@@ -1304,7 +1294,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/settingv1Service"
+            "$ref": "#/definitions/businesssettingv1Service"
           },
           "title": "List of services matching the request criteria\nMay be empty if no services match"
         }
@@ -1606,7 +1596,7 @@
           "description": "uint32, The numeric value of the weight."
         },
         "unit": {
-          "$ref": "#/definitions/WeightUnit",
+          "$ref": "#/definitions/v1WeightUnit",
           "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
         }
       },
@@ -1617,6 +1607,16 @@
         },
         "type": "Weight"
       }
+    },
+    "v1WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
     }
   }
 }
