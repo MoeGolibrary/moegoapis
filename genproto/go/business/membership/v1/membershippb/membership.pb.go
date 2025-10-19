@@ -143,32 +143,32 @@ const (
 	// STATUS_UNSPECIFIED indicates an unknown or invalid status.
 	Subscription_STATUS_UNSPECIFIED Subscription_Status = 0
 	// PENDING indicates the subscription is waiting for the first charge result.
-	Subscription_PENDING Subscription_Status = 1
+	Subscription_PENDING Subscription_Status = 2
 	// ACTIVE indicates the subscription is charged and in validity period.
 	// Cancel in validity period will not change the status,
 	// just change the cancel_at_period_end value to true.
-	Subscription_ACTIVE Subscription_Status = 2
+	Subscription_ACTIVE Subscription_Status = 3
 	// CANCELLED indicates the subscription is manually cancelled and out of validity period.
-	Subscription_CANCELLED Subscription_Status = 3
+	Subscription_CANCELLED Subscription_Status = 4
 	// PAUSED indicates the subscription is currently paused.
-	Subscription_PAUSED Subscription_Status = 4
+	Subscription_PAUSED Subscription_Status = 5
 )
 
 // Enum value maps for Subscription_Status.
 var (
 	Subscription_Status_name = map[int32]string{
 		0: "STATUS_UNSPECIFIED",
-		1: "PENDING",
-		2: "ACTIVE",
-		3: "CANCELLED",
-		4: "PAUSED",
+		2: "PENDING",
+		3: "ACTIVE",
+		4: "CANCELLED",
+		5: "PAUSED",
 	}
 	Subscription_Status_value = map[string]int32{
 		"STATUS_UNSPECIFIED": 0,
-		"PENDING":            1,
-		"ACTIVE":             2,
-		"CANCELLED":          3,
-		"PAUSED":             4,
+		"PENDING":            2,
+		"ACTIVE":             3,
+		"CANCELLED":          4,
+		"PAUSED":             5,
 	}
 )
 
@@ -786,12 +786,12 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x06status\x18\r \x01(\x0e21.moego.business.membership.v1.Subscription.StatusR\x06status\"T\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\v\n" +
-	"\aPENDING\x10\x01\x12\n" +
+	"\aPENDING\x10\x02\x12\n" +
 	"\n" +
-	"\x06ACTIVE\x10\x02\x12\r\n" +
-	"\tCANCELLED\x10\x03\x12\n" +
+	"\x06ACTIVE\x10\x03\x12\r\n" +
+	"\tCANCELLED\x10\x04\x12\n" +
 	"\n" +
-	"\x06PAUSED\x10\x04\"S\n" +
+	"\x06PAUSED\x10\x05\"S\n" +
 	"\n" +
 	"TimePeriod\x12/\n" +
 	"\x04unit\x18\x01 \x01(\x0e2\x1b.google.type.CalendarPeriodR\x04unit\x12\x14\n" +

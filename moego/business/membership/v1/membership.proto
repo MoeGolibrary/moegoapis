@@ -145,18 +145,18 @@ message Subscription {
     STATUS_UNSPECIFIED = 0;
 
     // PENDING indicates the subscription is waiting for the first charge result.
-    PENDING = 1;
+    PENDING = 2;
 
     // ACTIVE indicates the subscription is charged and in validity period.
     // Cancel in validity period will not change the status,
     // just change the cancel_at_period_end value to true.
-    ACTIVE = 2;
+    ACTIVE = 3;
 
     // CANCELLED indicates the subscription is manually cancelled and out of validity period.
-    CANCELLED = 3;
+    CANCELLED = 4;
 
     // PAUSED indicates the subscription is currently paused.
-    PAUSED = 4;
+    PAUSED = 5;
   }
 
   // Unique identifier for the subscription.
