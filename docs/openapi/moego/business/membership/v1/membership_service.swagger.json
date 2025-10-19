@@ -167,6 +167,21 @@
         "type": "Any"
       }
     },
+    "typeCalendarPeriod": {
+      "type": "string",
+      "enum": [
+        "CALENDAR_PERIOD_UNSPECIFIED",
+        "DAY",
+        "WEEK",
+        "FORTNIGHT",
+        "MONTH",
+        "QUARTER",
+        "HALF",
+        "YEAR"
+      ],
+      "default": "CALENDAR_PERIOD_UNSPECIFIED",
+      "description": "A `CalendarPeriod` represents the abstract concept of a time period that has\na canonical start. Grammatically, \"the start of the current\n`CalendarPeriod`.\" All calendar times begin at midnight UTC.\n\n - CALENDAR_PERIOD_UNSPECIFIED: Undefined period, raises an error.\n - DAY: A day.\n - WEEK: A week. Weeks begin on Monday, following\n[ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date).\n - FORTNIGHT: A fortnight. The first calendar fortnight of the year begins at the start\nof week 1 according to\n[ISO 8601](https://en.wikipedia.org/wiki/ISO_week_date).\n - MONTH: A month.\n - QUARTER: A quarter. Quarters start on dates 1-Jan, 1-Apr, 1-Jul, and 1-Oct of each\nyear.\n - HALF: A half-year. Half-years start on dates 1-Jan and 1-Jul.\n - YEAR: A year."
+    },
     "typeDayOfWeek": {
       "type": "string",
       "enum": [
@@ -721,7 +736,7 @@
       "type": "object",
       "properties": {
         "unit": {
-          "$ref": "#/definitions/v1TimePeriodUnit",
+          "$ref": "#/definitions/typeCalendarPeriod",
           "description": "The unit of time for this period."
         },
         "value": {
@@ -733,22 +748,10 @@
       "description": "TimePeriod represents a period of time with a unit and value.",
       "x-go-type": {
         "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
         },
         "type": "TimePeriod"
       }
-    },
-    "v1TimePeriodUnit": {
-      "type": "string",
-      "enum": [
-        "UNIT_UNSPECIFIED",
-        "DAY",
-        "WEEK",
-        "MONTH",
-        "YEAR"
-      ],
-      "default": "UNIT_UNSPECIFIED",
-      "description": "The unit of time for the period.\n\n - UNIT_UNSPECIFIED: UNIT_UNSPECIFIED indicates an unknown or invalid unit.\n - DAY: DAY indicates the period is measured in days.\n - WEEK: WEEK indicates the period is measured in weeks.\n - MONTH: MONTH indicates the period is measured in months.\n - YEAR: YEAR indicates the period is measured in years."
     }
   }
 }

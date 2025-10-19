@@ -8,7 +8,7 @@ package membershippb
 
 import (
 	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+	calendarperiod "google.golang.org/genproto/googleapis/type/calendarperiod"
 	dayofweek "google.golang.org/genproto/googleapis/type/dayofweek"
 	interval "google.golang.org/genproto/googleapis/type/interval"
 	money "google.golang.org/genproto/googleapis/type/money"
@@ -289,7 +289,7 @@ type Membership struct {
 	// The price id
 	PriceId string `protobuf:"bytes,11,opt,name=price_id,json=priceId,proto3" json:"price_id,omitempty"`
 	// Billing cycle period
-	BillingCyclePeriod *commonpb.TimePeriod `protobuf:"bytes,12,opt,name=billing_cycle_period,json=billingCyclePeriod,proto3" json:"billing_cycle_period,omitempty"`
+	BillingCyclePeriod *TimePeriod `protobuf:"bytes,12,opt,name=billing_cycle_period,json=billingCyclePeriod,proto3" json:"billing_cycle_period,omitempty"`
 	// Timestamp when the membership plan was created.
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// Timestamp when the membership plan was last updated.
@@ -440,7 +440,7 @@ func (x *Membership) GetPriceId() string {
 	return ""
 }
 
-func (x *Membership) GetBillingCyclePeriod() *commonpb.TimePeriod {
+func (x *Membership) GetBillingCyclePeriod() *TimePeriod {
 	if x != nil {
 		return x.BillingCyclePeriod
 	}
@@ -798,11 +798,66 @@ func (x *Subscription) GetStatus() Subscription_Status {
 	return Subscription_STATUS_UNSPECIFIED
 }
 
+// TimePeriod represents a period of time with a unit and value.
+type TimePeriod struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The unit of time for this period.
+	Unit calendarperiod.CalendarPeriod `protobuf:"varint,1,opt,name=unit,proto3,enum=google.type.CalendarPeriod" json:"unit,omitempty"`
+	// The value of the period in the specified unit.
+	Value         int32 `protobuf:"varint,2,opt,name=value,proto3" json:"value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimePeriod) Reset() {
+	*x = TimePeriod{}
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimePeriod) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimePeriod) ProtoMessage() {}
+
+func (x *TimePeriod) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimePeriod.ProtoReflect.Descriptor instead.
+func (*TimePeriod) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *TimePeriod) GetUnit() calendarperiod.CalendarPeriod {
+	if x != nil {
+		return x.Unit
+	}
+	return calendarperiod.CalendarPeriod(0)
+}
+
+func (x *TimePeriod) GetValue() int32 {
+	if x != nil {
+		return x.Value
+	}
+	return 0
+}
+
 var File_moego_business_membership_v1_membership_proto protoreflect.FileDescriptor
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a!moego/common/v1/time_period.proto\x1a$moego/business/customer/v1/pet.proto\"\xb4\x0e\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\"\xc1\x0e\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -817,8 +872,8 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
 	"company_id\x18\n" +
 	" \x01(\tR\tcompanyId\x12\x19\n" +
-	"\bprice_id\x18\v \x01(\tR\apriceId\x12M\n" +
-	"\x14billing_cycle_period\x18\f \x01(\v2\x1b.moego.common.v1.TimePeriodR\x12billingCyclePeriod\x12=\n" +
+	"\bprice_id\x18\v \x01(\tR\apriceId\x12Z\n" +
+	"\x14billing_cycle_period\x18\f \x01(\v2(.moego.business.membership.v1.TimePeriodR\x12billingCyclePeriod\x12=\n" +
 	"\fcreated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12=\n" +
 	"\fupdated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vupdatedTime\x12=\n" +
 	"\fdeleted_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vdeletedTime\x12\x1a\n" +
@@ -890,7 +945,11 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\tCANCELLED\x10\x03\x12\n" +
 	"\n" +
 	"\x06PAUSED\x10\x04B\r\n" +
-	"\v_deleted_atB\x99\x01\n" +
+	"\v_deleted_at\"S\n" +
+	"\n" +
+	"TimePeriod\x12/\n" +
+	"\x04unit\x18\x01 \x01(\x0e2\x1b.google.type.CalendarPeriodR\x04unit\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\x05R\x05valueB\x99\x01\n" +
 	"$com.moego.api.business.membership.v1B\x0fMembershipProtoP\x01Z^github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippbb\x06proto3"
 
 var (
@@ -906,39 +965,40 @@ func file_moego_business_membership_v1_membership_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_membership_v1_membership_proto_goTypes = []any{
-	(Membership_Status)(0),        // 0: moego.business.membership.v1.Membership.Status
-	(Membership_Source)(0),        // 1: moego.business.membership.v1.Membership.Source
-	(Membership_BillingCycle)(0),  // 2: moego.business.membership.v1.Membership.BillingCycle
-	(Subscription_Status)(0),      // 3: moego.business.membership.v1.Subscription.Status
-	(*Membership)(nil),            // 4: moego.business.membership.v1.Membership
-	(*CustomizedBreed)(nil),       // 5: moego.business.membership.v1.CustomizedBreed
-	(*Subscription)(nil),          // 6: moego.business.membership.v1.Subscription
-	(*money.Money)(nil),           // 7: google.type.Money
-	(*commonpb.TimePeriod)(nil),   // 8: moego.common.v1.TimePeriod
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
-	(dayofweek.DayOfWeek)(0),      // 10: google.type.DayOfWeek
-	(*timeofday.TimeOfDay)(nil),   // 11: google.type.TimeOfDay
-	(customerpb.Pet_Type)(0),      // 12: moego.business.customer.v1.Pet.Type
-	(*interval.Interval)(nil),     // 13: google.type.Interval
+	(Membership_Status)(0),             // 0: moego.business.membership.v1.Membership.Status
+	(Membership_Source)(0),             // 1: moego.business.membership.v1.Membership.Source
+	(Membership_BillingCycle)(0),       // 2: moego.business.membership.v1.Membership.BillingCycle
+	(Subscription_Status)(0),           // 3: moego.business.membership.v1.Subscription.Status
+	(*Membership)(nil),                 // 4: moego.business.membership.v1.Membership
+	(*CustomizedBreed)(nil),            // 5: moego.business.membership.v1.CustomizedBreed
+	(*Subscription)(nil),               // 6: moego.business.membership.v1.Subscription
+	(*TimePeriod)(nil),                 // 7: moego.business.membership.v1.TimePeriod
+	(*money.Money)(nil),                // 8: google.type.Money
+	(*timestamppb.Timestamp)(nil),      // 9: google.protobuf.Timestamp
+	(dayofweek.DayOfWeek)(0),           // 10: google.type.DayOfWeek
+	(*timeofday.TimeOfDay)(nil),        // 11: google.type.TimeOfDay
+	(customerpb.Pet_Type)(0),           // 12: moego.business.customer.v1.Pet.Type
+	(*interval.Interval)(nil),          // 13: google.type.Interval
+	(calendarperiod.CalendarPeriod)(0), // 14: google.type.CalendarPeriod
 }
 var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	0,  // 0: moego.business.membership.v1.Membership.status:type_name -> moego.business.membership.v1.Membership.Status
-	7,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
+	8,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
 	2,  // 2: moego.business.membership.v1.Membership.billing_cycle:type_name -> moego.business.membership.v1.Membership.BillingCycle
-	8,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.common.v1.TimePeriod
+	7,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
 	9,  // 4: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
 	9,  // 5: moego.business.membership.v1.Membership.updated_time:type_name -> google.protobuf.Timestamp
 	9,  // 6: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
-	7,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
-	7,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
+	8,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
+	8,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
 	10, // 9: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
 	5,  // 10: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.membership.v1.CustomizedBreed
 	1,  // 11: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
 	11, // 12: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
 	12, // 13: moego.business.membership.v1.CustomizedBreed.pet_type:type_name -> moego.business.customer.v1.Pet.Type
-	7,  // 14: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
+	8,  // 14: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
 	9,  // 15: moego.business.membership.v1.Subscription.created_at:type_name -> google.protobuf.Timestamp
 	9,  // 16: moego.business.membership.v1.Subscription.updated_at:type_name -> google.protobuf.Timestamp
 	9,  // 17: moego.business.membership.v1.Subscription.deleted_at:type_name -> google.protobuf.Timestamp
@@ -946,11 +1006,12 @@ var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	9,  // 19: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
 	9,  // 20: moego.business.membership.v1.Subscription.expires_at:type_name -> google.protobuf.Timestamp
 	3,  // 21: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
-	22, // [22:22] is the sub-list for method output_type
-	22, // [22:22] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	14, // 22: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
+	23, // [23:23] is the sub-list for method output_type
+	23, // [23:23] is the sub-list for method input_type
+	23, // [23:23] is the sub-list for extension type_name
+	23, // [23:23] is the sub-list for extension extendee
+	0,  // [0:23] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_membership_v1_membership_proto_init() }
@@ -966,7 +1027,7 @@ func file_moego_business_membership_v1_membership_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_membership_v1_membership_proto_rawDesc), len(file_moego_business_membership_v1_membership_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

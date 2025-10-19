@@ -246,6 +246,16 @@
       "default": "SERVICE_ITEM_TYPE_UNSPECIFIED",
       "description": "ItemType categorizes the primary type of service being offered.\nThis helps organize services in the system and determines applicable business rules.\n\n - SERVICE_ITEM_TYPE_UNSPECIFIED: Unknown or unspecified service type\nShould not be used when creating new services\n - GROOMING: Pet grooming services\nIncludes bathing, haircuts, nail trimming, etc.\n - BOARDING: Pet boarding services\nOvernight or extended stay care\n - DAYCARE: Daytime pet care services\nSupervised play and care during business hours\n - EVALUATION: Pet evaluation services\nBehavior assessment and service compatibility check\n - TRAINING: Pet training services\nIndividual or group training sessions"
     },
+    "WeightUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "KILOGRAM",
+        "POUND"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
+    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -1102,7 +1112,7 @@
           "description": "uint32, The numeric value of the weight."
         },
         "unit": {
-          "$ref": "#/definitions/v1WeightUnit",
+          "$ref": "#/definitions/WeightUnit",
           "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
         }
       },
@@ -1113,16 +1123,6 @@
         },
         "type": "Weight"
       }
-    },
-    "v1WeightUnit": {
-      "type": "string",
-      "enum": [
-        "UNIT_UNSPECIFIED",
-        "KILOGRAM",
-        "POUND"
-      ],
-      "default": "UNIT_UNSPECIFIED",
-      "description": "Supported weight units. Each unit can be converted to others\nusing standard conversion factors.\n\n - UNIT_UNSPECIFIED: Not intended for direct use\n - KILOGRAM: Kilograms, base unit for weight\n1 kg = 2.20462 lbs\n - POUND: Pounds, common in US and some other regions\n1 lb = 0.453592 kg"
     }
   }
 }
