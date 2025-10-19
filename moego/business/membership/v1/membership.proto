@@ -199,7 +199,7 @@ message Subscription {
   google.protobuf.Timestamp created_time = 6;
 
   // The update time.
-  google.protobuf.Timestamp updated_time = 7;
+  google.protobuf.Timestamp last_updated_time = 7;
 
   // The delete time, non-null means is deleted.
   google.protobuf.Timestamp deleted_time = 8;

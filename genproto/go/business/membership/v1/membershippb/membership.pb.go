@@ -597,7 +597,7 @@ type Subscription struct {
 	// The create time.
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// The update time.
-	UpdatedTime *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_time,json=updatedTime,proto3" json:"updated_time,omitempty"`
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// The delete time, non-null means is deleted.
 	DeletedTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=deleted_time,json=deletedTime,proto3" json:"deleted_time,omitempty"`
 	// Validity period.
@@ -686,9 +686,9 @@ func (x *Subscription) GetCreatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Subscription) GetUpdatedTime() *timestamppb.Timestamp {
+func (x *Subscription) GetLastUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdatedTime
+		return x.LastUpdatedTime
 	}
 	return nil
 }
@@ -847,7 +847,7 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\aMONTHLY\x10\x01\x12\f\n" +
 	"\bANNUALLY\x10\x02\x12\n" +
 	"\n" +
-	"\x06WEEKLY\x10\x03\"\x83\x06\n" +
+	"\x06WEEKLY\x10\x03\"\x8c\x06\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
@@ -856,8 +856,8 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
 	"company_id\x18\x04 \x01(\tR\tcompanyId\x12(\n" +
 	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyR\x05price\x12=\n" +
-	"\fcreated_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12=\n" +
-	"\fupdated_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\vupdatedTime\x12=\n" +
+	"\fcreated_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
+	"\x11last_updated_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12=\n" +
 	"\fdeleted_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vdeletedTime\x12>\n" +
 	"\x0fvalidity_period\x18\t \x01(\v2\x15.google.type.IntervalR\x0evalidityPeriod\x12F\n" +
 	"\x11next_billing_date\x18\n" +
@@ -925,7 +925,7 @@ var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	11, // 12: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
 	7,  // 13: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
 	8,  // 14: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
-	8,  // 15: moego.business.membership.v1.Subscription.updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 15: moego.business.membership.v1.Subscription.last_updated_time:type_name -> google.protobuf.Timestamp
 	8,  // 16: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
 	12, // 17: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
 	8,  // 18: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp

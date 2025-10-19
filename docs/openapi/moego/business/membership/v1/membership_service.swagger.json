@@ -663,7 +663,7 @@
           "format": "date-time",
           "description": "The create time."
         },
-        "updatedTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "description": "The update time."
