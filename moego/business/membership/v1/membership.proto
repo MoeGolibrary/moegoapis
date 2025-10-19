@@ -139,10 +139,14 @@ message Membership {
 
 // Subscription represents a customer's subscription to a membership plan.
 message Subscription {
+
   // Status represents the current state of a subscription.
   enum Status {
     // STATUS_UNSPECIFIED indicates an unknown or invalid status.
     STATUS_UNSPECIFIED = 0;
+
+    // TRIAL indicates the subscription is in trial period.
+    TRIAL = 1;
 
     // PENDING indicates the subscription is waiting for the first charge result.
     PENDING = 2;
@@ -152,11 +156,21 @@ message Subscription {
     // just change the cancel_at_period_end value to true.
     ACTIVE = 3;
 
+    // GRACE indicates the subscription is in grace period.
+    GRACE = 4;
+
+    // EXPIRED indicates the subscription is expired and out of validity period.
+    EXPIRED = 5;
+
     // CANCELLED indicates the subscription is manually cancelled and out of validity period.
-    CANCELLED = 4;
+    CANCELLED = 6;
 
     // PAUSED indicates the subscription is currently paused.
-    PAUSED = 5;
+    PAUSED = 7;
+
+    // INCOMPLETE indicates the subscription is not completed.
+    INCOMPLETE = 8;
+
   }
 
   // Unique identifier for the subscription.

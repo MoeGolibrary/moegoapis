@@ -692,13 +692,17 @@
       "type": "string",
       "enum": [
         "STATUS_UNSPECIFIED",
+        "TRIAL",
         "PENDING",
         "ACTIVE",
+        "GRACE",
+        "EXPIRED",
         "CANCELLED",
-        "PAUSED"
+        "PAUSED",
+        "INCOMPLETE"
       ],
       "default": "STATUS_UNSPECIFIED",
-      "description": "Status represents the current state of a subscription.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\n - PENDING: PENDING indicates the subscription is waiting for the first charge result.\n - ACTIVE: ACTIVE indicates the subscription is charged and in validity period.\nCancel in validity period will not change the status,\njust change the cancel_at_period_end value to true.\n - CANCELLED: CANCELLED indicates the subscription is manually cancelled and out of validity period.\n - PAUSED: PAUSED indicates the subscription is currently paused."
+      "description": "Status represents the current state of a subscription.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\n - TRIAL: TRIAL indicates the subscription is in trial period.\n - PENDING: PENDING indicates the subscription is waiting for the first charge result.\n - ACTIVE: ACTIVE indicates the subscription is charged and in validity period.\nCancel in validity period will not change the status,\njust change the cancel_at_period_end value to true.\n - GRACE: GRACE indicates the subscription is in grace period.\n - EXPIRED: EXPIRED indicates the subscription is expired and out of validity period.\n - CANCELLED: CANCELLED indicates the subscription is manually cancelled and out of validity period.\n - PAUSED: PAUSED indicates the subscription is currently paused.\n - INCOMPLETE: INCOMPLETE indicates the subscription is not completed."
     },
     "v1TimePeriod": {
       "type": "object",

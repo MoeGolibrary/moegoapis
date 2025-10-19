@@ -142,33 +142,49 @@ type Subscription_Status int32
 const (
 	// STATUS_UNSPECIFIED indicates an unknown or invalid status.
 	Subscription_STATUS_UNSPECIFIED Subscription_Status = 0
+	// TRIAL indicates the subscription is in trial period.
+	Subscription_TRIAL Subscription_Status = 1
 	// PENDING indicates the subscription is waiting for the first charge result.
 	Subscription_PENDING Subscription_Status = 2
 	// ACTIVE indicates the subscription is charged and in validity period.
 	// Cancel in validity period will not change the status,
 	// just change the cancel_at_period_end value to true.
 	Subscription_ACTIVE Subscription_Status = 3
+	// GRACE indicates the subscription is in grace period.
+	Subscription_GRACE Subscription_Status = 4
+	// EXPIRED indicates the subscription is expired and out of validity period.
+	Subscription_EXPIRED Subscription_Status = 5
 	// CANCELLED indicates the subscription is manually cancelled and out of validity period.
-	Subscription_CANCELLED Subscription_Status = 4
+	Subscription_CANCELLED Subscription_Status = 6
 	// PAUSED indicates the subscription is currently paused.
-	Subscription_PAUSED Subscription_Status = 5
+	Subscription_PAUSED Subscription_Status = 7
+	// INCOMPLETE indicates the subscription is not completed.
+	Subscription_INCOMPLETE Subscription_Status = 8
 )
 
 // Enum value maps for Subscription_Status.
 var (
 	Subscription_Status_name = map[int32]string{
 		0: "STATUS_UNSPECIFIED",
+		1: "TRIAL",
 		2: "PENDING",
 		3: "ACTIVE",
-		4: "CANCELLED",
-		5: "PAUSED",
+		4: "GRACE",
+		5: "EXPIRED",
+		6: "CANCELLED",
+		7: "PAUSED",
+		8: "INCOMPLETE",
 	}
 	Subscription_Status_value = map[string]int32{
 		"STATUS_UNSPECIFIED": 0,
+		"TRIAL":              1,
 		"PENDING":            2,
 		"ACTIVE":             3,
-		"CANCELLED":          4,
-		"PAUSED":             5,
+		"GRACE":              4,
+		"EXPIRED":            5,
+		"CANCELLED":          6,
+		"PAUSED":             7,
+		"INCOMPLETE":         8,
 	}
 )
 
@@ -766,7 +782,7 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x06Source\x12\x16\n" +
 	"\x12SOURCE_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eMOEGO_PLATFORM\x10\x01\x12\x12\n" +
-	"\x0eENTERPRISE_HUB\x10\x02\"\x8c\x06\n" +
+	"\x0eENTERPRISE_HUB\x10\x02\"\xc0\x06\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
@@ -783,15 +799,20 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	" \x01(\v2\x1a.google.protobuf.TimestampR\x0fnextBillingDate\x12=\n" +
 	"\fexpired_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vexpiredTime\x12/\n" +
 	"\x14cancel_at_period_end\x18\f \x01(\bR\x11cancelAtPeriodEnd\x12I\n" +
-	"\x06status\x18\r \x01(\x0e21.moego.business.membership.v1.Subscription.StatusR\x06status\"T\n" +
+	"\x06status\x18\r \x01(\x0e21.moego.business.membership.v1.Subscription.StatusR\x06status\"\x87\x01\n" +
 	"\x06Status\x12\x16\n" +
-	"\x12STATUS_UNSPECIFIED\x10\x00\x12\v\n" +
+	"\x12STATUS_UNSPECIFIED\x10\x00\x12\t\n" +
+	"\x05TRIAL\x10\x01\x12\v\n" +
 	"\aPENDING\x10\x02\x12\n" +
 	"\n" +
-	"\x06ACTIVE\x10\x03\x12\r\n" +
-	"\tCANCELLED\x10\x04\x12\n" +
+	"\x06ACTIVE\x10\x03\x12\t\n" +
+	"\x05GRACE\x10\x04\x12\v\n" +
+	"\aEXPIRED\x10\x05\x12\r\n" +
+	"\tCANCELLED\x10\x06\x12\n" +
 	"\n" +
-	"\x06PAUSED\x10\x05\"S\n" +
+	"\x06PAUSED\x10\a\x12\x0e\n" +
+	"\n" +
+	"INCOMPLETE\x10\b\"S\n" +
 	"\n" +
 	"TimePeriod\x12/\n" +
 	"\x04unit\x18\x01 \x01(\x0e2\x1b.google.type.CalendarPeriodR\x04unit\x12\x14\n" +
