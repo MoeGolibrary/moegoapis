@@ -9,6 +9,7 @@ import "google/type/timeofday.proto";
 import "google/type/interval.proto";
 import "moego/business/customer/v1/pet.proto";
 import "google/type/calendar_period.proto";
+import "moego/business/setting/v1/service.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
 option java_multiple_files = true;
@@ -132,7 +133,7 @@ message Membership {
   bool breed_filter = 23;
 
   // Customized breed
-  repeated CustomizedBreed customized_breeds = 24;
+  repeated moego.business.setting.v1.CustomizedBreed customized_breeds = 24;
 
   // Available for all pet size
   bool pet_size_filter = 25;
@@ -154,16 +155,6 @@ message Membership {
 
   // Allow billing cycle time of day.
   bool allow_billing_cycle_time_of_day = 31;
-}
-
-// customized breed
-message CustomizedBreed {
-  // pet type
-  moego.business.customer.v1.Pet.Type pet_type = 1;
-  // pet breed ids
-  repeated string breeds = 2;
-  // allow all breeds
-  optional bool is_all = 3;
 }
 
 
