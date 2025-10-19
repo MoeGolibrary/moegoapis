@@ -40,8 +40,6 @@ const (
 	// INACTIVE indicates the membership plan is not available for new purchases
 	// but existing memberships may still be valid.
 	Membership_INACTIVE Membership_Status = 2
-	// DELETED indicates the membership plan has been removed from the system.
-	Membership_DELETED Membership_Status = 3
 )
 
 // Enum value maps for Membership_Status.
@@ -50,13 +48,11 @@ var (
 		0: "STATUS_UNSPECIFIED",
 		1: "ACTIVE",
 		2: "INACTIVE",
-		3: "DELETED",
 	}
 	Membership_Status_value = map[string]int32{
 		"STATUS_UNSPECIFIED": 0,
 		"ACTIVE":             1,
 		"INACTIVE":           2,
-		"DELETED":            3,
 	}
 )
 
@@ -140,63 +136,6 @@ func (Membership_Source) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{0, 1}
 }
 
-// BillingCycle represents the billing cycle options for a membership plan.
-type Membership_BillingCycle int32
-
-const (
-	// BILLING_CYCLE_UNSPECIFIED indicates an unknown or invalid billing cycle.
-	Membership_BILLING_CYCLE_UNSPECIFIED Membership_BillingCycle = 0
-	// MONTHLY indicates the membership is billed monthly.
-	Membership_MONTHLY Membership_BillingCycle = 1
-	// ANNUALLY indicates the membership is billed annually.
-	Membership_ANNUALLY Membership_BillingCycle = 2
-	// WEEKLY indicates the membership is billed weekly.
-	Membership_WEEKLY Membership_BillingCycle = 3
-)
-
-// Enum value maps for Membership_BillingCycle.
-var (
-	Membership_BillingCycle_name = map[int32]string{
-		0: "BILLING_CYCLE_UNSPECIFIED",
-		1: "MONTHLY",
-		2: "ANNUALLY",
-		3: "WEEKLY",
-	}
-	Membership_BillingCycle_value = map[string]int32{
-		"BILLING_CYCLE_UNSPECIFIED": 0,
-		"MONTHLY":                   1,
-		"ANNUALLY":                  2,
-		"WEEKLY":                    3,
-	}
-)
-
-func (x Membership_BillingCycle) Enum() *Membership_BillingCycle {
-	p := new(Membership_BillingCycle)
-	*p = x
-	return p
-}
-
-func (x Membership_BillingCycle) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (Membership_BillingCycle) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_membership_v1_membership_proto_enumTypes[2].Descriptor()
-}
-
-func (Membership_BillingCycle) Type() protoreflect.EnumType {
-	return &file_moego_business_membership_v1_membership_proto_enumTypes[2]
-}
-
-func (x Membership_BillingCycle) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use Membership_BillingCycle.Descriptor instead.
-func (Membership_BillingCycle) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{0, 2}
-}
-
 // Status represents the current state of a subscription.
 type Subscription_Status int32
 
@@ -244,11 +183,11 @@ func (x Subscription_Status) String() string {
 }
 
 func (Subscription_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_membership_v1_membership_proto_enumTypes[3].Descriptor()
+	return file_moego_business_membership_v1_membership_proto_enumTypes[2].Descriptor()
 }
 
 func (Subscription_Status) Type() protoreflect.EnumType {
-	return &file_moego_business_membership_v1_membership_proto_enumTypes[3]
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[2]
 }
 
 func (x Subscription_Status) Number() protoreflect.EnumNumber {
@@ -279,10 +218,6 @@ type Membership struct {
 	Price *money.Money `protobuf:"bytes,6,opt,name=price,proto3" json:"price,omitempty"`
 	// The tax id associated with the membership.
 	TaxId string `protobuf:"bytes,7,opt,name=tax_id,json=taxId,proto3" json:"tax_id,omitempty"`
-	// Deprecated billing cycle for the membership.
-	//
-	// Deprecated: Marked as deprecated in moego/business/membership/v1/membership.proto.
-	BillingCycle Membership_BillingCycle `protobuf:"varint,8,opt,name=billing_cycle,json=billingCycle,proto3,enum=moego.business.membership.v1.Membership_BillingCycle" json:"billing_cycle,omitempty"`
 	// Policy information for the membership.
 	Policy string `protobuf:"bytes,9,opt,name=policy,proto3" json:"policy,omitempty"`
 	// The company id that owns this membership.
@@ -410,14 +345,6 @@ func (x *Membership) GetTaxId() string {
 		return x.TaxId
 	}
 	return ""
-}
-
-// Deprecated: Marked as deprecated in moego/business/membership/v1/membership.proto.
-func (x *Membership) GetBillingCycle() Membership_BillingCycle {
-	if x != nil {
-		return x.BillingCycle
-	}
-	return Membership_BILLING_CYCLE_UNSPECIFIED
 }
 
 func (x *Membership) GetPolicy() string {
@@ -794,7 +721,7 @@ var File_moego_business_membership_v1_membership_proto protoreflect.FileDescript
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\xc7\x0e\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\x84\r\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -803,8 +730,7 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\vdescription\x18\x04 \x01(\tR\vdescription\x12G\n" +
 	"\x06status\x18\x05 \x01(\x0e2/.moego.business.membership.v1.Membership.StatusR\x06status\x12(\n" +
 	"\x05price\x18\x06 \x01(\v2\x12.google.type.MoneyR\x05price\x12\x15\n" +
-	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12^\n" +
-	"\rbilling_cycle\x18\b \x01(\x0e25.moego.business.membership.v1.Membership.BillingCycleB\x02\x18\x01R\fbillingCycle\x12\x16\n" +
+	"\x06tax_id\x18\a \x01(\tR\x05taxId\x12\x16\n" +
 	"\x06policy\x18\t \x01(\tR\x06policy\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\n" +
@@ -831,23 +757,16 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x10customized_coats\x18\x1c \x03(\tR\x0fcustomizedCoats\x12G\n" +
 	"\x06source\x18\x1d \x01(\x0e2/.moego.business.membership.v1.Membership.SourceR\x06source\x12P\n" +
 	"\x19billing_cycle_time_of_day\x18\x1e \x01(\v2\x16.google.type.TimeOfDayR\x15billingCycleTimeOfDay\x12C\n" +
-	"\x1fallow_billing_cycle_time_of_day\x18\x1f \x01(\bR\x1aallowBillingCycleTimeOfDay\"G\n" +
+	"\x1fallow_billing_cycle_time_of_day\x18\x1f \x01(\bR\x1aallowBillingCycleTimeOfDay\":\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
-	"\bINACTIVE\x10\x02\x12\v\n" +
-	"\aDELETED\x10\x03\"H\n" +
+	"\bINACTIVE\x10\x02\"H\n" +
 	"\x06Source\x12\x16\n" +
 	"\x12SOURCE_UNSPECIFIED\x10\x00\x12\x12\n" +
 	"\x0eMOEGO_PLATFORM\x10\x01\x12\x12\n" +
-	"\x0eENTERPRISE_HUB\x10\x02\"T\n" +
-	"\fBillingCycle\x12\x1d\n" +
-	"\x19BILLING_CYCLE_UNSPECIFIED\x10\x00\x12\v\n" +
-	"\aMONTHLY\x10\x01\x12\f\n" +
-	"\bANNUALLY\x10\x02\x12\n" +
-	"\n" +
-	"\x06WEEKLY\x10\x03\"\x8c\x06\n" +
+	"\x0eENTERPRISE_HUB\x10\x02\"\x8c\x06\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
@@ -891,52 +810,50 @@ func file_moego_business_membership_v1_membership_proto_rawDescGZIP() []byte {
 	return file_moego_business_membership_v1_membership_proto_rawDescData
 }
 
-var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
 var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_membership_v1_membership_proto_goTypes = []any{
 	(Membership_Status)(0),             // 0: moego.business.membership.v1.Membership.Status
 	(Membership_Source)(0),             // 1: moego.business.membership.v1.Membership.Source
-	(Membership_BillingCycle)(0),       // 2: moego.business.membership.v1.Membership.BillingCycle
-	(Subscription_Status)(0),           // 3: moego.business.membership.v1.Subscription.Status
-	(*Membership)(nil),                 // 4: moego.business.membership.v1.Membership
-	(*Subscription)(nil),               // 5: moego.business.membership.v1.Subscription
-	(*TimePeriod)(nil),                 // 6: moego.business.membership.v1.TimePeriod
-	(*money.Money)(nil),                // 7: google.type.Money
-	(*timestamppb.Timestamp)(nil),      // 8: google.protobuf.Timestamp
-	(dayofweek.DayOfWeek)(0),           // 9: google.type.DayOfWeek
-	(*settingpb.CustomizedBreed)(nil),  // 10: moego.business.setting.v1.CustomizedBreed
-	(*timeofday.TimeOfDay)(nil),        // 11: google.type.TimeOfDay
-	(*interval.Interval)(nil),          // 12: google.type.Interval
-	(calendarperiod.CalendarPeriod)(0), // 13: google.type.CalendarPeriod
+	(Subscription_Status)(0),           // 2: moego.business.membership.v1.Subscription.Status
+	(*Membership)(nil),                 // 3: moego.business.membership.v1.Membership
+	(*Subscription)(nil),               // 4: moego.business.membership.v1.Subscription
+	(*TimePeriod)(nil),                 // 5: moego.business.membership.v1.TimePeriod
+	(*money.Money)(nil),                // 6: google.type.Money
+	(*timestamppb.Timestamp)(nil),      // 7: google.protobuf.Timestamp
+	(dayofweek.DayOfWeek)(0),           // 8: google.type.DayOfWeek
+	(*settingpb.CustomizedBreed)(nil),  // 9: moego.business.setting.v1.CustomizedBreed
+	(*timeofday.TimeOfDay)(nil),        // 10: google.type.TimeOfDay
+	(*interval.Interval)(nil),          // 11: google.type.Interval
+	(calendarperiod.CalendarPeriod)(0), // 12: google.type.CalendarPeriod
 }
 var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	0,  // 0: moego.business.membership.v1.Membership.status:type_name -> moego.business.membership.v1.Membership.Status
-	7,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
-	2,  // 2: moego.business.membership.v1.Membership.billing_cycle:type_name -> moego.business.membership.v1.Membership.BillingCycle
-	6,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
-	8,  // 4: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
-	8,  // 5: moego.business.membership.v1.Membership.last_updated_time:type_name -> google.protobuf.Timestamp
-	8,  // 6: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
-	7,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
-	7,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
-	9,  // 9: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
-	10, // 10: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
-	1,  // 11: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
-	11, // 12: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
-	7,  // 13: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
-	8,  // 14: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
-	8,  // 15: moego.business.membership.v1.Subscription.last_updated_time:type_name -> google.protobuf.Timestamp
-	8,  // 16: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
-	12, // 17: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
-	8,  // 18: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
-	8,  // 19: moego.business.membership.v1.Subscription.expired_time:type_name -> google.protobuf.Timestamp
-	3,  // 20: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
-	13, // 21: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
-	22, // [22:22] is the sub-list for method output_type
-	22, // [22:22] is the sub-list for method input_type
-	22, // [22:22] is the sub-list for extension type_name
-	22, // [22:22] is the sub-list for extension extendee
-	0,  // [0:22] is the sub-list for field type_name
+	6,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
+	5,  // 2: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
+	7,  // 3: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
+	7,  // 4: moego.business.membership.v1.Membership.last_updated_time:type_name -> google.protobuf.Timestamp
+	7,  // 5: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
+	6,  // 6: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
+	6,  // 7: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
+	8,  // 8: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
+	9,  // 9: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
+	1,  // 10: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
+	10, // 11: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
+	6,  // 12: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
+	7,  // 13: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
+	7,  // 14: moego.business.membership.v1.Subscription.last_updated_time:type_name -> google.protobuf.Timestamp
+	7,  // 15: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
+	11, // 16: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
+	7,  // 17: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
+	7,  // 18: moego.business.membership.v1.Subscription.expired_time:type_name -> google.protobuf.Timestamp
+	2,  // 19: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
+	12, // 20: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
+	21, // [21:21] is the sub-list for method output_type
+	21, // [21:21] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_membership_v1_membership_proto_init() }
@@ -949,7 +866,7 @@ func file_moego_business_membership_v1_membership_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_membership_v1_membership_proto_rawDesc), len(file_moego_business_membership_v1_membership_proto_rawDesc)),
-			NumEnums:      4,
+			NumEnums:      3,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,

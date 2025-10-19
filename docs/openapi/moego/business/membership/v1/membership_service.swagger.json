@@ -305,7 +305,7 @@
           "type": "string",
           "description": "string, Partial name match to filter memberships by name (case-insensitive).\nOptional. Maximum 50 characters."
         },
-        "statusIn": {
+        "statuses": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1MembershipStatus"
@@ -377,21 +377,21 @@
     "v1ListSubscriptionsRequestFilter": {
       "type": "object",
       "properties": {
-        "customerIdIn": {
+        "customerIds": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "array(string), List of customer IDs to include in results.\nOptional. Maximum 1000 items."
         },
-        "membershipIdIn": {
+        "membershipIds": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "description": "array(string), List of membership IDs to include in results.\nOptional. Maximum 1000 items."
         },
-        "statusIn": {
+        "statuses": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/v1SubscriptionStatus"

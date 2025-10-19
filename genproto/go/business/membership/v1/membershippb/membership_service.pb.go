@@ -279,7 +279,7 @@ type ListMembershipsRequest_Filter struct {
 	NameLike string `protobuf:"bytes,1,opt,name=name_like,json=nameLike,proto3" json:"name_like,omitempty"`
 	// array(enum), List of membership statuses to include in results.
 	// Optional. If not provided, memberships of all statuses are returned.
-	StatusIn      []Membership_Status `protobuf:"varint,2,rep,packed,name=status_in,json=statusIn,proto3,enum=moego.business.membership.v1.Membership_Status" json:"status_in,omitempty"`
+	Statuses      []Membership_Status `protobuf:"varint,2,rep,packed,name=statuses,proto3,enum=moego.business.membership.v1.Membership_Status" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -321,9 +321,9 @@ func (x *ListMembershipsRequest_Filter) GetNameLike() string {
 	return ""
 }
 
-func (x *ListMembershipsRequest_Filter) GetStatusIn() []Membership_Status {
+func (x *ListMembershipsRequest_Filter) GetStatuses() []Membership_Status {
 	if x != nil {
-		return x.StatusIn
+		return x.Statuses
 	}
 	return nil
 }
@@ -333,13 +333,13 @@ type ListSubscriptionsRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// array(string), List of customer IDs to include in results.
 	// Optional. Maximum 1000 items.
-	CustomerIdIn []string `protobuf:"bytes,1,rep,name=customer_id_in,json=customerIdIn,proto3" json:"customer_id_in,omitempty"`
+	CustomerIds []string `protobuf:"bytes,1,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
 	// array(string), List of membership IDs to include in results.
 	// Optional. Maximum 1000 items.
-	MembershipIdIn []string `protobuf:"bytes,2,rep,name=membership_id_in,json=membershipIdIn,proto3" json:"membership_id_in,omitempty"`
+	MembershipIds []string `protobuf:"bytes,2,rep,name=membership_ids,json=membershipIds,proto3" json:"membership_ids,omitempty"`
 	// array(enum), List of subscription statuses to include in results.
 	// Optional. If not provided, subscriptions of all statuses are returned.
-	StatusIn      []Subscription_Status `protobuf:"varint,3,rep,packed,name=status_in,json=statusIn,proto3,enum=moego.business.membership.v1.Subscription_Status" json:"status_in,omitempty"`
+	Statuses      []Subscription_Status `protobuf:"varint,3,rep,packed,name=statuses,proto3,enum=moego.business.membership.v1.Subscription_Status" json:"statuses,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -374,23 +374,23 @@ func (*ListSubscriptionsRequest_Filter) Descriptor() ([]byte, []int) {
 	return file_moego_business_membership_v1_membership_service_proto_rawDescGZIP(), []int{2, 0}
 }
 
-func (x *ListSubscriptionsRequest_Filter) GetCustomerIdIn() []string {
+func (x *ListSubscriptionsRequest_Filter) GetCustomerIds() []string {
 	if x != nil {
-		return x.CustomerIdIn
+		return x.CustomerIds
 	}
 	return nil
 }
 
-func (x *ListSubscriptionsRequest_Filter) GetMembershipIdIn() []string {
+func (x *ListSubscriptionsRequest_Filter) GetMembershipIds() []string {
 	if x != nil {
-		return x.MembershipIdIn
+		return x.MembershipIds
 	}
 	return nil
 }
 
-func (x *ListSubscriptionsRequest_Filter) GetStatusIn() []Subscription_Status {
+func (x *ListSubscriptionsRequest_Filter) GetStatuses() []Subscription_Status {
 	if x != nil {
-		return x.StatusIn
+		return x.Statuses
 	}
 	return nil
 }
@@ -399,31 +399,31 @@ var File_moego_business_membership_v1_membership_service_proto protoreflect.File
 
 const file_moego_business_membership_v1_membership_service_proto_rawDesc = "" +
 	"\n" +
-	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\"\xd2\x02\n" +
+	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\"\xd1\x02\n" +
 	"\x16ListMembershipsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12S\n" +
-	"\x06filter\x18\x03 \x01(\v2;.moego.business.membership.v1.ListMembershipsRequest.FilterR\x06filter\x1a}\n" +
+	"\x06filter\x18\x03 \x01(\v2;.moego.business.membership.v1.ListMembershipsRequest.FilterR\x06filter\x1a|\n" +
 	"\x06Filter\x12 \n" +
-	"\tname_like\x18\x01 \x01(\tB\x03\xe0A\x01R\bnameLike\x12Q\n" +
-	"\tstatus_in\x18\x02 \x03(\x0e2/.moego.business.membership.v1.Membership.StatusB\x03\xe0A\x01R\bstatusIn\"\x8d\x01\n" +
+	"\tname_like\x18\x01 \x01(\tB\x03\xe0A\x01R\bnameLike\x12P\n" +
+	"\bstatuses\x18\x02 \x03(\x0e2/.moego.business.membership.v1.Membership.StatusB\x03\xe0A\x01R\bstatuses\"\x8d\x01\n" +
 	"\x17ListMembershipsResponse\x12J\n" +
 	"\vmemberships\x18\x01 \x03(\v2(.moego.business.membership.v1.MembershipR\vmemberships\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa1\x03\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\x9a\x03\n" +
 	"\x18ListSubscriptionsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12Z\n" +
-	"\x06filter\x18\x03 \x01(\v2=.moego.business.membership.v1.ListSubscriptionsRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\xb7\x01\n" +
-	"\x06Filter\x12)\n" +
-	"\x0ecustomer_id_in\x18\x01 \x03(\tB\x03\xe0A\x01R\fcustomerIdIn\x12-\n" +
-	"\x10membership_id_in\x18\x02 \x03(\tB\x03\xe0A\x01R\x0emembershipIdIn\x12S\n" +
-	"\tstatus_in\x18\x03 \x03(\x0e21.moego.business.membership.v1.Subscription.StatusB\x03\xe0A\x01R\bstatusInB\t\n" +
+	"\x06filter\x18\x03 \x01(\v2=.moego.business.membership.v1.ListSubscriptionsRequest.FilterH\x00R\x06filter\x88\x01\x01\x1a\xb0\x01\n" +
+	"\x06Filter\x12&\n" +
+	"\fcustomer_ids\x18\x01 \x03(\tB\x03\xe0A\x01R\vcustomerIds\x12*\n" +
+	"\x0emembership_ids\x18\x02 \x03(\tB\x03\xe0A\x01R\rmembershipIds\x12R\n" +
+	"\bstatuses\x18\x03 \x03(\x0e21.moego.business.membership.v1.Subscription.StatusB\x03\xe0A\x01R\bstatusesB\t\n" +
 	"\a_filter\"\x95\x01\n" +
 	"\x19ListSubscriptionsResponse\x12P\n" +
 	"\rsubscriptions\x18\x01 \x03(\v2*.moego.business.membership.v1.SubscriptionR\rsubscriptions\x12&\n" +
@@ -466,8 +466,8 @@ var file_moego_business_membership_v1_membership_service_proto_depIdxs = []int32
 	6,  // 3: moego.business.membership.v1.ListSubscriptionsRequest.pagination:type_name -> moego.common.v1.Pagination
 	5,  // 4: moego.business.membership.v1.ListSubscriptionsRequest.filter:type_name -> moego.business.membership.v1.ListSubscriptionsRequest.Filter
 	8,  // 5: moego.business.membership.v1.ListSubscriptionsResponse.subscriptions:type_name -> moego.business.membership.v1.Subscription
-	9,  // 6: moego.business.membership.v1.ListMembershipsRequest.Filter.status_in:type_name -> moego.business.membership.v1.Membership.Status
-	10, // 7: moego.business.membership.v1.ListSubscriptionsRequest.Filter.status_in:type_name -> moego.business.membership.v1.Subscription.Status
+	9,  // 6: moego.business.membership.v1.ListMembershipsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Membership.Status
+	10, // 7: moego.business.membership.v1.ListSubscriptionsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Subscription.Status
 	0,  // 8: moego.business.membership.v1.MembershipService.ListMemberships:input_type -> moego.business.membership.v1.ListMembershipsRequest
 	2,  // 9: moego.business.membership.v1.MembershipService.ListSubscriptions:input_type -> moego.business.membership.v1.ListSubscriptionsRequest
 	1,  // 10: moego.business.membership.v1.MembershipService.ListMemberships:output_type -> moego.business.membership.v1.ListMembershipsResponse

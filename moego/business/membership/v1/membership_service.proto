@@ -62,7 +62,7 @@ message ListMembershipsRequest {
 
     // array(enum), List of membership statuses to include in results.
     // Optional. If not provided, memberships of all statuses are returned.
-    repeated Membership.Status status_in = 2 [(google.api.field_behavior) = OPTIONAL];
+    repeated Membership.Status statuses = 2 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the membership list
@@ -95,15 +95,15 @@ message ListSubscriptionsRequest {
   message Filter {
     // array(string), List of customer IDs to include in results.
     // Optional. Maximum 1000 items.
-    repeated string customer_id_in = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated string customer_ids = 1 [(google.api.field_behavior) = OPTIONAL];
 
     // array(string), List of membership IDs to include in results.
     // Optional. Maximum 1000 items.
-    repeated string membership_id_in = 2 [(google.api.field_behavior) = OPTIONAL];
+    repeated string membership_ids = 2 [(google.api.field_behavior) = OPTIONAL];
 
     // array(enum), List of subscription statuses to include in results.
     // Optional. If not provided, subscriptions of all statuses are returned.
-    repeated moego.business.membership.v1.Subscription.Status status_in = 3 [(google.api.field_behavior) = OPTIONAL];
+    repeated moego.business.membership.v1.Subscription.Status statuses = 3 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the subscription list
