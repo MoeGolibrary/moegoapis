@@ -5,6 +5,7 @@ package moego.business.retail.v1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "moego/business/retail/v1/product.proto";
+import "moego/business/retail/v1/package.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb;retailpb";
@@ -12,14 +13,32 @@ option java_multiple_files = true;
 option java_outer_classname = "RetailServiceProto";
 option java_package = "com.moego.api.business.retail.v1";
 
-// RetailService provides methods for managing retail products.
+// RetailService provides methods for managing retail products and packages.
 service RetailService {
   // Lists products
   //
   // Returns a list of products.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
     option (google.api.http) = {
       post: "/v1/retail/products:list"
+      body: "*"
+    };
+  }
+  
+  // Lists packages
+  //
+  // Returns a list of packages.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc ListPackages(ListPackagesRequest) returns (ListPackagesResponse) {
+    option (google.api.http) = {
+      post: "/v1/retail/packages:list"
       body: "*"
     };
   }
@@ -48,4 +67,29 @@ message ListProductsResponse {
 
   // array(Product), List of products.
   repeated Product products = 2;
+}
+
+// Request to list packages
+message ListPackagesRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The company identifier for multi-location businesses.
+  // Required for company-wide appointment listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of business location IDs to include.
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response to list packages
+message ListPackagesResponse {
+  // string, Token for retrieving the next page of results.
+  // Empty if there are no more results.
+  string next_page_token = 1;
+
+  // array(Package), List of packages.
+  repeated Package packages = 2;
 }

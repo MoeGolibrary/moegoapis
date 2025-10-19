@@ -73,6 +73,49 @@ Represents a product supplier.
 
 ---
 
+### 3. Package
+
+Represents a package of services that can be sold together.
+
+#### Fields
+
+| Field Name              | Type                      | Description                                              |
+|-------------------------|---------------------------|----------------------------------------------------------|
+| `id`                    | string                    | Unique identifier for the package                        |
+| `company_id`            | string                    | ID of the company that owns this package                 |
+| `business_id`           | string                    | ID of the business location associated with this package |
+| `name`                  | string                    | Name of the package                                      |
+| `description`           | string                    | Description of the package                               |
+| `price`                 | google.type.Money         | Price of the package                                     |
+| `total_value`           | google.type.Money         | Total value of the services in the package               |
+| `tax_id`                | string                    | Tax ID associated with this package                      |
+| `tax_rate`              | double                    | Tax rate applied to this package                         |
+| `sold_quantity`         | int32                     | Number of packages sold                                  |
+| `create_time`           | google.protobuf.Timestamp | When this package was created                            |
+| `update_time`           | google.protobuf.Timestamp | When this package was last updated                       |
+| `is_active`             | bool                      | Whether this package is active                           |
+| `enable_online_booking` | bool                      | Whether this package can be booked online                |
+| `expiration_days`       | int32                     | Expiration days for the package                          |
+| `source`                | int32                     | Source of the package                                    |
+| `items`                 | repeated Item             | Items included in the package                            |
+
+#### Item Object
+
+| Field Name | Type             | Description                    |
+|------------|------------------|--------------------------------|
+| `quantity` | int32            | Quantity of this item          |
+| `services` | repeated Service | Services included in this item |
+
+#### Service Object
+
+| Field Name   | Type              | Description               |
+|--------------|-------------------|---------------------------|
+| `service_id` | string            | ID of the service         |
+| `unit_price` | google.type.Money | Unit price of the service |
+| `name`       | string            | Name of the service       |
+
+---
+
 ## 📈 4. Typical Usage Flow
 
 ### ✅ Scenario: User integrates and debugs the Retail API
@@ -132,6 +175,43 @@ Retrieves a paginated list of products based on specified criteria. Supports fil
 - `INVALID_ARGUMENT`: Pagination parameters are invalid.
 - `PERMISSION_DENIED`: Permission denied.
 
+### 2. ListPackages (`ListPackages`)
+
+- **Method**: `ListPackages`
+- **HTTP Method**: POST
+- **Path**: `/v1/retail/packages:list`
+
+#### ✅ Functionality:
+
+Retrieves a paginated list of packages based on specified criteria. Supports filtering by business locations and package
+properties.
+
+#### 🎯 Use Cases:
+
+- View all packages in the system.
+- Filter packages by business location.
+- Search for specific packages by partial name match.
+
+#### 🔧 Request Parameters:
+
+| Field Name    | Type          | Required | Description                                      |
+|---------------|---------------|----------|--------------------------------------------------|
+| `pagination`  | Pagination    | Yes      | Pagination info: pageSize, pageToken             |
+| `companyId`   | string        | Yes      | Company ID to scope packages                     |
+| `businessIds` | Array(string) | Yes      | List of business locations to filter packages by |
+
+#### 📌 Return Value:
+
+| Field Name      | Type           | Description                                                          |
+|-----------------|----------------|----------------------------------------------------------------------|
+| `nextPageToken` | string         | Token for retrieving the next page of results (empty if none remain) |
+| `packages`      | Array(Package) | List of packages matching the request criteria                       |
+
+#### ⚠️ Error Codes:
+
+- `INVALID_ARGUMENT`: Pagination parameters are invalid.
+- `PERMISSION_DENIED`: Permission denied.
+
 ---
 
 ## 🧪 6. Usage Examples
@@ -148,6 +228,25 @@ Retrieves a paginated list of products based on specified criteria. Supports fil
     "biz_001",
     "biz_002"
   ]
+}
+```
+
+### Example 2: ListPackages
+
+```json
+{
+  "pagination": {
+    "pageSize": 20
+  },
+  "companyId": "cmp_001",
+  "businessIds": [
+    "biz_001",
+    "biz_002"
+  ],
+  "filter": {
+    "name_like": "grooming",
+    "active_only": true
+  }
 }
 ```
 

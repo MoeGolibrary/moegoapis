@@ -236,7 +236,7 @@ message ListCustomersRequest {
 
     // Main phone number for filtering customers
     // Optional. If not provided, returns all customers
-    string mainPhoneNumber = 2 [(google.api.field_behavior) = OPTIONAL];
+    string main_phone_number = 2 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the customer list

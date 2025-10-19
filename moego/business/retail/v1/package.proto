@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package moego.business.retail.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb;retailpb";
+option java_multiple_files = true;
+option java_outer_classname = "PackageProto";
+option java_package = "com.moego.api.business.retail.v1";
+
+// Package represents a package of services that can be sold together.
+message Package {
+  // Unique identifier for the package
+  string id = 1;
+
+  // ID of the company that owns this package
+  string company_id = 2;
+
+  // ID of the business location associated with this package
+  string business_id = 3;
+
+  // Name of the package
+  string name = 4;
+
+  // Description of the package
+  string description = 5;
+
+  // Price of the package
+  google.type.Money price = 6;
+
+  // Total value of the services in the package
+  google.type.Money total_value = 7;
+
+  // Tax ID associated with this package
+  string tax_id = 8;
+
+  // Tax rate applied to this package
+  double tax_rate = 9;
+
+  // Number of packages sold
+  int32 sold_quantity = 10;
+
+  // When this package was created
+  google.protobuf.Timestamp create_time = 11;
+
+  // When this package was last updated
+  google.protobuf.Timestamp update_time = 12;
+
+  // Whether this package is active
+  bool is_active = 13;
+
+  // Whether this package can be booked online
+  bool enable_online_booking = 14;
+
+  // Expiration days for the package
+  // Use 99999999 to indicate never expire
+  int32 expiration_days = 15;
+
+  // Source of the package
+  int32 source = 16;
+
+  // Items included in the package
+  repeated Item items = 17;
+}
+
+// Item represents an item in a package
+message Item {
+  // Quantity of this item
+  int32 quantity = 1;
+
+  // Services included in this item
+  repeated Service services = 2;
+}
+
+// Service represents a service included in a package item
+message Service {
+  // ID of the service
+  string service_id = 1;
+
+  // Unit price of the service
+  google.type.Money unit_price = 2;
+
+  // Name of the service
+  string name = 3;
+}

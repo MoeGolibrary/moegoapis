@@ -16,10 +16,44 @@
     "application/json"
   ],
   "paths": {
+    "/v1/retail/packages:list": {
+      "post": {
+        "summary": "Lists packages",
+        "description": "Returns a list of packages.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "RetailService_ListPackages",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPackagesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListPackagesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.retail.v1.RetailService"
+        ]
+      }
+    },
     "/v1/retail/products:list": {
       "post": {
         "summary": "Lists products",
-        "description": "Returns a list of products.",
+        "description": "Returns a list of products.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
         "operationId": "RetailService_ListProducts",
         "responses": {
           "200": {
@@ -52,6 +86,30 @@
     }
   },
   "definitions": {
+    "businessretailv1Service": {
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "title": "ID of the service"
+        },
+        "unitPrice": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Unit price of the service"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the service"
+        }
+      },
+      "title": "Service represents a service included in a package item",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
+        },
+        "type": "Service"
+      }
+    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -118,6 +176,87 @@
         "type": "Money"
       }
     },
+    "v1Item": {
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Quantity of this item"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businessretailv1Service"
+          },
+          "title": "Services included in this item"
+        }
+      },
+      "title": "Item represents an item in a package",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
+        },
+        "type": "Item"
+      }
+    },
+    "v1ListPackagesRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "string, The company identifier for multi-location businesses.\nRequired for company-wide appointment listing."
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of business location IDs to include."
+        }
+      },
+      "title": "Request to list packages",
+      "required": [
+        "pagination",
+        "companyId",
+        "businessIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
+        },
+        "type": "ListPackagesRequest"
+      }
+    },
+    "v1ListPackagesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "description": "string, Token for retrieving the next page of results.\nEmpty if there are no more results."
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Package"
+          },
+          "description": "array(Package), List of packages."
+        }
+      },
+      "title": "Response to list packages",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
+        },
+        "type": "ListPackagesResponse"
+      }
+    },
     "v1ListProductsRequest": {
       "type": "object",
       "properties": {
@@ -172,6 +311,96 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
         },
         "type": "ListProductsResponse"
+      }
+    },
+    "v1Package": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the package"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company that owns this package"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business location associated with this package"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the package"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description of the package"
+        },
+        "price": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Price of the package"
+        },
+        "totalValue": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Total value of the services in the package"
+        },
+        "taxId": {
+          "type": "string",
+          "title": "Tax ID associated with this package"
+        },
+        "taxRate": {
+          "type": "number",
+          "format": "double",
+          "title": "Tax rate applied to this package"
+        },
+        "soldQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Number of packages sold"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this package was created"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this package was last updated"
+        },
+        "isActive": {
+          "type": "boolean",
+          "title": "Whether this package is active"
+        },
+        "enableOnlineBooking": {
+          "type": "boolean",
+          "title": "Whether this package can be booked online"
+        },
+        "expirationDays": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Expiration days for the package\nUse 99999999 to indicate never expire"
+        },
+        "source": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Source of the package"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Item"
+          },
+          "title": "Items included in the package"
+        }
+      },
+      "description": "Package represents a package of services that can be sold together.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb"
+        },
+        "type": "Package"
       }
     },
     "v1Pagination": {

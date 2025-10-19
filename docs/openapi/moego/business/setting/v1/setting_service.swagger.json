@@ -394,7 +394,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -435,7 +435,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -473,7 +473,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/settingv1Service"
+              "$ref": "#/definitions/businesssettingv1Service"
             }
           },
           "default": {
@@ -838,47 +838,7 @@
         "type": "ListCustomerTagsResponse"
       }
     },
-    "googlerpcStatus": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      },
-      "x-go-type": {
-        "import": {
-          "package": "google.golang.org/genproto/googleapis/rpc/status"
-        },
-        "type": "Status"
-      }
-    },
-    "protobufAny": {
-      "type": "object",
-      "properties": {
-        "@type": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {},
-      "x-go-type": {
-        "import": {
-          "package": "google.golang.org/protobuf/types/known/anypb"
-        },
-        "type": "Any"
-      }
-    },
-    "settingv1Service": {
+    "businesssettingv1Service": {
       "type": "object",
       "properties": {
         "id": {
@@ -977,6 +937,46 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "Service"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
       }
     },
     "typeMoney": {
@@ -1304,7 +1304,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/settingv1Service"
+            "$ref": "#/definitions/businesssettingv1Service"
           },
           "title": "List of services matching the request criteria\nMay be empty if no services match"
         }
