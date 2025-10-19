@@ -99,6 +99,34 @@
       "default": "BILLING_CYCLE_UNSPECIFIED",
       "description": "BillingCycle represents the billing cycle options for a membership plan.\n\n - BILLING_CYCLE_UNSPECIFIED: BILLING_CYCLE_UNSPECIFIED indicates an unknown or invalid billing cycle.\n - MONTHLY: MONTHLY indicates the membership is billed monthly.\n - ANNUALLY: ANNUALLY indicates the membership is billed annually.\n - WEEKLY: WEEKLY indicates the membership is billed weekly."
     },
+    "businessmembershipv1CustomizedBreed": {
+      "type": "object",
+      "properties": {
+        "petType": {
+          "$ref": "#/definitions/v1PetType",
+          "title": "pet type"
+        },
+        "breeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "pet breed ids"
+        },
+        "isAll": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "allow all breeds"
+        }
+      },
+      "title": "customized breed",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "CustomizedBreed"
+      }
+    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -494,10 +522,11 @@
           "type": "boolean",
           "title": "Breed filter"
         },
-        "customizedBreed": {
+        "customizedBreeds": {
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "object",
+            "$ref": "#/definitions/businessmembershipv1CustomizedBreed"
           },
           "title": "Customized breed"
         },
@@ -516,7 +545,7 @@
           "type": "boolean",
           "title": "Available for all pet coat type"
         },
-        "customizedCoat": {
+        "customizedCoats": {
           "type": "array",
           "items": {
             "type": "string"
@@ -586,6 +615,25 @@
         },
         "type": "Pagination"
       }
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
     },
     "v1Subscription": {
       "type": "object",

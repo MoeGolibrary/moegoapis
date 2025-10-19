@@ -808,6 +808,38 @@
         "type": "UpdateServiceRequest"
       }
     },
+    "businesssettingv1CustomizedBreed": {
+      "type": "object",
+      "properties": {
+        "petTypeId": {
+          "type": "string",
+          "title": "Pet type id"
+        },
+        "petTypeName": {
+          "type": "string",
+          "title": "Pet type name"
+        },
+        "breeds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Pet breed ids"
+        },
+        "isAll": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Allow all breeds for this pet type"
+        }
+      },
+      "title": "Customized breed definition",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomizedBreed"
+      }
+    },
     "businesssettingv1ListCustomerTagsResponse": {
       "type": "object",
       "properties": {
@@ -890,7 +922,7 @@
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/v1CustomizedBreed"
+            "$ref": "#/definitions/businesssettingv1CustomizedBreed"
           },
           "title": "List of pet types and their breeds that can use this service\nOnly used when breed_filter is false"
         },
@@ -1046,38 +1078,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "CustomerTag"
-      }
-    },
-    "v1CustomizedBreed": {
-      "type": "object",
-      "properties": {
-        "petTypeId": {
-          "type": "string",
-          "title": "Pet type id"
-        },
-        "petTypeName": {
-          "type": "string",
-          "title": "Pet type name"
-        },
-        "breeds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "Pet breed ids"
-        },
-        "isAll": {
-          "type": "boolean",
-          "x-nullable": true,
-          "title": "Allow all breeds for this pet type"
-        }
-      },
-      "title": "Customized breed definition",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
-        },
-        "type": "CustomizedBreed"
       }
     },
     "v1LifeCycle": {

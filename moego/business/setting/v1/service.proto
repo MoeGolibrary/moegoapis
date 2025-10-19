@@ -3,6 +3,7 @@ syntax = "proto3";
 package moego.business.setting.v1;
 
 import "google/type/money.proto";
+// Removed import of moego/business/customer/v1/pet.proto to break circular dependency
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;

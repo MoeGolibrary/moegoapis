@@ -8,6 +8,7 @@ import "google/type/dayofweek.proto";
 import "google/type/timeofday.proto";
 import "google/type/interval.proto";
 import "moego/common/v1/time_period.proto";
+import "moego/business/customer/v1/pet.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
 option java_multiple_files = true;
@@ -131,7 +132,7 @@ message Membership {
   bool breed_filter = 23;
 
   // Customized breed
-  repeated string customized_breed = 24;
+  repeated CustomizedBreed customized_breeds = 24;
 
   // Available for all pet size
   bool pet_size_filter = 25;
@@ -143,7 +144,7 @@ message Membership {
   bool coat_filter = 27;
 
   // Available pet coat type (only if is_available_for_all_pet_coat_type is false)
-  repeated string customized_coat = 28;
+  repeated string customized_coats = 28;
 
   // Source of the membership
   Source source = 29;
@@ -154,6 +155,17 @@ message Membership {
   // Allow billing cycle time of day.
   bool allow_billing_cycle_time_of_day = 31;
 }
+
+// customized breed
+message CustomizedBreed {
+  // pet type
+  moego.business.customer.v1.Pet.Type pet_type = 1;
+  // pet breed ids
+  repeated string breeds = 2;
+  // allow all breeds
+  optional bool is_all = 3;
+}
+
 
 // Subscription represents a customer's subscription to a membership plan.
 message Subscription {

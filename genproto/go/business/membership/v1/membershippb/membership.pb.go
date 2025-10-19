@@ -7,6 +7,7 @@
 package membershippb
 
 import (
+	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	dayofweek "google.golang.org/genproto/googleapis/type/dayofweek"
 	interval "google.golang.org/genproto/googleapis/type/interval"
@@ -255,7 +256,7 @@ func (x Subscription_Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Subscription_Status.Descriptor instead.
 func (Subscription_Status) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{1, 0}
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{2, 0}
 }
 
 // Membership represents a membership plan that customers can purchase and use for benefits.
@@ -312,7 +313,7 @@ type Membership struct {
 	// Breed filter
 	BreedFilter bool `protobuf:"varint,23,opt,name=breed_filter,json=breedFilter,proto3" json:"breed_filter,omitempty"`
 	// Customized breed
-	CustomizedBreed []string `protobuf:"bytes,24,rep,name=customized_breed,json=customizedBreed,proto3" json:"customized_breed,omitempty"`
+	CustomizedBreeds []*CustomizedBreed `protobuf:"bytes,24,rep,name=customized_breeds,json=customizedBreeds,proto3" json:"customized_breeds,omitempty"`
 	// Available for all pet size
 	PetSizeFilter bool `protobuf:"varint,25,opt,name=pet_size_filter,json=petSizeFilter,proto3" json:"pet_size_filter,omitempty"`
 	// Available pet size (only if is_available_for_all_pet_size is false)
@@ -320,7 +321,7 @@ type Membership struct {
 	// Available for all pet coat type
 	CoatFilter bool `protobuf:"varint,27,opt,name=coat_filter,json=coatFilter,proto3" json:"coat_filter,omitempty"`
 	// Available pet coat type (only if is_available_for_all_pet_coat_type is false)
-	CustomizedCoat []string `protobuf:"bytes,28,rep,name=customized_coat,json=customizedCoat,proto3" json:"customized_coat,omitempty"`
+	CustomizedCoats []string `protobuf:"bytes,28,rep,name=customized_coats,json=customizedCoats,proto3" json:"customized_coats,omitempty"`
 	// Source of the membership
 	Source Membership_Source `protobuf:"varint,29,opt,name=source,proto3,enum=moego.business.membership.v1.Membership_Source" json:"source,omitempty"`
 	// Billing cycle time of day.
@@ -523,9 +524,9 @@ func (x *Membership) GetBreedFilter() bool {
 	return false
 }
 
-func (x *Membership) GetCustomizedBreed() []string {
+func (x *Membership) GetCustomizedBreeds() []*CustomizedBreed {
 	if x != nil {
-		return x.CustomizedBreed
+		return x.CustomizedBreeds
 	}
 	return nil
 }
@@ -551,9 +552,9 @@ func (x *Membership) GetCoatFilter() bool {
 	return false
 }
 
-func (x *Membership) GetCustomizedCoat() []string {
+func (x *Membership) GetCustomizedCoats() []string {
 	if x != nil {
-		return x.CustomizedCoat
+		return x.CustomizedCoats
 	}
 	return nil
 }
@@ -575,6 +576,70 @@ func (x *Membership) GetBillingCycleTimeOfDay() *timeofday.TimeOfDay {
 func (x *Membership) GetAllowBillingCycleTimeOfDay() bool {
 	if x != nil {
 		return x.AllowBillingCycleTimeOfDay
+	}
+	return false
+}
+
+// customized breed
+type CustomizedBreed struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// pet type
+	PetType customerpb.Pet_Type `protobuf:"varint,1,opt,name=pet_type,json=petType,proto3,enum=moego.business.customer.v1.Pet_Type" json:"pet_type,omitempty"`
+	// pet breed ids
+	Breeds []string `protobuf:"bytes,2,rep,name=breeds,proto3" json:"breeds,omitempty"`
+	// allow all breeds
+	IsAll         *bool `protobuf:"varint,3,opt,name=is_all,json=isAll,proto3,oneof" json:"is_all,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomizedBreed) Reset() {
+	*x = CustomizedBreed{}
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomizedBreed) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomizedBreed) ProtoMessage() {}
+
+func (x *CustomizedBreed) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomizedBreed.ProtoReflect.Descriptor instead.
+func (*CustomizedBreed) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *CustomizedBreed) GetPetType() customerpb.Pet_Type {
+	if x != nil {
+		return x.PetType
+	}
+	return customerpb.Pet_Type(0)
+}
+
+func (x *CustomizedBreed) GetBreeds() []string {
+	if x != nil {
+		return x.Breeds
+	}
+	return nil
+}
+
+func (x *CustomizedBreed) GetIsAll() bool {
+	if x != nil && x.IsAll != nil {
+		return *x.IsAll
 	}
 	return false
 }
@@ -614,7 +679,7 @@ type Subscription struct {
 
 func (x *Subscription) Reset() {
 	*x = Subscription{}
-	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[1]
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -626,7 +691,7 @@ func (x *Subscription) String() string {
 func (*Subscription) ProtoMessage() {}
 
 func (x *Subscription) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[1]
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -639,7 +704,7 @@ func (x *Subscription) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Subscription.ProtoReflect.Descriptor instead.
 func (*Subscription) Descriptor() ([]byte, []int) {
-	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{1}
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *Subscription) GetId() string {
@@ -737,7 +802,7 @@ var File_moego_business_membership_v1_membership_proto protoreflect.FileDescript
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a!moego/common/v1/time_period.proto\"\x81\x0e\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a!moego/common/v1/time_period.proto\x1a$moego/business/customer/v1/pet.proto\"\xb4\x0e\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -765,13 +830,13 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x18enable_discount_benefits\x18\x14 \x01(\bR\x16enableDiscountBenefits\x128\n" +
 	"\x18enable_quantity_benefits\x18\x15 \x01(\bR\x16enableQuantityBenefits\x12P\n" +
 	"\x19billing_cycle_day_of_week\x18\x16 \x01(\x0e2\x16.google.type.DayOfWeekR\x15billingCycleDayOfWeek\x12!\n" +
-	"\fbreed_filter\x18\x17 \x01(\bR\vbreedFilter\x12)\n" +
-	"\x10customized_breed\x18\x18 \x03(\tR\x0fcustomizedBreed\x12&\n" +
+	"\fbreed_filter\x18\x17 \x01(\bR\vbreedFilter\x12Z\n" +
+	"\x11customized_breeds\x18\x18 \x03(\v2-.moego.business.membership.v1.CustomizedBreedR\x10customizedBreeds\x12&\n" +
 	"\x0fpet_size_filter\x18\x19 \x01(\bR\rpetSizeFilter\x120\n" +
 	"\x14customized_pet_sizes\x18\x1a \x03(\tR\x12customizedPetSizes\x12\x1f\n" +
 	"\vcoat_filter\x18\x1b \x01(\bR\n" +
-	"coatFilter\x12'\n" +
-	"\x0fcustomized_coat\x18\x1c \x03(\tR\x0ecustomizedCoat\x12G\n" +
+	"coatFilter\x12)\n" +
+	"\x10customized_coats\x18\x1c \x03(\tR\x0fcustomizedCoats\x12G\n" +
 	"\x06source\x18\x1d \x01(\x0e2/.moego.business.membership.v1.Membership.SourceR\x06source\x12P\n" +
 	"\x19billing_cycle_time_of_day\x18\x1e \x01(\v2\x16.google.type.TimeOfDayR\x15billingCycleTimeOfDay\x12C\n" +
 	"\x1fallow_billing_cycle_time_of_day\x18\x1f \x01(\bR\x1aallowBillingCycleTimeOfDay\"G\n" +
@@ -790,7 +855,12 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\aMONTHLY\x10\x01\x12\f\n" +
 	"\bANNUALLY\x10\x02\x12\n" +
 	"\n" +
-	"\x06WEEKLY\x10\x03\"\x87\x06\n" +
+	"\x06WEEKLY\x10\x03\"\x91\x01\n" +
+	"\x0fCustomizedBreed\x12?\n" +
+	"\bpet_type\x18\x01 \x01(\x0e2$.moego.business.customer.v1.Pet.TypeR\apetType\x12\x16\n" +
+	"\x06breeds\x18\x02 \x03(\tR\x06breeds\x12\x1a\n" +
+	"\x06is_all\x18\x03 \x01(\bH\x00R\x05isAll\x88\x01\x01B\t\n" +
+	"\a_is_all\"\x87\x06\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
@@ -836,47 +906,51 @@ func file_moego_business_membership_v1_membership_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_membership_v1_membership_proto_goTypes = []any{
 	(Membership_Status)(0),        // 0: moego.business.membership.v1.Membership.Status
 	(Membership_Source)(0),        // 1: moego.business.membership.v1.Membership.Source
 	(Membership_BillingCycle)(0),  // 2: moego.business.membership.v1.Membership.BillingCycle
 	(Subscription_Status)(0),      // 3: moego.business.membership.v1.Subscription.Status
 	(*Membership)(nil),            // 4: moego.business.membership.v1.Membership
-	(*Subscription)(nil),          // 5: moego.business.membership.v1.Subscription
-	(*money.Money)(nil),           // 6: google.type.Money
-	(*commonpb.TimePeriod)(nil),   // 7: moego.common.v1.TimePeriod
-	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
-	(dayofweek.DayOfWeek)(0),      // 9: google.type.DayOfWeek
-	(*timeofday.TimeOfDay)(nil),   // 10: google.type.TimeOfDay
-	(*interval.Interval)(nil),     // 11: google.type.Interval
+	(*CustomizedBreed)(nil),       // 5: moego.business.membership.v1.CustomizedBreed
+	(*Subscription)(nil),          // 6: moego.business.membership.v1.Subscription
+	(*money.Money)(nil),           // 7: google.type.Money
+	(*commonpb.TimePeriod)(nil),   // 8: moego.common.v1.TimePeriod
+	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
+	(dayofweek.DayOfWeek)(0),      // 10: google.type.DayOfWeek
+	(*timeofday.TimeOfDay)(nil),   // 11: google.type.TimeOfDay
+	(customerpb.Pet_Type)(0),      // 12: moego.business.customer.v1.Pet.Type
+	(*interval.Interval)(nil),     // 13: google.type.Interval
 }
 var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	0,  // 0: moego.business.membership.v1.Membership.status:type_name -> moego.business.membership.v1.Membership.Status
-	6,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
+	7,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
 	2,  // 2: moego.business.membership.v1.Membership.billing_cycle:type_name -> moego.business.membership.v1.Membership.BillingCycle
-	7,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.common.v1.TimePeriod
-	8,  // 4: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
-	8,  // 5: moego.business.membership.v1.Membership.updated_time:type_name -> google.protobuf.Timestamp
-	8,  // 6: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
-	6,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
-	6,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
-	9,  // 9: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
-	1,  // 10: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
-	10, // 11: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
-	6,  // 12: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
-	8,  // 13: moego.business.membership.v1.Subscription.created_at:type_name -> google.protobuf.Timestamp
-	8,  // 14: moego.business.membership.v1.Subscription.updated_at:type_name -> google.protobuf.Timestamp
-	8,  // 15: moego.business.membership.v1.Subscription.deleted_at:type_name -> google.protobuf.Timestamp
-	11, // 16: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
-	8,  // 17: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
-	8,  // 18: moego.business.membership.v1.Subscription.expires_at:type_name -> google.protobuf.Timestamp
-	3,  // 19: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
-	20, // [20:20] is the sub-list for method output_type
-	20, // [20:20] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	8,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.common.v1.TimePeriod
+	9,  // 4: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
+	9,  // 5: moego.business.membership.v1.Membership.updated_time:type_name -> google.protobuf.Timestamp
+	9,  // 6: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
+	7,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
+	7,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
+	10, // 9: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
+	5,  // 10: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.membership.v1.CustomizedBreed
+	1,  // 11: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
+	11, // 12: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
+	12, // 13: moego.business.membership.v1.CustomizedBreed.pet_type:type_name -> moego.business.customer.v1.Pet.Type
+	7,  // 14: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
+	9,  // 15: moego.business.membership.v1.Subscription.created_at:type_name -> google.protobuf.Timestamp
+	9,  // 16: moego.business.membership.v1.Subscription.updated_at:type_name -> google.protobuf.Timestamp
+	9,  // 17: moego.business.membership.v1.Subscription.deleted_at:type_name -> google.protobuf.Timestamp
+	13, // 18: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
+	9,  // 19: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
+	9,  // 20: moego.business.membership.v1.Subscription.expires_at:type_name -> google.protobuf.Timestamp
+	3,  // 21: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
+	22, // [22:22] is the sub-list for method output_type
+	22, // [22:22] is the sub-list for method input_type
+	22, // [22:22] is the sub-list for extension type_name
+	22, // [22:22] is the sub-list for extension extendee
+	0,  // [0:22] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_membership_v1_membership_proto_init() }
@@ -885,13 +959,14 @@ func file_moego_business_membership_v1_membership_proto_init() {
 		return
 	}
 	file_moego_business_membership_v1_membership_proto_msgTypes[1].OneofWrappers = []any{}
+	file_moego_business_membership_v1_membership_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_membership_v1_membership_proto_rawDesc), len(file_moego_business_membership_v1_membership_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
