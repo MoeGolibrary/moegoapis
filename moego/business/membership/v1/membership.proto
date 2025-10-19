@@ -29,9 +29,6 @@ message Membership {
     // INACTIVE indicates the membership plan is not available for new purchases
     // but existing memberships may still be valid.
     INACTIVE = 2;
-
-    // DELETED indicates the membership plan has been removed from the system.
-    DELETED = 3;
   }
 
   // Source represents where the membership plan originates from.
@@ -44,21 +41,6 @@ message Membership {
 
     // ENTERPRISE_HUB indicates the membership plan is created from Enterprise Hub.
     ENTERPRISE_HUB = 2;
-  }
-
-  // BillingCycle represents the billing cycle options for a membership plan.
-  enum BillingCycle {
-    // BILLING_CYCLE_UNSPECIFIED indicates an unknown or invalid billing cycle.
-    BILLING_CYCLE_UNSPECIFIED = 0;
-
-    // MONTHLY indicates the membership is billed monthly.
-    MONTHLY = 1;
-
-    // ANNUALLY indicates the membership is billed annually.
-    ANNUALLY = 2;
-
-    // WEEKLY indicates the membership is billed weekly.
-    WEEKLY = 3;
   }
 
   // Unique identifier for the membership plan.
@@ -83,9 +65,6 @@ message Membership {
 
   // The tax id associated with the membership.
   string tax_id = 7;
-
-  // Deprecated billing cycle for the membership.
-  BillingCycle billing_cycle = 8 [deprecated = true];
 
   // Policy information for the membership.
   string policy = 9;

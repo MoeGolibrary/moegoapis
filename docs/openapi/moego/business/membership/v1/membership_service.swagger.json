@@ -88,17 +88,6 @@
     }
   },
   "definitions": {
-    "MembershipBillingCycle": {
-      "type": "string",
-      "enum": [
-        "BILLING_CYCLE_UNSPECIFIED",
-        "MONTHLY",
-        "ANNUALLY",
-        "WEEKLY"
-      ],
-      "default": "BILLING_CYCLE_UNSPECIFIED",
-      "description": "BillingCycle represents the billing cycle options for a membership plan.\n\n - BILLING_CYCLE_UNSPECIFIED: BILLING_CYCLE_UNSPECIFIED indicates an unknown or invalid billing cycle.\n - MONTHLY: MONTHLY indicates the membership is billed monthly.\n - ANNUALLY: ANNUALLY indicates the membership is billed annually.\n - WEEKLY: WEEKLY indicates the membership is billed weekly."
-    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -473,10 +462,6 @@
           "type": "string",
           "description": "The tax id associated with the membership."
         },
-        "billingCycle": {
-          "$ref": "#/definitions/MembershipBillingCycle",
-          "description": "Deprecated billing cycle for the membership."
-        },
         "policy": {
           "type": "string",
           "description": "Policy information for the membership."
@@ -607,11 +592,10 @@
       "enum": [
         "STATUS_UNSPECIFIED",
         "ACTIVE",
-        "INACTIVE",
-        "DELETED"
+        "INACTIVE"
       ],
       "default": "STATUS_UNSPECIFIED",
-      "description": "Status represents the current state of a membership plan.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\n - ACTIVE: ACTIVE indicates the membership plan is currently available for purchase and use.\n - INACTIVE: INACTIVE indicates the membership plan is not available for new purchases\nbut existing memberships may still be valid.\n - DELETED: DELETED indicates the membership plan has been removed from the system."
+      "description": "Status represents the current state of a membership plan.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\n - ACTIVE: ACTIVE indicates the membership plan is currently available for purchase and use.\n - INACTIVE: INACTIVE indicates the membership plan is not available for new purchases\nbut existing memberships may still be valid."
     },
     "v1Pagination": {
       "type": "object",
