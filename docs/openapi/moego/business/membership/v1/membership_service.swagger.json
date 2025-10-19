@@ -498,7 +498,7 @@
           "format": "date-time",
           "description": "Timestamp when the membership plan was created."
         },
-        "updatedTime": {
+        "lastUpdatedTime": {
           "type": "string",
           "format": "date-time",
           "description": "Timestamp when the membership plan was last updated."
@@ -658,20 +658,19 @@
           "$ref": "#/definitions/typeMoney",
           "description": "The price of the subscription."
         },
-        "createdAt": {
+        "createdTime": {
           "type": "string",
           "format": "date-time",
           "description": "The create time."
         },
-        "updatedAt": {
+        "updatedTime": {
           "type": "string",
           "format": "date-time",
           "description": "The update time."
         },
-        "deletedAt": {
+        "deletedTime": {
           "type": "string",
           "format": "date-time",
-          "x-nullable": true,
           "description": "The delete time, non-null means is deleted."
         },
         "validityPeriod": {
@@ -683,7 +682,7 @@
           "format": "date-time",
           "description": "Next billing date."
         },
-        "expiresAt": {
+        "expiredTime": {
           "type": "string",
           "format": "date-time",
           "description": "Expire date."

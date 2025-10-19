@@ -294,7 +294,7 @@ type Membership struct {
 	// Timestamp when the membership plan was created.
 	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// Timestamp when the membership plan was last updated.
-	UpdatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=updated_time,json=updatedTime,proto3" json:"updated_time,omitempty"`
+	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// Timestamp when the membership plan was deleted (if applicable).
 	DeletedTime *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=deleted_time,json=deletedTime,proto3" json:"deleted_time,omitempty"`
 	// Revision number for tracking updates.
@@ -455,9 +455,9 @@ func (x *Membership) GetCreatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Membership) GetUpdatedTime() *timestamppb.Timestamp {
+func (x *Membership) GetLastUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdatedTime
+		return x.LastUpdatedTime
 	}
 	return nil
 }
@@ -595,17 +595,17 @@ type Subscription struct {
 	// The price of the subscription.
 	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3" json:"price,omitempty"`
 	// The create time.
-	CreatedAt *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	CreatedTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_time,json=createdTime,proto3" json:"created_time,omitempty"`
 	// The update time.
-	UpdatedAt *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	UpdatedTime *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=updated_time,json=updatedTime,proto3" json:"updated_time,omitempty"`
 	// The delete time, non-null means is deleted.
-	DeletedAt *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	DeletedTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=deleted_time,json=deletedTime,proto3" json:"deleted_time,omitempty"`
 	// Validity period.
 	ValidityPeriod *interval.Interval `protobuf:"bytes,9,opt,name=validity_period,json=validityPeriod,proto3" json:"validity_period,omitempty"`
 	// Next billing date.
 	NextBillingDate *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=next_billing_date,json=nextBillingDate,proto3" json:"next_billing_date,omitempty"`
 	// Expire date.
-	ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
+	ExpiredTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=expired_time,json=expiredTime,proto3" json:"expired_time,omitempty"`
 	// Cancelled but in active status.
 	CancelAtPeriodEnd bool `protobuf:"varint,12,opt,name=cancel_at_period_end,json=cancelAtPeriodEnd,proto3" json:"cancel_at_period_end,omitempty"`
 	// Status of the subscription.
@@ -679,23 +679,23 @@ func (x *Subscription) GetPrice() *money.Money {
 	return nil
 }
 
-func (x *Subscription) GetCreatedAt() *timestamppb.Timestamp {
+func (x *Subscription) GetCreatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreatedAt
+		return x.CreatedTime
 	}
 	return nil
 }
 
-func (x *Subscription) GetUpdatedAt() *timestamppb.Timestamp {
+func (x *Subscription) GetUpdatedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdatedAt
+		return x.UpdatedTime
 	}
 	return nil
 }
 
-func (x *Subscription) GetDeletedAt() *timestamppb.Timestamp {
+func (x *Subscription) GetDeletedTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.DeletedAt
+		return x.DeletedTime
 	}
 	return nil
 }
@@ -714,9 +714,9 @@ func (x *Subscription) GetNextBillingDate() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Subscription) GetExpiresAt() *timestamppb.Timestamp {
+func (x *Subscription) GetExpiredTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.ExpiresAt
+		return x.ExpiredTime
 	}
 	return nil
 }
@@ -794,7 +794,7 @@ var File_moego_business_membership_v1_membership_proto protoreflect.FileDescript
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\xbe\x0e\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\xc7\x0e\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -811,8 +811,8 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	" \x01(\tR\tcompanyId\x12\x19\n" +
 	"\bprice_id\x18\v \x01(\tR\apriceId\x12Z\n" +
 	"\x14billing_cycle_period\x18\f \x01(\v2(.moego.business.membership.v1.TimePeriodR\x12billingCyclePeriod\x12=\n" +
-	"\fcreated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12=\n" +
-	"\fupdated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vupdatedTime\x12=\n" +
+	"\fcreated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
+	"\x11last_updated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12=\n" +
 	"\fdeleted_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\vdeletedTime\x12\x1a\n" +
 	"\brevision\x18\x10 \x01(\x05R\brevision\x123\n" +
 	"\vtotal_price\x18\x11 \x01(\v2\x12.google.type.MoneyR\n" +
@@ -847,7 +847,7 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\aMONTHLY\x10\x01\x12\f\n" +
 	"\bANNUALLY\x10\x02\x12\n" +
 	"\n" +
-	"\x06WEEKLY\x10\x03\"\x87\x06\n" +
+	"\x06WEEKLY\x10\x03\"\x83\x06\n" +
 	"\fSubscription\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vcustomer_id\x18\x02 \x01(\tR\n" +
@@ -855,18 +855,14 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\rmembership_id\x18\x03 \x01(\tR\fmembershipId\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x04 \x01(\tR\tcompanyId\x12(\n" +
-	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyR\x05price\x129\n" +
-	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x129\n" +
-	"\n" +
-	"updated_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12>\n" +
-	"\n" +
-	"deleted_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x12>\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyR\x05price\x12=\n" +
+	"\fcreated_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12=\n" +
+	"\fupdated_time\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\vupdatedTime\x12=\n" +
+	"\fdeleted_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\vdeletedTime\x12>\n" +
 	"\x0fvalidity_period\x18\t \x01(\v2\x15.google.type.IntervalR\x0evalidityPeriod\x12F\n" +
 	"\x11next_billing_date\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\x0fnextBillingDate\x129\n" +
-	"\n" +
-	"expires_at\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\texpiresAt\x12/\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\x0fnextBillingDate\x12=\n" +
+	"\fexpired_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\vexpiredTime\x12/\n" +
 	"\x14cancel_at_period_end\x18\f \x01(\bR\x11cancelAtPeriodEnd\x12I\n" +
 	"\x06status\x18\r \x01(\x0e21.moego.business.membership.v1.Subscription.StatusR\x06status\"T\n" +
 	"\x06Status\x12\x16\n" +
@@ -876,8 +872,7 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x06ACTIVE\x10\x02\x12\r\n" +
 	"\tCANCELLED\x10\x03\x12\n" +
 	"\n" +
-	"\x06PAUSED\x10\x04B\r\n" +
-	"\v_deleted_at\"S\n" +
+	"\x06PAUSED\x10\x04\"S\n" +
 	"\n" +
 	"TimePeriod\x12/\n" +
 	"\x04unit\x18\x01 \x01(\x0e2\x1b.google.type.CalendarPeriodR\x04unit\x12\x14\n" +
@@ -920,7 +915,7 @@ var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	2,  // 2: moego.business.membership.v1.Membership.billing_cycle:type_name -> moego.business.membership.v1.Membership.BillingCycle
 	6,  // 3: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
 	8,  // 4: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
-	8,  // 5: moego.business.membership.v1.Membership.updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 5: moego.business.membership.v1.Membership.last_updated_time:type_name -> google.protobuf.Timestamp
 	8,  // 6: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
 	7,  // 7: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
 	7,  // 8: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
@@ -929,12 +924,12 @@ var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
 	1,  // 11: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
 	11, // 12: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
 	7,  // 13: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
-	8,  // 14: moego.business.membership.v1.Subscription.created_at:type_name -> google.protobuf.Timestamp
-	8,  // 15: moego.business.membership.v1.Subscription.updated_at:type_name -> google.protobuf.Timestamp
-	8,  // 16: moego.business.membership.v1.Subscription.deleted_at:type_name -> google.protobuf.Timestamp
+	8,  // 14: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
+	8,  // 15: moego.business.membership.v1.Subscription.updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 16: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
 	12, // 17: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
 	8,  // 18: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
-	8,  // 19: moego.business.membership.v1.Subscription.expires_at:type_name -> google.protobuf.Timestamp
+	8,  // 19: moego.business.membership.v1.Subscription.expired_time:type_name -> google.protobuf.Timestamp
 	3,  // 20: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
 	13, // 21: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
 	22, // [22:22] is the sub-list for method output_type
@@ -949,7 +944,6 @@ func file_moego_business_membership_v1_membership_proto_init() {
 	if File_moego_business_membership_v1_membership_proto != nil {
 		return
 	}
-	file_moego_business_membership_v1_membership_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

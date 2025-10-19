@@ -29,7 +29,7 @@ message Membership {
     // INACTIVE indicates the membership plan is not available for new purchases
     // but existing memberships may still be valid.
     INACTIVE = 2;
-    
+
     // DELETED indicates the membership plan has been removed from the system.
     DELETED = 3;
   }
@@ -103,7 +103,7 @@ message Membership {
   google.protobuf.Timestamp created_time = 13;
 
   // Timestamp when the membership plan was last updated.
-  google.protobuf.Timestamp updated_time = 14;
+  google.protobuf.Timestamp last_updated_time = 14;
 
   // Timestamp when the membership plan was deleted (if applicable).
   google.protobuf.Timestamp deleted_time = 15;
@@ -196,13 +196,13 @@ message Subscription {
   google.type.Money price = 5;
 
   // The create time.
-  google.protobuf.Timestamp created_at = 6;
+  google.protobuf.Timestamp created_time = 6;
 
   // The update time.
-  google.protobuf.Timestamp updated_at = 7;
+  google.protobuf.Timestamp updated_time = 7;
 
   // The delete time, non-null means is deleted.
-  optional google.protobuf.Timestamp deleted_at = 8;
+  google.protobuf.Timestamp deleted_time = 8;
 
   // Validity period.
   google.type.Interval validity_period = 9;
@@ -211,7 +211,7 @@ message Subscription {
   google.protobuf.Timestamp next_billing_date = 10;
 
   // Expire date.
-  google.protobuf.Timestamp expires_at = 11;
+  google.protobuf.Timestamp expired_time = 11;
 
   // Cancelled but in active status.
   bool cancel_at_period_end = 12;
