@@ -251,7 +251,9 @@ status to facilitate targeted queries.
   "companyId": "cmp_001",
   "filter": {
     "name_like": "gold",
-    "statuses": ["ACTIVE"]
+    "statuses": [
+      "ACTIVE"
+    ]
   }
 }
 ```
@@ -265,8 +267,14 @@ status to facilitate targeted queries.
   },
   "companyId": "cmp_001",
   "filter": {
-    "customer_ids": ["cus_123", "cus_456"],
-    "statuses": ["ACTIVE", "TRIAL"]
+    "customer_ids": [
+      "cus_123",
+      "cus_456"
+    ],
+    "statuses": [
+      "ACTIVE",
+      "TRIAL"
+    ]
   }
 }
 ```
