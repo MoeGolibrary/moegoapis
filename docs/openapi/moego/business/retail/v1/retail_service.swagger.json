@@ -19,7 +19,7 @@
     "/v1/retail/packages:list": {
       "post": {
         "summary": "Lists packages",
-        "description": "Returns a list of packages.",
+        "description": "Returns a list of packages.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
         "operationId": "RetailService_ListPackages",
         "responses": {
           "200": {
@@ -53,7 +53,7 @@
     "/v1/retail/products:list": {
       "post": {
         "summary": "Lists products",
-        "description": "Returns a list of products.",
+        "description": "Returns a list of products.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
         "operationId": "RetailService_ListProducts",
         "responses": {
           "200": {

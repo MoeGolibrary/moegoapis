@@ -27,15 +27,23 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 //
-// RetailService provides methods for managing retail products.
+// RetailService provides methods for managing retail products and packages.
 type RetailServiceClient interface {
 	// Lists products
 	//
 	// Returns a list of products.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListProducts(ctx context.Context, in *ListProductsRequest, opts ...grpc.CallOption) (*ListProductsResponse, error)
 	// Lists packages
 	//
 	// Returns a list of packages.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesResponse, error)
 }
 
@@ -71,15 +79,23 @@ func (c *retailServiceClient) ListPackages(ctx context.Context, in *ListPackages
 // All implementations must embed UnimplementedRetailServiceServer
 // for forward compatibility.
 //
-// RetailService provides methods for managing retail products.
+// RetailService provides methods for managing retail products and packages.
 type RetailServiceServer interface {
 	// Lists products
 	//
 	// Returns a list of products.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListProducts(context.Context, *ListProductsRequest) (*ListProductsResponse, error)
 	// Lists packages
 	//
 	// Returns a list of packages.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if pagination parameters are invalid
+	// - PERMISSION_DENIED if the caller lacks access rights
 	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesResponse, error)
 	mustEmbedUnimplementedRetailServiceServer()
 }

@@ -13,11 +13,15 @@ option java_multiple_files = true;
 option java_outer_classname = "RetailServiceProto";
 option java_package = "com.moego.api.business.retail.v1";
 
-// RetailService provides methods for managing retail products.
+// RetailService provides methods for managing retail products and packages.
 service RetailService {
   // Lists products
   //
   // Returns a list of products.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListProducts(ListProductsRequest) returns (ListProductsResponse) {
     option (google.api.http) = {
       post: "/v1/retail/products:list"
@@ -28,6 +32,10 @@ service RetailService {
   // Lists packages
   //
   // Returns a list of packages.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if pagination parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
   rpc ListPackages(ListPackagesRequest) returns (ListPackagesResponse) {
     option (google.api.http) = {
       post: "/v1/retail/packages:list"
