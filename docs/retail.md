@@ -199,14 +199,6 @@ properties.
 | `pagination`  | Pagination    | Yes      | Pagination info: pageSize, pageToken             |
 | `companyId`   | string        | Yes      | Company ID to scope packages                     |
 | `businessIds` | Array(string) | Yes      | List of business locations to filter packages by |
-| `filter`      | Filter        | No       | Optional filters to apply to the package list    |
-
-##### Filter Object
-
-| Field Name    | Type   | Required | Description                                                      |
-|---------------|--------|----------|------------------------------------------------------------------|
-| `name_like`   | string | No       | Partial name match to filter packages by name (case-insensitive) |
-| `active_only` | bool   | No       | Filter to include only active packages                           |
 
 #### 📌 Return Value:
 
