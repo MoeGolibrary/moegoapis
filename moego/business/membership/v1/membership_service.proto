@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "moego/business/membership/v1/membership.proto";
 import "moego/common/v1/pagination.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
 option java_multiple_files = true;
@@ -38,6 +39,19 @@ service MembershipService {
   rpc ListSubscriptions(ListSubscriptionsRequest) returns (ListSubscriptionsResponse) {
     option (google.api.http) = {
       post: "/v1/memberships/subscriptions:list"
+      body: "*"
+    };
+  }
+  
+  // GetPerkUsageDetail retrieves detailed information about perk usage for a specific membership.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if the request parameters are invalid
+  // - NOT_FOUND if the membership or customer is not found
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc GetPerkUsageDetail(GetPerkUsageDetailRequest) returns (GetPerkUsageDetailResponse) {
+    option (google.api.http) = {
+      post: "/v1/memberships/perkUsageDetail"
       body: "*"
     };
   }
@@ -119,4 +133,34 @@ message ListSubscriptionsResponse {
   // Obtained from the previous page's response.
   // Empty if there are no more results.
   string next_page_token = 2;
+}
+
+// The request message for getting perk usage detail
+message GetPerkUsageDetailRequest {
+  // Filter parameters
+  message Filter {
+    // Validity start time
+    optional google.protobuf.Timestamp validity_start_time = 1;
+  }
+  
+  // Optional filter
+  optional Filter filter = 1;
+  
+  // The company identifier
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+  
+  // The membership identifier
+  string membership_id = 3 [(google.api.field_behavior) = REQUIRED];
+  
+  // The customer identifier
+  string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// The response message for getting perk usage detail
+message GetPerkUsageDetailResponse {
+  // The included benefits
+  repeated IncludeBenefitView included_benefits = 1;
+  
+  // Discount benefits
+  repeated IncludeBenefitView discount_benefits = 2;
 }

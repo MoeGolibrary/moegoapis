@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MembershipService_ListMemberships_FullMethodName   = "/moego.business.membership.v1.MembershipService/ListMemberships"
-	MembershipService_ListSubscriptions_FullMethodName = "/moego.business.membership.v1.MembershipService/ListSubscriptions"
+	MembershipService_ListMemberships_FullMethodName    = "/moego.business.membership.v1.MembershipService/ListMemberships"
+	MembershipService_ListSubscriptions_FullMethodName  = "/moego.business.membership.v1.MembershipService/ListSubscriptions"
+	MembershipService_GetPerkUsageDetail_FullMethodName = "/moego.business.membership.v1.MembershipService/GetPerkUsageDetail"
 )
 
 // MembershipServiceClient is the client API for MembershipService service.
@@ -45,6 +46,13 @@ type MembershipServiceClient interface {
 	// - INVALID_ARGUMENT if pagination parameters are invalid
 	// - PERMISSION_DENIED if the caller lacks access rights
 	ListSubscriptions(ctx context.Context, in *ListSubscriptionsRequest, opts ...grpc.CallOption) (*ListSubscriptionsResponse, error)
+	// GetPerkUsageDetail retrieves detailed information about perk usage for a specific membership.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if the request parameters are invalid
+	// - NOT_FOUND if the membership or customer is not found
+	// - PERMISSION_DENIED if the caller lacks access rights
+	GetPerkUsageDetail(ctx context.Context, in *GetPerkUsageDetailRequest, opts ...grpc.CallOption) (*GetPerkUsageDetailResponse, error)
 }
 
 type membershipServiceClient struct {
@@ -75,6 +83,16 @@ func (c *membershipServiceClient) ListSubscriptions(ctx context.Context, in *Lis
 	return out, nil
 }
 
+func (c *membershipServiceClient) GetPerkUsageDetail(ctx context.Context, in *GetPerkUsageDetailRequest, opts ...grpc.CallOption) (*GetPerkUsageDetailResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetPerkUsageDetailResponse)
+	err := c.cc.Invoke(ctx, MembershipService_GetPerkUsageDetail_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MembershipServiceServer is the server API for MembershipService service.
 // All implementations must embed UnimplementedMembershipServiceServer
 // for forward compatibility.
@@ -97,6 +115,13 @@ type MembershipServiceServer interface {
 	// - INVALID_ARGUMENT if pagination parameters are invalid
 	// - PERMISSION_DENIED if the caller lacks access rights
 	ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error)
+	// GetPerkUsageDetail retrieves detailed information about perk usage for a specific membership.
+	//
+	// Possible errors:
+	// - INVALID_ARGUMENT if the request parameters are invalid
+	// - NOT_FOUND if the membership or customer is not found
+	// - PERMISSION_DENIED if the caller lacks access rights
+	GetPerkUsageDetail(context.Context, *GetPerkUsageDetailRequest) (*GetPerkUsageDetailResponse, error)
 	mustEmbedUnimplementedMembershipServiceServer()
 }
 
@@ -112,6 +137,9 @@ func (UnimplementedMembershipServiceServer) ListMemberships(context.Context, *Li
 }
 func (UnimplementedMembershipServiceServer) ListSubscriptions(context.Context, *ListSubscriptionsRequest) (*ListSubscriptionsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListSubscriptions not implemented")
+}
+func (UnimplementedMembershipServiceServer) GetPerkUsageDetail(context.Context, *GetPerkUsageDetailRequest) (*GetPerkUsageDetailResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPerkUsageDetail not implemented")
 }
 func (UnimplementedMembershipServiceServer) mustEmbedUnimplementedMembershipServiceServer() {}
 func (UnimplementedMembershipServiceServer) testEmbeddedByValue()                           {}
@@ -170,6 +198,24 @@ func _MembershipService_ListSubscriptions_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MembershipService_GetPerkUsageDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetPerkUsageDetailRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MembershipServiceServer).GetPerkUsageDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MembershipService_GetPerkUsageDetail_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MembershipServiceServer).GetPerkUsageDetail(ctx, req.(*GetPerkUsageDetailRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MembershipService_ServiceDesc is the grpc.ServiceDesc for MembershipService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -184,6 +230,10 @@ var MembershipService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListSubscriptions",
 			Handler:    _MembershipService_ListSubscriptions_Handler,
+		},
+		{
+			MethodName: "GetPerkUsageDetail",
+			Handler:    _MembershipService_GetPerkUsageDetail_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

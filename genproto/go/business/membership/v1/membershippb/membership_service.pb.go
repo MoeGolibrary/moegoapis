@@ -11,6 +11,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -271,6 +272,134 @@ func (x *ListSubscriptionsResponse) GetNextPageToken() string {
 	return ""
 }
 
+// The request message for getting perk usage detail
+type GetPerkUsageDetailRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Optional filter
+	Filter *GetPerkUsageDetailRequest_Filter `protobuf:"bytes,1,opt,name=filter,proto3,oneof" json:"filter,omitempty"`
+	// The company identifier
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// The membership identifier
+	MembershipId string `protobuf:"bytes,3,opt,name=membership_id,json=membershipId,proto3" json:"membership_id,omitempty"`
+	// The customer identifier
+	CustomerId    string `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetPerkUsageDetailRequest) Reset() {
+	*x = GetPerkUsageDetailRequest{}
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPerkUsageDetailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPerkUsageDetailRequest) ProtoMessage() {}
+
+func (x *GetPerkUsageDetailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPerkUsageDetailRequest.ProtoReflect.Descriptor instead.
+func (*GetPerkUsageDetailRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetPerkUsageDetailRequest) GetFilter() *GetPerkUsageDetailRequest_Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+func (x *GetPerkUsageDetailRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *GetPerkUsageDetailRequest) GetMembershipId() string {
+	if x != nil {
+		return x.MembershipId
+	}
+	return ""
+}
+
+func (x *GetPerkUsageDetailRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+// The response message for getting perk usage detail
+type GetPerkUsageDetailResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The included benefits
+	IncludedBenefits []*IncludeBenefitView `protobuf:"bytes,1,rep,name=included_benefits,json=includedBenefits,proto3" json:"included_benefits,omitempty"`
+	// Discount benefits
+	DiscountBenefits []*IncludeBenefitView `protobuf:"bytes,2,rep,name=discount_benefits,json=discountBenefits,proto3" json:"discount_benefits,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
+}
+
+func (x *GetPerkUsageDetailResponse) Reset() {
+	*x = GetPerkUsageDetailResponse{}
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPerkUsageDetailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPerkUsageDetailResponse) ProtoMessage() {}
+
+func (x *GetPerkUsageDetailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPerkUsageDetailResponse.ProtoReflect.Descriptor instead.
+func (*GetPerkUsageDetailResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetPerkUsageDetailResponse) GetIncludedBenefits() []*IncludeBenefitView {
+	if x != nil {
+		return x.IncludedBenefits
+	}
+	return nil
+}
+
+func (x *GetPerkUsageDetailResponse) GetDiscountBenefits() []*IncludeBenefitView {
+	if x != nil {
+		return x.DiscountBenefits
+	}
+	return nil
+}
+
 // Filter parameters for the membership list
 type ListMembershipsRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -286,7 +415,7 @@ type ListMembershipsRequest_Filter struct {
 
 func (x *ListMembershipsRequest_Filter) Reset() {
 	*x = ListMembershipsRequest_Filter{}
-	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[4]
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -298,7 +427,7 @@ func (x *ListMembershipsRequest_Filter) String() string {
 func (*ListMembershipsRequest_Filter) ProtoMessage() {}
 
 func (x *ListMembershipsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[4]
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -346,7 +475,7 @@ type ListSubscriptionsRequest_Filter struct {
 
 func (x *ListSubscriptionsRequest_Filter) Reset() {
 	*x = ListSubscriptionsRequest_Filter{}
-	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[5]
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -358,7 +487,7 @@ func (x *ListSubscriptionsRequest_Filter) String() string {
 func (*ListSubscriptionsRequest_Filter) ProtoMessage() {}
 
 func (x *ListSubscriptionsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[5]
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -395,11 +524,57 @@ func (x *ListSubscriptionsRequest_Filter) GetStatuses() []Subscription_Status {
 	return nil
 }
 
+// Filter parameters
+type GetPerkUsageDetailRequest_Filter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Validity start time
+	ValidityStartTime *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=validity_start_time,json=validityStartTime,proto3,oneof" json:"validity_start_time,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
+}
+
+func (x *GetPerkUsageDetailRequest_Filter) Reset() {
+	*x = GetPerkUsageDetailRequest_Filter{}
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetPerkUsageDetailRequest_Filter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetPerkUsageDetailRequest_Filter) ProtoMessage() {}
+
+func (x *GetPerkUsageDetailRequest_Filter) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetPerkUsageDetailRequest_Filter.ProtoReflect.Descriptor instead.
+func (*GetPerkUsageDetailRequest_Filter) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_service_proto_rawDescGZIP(), []int{4, 0}
+}
+
+func (x *GetPerkUsageDetailRequest_Filter) GetValidityStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ValidityStartTime
+	}
+	return nil
+}
+
 var File_moego_business_membership_v1_membership_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_membership_v1_membership_service_proto_rawDesc = "" +
 	"\n" +
-	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\"\xd1\x02\n" +
+	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd1\x02\n" +
 	"\x16ListMembershipsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -427,10 +602,25 @@ const file_moego_business_membership_v1_membership_service_proto_rawDesc = "" +
 	"\a_filter\"\x95\x01\n" +
 	"\x19ListSubscriptionsResponse\x12P\n" +
 	"\rsubscriptions\x18\x01 \x03(\v2*.moego.business.membership.v1.SubscriptionR\rsubscriptions\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xeb\x02\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xea\x02\n" +
+	"\x19GetPerkUsageDetailRequest\x12[\n" +
+	"\x06filter\x18\x01 \x01(\v2>.moego.business.membership.v1.GetPerkUsageDetailRequest.FilterH\x00R\x06filter\x88\x01\x01\x12\"\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12(\n" +
+	"\rmembership_id\x18\x03 \x01(\tB\x03\xe0A\x02R\fmembershipId\x12$\n" +
+	"\vcustomer_id\x18\x04 \x01(\tB\x03\xe0A\x02R\n" +
+	"customerId\x1aq\n" +
+	"\x06Filter\x12O\n" +
+	"\x13validity_start_time\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x11validityStartTime\x88\x01\x01B\x16\n" +
+	"\x14_validity_start_timeB\t\n" +
+	"\a_filter\"\xda\x01\n" +
+	"\x1aGetPerkUsageDetailResponse\x12]\n" +
+	"\x11included_benefits\x18\x01 \x03(\v20.moego.business.membership.v1.IncludeBenefitViewR\x10includedBenefits\x12]\n" +
+	"\x11discount_benefits\x18\x02 \x03(\v20.moego.business.membership.v1.IncludeBenefitViewR\x10discountBenefits2\xa1\x04\n" +
 	"\x11MembershipService\x12\x9f\x01\n" +
 	"\x0fListMemberships\x124.moego.business.membership.v1.ListMembershipsRequest\x1a5.moego.business.membership.v1.ListMembershipsResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/v1/memberships:list\x12\xb3\x01\n" +
-	"\x11ListSubscriptions\x126.moego.business.membership.v1.ListSubscriptionsRequest\x1a7.moego.business.membership.v1.ListSubscriptionsResponse\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/memberships/subscriptions:listB\xa0\x01\n" +
+	"\x11ListSubscriptions\x126.moego.business.membership.v1.ListSubscriptionsRequest\x1a7.moego.business.membership.v1.ListSubscriptionsResponse\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/memberships/subscriptions:list\x12\xb3\x01\n" +
+	"\x12GetPerkUsageDetail\x127.moego.business.membership.v1.GetPerkUsageDetailRequest\x1a8.moego.business.membership.v1.GetPerkUsageDetailResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/memberships/perkUsageDetailB\xa0\x01\n" +
 	"$com.moego.api.business.membership.v1B\x16MembershipServiceProtoP\x01Z^github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippbb\x06proto3"
 
 var (
@@ -445,38 +635,49 @@ func file_moego_business_membership_v1_membership_service_proto_rawDescGZIP() []
 	return file_moego_business_membership_v1_membership_service_proto_rawDescData
 }
 
-var file_moego_business_membership_v1_membership_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_moego_business_membership_v1_membership_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_moego_business_membership_v1_membership_service_proto_goTypes = []any{
-	(*ListMembershipsRequest)(nil),          // 0: moego.business.membership.v1.ListMembershipsRequest
-	(*ListMembershipsResponse)(nil),         // 1: moego.business.membership.v1.ListMembershipsResponse
-	(*ListSubscriptionsRequest)(nil),        // 2: moego.business.membership.v1.ListSubscriptionsRequest
-	(*ListSubscriptionsResponse)(nil),       // 3: moego.business.membership.v1.ListSubscriptionsResponse
-	(*ListMembershipsRequest_Filter)(nil),   // 4: moego.business.membership.v1.ListMembershipsRequest.Filter
-	(*ListSubscriptionsRequest_Filter)(nil), // 5: moego.business.membership.v1.ListSubscriptionsRequest.Filter
-	(*commonpb.Pagination)(nil),             // 6: moego.common.v1.Pagination
-	(*Membership)(nil),                      // 7: moego.business.membership.v1.Membership
-	(*Subscription)(nil),                    // 8: moego.business.membership.v1.Subscription
-	(Membership_Status)(0),                  // 9: moego.business.membership.v1.Membership.Status
-	(Subscription_Status)(0),                // 10: moego.business.membership.v1.Subscription.Status
+	(*ListMembershipsRequest)(nil),           // 0: moego.business.membership.v1.ListMembershipsRequest
+	(*ListMembershipsResponse)(nil),          // 1: moego.business.membership.v1.ListMembershipsResponse
+	(*ListSubscriptionsRequest)(nil),         // 2: moego.business.membership.v1.ListSubscriptionsRequest
+	(*ListSubscriptionsResponse)(nil),        // 3: moego.business.membership.v1.ListSubscriptionsResponse
+	(*GetPerkUsageDetailRequest)(nil),        // 4: moego.business.membership.v1.GetPerkUsageDetailRequest
+	(*GetPerkUsageDetailResponse)(nil),       // 5: moego.business.membership.v1.GetPerkUsageDetailResponse
+	(*ListMembershipsRequest_Filter)(nil),    // 6: moego.business.membership.v1.ListMembershipsRequest.Filter
+	(*ListSubscriptionsRequest_Filter)(nil),  // 7: moego.business.membership.v1.ListSubscriptionsRequest.Filter
+	(*GetPerkUsageDetailRequest_Filter)(nil), // 8: moego.business.membership.v1.GetPerkUsageDetailRequest.Filter
+	(*commonpb.Pagination)(nil),              // 9: moego.common.v1.Pagination
+	(*Membership)(nil),                       // 10: moego.business.membership.v1.Membership
+	(*Subscription)(nil),                     // 11: moego.business.membership.v1.Subscription
+	(*IncludeBenefitView)(nil),               // 12: moego.business.membership.v1.IncludeBenefitView
+	(Membership_Status)(0),                   // 13: moego.business.membership.v1.Membership.Status
+	(Subscription_Status)(0),                 // 14: moego.business.membership.v1.Subscription.Status
+	(*timestamppb.Timestamp)(nil),            // 15: google.protobuf.Timestamp
 }
 var file_moego_business_membership_v1_membership_service_proto_depIdxs = []int32{
-	6,  // 0: moego.business.membership.v1.ListMembershipsRequest.pagination:type_name -> moego.common.v1.Pagination
-	4,  // 1: moego.business.membership.v1.ListMembershipsRequest.filter:type_name -> moego.business.membership.v1.ListMembershipsRequest.Filter
-	7,  // 2: moego.business.membership.v1.ListMembershipsResponse.memberships:type_name -> moego.business.membership.v1.Membership
-	6,  // 3: moego.business.membership.v1.ListSubscriptionsRequest.pagination:type_name -> moego.common.v1.Pagination
-	5,  // 4: moego.business.membership.v1.ListSubscriptionsRequest.filter:type_name -> moego.business.membership.v1.ListSubscriptionsRequest.Filter
-	8,  // 5: moego.business.membership.v1.ListSubscriptionsResponse.subscriptions:type_name -> moego.business.membership.v1.Subscription
-	9,  // 6: moego.business.membership.v1.ListMembershipsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Membership.Status
-	10, // 7: moego.business.membership.v1.ListSubscriptionsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Subscription.Status
-	0,  // 8: moego.business.membership.v1.MembershipService.ListMemberships:input_type -> moego.business.membership.v1.ListMembershipsRequest
-	2,  // 9: moego.business.membership.v1.MembershipService.ListSubscriptions:input_type -> moego.business.membership.v1.ListSubscriptionsRequest
-	1,  // 10: moego.business.membership.v1.MembershipService.ListMemberships:output_type -> moego.business.membership.v1.ListMembershipsResponse
-	3,  // 11: moego.business.membership.v1.MembershipService.ListSubscriptions:output_type -> moego.business.membership.v1.ListSubscriptionsResponse
-	10, // [10:12] is the sub-list for method output_type
-	8,  // [8:10] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	9,  // 0: moego.business.membership.v1.ListMembershipsRequest.pagination:type_name -> moego.common.v1.Pagination
+	6,  // 1: moego.business.membership.v1.ListMembershipsRequest.filter:type_name -> moego.business.membership.v1.ListMembershipsRequest.Filter
+	10, // 2: moego.business.membership.v1.ListMembershipsResponse.memberships:type_name -> moego.business.membership.v1.Membership
+	9,  // 3: moego.business.membership.v1.ListSubscriptionsRequest.pagination:type_name -> moego.common.v1.Pagination
+	7,  // 4: moego.business.membership.v1.ListSubscriptionsRequest.filter:type_name -> moego.business.membership.v1.ListSubscriptionsRequest.Filter
+	11, // 5: moego.business.membership.v1.ListSubscriptionsResponse.subscriptions:type_name -> moego.business.membership.v1.Subscription
+	8,  // 6: moego.business.membership.v1.GetPerkUsageDetailRequest.filter:type_name -> moego.business.membership.v1.GetPerkUsageDetailRequest.Filter
+	12, // 7: moego.business.membership.v1.GetPerkUsageDetailResponse.included_benefits:type_name -> moego.business.membership.v1.IncludeBenefitView
+	12, // 8: moego.business.membership.v1.GetPerkUsageDetailResponse.discount_benefits:type_name -> moego.business.membership.v1.IncludeBenefitView
+	13, // 9: moego.business.membership.v1.ListMembershipsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Membership.Status
+	14, // 10: moego.business.membership.v1.ListSubscriptionsRequest.Filter.statuses:type_name -> moego.business.membership.v1.Subscription.Status
+	15, // 11: moego.business.membership.v1.GetPerkUsageDetailRequest.Filter.validity_start_time:type_name -> google.protobuf.Timestamp
+	0,  // 12: moego.business.membership.v1.MembershipService.ListMemberships:input_type -> moego.business.membership.v1.ListMembershipsRequest
+	2,  // 13: moego.business.membership.v1.MembershipService.ListSubscriptions:input_type -> moego.business.membership.v1.ListSubscriptionsRequest
+	4,  // 14: moego.business.membership.v1.MembershipService.GetPerkUsageDetail:input_type -> moego.business.membership.v1.GetPerkUsageDetailRequest
+	1,  // 15: moego.business.membership.v1.MembershipService.ListMemberships:output_type -> moego.business.membership.v1.ListMembershipsResponse
+	3,  // 16: moego.business.membership.v1.MembershipService.ListSubscriptions:output_type -> moego.business.membership.v1.ListSubscriptionsResponse
+	5,  // 17: moego.business.membership.v1.MembershipService.GetPerkUsageDetail:output_type -> moego.business.membership.v1.GetPerkUsageDetailResponse
+	15, // [15:18] is the sub-list for method output_type
+	12, // [12:15] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_membership_v1_membership_service_proto_init() }
@@ -486,13 +687,15 @@ func file_moego_business_membership_v1_membership_service_proto_init() {
 	}
 	file_moego_business_membership_v1_membership_proto_init()
 	file_moego_business_membership_v1_membership_service_proto_msgTypes[2].OneofWrappers = []any{}
+	file_moego_business_membership_v1_membership_service_proto_msgTypes[4].OneofWrappers = []any{}
+	file_moego_business_membership_v1_membership_service_proto_msgTypes[8].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_membership_v1_membership_service_proto_rawDesc), len(file_moego_business_membership_v1_membership_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

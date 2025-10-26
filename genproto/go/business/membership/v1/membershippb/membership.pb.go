@@ -29,6 +29,120 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// TargetType represents the type of target for membership benefits.
+type TargetType int32
+
+const (
+	// unspecified
+	TargetType_TARGET_TYPE_UNSPECIFIED TargetType = 0
+	// service
+	TargetType_SERVICE TargetType = 1
+	// add on
+	TargetType_ADDON TargetType = 2
+	// product
+	TargetType_PRODUCT TargetType = 3
+	// package
+	TargetType_PACKAGE TargetType = 4
+)
+
+// Enum value maps for TargetType.
+var (
+	TargetType_name = map[int32]string{
+		0: "TARGET_TYPE_UNSPECIFIED",
+		1: "SERVICE",
+		2: "ADDON",
+		3: "PRODUCT",
+		4: "PACKAGE",
+	}
+	TargetType_value = map[string]int32{
+		"TARGET_TYPE_UNSPECIFIED": 0,
+		"SERVICE":                 1,
+		"ADDON":                   2,
+		"PRODUCT":                 3,
+		"PACKAGE":                 4,
+	}
+)
+
+func (x TargetType) Enum() *TargetType {
+	p := new(TargetType)
+	*p = x
+	return p
+}
+
+func (x TargetType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (TargetType) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_membership_v1_membership_proto_enumTypes[0].Descriptor()
+}
+
+func (TargetType) Type() protoreflect.EnumType {
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[0]
+}
+
+func (x TargetType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use TargetType.Descriptor instead.
+func (TargetType) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{0}
+}
+
+// DiscountUnit represents the unit of discount for membership benefits.
+type DiscountUnit int32
+
+const (
+	// unspecified
+	DiscountUnit_UNIT_UNSPECIFIED DiscountUnit = 0
+	// percent
+	DiscountUnit_PERCENT DiscountUnit = 1
+	// numerical
+	DiscountUnit_NUMERICAL DiscountUnit = 2
+)
+
+// Enum value maps for DiscountUnit.
+var (
+	DiscountUnit_name = map[int32]string{
+		0: "UNIT_UNSPECIFIED",
+		1: "PERCENT",
+		2: "NUMERICAL",
+	}
+	DiscountUnit_value = map[string]int32{
+		"UNIT_UNSPECIFIED": 0,
+		"PERCENT":          1,
+		"NUMERICAL":        2,
+	}
+)
+
+func (x DiscountUnit) Enum() *DiscountUnit {
+	p := new(DiscountUnit)
+	*p = x
+	return p
+}
+
+func (x DiscountUnit) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (DiscountUnit) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_membership_v1_membership_proto_enumTypes[1].Descriptor()
+}
+
+func (DiscountUnit) Type() protoreflect.EnumType {
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[1]
+}
+
+func (x DiscountUnit) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use DiscountUnit.Descriptor instead.
+func (DiscountUnit) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{1}
+}
+
 // Status represents the current state of a membership plan.
 type Membership_Status int32
 
@@ -67,11 +181,11 @@ func (x Membership_Status) String() string {
 }
 
 func (Membership_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_membership_v1_membership_proto_enumTypes[0].Descriptor()
+	return file_moego_business_membership_v1_membership_proto_enumTypes[2].Descriptor()
 }
 
 func (Membership_Status) Type() protoreflect.EnumType {
-	return &file_moego_business_membership_v1_membership_proto_enumTypes[0]
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[2]
 }
 
 func (x Membership_Status) Number() protoreflect.EnumNumber {
@@ -120,11 +234,11 @@ func (x Membership_Source) String() string {
 }
 
 func (Membership_Source) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_membership_v1_membership_proto_enumTypes[1].Descriptor()
+	return file_moego_business_membership_v1_membership_proto_enumTypes[3].Descriptor()
 }
 
 func (Membership_Source) Type() protoreflect.EnumType {
-	return &file_moego_business_membership_v1_membership_proto_enumTypes[1]
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[3]
 }
 
 func (x Membership_Source) Number() protoreflect.EnumNumber {
@@ -199,11 +313,11 @@ func (x Subscription_Status) String() string {
 }
 
 func (Subscription_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_membership_v1_membership_proto_enumTypes[2].Descriptor()
+	return file_moego_business_membership_v1_membership_proto_enumTypes[4].Descriptor()
 }
 
 func (Subscription_Status) Type() protoreflect.EnumType {
-	return &file_moego_business_membership_v1_membership_proto_enumTypes[2]
+	return &file_moego_business_membership_v1_membership_proto_enumTypes[4]
 }
 
 func (x Subscription_Status) Number() protoreflect.EnumNumber {
@@ -733,6 +847,206 @@ func (x *TimePeriod) GetValue() int32 {
 	return 0
 }
 
+// IncludeBenefitView represents a membership benefit view.
+type IncludeBenefitView struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// history id
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// membership id
+	MembershipId string `protobuf:"bytes,2,opt,name=membership_id,json=membershipId,proto3" json:"membership_id,omitempty"`
+	// quantity
+	TotalQuantity int32 `protobuf:"varint,3,opt,name=total_quantity,json=totalQuantity,proto3" json:"total_quantity,omitempty"`
+	// remaining quantity
+	RemainingQuantity int32 `protobuf:"varint,4,opt,name=remaining_quantity,json=remainingQuantity,proto3" json:"remaining_quantity,omitempty"`
+	// is limited
+	IsLimited bool `protobuf:"varint,5,opt,name=is_limited,json=isLimited,proto3" json:"is_limited,omitempty"`
+	// redeem time
+	RedeemTime *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=redeem_time,json=redeemTime,proto3" json:"redeem_time,omitempty"`
+	// item details
+	ItemDetails []*IncludeBenefitView_RedeemItemDetailView `protobuf:"bytes,7,rep,name=item_details,json=itemDetails,proto3" json:"item_details,omitempty"`
+	// is all
+	IsAll bool `protobuf:"varint,8,opt,name=is_all,json=isAll,proto3" json:"is_all,omitempty"`
+	// discount unit
+	DiscountUnit DiscountUnit `protobuf:"varint,9,opt,name=discount_unit,json=discountUnit,proto3,enum=moego.business.membership.v1.DiscountUnit" json:"discount_unit,omitempty"`
+	// discount value
+	DiscountValue float64 `protobuf:"fixed64,10,opt,name=discount_value,json=discountValue,proto3" json:"discount_value,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncludeBenefitView) Reset() {
+	*x = IncludeBenefitView{}
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncludeBenefitView) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncludeBenefitView) ProtoMessage() {}
+
+func (x *IncludeBenefitView) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncludeBenefitView.ProtoReflect.Descriptor instead.
+func (*IncludeBenefitView) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *IncludeBenefitView) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *IncludeBenefitView) GetMembershipId() string {
+	if x != nil {
+		return x.MembershipId
+	}
+	return ""
+}
+
+func (x *IncludeBenefitView) GetTotalQuantity() int32 {
+	if x != nil {
+		return x.TotalQuantity
+	}
+	return 0
+}
+
+func (x *IncludeBenefitView) GetRemainingQuantity() int32 {
+	if x != nil {
+		return x.RemainingQuantity
+	}
+	return 0
+}
+
+func (x *IncludeBenefitView) GetIsLimited() bool {
+	if x != nil {
+		return x.IsLimited
+	}
+	return false
+}
+
+func (x *IncludeBenefitView) GetRedeemTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RedeemTime
+	}
+	return nil
+}
+
+func (x *IncludeBenefitView) GetItemDetails() []*IncludeBenefitView_RedeemItemDetailView {
+	if x != nil {
+		return x.ItemDetails
+	}
+	return nil
+}
+
+func (x *IncludeBenefitView) GetIsAll() bool {
+	if x != nil {
+		return x.IsAll
+	}
+	return false
+}
+
+func (x *IncludeBenefitView) GetDiscountUnit() DiscountUnit {
+	if x != nil {
+		return x.DiscountUnit
+	}
+	return DiscountUnit_UNIT_UNSPECIFIED
+}
+
+func (x *IncludeBenefitView) GetDiscountValue() float64 {
+	if x != nil {
+		return x.DiscountValue
+	}
+	return 0
+}
+
+// item detail def
+type IncludeBenefitView_RedeemItemDetailView struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// item id
+	ItemId string `protobuf:"bytes,1,opt,name=item_id,json=itemId,proto3" json:"item_id,omitempty"`
+	// item name
+	ItemName string `protobuf:"bytes,2,opt,name=item_name,json=itemName,proto3" json:"item_name,omitempty"`
+	// item amount
+	Price *money.Money `protobuf:"bytes,3,opt,name=price,proto3" json:"price,omitempty"`
+	// item type
+	ItemType      TargetType `protobuf:"varint,4,opt,name=item_type,json=itemType,proto3,enum=moego.business.membership.v1.TargetType" json:"item_type,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) Reset() {
+	*x = IncludeBenefitView_RedeemItemDetailView{}
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IncludeBenefitView_RedeemItemDetailView) ProtoMessage() {}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_membership_v1_membership_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IncludeBenefitView_RedeemItemDetailView.ProtoReflect.Descriptor instead.
+func (*IncludeBenefitView_RedeemItemDetailView) Descriptor() ([]byte, []int) {
+	return file_moego_business_membership_v1_membership_proto_rawDescGZIP(), []int{3, 0}
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) GetItemId() string {
+	if x != nil {
+		return x.ItemId
+	}
+	return ""
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) GetItemName() string {
+	if x != nil {
+		return x.ItemName
+	}
+	return ""
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) GetPrice() *money.Money {
+	if x != nil {
+		return x.Price
+	}
+	return nil
+}
+
+func (x *IncludeBenefitView_RedeemItemDetailView) GetItemType() TargetType {
+	if x != nil {
+		return x.ItemType
+	}
+	return TargetType_TARGET_TYPE_UNSPECIFIED
+}
+
 var File_moego_business_membership_v1_membership_proto protoreflect.FileDescriptor
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
@@ -816,7 +1130,37 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
 	"TimePeriod\x12/\n" +
 	"\x04unit\x18\x01 \x01(\x0e2\x1b.google.type.CalendarPeriodR\x04unit\x12\x14\n" +
-	"\x05value\x18\x02 \x01(\x05R\x05valueB\x99\x01\n" +
+	"\x05value\x18\x02 \x01(\x05R\x05value\"\xb4\x05\n" +
+	"\x12IncludeBenefitView\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12#\n" +
+	"\rmembership_id\x18\x02 \x01(\tR\fmembershipId\x12%\n" +
+	"\x0etotal_quantity\x18\x03 \x01(\x05R\rtotalQuantity\x12-\n" +
+	"\x12remaining_quantity\x18\x04 \x01(\x05R\x11remainingQuantity\x12\x1d\n" +
+	"\n" +
+	"is_limited\x18\x05 \x01(\bR\tisLimited\x12;\n" +
+	"\vredeem_time\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"redeemTime\x12h\n" +
+	"\fitem_details\x18\a \x03(\v2E.moego.business.membership.v1.IncludeBenefitView.RedeemItemDetailViewR\vitemDetails\x12\x15\n" +
+	"\x06is_all\x18\b \x01(\bR\x05isAll\x12O\n" +
+	"\rdiscount_unit\x18\t \x01(\x0e2*.moego.business.membership.v1.DiscountUnitR\fdiscountUnit\x12%\n" +
+	"\x0ediscount_value\x18\n" +
+	" \x01(\x01R\rdiscountValue\x1a\xbd\x01\n" +
+	"\x14RedeemItemDetailView\x12\x17\n" +
+	"\aitem_id\x18\x01 \x01(\tR\x06itemId\x12\x1b\n" +
+	"\titem_name\x18\x02 \x01(\tR\bitemName\x12(\n" +
+	"\x05price\x18\x03 \x01(\v2\x12.google.type.MoneyR\x05price\x12E\n" +
+	"\titem_type\x18\x04 \x01(\x0e2(.moego.business.membership.v1.TargetTypeR\bitemType*[\n" +
+	"\n" +
+	"TargetType\x12\x1b\n" +
+	"\x17TARGET_TYPE_UNSPECIFIED\x10\x00\x12\v\n" +
+	"\aSERVICE\x10\x01\x12\t\n" +
+	"\x05ADDON\x10\x02\x12\v\n" +
+	"\aPRODUCT\x10\x03\x12\v\n" +
+	"\aPACKAGE\x10\x04*@\n" +
+	"\fDiscountUnit\x12\x14\n" +
+	"\x10UNIT_UNSPECIFIED\x10\x00\x12\v\n" +
+	"\aPERCENT\x10\x01\x12\r\n" +
+	"\tNUMERICAL\x10\x02B\x99\x01\n" +
 	"$com.moego.api.business.membership.v1B\x0fMembershipProtoP\x01Z^github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippbb\x06proto3"
 
 var (
@@ -831,50 +1175,59 @@ func file_moego_business_membership_v1_membership_proto_rawDescGZIP() []byte {
 	return file_moego_business_membership_v1_membership_proto_rawDescData
 }
 
-var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 3)
-var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_moego_business_membership_v1_membership_proto_enumTypes = make([]protoimpl.EnumInfo, 5)
+var file_moego_business_membership_v1_membership_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_moego_business_membership_v1_membership_proto_goTypes = []any{
-	(Membership_Status)(0),             // 0: moego.business.membership.v1.Membership.Status
-	(Membership_Source)(0),             // 1: moego.business.membership.v1.Membership.Source
-	(Subscription_Status)(0),           // 2: moego.business.membership.v1.Subscription.Status
-	(*Membership)(nil),                 // 3: moego.business.membership.v1.Membership
-	(*Subscription)(nil),               // 4: moego.business.membership.v1.Subscription
-	(*TimePeriod)(nil),                 // 5: moego.business.membership.v1.TimePeriod
-	(*money.Money)(nil),                // 6: google.type.Money
-	(*timestamppb.Timestamp)(nil),      // 7: google.protobuf.Timestamp
-	(dayofweek.DayOfWeek)(0),           // 8: google.type.DayOfWeek
-	(*settingpb.CustomizedBreed)(nil),  // 9: moego.business.setting.v1.CustomizedBreed
-	(*timeofday.TimeOfDay)(nil),        // 10: google.type.TimeOfDay
-	(*interval.Interval)(nil),          // 11: google.type.Interval
-	(calendarperiod.CalendarPeriod)(0), // 12: google.type.CalendarPeriod
+	(TargetType)(0),                                 // 0: moego.business.membership.v1.TargetType
+	(DiscountUnit)(0),                               // 1: moego.business.membership.v1.DiscountUnit
+	(Membership_Status)(0),                          // 2: moego.business.membership.v1.Membership.Status
+	(Membership_Source)(0),                          // 3: moego.business.membership.v1.Membership.Source
+	(Subscription_Status)(0),                        // 4: moego.business.membership.v1.Subscription.Status
+	(*Membership)(nil),                              // 5: moego.business.membership.v1.Membership
+	(*Subscription)(nil),                            // 6: moego.business.membership.v1.Subscription
+	(*TimePeriod)(nil),                              // 7: moego.business.membership.v1.TimePeriod
+	(*IncludeBenefitView)(nil),                      // 8: moego.business.membership.v1.IncludeBenefitView
+	(*IncludeBenefitView_RedeemItemDetailView)(nil), // 9: moego.business.membership.v1.IncludeBenefitView.RedeemItemDetailView
+	(*money.Money)(nil),                             // 10: google.type.Money
+	(*timestamppb.Timestamp)(nil),                   // 11: google.protobuf.Timestamp
+	(dayofweek.DayOfWeek)(0),                        // 12: google.type.DayOfWeek
+	(*settingpb.CustomizedBreed)(nil),               // 13: moego.business.setting.v1.CustomizedBreed
+	(*timeofday.TimeOfDay)(nil),                     // 14: google.type.TimeOfDay
+	(*interval.Interval)(nil),                       // 15: google.type.Interval
+	(calendarperiod.CalendarPeriod)(0),              // 16: google.type.CalendarPeriod
 }
 var file_moego_business_membership_v1_membership_proto_depIdxs = []int32{
-	0,  // 0: moego.business.membership.v1.Membership.status:type_name -> moego.business.membership.v1.Membership.Status
-	6,  // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
-	5,  // 2: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
-	7,  // 3: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
-	7,  // 4: moego.business.membership.v1.Membership.last_updated_time:type_name -> google.protobuf.Timestamp
-	7,  // 5: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
-	6,  // 6: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
-	6,  // 7: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
-	8,  // 8: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
-	9,  // 9: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
-	1,  // 10: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
-	10, // 11: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
-	6,  // 12: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
-	7,  // 13: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
-	7,  // 14: moego.business.membership.v1.Subscription.last_updated_time:type_name -> google.protobuf.Timestamp
-	7,  // 15: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
-	11, // 16: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
-	7,  // 17: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
-	7,  // 18: moego.business.membership.v1.Subscription.expired_time:type_name -> google.protobuf.Timestamp
-	2,  // 19: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
-	12, // 20: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
-	21, // [21:21] is the sub-list for method output_type
-	21, // [21:21] is the sub-list for method input_type
-	21, // [21:21] is the sub-list for extension type_name
-	21, // [21:21] is the sub-list for extension extendee
-	0,  // [0:21] is the sub-list for field type_name
+	2,  // 0: moego.business.membership.v1.Membership.status:type_name -> moego.business.membership.v1.Membership.Status
+	10, // 1: moego.business.membership.v1.Membership.price:type_name -> google.type.Money
+	7,  // 2: moego.business.membership.v1.Membership.billing_cycle_period:type_name -> moego.business.membership.v1.TimePeriod
+	11, // 3: moego.business.membership.v1.Membership.created_time:type_name -> google.protobuf.Timestamp
+	11, // 4: moego.business.membership.v1.Membership.last_updated_time:type_name -> google.protobuf.Timestamp
+	11, // 5: moego.business.membership.v1.Membership.deleted_time:type_name -> google.protobuf.Timestamp
+	10, // 6: moego.business.membership.v1.Membership.total_price:type_name -> google.type.Money
+	10, // 7: moego.business.membership.v1.Membership.total_tax:type_name -> google.type.Money
+	12, // 8: moego.business.membership.v1.Membership.billing_cycle_day_of_week:type_name -> google.type.DayOfWeek
+	13, // 9: moego.business.membership.v1.Membership.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
+	3,  // 10: moego.business.membership.v1.Membership.source:type_name -> moego.business.membership.v1.Membership.Source
+	14, // 11: moego.business.membership.v1.Membership.billing_cycle_time_of_day:type_name -> google.type.TimeOfDay
+	10, // 12: moego.business.membership.v1.Subscription.price:type_name -> google.type.Money
+	11, // 13: moego.business.membership.v1.Subscription.created_time:type_name -> google.protobuf.Timestamp
+	11, // 14: moego.business.membership.v1.Subscription.last_updated_time:type_name -> google.protobuf.Timestamp
+	11, // 15: moego.business.membership.v1.Subscription.deleted_time:type_name -> google.protobuf.Timestamp
+	15, // 16: moego.business.membership.v1.Subscription.validity_period:type_name -> google.type.Interval
+	11, // 17: moego.business.membership.v1.Subscription.next_billing_date:type_name -> google.protobuf.Timestamp
+	11, // 18: moego.business.membership.v1.Subscription.expired_time:type_name -> google.protobuf.Timestamp
+	4,  // 19: moego.business.membership.v1.Subscription.status:type_name -> moego.business.membership.v1.Subscription.Status
+	16, // 20: moego.business.membership.v1.TimePeriod.unit:type_name -> google.type.CalendarPeriod
+	11, // 21: moego.business.membership.v1.IncludeBenefitView.redeem_time:type_name -> google.protobuf.Timestamp
+	9,  // 22: moego.business.membership.v1.IncludeBenefitView.item_details:type_name -> moego.business.membership.v1.IncludeBenefitView.RedeemItemDetailView
+	1,  // 23: moego.business.membership.v1.IncludeBenefitView.discount_unit:type_name -> moego.business.membership.v1.DiscountUnit
+	10, // 24: moego.business.membership.v1.IncludeBenefitView.RedeemItemDetailView.price:type_name -> google.type.Money
+	0,  // 25: moego.business.membership.v1.IncludeBenefitView.RedeemItemDetailView.item_type:type_name -> moego.business.membership.v1.TargetType
+	26, // [26:26] is the sub-list for method output_type
+	26, // [26:26] is the sub-list for method input_type
+	26, // [26:26] is the sub-list for extension type_name
+	26, // [26:26] is the sub-list for extension extendee
+	0,  // [0:26] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_membership_v1_membership_proto_init() }
@@ -887,8 +1240,8 @@ func file_moego_business_membership_v1_membership_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_membership_v1_membership_proto_rawDesc), len(file_moego_business_membership_v1_membership_proto_rawDesc)),
-			NumEnums:      3,
-			NumMessages:   3,
+			NumEnums:      5,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
