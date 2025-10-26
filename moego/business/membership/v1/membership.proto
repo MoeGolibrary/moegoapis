@@ -222,3 +222,81 @@ message TimePeriod {
   // The value of the period in the specified unit.
   int32 value = 2;
 }
+
+// IncludeBenefitView represents a membership benefit view.
+message IncludeBenefitView {
+  // history id
+  string id = 1;
+  
+  // membership id
+  string membership_id = 2;
+  
+  // quantity
+  int32 total_quantity = 3;
+  
+  // remaining quantity
+  int32 remaining_quantity = 4;
+  
+  // is limited
+  bool is_limited = 5;
+  
+  // redeem time
+  google.protobuf.Timestamp redeem_time = 6;
+  
+  // item detail def
+  message RedeemItemDetailView {
+    // item id
+    string item_id = 1;
+    
+    // item name
+    string item_name = 2;
+    
+    // item amount
+    google.type.Money price = 3;
+    
+    // item type
+    TargetType item_type = 4;
+  }
+  
+  // item details
+  repeated RedeemItemDetailView item_details = 7;
+  
+  // is all
+  bool is_all = 8;
+  
+  // discount unit
+  DiscountUnit discount_unit = 9;
+  
+  // discount value
+  double discount_value = 10;
+}
+
+// TargetType represents the type of target for membership benefits.
+enum TargetType {
+  // unspecified
+  TARGET_TYPE_UNSPECIFIED = 0;
+  
+  // service
+  SERVICE = 1;
+  
+  // add on
+  ADDON = 2;
+  
+  // product
+  PRODUCT = 3;
+  
+  // package
+  PACKAGE = 4;
+}
+
+// DiscountUnit represents the unit of discount for membership benefits.
+enum DiscountUnit {
+  // unspecified
+  UNIT_UNSPECIFIED = 0;
+  
+  // percent
+  PERCENT = 1;
+  
+  // numerical
+  NUMERICAL = 2;
+}

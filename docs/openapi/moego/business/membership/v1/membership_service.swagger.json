@@ -16,6 +16,40 @@
     "application/json"
   ],
   "paths": {
+    "/v1/memberships/perkUsageDetail": {
+      "post": {
+        "summary": "GetPerkUsageDetail retrieves detailed information about perk usage for a specific membership.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if the request parameters are invalid\n- NOT_FOUND if the membership or customer is not found\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "MembershipService_GetPerkUsageDetail",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetPerkUsageDetailResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetPerkUsageDetailRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.membership.v1.MembershipService"
+        ]
+      }
+    },
     "/v1/memberships/subscriptions:list": {
       "post": {
         "summary": "ListSubscriptions retrieves a paginated list of subscriptions based on specified criteria.\nSupports filtering by customer, membership, and status to facilitate targeted queries.",
@@ -88,6 +122,34 @@
     }
   },
   "definitions": {
+    "IncludeBenefitViewRedeemItemDetailView": {
+      "type": "object",
+      "properties": {
+        "itemId": {
+          "type": "string",
+          "title": "item id"
+        },
+        "itemName": {
+          "type": "string",
+          "title": "item name"
+        },
+        "price": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "item amount"
+        },
+        "itemType": {
+          "$ref": "#/definitions/v1TargetType",
+          "title": "item type"
+        }
+      },
+      "title": "item detail def",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "RedeemItemDetailView"
+      }
+    },
     "googlerpcStatus": {
       "type": "object",
       "properties": {
@@ -268,6 +330,156 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "CustomizedBreed"
+      }
+    },
+    "v1DiscountUnit": {
+      "type": "string",
+      "enum": [
+        "UNIT_UNSPECIFIED",
+        "PERCENT",
+        "NUMERICAL"
+      ],
+      "default": "UNIT_UNSPECIFIED",
+      "description": "DiscountUnit represents the unit of discount for membership benefits.\n\n - UNIT_UNSPECIFIED: unspecified\n - PERCENT: percent\n - NUMERICAL: numerical"
+    },
+    "v1GetPerkUsageDetailRequest": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "$ref": "#/definitions/v1GetPerkUsageDetailRequestFilter",
+          "x-nullable": true,
+          "title": "Optional filter"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "The company identifier"
+        },
+        "membershipId": {
+          "type": "string",
+          "title": "The membership identifier"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "The customer identifier"
+        }
+      },
+      "title": "The request message for getting perk usage detail",
+      "required": [
+        "companyId",
+        "membershipId",
+        "customerId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "GetPerkUsageDetailRequest"
+      }
+    },
+    "v1GetPerkUsageDetailRequestFilter": {
+      "type": "object",
+      "properties": {
+        "validityStartTime": {
+          "type": "string",
+          "format": "date-time",
+          "x-nullable": true,
+          "title": "Validity start time"
+        }
+      },
+      "title": "Filter parameters",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1GetPerkUsageDetailResponse": {
+      "type": "object",
+      "properties": {
+        "includedBenefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1IncludeBenefitView"
+          },
+          "title": "The included benefits"
+        },
+        "discountBenefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1IncludeBenefitView"
+          },
+          "title": "Discount benefits"
+        }
+      },
+      "title": "The response message for getting perk usage detail",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "GetPerkUsageDetailResponse"
+      }
+    },
+    "v1IncludeBenefitView": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "history id"
+        },
+        "membershipId": {
+          "type": "string",
+          "title": "membership id"
+        },
+        "totalQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "quantity"
+        },
+        "remainingQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "remaining quantity"
+        },
+        "isLimited": {
+          "type": "boolean",
+          "title": "is limited"
+        },
+        "redeemTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "redeem time"
+        },
+        "itemDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/IncludeBenefitViewRedeemItemDetailView"
+          },
+          "title": "item details"
+        },
+        "isAll": {
+          "type": "boolean",
+          "title": "is all"
+        },
+        "discountUnit": {
+          "$ref": "#/definitions/v1DiscountUnit",
+          "title": "discount unit"
+        },
+        "discountValue": {
+          "type": "number",
+          "format": "double",
+          "title": "discount value"
+        }
+      },
+      "description": "IncludeBenefitView represents a membership benefit view.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb"
+        },
+        "type": "IncludeBenefitView"
       }
     },
     "v1ListMembershipsRequest": {
@@ -703,6 +915,18 @@
       ],
       "default": "STATUS_UNSPECIFIED",
       "description": "Status represents the current state of a subscription.\n\n - STATUS_UNSPECIFIED: STATUS_UNSPECIFIED indicates an unknown or invalid status.\n - TRIAL: TRIAL indicates the subscription is in trial period.\n - PENDING: PENDING indicates the subscription is waiting for the first charge result.\n - ACTIVE: ACTIVE indicates the subscription is charged and in validity period.\nCancel in validity period will not change the status,\njust change the cancel_at_period_end value to true.\n - GRACE: GRACE indicates the subscription is in grace period.\n - EXPIRED: EXPIRED indicates the subscription is expired and out of validity period.\n - CANCELLED: CANCELLED indicates the subscription is manually cancelled and out of validity period.\n - PAUSED: PAUSED indicates the subscription is currently paused.\n - INCOMPLETE: INCOMPLETE indicates the subscription is not completed."
+    },
+    "v1TargetType": {
+      "type": "string",
+      "enum": [
+        "TARGET_TYPE_UNSPECIFIED",
+        "SERVICE",
+        "ADDON",
+        "PRODUCT",
+        "PACKAGE"
+      ],
+      "default": "TARGET_TYPE_UNSPECIFIED",
+      "description": "TargetType represents the type of target for membership benefits.\n\n - TARGET_TYPE_UNSPECIFIED: unspecified\n - SERVICE: service\n - ADDON: add on\n - PRODUCT: product\n - PACKAGE: package"
     },
     "v1TimePeriod": {
       "type": "object",

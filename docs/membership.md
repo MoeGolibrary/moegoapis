@@ -126,6 +126,52 @@ Represents a period of time with a unit and value.
 | `unit`     | google.type.CalendarPeriod | The unit of time for this period              |
 | `value`    | int32                      | The value of the period in the specified unit |
 
+### 4. IncludeBenefitView
+
+Represents a membership benefit view with usage details.
+
+#### Fields
+
+| Field Name           | Type                          | Description                              |
+|----------------------|-------------------------------|------------------------------------------|
+| `id`                 | string                        | History ID                               |
+| `membership_id`      | string                        | Membership identifier                    |
+| `total_quantity`     | int32                         | Total quantity                           |
+| `remaining_quantity` | int32                         | Remaining quantity                       |
+| `is_limited`         | bool                          | Whether the benefit is limited           |
+| `redeem_time`        | google.protobuf.Timestamp     | Time when the benefit was redeemed       |
+| `item_details`       | repeated RedeemItemDetailView | Details of items in the benefit          |
+| `is_all`             | bool                          | Whether the benefit applies to all items |
+| `discount_unit`      | enum DiscountUnit             | Unit of discount (percent or numerical)  |
+| `discount_value`     | double                        | Value of the discount                    |
+
+#### RedeemItemDetailView
+
+| Field Name  | Type              | Description                           |
+|-------------|-------------------|---------------------------------------|
+| `item_id`   | string            | Item identifier                       |
+| `item_name` | string            | Item name                             |
+| `price`     | google.type.Money | Item amount                           |
+| `item_type` | enum TargetType   | Type of item (service, product, etc.) |
+
+#### TargetType Enum
+
+| Value                     | Description             |
+|---------------------------|-------------------------|
+| `TARGET_TYPE_UNSPECIFIED` | Unspecified target type |
+| `SERVICE`                 | Service                 |
+| `ADDON`                   | Add-on                  |
+| `PRODUCT`                 | Product                 |
+| `PACKAGE`                 | Package                 |
+
+#### DiscountUnit Enum
+
+| Value              | Description           |
+|--------------------|-----------------------|
+| `UNIT_UNSPECIFIED` | Unspecified unit      |
+| `PERCENT`          | Percentage discount   |
+| `NUMERICAL`        | Fixed amount discount |
+
 ---
 
 ## 📈 4. Typical Usage Flow
@@ -237,30 +283,76 @@ status to facilitate targeted queries.
 - `INVALID_ARGUMENT`: Pagination parameters are invalid
 - `PERMISSION_DENIED`: Permission denied
 
+### 3. GetPerkUsageDetail (`GetPerkUsageDetail`)
+
+- **Method**: `GetPerkUsageDetail`
+- **HTTP Method**: POST
+- **Path**: `/v1/memberships/perkUsageDetail`
+
+#### ✅ Functionality:
+
+Retrieves detailed information about perk usage for a specific membership and customer. This includes both included
+benefits and discount benefits that are associated with the membership.
+
+#### 🎯 Use Cases:
+
+- View detailed perk usage information for a customer's membership
+- Check remaining quantities of service benefits
+- Review discount benefits available to a customer
+
+#### 🔧 Request Parameters:
+
+| Field Name     | Type   | Required | Description                      |
+|----------------|--------|----------|----------------------------------|
+| `filter`       | Filter | No       | Optional filters for the request |
+| `companyId`    | string | Yes      | Company ID                       |
+| `membershipId` | string | Yes      | Membership ID                    |
+| `customerId`   | string | Yes      | Customer ID                      |
+
+##### Filter Object
+
+| Field Name            | Type                      | Required | Description         |
+|-----------------------|---------------------------|----------|---------------------|
+| `validity_start_time` | google.protobuf.Timestamp | No       | Validity start time |
+
+#### 📌 Return Value:
+
+| Field Name          | Type                      | Description           |
+|---------------------|---------------------------|-----------------------|
+| `included_benefits` | Array(IncludeBenefitView) | The included benefits |
+| `discount_benefits` | Array(IncludeBenefitView) | Discount benefits     |
+
+#### ⚠️ Error Codes:
+
+- `INVALID_ARGUMENT`: Request parameters are invalid
+- `NOT_FOUND`: Membership or customer not found
+- `PERMISSION_DENIED`: Permission denied
+
 ---
 
 ## 🧪 6. Usage Examples
 
 ### Example 1: ListMemberships
 
-```json
+``json
 {
-  "pagination": {
-    "pageSize": 20
-  },
-  "companyId": "cmp_001",
-  "filter": {
-    "name_like": "gold",
-    "statuses": [
-      "ACTIVE"
-    ]
-  }
+"pagination": {
+"pageSize": 20
+},
+"companyId": "cmp_001",
+"filter": {
+"name_like": "gold",
+"statuses": [
+"ACTIVE"
+]
 }
+}
+
 ```
 
 ### Example 2: ListSubscriptions
 
-```json
+``json
 {
   "pagination": {
     "pageSize": 20
@@ -276,6 +368,62 @@ status to facilitate targeted queries.
       "TRIAL"
     ]
   }
+}
+```
+
+### Example 3: GetPerkUsageDetail
+
+``json
+{
+"companyId": "cmp_001",
+"membershipId": "mem_abc123",
+"customerId": "cus_xyz789"
+}
+
+```
+
+Response:
+``json
+{
+  "included_benefits": [
+    {
+      "id": "inc_001",
+      "membership_id": "mem_abc123",
+      "total_quantity": 10,
+      "remaining_quantity": 5,
+      "is_limited": true,
+      "redeem_time": "2023-01-15T10:00:00Z",
+      "item_details": [
+        {
+          "item_id": "srv_001",
+          "item_name": "Basic Grooming",
+          "price": {
+            "currencyCode": "USD",
+            "units": 50,
+            "nanos": 0
+          },
+          "item_type": "SERVICE"
+        }
+      ],
+      "is_all": false,
+      "discount_unit": "UNIT_UNSPECIFIED",
+      "discount_value": 0
+    }
+  ],
+  "discount_benefits": [
+    {
+      "id": "disc_001",
+      "membership_id": "mem_abc123",
+      "total_quantity": 0,
+      "remaining_quantity": 0,
+      "is_limited": false,
+      "redeem_time": "2023-01-15T10:00:00Z",
+      "item_details": [],
+      "is_all": true,
+      "discount_unit": "PERCENT",
+      "discount_value": 15.0
+    }
+  ]
 }
 ```
 
