@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package moego.business.package.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb;packagepb";
+option java_multiple_files = true;
+option java_outer_classname = "PackageProto";
+option java_package = "com.moego.api.business.package.v1";
+
+// Package represents a package purchased by a customer.
+message Package {
+  // Unique identifier for the package
+  string id = 1;
+
+  // ID of the cart package
+  string cart_package_id = 2;
+
+  // ID of the customer who purchased this package
+  string customer_id = 3;
+
+  // ID of the staff who handled this package
+  string staff_id = 4;
+
+  // ID of the retail invoice item
+  string retail_invoice_item_id = 5;
+
+  // Confirmation ID for the package
+  string confirmation_id = 6;
+
+  // Name of the package
+  string package_name = 7;
+
+  // Description of the package
+  string package_desc = 8;
+
+  // Price of the package
+  google.type.Money package_price = 9;
+
+  // Purchase time of the package
+  google.protobuf.Timestamp purchase_time = 10;
+
+  // Start time of the package validity
+  google.protobuf.Timestamp start_time = 11;
+
+  // End time of the package validity
+  google.protobuf.Timestamp end_time = 12;
+
+  // Creation time of the package record
+  google.protobuf.Timestamp create_time = 13;
+
+  // Last update time of the package record
+  google.protobuf.Timestamp update_time = 14;
+
+  // Status of the package
+  int32 status = 15;
+
+  // Whether the package has been used
+  bool used = 16;
+
+  // Total remaining quantity of services in the package
+  int32 total_remaining_quantity = 17;
+
+  // Whether the package is applied
+  bool applied = 18;
+
+  // ID of the business that owns this package
+  string business_id = 19;
+
+  // Expiration date of the package in format: yyyy-MM-dd
+  // "9999-01-01" means never expired
+  string expiration_date = 20;
+}
+
+// PackageDetail represents detailed information about a package including its services and usage history
+message PackageDetail {
+
+  // PackageService represents a service included in a package
+  message PackageService {
+    // Unique identifier for the package service
+    string id = 1;
+
+    // ID of the package this service belongs to
+    string package_id = 2;
+
+    // List of services included in this package item
+    repeated Service services = 3;
+
+    // Total quantity of this service in the package
+    int32 total_quantity = 4;
+
+    // Remaining quantity of this service in the package
+    int32 remaining_quantity = 5;
+  }
+
+  // Service represents a service included in a package
+  message Service {
+    // ID of the service
+    string service_id = 1;
+
+    // Unit price of the service
+    google.type.Money unit_price = 2;
+
+    // Name of the service
+    string name = 3;
+  }
+
+  // Basic package information
+  Package package_info = 1;
+
+  // List of services included in the package
+  repeated PackageService package_services = 2;
+
+}

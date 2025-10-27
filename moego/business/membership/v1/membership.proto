@@ -7,7 +7,6 @@ import "google/type/money.proto";
 import "google/type/dayofweek.proto";
 import "google/type/timeofday.proto";
 import "google/type/interval.proto";
-import "moego/business/customer/v1/pet.proto";
 import "google/type/calendar_period.proto";
 import "moego/business/setting/v1/service.proto";
 
