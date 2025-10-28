@@ -111,6 +111,11 @@ notifications.
 
 - [Retail](docs/retail.md): Manages retail products and supplier relationships.
 
+### 👥 Membership & Packages
+
+- [Membership](docs/membership.md): Membership plans and customer subscriptions management.
+- [Package](docs/package.md): Customer package information and usage tracking.
+
 ### ⚙️ Settings & Integrations
 
 - [Webhook](docs/webhook.md): Real-time event notification system with HTTPS callbacks, HMAC signing, and retry

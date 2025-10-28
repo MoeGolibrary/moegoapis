@@ -1,0 +1,93 @@
+syntax = "proto3";
+
+package moego.business.package.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/package/v1/package.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb;packagepb";
+option java_multiple_files = true;
+option java_outer_classname = "PackageServiceProto";
+option java_package = "com.moego.api.business.package.v1";
+
+// PackageService provides methods for managing packages.
+service PackageService {
+  // ListPackages retrieves a list of packages for a specific customer.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if request parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc ListPackages(ListPackagesRequest) returns (ListPackagesResponse) {
+    option (google.api.http) = {
+      post: "/v1/packages:list"
+      body: "*"
+    };
+  }
+
+  // ListPackageDetails retrieves detailed information for a list of packages including 
+  // services and usage history.
+  //
+  // Possible errors:
+  // - INVALID_ARGUMENT if request parameters are invalid
+  // - PERMISSION_DENIED if the caller lacks access rights
+  rpc ListPackageDetails(ListPackageDetailsRequest) returns (ListPackageDetailsResponse) {
+    option (google.api.http) = {
+      post: "/v1/packages/details:list"
+      body: "*"
+    };
+  }
+}
+
+// Request message for listing packages.
+message ListPackagesRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The company identifier
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of customer identifiers.
+  repeated string customer_ids = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing packages.
+message ListPackagesResponse {
+  // array(Package), List of packages matching the request criteria.
+  repeated Package packages = 1;
+
+  // string, Token for retrieving the next page.
+  // Obtained from the previous page's response.
+  // Empty if there are no more results.
+  string next_page_token = 2;
+}
+
+// Request message for listing package details.
+message ListPackageDetailsRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+
+  // The company identifier
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of package identifiers.
+  // Required for fetching details for specific packages.
+  repeated string package_ids = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing package details.
+message ListPackageDetailsResponse {
+  // array(PackageDetail), List of package details matching the request criteria.
+  repeated PackageDetail package_details = 1;
+
+  // string, Token for retrieving the next page.
+  // Obtained from the previous page's response.
+  // Empty if there are no more results.
+  string next_page_token = 2;
+}

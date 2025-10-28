@@ -1,0 +1,503 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/package/v1/package_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.package.v1.PackageService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/packages/details:list": {
+      "post": {
+        "summary": "ListPackageDetails retrieves detailed information for a list of packages including \nservices and usage history.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if request parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "PackageService_ListPackageDetails",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListPackageDetailsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing package details.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListPackageDetailsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.package.v1.PackageService"
+        ]
+      }
+    },
+    "/v1/packages:list": {
+      "post": {
+        "summary": "ListPackages retrieves a list of packages for a specific customer.",
+        "description": "Possible errors:\n- INVALID_ARGUMENT if request parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "operationId": "PackageService_ListPackages",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/businesspackagev1ListPackagesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing packages.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/businesspackagev1ListPackagesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.package.v1.PackageService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "PackageDetailPackageService": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the package service"
+        },
+        "packageId": {
+          "type": "string",
+          "title": "ID of the package this service belongs to"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PackageDetailService"
+          },
+          "title": "List of services included in this package item"
+        },
+        "totalQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Total quantity of this service in the package"
+        },
+        "remainingQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Remaining quantity of this service in the package"
+        }
+      },
+      "title": "PackageService represents a service included in a package",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "PackageService"
+      }
+    },
+    "businesspackagev1ListPackagesRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "companyId": {
+          "type": "string",
+          "title": "The company identifier"
+        },
+        "customerIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of customer identifiers."
+        }
+      },
+      "description": "Request message for listing packages.",
+      "required": [
+        "pagination",
+        "companyId",
+        "customerIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "ListPackagesRequest"
+      }
+    },
+    "businesspackagev1ListPackagesResponse": {
+      "type": "object",
+      "properties": {
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businesspackagev1Package"
+          },
+          "description": "array(Package), List of packages matching the request criteria."
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nEmpty if there are no more results."
+        }
+      },
+      "description": "Response message for listing packages.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "ListPackagesResponse"
+      }
+    },
+    "businesspackagev1Package": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "Unique identifier for the package"
+        },
+        "customerId": {
+          "type": "string",
+          "title": "ID of the customer who purchased this package"
+        },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business that owns this package"
+        },
+        "staffId": {
+          "type": "string",
+          "title": "ID of the staff who handled this package"
+        },
+        "packageName": {
+          "type": "string",
+          "title": "Name of the package"
+        },
+        "packageDesc": {
+          "type": "string",
+          "title": "Description of the package"
+        },
+        "packagePrice": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Price of the package"
+        },
+        "purchaseTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Purchase time of the package"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Start time of the package validity"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "End time of the package validity"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Creation time of the package record"
+        },
+        "lastUpdateTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Last update time of the package record"
+        },
+        "expirationDate": {
+          "$ref": "#/definitions/typeDate",
+          "title": "Expiration date of the package\n\"9999-01-01\" means never expired\n\"0001-01-01\" means expired"
+        },
+        "status": {
+          "$ref": "#/definitions/v1PackageStatus",
+          "title": "Status of the package"
+        },
+        "used": {
+          "type": "boolean",
+          "title": "Whether the package has been used"
+        },
+        "applied": {
+          "type": "boolean",
+          "title": "Whether the package is applied"
+        },
+        "totalRemainingQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Total remaining quantity of services in the package"
+        }
+      },
+      "description": "Package represents a package purchased by a customer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "Package"
+      }
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
+      }
+    },
+    "typeMoney": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "The three-letter currency code defined in ISO 4217."
+        },
+        "units": {
+          "type": "string",
+          "format": "int64",
+          "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000."
+        }
+      },
+      "description": "Represents an amount of money with its currency type.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/money"
+        },
+        "type": "Money"
+      }
+    },
+    "v1ListPackageDetailsRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "companyId": {
+          "type": "string",
+          "title": "The company identifier"
+        },
+        "packageIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of package identifiers.\nRequired for fetching details for specific packages."
+        }
+      },
+      "description": "Request message for listing package details.",
+      "required": [
+        "pagination",
+        "companyId",
+        "packageIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "ListPackageDetailsRequest"
+      }
+    },
+    "v1ListPackageDetailsResponse": {
+      "type": "object",
+      "properties": {
+        "packageDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PackageDetail"
+          },
+          "description": "array(PackageDetail), List of package details matching the request criteria."
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nEmpty if there are no more results."
+        }
+      },
+      "description": "Response message for listing package details.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "ListPackageDetailsResponse"
+      }
+    },
+    "v1PackageDetail": {
+      "type": "object",
+      "properties": {
+        "packageInfo": {
+          "$ref": "#/definitions/businesspackagev1Package",
+          "title": "Basic package information"
+        },
+        "packageServices": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PackageDetailPackageService"
+          },
+          "title": "List of services included in the package"
+        }
+      },
+      "title": "PackageDetail represents detailed information about a package including its services and usage history",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "PackageDetail"
+      }
+    },
+    "v1PackageDetailService": {
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "title": "ID of the service"
+        },
+        "unitPrice": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Unit price of the service"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name of the service"
+        }
+      },
+      "title": "Service represents a service included in a package",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/package/v1/packagepb"
+        },
+        "type": "Service"
+      }
+    },
+    "v1PackageStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNKNOWN_UNSPECIFIED",
+        "STATUS_NORMAL",
+        "STATUS_DELETED"
+      ],
+      "default": "STATUS_UNKNOWN_UNSPECIFIED",
+      "description": "- STATUS_UNKNOWN_UNSPECIFIED: Package status is unknown\n - STATUS_NORMAL: Package is  active\n - STATUS_DELETED: Package is  deleted",
+      "title": "Status of the package"
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    }
+  }
+}

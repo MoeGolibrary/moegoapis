@@ -7,7 +7,6 @@
 package membershippb
 
 import (
-	_ "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	calendarperiod "google.golang.org/genproto/googleapis/type/calendarperiod"
 	dayofweek "google.golang.org/genproto/googleapis/type/dayofweek"
@@ -1051,7 +1050,7 @@ var File_moego_business_membership_v1_membership_proto protoreflect.FileDescript
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a$moego/business/customer/v1/pet.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\x84\r\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1bgoogle/type/timeofday.proto\x1a\x1agoogle/type/interval.proto\x1a!google/type/calendar_period.proto\x1a'moego/business/setting/v1/service.proto\"\x84\r\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
