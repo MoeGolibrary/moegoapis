@@ -364,9 +364,12 @@
           "type": "string",
           "description": "string, The business identifier.\nRequired for identifying the business context."
         },
-        "packageId": {
-          "type": "string",
-          "description": "string, The package identifier.\nRequired to identify which package to retrieve."
+        "packageIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of package identifiers.\nRequired for fetching details for specific packages."
         }
       },
       "description": "Request message for listing package details.",
@@ -374,7 +377,7 @@
         "pagination",
         "companyId",
         "businessId",
-        "packageId"
+        "packageIds"
       ],
       "x-go-type": {
         "import": {
