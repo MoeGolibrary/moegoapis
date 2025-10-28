@@ -360,10 +360,6 @@
           "type": "string",
           "title": "The company identifier"
         },
-        "businessId": {
-          "type": "string",
-          "description": "string, The business identifier.\nRequired for identifying the business context."
-        },
         "packageIds": {
           "type": "array",
           "items": {
@@ -376,7 +372,6 @@
       "required": [
         "pagination",
         "companyId",
-        "businessId",
         "packageIds"
       ],
       "x-go-type": {

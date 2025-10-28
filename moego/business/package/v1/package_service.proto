@@ -82,13 +82,9 @@ message ListPackageDetailsRequest {
   // The company identifier
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 
-  // string, The business identifier.
-  // Required for identifying the business context.
-  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
-
   // array(string), List of package identifiers.
   // Required for fetching details for specific packages.
-  repeated string package_ids = 4 [(google.api.field_behavior) = REQUIRED];
+  repeated string package_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing package details.

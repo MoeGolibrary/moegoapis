@@ -166,12 +166,9 @@ type ListPackageDetailsRequest struct {
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	// The company identifier
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// string, The business identifier.
-	// Required for identifying the business context.
-	BusinessId string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// string, The package identifier.
-	// Required to identify which package to retrieve.
-	PackageId     string `protobuf:"bytes,4,opt,name=package_id,json=packageId,proto3" json:"package_id,omitempty"`
+	// array(string), List of package identifiers.
+	// Required for fetching details for specific packages.
+	PackageIds    []string `protobuf:"bytes,3,rep,name=package_ids,json=packageIds,proto3" json:"package_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -220,18 +217,11 @@ func (x *ListPackageDetailsRequest) GetCompanyId() string {
 	return ""
 }
 
-func (x *ListPackageDetailsRequest) GetBusinessId() string {
+func (x *ListPackageDetailsRequest) GetPackageIds() []string {
 	if x != nil {
-		return x.BusinessId
+		return x.PackageIds
 	}
-	return ""
-}
-
-func (x *ListPackageDetailsRequest) GetPackageId() string {
-	if x != nil {
-		return x.PackageId
-	}
-	return ""
+	return nil
 }
 
 // Response message for listing package details.
@@ -308,17 +298,15 @@ const file_moego_business_package_v1_package_service_proto_rawDesc = "" +
 	"customerId\"~\n" +
 	"\x14ListPackagesResponse\x12>\n" +
 	"\bpackages\x18\x01 \x03(\v2\".moego.business.package.v1.PackageR\bpackages\x12&\n" +
-	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xcb\x01\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa7\x01\n" +
 	"\x19ListPackageDetailsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
-	"\vbusiness_id\x18\x03 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId\x12\"\n" +
-	"\n" +
-	"package_id\x18\x04 \x01(\tB\x03\xe0A\x02R\tpackageId\"\x97\x01\n" +
+	"\vpackage_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\n" +
+	"packageIds\"\x97\x01\n" +
 	"\x1aListPackageDetailsResponse\x12Q\n" +
 	"\x0fpackage_details\x18\x01 \x03(\v2(.moego.business.package.v1.PackageDetailR\x0epackageDetails\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xca\x02\n" +
