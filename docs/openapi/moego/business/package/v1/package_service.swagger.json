@@ -240,7 +240,7 @@
         },
         "expirationDate": {
           "$ref": "#/definitions/typeDate",
-          "title": "Expiration date of the package in format: yyyy-MM-dd\n\"9999-01-01\" means never expired"
+          "title": "Expiration date of the package\n\"9999-01-01\" means never expired\n\"0001-01-01\" means expired"
         },
         "status": {
           "$ref": "#/definitions/v1PackageStatus",

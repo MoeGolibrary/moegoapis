@@ -2,13 +2,15 @@
 
 ## 📌 1. Functional Overview
 
-The Package module manages customer packages, including package information, services included in packages, and package usage details. It provides the following functions:
+The Package module manages customer packages, including package information, services included in packages, and package
+usage details. It provides the following functions:
 
 - Retrieving basic package information for customers
 - Getting detailed package information including services
 - Listing packages with filtering and pagination capabilities
 
-This module is applicable to scenarios such as package management, service tracking, and customer benefits administration.
+This module is applicable to scenarios such as package management, service tracking, and customer benefits
+administration.
 
 ---
 
@@ -29,25 +31,25 @@ Represents a package purchased by a customer.
 
 #### Fields
 
-| Field Name                 | Type                      | Description                                                    |
-|----------------------------|---------------------------|----------------------------------------------------------------|
-| `id`                       | string                    | Unique identifier for the package                              |
-| `customer_id`              | string                    | ID of the customer who purchased this package                  |
-| `business_id`              | string                    | ID of the business that owns this package                      |
-| `staff_id`                 | string                    | ID of the staff who handled this package                       |
-| `package_name`             | string                    | Name of the package                                            |
-| `package_desc`             | string                    | Description of the package                                     |
-| `package_price`            | google.type.Money         | Price of the package                                           |
-| `purchase_time`            | google.protobuf.Timestamp | Purchase time of the package                                   |
-| `start_time`               | google.protobuf.Timestamp | Start time of the package validity                             |
-| `end_time`                 | google.protobuf.Timestamp | End time of the package validity                               |
-| `create_time`              | google.protobuf.Timestamp | Creation time of the package record                            |
-| `last_update_time`         | google.protobuf.Timestamp | Last update time of the package record                         |
-| `expiration_date`          | google.type.Date          | Expiration date of the package in format: yyyy-MM-dd           |
-| `status`                   | enum Status               | Status of the package                                          |
-| `used`                     | bool                      | Whether the package has been used                              |
-| `applied`                  | bool                      | Whether the package is applied                                 |
-| `total_remaining_quantity` | int32                     | Total remaining quantity of services in the package            |
+| Field Name                 | Type                      | Description                                                                            |
+|----------------------------|---------------------------|----------------------------------------------------------------------------------------|
+| `id`                       | string                    | Unique identifier for the package                                                      |
+| `customer_id`              | string                    | ID of the customer who purchased this package                                          |
+| `business_id`              | string                    | ID of the business that owns this package                                              |
+| `staff_id`                 | string                    | ID of the staff who handled this package                                               |
+| `package_name`             | string                    | Name of the package                                                                    |
+| `package_desc`             | string                    | Description of the package                                                             |
+| `package_price`            | google.type.Money         | Price of the package                                                                   |
+| `purchase_time`            | google.protobuf.Timestamp | Purchase time of the package                                                           |
+| `start_time`               | google.protobuf.Timestamp | Start time of the package validity                                                     |
+| `end_time`                 | google.protobuf.Timestamp | End time of the package validity                                                       |
+| `create_time`              | google.protobuf.Timestamp | Creation time of the package record                                                    |
+| `last_update_time`         | google.protobuf.Timestamp | Last update time of the package record                                                 |
+| `expiration_date`          | google.type.Date          | Expiration date of the package in format: yyyy-MM-dd ."9999-01-01" means never expired |
+| `status`                   | enum Status               | Status of the package                                                                  |
+| `used`                     | bool                      | Whether the package has been used                                                      |
+| `applied`                  | bool                      | Whether the package is applied                                                         |
+| `total_remaining_quantity` | int32                     | Total remaining quantity of services in the package                                    |
 
 ### 2. PackageDetail
 
@@ -55,9 +57,9 @@ Represents detailed information about a package including its services.
 
 #### Fields
 
-| Field Name         | Type              | Description                                  |
-|--------------------|-------------------|----------------------------------------------|
-| `package_info`     | Package           | Basic package information                    |
+| Field Name         | Type                    | Description                              |
+|--------------------|-------------------------|------------------------------------------|
+| `package_info`     | Package                 | Basic package information                |
 | `package_services` | repeated PackageService | List of services included in the package |
 
 ### 3. PackageService
@@ -66,13 +68,13 @@ Represents a service included in a package.
 
 #### Fields
 
-| Field Name          | Type              | Description                                      |
-|---------------------|-------------------|--------------------------------------------------|
-| `id`                | string            | Unique identifier for the package service        |
-| `package_id`        | string            | ID of the package this service belongs to        |
-| `services`          | repeated Service  | List of services included in this package item   |
-| `total_quantity`    | int32             | Total quantity of this service in the package    |
-| `remaining_quantity`| int32             | Remaining quantity of this service in the package|
+| Field Name           | Type             | Description                                       |
+|----------------------|------------------|---------------------------------------------------|
+| `id`                 | string           | Unique identifier for the package service         |
+| `package_id`         | string           | ID of the package this service belongs to         |
+| `services`           | repeated Service | List of services included in this package item    |
+| `total_quantity`     | int32            | Total quantity of this service in the package     |
+| `remaining_quantity` | int32            | Remaining quantity of this service in the package |
 
 ### 4. Service
 
@@ -80,11 +82,11 @@ Represents a service included in a package.
 
 #### Fields
 
-| Field Name       | Type              | Description                    |
-|------------------|-------------------|--------------------------------|
-| `service_id`     | string            | ID of the service              |
-| `unit_price`     | google.type.Money | Unit price of the service      |
-| `name`           | string            | Name of the service            |
+| Field Name   | Type              | Description               |
+|--------------|-------------------|---------------------------|
+| `service_id` | string            | ID of the service         |
+| `unit_price` | google.type.Money | Unit price of the service |
+| `name`       | string            | Name of the service       |
 
 ---
 
@@ -125,11 +127,11 @@ Retrieves a list of packages for a specific customer. Supports filtering by busi
 
 #### 🔧 Request Parameters:
 
-| Field Name    | Type       | Required | Description                                      |
-|---------------|------------|----------|--------------------------------------------------|
-| `pagination`  | Pagination | Yes      | Pagination info: pageSize, pageToken             |
-| `company_id`  | string     | Yes      | Company ID to scope packages                     |
-| `customer_ids`| repeated string | Yes | Customer IDs to filter packages              |
+| Field Name     | Type            | Required | Description                          |
+|----------------|-----------------|----------|--------------------------------------|
+| `pagination`   | Pagination      | Yes      | Pagination info: pageSize, pageToken |
+| `company_id`   | string          | Yes      | Company ID to scope packages         |
+| `customer_ids` | repeated string | Yes      | Customer IDs to filter packages      |
 
 #### 📌 Return Value:
 
@@ -161,18 +163,18 @@ Retrieves detailed information for a list of packages including services.
 
 #### 🔧 Request Parameters:
 
-| Field Name    | Type       | Required | Description                                      |
-|---------------|------------|----------|--------------------------------------------------|
-| `pagination`  | Pagination | Yes      | Pagination info: pageSize, pageToken             |
-| `company_id`  | string     | Yes      | Company ID to scope packages                     |
-| `package_ids` | repeated string | Yes | List of package IDs to retrieve details for   |
+| Field Name    | Type            | Required | Description                                 |
+|---------------|-----------------|----------|---------------------------------------------|
+| `pagination`  | Pagination      | Yes      | Pagination info: pageSize, pageToken        |
+| `company_id`  | string          | Yes      | Company ID to scope packages                |
+| `package_ids` | repeated string | Yes      | List of package IDs to retrieve details for |
 
 #### 📌 Return Value:
 
-| Field Name         | Type                 | Description                                                          |
-|--------------------|----------------------|----------------------------------------------------------------------|
-| `package_details`  | Array(PackageDetail) | List of package details matching the request criteria                |
-| `next_page_token`  | string               | Token for retrieving the next page of results (empty if none remain) |
+| Field Name        | Type                 | Description                                                          |
+|-------------------|----------------------|----------------------------------------------------------------------|
+| `package_details` | Array(PackageDetail) | List of package details matching the request criteria                |
+| `next_page_token` | string               | Token for retrieving the next page of results (empty if none remain) |
 
 #### ⚠️ Error Codes:
 
@@ -191,11 +193,14 @@ Retrieves detailed information for a list of packages including services.
     "pageSize": 20
   },
   "companyId": "cmp_001",
-  "customerIds": ["cus_123"]
+  "customerIds": [
+    "cus_123"
+  ]
 }
 ```
 
 Response:
+
 ```json
 {
   "packages": [
@@ -242,6 +247,7 @@ Response:
 ```
 
 Response:
+
 ```json
 {
   "packageDetails": [
@@ -304,12 +310,12 @@ TODO
 
 ## 📎 8. FAQ
 
-| Question                                          | Answer                                                             |
-|---------------------------------------------------|--------------------------------------------------------------------|
-| How to verify if a package exists?                | Use `ListPackages` with specific filters                           |
+| Question                                            | Answer                                                              |
+|-----------------------------------------------------|---------------------------------------------------------------------|
+| How to verify if a package exists?                  | Use `ListPackages` with specific filters                            |
 | Can I list packages for multiple customers at once? | Currently only supports listing packages for one customer at a time |
-| How to get detailed information about a package?  | Use `ListPackageDetails` with specific package IDs                 |
-| How to handle expired packages?                   | Check the `expirationDate` field                                   |
+| How to get detailed information about a package?    | Use `ListPackageDetails` with specific package IDs                  |
+| How to handle expired packages?                     | Check the `expirationDate` field                                    |
 
 ---
 

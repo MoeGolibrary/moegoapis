@@ -62,8 +62,9 @@ message Package {
   // Last update time of the package record
   google.protobuf.Timestamp last_update_time = 12;
 
-  // Expiration date of the package in format: yyyy-MM-dd
+  // Expiration date of the package
   // "9999-01-01" means never expired
+  // "0001-01-01" means expired
   google.type.Date expiration_date = 13;
 
   // Status of the package

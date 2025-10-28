@@ -104,8 +104,9 @@ type Package struct {
 	CreateTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Last update time of the package record
 	LastUpdateTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time,omitempty"`
-	// Expiration date of the package in format: yyyy-MM-dd
+	// Expiration date of the package
 	// "9999-01-01" means never expired
+	// "0001-01-01" means expired
 	ExpirationDate *date.Date `protobuf:"bytes,13,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
 	// Status of the package
 	Status Package_Status `protobuf:"varint,14,opt,name=status,proto3,enum=moego.business.package.v1.Package_Status" json:"status,omitempty"`
