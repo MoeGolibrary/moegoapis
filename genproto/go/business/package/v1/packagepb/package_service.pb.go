@@ -32,12 +32,8 @@ type ListPackagesRequest struct {
 	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	// The company identifier
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	// string, The business identifier.
-	// Required for identifying the business context.
-	BusinessId string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
-	// string, The customer identifier.
-	// Required for fetching packages for a specific customer.
-	CustomerId    string `protobuf:"bytes,4,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// array(string), List of customer identifiers.
+	CustomerIds   []string `protobuf:"bytes,4,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -86,18 +82,11 @@ func (x *ListPackagesRequest) GetCompanyId() string {
 	return ""
 }
 
-func (x *ListPackagesRequest) GetBusinessId() string {
+func (x *ListPackagesRequest) GetCustomerIds() []string {
 	if x != nil {
-		return x.BusinessId
+		return x.CustomerIds
 	}
-	return ""
-}
-
-func (x *ListPackagesRequest) GetCustomerId() string {
-	if x != nil {
-		return x.CustomerId
-	}
-	return ""
+	return nil
 }
 
 // Response message for listing packages.
@@ -285,17 +274,14 @@ var File_moego_business_package_v1_package_service_proto protoreflect.FileDescri
 
 const file_moego_business_package_v1_package_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/package/v1/package_service.proto\x12\x19moego.business.package.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a'moego/business/package/v1/package.proto\x1a moego/common/v1/pagination.proto\"\xc7\x01\n" +
+	"/moego/business/package/v1/package_service.proto\x12\x19moego.business.package.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a'moego/business/package/v1/package.proto\x1a moego/common/v1/pagination.proto\"\xa3\x01\n" +
 	"\x13ListPackagesRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
-	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
-	"\vbusiness_id\x18\x03 \x01(\tB\x03\xe0A\x02R\n" +
-	"businessId\x12$\n" +
-	"\vcustomer_id\x18\x04 \x01(\tB\x03\xe0A\x02R\n" +
-	"customerId\"~\n" +
+	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12&\n" +
+	"\fcustomer_ids\x18\x04 \x03(\tB\x03\xe0A\x02R\vcustomerIds\"~\n" +
 	"\x14ListPackagesResponse\x12>\n" +
 	"\bpackages\x18\x01 \x03(\v2\".moego.business.package.v1.PackageR\bpackages\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa7\x01\n" +

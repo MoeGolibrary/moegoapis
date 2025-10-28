@@ -137,21 +137,19 @@
           "type": "string",
           "title": "The company identifier"
         },
-        "businessId": {
-          "type": "string",
-          "description": "string, The business identifier.\nRequired for identifying the business context."
-        },
-        "customerId": {
-          "type": "string",
-          "description": "string, The customer identifier.\nRequired for fetching packages for a specific customer."
+        "customerIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of customer identifiers."
         }
       },
       "description": "Request message for listing packages.",
       "required": [
         "pagination",
         "companyId",
-        "businessId",
-        "customerId"
+        "customerIds"
       ],
       "x-go-type": {
         "import": {
