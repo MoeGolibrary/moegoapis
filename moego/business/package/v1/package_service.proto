@@ -51,7 +51,7 @@ message ListPackagesRequest {
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // array(string), List of customer identifiers.
-  repeated string customer_ids = 4 [(google.api.field_behavior) = REQUIRED];
+  repeated string customer_ids = 3 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing packages.

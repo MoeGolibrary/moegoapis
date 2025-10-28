@@ -33,7 +33,7 @@ type ListPackagesRequest struct {
 	// The company identifier
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// array(string), List of customer identifiers.
-	CustomerIds   []string `protobuf:"bytes,4,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
+	CustomerIds   []string `protobuf:"bytes,3,rep,name=customer_ids,json=customerIds,proto3" json:"customer_ids,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -281,7 +281,7 @@ const file_moego_business_package_v1_package_service_proto_rawDesc = "" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12&\n" +
-	"\fcustomer_ids\x18\x04 \x03(\tB\x03\xe0A\x02R\vcustomerIds\"~\n" +
+	"\fcustomer_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\vcustomerIds\"~\n" +
 	"\x14ListPackagesResponse\x12>\n" +
 	"\bpackages\x18\x01 \x03(\v2\".moego.business.package.v1.PackageR\bpackages\x12&\n" +
 	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken\"\xa7\x01\n" +
