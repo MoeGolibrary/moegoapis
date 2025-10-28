@@ -12,6 +12,18 @@ option java_package = "com.moego.api.business.package.v1";
 
 // Package represents a package purchased by a customer.
 message Package {
+
+  enum Status {
+    // Package status is unknown
+    STATUS_UNKNOWN = 0;
+
+    // Package is  active
+    STATUS_NORMAL = 1;
+
+    // Package is  deleted
+    STATUS_DELETED = 2;
+  }
+
   // Unique identifier for the package
   string id = 1;
 
@@ -55,7 +67,7 @@ message Package {
   google.protobuf.Timestamp update_time = 14;
 
   // Status of the package
-  int32 status = 15;
+  Status status = 15;
 
   // Whether the package has been used
   bool used = 16;

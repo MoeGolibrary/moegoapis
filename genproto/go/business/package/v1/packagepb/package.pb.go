@@ -23,6 +23,58 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+type Package_Status int32
+
+const (
+	// Package status is unknown
+	Package_STATUS_UNKNOWN Package_Status = 0
+	// Package is  active
+	Package_STATUS_NORMAL Package_Status = 1
+	// Package is  deleted
+	Package_STATUS_DELETED Package_Status = 2
+)
+
+// Enum value maps for Package_Status.
+var (
+	Package_Status_name = map[int32]string{
+		0: "STATUS_UNKNOWN",
+		1: "STATUS_NORMAL",
+		2: "STATUS_DELETED",
+	}
+	Package_Status_value = map[string]int32{
+		"STATUS_UNKNOWN": 0,
+		"STATUS_NORMAL":  1,
+		"STATUS_DELETED": 2,
+	}
+)
+
+func (x Package_Status) Enum() *Package_Status {
+	p := new(Package_Status)
+	*p = x
+	return p
+}
+
+func (x Package_Status) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (Package_Status) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_package_v1_package_proto_enumTypes[0].Descriptor()
+}
+
+func (Package_Status) Type() protoreflect.EnumType {
+	return &file_moego_business_package_v1_package_proto_enumTypes[0]
+}
+
+func (x Package_Status) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use Package_Status.Descriptor instead.
+func (Package_Status) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_package_v1_package_proto_rawDescGZIP(), []int{0, 0}
+}
+
 // Package represents a package purchased by a customer.
 type Package struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -55,7 +107,7 @@ type Package struct {
 	// Last update time of the package record
 	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
 	// Status of the package
-	Status int32 `protobuf:"varint,15,opt,name=status,proto3" json:"status,omitempty"`
+	Status Package_Status `protobuf:"varint,15,opt,name=status,proto3,enum=moego.business.package.v1.Package_Status" json:"status,omitempty"`
 	// Whether the package has been used
 	Used bool `protobuf:"varint,16,opt,name=used,proto3" json:"used,omitempty"`
 	// Total remaining quantity of services in the package
@@ -199,11 +251,11 @@ func (x *Package) GetUpdateTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Package) GetStatus() int32 {
+func (x *Package) GetStatus() Package_Status {
 	if x != nil {
 		return x.Status
 	}
-	return 0
+	return Package_STATUS_UNKNOWN
 }
 
 func (x *Package) GetUsed() bool {
@@ -446,7 +498,7 @@ var File_moego_business_package_v1_package_proto protoreflect.FileDescriptor
 
 const file_moego_business_package_v1_package_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/package/v1/package.proto\x12\x19moego.business.package.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xd1\x06\n" +
+	"'moego/business/package/v1/package.proto\x12\x19moego.business.package.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc1\a\n" +
 	"\aPackage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12&\n" +
 	"\x0fcart_package_id\x18\x02 \x01(\tR\rcartPackageId\x12\x1f\n" +
@@ -466,14 +518,18 @@ const file_moego_business_package_v1_package_proto_rawDesc = "" +
 	"\vcreate_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\n" +
 	"createTime\x12;\n" +
 	"\vupdate_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\x12\x16\n" +
-	"\x06status\x18\x0f \x01(\x05R\x06status\x12\x12\n" +
+	"updateTime\x12A\n" +
+	"\x06status\x18\x0f \x01(\x0e2).moego.business.package.v1.Package.StatusR\x06status\x12\x12\n" +
 	"\x04used\x18\x10 \x01(\bR\x04used\x128\n" +
 	"\x18total_remaining_quantity\x18\x11 \x01(\x05R\x16totalRemainingQuantity\x12\x18\n" +
 	"\aapplied\x18\x12 \x01(\bR\aapplied\x12\x1f\n" +
 	"\vbusiness_id\x18\x13 \x01(\tR\n" +
 	"businessId\x12'\n" +
-	"\x0fexpiration_date\x18\x14 \x01(\tR\x0eexpirationDate\"\x91\x04\n" +
+	"\x0fexpiration_date\x18\x14 \x01(\tR\x0eexpirationDate\"C\n" +
+	"\x06Status\x12\x12\n" +
+	"\x0eSTATUS_UNKNOWN\x10\x00\x12\x11\n" +
+	"\rSTATUS_NORMAL\x10\x01\x12\x12\n" +
+	"\x0eSTATUS_DELETED\x10\x02\"\x91\x04\n" +
 	"\rPackageDetail\x12E\n" +
 	"\fpackage_info\x18\x01 \x01(\v2\".moego.business.package.v1.PackageR\vpackageInfo\x12b\n" +
 	"\x10package_services\x18\x02 \x03(\v27.moego.business.package.v1.PackageDetail.PackageServiceR\x0fpackageServices\x1a\xe3\x01\n" +
@@ -504,31 +560,34 @@ func file_moego_business_package_v1_package_proto_rawDescGZIP() []byte {
 	return file_moego_business_package_v1_package_proto_rawDescData
 }
 
+var file_moego_business_package_v1_package_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_moego_business_package_v1_package_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_package_v1_package_proto_goTypes = []any{
-	(*Package)(nil),                      // 0: moego.business.package.v1.Package
-	(*PackageDetail)(nil),                // 1: moego.business.package.v1.PackageDetail
-	(*PackageDetail_PackageService)(nil), // 2: moego.business.package.v1.PackageDetail.PackageService
-	(*PackageDetail_Service)(nil),        // 3: moego.business.package.v1.PackageDetail.Service
-	(*money.Money)(nil),                  // 4: google.type.Money
-	(*timestamppb.Timestamp)(nil),        // 5: google.protobuf.Timestamp
+	(Package_Status)(0),                  // 0: moego.business.package.v1.Package.Status
+	(*Package)(nil),                      // 1: moego.business.package.v1.Package
+	(*PackageDetail)(nil),                // 2: moego.business.package.v1.PackageDetail
+	(*PackageDetail_PackageService)(nil), // 3: moego.business.package.v1.PackageDetail.PackageService
+	(*PackageDetail_Service)(nil),        // 4: moego.business.package.v1.PackageDetail.Service
+	(*money.Money)(nil),                  // 5: google.type.Money
+	(*timestamppb.Timestamp)(nil),        // 6: google.protobuf.Timestamp
 }
 var file_moego_business_package_v1_package_proto_depIdxs = []int32{
-	4,  // 0: moego.business.package.v1.Package.package_price:type_name -> google.type.Money
-	5,  // 1: moego.business.package.v1.Package.purchase_time:type_name -> google.protobuf.Timestamp
-	5,  // 2: moego.business.package.v1.Package.start_time:type_name -> google.protobuf.Timestamp
-	5,  // 3: moego.business.package.v1.Package.end_time:type_name -> google.protobuf.Timestamp
-	5,  // 4: moego.business.package.v1.Package.create_time:type_name -> google.protobuf.Timestamp
-	5,  // 5: moego.business.package.v1.Package.update_time:type_name -> google.protobuf.Timestamp
-	0,  // 6: moego.business.package.v1.PackageDetail.package_info:type_name -> moego.business.package.v1.Package
-	2,  // 7: moego.business.package.v1.PackageDetail.package_services:type_name -> moego.business.package.v1.PackageDetail.PackageService
-	3,  // 8: moego.business.package.v1.PackageDetail.PackageService.services:type_name -> moego.business.package.v1.PackageDetail.Service
-	4,  // 9: moego.business.package.v1.PackageDetail.Service.unit_price:type_name -> google.type.Money
-	10, // [10:10] is the sub-list for method output_type
-	10, // [10:10] is the sub-list for method input_type
-	10, // [10:10] is the sub-list for extension type_name
-	10, // [10:10] is the sub-list for extension extendee
-	0,  // [0:10] is the sub-list for field type_name
+	5,  // 0: moego.business.package.v1.Package.package_price:type_name -> google.type.Money
+	6,  // 1: moego.business.package.v1.Package.purchase_time:type_name -> google.protobuf.Timestamp
+	6,  // 2: moego.business.package.v1.Package.start_time:type_name -> google.protobuf.Timestamp
+	6,  // 3: moego.business.package.v1.Package.end_time:type_name -> google.protobuf.Timestamp
+	6,  // 4: moego.business.package.v1.Package.create_time:type_name -> google.protobuf.Timestamp
+	6,  // 5: moego.business.package.v1.Package.update_time:type_name -> google.protobuf.Timestamp
+	0,  // 6: moego.business.package.v1.Package.status:type_name -> moego.business.package.v1.Package.Status
+	1,  // 7: moego.business.package.v1.PackageDetail.package_info:type_name -> moego.business.package.v1.Package
+	3,  // 8: moego.business.package.v1.PackageDetail.package_services:type_name -> moego.business.package.v1.PackageDetail.PackageService
+	4,  // 9: moego.business.package.v1.PackageDetail.PackageService.services:type_name -> moego.business.package.v1.PackageDetail.Service
+	5,  // 10: moego.business.package.v1.PackageDetail.Service.unit_price:type_name -> google.type.Money
+	11, // [11:11] is the sub-list for method output_type
+	11, // [11:11] is the sub-list for method input_type
+	11, // [11:11] is the sub-list for extension type_name
+	11, // [11:11] is the sub-list for extension extendee
+	0,  // [0:11] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_package_v1_package_proto_init() }
@@ -541,13 +600,14 @@ func file_moego_business_package_v1_package_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_package_v1_package_proto_rawDesc), len(file_moego_business_package_v1_package_proto_rawDesc)),
-			NumEnums:      0,
+			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_moego_business_package_v1_package_proto_goTypes,
 		DependencyIndexes: file_moego_business_package_v1_package_proto_depIdxs,
+		EnumInfos:         file_moego_business_package_v1_package_proto_enumTypes,
 		MessageInfos:      file_moego_business_package_v1_package_proto_msgTypes,
 	}.Build()
 	File_moego_business_package_v1_package_proto = out.File

@@ -247,8 +247,7 @@
           "title": "Last update time of the package record"
         },
         "status": {
-          "type": "integer",
-          "format": "int32",
+          "$ref": "#/definitions/v1PackageStatus",
           "title": "Status of the package"
         },
         "used": {
@@ -450,6 +449,16 @@
         },
         "type": "Service"
       }
+    },
+    "v1PackageStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNKNOWN",
+        "STATUS_NORMAL",
+        "STATUS_DELETED"
+      ],
+      "default": "STATUS_UNKNOWN",
+      "title": "- STATUS_UNKNOWN: Package status is unknown\n - STATUS_NORMAL: Package is  active\n - STATUS_DELETED: Package is  deleted"
     },
     "v1Pagination": {
       "type": "object",
