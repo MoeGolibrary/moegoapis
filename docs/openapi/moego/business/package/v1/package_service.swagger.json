@@ -133,6 +133,10 @@
           "$ref": "#/definitions/v1Pagination",
           "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
         },
+        "companyId": {
+          "type": "string",
+          "title": "The company identifier"
+        },
         "businessId": {
           "type": "string",
           "description": "string, The business identifier.\nRequired for identifying the business context."
@@ -145,6 +149,7 @@
       "description": "Request message for listing packages.",
       "required": [
         "pagination",
+        "companyId",
         "businessId",
         "customerId"
       ],
@@ -351,6 +356,10 @@
           "$ref": "#/definitions/v1Pagination",
           "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
         },
+        "companyId": {
+          "type": "string",
+          "title": "The company identifier"
+        },
         "businessId": {
           "type": "string",
           "description": "string, The business identifier.\nRequired for identifying the business context."
@@ -363,6 +372,7 @@
       "description": "Request message for listing package details.",
       "required": [
         "pagination",
+        "companyId",
         "businessId",
         "packageId"
       ],

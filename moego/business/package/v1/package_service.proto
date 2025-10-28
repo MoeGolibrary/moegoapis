@@ -47,13 +47,17 @@ message ListPackagesRequest {
   // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
+  // The company identifier
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+
   // string, The business identifier.
   // Required for identifying the business context.
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
 
   // string, The customer identifier.
   // Required for fetching packages for a specific customer.
-  string customer_id = 3 [(google.api.field_behavior) = REQUIRED];
+  string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing packages.
@@ -74,13 +78,17 @@ message ListPackageDetailsRequest {
   // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
 
+
+  // The company identifier
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
   // string, The business identifier.
   // Required for identifying the business context.
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  string business_id = 3 [(google.api.field_behavior) = REQUIRED];
 
   // string, The package identifier.
   // Required to identify which package to retrieve.
-  string package_id = 3 [(google.api.field_behavior) = REQUIRED];
+  string package_id = 4 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for listing package details.
