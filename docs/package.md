@@ -32,11 +32,9 @@ Represents a package purchased by a customer.
 | Field Name                 | Type                      | Description                                                    |
 |----------------------------|---------------------------|----------------------------------------------------------------|
 | `id`                       | string                    | Unique identifier for the package                              |
-| `cart_package_id`          | string                    | ID of the cart package                                         |
 | `customer_id`              | string                    | ID of the customer who purchased this package                  |
+| `business_id`              | string                    | ID of the business that owns this package                      |
 | `staff_id`                 | string                    | ID of the staff who handled this package                       |
-| `retail_invoice_item_id`   | string                    | ID of the retail invoice item                                  |
-| `confirmation_id`          | string                    | Confirmation ID for the package                                |
 | `package_name`             | string                    | Name of the package                                            |
 | `package_desc`             | string                    | Description of the package                                     |
 | `package_price`            | google.type.Money         | Price of the package                                           |
@@ -44,13 +42,12 @@ Represents a package purchased by a customer.
 | `start_time`               | google.protobuf.Timestamp | Start time of the package validity                             |
 | `end_time`                 | google.protobuf.Timestamp | End time of the package validity                               |
 | `create_time`              | google.protobuf.Timestamp | Creation time of the package record                            |
-| `update_time`              | google.protobuf.Timestamp | Last update time of the package record                         |
-| `status`                   | int32                     | Status of the package                                          |
+| `last_update_time`         | google.protobuf.Timestamp | Last update time of the package record                         |
+| `expiration_date`          | google.type.Date          | Expiration date of the package in format: yyyy-MM-dd           |
+| `status`                   | enum Status               | Status of the package                                          |
 | `used`                     | bool                      | Whether the package has been used                              |
-| `total_remaining_quantity` | int32                     | Total remaining quantity of services in the package            |
 | `applied`                  | bool                      | Whether the package is applied                                 |
-| `business_id`              | string                    | ID of the business that owns this package                      |
-| `expiration_date`          | string                    | Expiration date of the package in format: yyyy-MM-dd           |
+| `total_remaining_quantity` | int32                     | Total remaining quantity of services in the package            |
 
 ### 2. PackageDetail
 
@@ -88,8 +85,6 @@ Represents a service included in a package.
 | `service_id`     | string            | ID of the service              |
 | `unit_price`     | google.type.Money | Unit price of the service      |
 | `name`           | string            | Name of the service            |
-| `description`    | string            | Description of the service     |
-| `original_price` | google.type.Money | Original price of the service  |
 
 ---
 
@@ -133,8 +128,8 @@ Retrieves a list of packages for a specific customer. Supports filtering by busi
 | Field Name    | Type       | Required | Description                                      |
 |---------------|------------|----------|--------------------------------------------------|
 | `pagination`  | Pagination | Yes      | Pagination info: pageSize, pageToken             |
-| `businessId`  | string     | Yes      | Business ID to scope packages                    |
-| `customerId`  | string     | Yes      | Customer ID to filter packages                   |
+| `company_id`  | string     | Yes      | Company ID to scope packages                     |
+| `customer_ids`| repeated string | Yes | Customer IDs to filter packages              |
 
 #### 📌 Return Value:
 
@@ -169,8 +164,8 @@ Retrieves detailed information for a list of packages including services.
 | Field Name    | Type       | Required | Description                                      |
 |---------------|------------|----------|--------------------------------------------------|
 | `pagination`  | Pagination | Yes      | Pagination info: pageSize, pageToken             |
-| `businessId`  | string     | Yes      | Business ID to scope packages                    |
-| `packageIds`  | Array(string) | Yes   | List of package IDs to retrieve details for      |
+| `company_id`  | string     | Yes      | Company ID to scope packages                     |
+| `package_ids` | repeated string | Yes | List of package IDs to retrieve details for   |
 
 #### 📌 Return Value:
 
@@ -195,8 +190,8 @@ Retrieves detailed information for a list of packages including services.
   "pagination": {
     "pageSize": 20
   },
-  "businessId": "bus_001",
-  "customerId": "cus_123"
+  "companyId": "cmp_001",
+  "customerIds": ["cus_123"]
 }
 ```
 
@@ -206,11 +201,9 @@ Response:
   "packages": [
     {
       "id": "pkg_abc123",
-      "cartPackageId": "cart_001",
       "customerId": "cus_123",
+      "businessId": "bus_001",
       "staffId": "staff_001",
-      "retailInvoiceItemId": "inv_001",
-      "confirmationId": "conf_001",
       "packageName": "Basic Grooming Package",
       "packageDesc": "Includes 5 basic grooming sessions",
       "packagePrice": {
@@ -222,13 +215,12 @@ Response:
       "startTime": "2023-01-15T10:00:00Z",
       "endTime": "2024-01-15T10:00:00Z",
       "createTime": "2023-01-15T10:00:00Z",
-      "updateTime": "2023-01-15T10:00:00Z",
-      "status": 1,
+      "lastUpdateTime": "2023-01-15T10:00:00Z",
+      "expirationDate": "2024-01-15",
+      "status": "STATUS_NORMAL",
       "used": true,
-      "totalRemainingQuantity": 3,
       "applied": true,
-      "businessId": "bus_001",
-      "expirationDate": "2024-01-15"
+      "totalRemainingQuantity": 3
     }
   ],
   "nextPageToken": ""
@@ -242,7 +234,7 @@ Response:
   "pagination": {
     "pageSize": 20
   },
-  "businessId": "bus_001",
+  "companyId": "cmp_001",
   "packageIds": [
     "pkg_abc123"
   ]
@@ -256,11 +248,9 @@ Response:
     {
       "packageInfo": {
         "id": "pkg_abc123",
-        "cartPackageId": "cart_001",
         "customerId": "cus_123",
+        "businessId": "bus_001",
         "staffId": "staff_001",
-        "retailInvoiceItemId": "inv_001",
-        "confirmationId": "conf_001",
         "packageName": "Basic Grooming Package",
         "packageDesc": "Includes 5 basic grooming sessions",
         "packagePrice": {
@@ -272,13 +262,12 @@ Response:
         "startTime": "2023-01-15T10:00:00Z",
         "endTime": "2024-01-15T10:00:00Z",
         "createTime": "2023-01-15T10:00:00Z",
-        "updateTime": "2023-01-15T10:00:00Z",
-        "status": 1,
+        "lastUpdateTime": "2023-01-15T10:00:00Z",
+        "expirationDate": "2024-01-15",
+        "status": "STATUS_NORMAL",
         "used": true,
-        "totalRemainingQuantity": 3,
         "applied": true,
-        "businessId": "bus_001",
-        "expirationDate": "2024-01-15"
+        "totalRemainingQuantity": 3
       },
       "packageServices": [
         {
@@ -292,13 +281,7 @@ Response:
                 "units": 30,
                 "nanos": 0
               },
-              "name": "Basic Grooming",
-              "description": "Full grooming service including bath, haircut, and nail trim",
-              "originalPrice": {
-                "currencyCode": "USD",
-                "units": 45,
-                "nanos": 0
-              }
+              "name": "Basic Grooming"
             }
           ],
           "totalQuantity": 5,

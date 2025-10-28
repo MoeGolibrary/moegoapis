@@ -189,25 +189,17 @@
           "type": "string",
           "title": "Unique identifier for the package"
         },
-        "cartPackageId": {
-          "type": "string",
-          "title": "ID of the cart package"
-        },
         "customerId": {
           "type": "string",
           "title": "ID of the customer who purchased this package"
         },
+        "businessId": {
+          "type": "string",
+          "title": "ID of the business that owns this package"
+        },
         "staffId": {
           "type": "string",
           "title": "ID of the staff who handled this package"
-        },
-        "retailInvoiceItemId": {
-          "type": "string",
-          "title": "ID of the retail invoice item"
-        },
-        "confirmationId": {
-          "type": "string",
-          "title": "Confirmation ID for the package"
         },
         "packageName": {
           "type": "string",
@@ -241,10 +233,14 @@
           "format": "date-time",
           "title": "Creation time of the package record"
         },
-        "updateTime": {
+        "lastUpdateTime": {
           "type": "string",
           "format": "date-time",
           "title": "Last update time of the package record"
+        },
+        "expirationDate": {
+          "$ref": "#/definitions/typeDate",
+          "title": "Expiration date of the package in format: yyyy-MM-dd\n\"9999-01-01\" means never expired"
         },
         "status": {
           "$ref": "#/definitions/v1PackageStatus",
@@ -254,22 +250,14 @@
           "type": "boolean",
           "title": "Whether the package has been used"
         },
-        "totalRemainingQuantity": {
-          "type": "integer",
-          "format": "int32",
-          "title": "Total remaining quantity of services in the package"
-        },
         "applied": {
           "type": "boolean",
           "title": "Whether the package is applied"
         },
-        "businessId": {
-          "type": "string",
-          "title": "ID of the business that owns this package"
-        },
-        "expirationDate": {
-          "type": "string",
-          "title": "Expiration date of the package in format: yyyy-MM-dd\n\"9999-01-01\" means never expired"
+        "totalRemainingQuantity": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Total remaining quantity of services in the package"
         }
       },
       "description": "Package represents a package purchased by a customer.",
@@ -318,6 +306,34 @@
           "package": "google.golang.org/protobuf/types/known/anypb"
         },
         "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
       }
     },
     "typeMoney": {
@@ -453,12 +469,13 @@
     "v1PackageStatus": {
       "type": "string",
       "enum": [
-        "STATUS_UNKNOWN",
+        "STATUS_UNKNOWN_UNSPECIFIED",
         "STATUS_NORMAL",
         "STATUS_DELETED"
       ],
-      "default": "STATUS_UNKNOWN",
-      "title": "- STATUS_UNKNOWN: Package status is unknown\n - STATUS_NORMAL: Package is  active\n - STATUS_DELETED: Package is  deleted"
+      "default": "STATUS_UNKNOWN_UNSPECIFIED",
+      "description": "- STATUS_UNKNOWN_UNSPECIFIED: Package status is unknown\n - STATUS_NORMAL: Package is  active\n - STATUS_DELETED: Package is  deleted",
+      "title": "Status of the package"
     },
     "v1Pagination": {
       "type": "object",

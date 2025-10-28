@@ -7,6 +7,7 @@
 package packagepb
 
 import (
+	date "google.golang.org/genproto/googleapis/type/date"
 	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -23,11 +24,12 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Status of the package
 type Package_Status int32
 
 const (
 	// Package status is unknown
-	Package_STATUS_UNKNOWN Package_Status = 0
+	Package_STATUS_UNKNOWN_UNSPECIFIED Package_Status = 0
 	// Package is  active
 	Package_STATUS_NORMAL Package_Status = 1
 	// Package is  deleted
@@ -37,14 +39,14 @@ const (
 // Enum value maps for Package_Status.
 var (
 	Package_Status_name = map[int32]string{
-		0: "STATUS_UNKNOWN",
+		0: "STATUS_UNKNOWN_UNSPECIFIED",
 		1: "STATUS_NORMAL",
 		2: "STATUS_DELETED",
 	}
 	Package_Status_value = map[string]int32{
-		"STATUS_UNKNOWN": 0,
-		"STATUS_NORMAL":  1,
-		"STATUS_DELETED": 2,
+		"STATUS_UNKNOWN_UNSPECIFIED": 0,
+		"STATUS_NORMAL":              1,
+		"STATUS_DELETED":             2,
 	}
 )
 
@@ -80,47 +82,41 @@ type Package struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the package
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	// ID of the cart package
-	CartPackageId string `protobuf:"bytes,2,opt,name=cart_package_id,json=cartPackageId,proto3" json:"cart_package_id,omitempty"`
 	// ID of the customer who purchased this package
-	CustomerId string `protobuf:"bytes,3,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	CustomerId string `protobuf:"bytes,2,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// ID of the business that owns this package
+	BusinessId string `protobuf:"bytes,3,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	// ID of the staff who handled this package
 	StaffId string `protobuf:"bytes,4,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
-	// ID of the retail invoice item
-	RetailInvoiceItemId string `protobuf:"bytes,5,opt,name=retail_invoice_item_id,json=retailInvoiceItemId,proto3" json:"retail_invoice_item_id,omitempty"`
-	// Confirmation ID for the package
-	ConfirmationId string `protobuf:"bytes,6,opt,name=confirmation_id,json=confirmationId,proto3" json:"confirmation_id,omitempty"`
 	// Name of the package
-	PackageName string `protobuf:"bytes,7,opt,name=package_name,json=packageName,proto3" json:"package_name,omitempty"`
+	PackageName string `protobuf:"bytes,5,opt,name=package_name,json=packageName,proto3" json:"package_name,omitempty"`
 	// Description of the package
-	PackageDesc string `protobuf:"bytes,8,opt,name=package_desc,json=packageDesc,proto3" json:"package_desc,omitempty"`
+	PackageDesc string `protobuf:"bytes,6,opt,name=package_desc,json=packageDesc,proto3" json:"package_desc,omitempty"`
 	// Price of the package
-	PackagePrice *money.Money `protobuf:"bytes,9,opt,name=package_price,json=packagePrice,proto3" json:"package_price,omitempty"`
+	PackagePrice *money.Money `protobuf:"bytes,7,opt,name=package_price,json=packagePrice,proto3" json:"package_price,omitempty"`
 	// Purchase time of the package
-	PurchaseTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=purchase_time,json=purchaseTime,proto3" json:"purchase_time,omitempty"`
+	PurchaseTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=purchase_time,json=purchaseTime,proto3" json:"purchase_time,omitempty"`
 	// Start time of the package validity
-	StartTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	StartTime *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
 	// End time of the package validity
-	EndTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	EndTime *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	// Creation time of the package record
-	CreateTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,11,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
 	// Last update time of the package record
-	UpdateTime *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
-	// Status of the package
-	Status Package_Status `protobuf:"varint,15,opt,name=status,proto3,enum=moego.business.package.v1.Package_Status" json:"status,omitempty"`
-	// Whether the package has been used
-	Used bool `protobuf:"varint,16,opt,name=used,proto3" json:"used,omitempty"`
-	// Total remaining quantity of services in the package
-	TotalRemainingQuantity int32 `protobuf:"varint,17,opt,name=total_remaining_quantity,json=totalRemainingQuantity,proto3" json:"total_remaining_quantity,omitempty"`
-	// Whether the package is applied
-	Applied bool `protobuf:"varint,18,opt,name=applied,proto3" json:"applied,omitempty"`
-	// ID of the business that owns this package
-	BusinessId string `protobuf:"bytes,19,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	LastUpdateTime *timestamppb.Timestamp `protobuf:"bytes,12,opt,name=last_update_time,json=lastUpdateTime,proto3" json:"last_update_time,omitempty"`
 	// Expiration date of the package in format: yyyy-MM-dd
 	// "9999-01-01" means never expired
-	ExpirationDate string `protobuf:"bytes,20,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	ExpirationDate *date.Date `protobuf:"bytes,13,opt,name=expiration_date,json=expirationDate,proto3" json:"expiration_date,omitempty"`
+	// Status of the package
+	Status Package_Status `protobuf:"varint,14,opt,name=status,proto3,enum=moego.business.package.v1.Package_Status" json:"status,omitempty"`
+	// Whether the package has been used
+	Used bool `protobuf:"varint,15,opt,name=used,proto3" json:"used,omitempty"`
+	// Whether the package is applied
+	Applied bool `protobuf:"varint,16,opt,name=applied,proto3" json:"applied,omitempty"`
+	// Total remaining quantity of services in the package
+	TotalRemainingQuantity int32 `protobuf:"varint,17,opt,name=total_remaining_quantity,json=totalRemainingQuantity,proto3" json:"total_remaining_quantity,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
 }
 
 func (x *Package) Reset() {
@@ -160,13 +156,6 @@ func (x *Package) GetId() string {
 	return ""
 }
 
-func (x *Package) GetCartPackageId() string {
-	if x != nil {
-		return x.CartPackageId
-	}
-	return ""
-}
-
 func (x *Package) GetCustomerId() string {
 	if x != nil {
 		return x.CustomerId
@@ -174,23 +163,16 @@ func (x *Package) GetCustomerId() string {
 	return ""
 }
 
+func (x *Package) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
 func (x *Package) GetStaffId() string {
 	if x != nil {
 		return x.StaffId
-	}
-	return ""
-}
-
-func (x *Package) GetRetailInvoiceItemId() string {
-	if x != nil {
-		return x.RetailInvoiceItemId
-	}
-	return ""
-}
-
-func (x *Package) GetConfirmationId() string {
-	if x != nil {
-		return x.ConfirmationId
 	}
 	return ""
 }
@@ -244,9 +226,16 @@ func (x *Package) GetCreateTime() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Package) GetUpdateTime() *timestamppb.Timestamp {
+func (x *Package) GetLastUpdateTime() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdateTime
+		return x.LastUpdateTime
+	}
+	return nil
+}
+
+func (x *Package) GetExpirationDate() *date.Date {
+	if x != nil {
+		return x.ExpirationDate
 	}
 	return nil
 }
@@ -255,7 +244,7 @@ func (x *Package) GetStatus() Package_Status {
 	if x != nil {
 		return x.Status
 	}
-	return Package_STATUS_UNKNOWN
+	return Package_STATUS_UNKNOWN_UNSPECIFIED
 }
 
 func (x *Package) GetUsed() bool {
@@ -265,13 +254,6 @@ func (x *Package) GetUsed() bool {
 	return false
 }
 
-func (x *Package) GetTotalRemainingQuantity() int32 {
-	if x != nil {
-		return x.TotalRemainingQuantity
-	}
-	return 0
-}
-
 func (x *Package) GetApplied() bool {
 	if x != nil {
 		return x.Applied
@@ -279,18 +261,11 @@ func (x *Package) GetApplied() bool {
 	return false
 }
 
-func (x *Package) GetBusinessId() string {
+func (x *Package) GetTotalRemainingQuantity() int32 {
 	if x != nil {
-		return x.BusinessId
+		return x.TotalRemainingQuantity
 	}
-	return ""
-}
-
-func (x *Package) GetExpirationDate() string {
-	if x != nil {
-		return x.ExpirationDate
-	}
-	return ""
+	return 0
 }
 
 // PackageDetail represents detailed information about a package including its services and usage history
@@ -498,36 +473,32 @@ var File_moego_business_package_v1_package_proto protoreflect.FileDescriptor
 
 const file_moego_business_package_v1_package_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/package/v1/package.proto\x12\x19moego.business.package.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xc1\a\n" +
+	"'moego/business/package/v1/package.proto\x12\x19moego.business.package.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x16google/type/date.proto\x1a\x17google/type/money.proto\"\xe3\x06\n" +
 	"\aPackage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12&\n" +
-	"\x0fcart_package_id\x18\x02 \x01(\tR\rcartPackageId\x12\x1f\n" +
-	"\vcustomer_id\x18\x03 \x01(\tR\n" +
-	"customerId\x12\x19\n" +
-	"\bstaff_id\x18\x04 \x01(\tR\astaffId\x123\n" +
-	"\x16retail_invoice_item_id\x18\x05 \x01(\tR\x13retailInvoiceItemId\x12'\n" +
-	"\x0fconfirmation_id\x18\x06 \x01(\tR\x0econfirmationId\x12!\n" +
-	"\fpackage_name\x18\a \x01(\tR\vpackageName\x12!\n" +
-	"\fpackage_desc\x18\b \x01(\tR\vpackageDesc\x127\n" +
-	"\rpackage_price\x18\t \x01(\v2\x12.google.type.MoneyR\fpackagePrice\x12?\n" +
-	"\rpurchase_time\x18\n" +
-	" \x01(\v2\x1a.google.protobuf.TimestampR\fpurchaseTime\x129\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
+	"\vcustomer_id\x18\x02 \x01(\tR\n" +
+	"customerId\x12\x1f\n" +
+	"\vbusiness_id\x18\x03 \x01(\tR\n" +
+	"businessId\x12\x19\n" +
+	"\bstaff_id\x18\x04 \x01(\tR\astaffId\x12!\n" +
+	"\fpackage_name\x18\x05 \x01(\tR\vpackageName\x12!\n" +
+	"\fpackage_desc\x18\x06 \x01(\tR\vpackageDesc\x127\n" +
+	"\rpackage_price\x18\a \x01(\v2\x12.google.type.MoneyR\fpackagePrice\x12?\n" +
+	"\rpurchase_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\fpurchaseTime\x129\n" +
 	"\n" +
-	"start_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
-	"\bend_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12;\n" +
-	"\vcreate_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"createTime\x12;\n" +
-	"\vupdate_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
-	"updateTime\x12A\n" +
-	"\x06status\x18\x0f \x01(\x0e2).moego.business.package.v1.Package.StatusR\x06status\x12\x12\n" +
-	"\x04used\x18\x10 \x01(\bR\x04used\x128\n" +
-	"\x18total_remaining_quantity\x18\x11 \x01(\x05R\x16totalRemainingQuantity\x12\x18\n" +
-	"\aapplied\x18\x12 \x01(\bR\aapplied\x12\x1f\n" +
-	"\vbusiness_id\x18\x13 \x01(\tR\n" +
-	"businessId\x12'\n" +
-	"\x0fexpiration_date\x18\x14 \x01(\tR\x0eexpirationDate\"C\n" +
-	"\x06Status\x12\x12\n" +
-	"\x0eSTATUS_UNKNOWN\x10\x00\x12\x11\n" +
+	"start_time\x18\t \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x12;\n" +
+	"\vcreate_time\x18\v \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"createTime\x12D\n" +
+	"\x10last_update_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\x0elastUpdateTime\x12:\n" +
+	"\x0fexpiration_date\x18\r \x01(\v2\x11.google.type.DateR\x0eexpirationDate\x12A\n" +
+	"\x06status\x18\x0e \x01(\x0e2).moego.business.package.v1.Package.StatusR\x06status\x12\x12\n" +
+	"\x04used\x18\x0f \x01(\bR\x04used\x12\x18\n" +
+	"\aapplied\x18\x10 \x01(\bR\aapplied\x128\n" +
+	"\x18total_remaining_quantity\x18\x11 \x01(\x05R\x16totalRemainingQuantity\"O\n" +
+	"\x06Status\x12\x1e\n" +
+	"\x1aSTATUS_UNKNOWN_UNSPECIFIED\x10\x00\x12\x11\n" +
 	"\rSTATUS_NORMAL\x10\x01\x12\x12\n" +
 	"\x0eSTATUS_DELETED\x10\x02\"\x91\x04\n" +
 	"\rPackageDetail\x12E\n" +
@@ -570,6 +541,7 @@ var file_moego_business_package_v1_package_proto_goTypes = []any{
 	(*PackageDetail_Service)(nil),        // 4: moego.business.package.v1.PackageDetail.Service
 	(*money.Money)(nil),                  // 5: google.type.Money
 	(*timestamppb.Timestamp)(nil),        // 6: google.protobuf.Timestamp
+	(*date.Date)(nil),                    // 7: google.type.Date
 }
 var file_moego_business_package_v1_package_proto_depIdxs = []int32{
 	5,  // 0: moego.business.package.v1.Package.package_price:type_name -> google.type.Money
@@ -577,17 +549,18 @@ var file_moego_business_package_v1_package_proto_depIdxs = []int32{
 	6,  // 2: moego.business.package.v1.Package.start_time:type_name -> google.protobuf.Timestamp
 	6,  // 3: moego.business.package.v1.Package.end_time:type_name -> google.protobuf.Timestamp
 	6,  // 4: moego.business.package.v1.Package.create_time:type_name -> google.protobuf.Timestamp
-	6,  // 5: moego.business.package.v1.Package.update_time:type_name -> google.protobuf.Timestamp
-	0,  // 6: moego.business.package.v1.Package.status:type_name -> moego.business.package.v1.Package.Status
-	1,  // 7: moego.business.package.v1.PackageDetail.package_info:type_name -> moego.business.package.v1.Package
-	3,  // 8: moego.business.package.v1.PackageDetail.package_services:type_name -> moego.business.package.v1.PackageDetail.PackageService
-	4,  // 9: moego.business.package.v1.PackageDetail.PackageService.services:type_name -> moego.business.package.v1.PackageDetail.Service
-	5,  // 10: moego.business.package.v1.PackageDetail.Service.unit_price:type_name -> google.type.Money
-	11, // [11:11] is the sub-list for method output_type
-	11, // [11:11] is the sub-list for method input_type
-	11, // [11:11] is the sub-list for extension type_name
-	11, // [11:11] is the sub-list for extension extendee
-	0,  // [0:11] is the sub-list for field type_name
+	6,  // 5: moego.business.package.v1.Package.last_update_time:type_name -> google.protobuf.Timestamp
+	7,  // 6: moego.business.package.v1.Package.expiration_date:type_name -> google.type.Date
+	0,  // 7: moego.business.package.v1.Package.status:type_name -> moego.business.package.v1.Package.Status
+	1,  // 8: moego.business.package.v1.PackageDetail.package_info:type_name -> moego.business.package.v1.Package
+	3,  // 9: moego.business.package.v1.PackageDetail.package_services:type_name -> moego.business.package.v1.PackageDetail.PackageService
+	4,  // 10: moego.business.package.v1.PackageDetail.PackageService.services:type_name -> moego.business.package.v1.PackageDetail.Service
+	5,  // 11: moego.business.package.v1.PackageDetail.Service.unit_price:type_name -> google.type.Money
+	12, // [12:12] is the sub-list for method output_type
+	12, // [12:12] is the sub-list for method input_type
+	12, // [12:12] is the sub-list for extension type_name
+	12, // [12:12] is the sub-list for extension extendee
+	0,  // [0:12] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_package_v1_package_proto_init() }
