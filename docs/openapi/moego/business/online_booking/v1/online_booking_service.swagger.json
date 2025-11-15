@@ -83,6 +83,41 @@
           "moego.business.online_booking.v1.OnlineBookingService"
         ]
       }
+    },
+    "/v1/online-booking/availability": {
+      "post": {
+        "summary": "Gets available dates and times for online booking.",
+        "description": "Returns available dates and times for online booking based on business hours,\nstaff availability, and other scheduling constraints. This endpoint helps \ncustomers find suitable time slots when booking services online.",
+        "operationId": "OnlineBookingService_GetBookingAvailability",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetBookingAvailabilityResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for GetBookingAvailability.\nUsed to query available time slots for online bookings.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetBookingAvailabilityRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.online_booking.v1.OnlineBookingService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -165,18 +200,58 @@
       "default": "ABANDON_STEP_UNSPECIFIED",
       "description": "Step represents the stage in the booking process where the abandonment occurred.\n\n - ABANDON_STEP_UNSPECIFIED: Default value. This value is unused.\n - WELCOME_PAGE: Customer visited the welcome page.\n - BASIC_INFO: Customer filled out basic info.\n - SELECT_CARE_TYPE: Customer selected care type.\n - SELECT_ADDRESS: Customer selected address.\n - SELECT_PET: Customer selected pet.\n - SELECT_DATE: Customer selected date.\n - SELECT_SERVICE: Customer selected service.\n - SELECT_GROOMER: Customer selected groomer.\n - SELECT_TIME: Customer selected time.\n - ADDITIONAL_PET_INFO: Customer provided additional pet info.\n - PERSONAL_INFO: Customer entered personal info.\n - CARD_ON_FILE: Customer provided card on file.\n - PREPAY: Customer initiated prepay.\n - PRE_AUTH: Customer initiated pre-auth.\n - SUBMIT_APPT: Customer submitted the appointment."
     },
-    "PetEvaluationStatus": {
-      "type": "string",
-      "enum": [
-        "EVALUATION_STATUS_UNSPECIFIED",
-        "PASS",
-        "FAIL"
-      ],
-      "default": "EVALUATION_STATUS_UNSPECIFIED",
-      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
-      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    "GetBookingAvailabilityRequestPetParam": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The unique identifier of the pet.\nRequired when checking availability for an existing pet."
+        },
+        "name": {
+          "type": "string",
+          "description": "Pet's given name\nUsed for display purposes and identification."
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "description": "Pet's date of birth\nHelps determine age-related service requirements."
+        },
+        "type": {
+          "$ref": "#/definitions/GetBookingAvailabilityRequestPetParamType",
+          "description": "Species of the pet\nRequired to determine appropriate services and handling requirements."
+        },
+        "breed": {
+          "type": "string",
+          "description": "Specific breed within the pet type\nMay affect service duration or special requirements."
+        },
+        "gender": {
+          "$ref": "#/definitions/GetBookingAvailabilityRequestPetParamGender",
+          "description": "Pet's gender\nMay affect service requirements or handling considerations."
+        },
+        "weight": {
+          "$ref": "#/definitions/v1Weight",
+          "description": "Pet's current weight\nUsed for pricing calculations and service planning."
+        },
+        "staffId": {
+          "type": "string",
+          "description": "The staff ID for which availability is checked.\nOptional. Used when customer has a preferred staff member."
+        },
+        "serviceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The service IDs for which availability is checked.\nRequired. Specifies which services are being requested for this pet."
+        }
+      },
+      "description": "Parameters for specifying pet-related information when checking availability.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "PetParam"
+      }
     },
-    "PetGender": {
+    "GetBookingAvailabilityRequestPetParamGender": {
       "type": "string",
       "enum": [
         "GENDER_UNSPECIFIED",
@@ -187,6 +262,88 @@
       "default": "GENDER_UNSPECIFIED",
       "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
       "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
+    "GetBookingAvailabilityRequestPetParamType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    },
+    "GetBookingAvailabilityResponseAvailabilityByDate": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "#/definitions/typeDate",
+          "description": "The date for which availability is provided."
+        },
+        "staff": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/GetBookingAvailabilityResponseStaffAvailability"
+          },
+          "description": "List of staff and their available time slots for this date."
+        }
+      },
+      "description": "Availability information for a specific date.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "AvailabilityByDate"
+      }
+    },
+    "GetBookingAvailabilityResponseStaffAvailability": {
+      "type": "object",
+      "properties": {
+        "staffId": {
+          "type": "string",
+          "description": "Unique identifier of the staff member."
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the staff member.\nUsed for display purposes when selecting a staff member."
+        },
+        "availableSlots": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/typeInterval"
+          },
+          "description": "Available time slots for this staff member on the specified date.\nEach interval represents a time slot available for booking."
+        }
+      },
+      "description": "Staff availability information.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "StaffAvailability"
+      }
+    },
+    "PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
     },
     "PetVaccination": {
       "type": "object",
@@ -680,6 +837,104 @@
       "description": "- TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - PRIMARY: Primary Address, which will be used as first address choice.\n - SECONDARY: Secondary Address, an optional address saved as back-up",
       "title": "Possible values are `primary`, `secondary`.\nType represents the importance of the address"
     },
+    "v1GetBookingAvailabilityRequest": {
+      "type": "object",
+      "properties": {
+        "companyId": {
+          "type": "string",
+          "description": "The company identifier.\nRequired. Identifies the company for multi-tenancy support."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "The business identifier.\nRequired. Identifies the specific business location where services will be provided."
+        },
+        "filter": {
+          "$ref": "#/definitions/v1GetBookingAvailabilityRequestFilter",
+          "description": "The filter criteria for the availability request.\nContains all parameters that affect how availability is calculated."
+        }
+      },
+      "description": "Request message for GetBookingAvailability.\nUsed to query available time slots for online bookings.",
+      "required": [
+        "companyId",
+        "businessId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "GetBookingAvailabilityRequest"
+      }
+    },
+    "v1GetBookingAvailabilityRequestFilter": {
+      "type": "object",
+      "properties": {
+        "startDate": {
+          "$ref": "#/definitions/typeDate",
+          "description": "Start date for availability check.\nOptional. If not provided, defaults to today's date."
+        },
+        "endDate": {
+          "$ref": "#/definitions/typeDate",
+          "description": "End date for availability check.\nOptional. If not provided, defaults to start_date."
+        },
+        "serviceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by the service IDs.\nOptional. When provided, only shows availability for these specific services."
+        },
+        "staffIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Filter by the staff IDs.\nOptional. When provided, only shows availability for these specific staff members."
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/GetBookingAvailabilityRequestPetParam"
+          },
+          "description": "Filter by the pet parameters.\nOptional. Specifies pet-related requirements for the booking."
+        }
+      },
+      "description": "Filter parameters for the availability check.\nAll fields are optional. When not provided, system defaults will be used.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1GetBookingAvailabilityResponse": {
+      "type": "object",
+      "properties": {
+        "availableDates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/typeDate"
+          },
+          "description": "List of available dates.\nThese are dates where at least one time slot is available."
+        },
+        "availability": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/GetBookingAvailabilityResponseAvailabilityByDate"
+          },
+          "description": "Detailed availability information by date and staff.\nContains comprehensive availability data for all dates with available slots."
+        }
+      },
+      "description": "Response message for GetBookingAvailability.\nContains available dates and detailed time slot information for booking.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "GetBookingAvailabilityResponse"
+      }
+    },
     "v1ListAbandonedBookingsRequest": {
       "type": "object",
       "properties": {
@@ -827,7 +1082,7 @@
           "title": "Specific breed within the pet type\nRequired. Helps determine grooming requirements"
         },
         "gender": {
-          "$ref": "#/definitions/PetGender",
+          "$ref": "#/definitions/v1PetGender",
           "title": "Pet's gender\nUsed for service assignments"
         },
         "weight": {
@@ -942,6 +1197,18 @@
         },
         "type": "PetCode"
       }
+    },
+    "v1PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
     },
     "v1PetNote": {
       "type": "object",

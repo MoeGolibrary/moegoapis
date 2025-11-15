@@ -271,6 +271,71 @@ Lists abandoned bookings matching specified criteria including abandon time rang
 
 ---
 
+### 3. Get Booking Availability (`GetBookingAvailability`)
+
+- **Method**: `GetBookingAvailability`
+- **HTTP Method**: POST
+- **Path**: `/v1/online-booking/availability`
+
+#### ✅ Functionality
+
+Gets available dates and times for online booking based on business hours, staff availability, and other scheduling
+constraints. This endpoint helps customers find suitable time slots when booking services online.
+
+#### 🔧 Request Parameters
+
+| Field Name   | Type   | Required | Description                                  |
+|--------------|--------|----------|----------------------------------------------|
+| `companyId`  | string | Yes      | Company identifier for multi-tenancy support |
+| `businessId` | string | Yes      | Business location where services provided    |
+| `filter`     | object | No       | Filter parameters for the availability check |
+
+##### Filter Options:
+
+- `startDate`: Start date for availability check (defaults to today)
+- `endDate`: End date for availability check (defaults to startDate)
+- `serviceIds`: Filter by specific service IDs
+- `staffIds`: Filter by specific staff IDs
+- `pets`: Array of pet parameters including:
+    - `id`: Pet ID (for existing pets)
+    - `name`: Pet name
+    - `type`: Pet type/species
+    - `breed`: Pet breed
+    - `gender`: Pet gender
+    - `birthday`: Pet birthday
+    - `weight`: Pet weight
+    - `staffId`: Preferred staff ID for this pet
+    - `serviceIds`: Service IDs for this pet
+
+#### 📌 Return Value
+
+| Field Name       | Type                      | Description                                    |
+|------------------|---------------------------|------------------------------------------------|
+| `availableDates` | Array(Date)               | List of dates with at least one available slot |
+| `availability`   | Array(AvailabilityByDate) | Detailed availability information by date      |
+
+##### AvailabilityByDate Object:
+
+| Field Name | Type                     | Description                             |
+|------------|--------------------------|-----------------------------------------|
+| `date`     | Date                     | Date for which availability is provided |
+| `staff`    | Array(StaffAvailability) | Staff and their available time slots    |
+
+##### StaffAvailability Object:
+
+| Field Name       | Type             | Description                              |
+|------------------|------------------|------------------------------------------|
+| `staffId`        | string           | Unique identifier of the staff member    |
+| `name`           | string           | Name of the staff member                 |
+| `availableSlots` | Array(Interval)  | Available time slots (google.type.Interval) |
+
+#### ⚠️ Error Codes
+
+- `PERMISSION_DENIED`: Permission denied
+- `INVALID_ARGUMENT`: Invalid request parameters
+
+---
+
 ## 🧪 5. Usage Examples
 
 ### Example 1: Get Abandoned Booking
@@ -384,6 +449,154 @@ POST /v1/abandoned_bookings:list
       "abandonStatus": "ABANDONED",
       "leadType": "NEW_VISITOR",
       "createdTime": "2024-08-05T14:25:00Z"
+    }
+  ]
+}
+```
+
+### Example 3: Get Booking Availability
+
+```http
+POST /v1/online-booking/availability
+
+```
+
+**Request Body:**
+
+```json
+{
+  "companyId": "cmp_001",
+  "businessId": "biz_001"
+}
+```
+
+**Response:**
+
+```json
+{
+  "availableDates": [
+    "2024-08-20",
+    "2024-08-21",
+    "2024-08-22"
+  ],
+  "availability": [
+    {
+      "date": "2024-08-20",
+      "staff": [
+        {
+          "staffId": "stf_123",
+          "name": "John Smith",
+          "availableSlots": [
+            {
+              "startTime": "2024-08-20T09:00:00Z",
+              "endTime": "2024-08-20T09:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T09:30:00Z",
+              "endTime": "2024-08-20T10:00:00Z"
+            },
+            {
+              "startTime": "2024-08-20T10:00:00Z",
+              "endTime": "2024-08-20T10:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T14:00:00Z",
+              "endTime": "2024-08-20T14:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T14:30:00Z",
+              "endTime": "2024-08-20T15:00:00Z"
+            }
+          ]
+        },
+        {
+          "staffId": "stf_456",
+          "name": "Jane Doe",
+          "availableSlots": [
+            {
+              "startTime": "2024-08-20T10:00:00Z",
+              "endTime": "2024-08-20T10:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T10:30:00Z",
+              "endTime": "2024-08-20T11:00:00Z"
+            },
+            {
+              "startTime": "2024-08-20T11:00:00Z",
+              "endTime": "2024-08-20T11:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T15:00:00Z",
+              "endTime": "2024-08-20T15:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T15:30:00Z",
+              "endTime": "2024-08-20T16:00:00Z"
+            },
+            {
+              "startTime": "2024-08-20T16:00:00Z",
+              "endTime": "2024-08-20T16:30:00Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+With filter parameters:
+
+```http
+POST /v1/online-booking/availability
+```
+
+**Request Body:**
+
+```json
+{
+  "companyId": "cmp_001",
+  "businessId": "biz_001",
+  "filter": {
+    "startDate": "2024-08-20",
+    "endDate": "2024-08-22",
+    "serviceIds": ["svc_123"],
+    "staffIds": ["stf_123"]
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "availableDates": [
+    "2024-08-20",
+    "2024-08-21"
+  ],
+  "availability": [
+    {
+      "date": "2024-08-20",
+      "staff": [
+        {
+          "staffId": "stf_123",
+          "name": "John Smith",
+          "availableSlots": [
+            {
+              "startTime": "2024-08-20T09:00:00Z",
+              "endTime": "2024-08-20T09:30:00Z"
+            },
+            {
+              "startTime": "2024-08-20T09:30:00Z",
+              "endTime": "2024-08-20T10:00:00Z"
+            },
+            {
+              "startTime": "2024-08-20T10:00:00Z",
+              "endTime": "2024-08-20T10:30:00Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
