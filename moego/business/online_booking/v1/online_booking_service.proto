@@ -7,6 +7,8 @@ import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/online_booking/v1/abandoned_booking.proto";
 import "moego/common/v1/pagination.proto";
+import "google/type/date.proto";
+import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
 option java_multiple_files = true;
@@ -33,6 +35,18 @@ service OnlineBookingService {
   rpc ListAbandonedBookings(ListAbandonedBookingsRequest) returns (ListAbandonedBookingsResponse) {
     option (google.api.http) = {
       post: "/v1/abandoned_bookings:list"
+      body: "*"
+    };
+  }
+
+  // Gets available dates and times for online booking.
+  //
+  // Returns available dates and times for online booking based on business hours,
+  // staff availability, and other scheduling constraints. This endpoint helps 
+  // customers find suitable time slots when booking services online.
+  rpc GetBookingAvailability(GetBookingAvailabilityRequest) returns (GetBookingAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/v1/online_booking/availability"
       body: "*"
     };
   }
@@ -90,3 +104,165 @@ message GetAbandonedBookingRequest {
   // The unique identifier of the abandoned booking to retrieve.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
 }
+
+// Request message for GetBookingAvailability.
+// Used to query available time slots for online bookings.
+message GetBookingAvailabilityRequest {
+  // The company identifier.
+  // Required. Identifies the company for multi-tenancy support.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The business identifier.
+  // Required. Identifies the specific business location where services will be provided.
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Parameters for specifying pet-related information when checking availability.
+  message PetParam {
+    // Type defines the species of the pet.
+    // This helps determine appropriate services, care requirements, and pricing.
+    enum Type {
+      // Unknown or unspecified pet type
+      TYPE_UNSPECIFIED = 0;
+
+      // Pet type not listed in standard categories
+      // Requires special handling and service customization
+      OTHER = 1;
+
+      // Canine companion
+      // Common breeds include Labrador, German Shepherd, Golden Retriever
+      DOG = 2;
+
+      // Feline companion
+      // Includes all domestic cat breeds
+      CAT = 3;
+
+      // Avian pet
+      // Includes parrots, canaries, finches, etc.
+      BIRD = 4;
+
+      // Domestic rabbit
+      // Requires specific grooming and handling techniques
+      RABBIT = 5;
+
+      // Guinea pig
+      // Small rodent requiring gentle handling
+      GUINEA_PIG = 6;
+
+      // Equine
+      // Requires specialized facilities and care
+      HORSE = 7;
+
+      // Hamster
+      // Small rodent with specific handling needs
+      HAMSTER = 8;
+
+      // Rat
+      // Intelligent rodent requiring social interaction
+      RAT = 9;
+
+      // Mouse
+      // Small rodent needing careful handling
+      MOUSE = 10;
+
+      // Chinchilla
+      // Requires special dust baths and temperature control
+      CHINCHILLA = 11;
+    }
+
+    // The unique identifier of the pet.
+    // Required when checking availability for an existing pet.
+    string id = 1;
+
+    // Pet's given name
+    // Used for display purposes and identification.
+    string name = 2;
+
+    // Pet's date of birth
+    // Helps determine age-related service requirements.
+    google.type.Date birthday = 3;
+
+    // Species of the pet
+    // Required to determine appropriate services and handling requirements.
+    Type type = 5;
+
+    // Specific breed within the pet type
+    // May affect service duration or special requirements.
+    string breed = 6;
+
+    // Pet's current weight
+    // Used for pricing calculations and service planning.
+    moego.common.v1.Weight weight = 7;
+
+    // The staff ID for which availability is checked.
+    // Optional. Used when customer has a preferred staff member.
+    string staff_id = 8;
+
+    // The service IDs for which availability is checked.
+    // Required. Specifies which services are being requested for this pet.
+    repeated string service_ids = 9;
+  }
+
+  // Filter parameters for the availability check.
+  // All fields are optional. When not provided, system defaults will be used.
+  message Filter {
+    // Start date for availability check.
+    // Optional. If not provided, defaults to today's date.
+    google.type.Date start_date = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // End date for availability check.
+    // Optional. If not provided, defaults to start_date.
+    google.type.Date end_date = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the service IDs.
+    // Optional. When provided, only shows availability for these specific services.
+    repeated string service_ids = 3 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the staff IDs.
+    // Optional. When provided, only shows availability for these specific staff members.
+    repeated string staff_ids = 4 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the pet parameters.
+    // Optional. Specifies pet-related requirements for the booking.
+    repeated PetParam pets = 5 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // The filter criteria for the availability request.
+  // Contains all parameters that affect how availability is calculated.
+  Filter filter = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for GetBookingAvailability.
+// Contains available dates and detailed time slot information for booking.
+message GetBookingAvailabilityResponse {
+  // List of available dates.
+  // These are dates where at least one time slot is available.
+  repeated google.type.Date available_dates = 1;
+
+  // Availability information for a specific date.
+  message AvailabilityByDate {
+    // The date for which availability is provided.
+    google.type.Date date = 1;
+
+    // List of staff and their available time slots for this date.
+    repeated StaffAvailability staff = 2;
+  }
+
+  // Staff availability information.
+  message StaffAvailability {
+    // Unique identifier of the staff member.
+    string staff_id = 1;
+
+    // Name of the staff member.
+    // Used for display purposes when selecting a staff member.
+    string name = 2;
+
+    // Available time slots for this staff member on the specified date.
+    // Each interval represents a time slot available for booking.
+    repeated google.type.Interval available_slots = 3;
+  }
+
+  // Detailed availability information by date and staff.
+  // Contains comprehensive availability data for all dates with available slots.
+  repeated AvailabilityByDate availability = 2;
+}
+

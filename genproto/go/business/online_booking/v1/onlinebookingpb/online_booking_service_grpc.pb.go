@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OnlineBookingService_GetAbandonedBooking_FullMethodName   = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
-	OnlineBookingService_ListAbandonedBookings_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
+	OnlineBookingService_GetAbandonedBooking_FullMethodName    = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
+	OnlineBookingService_ListAbandonedBookings_FullMethodName  = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
+	OnlineBookingService_GetBookingAvailability_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailability"
 )
 
 // OnlineBookingServiceClient is the client API for OnlineBookingService service.
@@ -42,6 +43,12 @@ type OnlineBookingServiceClient interface {
 	// Returns a paginated list of abandoned bookings filtered by abandon time,
 	// status, step, or lead type.
 	ListAbandonedBookings(ctx context.Context, in *ListAbandonedBookingsRequest, opts ...grpc.CallOption) (*ListAbandonedBookingsResponse, error)
+	// Gets available dates and times for online booking.
+	//
+	// Returns available dates and times for online booking based on business hours,
+	// staff availability, and other scheduling constraints. This endpoint helps
+	// customers find suitable time slots when booking services online.
+	GetBookingAvailability(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error)
 }
 
 type onlineBookingServiceClient struct {
@@ -72,6 +79,16 @@ func (c *onlineBookingServiceClient) ListAbandonedBookings(ctx context.Context, 
 	return out, nil
 }
 
+func (c *onlineBookingServiceClient) GetBookingAvailability(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBookingAvailabilityResponse)
+	err := c.cc.Invoke(ctx, OnlineBookingService_GetBookingAvailability_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OnlineBookingServiceServer is the server API for OnlineBookingService service.
 // All implementations must embed UnimplementedOnlineBookingServiceServer
 // for forward compatibility.
@@ -91,6 +108,12 @@ type OnlineBookingServiceServer interface {
 	// Returns a paginated list of abandoned bookings filtered by abandon time,
 	// status, step, or lead type.
 	ListAbandonedBookings(context.Context, *ListAbandonedBookingsRequest) (*ListAbandonedBookingsResponse, error)
+	// Gets available dates and times for online booking.
+	//
+	// Returns available dates and times for online booking based on business hours,
+	// staff availability, and other scheduling constraints. This endpoint helps
+	// customers find suitable time slots when booking services online.
+	GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error)
 	mustEmbedUnimplementedOnlineBookingServiceServer()
 }
 
@@ -106,6 +129,9 @@ func (UnimplementedOnlineBookingServiceServer) GetAbandonedBooking(context.Conte
 }
 func (UnimplementedOnlineBookingServiceServer) ListAbandonedBookings(context.Context, *ListAbandonedBookingsRequest) (*ListAbandonedBookingsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAbandonedBookings not implemented")
+}
+func (UnimplementedOnlineBookingServiceServer) GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBookingAvailability not implemented")
 }
 func (UnimplementedOnlineBookingServiceServer) mustEmbedUnimplementedOnlineBookingServiceServer() {}
 func (UnimplementedOnlineBookingServiceServer) testEmbeddedByValue()                              {}
@@ -164,6 +190,24 @@ func _OnlineBookingService_ListAbandonedBookings_Handler(srv interface{}, ctx co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OnlineBookingService_GetBookingAvailability_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBookingAvailabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineBookingServiceServer).GetBookingAvailability(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineBookingService_GetBookingAvailability_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineBookingServiceServer).GetBookingAvailability(ctx, req.(*GetBookingAvailabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OnlineBookingService_ServiceDesc is the grpc.ServiceDesc for OnlineBookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -178,6 +222,10 @@ var OnlineBookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListAbandonedBookings",
 			Handler:    _OnlineBookingService_ListAbandonedBookings_Handler,
+		},
+		{
+			MethodName: "GetBookingAvailability",
+			Handler:    _OnlineBookingService_GetBookingAvailability_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
