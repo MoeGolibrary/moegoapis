@@ -84,7 +84,7 @@
         ]
       }
     },
-    "/v1/online-booking/availability": {
+    "/v1/online_booking/availability": {
       "post": {
         "summary": "Gets available dates and times for online booking.",
         "description": "Returns available dates and times for online booking based on business hours,\nstaff availability, and other scheduling constraints. This endpoint helps \ncustomers find suitable time slots when booking services online.",
@@ -223,10 +223,6 @@
           "type": "string",
           "description": "Specific breed within the pet type\nMay affect service duration or special requirements."
         },
-        "gender": {
-          "$ref": "#/definitions/GetBookingAvailabilityRequestPetParamGender",
-          "description": "Pet's gender\nMay affect service requirements or handling considerations."
-        },
         "weight": {
           "$ref": "#/definitions/v1Weight",
           "description": "Pet's current weight\nUsed for pricing calculations and service planning."
@@ -250,18 +246,6 @@
         },
         "type": "PetParam"
       }
-    },
-    "GetBookingAvailabilityRequestPetParamGender": {
-      "type": "string",
-      "enum": [
-        "GENDER_UNSPECIFIED",
-        "MALE",
-        "FEMALE",
-        "UNKNOWN"
-      ],
-      "default": "GENDER_UNSPECIFIED",
-      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
-      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
     },
     "GetBookingAvailabilityRequestPetParamType": {
       "type": "string",

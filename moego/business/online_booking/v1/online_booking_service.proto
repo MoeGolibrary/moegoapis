@@ -207,21 +207,17 @@ message GetBookingAvailabilityRequest {
     // May affect service duration or special requirements.
     string breed = 6;
 
-    // Pet's gender
-    // May affect service requirements or handling considerations.
-    Gender gender = 7;
-
     // Pet's current weight
     // Used for pricing calculations and service planning.
-    moego.common.v1.Weight weight = 8;
+    moego.common.v1.Weight weight = 7;
 
     // The staff ID for which availability is checked.
     // Optional. Used when customer has a preferred staff member.
-    string staff_id = 9;
+    string staff_id = 8;
 
     // The service IDs for which availability is checked.
     // Required. Specifies which services are being requested for this pet.
-    repeated string service_ids = 10;
+    repeated string service_ids = 9;
   }
 
   // Filter parameters for the availability check.

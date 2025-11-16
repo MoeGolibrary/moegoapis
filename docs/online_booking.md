@@ -301,7 +301,6 @@ constraints. This endpoint helps customers find suitable time slots when booking
     - `name`: Pet name
     - `type`: Pet type/species
     - `breed`: Pet breed
-    - `gender`: Pet gender
     - `birthday`: Pet birthday
     - `weight`: Pet weight
     - `staffId`: Preferred staff ID for this pet
@@ -323,11 +322,11 @@ constraints. This endpoint helps customers find suitable time slots when booking
 
 ##### StaffAvailability Object:
 
-| Field Name       | Type             | Description                              |
-|------------------|------------------|------------------------------------------|
-| `staffId`        | string           | Unique identifier of the staff member    |
-| `name`           | string           | Name of the staff member                 |
-| `availableSlots` | Array(Interval)  | Available time slots (google.type.Interval) |
+| Field Name       | Type            | Description                                 |
+|------------------|-----------------|---------------------------------------------|
+| `staffId`        | string          | Unique identifier of the staff member       |
+| `name`           | string          | Name of the staff member                    |
+| `availableSlots` | Array(Interval) | Available time slots (google.type.Interval) |
 
 #### ⚠️ Error Codes
 
@@ -560,8 +559,12 @@ POST /v1/online-booking/availability
   "filter": {
     "startDate": "2024-08-20",
     "endDate": "2024-08-22",
-    "serviceIds": ["svc_123"],
-    "staffIds": ["stf_123"]
+    "serviceIds": [
+      "svc_123"
+    ],
+    "staffIds": [
+      "stf_123"
+    ]
   }
 }
 ```
