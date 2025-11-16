@@ -169,24 +169,6 @@ message GetBookingAvailabilityRequest {
       CHINCHILLA = 11;
     }
 
-    // Gender of the pet
-    // Used for appropriate service assignment and medical considerations
-    enum Gender {
-      // Unknown or unspecified gender
-      GENDER_UNSPECIFIED = 0;
-
-      // Male pet
-      // May require specific handling or service modifications
-      MALE = 1;
-
-      // Female pet
-      // May require specific handling or service modifications
-      FEMALE = 2;
-
-      // Gender not determined or disclosed
-      UNKNOWN = 3;
-    }
-
     // The unique identifier of the pet.
     // Required when checking availability for an existing pet.
     string id = 1;

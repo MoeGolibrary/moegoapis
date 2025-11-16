@@ -126,66 +126,6 @@ func (GetBookingAvailabilityRequest_PetParam_Type) EnumDescriptor() ([]byte, []i
 	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{3, 0, 0}
 }
 
-// Gender of the pet
-// Used for appropriate service assignment and medical considerations
-type GetBookingAvailabilityRequest_PetParam_Gender int32
-
-const (
-	// Unknown or unspecified gender
-	GetBookingAvailabilityRequest_PetParam_GENDER_UNSPECIFIED GetBookingAvailabilityRequest_PetParam_Gender = 0
-	// Male pet
-	// May require specific handling or service modifications
-	GetBookingAvailabilityRequest_PetParam_MALE GetBookingAvailabilityRequest_PetParam_Gender = 1
-	// Female pet
-	// May require specific handling or service modifications
-	GetBookingAvailabilityRequest_PetParam_FEMALE GetBookingAvailabilityRequest_PetParam_Gender = 2
-	// Gender not determined or disclosed
-	GetBookingAvailabilityRequest_PetParam_UNKNOWN GetBookingAvailabilityRequest_PetParam_Gender = 3
-)
-
-// Enum value maps for GetBookingAvailabilityRequest_PetParam_Gender.
-var (
-	GetBookingAvailabilityRequest_PetParam_Gender_name = map[int32]string{
-		0: "GENDER_UNSPECIFIED",
-		1: "MALE",
-		2: "FEMALE",
-		3: "UNKNOWN",
-	}
-	GetBookingAvailabilityRequest_PetParam_Gender_value = map[string]int32{
-		"GENDER_UNSPECIFIED": 0,
-		"MALE":               1,
-		"FEMALE":             2,
-		"UNKNOWN":            3,
-	}
-)
-
-func (x GetBookingAvailabilityRequest_PetParam_Gender) Enum() *GetBookingAvailabilityRequest_PetParam_Gender {
-	p := new(GetBookingAvailabilityRequest_PetParam_Gender)
-	*p = x
-	return p
-}
-
-func (x GetBookingAvailabilityRequest_PetParam_Gender) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (GetBookingAvailabilityRequest_PetParam_Gender) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_online_booking_v1_online_booking_service_proto_enumTypes[1].Descriptor()
-}
-
-func (GetBookingAvailabilityRequest_PetParam_Gender) Type() protoreflect.EnumType {
-	return &file_moego_business_online_booking_v1_online_booking_service_proto_enumTypes[1]
-}
-
-func (x GetBookingAvailabilityRequest_PetParam_Gender) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use GetBookingAvailabilityRequest_PetParam_Gender.Descriptor instead.
-func (GetBookingAvailabilityRequest_PetParam_Gender) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{3, 0, 1}
-}
-
 // Request to list abandoned bookings.
 type ListAbandonedBookingsRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -916,13 +856,13 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12N\n" +
 	"\bbookings\x18\x02 \x03(\v22.moego.business.online_booking.v1.AbandonedBookingR\bbookings\"1\n" +
 	"\x1aGetAbandonedBookingRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x97\b\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xd2\a\n" +
 	"\x1dGetBookingAvailabilityRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12c\n" +
-	"\x06filter\x18\x03 \x01(\v2F.moego.business.online_booking.v1.GetBookingAvailabilityRequest.FilterB\x03\xe0A\x01R\x06filter\x1a\xa6\x04\n" +
+	"\x06filter\x18\x03 \x01(\v2F.moego.business.online_booking.v1.GetBookingAvailabilityRequest.FilterB\x03\xe0A\x01R\x06filter\x1a\xe1\x03\n" +
 	"\bPetParam\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12-\n" +
@@ -949,13 +889,7 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\x05MOUSE\x10\n" +
 	"\x12\x0e\n" +
 	"\n" +
-	"CHINCHILLA\x10\v\"C\n" +
-	"\x06Gender\x12\x16\n" +
-	"\x12GENDER_UNSPECIFIED\x10\x00\x12\b\n" +
-	"\x04MALE\x10\x01\x12\n" +
-	"\n" +
-	"\x06FEMALE\x10\x02\x12\v\n" +
-	"\aUNKNOWN\x10\x03\x1a\x9d\x02\n" +
+	"CHINCHILLA\x10\v\x1a\x9d\x02\n" +
 	"\x06Filter\x125\n" +
 	"\n" +
 	"start_date\x18\x01 \x01(\v2\x11.google.type.DateB\x03\xe0A\x01R\tstartDate\x121\n" +
@@ -992,56 +926,55 @@ func file_moego_business_online_booking_v1_online_booking_service_proto_rawDescG
 	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescData
 }
 
-var file_moego_business_online_booking_v1_online_booking_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
+var file_moego_business_online_booking_v1_online_booking_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_moego_business_online_booking_v1_online_booking_service_proto_goTypes = []any{
 	(GetBookingAvailabilityRequest_PetParam_Type)(0),          // 0: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Type
-	(GetBookingAvailabilityRequest_PetParam_Gender)(0),        // 1: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Gender
-	(*ListAbandonedBookingsRequest)(nil),                      // 2: moego.business.online_booking.v1.ListAbandonedBookingsRequest
-	(*ListAbandonedBookingsResponse)(nil),                     // 3: moego.business.online_booking.v1.ListAbandonedBookingsResponse
-	(*GetAbandonedBookingRequest)(nil),                        // 4: moego.business.online_booking.v1.GetAbandonedBookingRequest
-	(*GetBookingAvailabilityRequest)(nil),                     // 5: moego.business.online_booking.v1.GetBookingAvailabilityRequest
-	(*GetBookingAvailabilityResponse)(nil),                    // 6: moego.business.online_booking.v1.GetBookingAvailabilityResponse
-	(*ListAbandonedBookingsRequest_Filter)(nil),               // 7: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
-	(*GetBookingAvailabilityRequest_PetParam)(nil),            // 8: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
-	(*GetBookingAvailabilityRequest_Filter)(nil),              // 9: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
-	(*GetBookingAvailabilityResponse_AvailabilityByDate)(nil), // 10: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
-	(*GetBookingAvailabilityResponse_StaffAvailability)(nil),  // 11: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
-	(*commonpb.Pagination)(nil),                               // 12: moego.common.v1.Pagination
-	(*AbandonedBooking)(nil),                                  // 13: moego.business.online_booking.v1.AbandonedBooking
-	(*date.Date)(nil),                                         // 14: google.type.Date
-	(*interval.Interval)(nil),                                 // 15: google.type.Interval
-	(AbandonedBooking_LeadType)(0),                            // 16: moego.business.online_booking.v1.AbandonedBooking.LeadType
-	(AbandonedBooking_Step)(0),                                // 17: moego.business.online_booking.v1.AbandonedBooking.Step
-	(AbandonedBooking_Status)(0),                              // 18: moego.business.online_booking.v1.AbandonedBooking.Status
-	(*commonpb.Weight)(nil),                                   // 19: moego.common.v1.Weight
+	(*ListAbandonedBookingsRequest)(nil),                      // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest
+	(*ListAbandonedBookingsResponse)(nil),                     // 2: moego.business.online_booking.v1.ListAbandonedBookingsResponse
+	(*GetAbandonedBookingRequest)(nil),                        // 3: moego.business.online_booking.v1.GetAbandonedBookingRequest
+	(*GetBookingAvailabilityRequest)(nil),                     // 4: moego.business.online_booking.v1.GetBookingAvailabilityRequest
+	(*GetBookingAvailabilityResponse)(nil),                    // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse
+	(*ListAbandonedBookingsRequest_Filter)(nil),               // 6: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
+	(*GetBookingAvailabilityRequest_PetParam)(nil),            // 7: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
+	(*GetBookingAvailabilityRequest_Filter)(nil),              // 8: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
+	(*GetBookingAvailabilityResponse_AvailabilityByDate)(nil), // 9: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
+	(*GetBookingAvailabilityResponse_StaffAvailability)(nil),  // 10: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
+	(*commonpb.Pagination)(nil),                               // 11: moego.common.v1.Pagination
+	(*AbandonedBooking)(nil),                                  // 12: moego.business.online_booking.v1.AbandonedBooking
+	(*date.Date)(nil),                                         // 13: google.type.Date
+	(*interval.Interval)(nil),                                 // 14: google.type.Interval
+	(AbandonedBooking_LeadType)(0),                            // 15: moego.business.online_booking.v1.AbandonedBooking.LeadType
+	(AbandonedBooking_Step)(0),                                // 16: moego.business.online_booking.v1.AbandonedBooking.Step
+	(AbandonedBooking_Status)(0),                              // 17: moego.business.online_booking.v1.AbandonedBooking.Status
+	(*commonpb.Weight)(nil),                                   // 18: moego.common.v1.Weight
 }
 var file_moego_business_online_booking_v1_online_booking_service_proto_depIdxs = []int32{
-	12, // 0: moego.business.online_booking.v1.ListAbandonedBookingsRequest.pagination:type_name -> moego.common.v1.Pagination
-	7,  // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest.filter:type_name -> moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
-	13, // 2: moego.business.online_booking.v1.ListAbandonedBookingsResponse.bookings:type_name -> moego.business.online_booking.v1.AbandonedBooking
-	9,  // 3: moego.business.online_booking.v1.GetBookingAvailabilityRequest.filter:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
-	14, // 4: moego.business.online_booking.v1.GetBookingAvailabilityResponse.available_dates:type_name -> google.type.Date
-	10, // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse.availability:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
-	15, // 6: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.abandon_time:type_name -> google.type.Interval
-	16, // 7: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.lead_types:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
-	17, // 8: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.steps:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
-	18, // 9: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.statuses:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
-	14, // 10: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.birthday:type_name -> google.type.Date
+	11, // 0: moego.business.online_booking.v1.ListAbandonedBookingsRequest.pagination:type_name -> moego.common.v1.Pagination
+	6,  // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest.filter:type_name -> moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
+	12, // 2: moego.business.online_booking.v1.ListAbandonedBookingsResponse.bookings:type_name -> moego.business.online_booking.v1.AbandonedBooking
+	8,  // 3: moego.business.online_booking.v1.GetBookingAvailabilityRequest.filter:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
+	13, // 4: moego.business.online_booking.v1.GetBookingAvailabilityResponse.available_dates:type_name -> google.type.Date
+	9,  // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse.availability:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
+	14, // 6: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.abandon_time:type_name -> google.type.Interval
+	15, // 7: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.lead_types:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
+	16, // 8: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.steps:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
+	17, // 9: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.statuses:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
+	13, // 10: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.birthday:type_name -> google.type.Date
 	0,  // 11: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.type:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Type
-	19, // 12: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.weight:type_name -> moego.common.v1.Weight
-	14, // 13: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.start_date:type_name -> google.type.Date
-	14, // 14: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.end_date:type_name -> google.type.Date
-	8,  // 15: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.pets:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
-	14, // 16: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.date:type_name -> google.type.Date
-	11, // 17: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.staff:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
-	15, // 18: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability.available_slots:type_name -> google.type.Interval
-	4,  // 19: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
-	2,  // 20: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingsRequest
-	5,  // 21: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:input_type -> moego.business.online_booking.v1.GetBookingAvailabilityRequest
-	13, // 22: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
-	3,  // 23: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingsResponse
-	6,  // 24: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:output_type -> moego.business.online_booking.v1.GetBookingAvailabilityResponse
+	18, // 12: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.weight:type_name -> moego.common.v1.Weight
+	13, // 13: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.start_date:type_name -> google.type.Date
+	13, // 14: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.end_date:type_name -> google.type.Date
+	7,  // 15: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.pets:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
+	13, // 16: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.date:type_name -> google.type.Date
+	10, // 17: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.staff:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
+	14, // 18: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability.available_slots:type_name -> google.type.Interval
+	3,  // 19: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
+	1,  // 20: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingsRequest
+	4,  // 21: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:input_type -> moego.business.online_booking.v1.GetBookingAvailabilityRequest
+	12, // 22: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
+	2,  // 23: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingsResponse
+	5,  // 24: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:output_type -> moego.business.online_booking.v1.GetBookingAvailabilityResponse
 	22, // [22:25] is the sub-list for method output_type
 	19, // [19:22] is the sub-list for method input_type
 	19, // [19:19] is the sub-list for extension type_name
@@ -1060,7 +993,7 @@ func file_moego_business_online_booking_v1_online_booking_service_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc), len(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc)),
-			NumEnums:      2,
+			NumEnums:      1,
 			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,

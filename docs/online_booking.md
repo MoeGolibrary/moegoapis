@@ -275,7 +275,7 @@ Lists abandoned bookings matching specified criteria including abandon time rang
 
 - **Method**: `GetBookingAvailability`
 - **HTTP Method**: POST
-- **Path**: `/v1/online-booking/availability`
+- **Path**: `/v1/online_booking/availability`
 
 #### ✅ Functionality
 
@@ -299,12 +299,31 @@ constraints. This endpoint helps customers find suitable time slots when booking
 - `pets`: Array of pet parameters including:
     - `id`: Pet ID (for existing pets)
     - `name`: Pet name
-    - `type`: Pet type/species
+    - `type`: Pet type/species (see Pet Types table below)
     - `breed`: Pet breed
     - `birthday`: Pet birthday
     - `weight`: Pet weight
     - `staffId`: Preferred staff ID for this pet
     - `serviceIds`: Service IDs for this pet
+
+###### Pet Types
+
+When specifying the pet type in the `type` field, use one of the following values:
+
+| Pet Type        | Description                                           |
+|-----------------|-------------------------------------------------------|
+| `TYPE_UNSPECIFIED` | Unknown or unspecified pet type (default value)      |
+| `OTHER`         | Pet type not listed in standard categories            |
+| `DOG`           | Canine companion (e.g., Labrador, German Shepherd)    |
+| `CAT`           | Feline companion (domestic cat breeds)                |
+| `BIRD`          | Avian pet (parrots, canaries, finches, etc.)          |
+| `RABBIT`        | Domestic rabbit                                       |
+| `GUINEA_PIG`    | Guinea pig                                            |
+| `HORSE`         | Equine                                                |
+| `HAMSTER`       | Hamster                                               |
+| `RAT`           | Rat                                                   |
+| `MOUSE`         | Mouse                                                 |
+| `CHINCHILLA`    | Chinchilla                                            |
 
 #### 📌 Return Value
 
@@ -456,7 +475,7 @@ POST /v1/abandoned_bookings:list
 ### Example 3: Get Booking Availability
 
 ```http
-POST /v1/online-booking/availability
+POST /v1/online_booking/availability
 
 ```
 
@@ -547,7 +566,7 @@ POST /v1/online-booking/availability
 With filter parameters:
 
 ```http
-POST /v1/online-booking/availability
+POST /v1/online_booking/availability
 ```
 
 **Request Body:**
@@ -637,5 +656,11 @@ help optimize the user experience and improve conversion rates.
 
 Use `GetAbandonedBooking` to review details of an abandoned booking and determine whether it can be recovered via
 outreach or re-engagement campaigns.
+
+### ✅ Scenario: Check Booking Availability
+
+Use `GetBookingAvailability` to retrieve available dates and time slots for online booking. This allows customers to
+find suitable appointment times based on business hours, staff availability, and service requirements. The API supports
+filtering by specific services, staff members, or pets to provide more targeted availability information.
 
 ---

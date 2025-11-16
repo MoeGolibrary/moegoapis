@@ -720,6 +720,18 @@
       "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
       "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
     },
+    "PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
     "PetVaccination": {
       "type": "object",
       "properties": {
@@ -1851,7 +1863,7 @@
           "title": "Specific breed within the pet type\nRequired. Helps determine grooming requirements"
         },
         "gender": {
-          "$ref": "#/definitions/v1PetGender",
+          "$ref": "#/definitions/PetGender",
           "title": "Pet's gender\nUsed for service assignments"
         },
         "weight": {
@@ -1966,18 +1978,6 @@
         },
         "type": "PetCode"
       }
-    },
-    "v1PetGender": {
-      "type": "string",
-      "enum": [
-        "GENDER_UNSPECIFIED",
-        "MALE",
-        "FEMALE",
-        "UNKNOWN"
-      ],
-      "default": "GENDER_UNSPECIFIED",
-      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
-      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
     },
     "v1PetNote": {
       "type": "object",
