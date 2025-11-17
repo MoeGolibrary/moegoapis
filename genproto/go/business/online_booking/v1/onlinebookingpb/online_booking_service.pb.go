@@ -772,12 +772,15 @@ type GetBookingAvailabilityResponse_StaffAvailability struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier of the staff member.
 	StaffId string `protobuf:"bytes,1,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
-	// Name of the staff member.
+	// First name of the staff member.
 	// Used for display purposes when selecting a staff member.
-	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	FirstName string `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	// Last name of the staff member.
+	// Used for display purposes when selecting a staff member.
+	LastName string `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
 	// Available time slots for this staff member on the specified date.
 	// Each interval represents a time slot available for booking.
-	AvailableSlots []*interval.Interval `protobuf:"bytes,3,rep,name=available_slots,json=availableSlots,proto3" json:"available_slots,omitempty"`
+	AvailableSlots []*interval.Interval `protobuf:"bytes,4,rep,name=available_slots,json=availableSlots,proto3" json:"available_slots,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -819,9 +822,16 @@ func (x *GetBookingAvailabilityResponse_StaffAvailability) GetStaffId() string {
 	return ""
 }
 
-func (x *GetBookingAvailabilityResponse_StaffAvailability) GetName() string {
+func (x *GetBookingAvailabilityResponse_StaffAvailability) GetFirstName() string {
 	if x != nil {
-		return x.Name
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *GetBookingAvailabilityResponse_StaffAvailability) GetLastName() string {
+	if x != nil {
+		return x.LastName
 	}
 	return ""
 }
@@ -897,17 +907,19 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\vservice_ids\x18\x03 \x03(\tB\x03\xe0A\x01R\n" +
 	"serviceIds\x12 \n" +
 	"\tstaff_ids\x18\x04 \x03(\tB\x03\xe0A\x01R\bstaffIds\x12a\n" +
-	"\x04pets\x18\x05 \x03(\v2H.moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParamB\x03\xe0A\x01R\x04pets\"\x82\x04\n" +
+	"\x04pets\x18\x05 \x03(\v2H.moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParamB\x03\xe0A\x01R\x04pets\"\xaa\x04\n" +
 	"\x1eGetBookingAvailabilityResponse\x12:\n" +
 	"\x0favailable_dates\x18\x01 \x03(\v2\x11.google.type.DateR\x0eavailableDates\x12w\n" +
 	"\favailability\x18\x02 \x03(\v2S.moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDateR\favailability\x1a\xa5\x01\n" +
 	"\x12AvailabilityByDate\x12%\n" +
 	"\x04date\x18\x01 \x01(\v2\x11.google.type.DateR\x04date\x12h\n" +
-	"\x05staff\x18\x02 \x03(\v2R.moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailabilityR\x05staff\x1a\x82\x01\n" +
+	"\x05staff\x18\x02 \x03(\v2R.moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailabilityR\x05staff\x1a\xaa\x01\n" +
 	"\x11StaffAvailability\x12\x19\n" +
-	"\bstaff_id\x18\x01 \x01(\tR\astaffId\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\x12>\n" +
-	"\x0favailable_slots\x18\x03 \x03(\v2\x15.google.type.IntervalR\x0eavailableSlots2\xd2\x04\n" +
+	"\bstaff_id\x18\x01 \x01(\tR\astaffId\x12\x1d\n" +
+	"\n" +
+	"first_name\x18\x02 \x01(\tR\tfirstName\x12\x1b\n" +
+	"\tlast_name\x18\x03 \x01(\tR\blastName\x12>\n" +
+	"\x0favailable_slots\x18\x04 \x03(\v2\x15.google.type.IntervalR\x0eavailableSlots2\xd2\x04\n" +
 	"\x14OnlineBookingService\x12\xac\x01\n" +
 	"\x13GetAbandonedBooking\x12<.moego.business.online_booking.v1.GetAbandonedBookingRequest\x1a2.moego.business.online_booking.v1.AbandonedBooking\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/abandoned_bookings/{id}\x12\xc0\x01\n" +
 	"\x15ListAbandonedBookings\x12>.moego.business.online_booking.v1.ListAbandonedBookingsRequest\x1a?.moego.business.online_booking.v1.ListAbandonedBookingsResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:list\x12\xc7\x01\n" +

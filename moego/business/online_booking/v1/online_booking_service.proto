@@ -252,13 +252,17 @@ message GetBookingAvailabilityResponse {
     // Unique identifier of the staff member.
     string staff_id = 1;
 
-    // Name of the staff member.
+    // First name of the staff member.
     // Used for display purposes when selecting a staff member.
-    string name = 2;
+    string first_name = 2;
+
+    // Last name of the staff member.
+    // Used for display purposes when selecting a staff member.
+    string last_name = 3;
 
     // Available time slots for this staff member on the specified date.
     // Each interval represents a time slot available for booking.
-    repeated google.type.Interval available_slots = 3;
+    repeated google.type.Interval available_slots = 4;
   }
 
   // Detailed availability information by date and staff.

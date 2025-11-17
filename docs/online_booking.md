@@ -310,20 +310,20 @@ constraints. This endpoint helps customers find suitable time slots when booking
 
 When specifying the pet type in the `type` field, use one of the following values:
 
-| Pet Type        | Description                                           |
-|-----------------|-------------------------------------------------------|
-| `TYPE_UNSPECIFIED` | Unknown or unspecified pet type (default value)      |
-| `OTHER`         | Pet type not listed in standard categories            |
-| `DOG`           | Canine companion (e.g., Labrador, German Shepherd)    |
-| `CAT`           | Feline companion (domestic cat breeds)                |
-| `BIRD`          | Avian pet (parrots, canaries, finches, etc.)          |
-| `RABBIT`        | Domestic rabbit                                       |
-| `GUINEA_PIG`    | Guinea pig                                            |
-| `HORSE`         | Equine                                                |
-| `HAMSTER`       | Hamster                                               |
-| `RAT`           | Rat                                                   |
-| `MOUSE`         | Mouse                                                 |
-| `CHINCHILLA`    | Chinchilla                                            |
+| Pet Type           | Description                                        |
+|--------------------|----------------------------------------------------|
+| `TYPE_UNSPECIFIED` | Unknown or unspecified pet type (default value)    |
+| `OTHER`            | Pet type not listed in standard categories         |
+| `DOG`              | Canine companion (e.g., Labrador, German Shepherd) |
+| `CAT`              | Feline companion (domestic cat breeds)             |
+| `BIRD`             | Avian pet (parrots, canaries, finches, etc.)       |
+| `RABBIT`           | Domestic rabbit                                    |
+| `GUINEA_PIG`       | Guinea pig                                         |
+| `HORSE`            | Equine                                             |
+| `HAMSTER`          | Hamster                                            |
+| `RAT`              | Rat                                                |
+| `MOUSE`            | Mouse                                              |
+| `CHINCHILLA`       | Chinchilla                                         |
 
 #### 📌 Return Value
 
@@ -344,7 +344,8 @@ When specifying the pet type in the `type` field, use one of the following value
 | Field Name       | Type            | Description                                 |
 |------------------|-----------------|---------------------------------------------|
 | `staffId`        | string          | Unique identifier of the staff member       |
-| `name`           | string          | Name of the staff member                    |
+| `first_name`     | string          | First name of the staff member              |
+| `last_name`      | string          | Last name of the staff member               |
 | `availableSlots` | Array(Interval) | Available time slots (google.type.Interval) |
 
 #### ⚠️ Error Codes
@@ -503,7 +504,8 @@ POST /v1/online_booking/availability
       "staff": [
         {
           "staffId": "stf_123",
-          "name": "John Smith",
+          "firstName": "John",
+          "lastName": "Doe",
           "availableSlots": [
             {
               "startTime": "2024-08-20T09:00:00Z",
@@ -529,7 +531,8 @@ POST /v1/online_booking/availability
         },
         {
           "staffId": "stf_456",
-          "name": "Jane Doe",
+          "firstName": "John",
+          "lastName": "Staff",
           "availableSlots": [
             {
               "startTime": "2024-08-20T10:00:00Z",
@@ -602,7 +605,8 @@ POST /v1/online_booking/availability
       "staff": [
         {
           "staffId": "stf_123",
-          "name": "John Smith",
+          "firstName": "John",
+          "lastName": "Staff",
           "availableSlots": [
             {
               "startTime": "2024-08-20T09:00:00Z",

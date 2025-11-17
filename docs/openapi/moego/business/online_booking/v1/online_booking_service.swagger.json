@@ -297,9 +297,13 @@
           "type": "string",
           "description": "Unique identifier of the staff member."
         },
-        "name": {
+        "firstName": {
           "type": "string",
-          "description": "Name of the staff member.\nUsed for display purposes when selecting a staff member."
+          "description": "First name of the staff member.\nUsed for display purposes when selecting a staff member."
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Last name of the staff member.\nUsed for display purposes when selecting a staff member."
         },
         "availableSlots": {
           "type": "array",
