@@ -199,7 +199,8 @@ Content-Type: application/json
 
 {
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "companyId": "cmp_001"
 }

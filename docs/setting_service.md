@@ -342,7 +342,8 @@ Request Body:
 {
   "companyId": "cmp_001",
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "businessIds": [
     "biz_001",

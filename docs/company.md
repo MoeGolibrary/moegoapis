@@ -194,7 +194,7 @@ Content-Type: application/json
 {
   "pagination": {
     "pageSize": 20,
-    "pageToken": ""
+    "pageToken": "1"
   }
 }
 ```

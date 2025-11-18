@@ -307,7 +307,8 @@ Returns the newly created `Customer` object
 {
   "companyId": "cmp_001",
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "filter": {
     "lifeCycleId": "lc_001"

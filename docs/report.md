@@ -213,7 +213,8 @@ Generates and returns report data based on the specified report ID and parameter
 ```json
 {
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "companyId": "cmp_001",
   "condition": {

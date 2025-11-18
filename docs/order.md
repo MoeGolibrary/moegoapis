@@ -465,9 +465,10 @@ useful for tracking package usage and reporting.
 
 ```json
 {
-  "pagination": {
-    "pageSize": 20
-  },
+   "pagination": {
+      "pageSize": 20,
+      "pageToken": "1"
+   },
   "companyId": "cmp_001",
   "businessIds": [
     "biz_001",

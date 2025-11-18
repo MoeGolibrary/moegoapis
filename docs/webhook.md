@@ -548,7 +548,8 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 {
   "webhookId": "whk_001",
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "filter": {
     "success": false,

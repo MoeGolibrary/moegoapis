@@ -196,7 +196,8 @@ Retrieves a paginated list of payments based on specified criteria. Supports fil
 ```json
 {
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "companyId": "cmp_001",
   "filter": {

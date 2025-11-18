@@ -334,28 +334,30 @@ benefits and discount benefits that are associated with the membership.
 
 ### Example 1: ListMemberships
 
-``json
+```json
 {
-"pagination": {
-"pageSize": 20
-},
-"companyId": "cmp_001",
-"filter": {
-"name_like": "gold",
-"statuses": [
-"ACTIVE"
-]
-}
+  "pagination": {
+    "pageSize": 20,
+    "pageToken": "1"
+  },
+  "companyId": "cmp_001",
+  "filter": {
+    "name_like": "gold",
+    "statuses": [
+      "ACTIVE"
+    ]
+  }
 }
 
 ```
 
 ### Example 2: ListSubscriptions
 
-``json
+```json
 {
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "companyId": "cmp_001",
   "filter": {
@@ -369,21 +371,23 @@ benefits and discount benefits that are associated with the membership.
     ]
   }
 }
+
 ```
 
 ### Example 3: GetPerkUsageDetail
 
-``json
+```json
 {
-"companyId": "cmp_001",
-"membershipId": "mem_abc123",
-"customerId": "cus_xyz789"
+  "companyId": "cmp_001",
+  "membershipId": "mem_abc123",
+  "customerId": "cus_xyz789"
 }
 
 ```
 
 Response:
-``json
+
+```json
 {
   "included_benefits": [
     {
@@ -425,6 +429,7 @@ Response:
     }
   ]
 }
+
 ```
 
 ---

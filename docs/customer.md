@@ -644,7 +644,8 @@ Retrieves all tags associated with a specific customer.
 {
   "companyId": "cmp_001",
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "filter": {
     "lastUpdatedTime": {

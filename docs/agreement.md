@@ -285,7 +285,8 @@ GET /v1/agreements/12345?company_id=cmp_001
 {
   "companyId": "cmp_001",
   "pagination": {
-    "pageSize": 20
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "businessIds": [
     "biz_001",

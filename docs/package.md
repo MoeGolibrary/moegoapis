@@ -189,9 +189,10 @@ Retrieves detailed information for a list of packages including services.
 
 ```json
 {
-  "pagination": {
-    "pageSize": 20
-  },
+   "pagination": {
+      "pageSize": 20,
+      "pageToken": "1"
+   },
   "companyId": "cmp_001",
   "customerIds": [
     "cus_123"
@@ -236,9 +237,10 @@ Response:
 
 ```json
 {
-  "pagination": {
-    "pageSize": 20
-  },
+   "pagination": {
+      "pageSize": 20,
+      "pageToken": "1"
+   },
   "companyId": "cmp_001",
   "packageIds": [
     "pkg_abc123"

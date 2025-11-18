@@ -424,7 +424,8 @@ POST /v1/abandoned_bookings:list
     "biz_002"
   ],
   "pagination": {
-    "pageSize": 50
+    "pageSize": 20,
+    "pageToken": "1"
   },
   "filter": {
     "abandonTime": {
