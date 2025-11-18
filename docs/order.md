@@ -58,7 +58,7 @@ business location and customer.
 | `tipsAmount`      | google.type.Money         | Additional amount provided as gratuity (optional, non-negative)                                        |
 | `taxAmount`       | google.type.Money         | Tax amount applied to the order (calculated based on local tax rates)                                  |
 | `discountAmount`  | google.type.Money         | Total discounts applied to the order (sum of all applicable discounts)                                 |
-| `extraFeeAmount`  | google.type.Money         | Additional fees applied to the order (e.g., holiday surcharge)                                         |
+| `extraFeeAmount`  | google.type.Money         | Additional fees applied to the order (e.g., convenience fee paid by client)                            |
 | `subTotalAmount`  | google.type.Money         | Subtotal before tax, tips, and adjustments (sum of all service prices)                                 |
 | `tipsBasedAmount` | google.type.Money         | Amount used as basis for calculating tips (usually equals subTotalAmount)                              |
 | `totalAmount`     | google.type.Money         | Total amount including all charges and adjustments (formula: subtotal + tax + tips + fees - discounts) |
@@ -465,10 +465,10 @@ useful for tracking package usage and reporting.
 
 ```json
 {
-   "pagination": {
-      "pageSize": 20,
-      "pageToken": "1"
-   },
+  "pagination": {
+    "pageSize": 20,
+    "pageToken": "1"
+  },
   "companyId": "cmp_001",
   "businessIds": [
     "biz_001",
