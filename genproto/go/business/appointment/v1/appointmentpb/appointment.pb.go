@@ -111,6 +111,10 @@ const (
 	Appointment_PARTIAL_PAID Appointment_PaymentStatus = 2
 	// Complete payment received.
 	Appointment_FULL_PAID Appointment_PaymentStatus = 3
+	// Partial payment refunded.
+	Appointment_PARTIAL_REFUNDED Appointment_PaymentStatus = 4
+	// Full payment refunded.
+	Appointment_FULL_REFUNDED Appointment_PaymentStatus = 5
 )
 
 // Enum value maps for Appointment_PaymentStatus.
@@ -120,12 +124,16 @@ var (
 		1: "UNPAID",
 		2: "PARTIAL_PAID",
 		3: "FULL_PAID",
+		4: "PARTIAL_REFUNDED",
+		5: "FULL_REFUNDED",
 	}
 	Appointment_PaymentStatus_value = map[string]int32{
 		"PAYMENT_STATUS_UNSPECIFIED": 0,
 		"UNPAID":                     1,
 		"PARTIAL_PAID":               2,
 		"FULL_PAID":                  3,
+		"PARTIAL_REFUNDED":           4,
+		"FULL_REFUNDED":              5,
 	}
 )
 
@@ -445,7 +453,7 @@ var File_moego_business_appointment_v1_appointment_proto protoreflect.FileDescri
 
 const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xc0\r\n" +
+	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xea\r\n" +
 	"\vAppointment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -489,13 +497,15 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"CHECKED_IN\x10\x03\x12\t\n" +
 	"\x05READY\x10\x04\x12\f\n" +
 	"\bFINISHED\x10\x05\x12\f\n" +
-	"\bCANCELED\x10\x06\"\\\n" +
+	"\bCANCELED\x10\x06\"\x85\x01\n" +
 	"\rPaymentStatus\x12\x1e\n" +
 	"\x1aPAYMENT_STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06UNPAID\x10\x01\x12\x10\n" +
 	"\fPARTIAL_PAID\x10\x02\x12\r\n" +
-	"\tFULL_PAID\x10\x03B\x15\n" +
+	"\tFULL_PAID\x10\x03\x12\x14\n" +
+	"\x10PARTIAL_REFUNDED\x10\x04\x12\x11\n" +
+	"\rFULL_REFUNDED\x10\x05B\x15\n" +
 	"\x13_booking_request_idB\t\n" +
 	"\a_raw_idB\x11\n" +
 	"\x0f_confirmed_timeB\r\n" +

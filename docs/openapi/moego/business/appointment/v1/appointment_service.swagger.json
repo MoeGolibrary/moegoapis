@@ -429,10 +429,12 @@
         "PAYMENT_STATUS_UNSPECIFIED",
         "UNPAID",
         "PARTIAL_PAID",
-        "FULL_PAID"
+        "FULL_PAID",
+        "PARTIAL_REFUNDED",
+        "FULL_REFUNDED"
       ],
       "default": "PAYMENT_STATUS_UNSPECIFIED",
-      "description": "Possible values are `unpaid`, `partial_paid`, or `full_paid`.\nNew appointments start as `unpaid`. After receiving partial payment (e.g., deposit),\nstatus changes to `partial_paid`. Once full payment is received, status becomes `full_paid`.\n\n - PAYMENT_STATUS_UNSPECIFIED: Not intended for direct use. Indicates a payment anomaly.\n - UNPAID: No payment received. Default state for new appointments.\n - PARTIAL_PAID: Deposit or partial payment received.\n - FULL_PAID: Complete payment received."
+      "description": "Possible values are `unpaid`, `partial_paid`, or `full_paid`.\nNew appointments start as `unpaid`. After receiving partial payment (e.g., deposit),\nstatus changes to `partial_paid`. Once full payment is received, status becomes `full_paid`.\n\n - PAYMENT_STATUS_UNSPECIFIED: Not intended for direct use. Indicates a payment anomaly.\n - UNPAID: No payment received. Default state for new appointments.\n - PARTIAL_PAID: Deposit or partial payment received.\n - FULL_PAID: Complete payment received.\n - PARTIAL_REFUNDED: Partial payment refunded.\n - FULL_REFUNDED: Full payment refunded."
     },
     "AppointmentServiceCancelAppointmentBody": {
       "type": "object",

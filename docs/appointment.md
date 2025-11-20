@@ -34,35 +34,35 @@ This API provides operations for:
 Represents a scheduled pet service booking. An appointment can include multiple pets and services, and tracks the entire
 lifecycle from creation to completion.
 
-| Field Name          | Type                    | Description                                                                   |
-|---------------------|-------------------------|-------------------------------------------------------------------------------|
-| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                    |
-| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string   |
-| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                     |
-| `address`           | Address                 | Service location details (required for home service appointments)             |
-| `duration`          | Interval                | Start and end time of the appointment                                         |
-| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                          |
-| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                   |
-| `ticketComment`     | string                  | Optional notes about the appointment                                          |
-| `colorCode`         | string                  | UI display color in hex format                                                |
-| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string              |
-| `totalAmount`       | Money                   | Total cost for all services                                                   |
-| `paidAmount`        | Money                   | Amount received from customer                                                 |
-| `refundAmount`      | Money                   | Amount returned to customer                                                   |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
-| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
-| `createdTime`       | timestamp               | When the appointment was created                                              |
-| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
-| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                        |
-| `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
-| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
-| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
-| `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users.       |
-| `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                            |
-| `readyTime`         | timestamp (optional)    | When the appointment was ready                                                |
-| `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                             |
-| `noShow`            | bool                    | bool, Indicates if the appointment was marked as no-show.                     |
-| `noShowFee`         | Money                   | Amount charged for no-show                                                    |
+| Field Name          | Type                    | Description                                                                             |
+|---------------------|-------------------------|-----------------------------------------------------------------------------------------|
+| `id`                | string                  | Unique identifier of the appointment, obfuscated ID string                              |
+| `businessId`        | string                  | Business location where the service will be performed, obfuscated ID string             |
+| `customerId`        | string                  | Customer who booked the appointment, obfuscated ID string                               |
+| `address`           | Address                 | Service location details (required for home service appointments)                       |
+| `duration`          | Interval                | Start and end time of the appointment                                                   |
+| `petServiceDetails` | Array(PetServiceDetail) | List of services booked for each pet                                                    |
+| `status`            | enum(Status)            | Current appointment state: `UNCONFIRMED`, `CONFIRMED`, etc.                             |
+| `ticketComment`     | string                  | Optional notes about the appointment                                                    |
+| `colorCode`         | string                  | UI display color in hex format                                                          |
+| `orderId`           | string                  | Identifier of the associated payment order, obfuscated ID string                        |
+| `totalAmount`       | Money                   | Total cost for all services                                                             |
+| `paidAmount`        | Money                   | Amount received from customer                                                           |
+| `refundAmount`      | Money                   | Amount returned to customer                                                             |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`,`PARTIAL_REFUNDED`,`FULL_REFUNDED` |
+| `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                             |
+| `createdTime`       | timestamp               | When the appointment was created                                                        |
+| `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                                   |
+| `lastUpdatedTime`   | timestamp               | When the appointment was last modified                                                  |
+| `checkInTime`       | timestamp               | When the customer arrived with their pet                                                |
+| `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                                    |
+| `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string           |
+| `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users.                 |
+| `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                                      |
+| `readyTime`         | timestamp (optional)    | When the appointment was ready                                                          |
+| `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                                       |
+| `noShow`            | bool                    | bool, Indicates if the appointment was marked as no-show.                               |
+| `noShowFee`         | Money                   | Amount charged for no-show                                                              |
 
 #### Enum Definitions
 
@@ -82,6 +82,8 @@ lifecycle from creation to completion.
 - `UNPAID`: No payment received.
 - `PARTIAL_PAID`: Deposit or partial payment received.
 - `FULL_PAID`: Complete payment received.
+- `PARTIAL_REFUNDED`: Payment partially refunded.
+- `FULL_REFUNDED`: Payment fully refunded.
 
 ---
 

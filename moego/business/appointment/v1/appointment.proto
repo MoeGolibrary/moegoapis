@@ -60,6 +60,12 @@ message Appointment {
 
     // Complete payment received.
     FULL_PAID = 3;
+
+    // Partial payment refunded.
+    PARTIAL_REFUNDED = 4;
+
+    // Full payment refunded.
+    FULL_REFUNDED = 5;
   }
 
   // string, Unique identifier for the appointment.
