@@ -55,6 +55,7 @@ message Event {
     // Cleans up associated records
     APPOINTMENT_DELETED = 104;
 
+    // TODO: implement
     // All payments for the appointment received
     // Updates financial records
     APPOINTMENT_FULLY_PAID = 105;
@@ -62,6 +63,7 @@ message Event {
     // Online Booking Events (200-299)
     // Events related to customer self-service booking
 
+    // TODO: implement
     // New online booking request received
     // Initiates booking validation and processing
     ONLINE_BOOKING_RECEIVED = 200;

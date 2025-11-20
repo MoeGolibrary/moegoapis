@@ -55,11 +55,10 @@ Events are categorized into functional groups with specific ranges:
 
 Each event type has an associated payload format:
 
-| Event Type                | Payload Type  | Description                        |
-|---------------------------|---------------|------------------------------------|
-| `HEALTH_CHECK`            | HealthCheck   | System monitoring verification     |
-| `APPOINTMENT_*` series    | Appointment   | Appointment lifecycle information  |
-| `ONLINE_BOOKING_RECEIVED` | OnlineBooking | Customer-initiated booking request |
+| Event Type             | Payload Type | Description                       |
+|------------------------|--------------|-----------------------------------|
+| `HEALTH_CHECK`         | HealthCheck  | System monitoring verification    |
+| `APPOINTMENT_*` series | Appointment  | Appointment lifecycle information |
 
 ---
 
@@ -81,10 +80,7 @@ message Event {
     APPOINTMENT_FINISHED = 102;
     APPOINTMENT_CANCELED = 103;
     APPOINTMENT_DELETED = 104;
-    APPOINTMENT_FULLY_PAID = 105;
 
-    // Online Booking Events (200-299)
-    ONLINE_BOOKING_RECEIVED = 200;
   }
 
   string id = 1;
@@ -136,20 +132,6 @@ message HealthCheck {
   "companyId": "cmp_001",
   "appointment": {
     // Full appointment details from moego.business.appointment.v1.Appointment
-  }
-}
-```
-
-### Example 3: Online Booking Received Event
-
-```json
-{
-  "id": "evt_ghi789",
-  "type": "ONLINE_BOOKING_RECEIVED",
-  "timestamp": "2024-08-01T12:10:00Z",
-  "companyId": "cmp_001",
-  "onlineBooking": {
-    // Full online booking details from moego.business.online_booking.v1.OnlineBooking
   }
 }
 ```

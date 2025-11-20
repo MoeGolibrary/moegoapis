@@ -51,9 +51,11 @@ const (
 	// Appointment has been permanently removed
 	// Cleans up associated records
 	Event_APPOINTMENT_DELETED Event_Type = 104
+	// TODO: implement
 	// All payments for the appointment received
 	// Updates financial records
 	Event_APPOINTMENT_FULLY_PAID Event_Type = 105
+	// TODO: implement
 	// New online booking request received
 	// Initiates booking validation and processing
 	Event_ONLINE_BOOKING_RECEIVED Event_Type = 200
