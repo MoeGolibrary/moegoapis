@@ -870,11 +870,11 @@
       "properties": {
         "startDate": {
           "$ref": "#/definitions/typeDate",
-          "description": "Start date for availability check.\nOptional. If not provided, defaults to today's date."
+          "description": "Start date for availability check.\nOptional. If not provided, defaults to today's date.\nMaximum range between start_date and end_date is 3 months."
         },
         "endDate": {
           "$ref": "#/definitions/typeDate",
-          "description": "End date for availability check.\nOptional. If not provided, defaults to start_date."
+          "description": "End date for availability check.\nOptional. If not provided, defaults to start_date.\nMaximum range between start_date and end_date is 3 months."
         },
         "serviceIds": {
           "type": "array",
@@ -897,6 +897,18 @@
             "$ref": "#/definitions/GetBookingAvailabilityRequestPetParam"
           },
           "description": "Filter by the pet parameters.\nOptional. Specifies pet-related requirements for the booking."
+        },
+        "customerId": {
+          "type": "string",
+          "description": "Filter by the customer ID.\nOptional. When provided, shows availability based on customer-specific settings or preferences."
+        },
+        "coordinate": {
+          "$ref": "#/definitions/typeLatLng",
+          "description": "object(LatLng), Latitude and Longitude coordinate for mapping.\nLatitude Range: -90 to 90. Longitude Range: -180 to 180."
+        },
+        "zipcode": {
+          "type": "string",
+          "description": "Zip code for location-based filtering.\nOptional. Used to filter based on postal code area."
         }
       },
       "description": "Filter parameters for the availability check.\nAll fields are optional. When not provided, system defaults will be used.",

@@ -5,6 +5,7 @@ package moego.business.online_booking.v1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
+import "google/type/latlng.proto";
 import "moego/business/online_booking/v1/abandoned_booking.proto";
 import "moego/common/v1/pagination.proto";
 import "google/type/date.proto";
@@ -207,10 +208,12 @@ message GetBookingAvailabilityRequest {
   message Filter {
     // Start date for availability check.
     // Optional. If not provided, defaults to today's date.
+    // Maximum range between start_date and end_date is 3 months.
     google.type.Date start_date = 1 [(google.api.field_behavior) = OPTIONAL];
 
     // End date for availability check.
     // Optional. If not provided, defaults to start_date.
+    // Maximum range between start_date and end_date is 3 months.
     google.type.Date end_date = 2 [(google.api.field_behavior) = OPTIONAL];
 
     // Filter by the service IDs.
@@ -224,6 +227,18 @@ message GetBookingAvailabilityRequest {
     // Filter by the pet parameters.
     // Optional. Specifies pet-related requirements for the booking.
     repeated PetParam pets = 5 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by the customer ID.
+    // Optional. When provided, shows availability based on customer-specific settings or preferences.
+    string customer_id = 6 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(LatLng), Latitude and Longitude coordinate for mapping.
+    // Latitude Range: -90 to 90. Longitude Range: -180 to 180.
+    google.type.LatLng coordinate = 7 [(google.api.field_behavior) = OPTIONAL];
+
+    // Zip code for location-based filtering.
+    // Optional. Used to filter based on postal code area.
+    string zipcode = 8 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // The filter criteria for the availability request.

@@ -292,10 +292,13 @@ constraints. This endpoint helps customers find suitable time slots when booking
 
 ##### Filter Options:
 
-- `startDate`: Start date for availability check (defaults to today)
-- `endDate`: End date for availability check (defaults to startDate)
+- `startDate`: Start date for availability check (defaults to today). Maximum range between startDate and endDate is 3 months.
+- `endDate`: End date for availability check (defaults to startDate). Maximum range between startDate and endDate is 3 months.
 - `serviceIds`: Filter by specific service IDs
 - `staffIds`: Filter by specific staff IDs
+- `customerId`: Filter by specific customer ID
+- `coordinate`: Filter by location coordinates (latitude and longitude)
+- `zipcode`: Filter by postal code
 - `pets`: Array of pet parameters including:
     - `id`: Pet ID (for existing pets)
     - `name`: Pet name
@@ -587,7 +590,13 @@ POST /v1/online_booking/availability
     ],
     "staffIds": [
       "stf_123"
-    ]
+    ],
+    "customerId": "cus_001",
+    "coordinate": {
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    },
+    "zipcode": "10001"
   }
 }
 ```
