@@ -293,22 +293,23 @@ Updates an existing pet's information.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type             | Required | Description                                                |
-|--------------------|------------------|----------|------------------------------------------------------------|
-| `customerId`       | string           | Yes      | Owner customer ID (obfuscated string)                      |
-| `id`               | string           | Yes      | Unique identifier of the pet to update (obfuscated string) |
-| `name`             | string           | No       | Pet's name                                                 |
-| `birthday`         | Date             | No       | Pet's date of birth                                        |
-| `type`             | Pet.Type         | No       | Pet's species                                              |
-| `breed`            | string           | No       | Pet's breed                                                |
-| `gender`           | Pet.Gender       | No       | Pet's gender                                               |
-| `weight`           | Weight           | No       | Pet's weight                                               |
-| `fixed`            | string           | No       | Spay/neuter status                                         |
-| `coat`             | string           | No       | Coat description                                           |
-| `behavior`         | string           | No       | Behavior notes                                             |
-| `vet`              | Pet.Vet          | No       | Veterinary care provider                                   |
-| `evaluationStatus` | EvaluationStatus | No       | Service eligibility status                                 |
-| `photo`            | string           | No       | Pet photo URL                                              |
+| Field Name         | Type               | Required | Description                                                |
+|--------------------|--------------------|----------|------------------------------------------------------------|
+| `customerId`       | string             | Yes      | Owner customer ID (obfuscated string)                      |
+| `id`               | string             | Yes      | Unique identifier of the pet to update (obfuscated string) |
+| `name`             | string             | No       | Pet's name                                                 |
+| `birthday`         | Date               | No       | Pet's date of birth                                        |
+| `type`             | Pet.Type           | No       | Pet's species                                              |
+| `breed`            | string             | No       | Pet's breed                                                |
+| `gender`           | Pet.Gender         | No       | Pet's gender                                               |
+| `weight`           | Weight             | No       | Pet's weight                                               |
+| `fixed`            | string             | No       | Spay/neuter status                                         |
+| `coat`             | string             | No       | Coat description                                           |
+| `behavior`         | string             | No       | Behavior notes                                             |
+| `vet`              | Pet.Vet            | No       | Veterinary care provider                                   |
+| `evaluationStatus` | EvaluationStatus   | No       | Service eligibility status                                 |
+| `photo`            | string             | No       | Pet photo URL                                              |
+| `vaccinations`     | Array(Vaccination) | No       | Vaccination records                                        |
 
 #### 📌 Return Value:
 

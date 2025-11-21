@@ -177,7 +177,10 @@ type UpdatePetRequest struct {
 	// Determines service availability
 	EvaluationStatus *Pet_EvaluationStatus `protobuf:"varint,13,opt,name=evaluation_status,json=evaluationStatus,proto3,enum=moego.business.customer.v1.Pet_EvaluationStatus,oneof" json:"evaluation_status,omitempty"`
 	// photo url of pet.
-	Photo         *string `protobuf:"bytes,14,opt,name=photo,proto3,oneof" json:"photo,omitempty"`
+	Photo *string `protobuf:"bytes,14,opt,name=photo,proto3,oneof" json:"photo,omitempty"`
+	// Current vaccination records
+	// Optional. If not provided, current value will be retained
+	Vaccinations  []*Pet_Vaccination `protobuf:"bytes,15,rep,name=vaccinations,proto3" json:"vaccinations,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -308,6 +311,13 @@ func (x *UpdatePetRequest) GetPhoto() string {
 		return *x.Photo
 	}
 	return ""
+}
+
+func (x *UpdatePetRequest) GetVaccinations() []*Pet_Vaccination {
+	if x != nil {
+		return x.Vaccinations
+	}
+	return nil
 }
 
 // Request message for retrieving a specific pet.
@@ -1003,7 +1013,7 @@ const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"customerId\x126\n" +
 	"\x03pet\x18\x02 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x02R\x03pet\"K\n" +
 	"\x11CreatePetResponse\x126\n" +
-	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x03R\x03pet\"\x86\x06\n" +
+	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetB\x03\xe0A\x03R\x03pet\"\xd7\x06\n" +
 	"\x10UpdatePetRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12\x13\n" +
@@ -1021,7 +1031,8 @@ const file_moego_business_customer_v1_pet_service_proto_rawDesc = "" +
 	"\x03vet\x18\f \x01(\v2#.moego.business.customer.v1.Pet.VetH\tR\x03vet\x88\x01\x01\x12b\n" +
 	"\x11evaluation_status\x18\r \x01(\x0e20.moego.business.customer.v1.Pet.EvaluationStatusH\n" +
 	"R\x10evaluationStatus\x88\x01\x01\x12\x19\n" +
-	"\x05photo\x18\x0e \x01(\tH\vR\x05photo\x88\x01\x01B\a\n" +
+	"\x05photo\x18\x0e \x01(\tH\vR\x05photo\x88\x01\x01\x12O\n" +
+	"\fvaccinations\x18\x0f \x03(\v2+.moego.business.customer.v1.Pet.VaccinationR\fvaccinationsB\a\n" +
 	"\x05_nameB\v\n" +
 	"\t_birthdayB\a\n" +
 	"\x05_typeB\b\n" +
@@ -1129,10 +1140,11 @@ var file_moego_business_customer_v1_pet_service_proto_goTypes = []any{
 	(*commonpb.Weight)(nil),           // 19: moego.common.v1.Weight
 	(*Pet_Vet)(nil),                   // 20: moego.business.customer.v1.Pet.Vet
 	(Pet_EvaluationStatus)(0),         // 21: moego.business.customer.v1.Pet.EvaluationStatus
-	(*settingpb.PetCode)(nil),         // 22: moego.business.setting.v1.PetCode
-	(*Pet_Note)(nil),                  // 23: moego.business.customer.v1.Pet.Note
-	(*commonpb.Pagination)(nil),       // 24: moego.common.v1.Pagination
-	(*interval.Interval)(nil),         // 25: google.type.Interval
+	(*Pet_Vaccination)(nil),           // 22: moego.business.customer.v1.Pet.Vaccination
+	(*settingpb.PetCode)(nil),         // 23: moego.business.setting.v1.PetCode
+	(*Pet_Note)(nil),                  // 24: moego.business.customer.v1.Pet.Note
+	(*commonpb.Pagination)(nil),       // 25: moego.common.v1.Pagination
+	(*interval.Interval)(nil),         // 26: google.type.Interval
 }
 var file_moego_business_customer_v1_pet_service_proto_depIdxs = []int32{
 	15, // 0: moego.business.customer.v1.CreatePetRequest.pet:type_name -> moego.business.customer.v1.Pet
@@ -1143,37 +1155,38 @@ var file_moego_business_customer_v1_pet_service_proto_depIdxs = []int32{
 	19, // 5: moego.business.customer.v1.UpdatePetRequest.weight:type_name -> moego.common.v1.Weight
 	20, // 6: moego.business.customer.v1.UpdatePetRequest.vet:type_name -> moego.business.customer.v1.Pet.Vet
 	21, // 7: moego.business.customer.v1.UpdatePetRequest.evaluation_status:type_name -> moego.business.customer.v1.Pet.EvaluationStatus
-	15, // 8: moego.business.customer.v1.ListPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
-	22, // 9: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.setting.v1.PetCode
-	23, // 10: moego.business.customer.v1.AppendPetNotesRequest.notes:type_name -> moego.business.customer.v1.Pet.Note
-	23, // 11: moego.business.customer.v1.AppendPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
-	24, // 12: moego.business.customer.v1.ListPetNotesRequest.pagination:type_name -> moego.common.v1.Pagination
-	23, // 13: moego.business.customer.v1.ListPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
-	24, // 14: moego.business.customer.v1.ListAllPetsRequest.pagination:type_name -> moego.common.v1.Pagination
-	14, // 15: moego.business.customer.v1.ListAllPetsRequest.filter:type_name -> moego.business.customer.v1.ListAllPetsRequest.Filter
-	15, // 16: moego.business.customer.v1.ListAllPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
-	25, // 17: moego.business.customer.v1.ListAllPetsRequest.Filter.last_updated_time:type_name -> google.type.Interval
-	0,  // 18: moego.business.customer.v1.PetService.CreatePet:input_type -> moego.business.customer.v1.CreatePetRequest
-	2,  // 19: moego.business.customer.v1.PetService.UpdatePet:input_type -> moego.business.customer.v1.UpdatePetRequest
-	3,  // 20: moego.business.customer.v1.PetService.GetPet:input_type -> moego.business.customer.v1.GetPetRequest
-	4,  // 21: moego.business.customer.v1.PetService.ListPets:input_type -> moego.business.customer.v1.ListPetsRequest
-	6,  // 22: moego.business.customer.v1.PetService.AppendPetCodes:input_type -> moego.business.customer.v1.AppendPetCodesRequest
-	8,  // 23: moego.business.customer.v1.PetService.AppendPetNotes:input_type -> moego.business.customer.v1.AppendPetNotesRequest
-	10, // 24: moego.business.customer.v1.PetService.ListPetNotes:input_type -> moego.business.customer.v1.ListPetNotesRequest
-	12, // 25: moego.business.customer.v1.PetService.ListAllPets:input_type -> moego.business.customer.v1.ListAllPetsRequest
-	1,  // 26: moego.business.customer.v1.PetService.CreatePet:output_type -> moego.business.customer.v1.CreatePetResponse
-	15, // 27: moego.business.customer.v1.PetService.UpdatePet:output_type -> moego.business.customer.v1.Pet
-	15, // 28: moego.business.customer.v1.PetService.GetPet:output_type -> moego.business.customer.v1.Pet
-	5,  // 29: moego.business.customer.v1.PetService.ListPets:output_type -> moego.business.customer.v1.ListPetsResponse
-	7,  // 30: moego.business.customer.v1.PetService.AppendPetCodes:output_type -> moego.business.customer.v1.AppendPetCodesResponse
-	9,  // 31: moego.business.customer.v1.PetService.AppendPetNotes:output_type -> moego.business.customer.v1.AppendPetNotesResponse
-	11, // 32: moego.business.customer.v1.PetService.ListPetNotes:output_type -> moego.business.customer.v1.ListPetNotesResponse
-	13, // 33: moego.business.customer.v1.PetService.ListAllPets:output_type -> moego.business.customer.v1.ListAllPetsResponse
-	26, // [26:34] is the sub-list for method output_type
-	18, // [18:26] is the sub-list for method input_type
-	18, // [18:18] is the sub-list for extension type_name
-	18, // [18:18] is the sub-list for extension extendee
-	0,  // [0:18] is the sub-list for field type_name
+	22, // 8: moego.business.customer.v1.UpdatePetRequest.vaccinations:type_name -> moego.business.customer.v1.Pet.Vaccination
+	15, // 9: moego.business.customer.v1.ListPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
+	23, // 10: moego.business.customer.v1.AppendPetCodesResponse.codes:type_name -> moego.business.setting.v1.PetCode
+	24, // 11: moego.business.customer.v1.AppendPetNotesRequest.notes:type_name -> moego.business.customer.v1.Pet.Note
+	24, // 12: moego.business.customer.v1.AppendPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
+	25, // 13: moego.business.customer.v1.ListPetNotesRequest.pagination:type_name -> moego.common.v1.Pagination
+	24, // 14: moego.business.customer.v1.ListPetNotesResponse.notes:type_name -> moego.business.customer.v1.Pet.Note
+	25, // 15: moego.business.customer.v1.ListAllPetsRequest.pagination:type_name -> moego.common.v1.Pagination
+	14, // 16: moego.business.customer.v1.ListAllPetsRequest.filter:type_name -> moego.business.customer.v1.ListAllPetsRequest.Filter
+	15, // 17: moego.business.customer.v1.ListAllPetsResponse.pets:type_name -> moego.business.customer.v1.Pet
+	26, // 18: moego.business.customer.v1.ListAllPetsRequest.Filter.last_updated_time:type_name -> google.type.Interval
+	0,  // 19: moego.business.customer.v1.PetService.CreatePet:input_type -> moego.business.customer.v1.CreatePetRequest
+	2,  // 20: moego.business.customer.v1.PetService.UpdatePet:input_type -> moego.business.customer.v1.UpdatePetRequest
+	3,  // 21: moego.business.customer.v1.PetService.GetPet:input_type -> moego.business.customer.v1.GetPetRequest
+	4,  // 22: moego.business.customer.v1.PetService.ListPets:input_type -> moego.business.customer.v1.ListPetsRequest
+	6,  // 23: moego.business.customer.v1.PetService.AppendPetCodes:input_type -> moego.business.customer.v1.AppendPetCodesRequest
+	8,  // 24: moego.business.customer.v1.PetService.AppendPetNotes:input_type -> moego.business.customer.v1.AppendPetNotesRequest
+	10, // 25: moego.business.customer.v1.PetService.ListPetNotes:input_type -> moego.business.customer.v1.ListPetNotesRequest
+	12, // 26: moego.business.customer.v1.PetService.ListAllPets:input_type -> moego.business.customer.v1.ListAllPetsRequest
+	1,  // 27: moego.business.customer.v1.PetService.CreatePet:output_type -> moego.business.customer.v1.CreatePetResponse
+	15, // 28: moego.business.customer.v1.PetService.UpdatePet:output_type -> moego.business.customer.v1.Pet
+	15, // 29: moego.business.customer.v1.PetService.GetPet:output_type -> moego.business.customer.v1.Pet
+	5,  // 30: moego.business.customer.v1.PetService.ListPets:output_type -> moego.business.customer.v1.ListPetsResponse
+	7,  // 31: moego.business.customer.v1.PetService.AppendPetCodes:output_type -> moego.business.customer.v1.AppendPetCodesResponse
+	9,  // 32: moego.business.customer.v1.PetService.AppendPetNotes:output_type -> moego.business.customer.v1.AppendPetNotesResponse
+	11, // 33: moego.business.customer.v1.PetService.ListPetNotes:output_type -> moego.business.customer.v1.ListPetNotesResponse
+	13, // 34: moego.business.customer.v1.PetService.ListAllPets:output_type -> moego.business.customer.v1.ListAllPetsResponse
+	27, // [27:35] is the sub-list for method output_type
+	19, // [19:27] is the sub-list for method input_type
+	19, // [19:19] is the sub-list for extension type_name
+	19, // [19:19] is the sub-list for extension extendee
+	0,  // [0:19] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_pet_service_proto_init() }

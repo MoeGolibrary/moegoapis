@@ -540,6 +540,14 @@
           "type": "string",
           "x-nullable": true,
           "description": "photo url of pet."
+        },
+        "vaccinations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetVaccination"
+          },
+          "title": "Current vaccination records\nOptional. If not provided, current value will be retained"
         }
       },
       "description": "Request message for updating a pet's profile.",
