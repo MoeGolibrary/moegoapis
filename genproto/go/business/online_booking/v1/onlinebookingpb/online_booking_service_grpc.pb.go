@@ -19,9 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OnlineBookingService_GetAbandonedBooking_FullMethodName    = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
-	OnlineBookingService_ListAbandonedBookings_FullMethodName  = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
-	OnlineBookingService_GetBookingAvailability_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailability"
+	OnlineBookingService_GetAbandonedBooking_FullMethodName          = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
+	OnlineBookingService_ListAbandonedBookings_FullMethodName        = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
+	OnlineBookingService_GetBookingAvailability_FullMethodName       = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailability"
+	OnlineBookingService_LookupFranchiseByZipcode_FullMethodName     = "/moego.business.online_booking.v1.OnlineBookingService/LookupFranchiseByZipcode"
+	OnlineBookingService_GetOnlineBookingBusinessInfo_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/GetOnlineBookingBusinessInfo"
 )
 
 // OnlineBookingServiceClient is the client API for OnlineBookingService service.
@@ -49,6 +51,16 @@ type OnlineBookingServiceClient interface {
 	// staff availability, and other scheduling constraints. This endpoint helps
 	// customers find suitable time slots when booking services online.
 	GetBookingAvailability(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error)
+	// Looks up franchise branch based on zipcode for territory routing.
+	//
+	// This endpoint allows routing customers to the correct franchisee based on
+	// their service address zipcode against territory mappings.
+	LookupFranchiseByZipcode(ctx context.Context, in *LookupFranchiseByZipcodeRequest, opts ...grpc.CallOption) (*LookupFranchiseByZipcodeResponse, error)
+	// Gets business information for online booking.
+	//
+	// This endpoint allows retrieving online booking business settings based on
+	// various criteria such as business ID or book online name.
+	GetOnlineBookingBusinessInfo(ctx context.Context, in *GetOnlineBookingBusinessInfoRequest, opts ...grpc.CallOption) (*GetOnlineBookingBusinessInfoResponse, error)
 }
 
 type onlineBookingServiceClient struct {
@@ -89,6 +101,26 @@ func (c *onlineBookingServiceClient) GetBookingAvailability(ctx context.Context,
 	return out, nil
 }
 
+func (c *onlineBookingServiceClient) LookupFranchiseByZipcode(ctx context.Context, in *LookupFranchiseByZipcodeRequest, opts ...grpc.CallOption) (*LookupFranchiseByZipcodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LookupFranchiseByZipcodeResponse)
+	err := c.cc.Invoke(ctx, OnlineBookingService_LookupFranchiseByZipcode_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *onlineBookingServiceClient) GetOnlineBookingBusinessInfo(ctx context.Context, in *GetOnlineBookingBusinessInfoRequest, opts ...grpc.CallOption) (*GetOnlineBookingBusinessInfoResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetOnlineBookingBusinessInfoResponse)
+	err := c.cc.Invoke(ctx, OnlineBookingService_GetOnlineBookingBusinessInfo_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OnlineBookingServiceServer is the server API for OnlineBookingService service.
 // All implementations must embed UnimplementedOnlineBookingServiceServer
 // for forward compatibility.
@@ -114,6 +146,16 @@ type OnlineBookingServiceServer interface {
 	// staff availability, and other scheduling constraints. This endpoint helps
 	// customers find suitable time slots when booking services online.
 	GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error)
+	// Looks up franchise branch based on zipcode for territory routing.
+	//
+	// This endpoint allows routing customers to the correct franchisee based on
+	// their service address zipcode against territory mappings.
+	LookupFranchiseByZipcode(context.Context, *LookupFranchiseByZipcodeRequest) (*LookupFranchiseByZipcodeResponse, error)
+	// Gets business information for online booking.
+	//
+	// This endpoint allows retrieving online booking business settings based on
+	// various criteria such as business ID or book online name.
+	GetOnlineBookingBusinessInfo(context.Context, *GetOnlineBookingBusinessInfoRequest) (*GetOnlineBookingBusinessInfoResponse, error)
 	mustEmbedUnimplementedOnlineBookingServiceServer()
 }
 
@@ -132,6 +174,12 @@ func (UnimplementedOnlineBookingServiceServer) ListAbandonedBookings(context.Con
 }
 func (UnimplementedOnlineBookingServiceServer) GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBookingAvailability not implemented")
+}
+func (UnimplementedOnlineBookingServiceServer) LookupFranchiseByZipcode(context.Context, *LookupFranchiseByZipcodeRequest) (*LookupFranchiseByZipcodeResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method LookupFranchiseByZipcode not implemented")
+}
+func (UnimplementedOnlineBookingServiceServer) GetOnlineBookingBusinessInfo(context.Context, *GetOnlineBookingBusinessInfoRequest) (*GetOnlineBookingBusinessInfoResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetOnlineBookingBusinessInfo not implemented")
 }
 func (UnimplementedOnlineBookingServiceServer) mustEmbedUnimplementedOnlineBookingServiceServer() {}
 func (UnimplementedOnlineBookingServiceServer) testEmbeddedByValue()                              {}
@@ -208,6 +256,42 @@ func _OnlineBookingService_GetBookingAvailability_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OnlineBookingService_LookupFranchiseByZipcode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LookupFranchiseByZipcodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineBookingServiceServer).LookupFranchiseByZipcode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineBookingService_LookupFranchiseByZipcode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineBookingServiceServer).LookupFranchiseByZipcode(ctx, req.(*LookupFranchiseByZipcodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OnlineBookingService_GetOnlineBookingBusinessInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetOnlineBookingBusinessInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineBookingServiceServer).GetOnlineBookingBusinessInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineBookingService_GetOnlineBookingBusinessInfo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineBookingServiceServer).GetOnlineBookingBusinessInfo(ctx, req.(*GetOnlineBookingBusinessInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OnlineBookingService_ServiceDesc is the grpc.ServiceDesc for OnlineBookingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -226,6 +310,14 @@ var OnlineBookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBookingAvailability",
 			Handler:    _OnlineBookingService_GetBookingAvailability_Handler,
+		},
+		{
+			MethodName: "LookupFranchiseByZipcode",
+			Handler:    _OnlineBookingService_LookupFranchiseByZipcode_Handler,
+		},
+		{
+			MethodName: "GetOnlineBookingBusinessInfo",
+			Handler:    _OnlineBookingService_GetOnlineBookingBusinessInfo_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

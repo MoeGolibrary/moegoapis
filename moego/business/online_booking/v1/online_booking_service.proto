@@ -51,6 +51,28 @@ service OnlineBookingService {
       body: "*"
     };
   }
+  
+  // Looks up franchise branch based on zipcode for territory routing.
+  //
+  // This endpoint allows routing customers to the correct franchisee based on 
+  // their service address zipcode against territory mappings.
+  rpc LookupFranchiseByZipcode(LookupFranchiseByZipcodeRequest) returns (LookupFranchiseByZipcodeResponse) {
+    option (google.api.http) = {
+      post: "/v1/online_booking/franchise_lookup"
+      body: "*"
+    };
+  }
+  
+  // Gets business information for online booking.
+  //
+  // This endpoint allows retrieving online booking business settings based on 
+  // various criteria such as business ID or book online name. 
+  rpc GetOnlineBookingBusinessInfo(GetOnlineBookingBusinessInfoRequest) returns (GetOnlineBookingBusinessInfoResponse) {
+    option (google.api.http) = {
+      post: "/v1/online_booking/business/info"
+      body: "*"
+    };
+  }
 }
 
 // Request to list abandoned bookings.
@@ -285,3 +307,93 @@ message GetBookingAvailabilityResponse {
   repeated AvailabilityByDate availability = 2;
 }
 
+// Request message for LookupFranchiseByZipcode.
+// Used to find the correct franchise branch based on zipcode for territory routing.
+message LookupFranchiseByZipcodeRequest {
+  // The zipcode to look up.
+  // Required. Used to determine which franchise branch serves this area based on territory mapping.
+  string zipcode = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for LookupFranchiseByZipcode.
+// Contains franchise branch information for the provided zipcode.
+message LookupFranchiseByZipcodeResponse {
+  // The business identifier of the franchise branch.
+  // Empty if the zipcode doesn't belong to any assigned territory.
+  string business_id = 1;
+
+  // The company identifier of the franchise branch.
+  // Empty if the zipcode doesn't belong to any assigned territory.
+  string company_id = 2;
+
+  // The name of the franchise branch.
+  // Empty if the zipcode doesn't belong to any assigned territory.
+  string business_name = 3;
+
+  // The book online name for the franchise branch.
+  // Empty if the zipcode doesn't belong to any assigned territory.
+  string book_online_name = 4;
+  
+  // Whether online booking is enabled for the franchise branch.
+  // 0-not  1-yes
+  bool is_enable = 5;
+
+  // The state of the franchise branch.
+  string state = 6;
+
+  // The county of the franchise branch.
+  string county = 7;
+}
+
+// Request message for GetOnlineBookingBusinessInfo.
+// Used to find business information for online booking based on filter criteria.
+message GetOnlineBookingBusinessInfoRequest {
+  // Filter parameters for the business info lookup.
+  message Filter {
+    // The business identifier to look up.
+    // Used to retrieve specific business by business ID.
+    string business_id = 1;
+
+    // The book online name to look up.
+    // Used to retrieve specific business by book online name.
+    string book_online_name = 2;
+    
+    // The zipcode of the business itself.
+    // Used to retrieve specific business by its own zipcode.
+    string zipcode = 3;
+  }
+
+  // The filter criteria for the lookup request.
+  // At least one field must be provided.
+  Filter filter = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for GetOnlineBookingBusinessInfo.
+// Contains business information for online booking.
+message GetOnlineBookingBusinessInfoResponse {
+  // The business identifier.
+  // Empty if the criteria doesn't match any business.
+  string business_id = 1;
+
+  // The company identifier.
+  // Empty if the criteria doesn't match any business.
+  string company_id = 2;
+
+  // The name of the business.
+  // Empty if the criteria doesn't match any business.
+  string business_name = 3;
+
+  // The book online name for the business.
+  // Empty if the criteria doesn't match any business.
+  string book_online_name = 4;
+  
+  // Whether online booking is enabled for the business.
+  // 0-not  1-yes
+  bool is_enable = 5;
+
+  // The state of the business.
+  string state = 6;
+
+  // The county of the business.
+  string county = 7;
+}

@@ -358,6 +358,96 @@ When specifying the pet type in the `type` field, use one of the following value
 
 ---
 
+### 4. Lookup Franchise By Zipcode (`LookupFranchiseByZipcode`)
+
+- **Method**: `LookupFranchiseByZipcode`
+- **HTTP Method**: POST
+- **Path**: `/v1/online_booking/franchise_lookup`
+
+#### ✅ Functionality
+
+Looks up franchise branch based on zipcode for territory routing. This endpoint allows routing customers to the correct
+franchisee based on their service address zipcode against territory mappings. It is specifically designed for the Aussie
+Pet Mobile franchise model where each franchisee can only serve users within their assigned territory.
+
+#### 🔧 Request Parameters
+
+| Field Name | Type   | Required | Description                                                  |
+|------------|--------|----------|--------------------------------------------------------------|
+| `zipcode`  | string | Yes      | The zipcode to look up for territory-based franchise routing |
+
+#### 📌 Return Value
+
+| Field Name       | Type    | Description                                                |
+|------------------|---------|------------------------------------------------------------|
+| `businessId`     | string  | The business identifier of the franchise branch            |
+| `companyId`      | string  | The company identifier of the franchise branch             |
+| `businessName`   | string  | The name of the franchise branch                           |
+| `bookOnlineName` | string  | The book online name for the franchise branch              |
+| `isEnable`       | boolean | Whether online booking is enabled for the franchise branch |
+| `state`          | string  | The state of the franchise branch                          |
+| `county`         | string  | The county of the franchise branch                         |
+
+#### 📋 Business Rules
+
+- If the zipcode belongs to an assigned territory or gray area, return information for the corresponding franchise
+  branch
+- If the zipcode belongs to an unassigned territory or doesn't belong to any territory, return empty results
+
+#### ⚠️ Error Codes
+
+- `PERMISSION_DENIED`: Permission denied
+- `INVALID_ARGUMENT`: Invalid request parameters (e.g., missing or malformed zipcode)
+
+---
+
+### 5. Get Online Booking Business Info (`GetOnlineBookingBusinessInfo`)
+
+- **Method**: `GetOnlineBookingBusinessInfo`
+- **HTTP Method**: POST
+- **Path**: `/v1/online_booking/business/info`
+
+#### ✅ Functionality
+
+Gets business information for online booking based on various filter criteria. This endpoint allows retrieving online
+booking business settings based on business ID, book online name, or the business's own zipcode. This is different from
+the territory-based zipcode lookup in LookupFranchiseByZipcode, which is specifically for routing customers to
+franchisees.
+
+#### 🔧 Request Parameters
+
+| Field Name | Type   | Required | Description                                    |
+|------------|--------|----------|------------------------------------------------|
+| `filter`   | object | Yes      | Filter parameters for the business info lookup |
+
+##### Filter Options:
+
+- `businessId`: The business identifier to look up. Used to retrieve specific business by business ID.
+- `bookOnlineName`: The book online name to look up. Used to retrieve specific business by book online name.
+- `zipcode`: The zipcode of the business itself. Used to retrieve specific business by its own zipcode (not
+  territory-based).
+
+At least one filter field must be provided.
+
+#### 📌 Return Value
+
+| Field Name       | Type    | Description                                        |
+|------------------|---------|----------------------------------------------------|
+| `businessId`     | string  | The business identifier                            |
+| `companyId`      | string  | The company identifier                             |
+| `businessName`   | string  | The name of the business                           |
+| `bookOnlineName` | string  | The book online name for the business              |
+| `isEnable`       | boolean | Whether online booking is enabled for the business |
+| `state`          | string  | The state of the business                          |
+| `county`         | string  | The county of the business                         |
+
+#### ⚠️ Error Codes
+
+- `PERMISSION_DENIED`: Permission denied
+- `INVALID_ARGUMENT`: Invalid request parameters (e.g., no filter provided)
+
+---
+
 ## 🧪 5. Usage Examples
 
 ### Example 1: Get Abandoned Booking
@@ -635,6 +725,126 @@ POST /v1/online_booking/availability
       ]
     }
   ]
+}
+```
+
+### Example 4: Lookup Franchise By Zipcode
+
+```http
+POST /v1/online_booking/business/info
+```
+
+**Request Body:**
+
+```json
+{
+  "zipcode": "90210"
+}
+```
+
+**Response (for a valid zipcode in assigned territory):**
+
+```json
+{
+  "businessId": "biz_001",
+  "companyId": "cmp_001",
+  "businessName": "Beverly Hills Pet Grooming",
+  "bookOnlineName": "beverly-hills",
+  "isEnable": true,
+  "state": "CA",
+  "county": "Los Angeles"
+}
+```
+
+**Response (for an invalid or unassigned zipcode):**
+
+```json
+{
+  "businessId": "",
+  "companyId": "",
+  "businessName": "",
+  "bookOnlineName": "",
+  "isEnable": false,
+  "state": "",
+  "county": ""
+}
+```
+
+### Example 5: Get Online Booking Business Info
+
+```http
+POST /v1/online_booking/business/info
+```
+
+**Request Body (by business ID):**
+
+```json
+{
+  "filter": {
+    "businessId": "biz_001"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "businessId": "biz_001",
+  "companyId": "cmp_001",
+  "businessName": "Beverly Hills Pet Grooming",
+  "bookOnlineName": "beverly-hills",
+  "isEnable": true,
+  "state": "CA",
+  "county": "Los Angeles"
+}
+```
+
+**Request Body (by book online name):**
+
+```json
+{
+  "filter": {
+    "bookOnlineName": "beverly-hills"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "businessId": "biz_001",
+  "companyId": "cmp_001",
+  "businessName": "Beverly Hills Pet Grooming",
+  "bookOnlineName": "beverly-hills",
+  "isEnable": true,
+  "state": "CA",
+  "county": "Los Angeles"
+}
+```
+
+**Request Body (by business's own zipcode):**
+
+```json
+{
+  "filter": {
+    "zipcode": "90210"
+  }
+}
+```
+
+**Response:**
+
+```json
+{
+  "businessId": "biz_001",
+  "companyId": "cmp_001",
+  "businessName": "Beverly Hills Pet Grooming",
+  "bookOnlineName": "beverly-hills",
+  "isEnable": true,
+  "state": "CA",
+  "county": "Los Angeles"
 }
 ```
 
