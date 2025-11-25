@@ -431,6 +431,314 @@ func (x *GetBookingAvailabilityResponse) GetAvailability() []*GetBookingAvailabi
 	return nil
 }
 
+// Request message for LookupFranchiseByZipcode.
+// Used to find the correct franchise branch based on zipcode for territory routing.
+type LookupFranchiseByZipcodeRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The zipcode to look up.
+	// Required. Used to determine which franchise branch serves this area based on territory mapping.
+	Zipcode       string `protobuf:"bytes,1,opt,name=zipcode,proto3" json:"zipcode,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LookupFranchiseByZipcodeRequest) Reset() {
+	*x = LookupFranchiseByZipcodeRequest{}
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LookupFranchiseByZipcodeRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LookupFranchiseByZipcodeRequest) ProtoMessage() {}
+
+func (x *LookupFranchiseByZipcodeRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LookupFranchiseByZipcodeRequest.ProtoReflect.Descriptor instead.
+func (*LookupFranchiseByZipcodeRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *LookupFranchiseByZipcodeRequest) GetZipcode() string {
+	if x != nil {
+		return x.Zipcode
+	}
+	return ""
+}
+
+// Response message for LookupFranchiseByZipcode.
+// Contains franchise branch information for the provided zipcode.
+type LookupFranchiseByZipcodeResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The business identifier of the franchise branch.
+	// Empty if the zipcode doesn't belong to any assigned territory.
+	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// The company identifier of the franchise branch.
+	// Empty if the zipcode doesn't belong to any assigned territory.
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// The name of the franchise branch.
+	// Empty if the zipcode doesn't belong to any assigned territory.
+	BusinessName string `protobuf:"bytes,3,opt,name=business_name,json=businessName,proto3" json:"business_name,omitempty"`
+	// The book online name for the franchise branch.
+	// Empty if the zipcode doesn't belong to any assigned territory.
+	BookOnlineName string `protobuf:"bytes,4,opt,name=book_online_name,json=bookOnlineName,proto3" json:"book_online_name,omitempty"`
+	// Whether online booking is enabled for the franchise branch.
+	// 0-not  1-yes
+	IsEnable bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
+	// The state of the franchise branch.
+	State string `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
+	// The county of the franchise branch.
+	County        string `protobuf:"bytes,7,opt,name=county,proto3" json:"county,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LookupFranchiseByZipcodeResponse) Reset() {
+	*x = LookupFranchiseByZipcodeResponse{}
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LookupFranchiseByZipcodeResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LookupFranchiseByZipcodeResponse) ProtoMessage() {}
+
+func (x *LookupFranchiseByZipcodeResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LookupFranchiseByZipcodeResponse.ProtoReflect.Descriptor instead.
+func (*LookupFranchiseByZipcodeResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetBusinessName() string {
+	if x != nil {
+		return x.BusinessName
+	}
+	return ""
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetBookOnlineName() string {
+	if x != nil {
+		return x.BookOnlineName
+	}
+	return ""
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetIsEnable() bool {
+	if x != nil {
+		return x.IsEnable
+	}
+	return false
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *LookupFranchiseByZipcodeResponse) GetCounty() string {
+	if x != nil {
+		return x.County
+	}
+	return ""
+}
+
+// Request message for GetOnlineBookingBusinessInfo.
+// Used to find business information for online booking based on filter criteria.
+type GetOnlineBookingBusinessInfoRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The filter criteria for the lookup request.
+	// At least one field must be provided.
+	Filter        *GetOnlineBookingBusinessInfoRequest_Filter `protobuf:"bytes,1,opt,name=filter,proto3" json:"filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest) Reset() {
+	*x = GetOnlineBookingBusinessInfoRequest{}
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOnlineBookingBusinessInfoRequest) ProtoMessage() {}
+
+func (x *GetOnlineBookingBusinessInfoRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOnlineBookingBusinessInfoRequest.ProtoReflect.Descriptor instead.
+func (*GetOnlineBookingBusinessInfoRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest) GetFilter() *GetOnlineBookingBusinessInfoRequest_Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+// Response message for GetOnlineBookingBusinessInfo.
+// Contains business information for online booking.
+type GetOnlineBookingBusinessInfoResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The business identifier.
+	// Empty if the criteria doesn't match any business.
+	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// The company identifier.
+	// Empty if the criteria doesn't match any business.
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// The name of the business.
+	// Empty if the criteria doesn't match any business.
+	BusinessName string `protobuf:"bytes,3,opt,name=business_name,json=businessName,proto3" json:"business_name,omitempty"`
+	// The book online name for the business.
+	// Empty if the criteria doesn't match any business.
+	BookOnlineName string `protobuf:"bytes,4,opt,name=book_online_name,json=bookOnlineName,proto3" json:"book_online_name,omitempty"`
+	// Whether online booking is enabled for the business.
+	// 0-not  1-yes
+	IsEnable bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
+	// The state of the business.
+	State string `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
+	// The county of the business.
+	County        string `protobuf:"bytes,7,opt,name=county,proto3" json:"county,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) Reset() {
+	*x = GetOnlineBookingBusinessInfoResponse{}
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOnlineBookingBusinessInfoResponse) ProtoMessage() {}
+
+func (x *GetOnlineBookingBusinessInfoResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOnlineBookingBusinessInfoResponse.ProtoReflect.Descriptor instead.
+func (*GetOnlineBookingBusinessInfoResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetBusinessName() string {
+	if x != nil {
+		return x.BusinessName
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetBookOnlineName() string {
+	if x != nil {
+		return x.BookOnlineName
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetIsEnable() bool {
+	if x != nil {
+		return x.IsEnable
+	}
+	return false
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetState() string {
+	if x != nil {
+		return x.State
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoResponse) GetCounty() string {
+	if x != nil {
+		return x.County
+	}
+	return ""
+}
+
 // Filter parameters for the abandoned booking list.
 type ListAbandonedBookingsRequest_Filter struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -452,7 +760,7 @@ type ListAbandonedBookingsRequest_Filter struct {
 
 func (x *ListAbandonedBookingsRequest_Filter) Reset() {
 	*x = ListAbandonedBookingsRequest_Filter{}
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[5]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -464,7 +772,7 @@ func (x *ListAbandonedBookingsRequest_Filter) String() string {
 func (*ListAbandonedBookingsRequest_Filter) ProtoMessage() {}
 
 func (x *ListAbandonedBookingsRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[5]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -541,7 +849,7 @@ type GetBookingAvailabilityRequest_PetParam struct {
 
 func (x *GetBookingAvailabilityRequest_PetParam) Reset() {
 	*x = GetBookingAvailabilityRequest_PetParam{}
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[6]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -553,7 +861,7 @@ func (x *GetBookingAvailabilityRequest_PetParam) String() string {
 func (*GetBookingAvailabilityRequest_PetParam) ProtoMessage() {}
 
 func (x *GetBookingAvailabilityRequest_PetParam) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[6]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -661,7 +969,7 @@ type GetBookingAvailabilityRequest_Filter struct {
 
 func (x *GetBookingAvailabilityRequest_Filter) Reset() {
 	*x = GetBookingAvailabilityRequest_Filter{}
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[7]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -673,7 +981,7 @@ func (x *GetBookingAvailabilityRequest_Filter) String() string {
 func (*GetBookingAvailabilityRequest_Filter) ProtoMessage() {}
 
 func (x *GetBookingAvailabilityRequest_Filter) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[7]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -758,7 +1066,7 @@ type GetBookingAvailabilityResponse_AvailabilityByDate struct {
 
 func (x *GetBookingAvailabilityResponse_AvailabilityByDate) Reset() {
 	*x = GetBookingAvailabilityResponse_AvailabilityByDate{}
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[8]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -770,7 +1078,7 @@ func (x *GetBookingAvailabilityResponse_AvailabilityByDate) String() string {
 func (*GetBookingAvailabilityResponse_AvailabilityByDate) ProtoMessage() {}
 
 func (x *GetBookingAvailabilityResponse_AvailabilityByDate) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[8]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -820,7 +1128,7 @@ type GetBookingAvailabilityResponse_StaffAvailability struct {
 
 func (x *GetBookingAvailabilityResponse_StaffAvailability) Reset() {
 	*x = GetBookingAvailabilityResponse_StaffAvailability{}
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[9]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -832,7 +1140,7 @@ func (x *GetBookingAvailabilityResponse_StaffAvailability) String() string {
 func (*GetBookingAvailabilityResponse_StaffAvailability) ProtoMessage() {}
 
 func (x *GetBookingAvailabilityResponse_StaffAvailability) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[9]
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -874,6 +1182,73 @@ func (x *GetBookingAvailabilityResponse_StaffAvailability) GetAvailableSlots() [
 		return x.AvailableSlots
 	}
 	return nil
+}
+
+// Filter parameters for the business info lookup.
+type GetOnlineBookingBusinessInfoRequest_Filter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// The business identifier to look up.
+	// Used to retrieve specific business by business ID.
+	BusinessId string `protobuf:"bytes,1,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// The book online name to look up.
+	// Used to retrieve specific business by book online name.
+	BookOnlineName string `protobuf:"bytes,2,opt,name=book_online_name,json=bookOnlineName,proto3" json:"book_online_name,omitempty"`
+	// The zipcode of the business itself.
+	// Used to retrieve specific business by its own zipcode.
+	Zipcode       string `protobuf:"bytes,3,opt,name=zipcode,proto3" json:"zipcode,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) Reset() {
+	*x = GetOnlineBookingBusinessInfoRequest_Filter{}
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetOnlineBookingBusinessInfoRequest_Filter) ProtoMessage() {}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetOnlineBookingBusinessInfoRequest_Filter.ProtoReflect.Descriptor instead.
+func (*GetOnlineBookingBusinessInfoRequest_Filter) Descriptor() ([]byte, []int) {
+	return file_moego_business_online_booking_v1_online_booking_service_proto_rawDescGZIP(), []int{7, 0}
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) GetBookOnlineName() string {
+	if x != nil {
+		return x.BookOnlineName
+	}
+	return ""
+}
+
+func (x *GetOnlineBookingBusinessInfoRequest_Filter) GetZipcode() string {
+	if x != nil {
+		return x.Zipcode
+	}
+	return ""
 }
 
 var File_moego_business_online_booking_v1_online_booking_service_proto protoreflect.FileDescriptor
@@ -958,11 +1333,42 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\n" +
 	"first_name\x18\x02 \x01(\tR\tfirstName\x12\x1b\n" +
 	"\tlast_name\x18\x03 \x01(\tR\blastName\x12>\n" +
-	"\x0favailable_slots\x18\x04 \x03(\v2\x15.google.type.IntervalR\x0eavailableSlots2\xd2\x04\n" +
+	"\x0favailable_slots\x18\x04 \x03(\v2\x15.google.type.IntervalR\x0eavailableSlots\"@\n" +
+	"\x1fLookupFranchiseByZipcodeRequest\x12\x1d\n" +
+	"\azipcode\x18\x01 \x01(\tB\x03\xe0A\x02R\azipcode\"\xfc\x01\n" +
+	" LookupFranchiseByZipcodeResponse\x12\x1f\n" +
+	"\vbusiness_id\x18\x01 \x01(\tR\n" +
+	"businessId\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tR\tcompanyId\x12#\n" +
+	"\rbusiness_name\x18\x03 \x01(\tR\fbusinessName\x12(\n" +
+	"\x10book_online_name\x18\x04 \x01(\tR\x0ebookOnlineName\x12\x1b\n" +
+	"\tis_enable\x18\x05 \x01(\bR\bisEnable\x12\x14\n" +
+	"\x05state\x18\x06 \x01(\tR\x05state\x12\x16\n" +
+	"\x06county\x18\a \x01(\tR\x06county\"\xff\x01\n" +
+	"#GetOnlineBookingBusinessInfoRequest\x12i\n" +
+	"\x06filter\x18\x01 \x01(\v2L.moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest.FilterB\x03\xe0A\x02R\x06filter\x1am\n" +
+	"\x06Filter\x12\x1f\n" +
+	"\vbusiness_id\x18\x01 \x01(\tR\n" +
+	"businessId\x12(\n" +
+	"\x10book_online_name\x18\x02 \x01(\tR\x0ebookOnlineName\x12\x18\n" +
+	"\azipcode\x18\x03 \x01(\tR\azipcode\"\x80\x02\n" +
+	"$GetOnlineBookingBusinessInfoResponse\x12\x1f\n" +
+	"\vbusiness_id\x18\x01 \x01(\tR\n" +
+	"businessId\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tR\tcompanyId\x12#\n" +
+	"\rbusiness_name\x18\x03 \x01(\tR\fbusinessName\x12(\n" +
+	"\x10book_online_name\x18\x04 \x01(\tR\x0ebookOnlineName\x12\x1b\n" +
+	"\tis_enable\x18\x05 \x01(\bR\bisEnable\x12\x14\n" +
+	"\x05state\x18\x06 \x01(\tR\x05state\x12\x16\n" +
+	"\x06county\x18\a \x01(\tR\x06county2\x83\b\n" +
 	"\x14OnlineBookingService\x12\xac\x01\n" +
 	"\x13GetAbandonedBooking\x12<.moego.business.online_booking.v1.GetAbandonedBookingRequest\x1a2.moego.business.online_booking.v1.AbandonedBooking\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/abandoned_bookings/{id}\x12\xc0\x01\n" +
 	"\x15ListAbandonedBookings\x12>.moego.business.online_booking.v1.ListAbandonedBookingsRequest\x1a?.moego.business.online_booking.v1.ListAbandonedBookingsResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:list\x12\xc7\x01\n" +
-	"\x16GetBookingAvailability\x12?.moego.business.online_booking.v1.GetBookingAvailabilityRequest\x1a@.moego.business.online_booking.v1.GetBookingAvailabilityResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/online_booking/availabilityB\xb1\x01\n" +
+	"\x16GetBookingAvailability\x12?.moego.business.online_booking.v1.GetBookingAvailabilityRequest\x1a@.moego.business.online_booking.v1.GetBookingAvailabilityResponse\"*\x82\xd3\xe4\x93\x02$:\x01*\"\x1f/v1/online_booking/availability\x12\xd1\x01\n" +
+	"\x18LookupFranchiseByZipcode\x12A.moego.business.online_booking.v1.LookupFranchiseByZipcodeRequest\x1aB.moego.business.online_booking.v1.LookupFranchiseByZipcodeResponse\".\x82\xd3\xe4\x93\x02(:\x01*\"#/v1/online_booking/franchise_lookup\x12\xda\x01\n" +
+	"\x1cGetOnlineBookingBusinessInfo\x12E.moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest\x1aF.moego.business.online_booking.v1.GetOnlineBookingBusinessInfoResponse\"+\x82\xd3\xe4\x93\x02%:\x01*\" /v1/online_booking/business/infoB\xb1\x01\n" +
 	"(com.moego.api.business.online_booking.v1B\x19OnlineBookingServiceProtoP\x01Zhgithub.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpbb\x06proto3"
 
 var (
@@ -978,7 +1384,7 @@ func file_moego_business_online_booking_v1_online_booking_service_proto_rawDescG
 }
 
 var file_moego_business_online_booking_v1_online_booking_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
+var file_moego_business_online_booking_v1_online_booking_service_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_moego_business_online_booking_v1_online_booking_service_proto_goTypes = []any{
 	(GetBookingAvailabilityRequest_PetParam_Type)(0),          // 0: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Type
 	(*ListAbandonedBookingsRequest)(nil),                      // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest
@@ -986,53 +1392,63 @@ var file_moego_business_online_booking_v1_online_booking_service_proto_goTypes =
 	(*GetAbandonedBookingRequest)(nil),                        // 3: moego.business.online_booking.v1.GetAbandonedBookingRequest
 	(*GetBookingAvailabilityRequest)(nil),                     // 4: moego.business.online_booking.v1.GetBookingAvailabilityRequest
 	(*GetBookingAvailabilityResponse)(nil),                    // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse
-	(*ListAbandonedBookingsRequest_Filter)(nil),               // 6: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
-	(*GetBookingAvailabilityRequest_PetParam)(nil),            // 7: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
-	(*GetBookingAvailabilityRequest_Filter)(nil),              // 8: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
-	(*GetBookingAvailabilityResponse_AvailabilityByDate)(nil), // 9: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
-	(*GetBookingAvailabilityResponse_StaffAvailability)(nil),  // 10: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
-	(*commonpb.Pagination)(nil),                               // 11: moego.common.v1.Pagination
-	(*AbandonedBooking)(nil),                                  // 12: moego.business.online_booking.v1.AbandonedBooking
-	(*date.Date)(nil),                                         // 13: google.type.Date
-	(*interval.Interval)(nil),                                 // 14: google.type.Interval
-	(AbandonedBooking_LeadType)(0),                            // 15: moego.business.online_booking.v1.AbandonedBooking.LeadType
-	(AbandonedBooking_Step)(0),                                // 16: moego.business.online_booking.v1.AbandonedBooking.Step
-	(AbandonedBooking_Status)(0),                              // 17: moego.business.online_booking.v1.AbandonedBooking.Status
-	(*commonpb.Weight)(nil),                                   // 18: moego.common.v1.Weight
-	(*latlng.LatLng)(nil),                                     // 19: google.type.LatLng
+	(*LookupFranchiseByZipcodeRequest)(nil),                   // 6: moego.business.online_booking.v1.LookupFranchiseByZipcodeRequest
+	(*LookupFranchiseByZipcodeResponse)(nil),                  // 7: moego.business.online_booking.v1.LookupFranchiseByZipcodeResponse
+	(*GetOnlineBookingBusinessInfoRequest)(nil),               // 8: moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest
+	(*GetOnlineBookingBusinessInfoResponse)(nil),              // 9: moego.business.online_booking.v1.GetOnlineBookingBusinessInfoResponse
+	(*ListAbandonedBookingsRequest_Filter)(nil),               // 10: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
+	(*GetBookingAvailabilityRequest_PetParam)(nil),            // 11: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
+	(*GetBookingAvailabilityRequest_Filter)(nil),              // 12: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
+	(*GetBookingAvailabilityResponse_AvailabilityByDate)(nil), // 13: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
+	(*GetBookingAvailabilityResponse_StaffAvailability)(nil),  // 14: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
+	(*GetOnlineBookingBusinessInfoRequest_Filter)(nil),        // 15: moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest.Filter
+	(*commonpb.Pagination)(nil),                               // 16: moego.common.v1.Pagination
+	(*AbandonedBooking)(nil),                                  // 17: moego.business.online_booking.v1.AbandonedBooking
+	(*date.Date)(nil),                                         // 18: google.type.Date
+	(*interval.Interval)(nil),                                 // 19: google.type.Interval
+	(AbandonedBooking_LeadType)(0),                            // 20: moego.business.online_booking.v1.AbandonedBooking.LeadType
+	(AbandonedBooking_Step)(0),                                // 21: moego.business.online_booking.v1.AbandonedBooking.Step
+	(AbandonedBooking_Status)(0),                              // 22: moego.business.online_booking.v1.AbandonedBooking.Status
+	(*commonpb.Weight)(nil),                                   // 23: moego.common.v1.Weight
+	(*latlng.LatLng)(nil),                                     // 24: google.type.LatLng
 }
 var file_moego_business_online_booking_v1_online_booking_service_proto_depIdxs = []int32{
-	11, // 0: moego.business.online_booking.v1.ListAbandonedBookingsRequest.pagination:type_name -> moego.common.v1.Pagination
-	6,  // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest.filter:type_name -> moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
-	12, // 2: moego.business.online_booking.v1.ListAbandonedBookingsResponse.bookings:type_name -> moego.business.online_booking.v1.AbandonedBooking
-	8,  // 3: moego.business.online_booking.v1.GetBookingAvailabilityRequest.filter:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
-	13, // 4: moego.business.online_booking.v1.GetBookingAvailabilityResponse.available_dates:type_name -> google.type.Date
-	9,  // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse.availability:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
-	14, // 6: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.abandon_time:type_name -> google.type.Interval
-	15, // 7: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.lead_types:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
-	16, // 8: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.steps:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
-	17, // 9: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.statuses:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
-	13, // 10: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.birthday:type_name -> google.type.Date
-	0,  // 11: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.type:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Type
-	18, // 12: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.weight:type_name -> moego.common.v1.Weight
-	13, // 13: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.start_date:type_name -> google.type.Date
-	13, // 14: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.end_date:type_name -> google.type.Date
-	7,  // 15: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.pets:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
-	19, // 16: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.coordinate:type_name -> google.type.LatLng
-	13, // 17: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.date:type_name -> google.type.Date
-	10, // 18: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.staff:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
-	14, // 19: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability.available_slots:type_name -> google.type.Interval
-	3,  // 20: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
-	1,  // 21: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingsRequest
-	4,  // 22: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:input_type -> moego.business.online_booking.v1.GetBookingAvailabilityRequest
-	12, // 23: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
-	2,  // 24: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingsResponse
-	5,  // 25: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:output_type -> moego.business.online_booking.v1.GetBookingAvailabilityResponse
-	23, // [23:26] is the sub-list for method output_type
-	20, // [20:23] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	16, // 0: moego.business.online_booking.v1.ListAbandonedBookingsRequest.pagination:type_name -> moego.common.v1.Pagination
+	10, // 1: moego.business.online_booking.v1.ListAbandonedBookingsRequest.filter:type_name -> moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter
+	17, // 2: moego.business.online_booking.v1.ListAbandonedBookingsResponse.bookings:type_name -> moego.business.online_booking.v1.AbandonedBooking
+	12, // 3: moego.business.online_booking.v1.GetBookingAvailabilityRequest.filter:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter
+	18, // 4: moego.business.online_booking.v1.GetBookingAvailabilityResponse.available_dates:type_name -> google.type.Date
+	13, // 5: moego.business.online_booking.v1.GetBookingAvailabilityResponse.availability:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate
+	15, // 6: moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest.filter:type_name -> moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest.Filter
+	19, // 7: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.abandon_time:type_name -> google.type.Interval
+	20, // 8: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.lead_types:type_name -> moego.business.online_booking.v1.AbandonedBooking.LeadType
+	21, // 9: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.steps:type_name -> moego.business.online_booking.v1.AbandonedBooking.Step
+	22, // 10: moego.business.online_booking.v1.ListAbandonedBookingsRequest.Filter.statuses:type_name -> moego.business.online_booking.v1.AbandonedBooking.Status
+	18, // 11: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.birthday:type_name -> google.type.Date
+	0,  // 12: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.type:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.Type
+	23, // 13: moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam.weight:type_name -> moego.common.v1.Weight
+	18, // 14: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.start_date:type_name -> google.type.Date
+	18, // 15: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.end_date:type_name -> google.type.Date
+	11, // 16: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.pets:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityRequest.PetParam
+	24, // 17: moego.business.online_booking.v1.GetBookingAvailabilityRequest.Filter.coordinate:type_name -> google.type.LatLng
+	18, // 18: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.date:type_name -> google.type.Date
+	14, // 19: moego.business.online_booking.v1.GetBookingAvailabilityResponse.AvailabilityByDate.staff:type_name -> moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability
+	19, // 20: moego.business.online_booking.v1.GetBookingAvailabilityResponse.StaffAvailability.available_slots:type_name -> google.type.Interval
+	3,  // 21: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:input_type -> moego.business.online_booking.v1.GetAbandonedBookingRequest
+	1,  // 22: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:input_type -> moego.business.online_booking.v1.ListAbandonedBookingsRequest
+	4,  // 23: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:input_type -> moego.business.online_booking.v1.GetBookingAvailabilityRequest
+	6,  // 24: moego.business.online_booking.v1.OnlineBookingService.LookupFranchiseByZipcode:input_type -> moego.business.online_booking.v1.LookupFranchiseByZipcodeRequest
+	8,  // 25: moego.business.online_booking.v1.OnlineBookingService.GetOnlineBookingBusinessInfo:input_type -> moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest
+	17, // 26: moego.business.online_booking.v1.OnlineBookingService.GetAbandonedBooking:output_type -> moego.business.online_booking.v1.AbandonedBooking
+	2,  // 27: moego.business.online_booking.v1.OnlineBookingService.ListAbandonedBookings:output_type -> moego.business.online_booking.v1.ListAbandonedBookingsResponse
+	5,  // 28: moego.business.online_booking.v1.OnlineBookingService.GetBookingAvailability:output_type -> moego.business.online_booking.v1.GetBookingAvailabilityResponse
+	7,  // 29: moego.business.online_booking.v1.OnlineBookingService.LookupFranchiseByZipcode:output_type -> moego.business.online_booking.v1.LookupFranchiseByZipcodeResponse
+	9,  // 30: moego.business.online_booking.v1.OnlineBookingService.GetOnlineBookingBusinessInfo:output_type -> moego.business.online_booking.v1.GetOnlineBookingBusinessInfoResponse
+	26, // [26:31] is the sub-list for method output_type
+	21, // [21:26] is the sub-list for method input_type
+	21, // [21:21] is the sub-list for extension type_name
+	21, // [21:21] is the sub-list for extension extendee
+	0,  // [0:21] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_online_booking_v1_online_booking_service_proto_init() }
@@ -1047,7 +1463,7 @@ func file_moego_business_online_booking_v1_online_booking_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc), len(file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   10,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
