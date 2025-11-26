@@ -62,17 +62,6 @@ service OnlineBookingService {
       body: "*"
     };
   }
-  
-  // Gets business information for online booking.
-  //
-  // This endpoint allows retrieving online booking business settings based on 
-  // various criteria such as business ID or book online name. 
-  rpc GetOnlineBookingBusinessInfo(GetOnlineBookingBusinessInfoRequest) returns (GetOnlineBookingBusinessInfoResponse) {
-    option (google.api.http) = {
-      post: "/v1/online_booking/business/info"
-      body: "*"
-    };
-  }
 }
 
 // Request to list abandoned bookings.
@@ -335,53 +324,6 @@ message LookupFranchiseByZipcodeResponse {
   string book_online_name = 4;
   
   // Whether online booking is enabled for the franchise branch.
-  // 0-not  1-yes
-  bool is_enable = 5;
-}
-
-// Request message for GetOnlineBookingBusinessInfo.
-// Used to find business information for online booking based on filter criteria.
-message GetOnlineBookingBusinessInfoRequest {
-  // Filter parameters for the business info lookup.
-  message Filter {
-    // The business identifier to look up.
-    // Used to retrieve specific business by business ID.
-    string business_id = 1;
-
-    // The book online name to look up.
-    // Used to retrieve specific business by book online name.
-    string book_online_name = 2;
-    
-    // The zipcode of the business itself.
-    // Used to retrieve specific business by its own zipcode.
-    string zipcode = 3;
-  }
-
-  // The filter criteria for the lookup request.
-  // At least one field must be provided.
-  Filter filter = 1 [(google.api.field_behavior) = REQUIRED];
-}
-
-// Response message for GetOnlineBookingBusinessInfo.
-// Contains business information for online booking.
-message GetOnlineBookingBusinessInfoResponse {
-  // The business identifier.
-  // Empty if the criteria doesn't match any business.
-  string business_id = 1;
-
-  // The company identifier.
-  // Empty if the criteria doesn't match any business.
-  string company_id = 2;
-
-  // The name of the business.
-  // Empty if the criteria doesn't match any business.
-  string business_name = 3;
-
-  // The book online name for the business.
-  // Empty if the criteria doesn't match any business.
-  string book_online_name = 4;
-  
-  // Whether online booking is enabled for the business.
   // 0-not  1-yes
   bool is_enable = 5;
 }

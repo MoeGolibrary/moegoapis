@@ -119,41 +119,6 @@
         ]
       }
     },
-    "/v1/online_booking/business/info": {
-      "post": {
-        "summary": "Gets business information for online booking.",
-        "description": "This endpoint allows retrieving online booking business settings based on \nvarious criteria such as business ID or book online name.",
-        "operationId": "OnlineBookingService_GetOnlineBookingBusinessInfo",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1GetOnlineBookingBusinessInfoResponse"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/googlerpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "description": "Request message for GetOnlineBookingBusinessInfo.\nUsed to find business information for online booking based on filter criteria.",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/v1GetOnlineBookingBusinessInfoRequest"
-            }
-          }
-        ],
-        "tags": [
-          "moego.business.online_booking.v1.OnlineBookingService"
-        ]
-      }
-    },
     "/v1/online_booking/franchise_lookup": {
       "post": {
         "summary": "Looks up franchise branch based on zipcode for territory routing.",
@@ -1015,81 +980,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
         },
         "type": "GetBookingAvailabilityResponse"
-      }
-    },
-    "v1GetOnlineBookingBusinessInfoRequest": {
-      "type": "object",
-      "properties": {
-        "filter": {
-          "$ref": "#/definitions/v1GetOnlineBookingBusinessInfoRequestFilter",
-          "description": "The filter criteria for the lookup request.\nAt least one field must be provided."
-        }
-      },
-      "description": "Request message for GetOnlineBookingBusinessInfo.\nUsed to find business information for online booking based on filter criteria.",
-      "required": [
-        "filter"
-      ],
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
-        },
-        "type": "GetOnlineBookingBusinessInfoRequest"
-      }
-    },
-    "v1GetOnlineBookingBusinessInfoRequestFilter": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string",
-          "description": "The business identifier to look up.\nUsed to retrieve specific business by business ID."
-        },
-        "bookOnlineName": {
-          "type": "string",
-          "description": "The book online name to look up.\nUsed to retrieve specific business by book online name."
-        },
-        "zipcode": {
-          "type": "string",
-          "description": "The zipcode of the business itself.\nUsed to retrieve specific business by its own zipcode."
-        }
-      },
-      "description": "Filter parameters for the business info lookup.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
-        },
-        "type": "Filter"
-      }
-    },
-    "v1GetOnlineBookingBusinessInfoResponse": {
-      "type": "object",
-      "properties": {
-        "businessId": {
-          "type": "string",
-          "description": "The business identifier.\nEmpty if the criteria doesn't match any business."
-        },
-        "companyId": {
-          "type": "string",
-          "description": "The company identifier.\nEmpty if the criteria doesn't match any business."
-        },
-        "businessName": {
-          "type": "string",
-          "description": "The name of the business.\nEmpty if the criteria doesn't match any business."
-        },
-        "bookOnlineName": {
-          "type": "string",
-          "description": "The book online name for the business.\nEmpty if the criteria doesn't match any business."
-        },
-        "isEnable": {
-          "type": "boolean",
-          "title": "Whether online booking is enabled for the business.\n0-not  1-yes"
-        }
-      },
-      "description": "Response message for GetOnlineBookingBusinessInfo.\nContains business information for online booking.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
-        },
-        "type": "GetOnlineBookingBusinessInfoResponse"
       }
     },
     "v1ListAbandonedBookingsRequest": {
