@@ -337,12 +337,6 @@ message LookupFranchiseByZipcodeResponse {
   // Whether online booking is enabled for the franchise branch.
   // 0-not  1-yes
   bool is_enable = 5;
-
-  // The state of the franchise branch.
-  string state = 6;
-
-  // The county of the franchise branch.
-  string county = 7;
 }
 
 // Request message for GetOnlineBookingBusinessInfo.
@@ -390,10 +384,4 @@ message GetOnlineBookingBusinessInfoResponse {
   // Whether online booking is enabled for the business.
   // 0-not  1-yes
   bool is_enable = 5;
-
-  // The state of the business.
-  string state = 6;
-
-  // The county of the business.
-  string county = 7;
 }

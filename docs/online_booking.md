@@ -385,8 +385,6 @@ Pet Mobile franchise model where each franchisee can only serve users within the
 | `businessName`   | string  | The name of the franchise branch                           |
 | `bookOnlineName` | string  | The book online name for the franchise branch              |
 | `isEnable`       | boolean | Whether online booking is enabled for the franchise branch |
-| `state`          | string  | The state of the franchise branch                          |
-| `county`         | string  | The county of the franchise branch                         |
 
 #### 📋 Business Rules
 
@@ -438,8 +436,6 @@ At least one filter field must be provided.
 | `businessName`   | string  | The name of the business                           |
 | `bookOnlineName` | string  | The book online name for the business              |
 | `isEnable`       | boolean | Whether online booking is enabled for the business |
-| `state`          | string  | The state of the business                          |
-| `county`         | string  | The county of the business                         |
 
 #### ⚠️ Error Codes
 
@@ -750,9 +746,7 @@ POST /v1/online_booking/business/info
   "companyId": "cmp_001",
   "businessName": "Beverly Hills Pet Grooming",
   "bookOnlineName": "beverly-hills",
-  "isEnable": true,
-  "state": "CA",
-  "county": "Los Angeles"
+  "isEnable": true
 }
 ```
 
@@ -764,9 +758,7 @@ POST /v1/online_booking/business/info
   "companyId": "",
   "businessName": "",
   "bookOnlineName": "",
-  "isEnable": false,
-  "state": "",
-  "county": ""
+  "isEnable": false
 }
 ```
 
@@ -794,9 +786,7 @@ POST /v1/online_booking/business/info
   "companyId": "cmp_001",
   "businessName": "Beverly Hills Pet Grooming",
   "bookOnlineName": "beverly-hills",
-  "isEnable": true,
-  "state": "CA",
-  "county": "Los Angeles"
+  "isEnable": true
 }
 ```
 
@@ -818,9 +808,7 @@ POST /v1/online_booking/business/info
   "companyId": "cmp_001",
   "businessName": "Beverly Hills Pet Grooming",
   "bookOnlineName": "beverly-hills",
-  "isEnable": true,
-  "state": "CA",
-  "county": "Los Angeles"
+  "isEnable": true
 }
 ```
 
@@ -842,9 +830,7 @@ POST /v1/online_booking/business/info
   "companyId": "cmp_001",
   "businessName": "Beverly Hills Pet Grooming",
   "bookOnlineName": "beverly-hills",
-  "isEnable": true,
-  "state": "CA",
-  "county": "Los Angeles"
+  "isEnable": true
 }
 ```
 

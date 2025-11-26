@@ -1082,14 +1082,6 @@
         "isEnable": {
           "type": "boolean",
           "title": "Whether online booking is enabled for the business.\n0-not  1-yes"
-        },
-        "state": {
-          "type": "string",
-          "description": "The state of the business."
-        },
-        "county": {
-          "type": "string",
-          "description": "The county of the business."
         }
       },
       "description": "Response message for GetOnlineBookingBusinessInfo.\nContains business information for online booking.",
@@ -1238,14 +1230,6 @@
         "isEnable": {
           "type": "boolean",
           "title": "Whether online booking is enabled for the franchise branch.\n0-not  1-yes"
-        },
-        "state": {
-          "type": "string",
-          "description": "The state of the franchise branch."
-        },
-        "county": {
-          "type": "string",
-          "description": "The county of the franchise branch."
         }
       },
       "description": "Response message for LookupFranchiseByZipcode.\nContains franchise branch information for the provided zipcode.",

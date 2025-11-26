@@ -497,11 +497,7 @@ type LookupFranchiseByZipcodeResponse struct {
 	BookOnlineName string `protobuf:"bytes,4,opt,name=book_online_name,json=bookOnlineName,proto3" json:"book_online_name,omitempty"`
 	// Whether online booking is enabled for the franchise branch.
 	// 0-not  1-yes
-	IsEnable bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
-	// The state of the franchise branch.
-	State string `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
-	// The county of the franchise branch.
-	County        string `protobuf:"bytes,7,opt,name=county,proto3" json:"county,omitempty"`
+	IsEnable      bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -571,20 +567,6 @@ func (x *LookupFranchiseByZipcodeResponse) GetIsEnable() bool {
 	return false
 }
 
-func (x *LookupFranchiseByZipcodeResponse) GetState() string {
-	if x != nil {
-		return x.State
-	}
-	return ""
-}
-
-func (x *LookupFranchiseByZipcodeResponse) GetCounty() string {
-	if x != nil {
-		return x.County
-	}
-	return ""
-}
-
 // Request message for GetOnlineBookingBusinessInfo.
 // Used to find business information for online booking based on filter criteria.
 type GetOnlineBookingBusinessInfoRequest struct {
@@ -651,11 +633,7 @@ type GetOnlineBookingBusinessInfoResponse struct {
 	BookOnlineName string `protobuf:"bytes,4,opt,name=book_online_name,json=bookOnlineName,proto3" json:"book_online_name,omitempty"`
 	// Whether online booking is enabled for the business.
 	// 0-not  1-yes
-	IsEnable bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
-	// The state of the business.
-	State string `protobuf:"bytes,6,opt,name=state,proto3" json:"state,omitempty"`
-	// The county of the business.
-	County        string `protobuf:"bytes,7,opt,name=county,proto3" json:"county,omitempty"`
+	IsEnable      bool `protobuf:"varint,5,opt,name=is_enable,json=isEnable,proto3" json:"is_enable,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -723,20 +701,6 @@ func (x *GetOnlineBookingBusinessInfoResponse) GetIsEnable() bool {
 		return x.IsEnable
 	}
 	return false
-}
-
-func (x *GetOnlineBookingBusinessInfoResponse) GetState() string {
-	if x != nil {
-		return x.State
-	}
-	return ""
-}
-
-func (x *GetOnlineBookingBusinessInfoResponse) GetCounty() string {
-	if x != nil {
-		return x.County
-	}
-	return ""
 }
 
 // Filter parameters for the abandoned booking list.
@@ -1255,7 +1219,7 @@ var File_moego_business_online_booking_v1_online_booking_service_proto protorefl
 
 const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc = "" +
 	"\n" +
-	"=moego/business/online_booking/v1/online_booking_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a\x18google/type/latlng.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\"\xe6\x04\n" +
+	"=moego/business/online_booking/v1/online_booking_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a\x18google/type/latlng.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\x1a\x1dmoego/common/v1/address.proto\"\xe6\x04\n" +
 	"\x1cListAbandonedBookingsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -1335,7 +1299,7 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"\tlast_name\x18\x03 \x01(\tR\blastName\x12>\n" +
 	"\x0favailable_slots\x18\x04 \x03(\v2\x15.google.type.IntervalR\x0eavailableSlots\"@\n" +
 	"\x1fLookupFranchiseByZipcodeRequest\x12\x1d\n" +
-	"\azipcode\x18\x01 \x01(\tB\x03\xe0A\x02R\azipcode\"\xfc\x01\n" +
+	"\azipcode\x18\x01 \x01(\tB\x03\xe0A\x02R\azipcode\"\xce\x01\n" +
 	" LookupFranchiseByZipcodeResponse\x12\x1f\n" +
 	"\vbusiness_id\x18\x01 \x01(\tR\n" +
 	"businessId\x12\x1d\n" +
@@ -1343,16 +1307,14 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"company_id\x18\x02 \x01(\tR\tcompanyId\x12#\n" +
 	"\rbusiness_name\x18\x03 \x01(\tR\fbusinessName\x12(\n" +
 	"\x10book_online_name\x18\x04 \x01(\tR\x0ebookOnlineName\x12\x1b\n" +
-	"\tis_enable\x18\x05 \x01(\bR\bisEnable\x12\x14\n" +
-	"\x05state\x18\x06 \x01(\tR\x05state\x12\x16\n" +
-	"\x06county\x18\a \x01(\tR\x06county\"\xff\x01\n" +
+	"\tis_enable\x18\x05 \x01(\bR\bisEnable\"\xff\x01\n" +
 	"#GetOnlineBookingBusinessInfoRequest\x12i\n" +
 	"\x06filter\x18\x01 \x01(\v2L.moego.business.online_booking.v1.GetOnlineBookingBusinessInfoRequest.FilterB\x03\xe0A\x02R\x06filter\x1am\n" +
 	"\x06Filter\x12\x1f\n" +
 	"\vbusiness_id\x18\x01 \x01(\tR\n" +
 	"businessId\x12(\n" +
 	"\x10book_online_name\x18\x02 \x01(\tR\x0ebookOnlineName\x12\x18\n" +
-	"\azipcode\x18\x03 \x01(\tR\azipcode\"\x80\x02\n" +
+	"\azipcode\x18\x03 \x01(\tR\azipcode\"\xd2\x01\n" +
 	"$GetOnlineBookingBusinessInfoResponse\x12\x1f\n" +
 	"\vbusiness_id\x18\x01 \x01(\tR\n" +
 	"businessId\x12\x1d\n" +
@@ -1360,9 +1322,7 @@ const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc
 	"company_id\x18\x02 \x01(\tR\tcompanyId\x12#\n" +
 	"\rbusiness_name\x18\x03 \x01(\tR\fbusinessName\x12(\n" +
 	"\x10book_online_name\x18\x04 \x01(\tR\x0ebookOnlineName\x12\x1b\n" +
-	"\tis_enable\x18\x05 \x01(\bR\bisEnable\x12\x14\n" +
-	"\x05state\x18\x06 \x01(\tR\x05state\x12\x16\n" +
-	"\x06county\x18\a \x01(\tR\x06county2\x83\b\n" +
+	"\tis_enable\x18\x05 \x01(\bR\bisEnable2\x83\b\n" +
 	"\x14OnlineBookingService\x12\xac\x01\n" +
 	"\x13GetAbandonedBooking\x12<.moego.business.online_booking.v1.GetAbandonedBookingRequest\x1a2.moego.business.online_booking.v1.AbandonedBooking\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/abandoned_bookings/{id}\x12\xc0\x01\n" +
 	"\x15ListAbandonedBookings\x12>.moego.business.online_booking.v1.ListAbandonedBookingsRequest\x1a?.moego.business.online_booking.v1.ListAbandonedBookingsResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/abandoned_bookings:list\x12\xc7\x01\n" +
