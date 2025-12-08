@@ -130,6 +130,12 @@ message Service {
   // Pet code filter related fields
   // Pet code filter
   PetCodeFilter pet_code_filter = 18;
+
+  // whether the add on is available for all services(only for add on)
+  bool service_filter = 19;
+
+  // service filters(only for add on)
+  repeated ServiceFilter service_filter_list = 20;
 }
 
 // Customized breed definition
@@ -157,4 +163,16 @@ message PetCodeFilter {
 
   // Pet code list, only valid when is_all_pet_code is false
   repeated string pet_code_ids = 3;
+}
+
+// Service filter definition
+message ServiceFilter {
+  // Service item type
+  Service.ItemType service_item_type = 1;
+
+  // Whether the addon is available for all services
+  optional bool available_for_all_services = 2;
+
+  // Available service ids (only if available_for_all_services is false)
+  repeated string available_service_id_list = 3;
 }

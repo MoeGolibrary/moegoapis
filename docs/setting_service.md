@@ -52,6 +52,8 @@ Represents a specific service or add-on that can be provided to pets.
 | `coatFilter`           | bool                   | Whether the service is available for all pet coat types       |
 | `customizedCoats`      | Array(string)          | List of pet coat types that can use this service              |
 | `petCodeFilter`        | PetCodeFilter          | Pet code filter configuration                                 |
+| `serviceFilter`        | bool                   | Whether the add-on is available for all services (only for add-ons) |
+| `serviceFilterList`    | Array(ServiceFilter)   | List of service filters defining which services this add-on can be combined with (only for add-ons) |
 
 #### Enum: ItemType
 
@@ -118,6 +120,21 @@ Services can be configured to work only with pets that have specific pet codes:
 | `isWhiteList`  | bool          | Whether to use whitelist (true) or blacklist (false)                 |
 | `isAllPetCode` | bool          | Whether the service is available for all pet codes                   |
 | `petCodeIds`   | Array(string) | List of pet code identifiers (only valid when isAllPetCode is false) |
+
+#### Service Filter Configuration
+
+Services can be configured to work with other services using service filters, particularly for add-ons that need to be combined with primary services:
+
+- `serviceFilter`: When set to `true`, indicates that the service is only available for specific service types or services defined in `serviceFilterList`
+- `serviceFilterList`: An array of `ServiceFilter` objects that define which service types and specific services the current service can be combined with
+
+##### ServiceFilter Object
+
+| Field Name               | Type                 | Description                                                 |
+|--------------------------|----------------------|-------------------------------------------------------------|
+| `serviceItemType`        | Service.ItemType     | Service type that this filter applies to                    |
+| `availableForAllServices`| optional bool        | Whether the service is available for all services of the type|
+| `availableServiceIdList` | Array(string)        | List of specific service IDs that this service can be combined with (only used when availableForAllServices is false)|
 
 ---
 

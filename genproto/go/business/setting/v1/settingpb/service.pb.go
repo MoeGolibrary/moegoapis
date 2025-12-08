@@ -210,8 +210,12 @@ type Service struct {
 	// Pet code filter related fields
 	// Pet code filter
 	PetCodeFilter *PetCodeFilter `protobuf:"bytes,18,opt,name=pet_code_filter,json=petCodeFilter,proto3" json:"pet_code_filter,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// whether the add on is available for all services(only for add on)
+	ServiceFilter bool `protobuf:"varint,19,opt,name=service_filter,json=serviceFilter,proto3" json:"service_filter,omitempty"`
+	// service filters(only for add on)
+	ServiceFilterList []*ServiceFilter `protobuf:"bytes,20,rep,name=service_filter_list,json=serviceFilterList,proto3" json:"service_filter_list,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *Service) Reset() {
@@ -370,6 +374,20 @@ func (x *Service) GetPetCodeFilter() *PetCodeFilter {
 	return nil
 }
 
+func (x *Service) GetServiceFilter() bool {
+	if x != nil {
+		return x.ServiceFilter
+	}
+	return false
+}
+
+func (x *Service) GetServiceFilterList() []*ServiceFilter {
+	if x != nil {
+		return x.ServiceFilterList
+	}
+	return nil
+}
+
 // Customized breed definition
 type CustomizedBreed struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -507,11 +525,75 @@ func (x *PetCodeFilter) GetPetCodeIds() []string {
 	return nil
 }
 
+// Service filter definition
+type ServiceFilter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Service item type
+	ServiceItemType Service_ItemType `protobuf:"varint,1,opt,name=service_item_type,json=serviceItemType,proto3,enum=moego.business.setting.v1.Service_ItemType" json:"service_item_type,omitempty"`
+	// Whether the addon is available for all services
+	AvailableForAllServices *bool `protobuf:"varint,2,opt,name=available_for_all_services,json=availableForAllServices,proto3,oneof" json:"available_for_all_services,omitempty"`
+	// Available service ids (only if available_for_all_services is false)
+	AvailableServiceIdList []string `protobuf:"bytes,3,rep,name=available_service_id_list,json=availableServiceIdList,proto3" json:"available_service_id_list,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *ServiceFilter) Reset() {
+	*x = ServiceFilter{}
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ServiceFilter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ServiceFilter) ProtoMessage() {}
+
+func (x *ServiceFilter) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ServiceFilter.ProtoReflect.Descriptor instead.
+func (*ServiceFilter) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ServiceFilter) GetServiceItemType() Service_ItemType {
+	if x != nil {
+		return x.ServiceItemType
+	}
+	return Service_SERVICE_ITEM_TYPE_UNSPECIFIED
+}
+
+func (x *ServiceFilter) GetAvailableForAllServices() bool {
+	if x != nil && x.AvailableForAllServices != nil {
+		return *x.AvailableForAllServices
+	}
+	return false
+}
+
+func (x *ServiceFilter) GetAvailableServiceIdList() []string {
+	if x != nil {
+		return x.AvailableServiceIdList
+	}
+	return nil
+}
+
 var File_moego_business_setting_v1_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/setting/v1/service.proto\x12\x19moego.business.setting.v1\x1a\x17google/type/money.proto\"\xaf\b\n" +
+	"'moego/business/setting/v1/service.proto\x12\x19moego.business.setting.v1\x1a\x17google/type/money.proto\"\xb0\t\n" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -532,7 +614,9 @@ const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\vcoat_filter\x18\x10 \x01(\bR\n" +
 	"coatFilter\x12)\n" +
 	"\x10customized_coats\x18\x11 \x03(\tR\x0fcustomizedCoats\x12P\n" +
-	"\x0fpet_code_filter\x18\x12 \x01(\v2(.moego.business.setting.v1.PetCodeFilterR\rpetCodeFilter\"t\n" +
+	"\x0fpet_code_filter\x18\x12 \x01(\v2(.moego.business.setting.v1.PetCodeFilterR\rpetCodeFilter\x12%\n" +
+	"\x0eservice_filter\x18\x13 \x01(\bR\rserviceFilter\x12X\n" +
+	"\x13service_filter_list\x18\x14 \x03(\v2(.moego.business.setting.v1.ServiceFilterR\x11serviceFilterList\"t\n" +
 	"\bItemType\x12!\n" +
 	"\x1dSERVICE_ITEM_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
 	"\bGROOMING\x10\x01\x12\f\n" +
@@ -555,7 +639,12 @@ const file_moego_business_setting_v1_service_proto_rawDesc = "" +
 	"\ris_white_list\x18\x01 \x01(\bR\visWhiteList\x12%\n" +
 	"\x0fis_all_pet_code\x18\x02 \x01(\bR\fisAllPetCode\x12 \n" +
 	"\fpet_code_ids\x18\x03 \x03(\tR\n" +
-	"petCodeIdsB\x8a\x01\n" +
+	"petCodeIds\"\x84\x02\n" +
+	"\rServiceFilter\x12W\n" +
+	"\x11service_item_type\x18\x01 \x01(\x0e2+.moego.business.setting.v1.Service.ItemTypeR\x0fserviceItemType\x12@\n" +
+	"\x1aavailable_for_all_services\x18\x02 \x01(\bH\x00R\x17availableForAllServices\x88\x01\x01\x129\n" +
+	"\x19available_service_id_list\x18\x03 \x03(\tR\x16availableServiceIdListB\x1d\n" +
+	"\x1b_available_for_all_servicesB\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -571,26 +660,29 @@ func file_moego_business_setting_v1_service_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_setting_v1_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_moego_business_setting_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_moego_business_setting_v1_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_setting_v1_service_proto_goTypes = []any{
 	(Service_ItemType)(0),   // 0: moego.business.setting.v1.Service.ItemType
 	(Service_Type)(0),       // 1: moego.business.setting.v1.Service.Type
 	(*Service)(nil),         // 2: moego.business.setting.v1.Service
 	(*CustomizedBreed)(nil), // 3: moego.business.setting.v1.CustomizedBreed
 	(*PetCodeFilter)(nil),   // 4: moego.business.setting.v1.PetCodeFilter
-	(*money.Money)(nil),     // 5: google.type.Money
+	(*ServiceFilter)(nil),   // 5: moego.business.setting.v1.ServiceFilter
+	(*money.Money)(nil),     // 6: google.type.Money
 }
 var file_moego_business_setting_v1_service_proto_depIdxs = []int32{
 	0, // 0: moego.business.setting.v1.Service.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	5, // 1: moego.business.setting.v1.Service.price:type_name -> google.type.Money
+	6, // 1: moego.business.setting.v1.Service.price:type_name -> google.type.Money
 	1, // 2: moego.business.setting.v1.Service.service_type:type_name -> moego.business.setting.v1.Service.Type
 	3, // 3: moego.business.setting.v1.Service.customized_breeds:type_name -> moego.business.setting.v1.CustomizedBreed
 	4, // 4: moego.business.setting.v1.Service.pet_code_filter:type_name -> moego.business.setting.v1.PetCodeFilter
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	5, // 5: moego.business.setting.v1.Service.service_filter_list:type_name -> moego.business.setting.v1.ServiceFilter
+	0, // 6: moego.business.setting.v1.ServiceFilter.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_service_proto_init() }
@@ -599,13 +691,14 @@ func file_moego_business_setting_v1_service_proto_init() {
 		return
 	}
 	file_moego_business_setting_v1_service_proto_msgTypes[1].OneofWrappers = []any{}
+	file_moego_business_setting_v1_service_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_service_proto_rawDesc), len(file_moego_business_setting_v1_service_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
