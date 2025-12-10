@@ -30,38 +30,38 @@ Represents a membership plan that customers can purchase and use for benefits.
 
 #### Fields
 
-| Field Name                        | Type                      | Description                                                                             |
-|-----------------------------------|---------------------------|-----------------------------------------------------------------------------------------|
-| `id`                              | string                    | Unique identifier for the membership plan. Format: "mem_" followed by random characters |
-| `internal_product_id`             | string                    | The product id in subscription service                                                  |
-| `name`                            | string                    | Display name of the membership plan                                                     |
-| `description`                     | string                    | Detailed description of the membership plan                                             |
-| `status`                          | enum Status               | Current status of the membership plan                                                   |
-| `price`                           | google.type.Money         | Price of the membership plan                                                            |
-| `tax_id`                          | string                    | The tax id associated with the membership                                               |
-| `policy`                          | string                    | Policy information for the membership                                                   |
-| `company_id`                      | string                    | The company id that owns this membership                                                |
-| `price_id`                        | string                    | The price id                                                                            |
-| `billing_cycle_period`            | TimePeriod                | Billing cycle period                                                                    |
-| `created_time`                    | google.protobuf.Timestamp | Timestamp when the membership plan was created                                          |
-| `last_updated_time`               | google.protobuf.Timestamp | Timestamp when the membership plan was last updated                                     |
-| `deleted_time`                    | google.protobuf.Timestamp | Timestamp when the membership plan was deleted (if applicable)                          |
-| `revision`                        | int32                     | Revision number for tracking updates                                                    |
-| `total_price`                     | google.type.Money         | Total price including taxes                                                             |
-| `total_tax`                       | google.type.Money         | Total tax amount                                                                        |
-| `enable_online_booking`           | bool                      | Whether this membership can be purchased through online booking                         |
-| `enable_discount_benefits`        | bool                      | Whether discount benefits are enabled for this membership                               |
-| `enable_quantity_benefits`        | bool                      | Whether quantity benefits are enabled for this membership                               |
-| `billing_cycle_day_of_week`       | google.type.DayOfWeek     | Billing cycle day of week                                                               |
-| `breed_filter`                    | bool                      | Breed filter                                                                            |
-| `customized_breeds`               | repeated CustomizedBreed  | Customized breed                                                                        |
-| `pet_size_filter`                 | bool                      | Available for all pet size                                                              |
-| `customized_pet_sizes`            | repeated string           | Available pet size (only if is_available_for_all_pet_size is false)                     |
-| `coat_filter`                     | bool                      | Available for all pet coat type                                                         |
-| `customized_coats`                | repeated string           | Available pet coat type (only if is_available_for_all_pet_coat_type is false)           |
-| `source`                          | enum Source               | Source of the membership                                                                |
-| `billing_cycle_time_of_day`       | google.type.TimeOfDay     | Billing cycle time of day                                                               |
-| `allow_billing_cycle_time_of_day` | bool                      | Allow billing cycle time of day                                                         |
+| Field Name                   | Type                      | Description                                                                             |
+|------------------------------|---------------------------|-----------------------------------------------------------------------------------------|
+| `id`                         | string                    | Unique identifier for the membership plan. Format: "mem_" followed by random characters |
+| `internalProductId`          | string                    | The product id in subscription service                                                  |
+| `name`                       | string                    | Display name of the membership plan                                                     |
+| `description`                | string                    | Detailed description of the membership plan                                             |
+| `status`                     | enum Status               | Current status of the membership plan                                                   |
+| `price`                      | google.type.Money         | Price of the membership plan                                                            |
+| `taxId`                      | string                    | The tax id associated with the membership                                               |
+| `policy`                     | string                    | Policy information for the membership                                                   |
+| `companyId`                  | string                    | The company id that owns this membership                                                |
+| `priceId`                    | string                    | The price id                                                                            |
+| `billingCyclePeriod`         | TimePeriod                | Billing cycle period                                                                    |
+| `createdTime`                | google.protobuf.Timestamp | Timestamp when the membership plan was created                                          |
+| `lastUpdatedTime`            | google.protobuf.Timestamp | Timestamp when the membership plan was last updated                                     |
+| `deletedTime`                | google.protobuf.Timestamp | Timestamp when the membership plan was deleted (if applicable)                          |
+| `revision`                   | int32                     | Revision number for tracking updates                                                    |
+| `totalPrice`                 | google.type.Money         | Total price including taxes                                                             |
+| `totalTax`                   | google.type.Money         | Total tax amount                                                                        |
+| `enableOnlineBooking`        | bool                      | Whether this membership can be purchased through online booking                         |
+| `enableDiscountBenefits`     | bool                      | Whether discount benefits are enabled for this membership                               |
+| `enableQuantityBenefits`     | bool                      | Whether quantity benefits are enabled for this membership                               |
+| `billingCycleDayOfWeek`      | google.type.DayOfWeek     | Billing cycle day of week                                                               |
+| `breedFilter`                | bool                      | Breed filter                                                                            |
+| `customizedBreeds`           | repeated CustomizedBreed  | Customized breed                                                                        |
+| `petSizeFilter`              | bool                      | Available for all pet size                                                              |
+| `customizedPetSizes`         | repeated string           | Available pet size (only if is_available_for_all_pet_size is false)                     |
+| `coatFilter`                 | bool                      | Available for all pet coat type                                                         |
+| `customizedCoats`            | repeated string           | Available pet coat type (only if is_available_for_all_pet_coat_type is false)           |
+| `source`                     | enum Source               | Source of the membership                                                                |
+| `billingCycleTimeOfDay`      | google.type.TimeOfDay     | Billing cycle time of day                                                               |
+| `allowBillingCycleTimeOfDay` | bool                      | Allow billing cycle time of day                                                         |
 
 #### Status Enum
 
@@ -85,21 +85,21 @@ Represents a customer's subscription to a membership plan.
 
 #### Fields
 
-| Field Name             | Type                      | Description                                |
-|------------------------|---------------------------|--------------------------------------------|
-| `id`                   | string                    | Unique identifier for the subscription     |
-| `customer_id`          | string                    | The customer identifier                    |
-| `membership_id`        | string                    | The membership identifier                  |
-| `company_id`           | string                    | The company identifier                     |
-| `price`                | google.type.Money         | The price of the subscription              |
-| `created_time`         | google.protobuf.Timestamp | The create time                            |
-| `last_updated_time`    | google.protobuf.Timestamp | The update time                            |
-| `deleted_time`         | google.protobuf.Timestamp | The delete time, non-null means is deleted |
-| `validity_period`      | google.type.Interval      | Validity period                            |
-| `next_billing_date`    | google.protobuf.Timestamp | Next billing date                          |
-| `expired_time`         | google.protobuf.Timestamp | Expire date                                |
-| `cancel_at_period_end` | bool                      | Cancelled but in active status             |
-| `status`               | enum Status               | Status of the subscription                 |
+| Field Name          | Type                      | Description                                |
+|---------------------|---------------------------|--------------------------------------------|
+| `id`                | string                    | Unique identifier for the subscription     |
+| `customerId`        | string                    | The customer identifier                    |
+| `membershipId`      | string                    | The membership identifier                  |
+| `companyId`         | string                    | The company identifier                     |
+| `price`             | google.type.Money         | The price of the subscription              |
+| `createdTime`       | google.protobuf.Timestamp | The create time                            |
+| `lastUpdatedTime`   | google.protobuf.Timestamp | The update time                            |
+| `deletedTime`       | google.protobuf.Timestamp | The delete time, non-null means is deleted |
+| `validityPeriod`    | google.type.Interval      | Validity period                            |
+| `nextBillingDate`   | google.protobuf.Timestamp | Next billing date                          |
+| `expiredTime`       | google.protobuf.Timestamp | Expire date                                |
+| `cancelAtPeriodEnd` | bool                      | Cancelled but in active status             |
+| `status`            | enum Status               | Status of the subscription                 |
 
 #### Status Enum
 
@@ -132,27 +132,27 @@ Represents a membership benefit view with usage details.
 
 #### Fields
 
-| Field Name           | Type                          | Description                              |
-|----------------------|-------------------------------|------------------------------------------|
-| `id`                 | string                        | History ID                               |
-| `membership_id`      | string                        | Membership identifier                    |
-| `total_quantity`     | int32                         | Total quantity                           |
-| `remaining_quantity` | int32                         | Remaining quantity                       |
-| `is_limited`         | bool                          | Whether the benefit is limited           |
-| `redeem_time`        | google.protobuf.Timestamp     | Time when the benefit was redeemed       |
-| `item_details`       | repeated RedeemItemDetailView | Details of items in the benefit          |
-| `is_all`             | bool                          | Whether the benefit applies to all items |
-| `discount_unit`      | enum DiscountUnit             | Unit of discount (percent or numerical)  |
-| `discount_value`     | double                        | Value of the discount                    |
+| Field Name          | Type                          | Description                              |
+|---------------------|-------------------------------|------------------------------------------|
+| `id`                | string                        | History ID                               |
+| `membershipId`      | string                        | Membership identifier                    |
+| `totalQuantity`     | int32                         | Total quantity                           |
+| `remainingQuantity` | int32                         | Remaining quantity                       |
+| `isLimited`         | bool                          | Whether the benefit is limited           |
+| `redeemTime`        | google.protobuf.Timestamp     | Time when the benefit was redeemed       |
+| `itemDetails`       | repeated RedeemItemDetailView | Details of items in the benefit          |
+| `isAll`             | bool                          | Whether the benefit applies to all items |
+| `discountUnit`      | enum DiscountUnit             | Unit of discount (percent or numerical)  |
+| `discountValue`     | double                        | Value of the discount                    |
 
 #### RedeemItemDetailView
 
-| Field Name  | Type              | Description                           |
-|-------------|-------------------|---------------------------------------|
-| `item_id`   | string            | Item identifier                       |
-| `item_name` | string            | Item name                             |
-| `price`     | google.type.Money | Item amount                           |
-| `item_type` | enum TargetType   | Type of item (service, product, etc.) |
+| Field Name | Type              | Description                           |
+|------------|-------------------|---------------------------------------|
+| `itemId`   | string            | Item identifier                       |
+| `itemName` | string            | Item name                             |
+| `price`    | google.type.Money | Item amount                           |
+| `itemType` | enum TargetType   | Type of item (service, product, etc.) |
 
 #### TargetType Enum
 
@@ -221,17 +221,17 @@ facilitate targeted queries.
 
 ##### Filter Object
 
-| Field Name  | Type               | Required | Description                                                         |
-|-------------|--------------------|----------|---------------------------------------------------------------------|
-| `name_like` | string             | No       | Partial name match to filter memberships by name (case-insensitive) |
-| `statuses`  | Array(enum Status) | No       | List of membership statuses to include in results                   |
+| Field Name | Type               | Required | Description                                                         |
+|------------|--------------------|----------|---------------------------------------------------------------------|
+| `nameLike` | string             | No       | Partial name match to filter memberships by name (case-insensitive) |
+| `statuses` | Array(enum Status) | No       | List of membership statuses to include in results                   |
 
 #### 📌 Return Value:
 
-| Field Name        | Type              | Description                                                          |
-|-------------------|-------------------|----------------------------------------------------------------------|
-| `memberships`     | Array(Membership) | List of memberships matching the request criteria                    |
-| `next_page_token` | string            | Token for retrieving the next page of results (empty if none remain) |
+| Field Name      | Type              | Description                                                          |
+|-----------------|-------------------|----------------------------------------------------------------------|
+| `memberships`   | Array(Membership) | List of memberships matching the request criteria                    |
+| `nextPageToken` | string            | Token for retrieving the next page of results (empty if none remain) |
 
 #### ⚠️ Error Codes:
 
@@ -265,18 +265,18 @@ status to facilitate targeted queries.
 
 ##### Filter Object
 
-| Field Name       | Type               | Required | Description                                         |
-|------------------|--------------------|----------|-----------------------------------------------------|
-| `customer_ids`   | Array(string)      | No       | List of customer IDs to include in results          |
-| `membership_ids` | Array(string)      | No       | List of membership IDs to include in results        |
-| `statuses`       | Array(enum Status) | No       | List of subscription statuses to include in results |
+| Field Name      | Type               | Required | Description                                         |
+|-----------------|--------------------|----------|-----------------------------------------------------|
+| `customerIds`   | Array(string)      | No       | List of customer IDs to include in results          |
+| `membershipIds` | Array(string)      | No       | List of membership IDs to include in results        |
+| `statuses`      | Array(enum Status) | No       | List of subscription statuses to include in results |
 
 #### 📌 Return Value:
 
-| Field Name        | Type                | Description                                                          |
-|-------------------|---------------------|----------------------------------------------------------------------|
-| `subscriptions`   | Array(Subscription) | List of subscriptions matching the request criteria                  |
-| `next_page_token` | string              | Token for retrieving the next page of results (empty if none remain) |
+| Field Name      | Type                | Description                                                          |
+|-----------------|---------------------|----------------------------------------------------------------------|
+| `subscriptions` | Array(Subscription) | List of subscriptions matching the request criteria                  |
+| `nextPageToken` | string              | Token for retrieving the next page of results (empty if none remain) |
 
 #### ⚠️ Error Codes:
 
@@ -311,16 +311,16 @@ benefits and discount benefits that are associated with the membership.
 
 ##### Filter Object
 
-| Field Name            | Type                      | Required | Description         |
-|-----------------------|---------------------------|----------|---------------------|
-| `validity_start_time` | google.protobuf.Timestamp | No       | Validity start time |
+| Field Name          | Type                      | Required | Description         |
+|---------------------|---------------------------|----------|---------------------|
+| `validityStartTime` | google.protobuf.Timestamp | No       | Validity start time |
 
 #### 📌 Return Value:
 
-| Field Name          | Type                      | Description           |
-|---------------------|---------------------------|-----------------------|
-| `included_benefits` | Array(IncludeBenefitView) | The included benefits |
-| `discount_benefits` | Array(IncludeBenefitView) | Discount benefits     |
+| Field Name         | Type                      | Description           |
+|--------------------|---------------------------|-----------------------|
+| `includedBenefits` | Array(IncludeBenefitView) | The included benefits |
+| `discountBenefits` | Array(IncludeBenefitView) | Discount benefits     |
 
 #### ⚠️ Error Codes:
 
@@ -342,7 +342,7 @@ benefits and discount benefits that are associated with the membership.
   },
   "companyId": "cmp_001",
   "filter": {
-    "name_like": "gold",
+    "nameLike": "gold",
     "statuses": [
       "ACTIVE"
     ]
@@ -361,7 +361,7 @@ benefits and discount benefits that are associated with the membership.
   },
   "companyId": "cmp_001",
   "filter": {
-    "customer_ids": [
+    "customerIds": [
       "cus_123",
       "cus_456"
     ],
@@ -389,43 +389,43 @@ Response:
 
 ```json
 {
-  "included_benefits": [
+  "includedBenefits": [
     {
       "id": "inc_001",
-      "membership_id": "mem_abc123",
-      "total_quantity": 10,
-      "remaining_quantity": 5,
-      "is_limited": true,
-      "redeem_time": "2023-01-15T10:00:00Z",
-      "item_details": [
+      "membershipId": "mem_abc123",
+      "totalQuantity": 10,
+      "remainingQuantity": 5,
+      "isLimited": true,
+      "redeemTime": "2023-01-15T10:00:00Z",
+      "itemDetails": [
         {
-          "item_id": "srv_001",
-          "item_name": "Basic Grooming",
+          "itemId": "srv_001",
+          "itemName": "Basic Grooming",
           "price": {
             "currencyCode": "USD",
             "units": 50,
             "nanos": 0
           },
-          "item_type": "SERVICE"
+          "itemType": "SERVICE"
         }
       ],
-      "is_all": false,
-      "discount_unit": "UNIT_UNSPECIFIED",
-      "discount_value": 0
+      "isAll": false,
+      "discountUnit": "UNIT_UNSPECIFIED",
+      "discountValue": 0
     }
   ],
-  "discount_benefits": [
+  "discountBenefits": [
     {
       "id": "disc_001",
-      "membership_id": "mem_abc123",
-      "total_quantity": 0,
-      "remaining_quantity": 0,
-      "is_limited": false,
-      "redeem_time": "2023-01-15T10:00:00Z",
-      "item_details": [],
-      "is_all": true,
-      "discount_unit": "PERCENT",
-      "discount_value": 15.0
+      "membershipId": "mem_abc123",
+      "totalQuantity": 0,
+      "remainingQuantity": 0,
+      "isLimited": false,
+      "redeemTime": "2023-01-15T10:00:00Z",
+      "itemDetails": [],
+      "isAll": true,
+      "discountUnit": "PERCENT",
+      "discountValue": 15.0
     }
   ]
 }

@@ -165,7 +165,7 @@ Retrieves a paginated list of payments based on specified criteria. Supports fil
 |-------------------|---------------|----------|--------------------------------------------------|
 | `pagination`      | Pagination    | Yes      | Pagination info: pageSize, pageToken             |
 | `companyId`       | string        | Yes      | Company ID to scope payments                     |
-| `filter.orderIds` | Array(string) | No       | Optional list of order IDs to filter payments by |
+| `filter.orderIds` | Array(string) | Yes      | Optional list of order IDs to filter payments by |
 
 #### 📌 Return Value:
 

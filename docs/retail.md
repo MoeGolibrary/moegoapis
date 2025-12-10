@@ -79,25 +79,25 @@ Represents a package of services that can be sold together.
 
 #### Fields
 
-| Field Name              | Type                      | Description                                              |
-|-------------------------|---------------------------|----------------------------------------------------------|
-| `id`                    | string                    | Unique identifier for the package                        |
-| `company_id`            | string                    | ID of the company that owns this package                 |
-| `business_id`           | string                    | ID of the business location associated with this package |
-| `name`                  | string                    | Name of the package                                      |
-| `description`           | string                    | Description of the package                               |
-| `price`                 | google.type.Money         | Price of the package                                     |
-| `total_value`           | google.type.Money         | Total value of the services in the package               |
-| `tax_id`                | string                    | Tax ID associated with this package                      |
-| `tax_rate`              | double                    | Tax rate applied to this package                         |
-| `sold_quantity`         | int32                     | Number of packages sold                                  |
-| `create_time`           | google.protobuf.Timestamp | When this package was created                            |
-| `update_time`           | google.protobuf.Timestamp | When this package was last updated                       |
-| `is_active`             | bool                      | Whether this package is active                           |
-| `enable_online_booking` | bool                      | Whether this package can be booked online                |
-| `expiration_days`       | int32                     | Expiration days for the package                          |
-| `source`                | int32                     | Source of the package                                    |
-| `items`                 | repeated Item             | Items included in the package                            |
+| Field Name            | Type                      | Description                                              |
+|-----------------------|---------------------------|----------------------------------------------------------|
+| `id`                  | string                    | Unique identifier for the package                        |
+| `companyId`           | string                    | ID of the company that owns this package                 |
+| `businessId`          | string                    | ID of the business location associated with this package |
+| `name`                | string                    | Name of the package                                      |
+| `description`         | string                    | Description of the package                               |
+| `price`               | google.type.Money         | Price of the package                                     |
+| `totalValue`          | google.type.Money         | Total value of the services in the package               |
+| `taxId`               | string                    | Tax ID associated with this package                      |
+| `taxRate`             | double                    | Tax rate applied to this package                         |
+| `soldQuantity`        | int32                     | Number of packages sold                                  |
+| `createTime`          | google.protobuf.Timestamp | When this package was created                            |
+| `updateTime`          | google.protobuf.Timestamp | When this package was last updated                       |
+| `isActive`            | bool                      | Whether this package is active                           |
+| `enableOnlineBooking` | bool                      | Whether this package can be booked online                |
+| `expirationDays`      | int32                     | Expiration days for the package                          |
+| `source`              | int32                     | Source of the package                                    |
+| `items`               | repeated Item             | Items included in the package                            |
 
 #### Item Object
 
@@ -108,11 +108,11 @@ Represents a package of services that can be sold together.
 
 #### Service Object
 
-| Field Name   | Type              | Description               |
-|--------------|-------------------|---------------------------|
-| `service_id` | string            | ID of the service         |
-| `unit_price` | google.type.Money | Unit price of the service |
-| `name`       | string            | Name of the service       |
+| Field Name  | Type              | Description               |
+|-------------|-------------------|---------------------------|
+| `serviceId` | string            | ID of the service         |
+| `unitPrice` | google.type.Money | Unit price of the service |
+| `name`      | string            | Name of the service       |
 
 ---
 
@@ -236,18 +236,18 @@ properties.
 
 ```json
 {
-   "pagination": {
-      "pageSize": 20,
-      "pageToken": "1"
-   },
+  "pagination": {
+    "pageSize": 20,
+    "pageToken": "1"
+  },
   "companyId": "cmp_001",
   "businessIds": [
     "biz_001",
     "biz_002"
   ],
   "filter": {
-    "name_like": "grooming",
-    "active_only": true
+    "nameLike": "grooming",
+    "activeOnly": true
   }
 }
 ```

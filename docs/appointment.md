@@ -139,12 +139,12 @@ status, sending methods and logs, and is used for customer communication and int
 
 ##### `GroomingReport.SendLog`
 
-- `send_method`: Method used for this send attempt.
-- `send_status`: Result of this send attempt.
-- `sent_time`: Timestamp when the send attempt occurred.
-- `sender_id`: Identifier of the staff or system that initiated the send.
-- `error_code` *(optional)*: Error code if the send failed.
-- `error_msg` *(optional)*: Error message if the send failed.
+- `sendMethod`: Method used for this send attempt.
+- `sendStatus`: Result of this send attempt.
+- `sentTime`: Timestamp when the send attempt occurred.
+- `senderId`: Identifier of the staff or system that initiated the send.
+- `errorCode` *(optional)*: Error code if the send failed.
+- `errorMsg` *(optional)*: Error message if the send failed.
 
 ---
 

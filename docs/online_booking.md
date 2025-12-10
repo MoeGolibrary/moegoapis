@@ -292,8 +292,10 @@ constraints. This endpoint helps customers find suitable time slots when booking
 
 ##### Filter Options:
 
-- `startDate`: Start date for availability check (defaults to today). Maximum range between startDate and endDate is 3 months.
-- `endDate`: End date for availability check (defaults to startDate). Maximum range between startDate and endDate is 3 months.
+- `startDate`: Start date for availability check (defaults to today). Maximum range between startDate and endDate is 3
+  months.
+- `endDate`: End date for availability check (defaults to startDate). Maximum range between startDate and endDate is 3
+  months.
 - `serviceIds`: Filter by specific service IDs
 - `staffIds`: Filter by specific staff IDs
 - `customerId`: Filter by specific customer ID
@@ -347,8 +349,8 @@ When specifying the pet type in the `type` field, use one of the following value
 | Field Name       | Type            | Description                                 |
 |------------------|-----------------|---------------------------------------------|
 | `staffId`        | string          | Unique identifier of the staff member       |
-| `first_name`     | string          | First name of the staff member              |
-| `last_name`      | string          | Last name of the staff member               |
+| `firstName`      | string          | First name of the staff member              |
+| `lastName`       | string          | Last name of the staff member               |
 | `availableSlots` | Array(Interval) | Available time slots (google.type.Interval) |
 
 #### ⚠️ Error Codes

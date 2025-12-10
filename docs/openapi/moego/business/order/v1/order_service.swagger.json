@@ -339,6 +339,9 @@
         }
       },
       "title": "Filter parameters for the discount list",
+      "required": [
+        "orderIds"
+      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
@@ -401,6 +404,9 @@
         }
       },
       "title": "Filter parameters for the line item list",
+      "required": [
+        "orderIds"
+      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"
@@ -471,6 +477,9 @@
         }
       },
       "title": "Filter parameters for the redeem package list",
+      "required": [
+        "orderIds"
+      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/order/v1/orderpb"

@@ -758,7 +758,7 @@ const file_moego_business_order_v1_order_service_proto_rawDesc = "" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12Q\n" +
 	"\x06filter\x18\x02 \x01(\v29.moego.business.order.v1.ListOrderLineItemsRequest.FilterR\x06filter\x1a*\n" +
 	"\x06Filter\x12 \n" +
-	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x01R\borderIds\"\xc8\x01\n" +
+	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x02R\borderIds\"\xc8\x01\n" +
 	"\x1aListOrderLineItemsResponse\x12P\n" +
 	"\x10order_line_items\x18\x01 \x03(\v2&.moego.business.order.v1.OrderLineItemR\x0eorderLineItems\x12X\n" +
 	"\x15order_line_item_taxes\x18\x02 \x03(\v2%.moego.business.order.v1.OrderLineTaxR\x12orderLineItemTaxes\"\xbe\x01\n" +
@@ -767,7 +767,7 @@ const file_moego_business_order_v1_order_service_proto_rawDesc = "" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12Q\n" +
 	"\x06filter\x18\x02 \x01(\v29.moego.business.order.v1.ListOrderDiscountsRequest.FilterR\x06filter\x1a*\n" +
 	"\x06Filter\x12 \n" +
-	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x01R\borderIds\"m\n" +
+	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x02R\borderIds\"m\n" +
 	"\x1aListOrderDiscountsResponse\x12O\n" +
 	"\x0forder_discounts\x18\x01 \x03(\v2&.moego.business.order.v1.OrderDiscountR\x0eorderDiscounts\"\xc8\x01\n" +
 	"\x1eListOrderRedeemPackagesRequest\x12\"\n" +
@@ -775,7 +775,7 @@ const file_moego_business_order_v1_order_service_proto_rawDesc = "" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12V\n" +
 	"\x06filter\x18\x02 \x01(\v2>.moego.business.order.v1.ListOrderRedeemPackagesRequest.FilterR\x06filter\x1a*\n" +
 	"\x06Filter\x12 \n" +
-	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x01R\borderIds\"\x82\x01\n" +
+	"\torder_ids\x18\x01 \x03(\tB\x03\xe0A\x02R\borderIds\"\x82\x01\n" +
 	"\x1fListOrderRedeemPackagesResponse\x12_\n" +
 	"\x15order_redeem_packages\x18\x01 \x03(\v2+.moego.business.order.v1.OrderRedeemPackageR\x13orderRedeemPackages2\x83\x06\n" +
 	"\fOrderService\x12m\n" +

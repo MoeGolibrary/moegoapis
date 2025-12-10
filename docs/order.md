@@ -317,14 +317,14 @@ update time.
 
 #### 🔧 Request Parameters:
 
-| Field Name                 | Type                | Required | Description                                                                                    |
-|----------------------------|---------------------|----------|------------------------------------------------------------------------------------------------|
-| `pagination`               | Pagination          | Yes      | Pagination info: pageSize, pageToken                                                           |
-| `companyId`                | string              | Yes      | Company ID to scope orders, obfuscated ID string                                               |
-| `businessIds`              | Array(string)       | Yes      | List of business locations to filter orders by, obfuscated ID strings                          |
-| `filter.ids`               | Array(string)       | No       | Specific order IDs to retrieve (if provided, other filters are ignored), obfuscated ID strings |
-| `filter.statuses`          | Array(Order.Status) | No       | Order statuses to include in results                                                           |
-| `filter.last_updated_time` | Interval            | No       | Time range for filtering orders by last update time                                            |
+| Field Name               | Type                | Required | Description                                                                                    |
+|--------------------------|---------------------|----------|------------------------------------------------------------------------------------------------|
+| `pagination`             | Pagination          | Yes      | Pagination info: pageSize, pageToken                                                           |
+| `companyId`              | string              | Yes      | Company ID to scope orders, obfuscated ID string                                               |
+| `businessIds`            | Array(string)       | Yes      | List of business locations to filter orders by, obfuscated ID strings                          |
+| `filter.ids`             | Array(string)       | No       | Specific order IDs to retrieve (if provided, other filters are ignored), obfuscated ID strings |
+| `filter.statuses`        | Array(Order.Status) | No       | Order statuses to include in results                                                           |
+| `filter.lastUpdatedTime` | Interval            | No       | Time range for filtering orders by last update time                                            |
 
 #### 📌 Return Value:
 
@@ -361,10 +361,10 @@ line item.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                                                               |
-|--------------------|---------------|----------|---------------------------------------------------------------------------|
-| `companyId`        | string        | Yes      | Company ID to scope line items                                            |
-| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter line items by, obfuscated ID strings |
+| Field Name        | Type          | Required | Description                                                               |
+|-------------------|---------------|----------|---------------------------------------------------------------------------|
+| `companyId`       | string        | Yes      | Company ID to scope line items                                            |
+| `filter.orderIds` | Array(string) | Yes      | Optional list of order IDs to filter line items by, obfuscated ID strings |
 
 #### 📌 Return Value:
 
@@ -398,10 +398,10 @@ reporting and analysis.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                                                              |
-|--------------------|---------------|----------|--------------------------------------------------------------------------|
-| `companyId`        | string        | Yes      | Company ID to scope discounts                                            |
-| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter discounts by, obfuscated ID strings |
+| Field Name        | Type          | Required | Description                                                              |
+|-------------------|---------------|----------|--------------------------------------------------------------------------|
+| `companyId`       | string        | Yes      | Company ID to scope discounts                                            |
+| `filter.orderIds` | Array(string) | Yes      | Optional list of order IDs to filter discounts by, obfuscated ID strings |
 
 #### 📌 Return Value:
 
@@ -434,10 +434,10 @@ useful for tracking package usage and reporting.
 
 #### 🔧 Request Parameters:
 
-| Field Name         | Type          | Required | Description                                                                      |
-|--------------------|---------------|----------|----------------------------------------------------------------------------------|
-| `companyId`        | string        | Yes      | Company ID to scope redeemed packages                                            |
-| `filter.order_ids` | Array(string) | No       | Optional list of order IDs to filter redeemed packages by, obfuscated ID strings |
+| Field Name        | Type          | Required | Description                                                                      |
+|-------------------|---------------|----------|----------------------------------------------------------------------------------|
+| `companyId`       | string        | Yes      | Company ID to scope redeemed packages                                            |
+| `filter.orderIds` | Array(string) | Yes      | Optional list of order IDs to filter redeemed packages by, obfuscated ID strings |
 
 #### 📌 Return Value:
 

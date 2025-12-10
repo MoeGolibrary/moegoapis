@@ -152,7 +152,7 @@ message ListOrderLineItemsRequest {
   message Filter {
     // Specific order IDs to retrieve line items for
     // Optional. If empty, returns items from all orders
-    repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated string order_ids = 1 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Optional filters to apply to the line item list
@@ -180,7 +180,7 @@ message ListOrderDiscountsRequest {
   message Filter {
     // Specific order IDs to retrieve discounts for
     // Optional. If empty, returns discounts from all orders
-    repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated string order_ids = 1 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Optional filters to apply to the discount list
@@ -204,7 +204,7 @@ message ListOrderRedeemPackagesRequest {
   message Filter {
     // Specific order IDs to retrieve redeem packages for
     // Optional. If empty, returns redeem packages from all orders
-    repeated string order_ids = 1 [(google.api.field_behavior) = OPTIONAL];
+    repeated string order_ids = 1 [(google.api.field_behavior) = REQUIRED];
   }
 
   // Optional filters to apply to the redeem package list
