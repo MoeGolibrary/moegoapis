@@ -292,7 +292,7 @@ Lists appointments matching specified criteria, including company ID and optiona
 | `pagination`  | Pagination    | Yes      | Page size and token                            |
 | `companyId`   | string        | Yes      | Company ID for access control                  |
 | `businessIds` | Array(string) | Yes      | List of business IDs to filter appointments by |
-| `filters`     | Filter        | No       | Filter options                                 |
+| `filter`     | Filter        | No       | Filter options                                 |
 
 #### Filter Options:
 
