@@ -929,6 +929,18 @@
         "petCodeFilter": {
           "$ref": "#/definitions/v1PetCodeFilter",
           "title": "Pet code filter related fields\nPet code filter"
+        },
+        "serviceFilter": {
+          "type": "boolean",
+          "title": "whether the add on is available for all services(only for add on)"
+        },
+        "serviceFilterList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ServiceFilter"
+          },
+          "title": "service filters(only for add on)"
         }
       },
       "description": "Service represents a specific service or add-on that can be provided to pets.\nServices are the core offerings of your business and can be customized based on\nlocation, staff availability, service type, and pet details. Each service has its own pricing,\nduration, and availability settings.",
@@ -1575,6 +1587,34 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ReferralSource"
+      }
+    },
+    "v1ServiceFilter": {
+      "type": "object",
+      "properties": {
+        "serviceItemType": {
+          "$ref": "#/definitions/ServiceItemType",
+          "title": "Service item type"
+        },
+        "availableForAllServices": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Whether the addon is available for all services"
+        },
+        "availableServiceIdList": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Available service ids (only if available_for_all_services is false)"
+        }
+      },
+      "title": "Service filter definition",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ServiceFilter"
       }
     },
     "v1ServiceType": {

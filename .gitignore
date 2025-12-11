@@ -2,3 +2,4 @@
 .vscode/
 deps/
 moego.bin
+.DS_Store
