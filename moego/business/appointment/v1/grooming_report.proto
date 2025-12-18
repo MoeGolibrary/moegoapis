@@ -60,6 +60,9 @@ message GroomingReport {
   // string, The unique identifier of the grooming report.
   string id = 1;
 
+  // int64, The raw identifier of the grooming report.
+  int64 raw_id = 15;
+
   // string, The appointment associated with this grooming report.
   string appointment_id = 2;
 

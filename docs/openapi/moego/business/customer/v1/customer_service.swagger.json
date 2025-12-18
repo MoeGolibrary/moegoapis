@@ -792,6 +792,11 @@
           "type": "string",
           "title": "Unique identifier for the customer\nFormat: \"cus_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the customer in product"
+        },
         "firstName": {
           "type": "string",
           "title": "Customer's first name"

@@ -62,6 +62,9 @@ message Service {
   // Format: "srv_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the service in product
+  int64 raw_id = 21;
+
   // Display name of the service
   string name = 2;
 

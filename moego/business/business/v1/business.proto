@@ -18,6 +18,9 @@ message Business {
   // Format: "bus_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the business in product
+  int64 raw_id = 14;
+
   // Display name of the business location
   // Used in customer communications and UI
   string name = 2;

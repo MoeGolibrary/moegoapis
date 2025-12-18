@@ -160,6 +160,9 @@ message Pet {
   // Format: "pet_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the pet in product
+  int64 raw_id = 22;
+
   // Pet's given name
   string name = 2 [(google.api.field_behavior) = REQUIRED];
 

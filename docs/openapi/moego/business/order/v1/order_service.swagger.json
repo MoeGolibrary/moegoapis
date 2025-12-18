@@ -604,6 +604,11 @@
           "type": "string",
           "title": "Unique identifier for the order\nFormat: \"ord_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the order in product"
+        },
         "businessId": {
           "type": "string",
           "title": "ID of the business location where services were provided\nRequired. Must be a valid business ID"

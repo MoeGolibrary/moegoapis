@@ -72,6 +72,9 @@ message Customer {
   // Format: "cus_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the customer in product
+  int64 raw_id = 25;
+
   // Customer's first name
   string first_name = 2;
 

@@ -214,6 +214,11 @@
           "type": "string",
           "title": "Unique identifier for the business location\nFormat: \"bus_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the business in product"
+        },
         "name": {
           "type": "string",
           "title": "Display name of the business location\nUsed in customer communications and UI"
