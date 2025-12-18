@@ -845,6 +845,11 @@
           "type": "string",
           "title": "Unique identifier for the service\nFormat: \"srv_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the service in product"
+        },
         "name": {
           "type": "string",
           "title": "Display name of the service"

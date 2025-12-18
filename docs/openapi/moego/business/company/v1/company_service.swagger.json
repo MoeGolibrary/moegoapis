@@ -153,6 +153,11 @@
           "type": "string",
           "title": "Unique identifier for the company\nFormat: \"cmp_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the company in product"
+        },
         "name": {
           "type": "string",
           "title": "Legal name of the company\nUsed in official communications and documents"

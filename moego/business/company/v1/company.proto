@@ -18,6 +18,9 @@ message Company {
   // Format: "cmp_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the company in product
+  int64 raw_id = 2;
+
   // Legal name of the company
   // Used in official communications and documents
   string name = 3;

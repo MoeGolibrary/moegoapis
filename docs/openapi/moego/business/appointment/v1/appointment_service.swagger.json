@@ -1419,6 +1419,11 @@
           "type": "string",
           "description": "string, The unique identifier of the grooming report."
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "description": "int64, The raw identifier of the grooming report."
+        },
         "appointmentId": {
           "type": "string",
           "description": "string, The appointment associated with this grooming report."
@@ -1843,6 +1848,11 @@
         "id": {
           "type": "string",
           "title": "Unique identifier for the pet\nFormat: \"pet_\" followed by random characters"
+        },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the pet in product"
         },
         "name": {
           "type": "string",

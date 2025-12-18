@@ -43,6 +43,9 @@ message Order {
   // Format: "ord_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the order in product
+  int64 raw_id = 23;
+
   // ID of the business location where services were provided
   // Required. Must be a valid business ID
   string business_id = 2;
