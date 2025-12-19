@@ -341,9 +341,6 @@ func (x *Payment) GetRefunds() []*Refund {
 // Multiple refunds can be applied to a single payment.
 type Refund struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier for the refund
-	// Format: "rf_" followed by random characters
-	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// Amount refunded
 	// Must be greater than zero and not exceed remaining balance
 	Amount *money.Money `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
@@ -391,13 +388,6 @@ func (x *Refund) ProtoReflect() protoreflect.Message {
 // Deprecated: Use Refund.ProtoReflect.Descriptor instead.
 func (*Refund) Descriptor() ([]byte, []int) {
 	return file_moego_business_payment_v1_payment_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *Refund) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
 }
 
 func (x *Refund) GetAmount() *money.Money {
@@ -473,9 +463,8 @@ const file_moego_business_payment_v1_payment_proto_rawDesc = "" +
 	"\n" +
 	"\x06RETAIL\x10\x02\x12\x0e\n" +
 	"\n" +
-	"MEMBERSHIP\x10\x03\"\xd9\x01\n" +
-	"\x06Refund\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
+	"MEMBERSHIP\x10\x03\"\xc9\x01\n" +
+	"\x06Refund\x12*\n" +
 	"\x06amount\x18\x02 \x01(\v2\x12.google.type.MoneyR\x06amount\x12\x16\n" +
 	"\x06reason\x18\x03 \x01(\tR\x06reason\x12A\n" +
 	"\x0eprocessed_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rprocessedTime\x12\x19\n" +

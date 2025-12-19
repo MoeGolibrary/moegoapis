@@ -346,10 +346,6 @@
     "v1Refund": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "title": "Unique identifier for the refund\nFormat: \"rf_\" followed by random characters"
-        },
         "amount": {
           "$ref": "#/definitions/typeMoney",
           "title": "Amount refunded\nMust be greater than zero and not exceed remaining balance"

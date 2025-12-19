@@ -123,10 +123,6 @@ message Payment {
 // Each refund tracks the amount returned, reason, and processing timestamp.
 // Multiple refunds can be applied to a single payment.
 message Refund {
-  // Unique identifier for the refund
-  // Format: "rf_" followed by random characters
-  string id = 1;
-
   // Amount refunded
   // Must be greater than zero and not exceed remaining balance
   google.type.Money amount = 2;
