@@ -201,8 +201,11 @@ type Payment struct {
 	// When this payment was last modified
 	// System-generated timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// Detailed refund information
+	// Contains individual refund records with amounts and timestamps
+	Refunds       []*Refund `protobuf:"bytes,14,rep,name=refunds,proto3" json:"refunds,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Payment) Reset() {
@@ -326,11 +329,117 @@ func (x *Payment) GetLastUpdatedTime() *timestamppb.Timestamp {
 	return nil
 }
 
+func (x *Payment) GetRefunds() []*Refund {
+	if x != nil {
+		return x.Refunds
+	}
+	return nil
+}
+
+// Refund represents a partial or full return of payment funds.
+// Each refund tracks the amount returned, reason, and processing timestamp.
+// Multiple refunds can be applied to a single payment.
+type Refund struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Unique identifier for the refund
+	// Format: "rf_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Amount refunded
+	// Must be greater than zero and not exceed remaining balance
+	Amount *money.Money `protobuf:"bytes,2,opt,name=amount,proto3" json:"amount,omitempty"`
+	// Reason for the refund
+	// Example: "customer_request", "service_issue", "duplicate_charge"
+	Reason string `protobuf:"bytes,3,opt,name=reason,proto3" json:"reason,omitempty"`
+	// When the refund was processed
+	// System-generated timestamp
+	ProcessedTime *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=processed_time,json=processedTime,proto3" json:"processed_time,omitempty"`
+	// ID of the staff member who processed the refund
+	// Optional. May be empty for system-initiated refunds
+	StaffId string `protobuf:"bytes,5,opt,name=staff_id,json=staffId,proto3" json:"staff_id,omitempty"`
+	// Reference to the original transaction
+	// Links to the payment ID this refund belongs to
+	PaymentId     string `protobuf:"bytes,6,opt,name=payment_id,json=paymentId,proto3" json:"payment_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Refund) Reset() {
+	*x = Refund{}
+	mi := &file_moego_business_payment_v1_payment_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Refund) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Refund) ProtoMessage() {}
+
+func (x *Refund) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_payment_v1_payment_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Refund.ProtoReflect.Descriptor instead.
+func (*Refund) Descriptor() ([]byte, []int) {
+	return file_moego_business_payment_v1_payment_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Refund) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *Refund) GetAmount() *money.Money {
+	if x != nil {
+		return x.Amount
+	}
+	return nil
+}
+
+func (x *Refund) GetReason() string {
+	if x != nil {
+		return x.Reason
+	}
+	return ""
+}
+
+func (x *Refund) GetProcessedTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.ProcessedTime
+	}
+	return nil
+}
+
+func (x *Refund) GetStaffId() string {
+	if x != nil {
+		return x.StaffId
+	}
+	return ""
+}
+
+func (x *Refund) GetPaymentId() string {
+	if x != nil {
+		return x.PaymentId
+	}
+	return ""
+}
+
 var File_moego_business_payment_v1_payment_proto protoreflect.FileDescriptor
 
 const file_moego_business_payment_v1_payment_proto_rawDesc = "" +
 	"\n" +
-	"'moego/business/payment/v1/payment.proto\x12\x19moego.business.payment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x90\x06\n" +
+	"'moego/business/payment/v1/payment.proto\x12\x19moego.business.payment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xcd\x06\n" +
 	"\aPayment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -347,7 +456,8 @@ const file_moego_business_payment_v1_payment_proto_rawDesc = "" +
 	" \x01(\v2\x12.google.type.MoneyR\rprocessingFee\x127\n" +
 	"\rrefund_amount\x18\v \x01(\v2\x12.google.type.MoneyR\frefundAmount\x12=\n" +
 	"\fcreated_time\x18\f \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
-	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\"b\n" +
+	"\x11last_updated_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12;\n" +
+	"\arefunds\x18\x0e \x03(\v2!.moego.business.payment.v1.RefundR\arefunds\"b\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\v\n" +
 	"\aCREATED\x10\x01\x12\x0e\n" +
@@ -363,7 +473,15 @@ const file_moego_business_payment_v1_payment_proto_rawDesc = "" +
 	"\n" +
 	"\x06RETAIL\x10\x02\x12\x0e\n" +
 	"\n" +
-	"MEMBERSHIP\x10\x03B\x8a\x01\n" +
+	"MEMBERSHIP\x10\x03\"\xd9\x01\n" +
+	"\x06Refund\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12*\n" +
+	"\x06amount\x18\x02 \x01(\v2\x12.google.type.MoneyR\x06amount\x12\x16\n" +
+	"\x06reason\x18\x03 \x01(\tR\x06reason\x12A\n" +
+	"\x0eprocessed_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\rprocessedTime\x12\x19\n" +
+	"\bstaff_id\x18\x05 \x01(\tR\astaffId\x12\x1d\n" +
+	"\n" +
+	"payment_id\x18\x06 \x01(\tR\tpaymentIdB\x8a\x01\n" +
 	"!com.moego.api.business.payment.v1B\fPaymentProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/payment/v1/paymentpb;paymentpbb\x06proto3"
 
 var (
@@ -379,27 +497,31 @@ func file_moego_business_payment_v1_payment_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_payment_v1_payment_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_moego_business_payment_v1_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_moego_business_payment_v1_payment_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_moego_business_payment_v1_payment_proto_goTypes = []any{
 	(Payment_Status)(0),           // 0: moego.business.payment.v1.Payment.Status
 	(Payment_Module)(0),           // 1: moego.business.payment.v1.Payment.Module
 	(*Payment)(nil),               // 2: moego.business.payment.v1.Payment
-	(*money.Money)(nil),           // 3: google.type.Money
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(*Refund)(nil),                // 3: moego.business.payment.v1.Refund
+	(*money.Money)(nil),           // 4: google.type.Money
+	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
 }
 var file_moego_business_payment_v1_payment_proto_depIdxs = []int32{
-	0, // 0: moego.business.payment.v1.Payment.status:type_name -> moego.business.payment.v1.Payment.Status
-	1, // 1: moego.business.payment.v1.Payment.module:type_name -> moego.business.payment.v1.Payment.Module
-	3, // 2: moego.business.payment.v1.Payment.amount:type_name -> google.type.Money
-	3, // 3: moego.business.payment.v1.Payment.processing_fee:type_name -> google.type.Money
-	3, // 4: moego.business.payment.v1.Payment.refund_amount:type_name -> google.type.Money
-	4, // 5: moego.business.payment.v1.Payment.created_time:type_name -> google.protobuf.Timestamp
-	4, // 6: moego.business.payment.v1.Payment.last_updated_time:type_name -> google.protobuf.Timestamp
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	0,  // 0: moego.business.payment.v1.Payment.status:type_name -> moego.business.payment.v1.Payment.Status
+	1,  // 1: moego.business.payment.v1.Payment.module:type_name -> moego.business.payment.v1.Payment.Module
+	4,  // 2: moego.business.payment.v1.Payment.amount:type_name -> google.type.Money
+	4,  // 3: moego.business.payment.v1.Payment.processing_fee:type_name -> google.type.Money
+	4,  // 4: moego.business.payment.v1.Payment.refund_amount:type_name -> google.type.Money
+	5,  // 5: moego.business.payment.v1.Payment.created_time:type_name -> google.protobuf.Timestamp
+	5,  // 6: moego.business.payment.v1.Payment.last_updated_time:type_name -> google.protobuf.Timestamp
+	3,  // 7: moego.business.payment.v1.Payment.refunds:type_name -> moego.business.payment.v1.Refund
+	4,  // 8: moego.business.payment.v1.Refund.amount:type_name -> google.type.Money
+	5,  // 9: moego.business.payment.v1.Refund.processed_time:type_name -> google.protobuf.Timestamp
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_payment_v1_payment_proto_init() }
@@ -413,7 +535,7 @@ func file_moego_business_payment_v1_payment_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_payment_v1_payment_proto_rawDesc), len(file_moego_business_payment_v1_payment_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -113,4 +113,37 @@ message Payment {
   // When this payment was last modified
   // System-generated timestamp
   google.protobuf.Timestamp last_updated_time = 13;
+
+  // Detailed refund information
+  // Contains individual refund records with amounts and timestamps
+  repeated Refund refunds = 14;
+}
+
+// Refund represents a partial or full return of payment funds.
+// Each refund tracks the amount returned, reason, and processing timestamp.
+// Multiple refunds can be applied to a single payment.
+message Refund {
+  // Unique identifier for the refund
+  // Format: "rf_" followed by random characters
+  string id = 1;
+
+  // Amount refunded
+  // Must be greater than zero and not exceed remaining balance
+  google.type.Money amount = 2;
+
+  // Reason for the refund
+  // Example: "customer_request", "service_issue", "duplicate_charge"
+  string reason = 3;
+
+  // When the refund was processed
+  // System-generated timestamp
+  google.protobuf.Timestamp processed_time = 4;
+
+  // ID of the staff member who processed the refund
+  // Optional. May be empty for system-initiated refunds
+  string staff_id = 5;
+
+  // Reference to the original transaction
+  // Links to the payment ID this refund belongs to
+  string payment_id = 6;
 }
