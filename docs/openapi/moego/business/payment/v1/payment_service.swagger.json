@@ -312,6 +312,14 @@
           "type": "string",
           "format": "date-time",
           "title": "When this payment was last modified\nSystem-generated timestamp"
+        },
+        "refunds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Refund"
+          },
+          "title": "Detailed refund information\nContains individual refund records with amounts and timestamps"
         }
       },
       "description": "Payment represents a financial transaction that processes funds for an order.\nEach payment tracks the amount, processing status, and associated fees. Payments\ncan be made for various business modules and support multiple payment methods.",
@@ -334,6 +342,39 @@
       ],
       "default": "STATUS_UNSPECIFIED",
       "description": "Status represents the current state of the payment in its lifecycle.\nThis determines what actions can be taken and affects reporting.\n\n - STATUS_UNSPECIFIED: Unknown or invalid status\nShould not be used when creating new payments\n - CREATED: Payment has been initiated but not processed\nInitial state for new payments\n - PROCESSING: Payment is being processed by the payment provider\nTemporary state during processing\n - PAID: Funds have been successfully transferred\nAwaiting final reconciliation\n - COMPLETED: Payment has been fully reconciled\nFinal state for successful payments\n - FAILED: Payment processing encountered an error\nMay be retried depending on the error"
+    },
+    "v1Refund": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Amount refunded\nMust be greater than zero and not exceed remaining balance"
+        },
+        "reason": {
+          "type": "string",
+          "title": "Reason for the refund\nExample: \"customer_request\", \"service_issue\", \"duplicate_charge\""
+        },
+        "processedTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When the refund was processed\nSystem-generated timestamp"
+        },
+        "staffId": {
+          "type": "string",
+          "title": "ID of the staff member who processed the refund\nOptional. May be empty for system-initiated refunds"
+        },
+        "paymentId": {
+          "type": "string",
+          "title": "Reference to the original transaction\nLinks to the payment ID this refund belongs to"
+        }
+      },
+      "description": "Refund represents a partial or full return of payment funds.\nEach refund tracks the amount returned, reason, and processing timestamp.\nMultiple refunds can be applied to a single payment.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/payment/v1/paymentpb"
+        },
+        "type": "Refund"
+      }
     }
   }
 }
