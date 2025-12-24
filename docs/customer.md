@@ -58,6 +58,7 @@ pets, and tracking service history.
 | `preference`              | Preference                                                | Customer's communication and marketing preferences                    |
 | `upcomingAppointmentsUrl` | string                                                    | URL to a page where the customer can view their upcoming appointments |
 | `deleted`                 | bool                                                      | Flag indicating if this customer record is deleted                    |
+| `complianceConfig`        | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels        |
 
 ### 2. Note
 
@@ -83,7 +84,32 @@ customer.
 | `subscribeToMarketingEmails` | bool | Whether the customer has opted in to marketing emails        |
 | `receiveAppointmentReminder` | bool | Whether the customer wants appointment reminders             |
 
-### 4. Address
+### 4. ComplianceChannel
+
+Represents the available communication channels for customer notifications. These channels are used to control how 
+customers receive service-related and marketing communications.
+
+| Value                         | Description                                   |
+|-------------------------------|-----------------------------------------------|
+| `COMPLIANCE_CHANNEL_SMS`      | Communication via SMS text messages           |
+| `COMPLIANCE_CHANNEL_EMAIL`    | Communication via email                       |
+| `COMPLIANCE_CHANNEL_AUTO_CALL`| Communication via automated phone calls       |
+
+### 5. CustomerComplianceConfig
+
+Stores customer's compliance and communication preferences. This configuration controls which channels the business 
+can use to contact the customer for different types of communications.
+
+| Field Name                    | Type                       | Description                                                           |
+|-------------------------------|----------------------------|-----------------------------------------------------------------------|
+| `serviceRelatedChannels`      | Array(ComplianceChannel)   | Communication channels allowed for service-related notifications      |
+| `marketingCampaignsChannels`  | Array(ComplianceChannel)   | Communication channels allowed for marketing campaigns                |
+| `brandedAppEnabled`           | bool                       | Whether the customer has enabled the branded mobile app for notifications |
+| `isAgreedMarketingPolicy`     | bool                       | Whether the customer has agreed to receive marketing communications   |
+
+> **Note**: If an empty list is provided when updating channel configurations, the corresponding configuration will be cleared.
+
+### 6. Address
 
 Represents a customer's physical address.
 
@@ -156,6 +182,7 @@ Registers a new customer with basic details, preferences, and optionally initial
 | `preference`          | Preference                                                | No       | Customer's communication and marketing preferences    |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | No       | Initial tags to apply to the customer                 |
 | `notes`               | Array(Note)                                               | No       | Initial notes about the customer                      |
+| `complianceConfig`    | CustomerComplianceConfig                                  | No       | Customer's compliance configuration for communication channels |
 
 #### 💡 Example Request:
 
@@ -188,7 +215,13 @@ Registers a new customer with basic details, preferences, and optionally initial
     {
       "note": "Prefers morning appointments."
     }
-  ]
+  ],
+  "complianceConfig": {
+    "serviceRelatedChannels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"],
+    "marketingCampaignsChannels": ["COMPLIANCE_CHANNEL_EMAIL"],
+    "brandedAppEnabled": true,
+    "isAgreedMarketingPolicy": true
+  }
 }
 ```
 
@@ -218,6 +251,7 @@ Registers a new customer with basic details, preferences, and optionally initial
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
 | `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
 
@@ -274,6 +308,7 @@ Retrieves detailed information about a specific customer, including preferences,
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
 | `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
 
@@ -313,6 +348,7 @@ Updates an existing customer's information, including basic details, preferences
 | `address`             | Address                                                   | No       | Customer's primary address                            |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | No       | Tags to apply to the customer                         |
 | `notes`               | Array(Note)                                               | No       | Notes about the customer                              |
+| `complianceConfig`    | CustomerComplianceConfigUpdateDef                         | No       | Customer's compliance configuration updates           |
 
 #### 📌 Return Value:
 
@@ -340,6 +376,7 @@ Updates an existing customer's information, including basic details, preferences
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
 | `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
 
@@ -604,7 +641,13 @@ Retrieves all tags associated with a specific customer.
     {
       "note": "Prefers morning appointments."
     }
-  ]
+  ],
+  "complianceConfig": {
+    "serviceRelatedChannels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"],
+    "marketingCampaignsChannels": ["COMPLIANCE_CHANNEL_EMAIL"],
+    "brandedAppEnabled": true,
+    "isAgreedMarketingPolicy": true
+  }
 }
 ```
 
@@ -634,7 +677,16 @@ Retrieves all tags associated with a specific customer.
     {
       "note": "Prefers evening appointments now."
     }
-  ]
+  ],
+  "complianceConfig": {
+    "serviceRelatedChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_SMS"]
+    },
+    "marketingCampaignsChannels": {
+      "channels": []
+    },
+    "isAgreedMarketingPolicy": false
+  }
 }
 ```
 
@@ -673,6 +725,7 @@ TODO
 | How to filter customers by update time?                   | Use `ListCustomers` with `filter.lastUpdatedTime`                                                                              |
 | Why does creating a customer return "resource exhausted"? | The company may have reached the maximum allowed customer count. Clean up unused customers or contact admin to increase quota. |
 | How to manage customer tags and notes effectively?        | Use `AppendCustomerTags` and `AppendCustomerNotes` to add new entries                                                          |
+| How to control which communication channels can be used to contact a customer? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |
 
 ---
 
