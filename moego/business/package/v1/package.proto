@@ -13,7 +13,6 @@ option java_package = "com.moego.api.business.package.v1";
 
 // Package represents a package purchased by a customer.
 message Package {
-
   // Status of the package
   enum Status {
     // Package status is unknown
@@ -82,7 +81,6 @@ message Package {
 
 // PackageDetail represents detailed information about a package including its services and usage history
 message PackageDetail {
-
   // PackageService represents a service included in a package
   message PackageService {
     // Unique identifier for the package service
@@ -118,5 +116,4 @@ message PackageDetail {
 
   // List of services included in the package
   repeated PackageService package_services = 2;
-
 }

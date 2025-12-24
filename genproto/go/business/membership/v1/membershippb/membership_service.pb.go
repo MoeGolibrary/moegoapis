@@ -574,7 +574,7 @@ var File_moego_business_membership_v1_membership_service_proto protoreflect.File
 
 const file_moego_business_membership_v1_membership_service_proto_rawDesc = "" +
 	"\n" +
-	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"\xd1\x02\n" +
+	"5moego/business/membership/v1/membership_service.proto\x12\x1cmoego.business.membership.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a-moego/business/membership/v1/membership.proto\x1a moego/common/v1/pagination.proto\"\xd1\x02\n" +
 	"\x16ListMembershipsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +

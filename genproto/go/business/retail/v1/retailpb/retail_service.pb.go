@@ -273,7 +273,7 @@ var File_moego_business_retail_v1_retail_service_proto protoreflect.FileDescript
 
 const file_moego_business_retail_v1_retail_service_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/retail/v1/retail_service.proto\x12\x18moego.business.retail.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a&moego/business/retail/v1/product.proto\x1a&moego/business/retail/v1/package.proto\x1a moego/common/v1/pagination.proto\"\xa3\x01\n" +
+	"-moego/business/retail/v1/retail_service.proto\x12\x18moego.business.retail.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a&moego/business/retail/v1/package.proto\x1a&moego/business/retail/v1/product.proto\x1a moego/common/v1/pagination.proto\"\xa3\x01\n" +
 	"\x13ListProductsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -342,8 +342,8 @@ func file_moego_business_retail_v1_retail_service_proto_init() {
 	if File_moego_business_retail_v1_retail_service_proto != nil {
 		return
 	}
-	file_moego_business_retail_v1_product_proto_init()
 	file_moego_business_retail_v1_package_proto_init()
+	file_moego_business_retail_v1_product_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

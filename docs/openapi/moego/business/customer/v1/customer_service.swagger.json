@@ -357,6 +357,25 @@
     }
   },
   "definitions": {
+    "CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComplianceChannel"
+          },
+          "title": "List of communication channels to set\nIf an empty list is provided, the corresponding configuration will be cleared"
+        }
+      },
+      "description": "ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ComplianceChannelListUpdateDef"
+      }
+    },
     "CustomerPreference": {
       "type": "object",
       "properties": {
@@ -501,6 +520,11 @@
             "$ref": "#/definitions/v1CustomerNote"
           },
           "title": "Initial notes about the customer\nOptional. Empty list if not provided"
+        },
+        "complianceConfig": {
+          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
+          "x-nullable": true,
+          "title": "Customer's compliance configuration updates\nOptional. If not provided, current configuration will be retained"
         }
       },
       "description": "Request message for updating a customer.",
@@ -718,6 +742,17 @@
         "type": "AppendCustomerTagsResponse"
       }
     },
+    "v1ComplianceChannel": {
+      "type": "string",
+      "enum": [
+        "COMPLIANCE_CHANNEL_UNSPECIFIED",
+        "COMPLIANCE_CHANNEL_SMS",
+        "COMPLIANCE_CHANNEL_EMAIL",
+        "COMPLIANCE_CHANNEL_AUTO_CALL"
+      ],
+      "default": "COMPLIANCE_CHANNEL_UNSPECIFIED",
+      "description": "ComplianceChannel represents the available communication channels for customer notifications.\nThese channels are used to control how customers receive service-related and marketing communications.\n\n - COMPLIANCE_CHANNEL_UNSPECIFIED: COMPLIANCE_CHANNEL_UNSPECIFIED indicates an unknown or invalid channel.\n - COMPLIANCE_CHANNEL_SMS: COMPLIANCE_CHANNEL_SMS indicates communication via SMS text messages.\n - COMPLIANCE_CHANNEL_EMAIL: COMPLIANCE_CHANNEL_EMAIL indicates communication via email.\n - COMPLIANCE_CHANNEL_AUTO_CALL: COMPLIANCE_CHANNEL_AUTO_CALL indicates communication via automated phone calls."
+    },
     "v1CreateCustomerRequest": {
       "type": "object",
       "properties": {
@@ -768,6 +803,10 @@
             "$ref": "#/definitions/v1CustomerNote"
           },
           "title": "Initial notes about the customer\nOptional. Empty list if not provided"
+        },
+        "complianceConfig": {
+          "$ref": "#/definitions/v1CustomerComplianceConfig",
+          "title": "Customer's compliance configuration for communication channels\nOptional. System defaults will be used if not provided"
         }
       },
       "description": "Request message for creating a new customer.",
@@ -904,6 +943,10 @@
         "deleted": {
           "type": "boolean",
           "title": "Flag indicating if this customer record is deleted"
+        },
+        "complianceConfig": {
+          "$ref": "#/definitions/v1CustomerComplianceConfig",
+          "title": "Customer's compliance configuration for communication channels\nControls which channels can be used for different types of communications"
         }
       },
       "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",
@@ -912,6 +955,72 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "Customer"
+      }
+    },
+    "v1CustomerComplianceConfig": {
+      "type": "object",
+      "properties": {
+        "serviceRelatedChannels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComplianceChannel"
+          },
+          "title": "Communication channels allowed for service-related notifications"
+        },
+        "marketingCampaignsChannels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComplianceChannel"
+          },
+          "title": "Communication channels allowed for marketing campaigns"
+        },
+        "brandedAppEnabled": {
+          "type": "boolean",
+          "title": "Whether the customer has enabled the branded mobile app for notifications"
+        },
+        "isAgreedMarketingPolicy": {
+          "type": "boolean",
+          "title": "Whether the customer has agreed to receive marketing communications\nThis must be true before sending any marketing-related messages"
+        }
+      },
+      "description": "CustomerComplianceConfig stores customer's compliance and communication preferences.\nThis configuration controls which channels can be used to contact the customer\nfor different types of communications.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CustomerComplianceConfig"
+      }
+    },
+    "v1CustomerComplianceConfigUpdateDef": {
+      "type": "object",
+      "properties": {
+        "serviceRelatedChannels": {
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "x-nullable": true,
+          "title": "Update service-related notification channels\nIf set, replaces all existing service-related channels"
+        },
+        "marketingCampaignsChannels": {
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "x-nullable": true,
+          "title": "Update marketing campaign notification channels\nIf set, replaces all existing marketing campaign channels"
+        },
+        "brandedAppEnabled": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Update whether branded app notifications are enabled"
+        },
+        "isAgreedMarketingPolicy": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Update whether customer has agreed to marketing policy"
+        }
+      },
+      "description": "CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.\nAll fields are optional to support partial updates.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CustomerComplianceConfigUpdateDef"
       }
     },
     "v1CustomerNote": {

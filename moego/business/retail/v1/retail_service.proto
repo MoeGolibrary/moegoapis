@@ -4,8 +4,8 @@ package moego.business.retail.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "moego/business/retail/v1/product.proto";
 import "moego/business/retail/v1/package.proto";
+import "moego/business/retail/v1/product.proto";
 import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/retail/v1/retailpb;retailpb";
@@ -28,7 +28,7 @@ service RetailService {
       body: "*"
     };
   }
-  
+
   // Lists packages
   //
   // Returns a list of packages.

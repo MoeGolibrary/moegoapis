@@ -18,7 +18,7 @@
   "paths": {
     "/v1/packages/details:list": {
       "post": {
-        "summary": "ListPackageDetails retrieves detailed information for a list of packages including \nservices and usage history.",
+        "summary": "ListPackageDetails retrieves detailed information for a list of packages including\nservices and usage history.",
         "description": "Possible errors:\n- INVALID_ARGUMENT if request parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
         "operationId": "PackageService_ListPackageDetails",
         "responses": {

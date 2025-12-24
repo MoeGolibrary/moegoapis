@@ -26,7 +26,7 @@ service PackageService {
     };
   }
 
-  // ListPackageDetails retrieves detailed information for a list of packages including 
+  // ListPackageDetails retrieves detailed information for a list of packages including
   // services and usage history.
   //
   // Possible errors:
@@ -71,7 +71,6 @@ message ListPackageDetailsRequest {
   // Use page_size to specify results per page (max 500).
   // Use page_token from previous response for next page.
   moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
-
 
   // The company identifier
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];

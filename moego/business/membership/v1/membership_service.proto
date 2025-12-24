@@ -4,9 +4,9 @@ package moego.business.membership.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/protobuf/timestamp.proto";
 import "moego/business/membership/v1/membership.proto";
 import "moego/common/v1/pagination.proto";
-import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/membership/v1/membershippb;membershippb";
 option java_multiple_files = true;
@@ -42,7 +42,7 @@ service MembershipService {
       body: "*"
     };
   }
-  
+
   // GetPerkUsageDetail retrieves detailed information about perk usage for a specific membership.
   //
   // Possible errors:
@@ -142,16 +142,16 @@ message GetPerkUsageDetailRequest {
     // Validity start time
     optional google.protobuf.Timestamp validity_start_time = 1;
   }
-  
+
   // Optional filter
   optional Filter filter = 1;
-  
+
   // The company identifier
   string company_id = 2 [(google.api.field_behavior) = REQUIRED];
-  
+
   // The membership identifier
   string membership_id = 3 [(google.api.field_behavior) = REQUIRED];
-  
+
   // The customer identifier
   string customer_id = 4 [(google.api.field_behavior) = REQUIRED];
 }
@@ -160,7 +160,7 @@ message GetPerkUsageDetailRequest {
 message GetPerkUsageDetailResponse {
   // The included benefits
   repeated IncludeBenefitView included_benefits = 1;
-  
+
   // Discount benefits
   repeated IncludeBenefitView discount_benefits = 2;
 }
