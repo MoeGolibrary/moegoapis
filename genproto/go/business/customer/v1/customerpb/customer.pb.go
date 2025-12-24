@@ -136,159 +136,7 @@ func (x Customer_Status) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Customer_Status.Descriptor instead.
 func (Customer_Status) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2, 0}
-}
-
-// CustomerComplianceConfig stores customer's compliance and communication preferences.
-// This configuration controls which channels can be used to contact the customer
-// for different types of communications.
-type CustomerComplianceConfig struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Communication channels allowed for service-related notifications
-	ServiceRelatedChannels []ComplianceChannel `protobuf:"varint,2,rep,packed,name=service_related_channels,json=serviceRelatedChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"service_related_channels,omitempty"`
-	// Communication channels allowed for marketing campaigns
-	MarketingCampaignsChannels []ComplianceChannel `protobuf:"varint,3,rep,packed,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"marketing_campaigns_channels,omitempty"`
-	// Whether the customer has enabled the branded mobile app for notifications
-	BrandedAppEnabled bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3" json:"branded_app_enabled,omitempty"`
-	// Whether the customer has agreed to receive marketing communications
-	// This must be true before sending any marketing-related messages
-	IsAgreedMarketingPolicy bool `protobuf:"varint,6,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3" json:"is_agreed_marketing_policy,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
-}
-
-func (x *CustomerComplianceConfig) Reset() {
-	*x = CustomerComplianceConfig{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CustomerComplianceConfig) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CustomerComplianceConfig) ProtoMessage() {}
-
-func (x *CustomerComplianceConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CustomerComplianceConfig.ProtoReflect.Descriptor instead.
-func (*CustomerComplianceConfig) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *CustomerComplianceConfig) GetServiceRelatedChannels() []ComplianceChannel {
-	if x != nil {
-		return x.ServiceRelatedChannels
-	}
-	return nil
-}
-
-func (x *CustomerComplianceConfig) GetMarketingCampaignsChannels() []ComplianceChannel {
-	if x != nil {
-		return x.MarketingCampaignsChannels
-	}
-	return nil
-}
-
-func (x *CustomerComplianceConfig) GetBrandedAppEnabled() bool {
-	if x != nil {
-		return x.BrandedAppEnabled
-	}
-	return false
-}
-
-func (x *CustomerComplianceConfig) GetIsAgreedMarketingPolicy() bool {
-	if x != nil {
-		return x.IsAgreedMarketingPolicy
-	}
-	return false
-}
-
-// CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.
-// All fields are optional to support partial updates.
-type CustomerComplianceConfigUpdateDef struct {
-	state protoimpl.MessageState `protogen:"open.v1"`
-	// Update service-related notification channels
-	// If set, replaces all existing service-related channels
-	ServiceRelatedChannels *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,2,opt,name=service_related_channels,json=serviceRelatedChannels,proto3,oneof" json:"service_related_channels,omitempty"`
-	// Update marketing campaign notification channels
-	// If set, replaces all existing marketing campaign channels
-	MarketingCampaignsChannels *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,3,opt,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,oneof" json:"marketing_campaigns_channels,omitempty"`
-	// Update whether branded app notifications are enabled
-	BrandedAppEnabled *bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3,oneof" json:"branded_app_enabled,omitempty"`
-	// Update whether customer has agreed to marketing policy
-	IsAgreedMarketingPolicy *bool `protobuf:"varint,5,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3,oneof" json:"is_agreed_marketing_policy,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
-}
-
-func (x *CustomerComplianceConfigUpdateDef) Reset() {
-	*x = CustomerComplianceConfigUpdateDef{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CustomerComplianceConfigUpdateDef) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CustomerComplianceConfigUpdateDef) ProtoMessage() {}
-
-func (x *CustomerComplianceConfigUpdateDef) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CustomerComplianceConfigUpdateDef.ProtoReflect.Descriptor instead.
-func (*CustomerComplianceConfigUpdateDef) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *CustomerComplianceConfigUpdateDef) GetServiceRelatedChannels() *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
-	if x != nil {
-		return x.ServiceRelatedChannels
-	}
-	return nil
-}
-
-func (x *CustomerComplianceConfigUpdateDef) GetMarketingCampaignsChannels() *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
-	if x != nil {
-		return x.MarketingCampaignsChannels
-	}
-	return nil
-}
-
-func (x *CustomerComplianceConfigUpdateDef) GetBrandedAppEnabled() bool {
-	if x != nil && x.BrandedAppEnabled != nil {
-		return *x.BrandedAppEnabled
-	}
-	return false
-}
-
-func (x *CustomerComplianceConfigUpdateDef) GetIsAgreedMarketingPolicy() bool {
-	if x != nil && x.IsAgreedMarketingPolicy != nil {
-		return *x.IsAgreedMarketingPolicy
-	}
-	return false
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 0}
 }
 
 // Customer represents a client who uses your services. A customer can have multiple pets,
@@ -363,7 +211,7 @@ type Customer struct {
 
 func (x *Customer) Reset() {
 	*x = Customer{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -375,7 +223,7 @@ func (x *Customer) String() string {
 func (*Customer) ProtoMessage() {}
 
 func (x *Customer) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -388,7 +236,7 @@ func (x *Customer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Customer.ProtoReflect.Descriptor instead.
 func (*Customer) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2}
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *Customer) GetId() string {
@@ -573,31 +421,39 @@ func (x *Customer) GetComplianceConfig() *CustomerComplianceConfig {
 	return nil
 }
 
-// ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.
-type CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef struct {
+// CustomerComplianceConfig stores customer's compliance and communication preferences.
+// This configuration controls which channels can be used to contact the customer
+// for different types of communications.
+type CustomerComplianceConfig struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// List of communication channels to set
-	// If an empty list is provided, the corresponding configuration will be cleared
-	Channels      []ComplianceChannel `protobuf:"varint,1,rep,packed,name=channels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"channels,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	// Communication channels allowed for service-related notifications
+	ServiceRelatedChannels []ComplianceChannel `protobuf:"varint,2,rep,packed,name=service_related_channels,json=serviceRelatedChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"service_related_channels,omitempty"`
+	// Communication channels allowed for marketing campaigns
+	MarketingCampaignsChannels []ComplianceChannel `protobuf:"varint,3,rep,packed,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"marketing_campaigns_channels,omitempty"`
+	// Whether the customer has enabled the branded mobile app for notifications
+	BrandedAppEnabled bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3" json:"branded_app_enabled,omitempty"`
+	// Whether the customer has agreed to receive marketing communications
+	// This must be true before sending any marketing-related messages
+	IsAgreedMarketingPolicy bool `protobuf:"varint,6,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3" json:"is_agreed_marketing_policy,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
 }
 
-func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Reset() {
-	*x = CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+func (x *CustomerComplianceConfig) Reset() {
+	*x = CustomerComplianceConfig{}
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) String() string {
+func (x *CustomerComplianceConfig) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoMessage() {}
+func (*CustomerComplianceConfig) ProtoMessage() {}
 
-func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+func (x *CustomerComplianceConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -608,16 +464,113 @@ func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Proto
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef.ProtoReflect.Descriptor instead.
-func (*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{1, 0}
+// Deprecated: Use CustomerComplianceConfig.ProtoReflect.Descriptor instead.
+func (*CustomerComplianceConfig) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) GetChannels() []ComplianceChannel {
+func (x *CustomerComplianceConfig) GetServiceRelatedChannels() []ComplianceChannel {
 	if x != nil {
-		return x.Channels
+		return x.ServiceRelatedChannels
 	}
 	return nil
+}
+
+func (x *CustomerComplianceConfig) GetMarketingCampaignsChannels() []ComplianceChannel {
+	if x != nil {
+		return x.MarketingCampaignsChannels
+	}
+	return nil
+}
+
+func (x *CustomerComplianceConfig) GetBrandedAppEnabled() bool {
+	if x != nil {
+		return x.BrandedAppEnabled
+	}
+	return false
+}
+
+func (x *CustomerComplianceConfig) GetIsAgreedMarketingPolicy() bool {
+	if x != nil {
+		return x.IsAgreedMarketingPolicy
+	}
+	return false
+}
+
+// CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.
+// All fields are optional to support partial updates.
+type CustomerComplianceConfigUpdateDef struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Update service-related notification channels
+	// If set, replaces all existing service-related channels
+	ServiceRelatedChannels *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,2,opt,name=service_related_channels,json=serviceRelatedChannels,proto3,oneof" json:"service_related_channels,omitempty"`
+	// Update marketing campaign notification channels
+	// If set, replaces all existing marketing campaign channels
+	MarketingCampaignsChannels *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,3,opt,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,oneof" json:"marketing_campaigns_channels,omitempty"`
+	// Update whether branded app notifications are enabled
+	BrandedAppEnabled *bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3,oneof" json:"branded_app_enabled,omitempty"`
+	// Update whether customer has agreed to marketing policy
+	IsAgreedMarketingPolicy *bool `protobuf:"varint,5,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3,oneof" json:"is_agreed_marketing_policy,omitempty"`
+	unknownFields           protoimpl.UnknownFields
+	sizeCache               protoimpl.SizeCache
+}
+
+func (x *CustomerComplianceConfigUpdateDef) Reset() {
+	*x = CustomerComplianceConfigUpdateDef{}
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomerComplianceConfigUpdateDef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomerComplianceConfigUpdateDef) ProtoMessage() {}
+
+func (x *CustomerComplianceConfigUpdateDef) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomerComplianceConfigUpdateDef.ProtoReflect.Descriptor instead.
+func (*CustomerComplianceConfigUpdateDef) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CustomerComplianceConfigUpdateDef) GetServiceRelatedChannels() *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
+	if x != nil {
+		return x.ServiceRelatedChannels
+	}
+	return nil
+}
+
+func (x *CustomerComplianceConfigUpdateDef) GetMarketingCampaignsChannels() *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
+	if x != nil {
+		return x.MarketingCampaignsChannels
+	}
+	return nil
+}
+
+func (x *CustomerComplianceConfigUpdateDef) GetBrandedAppEnabled() bool {
+	if x != nil && x.BrandedAppEnabled != nil {
+		return *x.BrandedAppEnabled
+	}
+	return false
+}
+
+func (x *CustomerComplianceConfigUpdateDef) GetIsAgreedMarketingPolicy() bool {
+	if x != nil && x.IsAgreedMarketingPolicy != nil {
+		return *x.IsAgreedMarketingPolicy
+	}
+	return false
 }
 
 // Note represents a comment or observation about a customer.
@@ -638,7 +591,7 @@ type Customer_Note struct {
 
 func (x *Customer_Note) Reset() {
 	*x = Customer_Note{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -650,7 +603,7 @@ func (x *Customer_Note) String() string {
 func (*Customer_Note) ProtoMessage() {}
 
 func (x *Customer_Note) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -663,7 +616,7 @@ func (x *Customer_Note) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Customer_Note.ProtoReflect.Descriptor instead.
 func (*Customer_Note) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2, 0}
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 0}
 }
 
 func (x *Customer_Note) GetId() string {
@@ -716,7 +669,7 @@ type Customer_Preference struct {
 
 func (x *Customer_Preference) Reset() {
 	*x = Customer_Preference{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -728,7 +681,7 @@ func (x *Customer_Preference) String() string {
 func (*Customer_Preference) ProtoMessage() {}
 
 func (x *Customer_Preference) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -741,7 +694,7 @@ func (x *Customer_Preference) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Customer_Preference.ProtoReflect.Descriptor instead.
 func (*Customer_Preference) Descriptor() ([]byte, []int) {
-	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2, 1}
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{0, 1}
 }
 
 func (x *Customer_Preference) GetReceiveAutoMessage() bool {
@@ -772,27 +725,58 @@ func (x *Customer_Preference) GetReceiveAppointmentReminder() bool {
 	return false
 }
 
+// ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.
+type CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of communication channels to set
+	// If an empty list is provided, the corresponding configuration will be cleared
+	Channels      []ComplianceChannel `protobuf:"varint,1,rep,packed,name=channels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"channels,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Reset() {
+	*x = CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef{}
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoMessage() {}
+
+func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef.ProtoReflect.Descriptor instead.
+func (*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{2, 0}
+}
+
+func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) GetChannels() []ComplianceChannel {
+	if x != nil {
+		return x.Channels
+	}
+	return nil
+}
+
 var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xe1\x02\n" +
-	"\x18CustomerComplianceConfig\x12g\n" +
-	"\x18service_related_channels\x18\x02 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x16serviceRelatedChannels\x12o\n" +
-	"\x1cmarketing_campaigns_channels\x18\x03 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x1amarketingCampaignsChannels\x12.\n" +
-	"\x13branded_app_enabled\x18\x04 \x01(\bR\x11brandedAppEnabled\x12;\n" +
-	"\x1ais_agreed_marketing_policy\x18\x06 \x01(\bR\x17isAgreedMarketingPolicy\"\xc0\x05\n" +
-	"!CustomerComplianceConfigUpdateDef\x12\x9b\x01\n" +
-	"\x18service_related_channels\x18\x02 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x00R\x16serviceRelatedChannels\x88\x01\x01\x12\xa3\x01\n" +
-	"\x1cmarketing_campaigns_channels\x18\x03 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x01R\x1amarketingCampaignsChannels\x88\x01\x01\x123\n" +
-	"\x13branded_app_enabled\x18\x04 \x01(\bH\x02R\x11brandedAppEnabled\x88\x01\x01\x12@\n" +
-	"\x1ais_agreed_marketing_policy\x18\x05 \x01(\bH\x03R\x17isAgreedMarketingPolicy\x88\x01\x01\x1ak\n" +
-	"\x1eComplianceChannelListUpdateDef\x12I\n" +
-	"\bchannels\x18\x01 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\bchannelsB\x1b\n" +
-	"\x19_service_related_channelsB\x1f\n" +
-	"\x1d_marketing_campaigns_channelsB\x16\n" +
-	"\x14_branded_app_enabledB\x1d\n" +
-	"\x1b_is_agreed_marketing_policy\"\xca\r\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xca\r\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06raw_id\x18\x19 \x01(\x03R\x05rawId\x12\x1d\n" +
@@ -842,7 +826,23 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
-	"\bINACTIVE\x10\x02*\x93\x01\n" +
+	"\bINACTIVE\x10\x02\"\xe1\x02\n" +
+	"\x18CustomerComplianceConfig\x12g\n" +
+	"\x18service_related_channels\x18\x02 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x16serviceRelatedChannels\x12o\n" +
+	"\x1cmarketing_campaigns_channels\x18\x03 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x1amarketingCampaignsChannels\x12.\n" +
+	"\x13branded_app_enabled\x18\x04 \x01(\bR\x11brandedAppEnabled\x12;\n" +
+	"\x1ais_agreed_marketing_policy\x18\x06 \x01(\bR\x17isAgreedMarketingPolicy\"\xc0\x05\n" +
+	"!CustomerComplianceConfigUpdateDef\x12\x9b\x01\n" +
+	"\x18service_related_channels\x18\x02 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x00R\x16serviceRelatedChannels\x88\x01\x01\x12\xa3\x01\n" +
+	"\x1cmarketing_campaigns_channels\x18\x03 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x01R\x1amarketingCampaignsChannels\x88\x01\x01\x123\n" +
+	"\x13branded_app_enabled\x18\x04 \x01(\bH\x02R\x11brandedAppEnabled\x88\x01\x01\x12@\n" +
+	"\x1ais_agreed_marketing_policy\x18\x05 \x01(\bH\x03R\x17isAgreedMarketingPolicy\x88\x01\x01\x1ak\n" +
+	"\x1eComplianceChannelListUpdateDef\x12I\n" +
+	"\bchannels\x18\x01 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\bchannelsB\x1b\n" +
+	"\x19_service_related_channelsB\x1f\n" +
+	"\x1d_marketing_campaigns_channelsB\x16\n" +
+	"\x14_branded_app_enabledB\x1d\n" +
+	"\x1b_is_agreed_marketing_policy*\x93\x01\n" +
 	"\x11ComplianceChannel\x12\"\n" +
 	"\x1eCOMPLIANCE_CHANNEL_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16COMPLIANCE_CHANNEL_SMS\x10\x01\x12\x1c\n" +
@@ -867,35 +867,35 @@ var file_moego_business_customer_v1_customer_proto_msgTypes = make([]protoimpl.M
 var file_moego_business_customer_v1_customer_proto_goTypes = []any{
 	(ComplianceChannel)(0),                    // 0: moego.business.customer.v1.ComplianceChannel
 	(Customer_Status)(0),                      // 1: moego.business.customer.v1.Customer.Status
-	(*CustomerComplianceConfig)(nil),          // 2: moego.business.customer.v1.CustomerComplianceConfig
-	(*CustomerComplianceConfigUpdateDef)(nil), // 3: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	(*Customer)(nil),                          // 4: moego.business.customer.v1.Customer
-	(*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef)(nil), // 5: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	(*Customer_Note)(nil),            // 6: moego.business.customer.v1.Customer.Note
-	(*Customer_Preference)(nil),      // 7: moego.business.customer.v1.Customer.Preference
+	(*Customer)(nil),                          // 2: moego.business.customer.v1.Customer
+	(*CustomerComplianceConfig)(nil),          // 3: moego.business.customer.v1.CustomerComplianceConfig
+	(*CustomerComplianceConfigUpdateDef)(nil), // 4: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	(*Customer_Note)(nil),                     // 5: moego.business.customer.v1.Customer.Note
+	(*Customer_Preference)(nil),               // 6: moego.business.customer.v1.Customer.Preference
+	(*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef)(nil), // 7: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
 	(*commonpb.Address)(nil),         // 8: moego.common.v1.Address
 	(*timestamppb.Timestamp)(nil),    // 9: google.protobuf.Timestamp
 	(*settingpb.CustomerTag)(nil),    // 10: moego.business.setting.v1.CustomerTag
 	(*settingpb.ReferralSource)(nil), // 11: moego.business.setting.v1.ReferralSource
 }
 var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
-	0,  // 0: moego.business.customer.v1.CustomerComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	0,  // 1: moego.business.customer.v1.CustomerComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	5,  // 2: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	5,  // 3: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	8,  // 4: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
-	1,  // 5: moego.business.customer.v1.Customer.status:type_name -> moego.business.customer.v1.Customer.Status
-	9,  // 6: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
-	9,  // 7: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
-	9,  // 8: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
-	9,  // 9: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
-	6,  // 10: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
-	10, // 11: moego.business.customer.v1.Customer.tags:type_name -> moego.business.setting.v1.CustomerTag
-	11, // 12: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
-	7,  // 13: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
-	2,  // 14: moego.business.customer.v1.Customer.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
-	0,  // 15: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	9,  // 16: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
+	1,  // 1: moego.business.customer.v1.Customer.status:type_name -> moego.business.customer.v1.Customer.Status
+	9,  // 2: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
+	9,  // 3: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
+	9,  // 4: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
+	9,  // 5: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
+	5,  // 6: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
+	10, // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.setting.v1.CustomerTag
+	11, // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
+	6,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
+	3,  // 10: moego.business.customer.v1.Customer.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
+	0,  // 11: moego.business.customer.v1.CustomerComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	0,  // 12: moego.business.customer.v1.CustomerComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	7,  // 13: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	7,  // 14: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	9,  // 15: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	0,  // 16: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
 	17, // [17:17] is the sub-list for method output_type
 	17, // [17:17] is the sub-list for method input_type
 	17, // [17:17] is the sub-list for extension type_name
@@ -908,7 +908,7 @@ func file_moego_business_customer_v1_customer_proto_init() {
 	if File_moego_business_customer_v1_customer_proto != nil {
 		return
 	}
-	file_moego_business_customer_v1_customer_proto_msgTypes[1].OneofWrappers = []any{}
+	file_moego_business_customer_v1_customer_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

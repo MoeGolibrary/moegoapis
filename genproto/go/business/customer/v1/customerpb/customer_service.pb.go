@@ -58,7 +58,7 @@ type CreateCustomerRequest struct {
 	Notes []*Customer_Note `protobuf:"bytes,10,rep,name=notes,proto3" json:"notes,omitempty"`
 	// Customer's compliance configuration for communication channels
 	// Optional. System defaults will be used if not provided
-	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,11,opt,name=compliance_config,json=complianceConfig,proto3" json:"compliance_config,omitempty"`
+	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,11,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -1068,7 +1068,7 @@ var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDesc
 
 const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\n" +
-	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xd0\x04\n" +
+	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xeb\x04\n" +
 	"\x15CreateCustomerRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x127\n" +
@@ -1084,8 +1084,9 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"preference\x12:\n" +
 	"\x04tags\x18\t \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\x12?\n" +
 	"\x05notes\x18\n" +
-	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12a\n" +
-	"\x11compliance_config\x18\v \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfig\"\xd4\x05\n" +
+	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12f\n" +
+	"\x11compliance_config\x18\v \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
+	"\x12_compliance_config\"\xd4\x05\n" +
 	"\x15UpdateCustomerRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
 	"\n" +
@@ -1258,6 +1259,7 @@ func file_moego_business_customer_v1_customer_service_proto_init() {
 		return
 	}
 	file_moego_business_customer_v1_customer_proto_init()
+	file_moego_business_customer_v1_customer_service_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_customer_v1_customer_service_proto_msgTypes[1].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
