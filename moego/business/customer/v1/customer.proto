@@ -11,6 +11,65 @@ option java_multiple_files = true;
 option java_outer_classname = "CustomerProto";
 option java_package = "com.moego.api.business.customer.v1";
 
+// ComplianceChannel represents the available communication channels for customer notifications.
+// These channels are used to control how customers receive service-related and marketing communications.
+enum ComplianceChannel {
+  // COMPLIANCE_CHANNEL_UNSPECIFIED indicates an unknown or invalid channel.
+  COMPLIANCE_CHANNEL_UNSPECIFIED = 0;
+
+  // COMPLIANCE_CHANNEL_SMS indicates communication via SMS text messages.
+  COMPLIANCE_CHANNEL_SMS = 1;
+
+  // COMPLIANCE_CHANNEL_EMAIL indicates communication via email.
+  COMPLIANCE_CHANNEL_EMAIL = 2;
+
+  // COMPLIANCE_CHANNEL_AUTO_CALL indicates communication via automated phone calls.
+  COMPLIANCE_CHANNEL_AUTO_CALL = 3;
+}
+
+// CustomerComplianceConfig stores customer's compliance and communication preferences.
+// This configuration controls which channels can be used to contact the customer
+// for different types of communications.
+message CustomerComplianceConfig {
+  // Communication channels allowed for service-related notifications
+  repeated ComplianceChannel service_related_channels = 2;
+
+  // Communication channels allowed for marketing campaigns
+  repeated ComplianceChannel marketing_campaigns_channels = 3;
+
+  // Whether the customer has enabled the branded mobile app for notifications
+  bool branded_app_enabled = 4;
+
+  // Whether the customer has agreed to receive marketing communications
+  // This must be true before sending any marketing-related messages
+  bool is_agreed_marketing_policy = 6;
+}
+
+// CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.
+// All fields are optional to support partial updates.
+message CustomerComplianceConfigUpdateDef {
+  // ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.
+  message ComplianceChannelListUpdateDef {
+    // List of communication channels to set
+    // If an empty list is provided, the corresponding configuration will be cleared
+    repeated ComplianceChannel channels = 1;
+  }
+
+  // Update service-related notification channels
+  // If set, replaces all existing service-related channels
+  optional ComplianceChannelListUpdateDef service_related_channels = 2;
+
+  // Update marketing campaign notification channels
+  // If set, replaces all existing marketing campaign channels
+  optional ComplianceChannelListUpdateDef marketing_campaigns_channels = 3;
+
+  // Update whether branded app notifications are enabled
+  optional bool branded_app_enabled = 4;
+
+  // Update whether customer has agreed to marketing policy
+  optional bool is_agreed_marketing_policy = 5;
+}
+
 // Customer represents a client who uses your services. A customer can have multiple pets,
 // appointments, and preferences. Customers are the core entity in the pet service business
 // and are used throughout the system for booking appointments, managing pets, and tracking
@@ -149,4 +208,8 @@ message Customer {
 
   // Flag indicating if this customer record is deleted
   bool deleted = 24;
+
+  // Customer's compliance configuration for communication channels
+  // Controls which channels can be used for different types of communications
+  CustomerComplianceConfig compliance_config = 26;
 }

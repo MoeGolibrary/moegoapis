@@ -162,6 +162,10 @@ message CreateCustomerRequest {
   // Initial notes about the customer
   // Optional. Empty list if not provided
   repeated Customer.Note notes = 10;
+
+  // Customer's compliance configuration for communication channels
+  // Optional. System defaults will be used if not provided
+  CustomerComplianceConfig compliance_config = 11;
 }
 
 // Request message for updating a customer.
@@ -209,6 +213,10 @@ message UpdateCustomerRequest {
   // Initial notes about the customer
   // Optional. Empty list if not provided
   repeated Customer.Note notes = 11;
+
+  // Customer's compliance configuration updates
+  // Optional. If not provided, current configuration will be retained
+  optional CustomerComplianceConfigUpdateDef compliance_config = 12;
 }
 
 // Request message for retrieving a specific customer.
