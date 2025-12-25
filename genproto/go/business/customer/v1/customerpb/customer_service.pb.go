@@ -58,7 +58,7 @@ type CreateCustomerRequest struct {
 	Notes []*Customer_Note `protobuf:"bytes,10,rep,name=notes,proto3" json:"notes,omitempty"`
 	// Customer's compliance configuration for communication channels
 	// Optional. System defaults will be used if not provided
-	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,11,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
+	ComplianceConfig *CustomerComplianceConfigUpdateDef `protobuf:"bytes,11,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -163,7 +163,7 @@ func (x *CreateCustomerRequest) GetNotes() []*Customer_Note {
 	return nil
 }
 
-func (x *CreateCustomerRequest) GetComplianceConfig() *CustomerComplianceConfig {
+func (x *CreateCustomerRequest) GetComplianceConfig() *CustomerComplianceConfigUpdateDef {
 	if x != nil {
 		return x.ComplianceConfig
 	}
@@ -1068,7 +1068,7 @@ var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDesc
 
 const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\n" +
-	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xeb\x04\n" +
+	"1moego/business/customer/v1/customer_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a)moego/business/customer/v1/customer.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a moego/common/v1/pagination.proto\"\xf4\x04\n" +
 	"\x15CreateCustomerRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x127\n" +
@@ -1084,8 +1084,8 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"preference\x12:\n" +
 	"\x04tags\x18\t \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags\x12?\n" +
 	"\x05notes\x18\n" +
-	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12f\n" +
-	"\x11compliance_config\x18\v \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
+	" \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\x12o\n" +
+	"\x11compliance_config\x18\v \x01(\v2=.moego.business.customer.v1.CustomerComplianceConfigUpdateDefH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
 	"\x12_compliance_config\"\xd4\x05\n" +
 	"\x15UpdateCustomerRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12\"\n" +
@@ -1201,33 +1201,32 @@ var file_moego_business_customer_v1_customer_service_proto_goTypes = []any{
 	(*Customer_Preference)(nil),               // 17: moego.business.customer.v1.Customer.Preference
 	(*settingpb.CustomerTag)(nil),             // 18: moego.business.setting.v1.CustomerTag
 	(*Customer_Note)(nil),                     // 19: moego.business.customer.v1.Customer.Note
-	(*CustomerComplianceConfig)(nil),          // 20: moego.business.customer.v1.CustomerComplianceConfig
-	(*CustomerComplianceConfigUpdateDef)(nil), // 21: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	(*commonpb.Pagination)(nil),               // 22: moego.common.v1.Pagination
-	(*Customer)(nil),                          // 23: moego.business.customer.v1.Customer
-	(*interval.Interval)(nil),                 // 24: google.type.Interval
+	(*CustomerComplianceConfigUpdateDef)(nil), // 20: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	(*commonpb.Pagination)(nil),               // 21: moego.common.v1.Pagination
+	(*Customer)(nil),                          // 22: moego.business.customer.v1.Customer
+	(*interval.Interval)(nil),                 // 23: google.type.Interval
 }
 var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	16, // 0: moego.business.customer.v1.CreateCustomerRequest.address:type_name -> moego.common.v1.Address
 	17, // 1: moego.business.customer.v1.CreateCustomerRequest.preference:type_name -> moego.business.customer.v1.Customer.Preference
 	18, // 2: moego.business.customer.v1.CreateCustomerRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
 	19, // 3: moego.business.customer.v1.CreateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
-	20, // 4: moego.business.customer.v1.CreateCustomerRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
+	20, // 4: moego.business.customer.v1.CreateCustomerRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
 	16, // 5: moego.business.customer.v1.UpdateCustomerRequest.address:type_name -> moego.common.v1.Address
 	18, // 6: moego.business.customer.v1.UpdateCustomerRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
 	19, // 7: moego.business.customer.v1.UpdateCustomerRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
-	21, // 8: moego.business.customer.v1.UpdateCustomerRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	22, // 9: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination
+	20, // 8: moego.business.customer.v1.UpdateCustomerRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	21, // 9: moego.business.customer.v1.ListCustomersRequest.pagination:type_name -> moego.common.v1.Pagination
 	15, // 10: moego.business.customer.v1.ListCustomersRequest.filter:type_name -> moego.business.customer.v1.ListCustomersRequest.Filter
-	23, // 11: moego.business.customer.v1.ListCustomersResponse.customers:type_name -> moego.business.customer.v1.Customer
+	22, // 11: moego.business.customer.v1.ListCustomersResponse.customers:type_name -> moego.business.customer.v1.Customer
 	19, // 12: moego.business.customer.v1.AppendCustomerNotesRequest.notes:type_name -> moego.business.customer.v1.Customer.Note
 	19, // 13: moego.business.customer.v1.AppendCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
-	22, // 14: moego.business.customer.v1.ListCustomerNotesRequest.pagination:type_name -> moego.common.v1.Pagination
+	21, // 14: moego.business.customer.v1.ListCustomerNotesRequest.pagination:type_name -> moego.common.v1.Pagination
 	19, // 15: moego.business.customer.v1.ListCustomerNotesResponse.notes:type_name -> moego.business.customer.v1.Customer.Note
 	18, // 16: moego.business.customer.v1.AppendCustomerTagsRequest.tags:type_name -> moego.business.setting.v1.CustomerTag
 	18, // 17: moego.business.customer.v1.AppendCustomerTagsResponse.tags:type_name -> moego.business.setting.v1.CustomerTag
 	18, // 18: moego.business.customer.v1.ListCustomerTagsResponse.tags:type_name -> moego.business.setting.v1.CustomerTag
-	24, // 19: moego.business.customer.v1.ListCustomersRequest.Filter.last_updated_time:type_name -> google.type.Interval
+	23, // 19: moego.business.customer.v1.ListCustomersRequest.Filter.last_updated_time:type_name -> google.type.Interval
 	0,  // 20: moego.business.customer.v1.CustomerService.CreateCustomer:input_type -> moego.business.customer.v1.CreateCustomerRequest
 	1,  // 21: moego.business.customer.v1.CustomerService.UpdateCustomer:input_type -> moego.business.customer.v1.UpdateCustomerRequest
 	2,  // 22: moego.business.customer.v1.CustomerService.GetCustomer:input_type -> moego.business.customer.v1.GetCustomerRequest
@@ -1237,9 +1236,9 @@ var file_moego_business_customer_v1_customer_service_proto_depIdxs = []int32{
 	9,  // 26: moego.business.customer.v1.CustomerService.ListCustomerNotes:input_type -> moego.business.customer.v1.ListCustomerNotesRequest
 	11, // 27: moego.business.customer.v1.CustomerService.AppendCustomerTags:input_type -> moego.business.customer.v1.AppendCustomerTagsRequest
 	13, // 28: moego.business.customer.v1.CustomerService.ListCustomerTags:input_type -> moego.business.customer.v1.ListCustomerTagsRequest
-	23, // 29: moego.business.customer.v1.CustomerService.CreateCustomer:output_type -> moego.business.customer.v1.Customer
-	23, // 30: moego.business.customer.v1.CustomerService.UpdateCustomer:output_type -> moego.business.customer.v1.Customer
-	23, // 31: moego.business.customer.v1.CustomerService.GetCustomer:output_type -> moego.business.customer.v1.Customer
+	22, // 29: moego.business.customer.v1.CustomerService.CreateCustomer:output_type -> moego.business.customer.v1.Customer
+	22, // 30: moego.business.customer.v1.CustomerService.UpdateCustomer:output_type -> moego.business.customer.v1.Customer
+	22, // 31: moego.business.customer.v1.CustomerService.GetCustomer:output_type -> moego.business.customer.v1.Customer
 	4,  // 32: moego.business.customer.v1.CustomerService.ListCustomers:output_type -> moego.business.customer.v1.ListCustomersResponse
 	6,  // 33: moego.business.customer.v1.CustomerService.GenCustomerCofLink:output_type -> moego.business.customer.v1.GenCustomerCofLinkResponse
 	8,  // 34: moego.business.customer.v1.CustomerService.AppendCustomerNotes:output_type -> moego.business.customer.v1.AppendCustomerNotesResponse

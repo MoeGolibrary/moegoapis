@@ -805,7 +805,7 @@
           "title": "Initial notes about the customer\nOptional. Empty list if not provided"
         },
         "complianceConfig": {
-          "$ref": "#/definitions/v1CustomerComplianceConfig",
+          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
           "x-nullable": true,
           "title": "Customer's compliance configuration for communication channels\nOptional. System defaults will be used if not provided"
         }

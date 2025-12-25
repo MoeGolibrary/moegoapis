@@ -165,7 +165,7 @@ message CreateCustomerRequest {
 
   // Customer's compliance configuration for communication channels
   // Optional. System defaults will be used if not provided
-  optional CustomerComplianceConfig compliance_config = 11;
+  optional CustomerComplianceConfigUpdateDef compliance_config = 11;
 }
 
 // Request message for updating a customer.
