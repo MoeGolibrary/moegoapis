@@ -153,6 +153,46 @@ Retrieves detailed information about a specific block by its ID.
 
 ---
 
+### 3. ListBlocks (`ListBlocks`)
+
+- **Method**: `ListBlocks`
+- **HTTP Method**: POST
+- **Path**: `/v1/blocks:list`
+
+#### ✅ Functionality:
+
+Retrieves a list of blocks based on the provided filter criteria.
+
+#### 🎯 Use Cases:
+
+- Retrieving all blocks for a specific business or company
+- Getting blocks within a specific time range
+- Fetching paginated lists of blocks for staff scheduling
+
+#### 🔧 Request Parameters:
+
+| Field Name         | Type                 | Required | Description                                                                               |
+|--------------------|----------------------|----------|-------------------------------------------------------------------------------------------|
+| `pagination`       | object               | Yes      | Pagination parameters including page_size (max 500) and optional page_token for next page |
+| `companyId`        | string               | Yes      | Company identifier for multi-location businesses                                          |
+| `businessIds`      | []string             | Yes      | List of business location IDs to include in the search                                    |
+| `filter`           | object               | No       | Optional filter criteria                                                                  |
+| `filter.startTime` | google.type.Interval | No       | Filter by blocks start time range                                                         |
+| `filter.endTime`   | google.type.Interval | No       | Filter by blocks end time range                                                           |
+
+#### 📌 Return Value:
+
+| Field Name      | Type    | Description                                                                       |
+|-----------------|---------|-----------------------------------------------------------------------------------|
+| `blocks`        | []Block | List of blocks matching the filter criteria                                       |
+| `nextPageToken` | string  | Token for retrieving the next page of results; empty if there are no more results |
+
+#### ⚠️ Error Codes:
+
+- `PERMISSION_DENIED`: Permission denied
+
+---
+
 ## 🧪 6. Usage Examples
 
 ### Example 1: CreateBlock

@@ -7,6 +7,7 @@
 package blockpb
 
 import (
+	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	interval "google.golang.org/genproto/googleapis/type/interval"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -158,11 +159,198 @@ func (x *GetBlockRequest) GetId() string {
 	return ""
 }
 
+// ListBlocksRequest contains the criteria for listing blocks.
+type ListBlocksRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// object(Pagination), Pagination parameters.
+	// Use page_size to specify results per page (max 500).
+	// Use page_token from previous response for next page.
+	Pagination *commonpb.Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	// string, The company identifier for multi-location businesses.
+	// Required for company-wide blocks listing.
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// array(string), List of business location IDs to include.
+	BusinessIds []string `protobuf:"bytes,3,rep,name=business_ids,json=businessIds,proto3" json:"business_ids,omitempty"`
+	// Optional filter criteria
+	Filter        *ListBlocksRequest_Filter `protobuf:"bytes,4,opt,name=filter,proto3" json:"filter,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBlocksRequest) Reset() {
+	*x = ListBlocksRequest{}
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBlocksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBlocksRequest) ProtoMessage() {}
+
+func (x *ListBlocksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBlocksRequest.ProtoReflect.Descriptor instead.
+func (*ListBlocksRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_block_v1_block_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *ListBlocksRequest) GetPagination() *commonpb.Pagination {
+	if x != nil {
+		return x.Pagination
+	}
+	return nil
+}
+
+func (x *ListBlocksRequest) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *ListBlocksRequest) GetBusinessIds() []string {
+	if x != nil {
+		return x.BusinessIds
+	}
+	return nil
+}
+
+func (x *ListBlocksRequest) GetFilter() *ListBlocksRequest_Filter {
+	if x != nil {
+		return x.Filter
+	}
+	return nil
+}
+
+// ListBlocksResponse contains the result of the list blocks operation.
+type ListBlocksResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of blocks matching the filter criteria
+	Blocks []*Block `protobuf:"bytes,1,rep,name=blocks,proto3" json:"blocks,omitempty"`
+	// Token for retrieving the next page of results.
+	// Empty if there are no more results.
+	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBlocksResponse) Reset() {
+	*x = ListBlocksResponse{}
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBlocksResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBlocksResponse) ProtoMessage() {}
+
+func (x *ListBlocksResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBlocksResponse.ProtoReflect.Descriptor instead.
+func (*ListBlocksResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_block_v1_block_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *ListBlocksResponse) GetBlocks() []*Block {
+	if x != nil {
+		return x.Blocks
+	}
+	return nil
+}
+
+func (x *ListBlocksResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
+// Filter for the request
+type ListBlocksRequest_Filter struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// object(Interval), Filter by blocks start time range.
+	StartTime *interval.Interval `protobuf:"bytes,1,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	// object(Interval), Filter by blocks end time range.
+	EndTime       *interval.Interval `protobuf:"bytes,2,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListBlocksRequest_Filter) Reset() {
+	*x = ListBlocksRequest_Filter{}
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListBlocksRequest_Filter) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListBlocksRequest_Filter) ProtoMessage() {}
+
+func (x *ListBlocksRequest_Filter) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_block_v1_block_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListBlocksRequest_Filter.ProtoReflect.Descriptor instead.
+func (*ListBlocksRequest_Filter) Descriptor() ([]byte, []int) {
+	return file_moego_business_block_v1_block_service_proto_rawDescGZIP(), []int{2, 0}
+}
+
+func (x *ListBlocksRequest_Filter) GetStartTime() *interval.Interval {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *ListBlocksRequest_Filter) GetEndTime() *interval.Interval {
+	if x != nil {
+		return x.EndTime
+	}
+	return nil
+}
+
 var File_moego_business_block_v1_block_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_block_v1_block_service_proto_rawDesc = "" +
 	"\n" +
-	"+moego/business/block/v1/block_service.proto\x12\x17moego.business.block.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a#moego/business/block/v1/block.proto\"\xd3\x01\n" +
+	"+moego/business/block/v1/block_service.proto\x12\x17moego.business.block.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a#moego/business/block/v1/block.proto\x1a moego/common/v1/pagination.proto\"\xd3\x01\n" +
 	"\x12CreateBlockRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12\x1e\n" +
@@ -172,11 +360,28 @@ const file_moego_business_block_v1_block_service_proto_rawDesc = "" +
 	"\n" +
 	"color_code\x18\x05 \x01(\tR\tcolorCode\"&\n" +
 	"\x0fGetBlockRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id2\xf0\x01\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xe8\x02\n" +
+	"\x11ListBlocksRequest\x12@\n" +
+	"\n" +
+	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
+	"pagination\x12\"\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12&\n" +
+	"\fbusiness_ids\x18\x03 \x03(\tB\x03\xe0A\x02R\vbusinessIds\x12I\n" +
+	"\x06filter\x18\x04 \x01(\v21.moego.business.block.v1.ListBlocksRequest.FilterR\x06filter\x1az\n" +
+	"\x06Filter\x129\n" +
+	"\n" +
+	"start_time\x18\x01 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\tstartTime\x125\n" +
+	"\bend_time\x18\x02 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\aendTime\"t\n" +
+	"\x12ListBlocksResponse\x126\n" +
+	"\x06blocks\x18\x01 \x03(\v2\x1e.moego.business.block.v1.BlockR\x06blocks\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xf4\x02\n" +
 	"\fBlockService\x12q\n" +
 	"\vCreateBlock\x12+.moego.business.block.v1.CreateBlockRequest\x1a\x1e.moego.business.block.v1.Block\"\x15\x82\xd3\xe4\x93\x02\x0f:\x01*\"\n" +
 	"/v1/blocks\x12m\n" +
-	"\bGetBlock\x12(.moego.business.block.v1.GetBlockRequest\x1a\x1e.moego.business.block.v1.Block\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/blocks/{id}B\x87\x01\n" +
+	"\bGetBlock\x12(.moego.business.block.v1.GetBlockRequest\x1a\x1e.moego.business.block.v1.Block\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/blocks/{id}\x12\x81\x01\n" +
+	"\n" +
+	"ListBlocks\x12*.moego.business.block.v1.ListBlocksRequest\x1a+.moego.business.block.v1.ListBlocksResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/blocks:listB\x87\x01\n" +
 	"\x1fcom.moego.api.business.block.v1B\x11BlockServiceProtoP\x01ZOgithub.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb;blockpbb\x06proto3"
 
 var (
@@ -191,24 +396,35 @@ func file_moego_business_block_v1_block_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_block_v1_block_service_proto_rawDescData
 }
 
-var file_moego_business_block_v1_block_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_moego_business_block_v1_block_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_moego_business_block_v1_block_service_proto_goTypes = []any{
-	(*CreateBlockRequest)(nil), // 0: moego.business.block.v1.CreateBlockRequest
-	(*GetBlockRequest)(nil),    // 1: moego.business.block.v1.GetBlockRequest
-	(*interval.Interval)(nil),  // 2: google.type.Interval
-	(*Block)(nil),              // 3: moego.business.block.v1.Block
+	(*CreateBlockRequest)(nil),       // 0: moego.business.block.v1.CreateBlockRequest
+	(*GetBlockRequest)(nil),          // 1: moego.business.block.v1.GetBlockRequest
+	(*ListBlocksRequest)(nil),        // 2: moego.business.block.v1.ListBlocksRequest
+	(*ListBlocksResponse)(nil),       // 3: moego.business.block.v1.ListBlocksResponse
+	(*ListBlocksRequest_Filter)(nil), // 4: moego.business.block.v1.ListBlocksRequest.Filter
+	(*interval.Interval)(nil),        // 5: google.type.Interval
+	(*commonpb.Pagination)(nil),      // 6: moego.common.v1.Pagination
+	(*Block)(nil),                    // 7: moego.business.block.v1.Block
 }
 var file_moego_business_block_v1_block_service_proto_depIdxs = []int32{
-	2, // 0: moego.business.block.v1.CreateBlockRequest.duration:type_name -> google.type.Interval
-	0, // 1: moego.business.block.v1.BlockService.CreateBlock:input_type -> moego.business.block.v1.CreateBlockRequest
-	1, // 2: moego.business.block.v1.BlockService.GetBlock:input_type -> moego.business.block.v1.GetBlockRequest
-	3, // 3: moego.business.block.v1.BlockService.CreateBlock:output_type -> moego.business.block.v1.Block
-	3, // 4: moego.business.block.v1.BlockService.GetBlock:output_type -> moego.business.block.v1.Block
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	5, // 0: moego.business.block.v1.CreateBlockRequest.duration:type_name -> google.type.Interval
+	6, // 1: moego.business.block.v1.ListBlocksRequest.pagination:type_name -> moego.common.v1.Pagination
+	4, // 2: moego.business.block.v1.ListBlocksRequest.filter:type_name -> moego.business.block.v1.ListBlocksRequest.Filter
+	7, // 3: moego.business.block.v1.ListBlocksResponse.blocks:type_name -> moego.business.block.v1.Block
+	5, // 4: moego.business.block.v1.ListBlocksRequest.Filter.start_time:type_name -> google.type.Interval
+	5, // 5: moego.business.block.v1.ListBlocksRequest.Filter.end_time:type_name -> google.type.Interval
+	0, // 6: moego.business.block.v1.BlockService.CreateBlock:input_type -> moego.business.block.v1.CreateBlockRequest
+	1, // 7: moego.business.block.v1.BlockService.GetBlock:input_type -> moego.business.block.v1.GetBlockRequest
+	2, // 8: moego.business.block.v1.BlockService.ListBlocks:input_type -> moego.business.block.v1.ListBlocksRequest
+	7, // 9: moego.business.block.v1.BlockService.CreateBlock:output_type -> moego.business.block.v1.Block
+	7, // 10: moego.business.block.v1.BlockService.GetBlock:output_type -> moego.business.block.v1.Block
+	3, // 11: moego.business.block.v1.BlockService.ListBlocks:output_type -> moego.business.block.v1.ListBlocksResponse
+	9, // [9:12] is the sub-list for method output_type
+	6, // [6:9] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_block_v1_block_service_proto_init() }
@@ -223,7 +439,7 @@ func file_moego_business_block_v1_block_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_block_v1_block_service_proto_rawDesc), len(file_moego_business_block_v1_block_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

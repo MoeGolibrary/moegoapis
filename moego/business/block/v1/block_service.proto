@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/interval.proto";
 import "moego/business/block/v1/block.proto";
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb;blockpb";
 option java_multiple_files = true;
@@ -39,6 +40,18 @@ service BlockService {
   rpc GetBlock(GetBlockRequest) returns (Block) {
     option (google.api.http) = {get: "/v1/blocks/{id}"};
   }
+
+  // ListBlocks retrieves a list of blocks based on the provided filter criteria.
+  //
+  // Returns:
+  // - A list of Block objects matching the filter criteria
+  // - PERMISSION_DENIED if the caller lacks permission
+  rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
+    option (google.api.http) = {
+      post: "/v1/blocks:list"
+      body: "*"
+    };
+  }
 }
 
 // CreateBlockRequest contains the information needed to create a new block
@@ -70,4 +83,42 @@ message GetBlockRequest {
   // Unique identifier of the block to retrieve.
   // Must be a valid block ID that exists in the system.
   string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// ListBlocksRequest contains the criteria for listing blocks.
+message ListBlocksRequest {
+  // object(Pagination), Pagination parameters.
+  // Use page_size to specify results per page (max 500).
+  // Use page_token from previous response for next page.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // string, The company identifier for multi-location businesses.
+  // Required for company-wide blocks listing.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(string), List of business location IDs to include.
+  repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
+
+
+  // Filter for the request
+  message Filter {
+    // object(Interval), Filter by blocks start time range.
+    google.type.Interval start_time = 1 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(Interval), Filter by blocks end time range.
+    google.type.Interval end_time = 2 [(google.api.field_behavior) = OPTIONAL];
+  }
+  
+  // Optional filter criteria
+  Filter filter = 4;
+}
+
+// ListBlocksResponse contains the result of the list blocks operation.
+message ListBlocksResponse {
+  // List of blocks matching the filter criteria
+  repeated Block blocks = 1;
+  
+  // Token for retrieving the next page of results.
+  // Empty if there are no more results.
+  string next_page_token = 2;
 }

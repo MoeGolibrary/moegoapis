@@ -83,6 +83,41 @@
           "moego.business.block.v1.BlockService"
         ]
       }
+    },
+    "/v1/blocks:list": {
+      "post": {
+        "summary": "ListBlocks retrieves a list of blocks based on the provided filter criteria.",
+        "description": "Returns:\n- A list of Block objects matching the filter criteria\n- PERMISSION_DENIED if the caller lacks permission",
+        "operationId": "BlockService_ListBlocks",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListBlocksResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "ListBlocksRequest contains the criteria for listing blocks.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListBlocksRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.block.v1.BlockService"
+        ]
+      }
     }
   },
   "definitions": {
@@ -219,6 +254,108 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
         },
         "type": "CreateBlockRequest"
+      }
+    },
+    "v1ListBlocksRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "object(Pagination), Pagination parameters.\nUse page_size to specify results per page (max 500).\nUse page_token from previous response for next page."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "string, The company identifier for multi-location businesses.\nRequired for company-wide blocks listing."
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "array(string), List of business location IDs to include."
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListBlocksRequestFilter",
+          "title": "Optional filter criteria"
+        }
+      },
+      "description": "ListBlocksRequest contains the criteria for listing blocks.",
+      "required": [
+        "pagination",
+        "companyId",
+        "businessIds"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "ListBlocksRequest"
+      }
+    },
+    "v1ListBlocksRequestFilter": {
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "object(Interval), Filter by blocks start time range."
+        },
+        "endTime": {
+          "$ref": "#/definitions/typeInterval",
+          "description": "object(Interval), Filter by blocks end time range."
+        }
+      },
+      "title": "Filter for the request",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListBlocksResponse": {
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Block"
+          },
+          "title": "List of blocks matching the filter criteria"
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Token for retrieving the next page of results.\nEmpty if there are no more results."
+        }
+      },
+      "description": "ListBlocksResponse contains the result of the list blocks operation.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "ListBlocksResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
       }
     }
   }

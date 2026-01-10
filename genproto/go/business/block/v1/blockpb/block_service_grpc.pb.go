@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	BlockService_CreateBlock_FullMethodName = "/moego.business.block.v1.BlockService/CreateBlock"
 	BlockService_GetBlock_FullMethodName    = "/moego.business.block.v1.BlockService/GetBlock"
+	BlockService_ListBlocks_FullMethodName  = "/moego.business.block.v1.BlockService/ListBlocks"
 )
 
 // BlockServiceClient is the client API for BlockService service.
@@ -46,6 +47,12 @@ type BlockServiceClient interface {
 	// - NOT_FOUND if the block doesn't exist
 	// - PERMISSION_DENIED if the caller lacks permission
 	GetBlock(ctx context.Context, in *GetBlockRequest, opts ...grpc.CallOption) (*Block, error)
+	// ListBlocks retrieves a list of blocks based on the provided filter criteria.
+	//
+	// Returns:
+	// - A list of Block objects matching the filter criteria
+	// - PERMISSION_DENIED if the caller lacks permission
+	ListBlocks(ctx context.Context, in *ListBlocksRequest, opts ...grpc.CallOption) (*ListBlocksResponse, error)
 }
 
 type blockServiceClient struct {
@@ -76,6 +83,16 @@ func (c *blockServiceClient) GetBlock(ctx context.Context, in *GetBlockRequest, 
 	return out, nil
 }
 
+func (c *blockServiceClient) ListBlocks(ctx context.Context, in *ListBlocksRequest, opts ...grpc.CallOption) (*ListBlocksResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListBlocksResponse)
+	err := c.cc.Invoke(ctx, BlockService_ListBlocks_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BlockServiceServer is the server API for BlockService service.
 // All implementations must embed UnimplementedBlockServiceServer
 // for forward compatibility.
@@ -99,6 +116,12 @@ type BlockServiceServer interface {
 	// - NOT_FOUND if the block doesn't exist
 	// - PERMISSION_DENIED if the caller lacks permission
 	GetBlock(context.Context, *GetBlockRequest) (*Block, error)
+	// ListBlocks retrieves a list of blocks based on the provided filter criteria.
+	//
+	// Returns:
+	// - A list of Block objects matching the filter criteria
+	// - PERMISSION_DENIED if the caller lacks permission
+	ListBlocks(context.Context, *ListBlocksRequest) (*ListBlocksResponse, error)
 	mustEmbedUnimplementedBlockServiceServer()
 }
 
@@ -114,6 +137,9 @@ func (UnimplementedBlockServiceServer) CreateBlock(context.Context, *CreateBlock
 }
 func (UnimplementedBlockServiceServer) GetBlock(context.Context, *GetBlockRequest) (*Block, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBlock not implemented")
+}
+func (UnimplementedBlockServiceServer) ListBlocks(context.Context, *ListBlocksRequest) (*ListBlocksResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListBlocks not implemented")
 }
 func (UnimplementedBlockServiceServer) mustEmbedUnimplementedBlockServiceServer() {}
 func (UnimplementedBlockServiceServer) testEmbeddedByValue()                      {}
@@ -172,6 +198,24 @@ func _BlockService_GetBlock_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BlockService_ListBlocks_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListBlocksRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlockServiceServer).ListBlocks(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: BlockService_ListBlocks_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlockServiceServer).ListBlocks(ctx, req.(*ListBlocksRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // BlockService_ServiceDesc is the grpc.ServiceDesc for BlockService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -186,6 +230,10 @@ var BlockService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBlock",
 			Handler:    _BlockService_GetBlock_Handler,
+		},
+		{
+			MethodName: "ListBlocks",
+			Handler:    _BlockService_ListBlocks_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
