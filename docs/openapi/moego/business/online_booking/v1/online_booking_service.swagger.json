@@ -87,7 +87,7 @@
     "/v1/online_booking/availability": {
       "post": {
         "summary": "Gets available dates and times for online booking.",
-        "description": "Returns available dates and times for online booking based on business hours,\nstaff availability, and other scheduling constraints. This endpoint helps \ncustomers find suitable time slots when booking services online.",
+        "description": "Returns available dates and times for online booking based on business hours,\nstaff availability, and other scheduling constraints. This endpoint helps\ncustomers find suitable time slots when booking services online.",
         "operationId": "OnlineBookingService_GetBookingAvailability",
         "responses": {
           "200": {
@@ -122,7 +122,7 @@
     "/v1/online_booking/franchise_lookup": {
       "post": {
         "summary": "Looks up franchise branch based on zipcode for territory routing.",
-        "description": "This endpoint allows routing customers to the correct franchisee based on \ntheir service address zipcode against territory mappings.",
+        "description": "This endpoint allows routing customers to the correct franchisee based on\ntheir service address zipcode against territory mappings.",
         "operationId": "OnlineBookingService_LookupFranchiseByZipcode",
         "responses": {
           "200": {

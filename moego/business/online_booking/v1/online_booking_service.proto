@@ -4,11 +4,11 @@ package moego.business.online_booking.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/type/date.proto";
 import "google/type/interval.proto";
 import "google/type/latlng.proto";
 import "moego/business/online_booking/v1/abandoned_booking.proto";
 import "moego/common/v1/pagination.proto";
-import "google/type/date.proto";
 import "moego/common/v1/weight.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb;onlinebookingpb";
@@ -43,7 +43,7 @@ service OnlineBookingService {
   // Gets available dates and times for online booking.
   //
   // Returns available dates and times for online booking based on business hours,
-  // staff availability, and other scheduling constraints. This endpoint helps 
+  // staff availability, and other scheduling constraints. This endpoint helps
   // customers find suitable time slots when booking services online.
   rpc GetBookingAvailability(GetBookingAvailabilityRequest) returns (GetBookingAvailabilityResponse) {
     option (google.api.http) = {
@@ -51,10 +51,10 @@ service OnlineBookingService {
       body: "*"
     };
   }
-  
+
   // Looks up franchise branch based on zipcode for territory routing.
   //
-  // This endpoint allows routing customers to the correct franchisee based on 
+  // This endpoint allows routing customers to the correct franchisee based on
   // their service address zipcode against territory mappings.
   rpc LookupFranchiseByZipcode(LookupFranchiseByZipcodeRequest) returns (LookupFranchiseByZipcodeResponse) {
     option (google.api.http) = {
@@ -322,7 +322,7 @@ message LookupFranchiseByZipcodeResponse {
   // The book online name for the franchise branch.
   // Empty if the zipcode doesn't belong to any assigned territory.
   string book_online_name = 4;
-  
+
   // Whether online booking is enabled for the franchise branch.
   // 0-not  1-yes
   bool is_enable = 5;

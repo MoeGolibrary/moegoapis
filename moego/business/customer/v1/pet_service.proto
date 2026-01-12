@@ -193,7 +193,7 @@ message UpdatePetRequest {
 
   // photo url of pet.
   optional string photo = 14;
-  
+
   // Current vaccination records
   // Optional. If not provided, current value will be retained
   repeated Pet.Vaccination vaccinations = 15;

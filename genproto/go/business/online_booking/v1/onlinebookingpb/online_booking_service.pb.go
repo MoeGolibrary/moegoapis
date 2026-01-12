@@ -1016,7 +1016,7 @@ var File_moego_business_online_booking_v1_online_booking_service_proto protorefl
 
 const file_moego_business_online_booking_v1_online_booking_service_proto_rawDesc = "" +
 	"\n" +
-	"=moego/business/online_booking/v1/online_booking_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1agoogle/type/interval.proto\x1a\x18google/type/latlng.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\x1a\x16google/type/date.proto\x1a\x1cmoego/common/v1/weight.proto\"\xe6\x04\n" +
+	"=moego/business/online_booking/v1/online_booking_service.proto\x12 moego.business.online_booking.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x1agoogle/type/interval.proto\x1a\x18google/type/latlng.proto\x1a8moego/business/online_booking/v1/abandoned_booking.proto\x1a moego/common/v1/pagination.proto\x1a\x1cmoego/common/v1/weight.proto\"\xe6\x04\n" +
 	"\x1cListAbandonedBookingsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
