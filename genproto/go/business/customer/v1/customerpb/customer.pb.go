@@ -435,8 +435,22 @@ type CustomerComplianceConfig struct {
 	// Whether the customer has agreed to receive marketing communications
 	// This must be true before sending any marketing-related messages
 	IsAgreedMarketingPolicy bool `protobuf:"varint,6,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3" json:"is_agreed_marketing_policy,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// Whether the customer has explicitly consented to the current notification compliance configuration.
+	// This field indicates the customer's informed consent to be contacted through the specified channels.
+	//
+	// LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+	// - Ensure proper consent mechanisms are in place before setting this to true
+	// - Maintain audit trails of consent collection
+	// - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+	// - Provide clear opt-out mechanisms
+	// - Handle consent withdrawal appropriately
+	//
+	// Improper handling of customer consent may result in legal liability, regulatory penalties,
+	// and violations of privacy laws. Always consult with legal counsel when implementing
+	// consent management features.
+	IsConsented   bool `protobuf:"varint,7,opt,name=is_consented,json=isConsented,proto3" json:"is_consented,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CustomerComplianceConfig) Reset() {
@@ -497,6 +511,13 @@ func (x *CustomerComplianceConfig) GetIsAgreedMarketingPolicy() bool {
 	return false
 }
 
+func (x *CustomerComplianceConfig) GetIsConsented() bool {
+	if x != nil {
+		return x.IsConsented
+	}
+	return false
+}
+
 // CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.
 // All fields are optional to support partial updates.
 type CustomerComplianceConfigUpdateDef struct {
@@ -511,8 +532,22 @@ type CustomerComplianceConfigUpdateDef struct {
 	BrandedAppEnabled *bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3,oneof" json:"branded_app_enabled,omitempty"`
 	// Update whether customer has agreed to marketing policy
 	IsAgreedMarketingPolicy *bool `protobuf:"varint,5,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3,oneof" json:"is_agreed_marketing_policy,omitempty"`
-	unknownFields           protoimpl.UnknownFields
-	sizeCache               protoimpl.SizeCache
+	// Update whether customer has explicitly consented to the notification compliance configuration.
+	// This field indicates the customer's informed consent to be contacted through the specified channels.
+	//
+	// LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+	// - Ensure proper consent mechanisms are in place before setting this to true
+	// - Maintain audit trails of consent collection
+	// - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+	// - Provide clear opt-out mechanisms
+	// - Handle consent withdrawal appropriately
+	//
+	// Improper handling of customer consent may result in legal liability, regulatory penalties,
+	// and violations of privacy laws. Always consult with legal counsel when implementing
+	// consent management features.
+	IsConsented   *bool `protobuf:"varint,6,opt,name=is_consented,json=isConsented,proto3,oneof" json:"is_consented,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CustomerComplianceConfigUpdateDef) Reset() {
@@ -569,6 +604,13 @@ func (x *CustomerComplianceConfigUpdateDef) GetBrandedAppEnabled() bool {
 func (x *CustomerComplianceConfigUpdateDef) GetIsAgreedMarketingPolicy() bool {
 	if x != nil && x.IsAgreedMarketingPolicy != nil {
 		return *x.IsAgreedMarketingPolicy
+	}
+	return false
+}
+
+func (x *CustomerComplianceConfigUpdateDef) GetIsConsented() bool {
+	if x != nil && x.IsConsented != nil {
+		return *x.IsConsented
 	}
 	return false
 }
@@ -826,23 +868,26 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
-	"\bINACTIVE\x10\x02\"\xe1\x02\n" +
+	"\bINACTIVE\x10\x02\"\x84\x03\n" +
 	"\x18CustomerComplianceConfig\x12g\n" +
 	"\x18service_related_channels\x18\x02 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x16serviceRelatedChannels\x12o\n" +
 	"\x1cmarketing_campaigns_channels\x18\x03 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x1amarketingCampaignsChannels\x12.\n" +
 	"\x13branded_app_enabled\x18\x04 \x01(\bR\x11brandedAppEnabled\x12;\n" +
-	"\x1ais_agreed_marketing_policy\x18\x06 \x01(\bR\x17isAgreedMarketingPolicy\"\xc0\x05\n" +
+	"\x1ais_agreed_marketing_policy\x18\x06 \x01(\bR\x17isAgreedMarketingPolicy\x12!\n" +
+	"\fis_consented\x18\a \x01(\bR\visConsented\"\xf9\x05\n" +
 	"!CustomerComplianceConfigUpdateDef\x12\x9b\x01\n" +
 	"\x18service_related_channels\x18\x02 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x00R\x16serviceRelatedChannels\x88\x01\x01\x12\xa3\x01\n" +
 	"\x1cmarketing_campaigns_channels\x18\x03 \x01(\v2\\.moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x01R\x1amarketingCampaignsChannels\x88\x01\x01\x123\n" +
 	"\x13branded_app_enabled\x18\x04 \x01(\bH\x02R\x11brandedAppEnabled\x88\x01\x01\x12@\n" +
-	"\x1ais_agreed_marketing_policy\x18\x05 \x01(\bH\x03R\x17isAgreedMarketingPolicy\x88\x01\x01\x1ak\n" +
+	"\x1ais_agreed_marketing_policy\x18\x05 \x01(\bH\x03R\x17isAgreedMarketingPolicy\x88\x01\x01\x12&\n" +
+	"\fis_consented\x18\x06 \x01(\bH\x04R\visConsented\x88\x01\x01\x1ak\n" +
 	"\x1eComplianceChannelListUpdateDef\x12I\n" +
 	"\bchannels\x18\x01 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\bchannelsB\x1b\n" +
 	"\x19_service_related_channelsB\x1f\n" +
 	"\x1d_marketing_campaigns_channelsB\x16\n" +
 	"\x14_branded_app_enabledB\x1d\n" +
-	"\x1b_is_agreed_marketing_policy*\x93\x01\n" +
+	"\x1b_is_agreed_marketing_policyB\x0f\n" +
+	"\r_is_consented*\x93\x01\n" +
 	"\x11ComplianceChannel\x12\"\n" +
 	"\x1eCOMPLIANCE_CHANNEL_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16COMPLIANCE_CHANNEL_SMS\x10\x01\x12\x1c\n" +

@@ -187,6 +187,21 @@ message CustomerComplianceConfig {
   // Whether the customer has agreed to receive marketing communications
   // This must be true before sending any marketing-related messages
   bool is_agreed_marketing_policy = 6;
+
+  // Whether the customer has explicitly consented to the current notification compliance configuration.
+  // This field indicates the customer's informed consent to be contacted through the specified channels.
+  //
+  // LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+  // - Ensure proper consent mechanisms are in place before setting this to true
+  // - Maintain audit trails of consent collection
+  // - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+  // - Provide clear opt-out mechanisms
+  // - Handle consent withdrawal appropriately
+  //
+  // Improper handling of customer consent may result in legal liability, regulatory penalties,
+  // and violations of privacy laws. Always consult with legal counsel when implementing
+  // consent management features.
+  bool is_consented = 7;
 }
 
 // CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.
@@ -212,4 +227,19 @@ message CustomerComplianceConfigUpdateDef {
 
   // Update whether customer has agreed to marketing policy
   optional bool is_agreed_marketing_policy = 5;
+
+  // Update whether customer has explicitly consented to the notification compliance configuration.
+  // This field indicates the customer's informed consent to be contacted through the specified channels.
+  //
+  // LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+  // - Ensure proper consent mechanisms are in place before setting this to true
+  // - Maintain audit trails of consent collection
+  // - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+  // - Provide clear opt-out mechanisms
+  // - Handle consent withdrawal appropriately
+  //
+  // Improper handling of customer consent may result in legal liability, regulatory penalties,
+  // and violations of privacy laws. Always consult with legal counsel when implementing
+  // consent management features.
+  optional bool is_consented = 6;
 }

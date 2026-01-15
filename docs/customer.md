@@ -106,8 +106,11 @@ can use to contact the customer for different types of communications.
 | `marketingCampaignsChannels`  | Array(ComplianceChannel)   | Communication channels allowed for marketing campaigns                |
 | `brandedAppEnabled`           | bool                       | Whether the customer has enabled the branded mobile app for notifications |
 | `isAgreedMarketingPolicy`     | bool                       | Whether the customer has agreed to receive marketing communications   |
+| `isConsented`                 | bool                       | Whether the customer has explicitly consented to the current notification compliance configuration. **LEGAL NOTICE**: Modifying this field carries legal responsibility. Organizations must ensure proper consent mechanisms are in place, maintain audit trails, comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA), and provide clear opt-out mechanisms. Improper handling may result in legal liability and regulatory penalties. |
 
 > **Note**: If an empty list is provided when updating channel configurations, the corresponding configuration will be cleared.
+>
+> **Important**: The `isConsented` field indicates explicit customer consent. Organizations modifying this field must comply with all applicable privacy laws and regulations. Consult with legal counsel when implementing consent management features.
 
 ### 6. Address
 
@@ -220,7 +223,8 @@ Registers a new customer with basic details, preferences, and optionally initial
     "serviceRelatedChannels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"],
     "marketingCampaignsChannels": ["COMPLIANCE_CHANNEL_EMAIL"],
     "brandedAppEnabled": true,
-    "isAgreedMarketingPolicy": true
+    "isAgreedMarketingPolicy": true,
+    "isConsented": true
   }
 }
 ```
@@ -646,7 +650,8 @@ Retrieves all tags associated with a specific customer.
     "serviceRelatedChannels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"],
     "marketingCampaignsChannels": ["COMPLIANCE_CHANNEL_EMAIL"],
     "brandedAppEnabled": true,
-    "isAgreedMarketingPolicy": true
+    "isAgreedMarketingPolicy": true,
+    "isConsented": true
   }
 }
 ```
@@ -685,7 +690,8 @@ Retrieves all tags associated with a specific customer.
     "marketingCampaignsChannels": {
       "channels": []
     },
-    "isAgreedMarketingPolicy": false
+    "isAgreedMarketingPolicy": false,
+    "isConsented": false
   }
 }
 ```
