@@ -197,9 +197,12 @@ type CreateLeadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// The lead to create
 	// Required.
-	Lead          *Lead `protobuf:"bytes,1,opt,name=lead,proto3" json:"lead,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Lead *Lead `protobuf:"bytes,1,opt,name=lead,proto3" json:"lead,omitempty"`
+	// Lead's compliance configuration for communication channels
+	// Optional. System defaults will be used if not provided
+	ComplianceConfig *CustomerComplianceConfigUpdateDef `protobuf:"bytes,2,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *CreateLeadRequest) Reset() {
@@ -239,6 +242,13 @@ func (x *CreateLeadRequest) GetLead() *Lead {
 	return nil
 }
 
+func (x *CreateLeadRequest) GetComplianceConfig() *CustomerComplianceConfigUpdateDef {
+	if x != nil {
+		return x.ComplianceConfig
+	}
+	return nil
+}
+
 // Request message for updating an existing lead
 type UpdateLeadRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -247,9 +257,12 @@ type UpdateLeadRequest struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// The updated lead information
 	// Required.
-	Lead          *Lead `protobuf:"bytes,2,opt,name=lead,proto3" json:"lead,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Lead *Lead `protobuf:"bytes,2,opt,name=lead,proto3" json:"lead,omitempty"`
+	// Lead's compliance configuration updates
+	// Optional. If not provided, current configuration will be retained
+	ComplianceConfig *CustomerComplianceConfigUpdateDef `protobuf:"bytes,3,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *UpdateLeadRequest) Reset() {
@@ -292,6 +305,13 @@ func (x *UpdateLeadRequest) GetId() string {
 func (x *UpdateLeadRequest) GetLead() *Lead {
 	if x != nil {
 		return x.Lead
+	}
+	return nil
+}
+
+func (x *UpdateLeadRequest) GetComplianceConfig() *CustomerComplianceConfigUpdateDef {
+	if x != nil {
+		return x.ComplianceConfig
 	}
 	return nil
 }
@@ -473,12 +493,16 @@ const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x126\n" +
 	"\x05leads\x18\x02 \x03(\v2 .moego.business.customer.v1.LeadR\x05leads\"%\n" +
 	"\x0eGetLeadRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"N\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xd5\x01\n" +
 	"\x11CreateLeadRequest\x129\n" +
-	"\x04lead\x18\x01 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\"c\n" +
+	"\x04lead\x18\x01 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\x12o\n" +
+	"\x11compliance_config\x18\x02 \x01(\v2=.moego.business.customer.v1.CustomerComplianceConfigUpdateDefH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
+	"\x12_compliance_config\"\xea\x01\n" +
 	"\x11UpdateLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x129\n" +
-	"\x04lead\x18\x02 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\")\n" +
+	"\x04lead\x18\x02 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\x12o\n" +
+	"\x11compliance_config\x18\x03 \x01(\v2=.moego.business.customer.v1.CustomerComplianceConfigUpdateDefH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
+	"\x12_compliance_config\")\n" +
 	"\x12PromoteLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"W\n" +
 	"\x13PromoteLeadResponse\x12@\n" +
@@ -507,40 +531,43 @@ func file_moego_business_customer_v1_lead_service_proto_rawDescGZIP() []byte {
 
 var file_moego_business_customer_v1_lead_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_moego_business_customer_v1_lead_service_proto_goTypes = []any{
-	(*ListLeadsRequest)(nil),        // 0: moego.business.customer.v1.ListLeadsRequest
-	(*ListLeadsResponse)(nil),       // 1: moego.business.customer.v1.ListLeadsResponse
-	(*GetLeadRequest)(nil),          // 2: moego.business.customer.v1.GetLeadRequest
-	(*CreateLeadRequest)(nil),       // 3: moego.business.customer.v1.CreateLeadRequest
-	(*UpdateLeadRequest)(nil),       // 4: moego.business.customer.v1.UpdateLeadRequest
-	(*PromoteLeadRequest)(nil),      // 5: moego.business.customer.v1.PromoteLeadRequest
-	(*PromoteLeadResponse)(nil),     // 6: moego.business.customer.v1.PromoteLeadResponse
-	(*ListLeadsRequest_Filter)(nil), // 7: moego.business.customer.v1.ListLeadsRequest.Filter
-	(*commonpb.Pagination)(nil),     // 8: moego.common.v1.Pagination
-	(*Lead)(nil),                    // 9: moego.business.customer.v1.Lead
-	(*Customer)(nil),                // 10: moego.business.customer.v1.Customer
+	(*ListLeadsRequest)(nil),                  // 0: moego.business.customer.v1.ListLeadsRequest
+	(*ListLeadsResponse)(nil),                 // 1: moego.business.customer.v1.ListLeadsResponse
+	(*GetLeadRequest)(nil),                    // 2: moego.business.customer.v1.GetLeadRequest
+	(*CreateLeadRequest)(nil),                 // 3: moego.business.customer.v1.CreateLeadRequest
+	(*UpdateLeadRequest)(nil),                 // 4: moego.business.customer.v1.UpdateLeadRequest
+	(*PromoteLeadRequest)(nil),                // 5: moego.business.customer.v1.PromoteLeadRequest
+	(*PromoteLeadResponse)(nil),               // 6: moego.business.customer.v1.PromoteLeadResponse
+	(*ListLeadsRequest_Filter)(nil),           // 7: moego.business.customer.v1.ListLeadsRequest.Filter
+	(*commonpb.Pagination)(nil),               // 8: moego.common.v1.Pagination
+	(*Lead)(nil),                              // 9: moego.business.customer.v1.Lead
+	(*CustomerComplianceConfigUpdateDef)(nil), // 10: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	(*Customer)(nil),                          // 11: moego.business.customer.v1.Customer
 }
 var file_moego_business_customer_v1_lead_service_proto_depIdxs = []int32{
 	8,  // 0: moego.business.customer.v1.ListLeadsRequest.pagination:type_name -> moego.common.v1.Pagination
 	7,  // 1: moego.business.customer.v1.ListLeadsRequest.filter:type_name -> moego.business.customer.v1.ListLeadsRequest.Filter
 	9,  // 2: moego.business.customer.v1.ListLeadsResponse.leads:type_name -> moego.business.customer.v1.Lead
 	9,  // 3: moego.business.customer.v1.CreateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
-	9,  // 4: moego.business.customer.v1.UpdateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
-	10, // 5: moego.business.customer.v1.PromoteLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
-	0,  // 6: moego.business.customer.v1.LeadService.ListLeads:input_type -> moego.business.customer.v1.ListLeadsRequest
-	2,  // 7: moego.business.customer.v1.LeadService.GetLead:input_type -> moego.business.customer.v1.GetLeadRequest
-	3,  // 8: moego.business.customer.v1.LeadService.CreateLead:input_type -> moego.business.customer.v1.CreateLeadRequest
-	4,  // 9: moego.business.customer.v1.LeadService.UpdateLead:input_type -> moego.business.customer.v1.UpdateLeadRequest
-	5,  // 10: moego.business.customer.v1.LeadService.PromoteLead:input_type -> moego.business.customer.v1.PromoteLeadRequest
-	1,  // 11: moego.business.customer.v1.LeadService.ListLeads:output_type -> moego.business.customer.v1.ListLeadsResponse
-	9,  // 12: moego.business.customer.v1.LeadService.GetLead:output_type -> moego.business.customer.v1.Lead
-	9,  // 13: moego.business.customer.v1.LeadService.CreateLead:output_type -> moego.business.customer.v1.Lead
-	9,  // 14: moego.business.customer.v1.LeadService.UpdateLead:output_type -> moego.business.customer.v1.Lead
-	6,  // 15: moego.business.customer.v1.LeadService.PromoteLead:output_type -> moego.business.customer.v1.PromoteLeadResponse
-	11, // [11:16] is the sub-list for method output_type
-	6,  // [6:11] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	10, // 4: moego.business.customer.v1.CreateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	9,  // 5: moego.business.customer.v1.UpdateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
+	10, // 6: moego.business.customer.v1.UpdateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	11, // 7: moego.business.customer.v1.PromoteLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
+	0,  // 8: moego.business.customer.v1.LeadService.ListLeads:input_type -> moego.business.customer.v1.ListLeadsRequest
+	2,  // 9: moego.business.customer.v1.LeadService.GetLead:input_type -> moego.business.customer.v1.GetLeadRequest
+	3,  // 10: moego.business.customer.v1.LeadService.CreateLead:input_type -> moego.business.customer.v1.CreateLeadRequest
+	4,  // 11: moego.business.customer.v1.LeadService.UpdateLead:input_type -> moego.business.customer.v1.UpdateLeadRequest
+	5,  // 12: moego.business.customer.v1.LeadService.PromoteLead:input_type -> moego.business.customer.v1.PromoteLeadRequest
+	1,  // 13: moego.business.customer.v1.LeadService.ListLeads:output_type -> moego.business.customer.v1.ListLeadsResponse
+	9,  // 14: moego.business.customer.v1.LeadService.GetLead:output_type -> moego.business.customer.v1.Lead
+	9,  // 15: moego.business.customer.v1.LeadService.CreateLead:output_type -> moego.business.customer.v1.Lead
+	9,  // 16: moego.business.customer.v1.LeadService.UpdateLead:output_type -> moego.business.customer.v1.Lead
+	6,  // 17: moego.business.customer.v1.LeadService.PromoteLead:output_type -> moego.business.customer.v1.PromoteLeadResponse
+	13, // [13:18] is the sub-list for method output_type
+	8,  // [8:13] is the sub-list for method input_type
+	8,  // [8:8] is the sub-list for extension type_name
+	8,  // [8:8] is the sub-list for extension extendee
+	0,  // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_lead_service_proto_init() }
@@ -550,6 +577,8 @@ func file_moego_business_customer_v1_lead_service_proto_init() {
 	}
 	file_moego_business_customer_v1_customer_proto_init()
 	file_moego_business_customer_v1_lead_proto_init()
+	file_moego_business_customer_v1_lead_service_proto_msgTypes[3].OneofWrappers = []any{}
+	file_moego_business_customer_v1_lead_service_proto_msgTypes[4].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{

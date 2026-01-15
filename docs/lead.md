@@ -46,6 +46,9 @@ Represents a potential customer in the sales pipeline
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource) | The source or channel through which the lead was acquired |
 | `createdTime`         | Timestamp                                                | Creation timestamp                                        |
 | `lastUpdatedTime`     | Timestamp                                                | Last modification timestamp                               |
+| `complianceConfig`    | [CustomerComplianceConfig](./customer.md#5-customercomplianceconfig) | Lead's compliance configuration for communication channels. See [Customer ComplianceConfig](./customer.md#5-customercomplianceconfig) for details |
+
+> **Note**: Lead uses the same compliance configuration structure as Customer. For detailed information about compliance channels and configuration options, please refer to the [Customer API Documentation](./customer.md#5-customercomplianceconfig).
 
 ---
 
@@ -98,9 +101,10 @@ Creates a new lead
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type | Required | Description                |
-|------------|------|----------|----------------------------|
-| `lead`     | Lead | Yes      | Lead information to create |
+| Field Name         | Type                                  | Required | Description                                               |
+|--------------------|---------------------------------------|----------|-----------------------------------------------------------|
+| `lead`             | Lead                                  | Yes      | Lead information to create                                |
+| `complianceConfig` | CustomerComplianceConfigUpdateDef     | No       | Lead's compliance configuration for communication channels. See [Customer ComplianceConfig](./customer.md#5-customercomplianceconfig) |
 
 #### 📌 Return Value:
 
@@ -162,10 +166,11 @@ Updates an existing lead's information
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type   | Required | Description              |
-|------------|--------|----------|--------------------------|
-| `id`       | string | Yes      | Lead ID to update        |
-| `lead`     | Lead   | Yes      | Updated lead information |
+| Field Name         | Type                                  | Required | Description                                              |
+|--------------------|---------------------------------------|----------|----------------------------------------------------------|
+| `id`               | string                                | Yes      | Lead ID to update                                        |
+| `lead`             | Lead                                  | Yes      | Updated lead information                                 |
+| `complianceConfig` | CustomerComplianceConfigUpdateDef     | No       | Lead's compliance configuration updates. See [Customer ComplianceConfig](./customer.md#5-customercomplianceconfig) |
 
 #### 📌 Return Value:
 
@@ -274,6 +279,17 @@ Returns the newly created `Customer` object
         "breed": "Labrador Retriever"
       }
     ]
+  },
+  "complianceConfig": {
+    "serviceRelatedChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"]
+    },
+    "marketingCampaignsChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_EMAIL"]
+    },
+    "brandedAppEnabled": true,
+    "isAgreedMarketingPolicy": true,
+    "isConsented": true
   }
 }
 ```
@@ -297,6 +313,16 @@ Returns the newly created `Customer` object
       "name": "Contacted",
       "color": "#00FF00"
     }
+  },
+  "complianceConfig": {
+    "serviceRelatedChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_SMS"]
+    },
+    "marketingCampaignsChannels": {
+      "channels": []
+    },
+    "isAgreedMarketingPolicy": false,
+    "isConsented": false
   }
 }
 ```
@@ -340,6 +366,7 @@ TODO
 | Can I create multiple leads at once? | Currently only single lead creation is supported                    |
 | How to filter leads effectively?     | Use `ListLeads` with appropriate filter parameters                  |
 | What happens when promoting a lead?  | The lead is promoted to a customer and removed from the lead system |
+| How to control which communication channels can be used to contact a lead? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |
 
 ---
 

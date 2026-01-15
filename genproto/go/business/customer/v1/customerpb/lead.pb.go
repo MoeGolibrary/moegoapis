@@ -63,9 +63,12 @@ type Lead struct {
 	// Last modification timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// ID of the company associated with the lead
-	CompanyId     string `protobuf:"bytes,16,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	CompanyId string `protobuf:"bytes,16,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Lead's compliance configuration for communication channels
+	// Controls which channels can be used for different types of communications
+	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,17,opt,name=compliance_config,json=complianceConfig,proto3" json:"compliance_config,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Lead) Reset() {
@@ -210,11 +213,18 @@ func (x *Lead) GetCompanyId() string {
 	return ""
 }
 
+func (x *Lead) GetComplianceConfig() *CustomerComplianceConfig {
+	if x != nil {
+		return x.ComplianceConfig
+	}
+	return nil
+}
+
 var File_moego_business_customer_v1_lead_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\n" +
-	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xec\x05\n" +
+	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xcf\x06\n" +
 	"\x04Lead\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -235,7 +245,8 @@ const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\fcreated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
 	"\x11last_updated_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x1d\n" +
 	"\n" +
-	"company_id\x18\x10 \x01(\tR\tcompanyIdB\x8c\x01\n" +
+	"company_id\x18\x10 \x01(\tR\tcompanyId\x12a\n" +
+	"\x11compliance_config\x18\x11 \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfigB\x8c\x01\n" +
 	"\"com.moego.api.business.customer.v1B\n" +
 	"LeadsProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 
@@ -260,6 +271,7 @@ var file_moego_business_customer_v1_lead_proto_goTypes = []any{
 	(*settingpb.ActionStatus)(nil),   // 4: moego.business.setting.v1.ActionStatus
 	(*settingpb.ReferralSource)(nil), // 5: moego.business.setting.v1.ReferralSource
 	(*timestamppb.Timestamp)(nil),    // 6: google.protobuf.Timestamp
+	(*CustomerComplianceConfig)(nil), // 7: moego.business.customer.v1.CustomerComplianceConfig
 }
 var file_moego_business_customer_v1_lead_proto_depIdxs = []int32{
 	1, // 0: moego.business.customer.v1.Lead.address:type_name -> moego.common.v1.Address
@@ -269,11 +281,12 @@ var file_moego_business_customer_v1_lead_proto_depIdxs = []int32{
 	5, // 4: moego.business.customer.v1.Lead.referral_source:type_name -> moego.business.setting.v1.ReferralSource
 	6, // 5: moego.business.customer.v1.Lead.created_time:type_name -> google.protobuf.Timestamp
 	6, // 6: moego.business.customer.v1.Lead.last_updated_time:type_name -> google.protobuf.Timestamp
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	7, // 7: moego.business.customer.v1.Lead.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
+	8, // [8:8] is the sub-list for method output_type
+	8, // [8:8] is the sub-list for method input_type
+	8, // [8:8] is the sub-list for extension type_name
+	8, // [8:8] is the sub-list for extension extendee
+	0, // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_lead_proto_init() }
@@ -281,6 +294,7 @@ func file_moego_business_customer_v1_lead_proto_init() {
 	if File_moego_business_customer_v1_lead_proto != nil {
 		return
 	}
+	file_moego_business_customer_v1_customer_proto_init()
 	file_moego_business_customer_v1_pet_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{

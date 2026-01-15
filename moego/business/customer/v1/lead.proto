@@ -3,6 +3,7 @@ syntax = "proto3";
 package moego.business.customer.v1;
 
 import "google/protobuf/timestamp.proto";
+import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/customer.proto";
 import "moego/common/v1/address.proto";
@@ -66,4 +67,8 @@ message Lead {
 
   // ID of the company associated with the lead
   string company_id = 16;
+
+  // Lead's compliance configuration for communication channels
+  // Controls which channels can be used for different types of communications
+  CustomerComplianceConfig compliance_config = 17;
 }

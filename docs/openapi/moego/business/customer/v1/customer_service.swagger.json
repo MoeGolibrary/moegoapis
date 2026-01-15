@@ -982,6 +982,10 @@
         "isAgreedMarketingPolicy": {
           "type": "boolean",
           "title": "Whether the customer has agreed to receive marketing communications\nThis must be true before sending any marketing-related messages"
+        },
+        "isConsented": {
+          "type": "boolean",
+          "description": "Whether the customer has explicitly consented to the current notification compliance configuration.\nThis field indicates the customer's informed consent to be contacted through the specified channels.\n\nLEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:\n- Ensure proper consent mechanisms are in place before setting this to true\n- Maintain audit trails of consent collection\n- Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)\n- Provide clear opt-out mechanisms\n- Handle consent withdrawal appropriately\n\nImproper handling of customer consent may result in legal liability, regulatory penalties,\nand violations of privacy laws. Always consult with legal counsel when implementing\nconsent management features."
         }
       },
       "description": "CustomerComplianceConfig stores customer's compliance and communication preferences.\nThis configuration controls which channels can be used to contact the customer\nfor different types of communications.",
@@ -1014,6 +1018,11 @@
           "type": "boolean",
           "x-nullable": true,
           "title": "Update whether customer has agreed to marketing policy"
+        },
+        "isConsented": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "Update whether customer has explicitly consented to the notification compliance configuration.\nThis field indicates the customer's informed consent to be contacted through the specified channels.\n\nLEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:\n- Ensure proper consent mechanisms are in place before setting this to true\n- Maintain audit trails of consent collection\n- Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)\n- Provide clear opt-out mechanisms\n- Handle consent withdrawal appropriately\n\nImproper handling of customer consent may result in legal liability, regulatory penalties,\nand violations of privacy laws. Always consult with legal counsel when implementing\nconsent management features."
         }
       },
       "description": "CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.\nAll fields are optional to support partial updates.",
