@@ -357,6 +357,25 @@
     }
   },
   "definitions": {
+    "CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComplianceChannel"
+          },
+          "title": "List of communication channels to set\nIf an empty list is provided, the corresponding configuration will be cleared"
+        }
+      },
+      "description": "ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ComplianceChannelListUpdateDef"
+      }
+    },
     "CustomerPreference": {
       "type": "object",
       "properties": {
@@ -981,12 +1000,12 @@
       "type": "object",
       "properties": {
         "serviceRelatedChannels": {
-          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
           "x-nullable": true,
           "title": "Update service-related notification channels\nIf set, replaces all existing service-related channels"
         },
         "marketingCampaignsChannels": {
-          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
           "x-nullable": true,
           "title": "Update marketing campaign notification channels\nIf set, replaces all existing marketing campaign channels"
         },
@@ -1012,25 +1031,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "CustomerComplianceConfigUpdateDef"
-      }
-    },
-    "v1CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef": {
-      "type": "object",
-      "properties": {
-        "channels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ComplianceChannel"
-          },
-          "title": "List of communication channels to set\nIf an empty list is provided, the corresponding configuration will be cleared"
-        }
-      },
-      "description": "ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ComplianceChannelListUpdateDef"
       }
     },
     "v1CustomerNote": {

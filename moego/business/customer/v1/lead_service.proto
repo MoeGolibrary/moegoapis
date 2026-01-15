@@ -121,7 +121,7 @@ message CreateLeadRequest {
 
   // Lead's compliance configuration for communication channels
   // Optional. System defaults will be used if not provided
-  optional LeadComplianceConfigUpdateDef compliance_config = 2;
+  optional CustomerComplianceConfigUpdateDef compliance_config = 2;
 }
 
 // Request message for updating an existing lead
@@ -136,7 +136,7 @@ message UpdateLeadRequest {
 
   // Lead's compliance configuration updates
   // Optional. If not provided, current configuration will be retained
-  optional LeadComplianceConfigUpdateDef compliance_config = 3;
+  optional CustomerComplianceConfigUpdateDef compliance_config = 3;
 }
 
 // Request message for promoting a lead to a customer

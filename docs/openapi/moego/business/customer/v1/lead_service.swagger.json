@@ -192,6 +192,25 @@
     }
   },
   "definitions": {
+    "CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef": {
+      "type": "object",
+      "properties": {
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ComplianceChannel"
+          },
+          "title": "List of communication channels to set\nIf an empty list is provided, the corresponding configuration will be cleared"
+        }
+      },
+      "description": "ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "ComplianceChannelListUpdateDef"
+      }
+    },
     "CustomerPreference": {
       "type": "object",
       "properties": {
@@ -228,7 +247,7 @@
           "description": "The updated lead information\nRequired."
         },
         "complianceConfig": {
-          "$ref": "#/definitions/v1LeadComplianceConfigUpdateDef",
+          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
           "x-nullable": true,
           "title": "Lead's compliance configuration updates\nOptional. If not provided, current configuration will be retained"
         }
@@ -514,7 +533,7 @@
           "description": "The lead to create\nRequired."
         },
         "complianceConfig": {
-          "$ref": "#/definitions/v1LeadComplianceConfigUpdateDef",
+          "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
           "x-nullable": true,
           "title": "Lead's compliance configuration for communication channels\nOptional. System defaults will be used if not provided"
         }
@@ -701,6 +720,43 @@
         "type": "CustomerComplianceConfig"
       }
     },
+    "v1CustomerComplianceConfigUpdateDef": {
+      "type": "object",
+      "properties": {
+        "serviceRelatedChannels": {
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "x-nullable": true,
+          "title": "Update service-related notification channels\nIf set, replaces all existing service-related channels"
+        },
+        "marketingCampaignsChannels": {
+          "$ref": "#/definitions/CustomerComplianceConfigUpdateDefComplianceChannelListUpdateDef",
+          "x-nullable": true,
+          "title": "Update marketing campaign notification channels\nIf set, replaces all existing marketing campaign channels"
+        },
+        "brandedAppEnabled": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Update whether branded app notifications are enabled"
+        },
+        "isAgreedMarketingPolicy": {
+          "type": "boolean",
+          "x-nullable": true,
+          "title": "Update whether customer has agreed to marketing policy"
+        },
+        "isConsented": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "Update whether customer has explicitly consented to the notification compliance configuration.\nThis field indicates the customer's informed consent to be contacted through the specified channels.\n\nLEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:\n- Ensure proper consent mechanisms are in place before setting this to true\n- Maintain audit trails of consent collection\n- Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)\n- Provide clear opt-out mechanisms\n- Handle consent withdrawal appropriately\n\nImproper handling of customer consent may result in legal liability, regulatory penalties,\nand violations of privacy laws. Always consult with legal counsel when implementing\nconsent management features."
+        }
+      },
+      "description": "CustomerComplianceConfigUpdateDef defines updates to customer compliance configuration.\nAll fields are optional to support partial updates.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CustomerComplianceConfigUpdateDef"
+      }
+    },
     "v1CustomerNote": {
       "type": "object",
       "properties": {
@@ -843,7 +899,7 @@
           "title": "ID of the company associated with the lead"
         },
         "complianceConfig": {
-          "$ref": "#/definitions/v1LeadComplianceConfig",
+          "$ref": "#/definitions/v1CustomerComplianceConfig",
           "title": "Lead's compliance configuration for communication channels\nControls which channels can be used for different types of communications"
         }
       },
@@ -853,100 +909,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "Lead"
-      }
-    },
-    "v1LeadComplianceConfig": {
-      "type": "object",
-      "properties": {
-        "serviceRelatedChannels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ComplianceChannel"
-          },
-          "title": "Communication channels allowed for service-related notifications"
-        },
-        "marketingCampaignsChannels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ComplianceChannel"
-          },
-          "title": "Communication channels allowed for marketing campaigns"
-        },
-        "brandedAppEnabled": {
-          "type": "boolean",
-          "title": "Whether the lead has enabled the branded mobile app for notifications"
-        },
-        "isAgreedMarketingPolicy": {
-          "type": "boolean",
-          "title": "Whether the lead has agreed to receive marketing communications\nThis must be true before sending any marketing-related messages"
-        },
-        "isConsented": {
-          "type": "boolean",
-          "description": "Whether the lead has explicitly consented to the current notification compliance configuration.\nThis field indicates the lead's informed consent to be contacted through the specified channels.\n\nLEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:\n- Ensure proper consent mechanisms are in place before setting this to true\n- Maintain audit trails of consent collection\n- Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)\n- Provide clear opt-out mechanisms\n- Handle consent withdrawal appropriately\n\nImproper handling of lead consent may result in legal liability, regulatory penalties,\nand violations of privacy laws. Always consult with legal counsel when implementing\nconsent management features."
-        }
-      },
-      "description": "LeadComplianceConfig stores lead's compliance and communication preferences.\nThis configuration controls which channels can be used to contact the lead\nfor different types of communications.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "LeadComplianceConfig"
-      }
-    },
-    "v1LeadComplianceConfigUpdateDef": {
-      "type": "object",
-      "properties": {
-        "serviceRelatedChannels": {
-          "$ref": "#/definitions/v1LeadComplianceConfigUpdateDefComplianceChannelListUpdateDef",
-          "x-nullable": true,
-          "title": "Update service-related notification channels\nIf set, replaces all existing service-related channels"
-        },
-        "marketingCampaignsChannels": {
-          "$ref": "#/definitions/v1LeadComplianceConfigUpdateDefComplianceChannelListUpdateDef",
-          "x-nullable": true,
-          "title": "Update marketing campaign notification channels\nIf set, replaces all existing marketing campaign channels"
-        },
-        "brandedAppEnabled": {
-          "type": "boolean",
-          "x-nullable": true,
-          "title": "Update whether branded app notifications are enabled"
-        },
-        "isAgreedMarketingPolicy": {
-          "type": "boolean",
-          "x-nullable": true,
-          "title": "Update whether lead has agreed to marketing policy"
-        },
-        "isConsented": {
-          "type": "boolean",
-          "x-nullable": true,
-          "description": "Update whether lead has explicitly consented to the notification compliance configuration.\nThis field indicates the lead's informed consent to be contacted through the specified channels.\n\nLEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:\n- Ensure proper consent mechanisms are in place before setting this to true\n- Maintain audit trails of consent collection\n- Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)\n- Provide clear opt-out mechanisms\n- Handle consent withdrawal appropriately\n\nImproper handling of lead consent may result in legal liability, regulatory penalties,\nand violations of privacy laws. Always consult with legal counsel when implementing\nconsent management features."
-        }
-      },
-      "description": "LeadComplianceConfigUpdateDef defines updates to lead compliance configuration.\nAll fields are optional to support partial updates.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "LeadComplianceConfigUpdateDef"
-      }
-    },
-    "v1LeadComplianceConfigUpdateDefComplianceChannelListUpdateDef": {
-      "type": "object",
-      "properties": {
-        "channels": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1ComplianceChannel"
-          },
-          "title": "List of communication channels to set\nIf an empty list is provided, the corresponding configuration will be cleared"
-        }
-      },
-      "description": "ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
-        },
-        "type": "ComplianceChannelListUpdateDef"
       }
     },
     "v1LifeCycle": {
