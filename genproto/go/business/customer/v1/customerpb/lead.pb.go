@@ -63,9 +63,12 @@ type Lead struct {
 	// Last modification timestamp
 	LastUpdatedTime *timestamppb.Timestamp `protobuf:"bytes,15,opt,name=last_updated_time,json=lastUpdatedTime,proto3" json:"last_updated_time,omitempty"`
 	// ID of the company associated with the lead
-	CompanyId     string `protobuf:"bytes,16,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	CompanyId string `protobuf:"bytes,16,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Lead's compliance configuration for communication channels
+	// Controls which channels can be used for different types of communications
+	ComplianceConfig *LeadComplianceConfig `protobuf:"bytes,17,opt,name=compliance_config,json=complianceConfig,proto3" json:"compliance_config,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *Lead) Reset() {
@@ -210,11 +213,259 @@ func (x *Lead) GetCompanyId() string {
 	return ""
 }
 
+func (x *Lead) GetComplianceConfig() *LeadComplianceConfig {
+	if x != nil {
+		return x.ComplianceConfig
+	}
+	return nil
+}
+
+// LeadComplianceConfig stores lead's compliance and communication preferences.
+// This configuration controls which channels can be used to contact the lead
+// for different types of communications.
+type LeadComplianceConfig struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Communication channels allowed for service-related notifications
+	ServiceRelatedChannels []ComplianceChannel `protobuf:"varint,2,rep,packed,name=service_related_channels,json=serviceRelatedChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"service_related_channels,omitempty"`
+	// Communication channels allowed for marketing campaigns
+	MarketingCampaignsChannels []ComplianceChannel `protobuf:"varint,3,rep,packed,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"marketing_campaigns_channels,omitempty"`
+	// Whether the lead has enabled the branded mobile app for notifications
+	BrandedAppEnabled bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3" json:"branded_app_enabled,omitempty"`
+	// Whether the lead has agreed to receive marketing communications
+	// This must be true before sending any marketing-related messages
+	IsAgreedMarketingPolicy bool `protobuf:"varint,6,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3" json:"is_agreed_marketing_policy,omitempty"`
+	// Whether the lead has explicitly consented to the current notification compliance configuration.
+	// This field indicates the lead's informed consent to be contacted through the specified channels.
+	//
+	// LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+	// - Ensure proper consent mechanisms are in place before setting this to true
+	// - Maintain audit trails of consent collection
+	// - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+	// - Provide clear opt-out mechanisms
+	// - Handle consent withdrawal appropriately
+	//
+	// Improper handling of lead consent may result in legal liability, regulatory penalties,
+	// and violations of privacy laws. Always consult with legal counsel when implementing
+	// consent management features.
+	IsConsented   bool `protobuf:"varint,7,opt,name=is_consented,json=isConsented,proto3" json:"is_consented,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeadComplianceConfig) Reset() {
+	*x = LeadComplianceConfig{}
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeadComplianceConfig) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeadComplianceConfig) ProtoMessage() {}
+
+func (x *LeadComplianceConfig) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeadComplianceConfig.ProtoReflect.Descriptor instead.
+func (*LeadComplianceConfig) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_lead_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *LeadComplianceConfig) GetServiceRelatedChannels() []ComplianceChannel {
+	if x != nil {
+		return x.ServiceRelatedChannels
+	}
+	return nil
+}
+
+func (x *LeadComplianceConfig) GetMarketingCampaignsChannels() []ComplianceChannel {
+	if x != nil {
+		return x.MarketingCampaignsChannels
+	}
+	return nil
+}
+
+func (x *LeadComplianceConfig) GetBrandedAppEnabled() bool {
+	if x != nil {
+		return x.BrandedAppEnabled
+	}
+	return false
+}
+
+func (x *LeadComplianceConfig) GetIsAgreedMarketingPolicy() bool {
+	if x != nil {
+		return x.IsAgreedMarketingPolicy
+	}
+	return false
+}
+
+func (x *LeadComplianceConfig) GetIsConsented() bool {
+	if x != nil {
+		return x.IsConsented
+	}
+	return false
+}
+
+// LeadComplianceConfigUpdateDef defines updates to lead compliance configuration.
+// All fields are optional to support partial updates.
+type LeadComplianceConfigUpdateDef struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Update service-related notification channels
+	// If set, replaces all existing service-related channels
+	ServiceRelatedChannels *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,2,opt,name=service_related_channels,json=serviceRelatedChannels,proto3,oneof" json:"service_related_channels,omitempty"`
+	// Update marketing campaign notification channels
+	// If set, replaces all existing marketing campaign channels
+	MarketingCampaignsChannels *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef `protobuf:"bytes,3,opt,name=marketing_campaigns_channels,json=marketingCampaignsChannels,proto3,oneof" json:"marketing_campaigns_channels,omitempty"`
+	// Update whether branded app notifications are enabled
+	BrandedAppEnabled *bool `protobuf:"varint,4,opt,name=branded_app_enabled,json=brandedAppEnabled,proto3,oneof" json:"branded_app_enabled,omitempty"`
+	// Update whether lead has agreed to marketing policy
+	IsAgreedMarketingPolicy *bool `protobuf:"varint,5,opt,name=is_agreed_marketing_policy,json=isAgreedMarketingPolicy,proto3,oneof" json:"is_agreed_marketing_policy,omitempty"`
+	// Update whether lead has explicitly consented to the notification compliance configuration.
+	// This field indicates the lead's informed consent to be contacted through the specified channels.
+	//
+	// LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+	// - Ensure proper consent mechanisms are in place before setting this to true
+	// - Maintain audit trails of consent collection
+	// - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+	// - Provide clear opt-out mechanisms
+	// - Handle consent withdrawal appropriately
+	//
+	// Improper handling of lead consent may result in legal liability, regulatory penalties,
+	// and violations of privacy laws. Always consult with legal counsel when implementing
+	// consent management features.
+	IsConsented   *bool `protobuf:"varint,6,opt,name=is_consented,json=isConsented,proto3,oneof" json:"is_consented,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeadComplianceConfigUpdateDef) Reset() {
+	*x = LeadComplianceConfigUpdateDef{}
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeadComplianceConfigUpdateDef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeadComplianceConfigUpdateDef) ProtoMessage() {}
+
+func (x *LeadComplianceConfigUpdateDef) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeadComplianceConfigUpdateDef.ProtoReflect.Descriptor instead.
+func (*LeadComplianceConfigUpdateDef) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_lead_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *LeadComplianceConfigUpdateDef) GetServiceRelatedChannels() *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
+	if x != nil {
+		return x.ServiceRelatedChannels
+	}
+	return nil
+}
+
+func (x *LeadComplianceConfigUpdateDef) GetMarketingCampaignsChannels() *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef {
+	if x != nil {
+		return x.MarketingCampaignsChannels
+	}
+	return nil
+}
+
+func (x *LeadComplianceConfigUpdateDef) GetBrandedAppEnabled() bool {
+	if x != nil && x.BrandedAppEnabled != nil {
+		return *x.BrandedAppEnabled
+	}
+	return false
+}
+
+func (x *LeadComplianceConfigUpdateDef) GetIsAgreedMarketingPolicy() bool {
+	if x != nil && x.IsAgreedMarketingPolicy != nil {
+		return *x.IsAgreedMarketingPolicy
+	}
+	return false
+}
+
+func (x *LeadComplianceConfigUpdateDef) GetIsConsented() bool {
+	if x != nil && x.IsConsented != nil {
+		return *x.IsConsented
+	}
+	return false
+}
+
+// ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.
+type LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// List of communication channels to set
+	// If an empty list is provided, the corresponding configuration will be cleared
+	Channels      []ComplianceChannel `protobuf:"varint,1,rep,packed,name=channels,proto3,enum=moego.business.customer.v1.ComplianceChannel" json:"channels,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Reset() {
+	*x = LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef{}
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoMessage() {}
+
+func (x *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_lead_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef.ProtoReflect.Descriptor instead.
+func (*LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_lead_proto_rawDescGZIP(), []int{2, 0}
+}
+
+func (x *LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) GetChannels() []ComplianceChannel {
+	if x != nil {
+		return x.Channels
+	}
+	return nil
+}
+
 var File_moego_business_customer_v1_lead_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\n" +
-	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xec\x05\n" +
+	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xcb\x06\n" +
 	"\x04Lead\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -235,7 +486,27 @@ const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\fcreated_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\vcreatedTime\x12F\n" +
 	"\x11last_updated_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x1d\n" +
 	"\n" +
-	"company_id\x18\x10 \x01(\tR\tcompanyIdB\x8c\x01\n" +
+	"company_id\x18\x10 \x01(\tR\tcompanyId\x12]\n" +
+	"\x11compliance_config\x18\x11 \x01(\v20.moego.business.customer.v1.LeadComplianceConfigR\x10complianceConfig\"\x80\x03\n" +
+	"\x14LeadComplianceConfig\x12g\n" +
+	"\x18service_related_channels\x18\x02 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x16serviceRelatedChannels\x12o\n" +
+	"\x1cmarketing_campaigns_channels\x18\x03 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x1amarketingCampaignsChannels\x12.\n" +
+	"\x13branded_app_enabled\x18\x04 \x01(\bR\x11brandedAppEnabled\x12;\n" +
+	"\x1ais_agreed_marketing_policy\x18\x06 \x01(\bR\x17isAgreedMarketingPolicy\x12!\n" +
+	"\fis_consented\x18\a \x01(\bR\visConsented\"\xed\x05\n" +
+	"\x1dLeadComplianceConfigUpdateDef\x12\x97\x01\n" +
+	"\x18service_related_channels\x18\x02 \x01(\v2X.moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x00R\x16serviceRelatedChannels\x88\x01\x01\x12\x9f\x01\n" +
+	"\x1cmarketing_campaigns_channels\x18\x03 \x01(\v2X.moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDefH\x01R\x1amarketingCampaignsChannels\x88\x01\x01\x123\n" +
+	"\x13branded_app_enabled\x18\x04 \x01(\bH\x02R\x11brandedAppEnabled\x88\x01\x01\x12@\n" +
+	"\x1ais_agreed_marketing_policy\x18\x05 \x01(\bH\x03R\x17isAgreedMarketingPolicy\x88\x01\x01\x12&\n" +
+	"\fis_consented\x18\x06 \x01(\bH\x04R\visConsented\x88\x01\x01\x1ak\n" +
+	"\x1eComplianceChannelListUpdateDef\x12I\n" +
+	"\bchannels\x18\x01 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\bchannelsB\x1b\n" +
+	"\x19_service_related_channelsB\x1f\n" +
+	"\x1d_marketing_campaigns_channelsB\x16\n" +
+	"\x14_branded_app_enabledB\x1d\n" +
+	"\x1b_is_agreed_marketing_policyB\x0f\n" +
+	"\r_is_consentedB\x8c\x01\n" +
 	"\"com.moego.api.business.customer.v1B\n" +
 	"LeadsProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 
@@ -251,29 +522,39 @@ func file_moego_business_customer_v1_lead_proto_rawDescGZIP() []byte {
 	return file_moego_business_customer_v1_lead_proto_rawDescData
 }
 
-var file_moego_business_customer_v1_lead_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_moego_business_customer_v1_lead_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_customer_v1_lead_proto_goTypes = []any{
-	(*Lead)(nil),                     // 0: moego.business.customer.v1.Lead
-	(*commonpb.Address)(nil),         // 1: moego.common.v1.Address
-	(*Pet)(nil),                      // 2: moego.business.customer.v1.Pet
-	(*settingpb.LifeCycle)(nil),      // 3: moego.business.setting.v1.LifeCycle
-	(*settingpb.ActionStatus)(nil),   // 4: moego.business.setting.v1.ActionStatus
-	(*settingpb.ReferralSource)(nil), // 5: moego.business.setting.v1.ReferralSource
-	(*timestamppb.Timestamp)(nil),    // 6: google.protobuf.Timestamp
+	(*Lead)(nil),                          // 0: moego.business.customer.v1.Lead
+	(*LeadComplianceConfig)(nil),          // 1: moego.business.customer.v1.LeadComplianceConfig
+	(*LeadComplianceConfigUpdateDef)(nil), // 2: moego.business.customer.v1.LeadComplianceConfigUpdateDef
+	(*LeadComplianceConfigUpdateDef_ComplianceChannelListUpdateDef)(nil), // 3: moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	(*commonpb.Address)(nil),         // 4: moego.common.v1.Address
+	(*Pet)(nil),                      // 5: moego.business.customer.v1.Pet
+	(*settingpb.LifeCycle)(nil),      // 6: moego.business.setting.v1.LifeCycle
+	(*settingpb.ActionStatus)(nil),   // 7: moego.business.setting.v1.ActionStatus
+	(*settingpb.ReferralSource)(nil), // 8: moego.business.setting.v1.ReferralSource
+	(*timestamppb.Timestamp)(nil),    // 9: google.protobuf.Timestamp
+	(ComplianceChannel)(0),           // 10: moego.business.customer.v1.ComplianceChannel
 }
 var file_moego_business_customer_v1_lead_proto_depIdxs = []int32{
-	1, // 0: moego.business.customer.v1.Lead.address:type_name -> moego.common.v1.Address
-	2, // 1: moego.business.customer.v1.Lead.pets:type_name -> moego.business.customer.v1.Pet
-	3, // 2: moego.business.customer.v1.Lead.life_cycle:type_name -> moego.business.setting.v1.LifeCycle
-	4, // 3: moego.business.customer.v1.Lead.action_status:type_name -> moego.business.setting.v1.ActionStatus
-	5, // 4: moego.business.customer.v1.Lead.referral_source:type_name -> moego.business.setting.v1.ReferralSource
-	6, // 5: moego.business.customer.v1.Lead.created_time:type_name -> google.protobuf.Timestamp
-	6, // 6: moego.business.customer.v1.Lead.last_updated_time:type_name -> google.protobuf.Timestamp
-	7, // [7:7] is the sub-list for method output_type
-	7, // [7:7] is the sub-list for method input_type
-	7, // [7:7] is the sub-list for extension type_name
-	7, // [7:7] is the sub-list for extension extendee
-	0, // [0:7] is the sub-list for field type_name
+	4,  // 0: moego.business.customer.v1.Lead.address:type_name -> moego.common.v1.Address
+	5,  // 1: moego.business.customer.v1.Lead.pets:type_name -> moego.business.customer.v1.Pet
+	6,  // 2: moego.business.customer.v1.Lead.life_cycle:type_name -> moego.business.setting.v1.LifeCycle
+	7,  // 3: moego.business.customer.v1.Lead.action_status:type_name -> moego.business.setting.v1.ActionStatus
+	8,  // 4: moego.business.customer.v1.Lead.referral_source:type_name -> moego.business.setting.v1.ReferralSource
+	9,  // 5: moego.business.customer.v1.Lead.created_time:type_name -> google.protobuf.Timestamp
+	9,  // 6: moego.business.customer.v1.Lead.last_updated_time:type_name -> google.protobuf.Timestamp
+	1,  // 7: moego.business.customer.v1.Lead.compliance_config:type_name -> moego.business.customer.v1.LeadComplianceConfig
+	10, // 8: moego.business.customer.v1.LeadComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	10, // 9: moego.business.customer.v1.LeadComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	3,  // 10: moego.business.customer.v1.LeadComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	3,  // 11: moego.business.customer.v1.LeadComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	10, // 12: moego.business.customer.v1.LeadComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_lead_proto_init() }
@@ -281,14 +562,16 @@ func file_moego_business_customer_v1_lead_proto_init() {
 	if File_moego_business_customer_v1_lead_proto != nil {
 		return
 	}
+	file_moego_business_customer_v1_customer_proto_init()
 	file_moego_business_customer_v1_pet_proto_init()
+	file_moego_business_customer_v1_lead_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_lead_proto_rawDesc), len(file_moego_business_customer_v1_lead_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

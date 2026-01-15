@@ -3,6 +3,7 @@ syntax = "proto3";
 package moego.business.customer.v1;
 
 import "google/protobuf/timestamp.proto";
+import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/customer.proto";
 import "moego/common/v1/address.proto";
@@ -66,4 +67,81 @@ message Lead {
 
   // ID of the company associated with the lead
   string company_id = 16;
+
+  // Lead's compliance configuration for communication channels
+  // Controls which channels can be used for different types of communications
+  LeadComplianceConfig compliance_config = 17;
+}
+
+// LeadComplianceConfig stores lead's compliance and communication preferences.
+// This configuration controls which channels can be used to contact the lead
+// for different types of communications.
+message LeadComplianceConfig {
+  // Communication channels allowed for service-related notifications
+  repeated ComplianceChannel service_related_channels = 2;
+
+  // Communication channels allowed for marketing campaigns
+  repeated ComplianceChannel marketing_campaigns_channels = 3;
+
+  // Whether the lead has enabled the branded mobile app for notifications
+  bool branded_app_enabled = 4;
+
+  // Whether the lead has agreed to receive marketing communications
+  // This must be true before sending any marketing-related messages
+  bool is_agreed_marketing_policy = 6;
+
+  // Whether the lead has explicitly consented to the current notification compliance configuration.
+  // This field indicates the lead's informed consent to be contacted through the specified channels.
+  //
+  // LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+  // - Ensure proper consent mechanisms are in place before setting this to true
+  // - Maintain audit trails of consent collection
+  // - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+  // - Provide clear opt-out mechanisms
+  // - Handle consent withdrawal appropriately
+  //
+  // Improper handling of lead consent may result in legal liability, regulatory penalties,
+  // and violations of privacy laws. Always consult with legal counsel when implementing
+  // consent management features.
+  bool is_consented = 7;
+}
+
+// LeadComplianceConfigUpdateDef defines updates to lead compliance configuration.
+// All fields are optional to support partial updates.
+message LeadComplianceConfigUpdateDef {
+  // ComplianceChannelListUpdateDef wraps a list of compliance channels for updates.
+  message ComplianceChannelListUpdateDef {
+    // List of communication channels to set
+    // If an empty list is provided, the corresponding configuration will be cleared
+    repeated ComplianceChannel channels = 1;
+  }
+
+  // Update service-related notification channels
+  // If set, replaces all existing service-related channels
+  optional ComplianceChannelListUpdateDef service_related_channels = 2;
+
+  // Update marketing campaign notification channels
+  // If set, replaces all existing marketing campaign channels
+  optional ComplianceChannelListUpdateDef marketing_campaigns_channels = 3;
+
+  // Update whether branded app notifications are enabled
+  optional bool branded_app_enabled = 4;
+
+  // Update whether lead has agreed to marketing policy
+  optional bool is_agreed_marketing_policy = 5;
+
+  // Update whether lead has explicitly consented to the notification compliance configuration.
+  // This field indicates the lead's informed consent to be contacted through the specified channels.
+  //
+  // LEGAL NOTICE: Modifying this field carries legal responsibility. Organizations must:
+  // - Ensure proper consent mechanisms are in place before setting this to true
+  // - Maintain audit trails of consent collection
+  // - Comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA)
+  // - Provide clear opt-out mechanisms
+  // - Handle consent withdrawal appropriately
+  //
+  // Improper handling of lead consent may result in legal liability, regulatory penalties,
+  // and violations of privacy laws. Always consult with legal counsel when implementing
+  // consent management features.
+  optional bool is_consented = 6;
 }

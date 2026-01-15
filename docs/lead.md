@@ -46,6 +46,35 @@ Represents a potential customer in the sales pipeline
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource) | The source or channel through which the lead was acquired |
 | `createdTime`         | Timestamp                                                | Creation timestamp                                        |
 | `lastUpdatedTime`     | Timestamp                                                | Last modification timestamp                               |
+| `complianceConfig`    | LeadComplianceConfig                                     | Lead's compliance configuration for communication channels |
+
+### 2. ComplianceChannel
+
+Represents the available communication channels for lead notifications. These channels are used to control how 
+leads receive service-related and marketing communications.
+
+| Value                         | Description                                   |
+|-------------------------------|-----------------------------------------------|
+| `COMPLIANCE_CHANNEL_SMS`      | Communication via SMS text messages           |
+| `COMPLIANCE_CHANNEL_EMAIL`    | Communication via email                       |
+| `COMPLIANCE_CHANNEL_AUTO_CALL`| Communication via automated phone calls       |
+
+### 3. LeadComplianceConfig
+
+Stores lead's compliance and communication preferences. This configuration controls which channels the business 
+can use to contact the lead for different types of communications.
+
+| Field Name                    | Type                       | Description                                                           |
+|-------------------------------|----------------------------|-----------------------------------------------------------------------|
+| `serviceRelatedChannels`      | Array(ComplianceChannel)   | Communication channels allowed for service-related notifications      |
+| `marketingCampaignsChannels`  | Array(ComplianceChannel)   | Communication channels allowed for marketing campaigns                |
+| `brandedAppEnabled`           | bool                       | Whether the lead has enabled the branded mobile app for notifications |
+| `isAgreedMarketingPolicy`     | bool                       | Whether the lead has agreed to receive marketing communications   |
+| `isConsented`                 | bool                       | Whether the lead has explicitly consented to the current notification compliance configuration. **LEGAL NOTICE**: Modifying this field carries legal responsibility. Organizations must ensure proper consent mechanisms are in place, maintain audit trails, comply with applicable data protection regulations (e.g., GDPR, CCPA, TCPA), and provide clear opt-out mechanisms. Improper handling may result in legal liability and regulatory penalties. |
+
+> **Note**: If an empty list is provided when updating channel configurations, the corresponding configuration will be cleared.
+>
+> **Important**: The `isConsented` field indicates explicit lead consent. Organizations modifying this field must comply with all applicable privacy laws and regulations. Consult with legal counsel when implementing consent management features.
 
 ---
 
@@ -98,9 +127,10 @@ Creates a new lead
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type | Required | Description                |
-|------------|------|----------|----------------------------|
-| `lead`     | Lead | Yes      | Lead information to create |
+| Field Name         | Type                         | Required | Description                                               |
+|--------------------|------------------------------|----------|-----------------------------------------------------------|
+| `lead`             | Lead                         | Yes      | Lead information to create                                |
+| `complianceConfig` | LeadComplianceConfigUpdateDef | No       | Lead's compliance configuration for communication channels |
 
 #### 📌 Return Value:
 
@@ -162,10 +192,11 @@ Updates an existing lead's information
 
 #### 🔧 Request Parameters:
 
-| Field Name | Type   | Required | Description              |
-|------------|--------|----------|--------------------------|
-| `id`       | string | Yes      | Lead ID to update        |
-| `lead`     | Lead   | Yes      | Updated lead information |
+| Field Name         | Type                         | Required | Description                                              |
+|--------------------|------------------------------|----------|----------------------------------------------------------|
+| `id`               | string                       | Yes      | Lead ID to update                                        |
+| `lead`             | Lead                         | Yes      | Updated lead information                                 |
+| `complianceConfig` | LeadComplianceConfigUpdateDef | No       | Lead's compliance configuration updates                  |
 
 #### 📌 Return Value:
 
@@ -274,6 +305,17 @@ Returns the newly created `Customer` object
         "breed": "Labrador Retriever"
       }
     ]
+  },
+  "complianceConfig": {
+    "serviceRelatedChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_SMS", "COMPLIANCE_CHANNEL_EMAIL"]
+    },
+    "marketingCampaignsChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_EMAIL"]
+    },
+    "brandedAppEnabled": true,
+    "isAgreedMarketingPolicy": true,
+    "isConsented": true
   }
 }
 ```
@@ -297,6 +339,16 @@ Returns the newly created `Customer` object
       "name": "Contacted",
       "color": "#00FF00"
     }
+  },
+  "complianceConfig": {
+    "serviceRelatedChannels": {
+      "channels": ["COMPLIANCE_CHANNEL_SMS"]
+    },
+    "marketingCampaignsChannels": {
+      "channels": []
+    },
+    "isAgreedMarketingPolicy": false,
+    "isConsented": false
   }
 }
 ```
@@ -340,6 +392,7 @@ TODO
 | Can I create multiple leads at once? | Currently only single lead creation is supported                    |
 | How to filter leads effectively?     | Use `ListLeads` with appropriate filter parameters                  |
 | What happens when promoting a lead?  | The lead is promoted to a customer and removed from the lead system |
+| How to control which communication channels can be used to contact a lead? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |
 
 ---
 
