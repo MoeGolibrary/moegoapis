@@ -7,6 +7,7 @@
 package customerpb
 
 import (
+	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -201,8 +202,12 @@ type CreateLeadRequest struct {
 	// Lead's compliance configuration for communication channels
 	// Optional. System defaults will be used if not provided
 	ComplianceConfig *CustomerComplianceConfigUpdateDef `protobuf:"bytes,2,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Custom fields for create, Optional
+	// key is CustomField.code
+	// value is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value
+	CustomFields  map[string]*settingpb.CustomField_Value `protobuf:"bytes,3,rep,name=custom_fields,json=customFields,proto3" json:"custom_fields,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CreateLeadRequest) Reset() {
@@ -245,6 +250,13 @@ func (x *CreateLeadRequest) GetLead() *Lead {
 func (x *CreateLeadRequest) GetComplianceConfig() *CustomerComplianceConfigUpdateDef {
 	if x != nil {
 		return x.ComplianceConfig
+	}
+	return nil
+}
+
+func (x *CreateLeadRequest) GetCustomFields() map[string]*settingpb.CustomField_Value {
+	if x != nil {
+		return x.CustomFields
 	}
 	return nil
 }
@@ -477,7 +489,7 @@ var File_moego_business_customer_v1_lead_service_proto protoreflect.FileDescript
 
 const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/customer/v1/lead_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a%moego/business/customer/v1/lead.proto\x1a moego/common/v1/pagination.proto\"\xd9\x02\n" +
+	"-moego/business/customer/v1/lead_service.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a)moego/business/customer/v1/customer.proto\x1a%moego/business/customer/v1/lead.proto\x1a moego/common/v1/pagination.proto\x1a(moego/business/setting/v1/customer.proto\"\xd9\x02\n" +
 	"\x10ListLeadsRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
@@ -493,10 +505,14 @@ const file_moego_business_customer_v1_lead_service_proto_rawDesc = "" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x126\n" +
 	"\x05leads\x18\x02 \x03(\v2 .moego.business.customer.v1.LeadR\x05leads\"%\n" +
 	"\x0eGetLeadRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xd5\x01\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xaf\x03\n" +
 	"\x11CreateLeadRequest\x129\n" +
 	"\x04lead\x18\x01 \x01(\v2 .moego.business.customer.v1.LeadB\x03\xe0A\x02R\x04lead\x12o\n" +
-	"\x11compliance_config\x18\x02 \x01(\v2=.moego.business.customer.v1.CustomerComplianceConfigUpdateDefH\x00R\x10complianceConfig\x88\x01\x01B\x14\n" +
+	"\x11compliance_config\x18\x02 \x01(\v2=.moego.business.customer.v1.CustomerComplianceConfigUpdateDefH\x00R\x10complianceConfig\x88\x01\x01\x12i\n" +
+	"\rcustom_fields\x18\x03 \x03(\v2?.moego.business.customer.v1.CreateLeadRequest.CustomFieldsEntryB\x03\xe0A\x01R\fcustomFields\x1am\n" +
+	"\x11CustomFieldsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12B\n" +
+	"\x05value\x18\x02 \x01(\v2,.moego.business.setting.v1.CustomField.ValueR\x05value:\x028\x01B\x14\n" +
 	"\x12_compliance_config\"\xea\x01\n" +
 	"\x11UpdateLeadRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x129\n" +
@@ -529,7 +545,7 @@ func file_moego_business_customer_v1_lead_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_customer_v1_lead_service_proto_rawDescData
 }
 
-var file_moego_business_customer_v1_lead_service_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_moego_business_customer_v1_lead_service_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_moego_business_customer_v1_lead_service_proto_goTypes = []any{
 	(*ListLeadsRequest)(nil),                  // 0: moego.business.customer.v1.ListLeadsRequest
 	(*ListLeadsResponse)(nil),                 // 1: moego.business.customer.v1.ListLeadsResponse
@@ -539,35 +555,39 @@ var file_moego_business_customer_v1_lead_service_proto_goTypes = []any{
 	(*PromoteLeadRequest)(nil),                // 5: moego.business.customer.v1.PromoteLeadRequest
 	(*PromoteLeadResponse)(nil),               // 6: moego.business.customer.v1.PromoteLeadResponse
 	(*ListLeadsRequest_Filter)(nil),           // 7: moego.business.customer.v1.ListLeadsRequest.Filter
-	(*commonpb.Pagination)(nil),               // 8: moego.common.v1.Pagination
-	(*Lead)(nil),                              // 9: moego.business.customer.v1.Lead
-	(*CustomerComplianceConfigUpdateDef)(nil), // 10: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	(*Customer)(nil),                          // 11: moego.business.customer.v1.Customer
+	nil,                                       // 8: moego.business.customer.v1.CreateLeadRequest.CustomFieldsEntry
+	(*commonpb.Pagination)(nil),               // 9: moego.common.v1.Pagination
+	(*Lead)(nil),                              // 10: moego.business.customer.v1.Lead
+	(*CustomerComplianceConfigUpdateDef)(nil), // 11: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	(*Customer)(nil),                          // 12: moego.business.customer.v1.Customer
+	(*settingpb.CustomField_Value)(nil),       // 13: moego.business.setting.v1.CustomField.Value
 }
 var file_moego_business_customer_v1_lead_service_proto_depIdxs = []int32{
-	8,  // 0: moego.business.customer.v1.ListLeadsRequest.pagination:type_name -> moego.common.v1.Pagination
+	9,  // 0: moego.business.customer.v1.ListLeadsRequest.pagination:type_name -> moego.common.v1.Pagination
 	7,  // 1: moego.business.customer.v1.ListLeadsRequest.filter:type_name -> moego.business.customer.v1.ListLeadsRequest.Filter
-	9,  // 2: moego.business.customer.v1.ListLeadsResponse.leads:type_name -> moego.business.customer.v1.Lead
-	9,  // 3: moego.business.customer.v1.CreateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
-	10, // 4: moego.business.customer.v1.CreateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	9,  // 5: moego.business.customer.v1.UpdateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
-	10, // 6: moego.business.customer.v1.UpdateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	11, // 7: moego.business.customer.v1.PromoteLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
-	0,  // 8: moego.business.customer.v1.LeadService.ListLeads:input_type -> moego.business.customer.v1.ListLeadsRequest
-	2,  // 9: moego.business.customer.v1.LeadService.GetLead:input_type -> moego.business.customer.v1.GetLeadRequest
-	3,  // 10: moego.business.customer.v1.LeadService.CreateLead:input_type -> moego.business.customer.v1.CreateLeadRequest
-	4,  // 11: moego.business.customer.v1.LeadService.UpdateLead:input_type -> moego.business.customer.v1.UpdateLeadRequest
-	5,  // 12: moego.business.customer.v1.LeadService.PromoteLead:input_type -> moego.business.customer.v1.PromoteLeadRequest
-	1,  // 13: moego.business.customer.v1.LeadService.ListLeads:output_type -> moego.business.customer.v1.ListLeadsResponse
-	9,  // 14: moego.business.customer.v1.LeadService.GetLead:output_type -> moego.business.customer.v1.Lead
-	9,  // 15: moego.business.customer.v1.LeadService.CreateLead:output_type -> moego.business.customer.v1.Lead
-	9,  // 16: moego.business.customer.v1.LeadService.UpdateLead:output_type -> moego.business.customer.v1.Lead
-	6,  // 17: moego.business.customer.v1.LeadService.PromoteLead:output_type -> moego.business.customer.v1.PromoteLeadResponse
-	13, // [13:18] is the sub-list for method output_type
-	8,  // [8:13] is the sub-list for method input_type
-	8,  // [8:8] is the sub-list for extension type_name
-	8,  // [8:8] is the sub-list for extension extendee
-	0,  // [0:8] is the sub-list for field type_name
+	10, // 2: moego.business.customer.v1.ListLeadsResponse.leads:type_name -> moego.business.customer.v1.Lead
+	10, // 3: moego.business.customer.v1.CreateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
+	11, // 4: moego.business.customer.v1.CreateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	8,  // 5: moego.business.customer.v1.CreateLeadRequest.custom_fields:type_name -> moego.business.customer.v1.CreateLeadRequest.CustomFieldsEntry
+	10, // 6: moego.business.customer.v1.UpdateLeadRequest.lead:type_name -> moego.business.customer.v1.Lead
+	11, // 7: moego.business.customer.v1.UpdateLeadRequest.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef
+	12, // 8: moego.business.customer.v1.PromoteLeadResponse.customer:type_name -> moego.business.customer.v1.Customer
+	13, // 9: moego.business.customer.v1.CreateLeadRequest.CustomFieldsEntry.value:type_name -> moego.business.setting.v1.CustomField.Value
+	0,  // 10: moego.business.customer.v1.LeadService.ListLeads:input_type -> moego.business.customer.v1.ListLeadsRequest
+	2,  // 11: moego.business.customer.v1.LeadService.GetLead:input_type -> moego.business.customer.v1.GetLeadRequest
+	3,  // 12: moego.business.customer.v1.LeadService.CreateLead:input_type -> moego.business.customer.v1.CreateLeadRequest
+	4,  // 13: moego.business.customer.v1.LeadService.UpdateLead:input_type -> moego.business.customer.v1.UpdateLeadRequest
+	5,  // 14: moego.business.customer.v1.LeadService.PromoteLead:input_type -> moego.business.customer.v1.PromoteLeadRequest
+	1,  // 15: moego.business.customer.v1.LeadService.ListLeads:output_type -> moego.business.customer.v1.ListLeadsResponse
+	10, // 16: moego.business.customer.v1.LeadService.GetLead:output_type -> moego.business.customer.v1.Lead
+	10, // 17: moego.business.customer.v1.LeadService.CreateLead:output_type -> moego.business.customer.v1.Lead
+	10, // 18: moego.business.customer.v1.LeadService.UpdateLead:output_type -> moego.business.customer.v1.Lead
+	6,  // 19: moego.business.customer.v1.LeadService.PromoteLead:output_type -> moego.business.customer.v1.PromoteLeadResponse
+	15, // [15:20] is the sub-list for method output_type
+	10, // [10:15] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_lead_service_proto_init() }
@@ -585,7 +605,7 @@ func file_moego_business_customer_v1_lead_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_lead_service_proto_rawDesc), len(file_moego_business_customer_v1_lead_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

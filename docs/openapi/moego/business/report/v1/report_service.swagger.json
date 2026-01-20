@@ -159,6 +159,45 @@
         "type": "Any"
       }
     },
+    "reportv1Value": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "title": "Text value for string fields"
+        },
+        "double": {
+          "type": "number",
+          "format": "double",
+          "title": "Decimal value for numerical fields"
+        },
+        "int64": {
+          "type": "string",
+          "format": "int64",
+          "title": "Integer value for whole number fields"
+        },
+        "bool": {
+          "type": "boolean",
+          "title": "Boolean value for true/false fields"
+        },
+        "money": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Monetary value with currency information"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Date/time value for temporal fields"
+        }
+      },
+      "description": "Value represents a typed data value used in reports.\nSupports multiple data types through a oneof field.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
+        },
+        "type": "Value"
+      }
+    },
     "typeInterval": {
       "type": "object",
       "properties": {
@@ -219,7 +258,7 @@
           "title": "Data type of the value\nMust match the field definition"
         },
         "value": {
-          "$ref": "#/definitions/v1Value",
+          "$ref": "#/definitions/reportv1Value",
           "title": "Actual value of the cell\nType must match field_type"
         }
       },
@@ -469,45 +508,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
         },
         "type": "TableRowData"
-      }
-    },
-    "v1Value": {
-      "type": "object",
-      "properties": {
-        "string": {
-          "type": "string",
-          "title": "Text value for string fields"
-        },
-        "double": {
-          "type": "number",
-          "format": "double",
-          "title": "Decimal value for numerical fields"
-        },
-        "int64": {
-          "type": "string",
-          "format": "int64",
-          "title": "Integer value for whole number fields"
-        },
-        "bool": {
-          "type": "boolean",
-          "title": "Boolean value for true/false fields"
-        },
-        "money": {
-          "$ref": "#/definitions/typeMoney",
-          "title": "Monetary value with currency information"
-        },
-        "timestamp": {
-          "type": "string",
-          "format": "date-time",
-          "title": "Date/time value for temporal fields"
-        }
-      },
-      "description": "Value represents a typed data value used in reports.\nSupports multiple data types through a oneof field.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/report/v1/reportpb"
-        },
-        "type": "Value"
       }
     }
   }

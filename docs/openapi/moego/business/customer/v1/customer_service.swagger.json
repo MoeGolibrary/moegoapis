@@ -599,6 +599,14 @@
         "type": "Any"
       }
     },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
     "typeInterval": {
       "type": "object",
       "properties": {
@@ -948,6 +956,11 @@
         "complianceConfig": {
           "$ref": "#/definitions/v1CustomerComplianceConfig",
           "title": "Customer's compliance configuration for communication channels\nControls which channels can be used for different types of communications"
+        },
+        "customFields": {
+          "type": "object",
+          "x-nullable": true,
+          "title": "custom fields"
         }
       },
       "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",
