@@ -7,7 +7,6 @@ import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/customer.proto";
 import "moego/common/v1/address.proto";
-import "google/protobuf/struct.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -73,6 +72,8 @@ message Lead {
   // Controls which channels can be used for different types of communications
   CustomerComplianceConfig compliance_config = 17;
 
-  // custom fields for List, create dont use
-  optional google.protobuf.Struct custom_fields = 18;
+  // Custom fields, Optional
+  // key is CustomField.code
+  // value is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value
+  map<string,moego.business.setting.v1.CustomField.Value> custom_fields = 18;
 }

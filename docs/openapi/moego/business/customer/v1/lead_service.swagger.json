@@ -653,13 +653,6 @@
           "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
           "x-nullable": true,
           "title": "Lead's compliance configuration for communication channels\nOptional. System defaults will be used if not provided"
-        },
-        "customFields": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "#/definitions/v1CustomFieldValue"
-          },
-          "title": "Custom fields for create, Optional\nkey is CustomField.code\nvalue is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value"
         }
       },
       "title": "Request message for creating a new lead",
@@ -1084,8 +1077,10 @@
         },
         "customFields": {
           "type": "object",
-          "x-nullable": true,
-          "title": "custom fields for List, create dont use"
+          "additionalProperties": {
+            "$ref": "#/definitions/v1CustomFieldValue"
+          },
+          "title": "Custom fields, Optional\nkey is CustomField.code\nvalue is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value"
         }
       },
       "title": "Lead represents a potential customer in the sales pipeline",

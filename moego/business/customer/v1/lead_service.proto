@@ -7,7 +7,6 @@ import "google/api/field_behavior.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/lead.proto";
 import "moego/common/v1/pagination.proto";
-import "moego/business/setting/v1/customer.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -123,11 +122,6 @@ message CreateLeadRequest {
   // Lead's compliance configuration for communication channels
   // Optional. System defaults will be used if not provided
   optional CustomerComplianceConfigUpdateDef compliance_config = 2;
-
-  // Custom fields for create, Optional
-  // key is CustomField.code
-  // value is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value
-  map<string,moego.business.setting.v1.CustomField.Value> custom_fields = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request message for updating an existing lead
