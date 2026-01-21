@@ -47,6 +47,7 @@ Represents a potential customer in the sales pipeline
 | `createdTime`         | Timestamp                                                | Creation timestamp                                        |
 | `lastUpdatedTime`     | Timestamp                                                | Last modification timestamp                               |
 | `complianceConfig`    | [CustomerComplianceConfig](./customer.md#5-customercomplianceconfig) | Lead's compliance configuration for communication channels. See [Customer ComplianceConfig](./customer.md#5-customercomplianceconfig) for details |
+| `customFields`        | Map<string, [CustomField.Value](./setting_custom_field.md#5-customfieldvalue)> | Custom field values. Key is the custom field code (e.g., `field_123`), value is the field value based on the field type. See [Custom Field Documentation](./setting_custom_field.md) for details |
 
 > **Note**: Lead uses the same compliance configuration structure as Customer. For detailed information about compliance channels and configuration options, please refer to the [Customer API Documentation](./customer.md#5-customercomplianceconfig).
 
@@ -105,6 +106,14 @@ Creates a new lead
 |--------------------|---------------------------------------|----------|-----------------------------------------------------------|
 | `lead`             | Lead                                  | Yes      | Lead information to create                                |
 | `complianceConfig` | CustomerComplianceConfigUpdateDef     | No       | Lead's compliance configuration for communication channels. See [Customer ComplianceConfig](./customer.md#5-customercomplianceconfig) |
+
+**Lead Object Fields:**
+
+In addition to standard fields (firstName, lastName, phone, email, etc.), the `lead` object supports:
+
+| Field Name     | Type                                  | Required | Description                                               |
+|----------------|---------------------------------------|----------|-----------------------------------------------------------|
+| `customFields` | Map<string, CustomField.Value>        | No       | Custom field values. Key is the custom field code (from [ListCustomFields](./setting_custom_field.md)), value matches the field type. See [Custom Field Documentation](./setting_custom_field.md) for details |
 
 #### 📌 Return Value:
 
@@ -215,7 +224,12 @@ Lists leads with pagination and optional filters
 
 #### 📌 Return Value:
 
-Returns paginated results and lead list
+Returns paginated results and lead list. Each lead in the response includes all standard fields plus any custom field values that have been set.
+
+| Field Name       | Type          | Description                                    |
+|------------------|---------------|------------------------------------------------|
+| `nextPageToken`  | string        | Token for retrieving the next page of results  |
+| `leads`          | Array(Lead)   | List of leads with all fields including custom fields |
 
 #### ⚠️ Error Code:
 
@@ -278,7 +292,26 @@ Returns the newly created `Customer` object
         "type": "DOG",
         "breed": "Labrador Retriever"
       }
-    ]
+    ],
+    "customFields": {
+      "field_lead_source_detail": {
+        "string": "Facebook Ad Campaign"
+      },
+      "field_estimated_budget": {
+        "money": {
+          "currencyCode": "USD",
+          "units": "500"
+        }
+      },
+      "field_interested_services": {
+        "stringList": {
+          "values": ["Grooming", "Boarding", "Training"]
+        }
+      },
+      "field_follow_up_date": {
+        "timestampTime": "2024-02-15T10:00:00Z"
+      }
+    }
   },
   "complianceConfig": {
     "serviceRelatedChannels": {
@@ -329,6 +362,8 @@ Returns the newly created `Customer` object
 
 ### Example 3: List Leads
 
+Request:
+
 ```json
 {
   "companyId": "cmp_001",
@@ -339,6 +374,45 @@ Returns the newly created `Customer` object
   "filter": {
     "lifeCycleId": "lc_001"
   }
+}
+```
+
+Response:
+
+```json
+{
+  "nextPageToken": "2",
+  "leads": [
+    {
+      "id": "lcus_001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phone": "+12125551234",
+      "email": "john.doe@example.com",
+      "lifeCycle": {
+        "id": "lc_001",
+        "name": "Qualified"
+      },
+      "customFields": {
+        "field_lead_source_detail": {
+          "string": "Facebook Ad Campaign"
+        },
+        "field_estimated_budget": {
+          "money": {
+            "currencyCode": "USD",
+            "units": "500"
+          }
+        },
+        "field_interested_services": {
+          "stringList": {
+            "values": ["Grooming", "Boarding"]
+          }
+        }
+      },
+      "createdTime": "2024-01-15T10:00:00Z",
+      "lastUpdatedTime": "2024-01-20T14:30:00Z"
+    }
+  ]
 }
 ```
 
@@ -367,6 +441,8 @@ TODO
 | How to filter leads effectively?     | Use `ListLeads` with appropriate filter parameters                  |
 | What happens when promoting a lead?  | The lead is promoted to a customer and removed from the lead system |
 | How to control which communication channels can be used to contact a lead? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |
+| How do I use custom fields with leads? | First use [ListCustomFields](./setting_custom_field.md) to get available fields and their codes, then include them in the `customFields` map when creating or updating leads. The key is the field code (e.g., `field_123`) and the value type must match the field's defined type. |
+| What custom field types are supported? | Supports text, numbers, dates, booleans, selections, relations, money, time, and datetime. See [Custom Field Documentation](./setting_custom_field.md) for details. |
 
 ---
 
