@@ -203,6 +203,14 @@ service SettingService {
       body: "*"
     };
   }
+
+  // Lists all available custom fields for a company.
+  rpc ListCustomFields(ListCustomFieldsRequest) returns (ListCustomFieldsResponse) {
+    option (google.api.http) = {
+      post: "/v1/setting/companies/{company_id}/custom_fields"
+      body: "*"
+    };
+  }
 }
 
 // Request message for listing pet codes.
@@ -469,4 +477,27 @@ message ListPetCoatTypesResponse {
   // List of pet coat types matching the request criteria
   // May be empty if no pet coat types match
   repeated PetCoatType pet_coat_types = 1;
+}
+
+// Request message for listing custom fields.
+message ListCustomFieldsRequest {
+  // ID of the company to list custom fields for
+  // Required. Must be a valid company ID
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // Filter parameters for the custom field list
+  message Filter {
+    // Types of association to include in the results
+    // Optional. If empty, returns all association types
+    repeated CustomField.AssociationType association_types = 1 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // Optional filters to apply to the custom field list
+  Filter filter = 2 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for listing custom fields.
+message ListCustomFieldsResponse {
+  // List of available custom fields
+  // May be empty if no custom fields are defined
+  repeated CustomField custom_fields = 1;
 }

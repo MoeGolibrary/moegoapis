@@ -331,6 +331,57 @@
         "type": "Vet"
       }
     },
+    "RelationEntity": {
+      "type": "string",
+      "enum": [
+        "ENTITY_UNSPECIFIED",
+        "CUSTOMER",
+        "LEAD"
+      ],
+      "default": "ENTITY_UNSPECIFIED",
+      "description": "- ENTITY_UNSPECIFIED: Unspecified\n - CUSTOMER: Customer\n - LEAD: Lead",
+      "title": "Entity"
+    },
+    "ValueRelation": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/RelationEntity",
+          "title": "Related entity type"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Related entity id"
+        }
+      },
+      "title": "Relation to another entity (customer/lead)",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Relation"
+      }
+    },
+    "ValueStringList": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Values"
+        }
+      },
+      "title": "String list for multi-select values",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "StringList"
+      }
+    },
     "WeightUnit": {
       "type": "string",
       "enum": [
@@ -381,6 +432,14 @@
         "type": "Any"
       }
     },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\nThe JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
+    },
     "typeDate": {
       "type": "object",
       "properties": {
@@ -429,6 +488,64 @@
           "package": "google.golang.org/genproto/googleapis/type/latlng"
         },
         "type": "LatLng"
+      }
+    },
+    "typeMoney": {
+      "type": "object",
+      "properties": {
+        "currencyCode": {
+          "type": "string",
+          "description": "The three-letter currency code defined in ISO 4217."
+        },
+        "units": {
+          "type": "string",
+          "format": "int64",
+          "description": "The whole units of the amount.\nFor example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Number of nano (10^-9) units of the amount.\nThe value must be between -999,999,999 and +999,999,999 inclusive.\nIf `units` is positive, `nanos` must be positive or zero.\nIf `units` is zero, `nanos` can be positive, zero, or negative.\nIf `units` is negative, `nanos` must be negative or zero.\nFor example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000."
+        }
+      },
+      "description": "Represents an amount of money with its currency type.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/money"
+        },
+        "type": "Money"
+      }
+    },
+    "typeTimeOfDay": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose\nto allow the value \"24:00:00\" for scenarios like business closing time."
+        },
+        "minutes": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Minutes of hour of day. Must be from 0 to 59."
+        },
+        "seconds": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Seconds of minutes of the time. Must normally be from 0 to 59. An API may\nallow the value 60 if it allows leap-seconds."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999."
+        }
+      },
+      "description": "Represents a time of day. The date and time zone are either not significant\nor are specified elsewhere. An API may choose to allow leap seconds. Related\ntypes are [google.type.Date][google.type.Date] and\n`google.protobuf.Timestamp`.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/timeofday"
+        },
+        "type": "TimeOfDay"
       }
     },
     "v1ActionStatus": {
@@ -547,6 +664,57 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "CreateLeadRequest"
+      }
+    },
+    "v1CustomFieldValue": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "title": "String"
+        },
+        "doubleValue": {
+          "type": "number",
+          "format": "double",
+          "title": "Floating-point type"
+        },
+        "int64": {
+          "type": "string",
+          "format": "int64",
+          "title": "Integer"
+        },
+        "bool": {
+          "type": "boolean",
+          "title": "Bool"
+        },
+        "money": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Money"
+        },
+        "timestampTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Timestamp"
+        },
+        "relation": {
+          "$ref": "#/definitions/ValueRelation",
+          "title": "Relation"
+        },
+        "stringList": {
+          "$ref": "#/definitions/ValueStringList",
+          "title": "String list type (for the default value of multi-select)"
+        },
+        "timeOfDay": {
+          "$ref": "#/definitions/typeTimeOfDay",
+          "title": "The time of the day"
+        }
+      },
+      "description": "Custom field value, can be of any supported type.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Value"
       }
     },
     "v1Customer": {
@@ -672,6 +840,11 @@
         "complianceConfig": {
           "$ref": "#/definitions/v1CustomerComplianceConfig",
           "title": "Customer's compliance configuration for communication channels\nControls which channels can be used for different types of communications"
+        },
+        "customFields": {
+          "type": "object",
+          "x-nullable": true,
+          "title": "custom fields"
         }
       },
       "description": "Customer represents a client who uses your services. A customer can have multiple pets,\nappointments, and preferences. Customers are the core entity in the pet service business\nand are used throughout the system for booking appointments, managing pets, and tracking\nservice history.",
@@ -901,6 +1074,13 @@
         "complianceConfig": {
           "$ref": "#/definitions/v1CustomerComplianceConfig",
           "title": "Lead's compliance configuration for communication channels\nControls which channels can be used for different types of communications"
+        },
+        "customFields": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/v1CustomFieldValue"
+          },
+          "title": "Custom fields, Optional\nkey is CustomField.code\nvalue is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value"
         }
       },
       "title": "Lead represents a potential customer in the sales pipeline",

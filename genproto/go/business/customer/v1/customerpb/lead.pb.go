@@ -67,8 +67,12 @@ type Lead struct {
 	// Lead's compliance configuration for communication channels
 	// Controls which channels can be used for different types of communications
 	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,17,opt,name=compliance_config,json=complianceConfig,proto3" json:"compliance_config,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// Custom fields, Optional
+	// key is CustomField.code
+	// value is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value
+	CustomFields  map[string]*settingpb.CustomField_Value `protobuf:"bytes,18,rep,name=custom_fields,json=customFields,proto3" json:"custom_fields,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Lead) Reset() {
@@ -220,11 +224,18 @@ func (x *Lead) GetComplianceConfig() *CustomerComplianceConfig {
 	return nil
 }
 
+func (x *Lead) GetCustomFields() map[string]*settingpb.CustomField_Value {
+	if x != nil {
+		return x.CustomFields
+	}
+	return nil
+}
+
 var File_moego_business_customer_v1_lead_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\n" +
-	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xcf\x06\n" +
+	"%moego/business/customer/v1/lead.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\x97\b\n" +
 	"\x04Lead\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -246,7 +257,11 @@ const file_moego_business_customer_v1_lead_proto_rawDesc = "" +
 	"\x11last_updated_time\x18\x0f \x01(\v2\x1a.google.protobuf.TimestampR\x0flastUpdatedTime\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x10 \x01(\tR\tcompanyId\x12a\n" +
-	"\x11compliance_config\x18\x11 \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfigB\x8c\x01\n" +
+	"\x11compliance_config\x18\x11 \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfig\x12W\n" +
+	"\rcustom_fields\x18\x12 \x03(\v22.moego.business.customer.v1.Lead.CustomFieldsEntryR\fcustomFields\x1am\n" +
+	"\x11CustomFieldsEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12B\n" +
+	"\x05value\x18\x02 \x01(\v2,.moego.business.setting.v1.CustomField.ValueR\x05value:\x028\x01B\x8c\x01\n" +
 	"\"com.moego.api.business.customer.v1B\n" +
 	"LeadsProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 
@@ -262,31 +277,35 @@ func file_moego_business_customer_v1_lead_proto_rawDescGZIP() []byte {
 	return file_moego_business_customer_v1_lead_proto_rawDescData
 }
 
-var file_moego_business_customer_v1_lead_proto_msgTypes = make([]protoimpl.MessageInfo, 1)
+var file_moego_business_customer_v1_lead_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_moego_business_customer_v1_lead_proto_goTypes = []any{
-	(*Lead)(nil),                     // 0: moego.business.customer.v1.Lead
-	(*commonpb.Address)(nil),         // 1: moego.common.v1.Address
-	(*Pet)(nil),                      // 2: moego.business.customer.v1.Pet
-	(*settingpb.LifeCycle)(nil),      // 3: moego.business.setting.v1.LifeCycle
-	(*settingpb.ActionStatus)(nil),   // 4: moego.business.setting.v1.ActionStatus
-	(*settingpb.ReferralSource)(nil), // 5: moego.business.setting.v1.ReferralSource
-	(*timestamppb.Timestamp)(nil),    // 6: google.protobuf.Timestamp
-	(*CustomerComplianceConfig)(nil), // 7: moego.business.customer.v1.CustomerComplianceConfig
+	(*Lead)(nil),                        // 0: moego.business.customer.v1.Lead
+	nil,                                 // 1: moego.business.customer.v1.Lead.CustomFieldsEntry
+	(*commonpb.Address)(nil),            // 2: moego.common.v1.Address
+	(*Pet)(nil),                         // 3: moego.business.customer.v1.Pet
+	(*settingpb.LifeCycle)(nil),         // 4: moego.business.setting.v1.LifeCycle
+	(*settingpb.ActionStatus)(nil),      // 5: moego.business.setting.v1.ActionStatus
+	(*settingpb.ReferralSource)(nil),    // 6: moego.business.setting.v1.ReferralSource
+	(*timestamppb.Timestamp)(nil),       // 7: google.protobuf.Timestamp
+	(*CustomerComplianceConfig)(nil),    // 8: moego.business.customer.v1.CustomerComplianceConfig
+	(*settingpb.CustomField_Value)(nil), // 9: moego.business.setting.v1.CustomField.Value
 }
 var file_moego_business_customer_v1_lead_proto_depIdxs = []int32{
-	1, // 0: moego.business.customer.v1.Lead.address:type_name -> moego.common.v1.Address
-	2, // 1: moego.business.customer.v1.Lead.pets:type_name -> moego.business.customer.v1.Pet
-	3, // 2: moego.business.customer.v1.Lead.life_cycle:type_name -> moego.business.setting.v1.LifeCycle
-	4, // 3: moego.business.customer.v1.Lead.action_status:type_name -> moego.business.setting.v1.ActionStatus
-	5, // 4: moego.business.customer.v1.Lead.referral_source:type_name -> moego.business.setting.v1.ReferralSource
-	6, // 5: moego.business.customer.v1.Lead.created_time:type_name -> google.protobuf.Timestamp
-	6, // 6: moego.business.customer.v1.Lead.last_updated_time:type_name -> google.protobuf.Timestamp
-	7, // 7: moego.business.customer.v1.Lead.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	2,  // 0: moego.business.customer.v1.Lead.address:type_name -> moego.common.v1.Address
+	3,  // 1: moego.business.customer.v1.Lead.pets:type_name -> moego.business.customer.v1.Pet
+	4,  // 2: moego.business.customer.v1.Lead.life_cycle:type_name -> moego.business.setting.v1.LifeCycle
+	5,  // 3: moego.business.customer.v1.Lead.action_status:type_name -> moego.business.setting.v1.ActionStatus
+	6,  // 4: moego.business.customer.v1.Lead.referral_source:type_name -> moego.business.setting.v1.ReferralSource
+	7,  // 5: moego.business.customer.v1.Lead.created_time:type_name -> google.protobuf.Timestamp
+	7,  // 6: moego.business.customer.v1.Lead.last_updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 7: moego.business.customer.v1.Lead.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
+	1,  // 8: moego.business.customer.v1.Lead.custom_fields:type_name -> moego.business.customer.v1.Lead.CustomFieldsEntry
+	9,  // 9: moego.business.customer.v1.Lead.CustomFieldsEntry.value:type_name -> moego.business.setting.v1.CustomField.Value
+	10, // [10:10] is the sub-list for method output_type
+	10, // [10:10] is the sub-list for method input_type
+	10, // [10:10] is the sub-list for extension type_name
+	10, // [10:10] is the sub-list for extension extendee
+	0,  // [0:10] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_lead_proto_init() }
@@ -302,7 +321,7 @@ func file_moego_business_customer_v1_lead_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_lead_proto_rawDesc), len(file_moego_business_customer_v1_lead_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   1,
+			NumMessages:   2,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

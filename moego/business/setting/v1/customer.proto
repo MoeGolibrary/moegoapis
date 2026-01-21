@@ -3,6 +3,8 @@ syntax = "proto3";
 package moego.business.setting.v1;
 
 import "google/protobuf/timestamp.proto";
+import "google/type/money.proto";
+import "google/type/timeofday.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpb";
 option java_multiple_files = true;
@@ -53,4 +55,145 @@ message ActionStatus {
   string name = 2;
   // string, The color of the ActionStatus.
   string color = 3;
+}
+
+// Custom Field
+message CustomField {
+  // field type enumeration
+  enum Type {
+    // 0 is reserved for unspecified
+    TYPE_UNSPECIFIED = 0;
+    // short text, value type is string
+    SHORT_TEXT = 1;
+    // long text, value type is string
+    LONG_TEXT = 2;
+    // number, value type is int64
+    NUMBER = 3;
+    // date, value type is timestamp
+    DATE = 4;
+    // boolean, value type is bool
+    BOOLEAN = 5;
+    // select, value type is string
+    SELECT = 6;
+    // multi select, value type is string list
+    MULTI_SELECT = 7;
+    // relation, value type is relation
+    RELATION = 8;
+    // money, value type is money
+    MONEY = 9;
+    // time, value type is time of day
+    TIME = 10;
+    // datetime, value type is timestamp
+    DATETIME = 11;
+    // Group
+    GROUP = 12;
+  }
+
+  // custom field association type
+  enum AssociationType {
+    // 0 is reserved for unspecified
+    ASSOCIATION_TYPE_UNSPECIFIED = 0;
+    // customer
+    CUSTOMER = 1;
+    // lead
+    LEAD = 2;
+  }
+
+  // Custom field value, can be of any supported type.
+  message Value {
+    // Relation to another entity (customer/lead)
+    message Relation {
+      // Entity
+      enum Entity {
+        // Unspecified
+        ENTITY_UNSPECIFIED = 0;
+        // Customer
+        CUSTOMER =  1;
+        // Lead
+        LEAD = 2;
+      }
+      // Related entity type
+      Entity entity = 1;
+      // Related entity id
+      int64 id = 2;
+    }
+
+    // String list for multi-select values
+    message StringList {
+      // Values
+      repeated string values = 1;
+    }
+
+    // Value
+    oneof value {
+      // String
+      string string = 2;
+      // Floating-point type
+      double double_value = 3;
+      // Integer
+      int64 int64 = 4;
+      // Bool
+      bool bool = 6;
+      // Money
+      google.type.Money money = 7;
+      // Timestamp
+      google.protobuf.Timestamp timestamp_time = 8;
+      // Relation
+      Relation relation = 9;
+      // String list type (for the default value of multi-select)
+      StringList string_list = 10;
+      // The time of the day
+      google.type.TimeOfDay time_of_day = 11;
+    }
+  }
+
+  // Option
+  message Option {
+    // Field value
+    Value value = 1;
+    // Display name
+    string label = 2;
+    // Display order
+    int32 sort_order = 3;
+  }
+
+  // 来源
+  enum Source {
+    // unspecified
+    SOURCE_UNSPECIFIED = 0;
+    // Custom, for company customization
+    CUSTOM = 1;
+    // System, used in the build in field
+    SYSTEM = 2;
+  }
+
+  // ID
+  string id = 1;
+  // ID of the company
+  string company_id = 2;
+  // Associate entity type, customer or lead
+  AssociationType association_type = 3;
+  // Unique key, used when creating lead/customer
+  // Similar to field_123, fill in custom_fields when creating lead or customer
+  string code = 4;
+  // Display name
+  string label = 5;
+  // Value type
+  Type type = 6;
+  // Is required
+  bool is_required = 7;
+  // Default value
+  Value default_value = 8;
+  // Options
+  repeated Option options = 9;
+  // Source
+  Source source = 10;
+  // Display order
+  int32 display_order = 11;
+  // Help text
+  string help_text = 12;
+  // Created time
+  google.protobuf.Timestamp create_time = 13;
+  // Updated time
+  google.protobuf.Timestamp update_time = 14;
 }

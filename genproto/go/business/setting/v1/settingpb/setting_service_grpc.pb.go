@@ -32,6 +32,7 @@ const (
 	SettingService_CreateService_FullMethodName               = "/moego.business.setting.v1.SettingService/CreateService"
 	SettingService_UpdateService_FullMethodName               = "/moego.business.setting.v1.SettingService/UpdateService"
 	SettingService_ListLodgings_FullMethodName                = "/moego.business.setting.v1.SettingService/ListLodgings"
+	SettingService_ListCustomFields_FullMethodName            = "/moego.business.setting.v1.SettingService/ListCustomFields"
 )
 
 // SettingServiceClient is the client API for SettingService service.
@@ -151,6 +152,8 @@ type SettingServiceClient interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(ctx context.Context, in *ListLodgingsRequest, opts ...grpc.CallOption) (*ListLodgingsResponse, error)
+	// Lists all available custom fields for a company.
+	ListCustomFields(ctx context.Context, in *ListCustomFieldsRequest, opts ...grpc.CallOption) (*ListCustomFieldsResponse, error)
 }
 
 type settingServiceClient struct {
@@ -291,6 +294,16 @@ func (c *settingServiceClient) ListLodgings(ctx context.Context, in *ListLodging
 	return out, nil
 }
 
+func (c *settingServiceClient) ListCustomFields(ctx context.Context, in *ListCustomFieldsRequest, opts ...grpc.CallOption) (*ListCustomFieldsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListCustomFieldsResponse)
+	err := c.cc.Invoke(ctx, SettingService_ListCustomFields_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SettingServiceServer is the server API for SettingService service.
 // All implementations must embed UnimplementedSettingServiceServer
 // for forward compatibility.
@@ -408,6 +421,8 @@ type SettingServiceServer interface {
 	// Returns INVALID_ARGUMENT if the request is malformed.
 	// Returns NOT_FOUND if the company does not exist.
 	ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error)
+	// Lists all available custom fields for a company.
+	ListCustomFields(context.Context, *ListCustomFieldsRequest) (*ListCustomFieldsResponse, error)
 	mustEmbedUnimplementedSettingServiceServer()
 }
 
@@ -456,6 +471,9 @@ func (UnimplementedSettingServiceServer) UpdateService(context.Context, *UpdateS
 }
 func (UnimplementedSettingServiceServer) ListLodgings(context.Context, *ListLodgingsRequest) (*ListLodgingsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListLodgings not implemented")
+}
+func (UnimplementedSettingServiceServer) ListCustomFields(context.Context, *ListCustomFieldsRequest) (*ListCustomFieldsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListCustomFields not implemented")
 }
 func (UnimplementedSettingServiceServer) mustEmbedUnimplementedSettingServiceServer() {}
 func (UnimplementedSettingServiceServer) testEmbeddedByValue()                        {}
@@ -712,6 +730,24 @@ func _SettingService_ListLodgings_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SettingService_ListCustomFields_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCustomFieldsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SettingServiceServer).ListCustomFields(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SettingService_ListCustomFields_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SettingServiceServer).ListCustomFields(ctx, req.(*ListCustomFieldsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SettingService_ServiceDesc is the grpc.ServiceDesc for SettingService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -770,6 +806,10 @@ var SettingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListLodgings",
 			Handler:    _SettingService_ListLodgings_Handler,
+		},
+		{
+			MethodName: "ListCustomFields",
+			Handler:    _SettingService_ListCustomFields_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

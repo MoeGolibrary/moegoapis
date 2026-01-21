@@ -16,6 +16,46 @@
     "application/json"
   ],
   "paths": {
+    "/v1/setting/companies/{companyId}/custom_fields": {
+      "post": {
+        "summary": "Lists all available custom fields for a company.",
+        "operationId": "SettingService_ListCustomFields",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListCustomFieldsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "companyId",
+            "description": "ID of the company to list custom fields for\nRequired. Must be a valid company ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SettingServiceListCustomFieldsBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.setting.v1.SettingService"
+        ]
+      }
+    },
     "/v1/setting/companies/{companyId}/customer/referral_sources:list": {
       "post": {
         "summary": "Lists all available customer referral sources for a company.",
@@ -555,6 +595,53 @@
     }
   },
   "definitions": {
+    "CustomFieldAssociationType": {
+      "type": "string",
+      "enum": [
+        "ASSOCIATION_TYPE_UNSPECIFIED",
+        "CUSTOMER",
+        "LEAD"
+      ],
+      "default": "ASSOCIATION_TYPE_UNSPECIFIED",
+      "description": "- ASSOCIATION_TYPE_UNSPECIFIED: 0 is reserved for unspecified\n - CUSTOMER: customer\n - LEAD: lead",
+      "title": "custom field association type"
+    },
+    "CustomFieldOption": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "$ref": "#/definitions/v1CustomFieldValue",
+          "title": "Field value"
+        },
+        "label": {
+          "type": "string",
+          "title": "Display name"
+        },
+        "sortOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Display order"
+        }
+      },
+      "title": "Option",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Option"
+      }
+    },
+    "RelationEntity": {
+      "type": "string",
+      "enum": [
+        "ENTITY_UNSPECIFIED",
+        "CUSTOMER",
+        "LEAD"
+      ],
+      "default": "ENTITY_UNSPECIFIED",
+      "description": "- ENTITY_UNSPECIFIED: Unspecified\n - CUSTOMER: Customer\n - LEAD: Lead",
+      "title": "Entity"
+    },
     "ServiceItemType": {
       "type": "string",
       "enum": [
@@ -634,6 +721,22 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "CreateServiceRequest"
+      }
+    },
+    "SettingServiceListCustomFieldsBody": {
+      "type": "object",
+      "properties": {
+        "filter": {
+          "$ref": "#/definitions/v1ListCustomFieldsRequestFilter",
+          "title": "Optional filters to apply to the custom field list"
+        }
+      },
+      "description": "Request message for listing custom fields.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListCustomFieldsRequest"
       }
     },
     "SettingServiceListCustomerReferralSourcesBody": {
@@ -806,6 +909,46 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "UpdateServiceRequest"
+      }
+    },
+    "ValueRelation": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "$ref": "#/definitions/RelationEntity",
+          "title": "Related entity type"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "title": "Related entity id"
+        }
+      },
+      "title": "Relation to another entity (customer/lead)",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Relation"
+      }
+    },
+    "ValueStringList": {
+      "type": "object",
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "Values"
+        }
+      },
+      "title": "String list for multi-select values",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "StringList"
       }
     },
     "WeightUnit": {
@@ -1022,6 +1165,38 @@
         "type": "Money"
       }
     },
+    "typeTimeOfDay": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Hours of day in 24 hour format. Should be from 0 to 23. An API may choose\nto allow the value \"24:00:00\" for scenarios like business closing time."
+        },
+        "minutes": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Minutes of hour of day. Must be from 0 to 59."
+        },
+        "seconds": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Seconds of minutes of the time. Must normally be from 0 to 59. An API may\nallow the value 60 if it allows leap-seconds."
+        },
+        "nanos": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999."
+        }
+      },
+      "description": "Represents a time of day. The date and time zone are either not significant\nor are specified elsewhere. An API may choose to allow leap seconds. Related\ntypes are [google.type.Date][google.type.Date] and\n`google.protobuf.Timestamp`.",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/timeofday"
+        },
+        "type": "TimeOfDay"
+      }
+    },
     "v1ActionStatus": {
       "type": "object",
       "properties": {
@@ -1044,6 +1219,164 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ActionStatus"
+      }
+    },
+    "v1CustomField": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "ID"
+        },
+        "companyId": {
+          "type": "string",
+          "title": "ID of the company"
+        },
+        "associationType": {
+          "$ref": "#/definitions/CustomFieldAssociationType",
+          "title": "Associate entity type, customer or lead"
+        },
+        "code": {
+          "type": "string",
+          "title": "Unique key, used when creating lead/customer\nSimilar to field_123, fill in custom_fields when creating lead or customer"
+        },
+        "label": {
+          "type": "string",
+          "title": "Display name"
+        },
+        "type": {
+          "$ref": "#/definitions/v1CustomFieldType",
+          "title": "Value type"
+        },
+        "isRequired": {
+          "type": "boolean",
+          "title": "Is required"
+        },
+        "defaultValue": {
+          "$ref": "#/definitions/v1CustomFieldValue",
+          "title": "Default value"
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CustomFieldOption"
+          },
+          "title": "Options"
+        },
+        "source": {
+          "$ref": "#/definitions/v1CustomFieldSource",
+          "title": "Source"
+        },
+        "displayOrder": {
+          "type": "integer",
+          "format": "int32",
+          "title": "Display order"
+        },
+        "helpText": {
+          "type": "string",
+          "title": "Help text"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Created time"
+        },
+        "updateTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Updated time"
+        }
+      },
+      "title": "Custom Field",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "CustomField"
+      }
+    },
+    "v1CustomFieldSource": {
+      "type": "string",
+      "enum": [
+        "SOURCE_UNSPECIFIED",
+        "CUSTOM",
+        "SYSTEM"
+      ],
+      "default": "SOURCE_UNSPECIFIED",
+      "description": "- SOURCE_UNSPECIFIED: unspecified\n - CUSTOM: Custom, for company customization\n - SYSTEM: System, used in the build in field",
+      "title": "来源"
+    },
+    "v1CustomFieldType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "SHORT_TEXT",
+        "LONG_TEXT",
+        "NUMBER",
+        "DATE",
+        "BOOLEAN",
+        "SELECT",
+        "MULTI_SELECT",
+        "RELATION",
+        "MONEY",
+        "TIME",
+        "DATETIME",
+        "GROUP"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "- TYPE_UNSPECIFIED: 0 is reserved for unspecified\n - SHORT_TEXT: short text, value type is string\n - LONG_TEXT: long text, value type is string\n - NUMBER: number, value type is int64\n - DATE: date, value type is timestamp\n - BOOLEAN: boolean, value type is bool\n - SELECT: select, value type is string\n - MULTI_SELECT: multi select, value type is string list\n - RELATION: relation, value type is relation\n - MONEY: money, value type is money\n - TIME: time, value type is time of day\n - DATETIME: datetime, value type is timestamp\n - GROUP: Group",
+      "title": "field type enumeration"
+    },
+    "v1CustomFieldValue": {
+      "type": "object",
+      "properties": {
+        "string": {
+          "type": "string",
+          "title": "String"
+        },
+        "doubleValue": {
+          "type": "number",
+          "format": "double",
+          "title": "Floating-point type"
+        },
+        "int64": {
+          "type": "string",
+          "format": "int64",
+          "title": "Integer"
+        },
+        "bool": {
+          "type": "boolean",
+          "title": "Bool"
+        },
+        "money": {
+          "$ref": "#/definitions/typeMoney",
+          "title": "Money"
+        },
+        "timestampTime": {
+          "type": "string",
+          "format": "date-time",
+          "title": "Timestamp"
+        },
+        "relation": {
+          "$ref": "#/definitions/ValueRelation",
+          "title": "Relation"
+        },
+        "stringList": {
+          "$ref": "#/definitions/ValueStringList",
+          "title": "String list type (for the default value of multi-select)"
+        },
+        "timeOfDay": {
+          "$ref": "#/definitions/typeTimeOfDay",
+          "title": "The time of the day"
+        }
+      },
+      "description": "Custom field value, can be of any supported type.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Value"
       }
     },
     "v1CustomerTag": {
@@ -1129,6 +1462,45 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "LifeCycle"
+      }
+    },
+    "v1ListCustomFieldsRequestFilter": {
+      "type": "object",
+      "properties": {
+        "associationTypes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CustomFieldAssociationType"
+          },
+          "title": "Types of association to include in the results\nOptional. If empty, returns all association types"
+        }
+      },
+      "title": "Filter parameters for the custom field list",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "Filter"
+      }
+    },
+    "v1ListCustomFieldsResponse": {
+      "type": "object",
+      "properties": {
+        "customFields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1CustomField"
+          },
+          "title": "List of available custom fields\nMay be empty if no custom fields are defined"
+        }
+      },
+      "description": "Response message for listing custom fields.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListCustomFieldsResponse"
       }
     },
     "v1ListCustomerReferralSourcesResponse": {

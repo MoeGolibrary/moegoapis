@@ -71,4 +71,9 @@ message Lead {
   // Lead's compliance configuration for communication channels
   // Controls which channels can be used for different types of communications
   CustomerComplianceConfig compliance_config = 17;
+
+  // Custom fields, Optional
+  // key is CustomField.code
+  // value is CustomField.value: According to the different CustomField.type, fill in the different fields in CustomField.value
+  map<string,moego.business.setting.v1.CustomField.Value> custom_fields = 18;
 }

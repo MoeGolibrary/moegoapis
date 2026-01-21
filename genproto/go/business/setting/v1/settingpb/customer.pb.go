@@ -7,6 +7,8 @@
 package settingpb
 
 import (
+	money "google.golang.org/genproto/googleapis/type/money"
+	timeofday "google.golang.org/genproto/googleapis/type/timeofday"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -21,6 +23,258 @@ const (
 	// Verify that runtime/protoimpl is sufficiently up-to-date.
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
+
+// field type enumeration
+type CustomField_Type int32
+
+const (
+	// 0 is reserved for unspecified
+	CustomField_TYPE_UNSPECIFIED CustomField_Type = 0
+	// short text, value type is string
+	CustomField_SHORT_TEXT CustomField_Type = 1
+	// long text, value type is string
+	CustomField_LONG_TEXT CustomField_Type = 2
+	// number, value type is int64
+	CustomField_NUMBER CustomField_Type = 3
+	// date, value type is timestamp
+	CustomField_DATE CustomField_Type = 4
+	// boolean, value type is bool
+	CustomField_BOOLEAN CustomField_Type = 5
+	// select, value type is string
+	CustomField_SELECT CustomField_Type = 6
+	// multi select, value type is string list
+	CustomField_MULTI_SELECT CustomField_Type = 7
+	// relation, value type is relation
+	CustomField_RELATION CustomField_Type = 8
+	// money, value type is money
+	CustomField_MONEY CustomField_Type = 9
+	// time, value type is time of day
+	CustomField_TIME CustomField_Type = 10
+	// datetime, value type is timestamp
+	CustomField_DATETIME CustomField_Type = 11
+	// Group
+	CustomField_GROUP CustomField_Type = 12
+)
+
+// Enum value maps for CustomField_Type.
+var (
+	CustomField_Type_name = map[int32]string{
+		0:  "TYPE_UNSPECIFIED",
+		1:  "SHORT_TEXT",
+		2:  "LONG_TEXT",
+		3:  "NUMBER",
+		4:  "DATE",
+		5:  "BOOLEAN",
+		6:  "SELECT",
+		7:  "MULTI_SELECT",
+		8:  "RELATION",
+		9:  "MONEY",
+		10: "TIME",
+		11: "DATETIME",
+		12: "GROUP",
+	}
+	CustomField_Type_value = map[string]int32{
+		"TYPE_UNSPECIFIED": 0,
+		"SHORT_TEXT":       1,
+		"LONG_TEXT":        2,
+		"NUMBER":           3,
+		"DATE":             4,
+		"BOOLEAN":          5,
+		"SELECT":           6,
+		"MULTI_SELECT":     7,
+		"RELATION":         8,
+		"MONEY":            9,
+		"TIME":             10,
+		"DATETIME":         11,
+		"GROUP":            12,
+	}
+)
+
+func (x CustomField_Type) Enum() *CustomField_Type {
+	p := new(CustomField_Type)
+	*p = x
+	return p
+}
+
+func (x CustomField_Type) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CustomField_Type) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_setting_v1_customer_proto_enumTypes[0].Descriptor()
+}
+
+func (CustomField_Type) Type() protoreflect.EnumType {
+	return &file_moego_business_setting_v1_customer_proto_enumTypes[0]
+}
+
+func (x CustomField_Type) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CustomField_Type.Descriptor instead.
+func (CustomField_Type) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 0}
+}
+
+// custom field association type
+type CustomField_AssociationType int32
+
+const (
+	// 0 is reserved for unspecified
+	CustomField_ASSOCIATION_TYPE_UNSPECIFIED CustomField_AssociationType = 0
+	// customer
+	CustomField_CUSTOMER CustomField_AssociationType = 1
+	// lead
+	CustomField_LEAD CustomField_AssociationType = 2
+)
+
+// Enum value maps for CustomField_AssociationType.
+var (
+	CustomField_AssociationType_name = map[int32]string{
+		0: "ASSOCIATION_TYPE_UNSPECIFIED",
+		1: "CUSTOMER",
+		2: "LEAD",
+	}
+	CustomField_AssociationType_value = map[string]int32{
+		"ASSOCIATION_TYPE_UNSPECIFIED": 0,
+		"CUSTOMER":                     1,
+		"LEAD":                         2,
+	}
+)
+
+func (x CustomField_AssociationType) Enum() *CustomField_AssociationType {
+	p := new(CustomField_AssociationType)
+	*p = x
+	return p
+}
+
+func (x CustomField_AssociationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CustomField_AssociationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_setting_v1_customer_proto_enumTypes[1].Descriptor()
+}
+
+func (CustomField_AssociationType) Type() protoreflect.EnumType {
+	return &file_moego_business_setting_v1_customer_proto_enumTypes[1]
+}
+
+func (x CustomField_AssociationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CustomField_AssociationType.Descriptor instead.
+func (CustomField_AssociationType) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 1}
+}
+
+// 来源
+type CustomField_Source int32
+
+const (
+	// unspecified
+	CustomField_SOURCE_UNSPECIFIED CustomField_Source = 0
+	// Custom, for company customization
+	CustomField_CUSTOM CustomField_Source = 1
+	// System, used in the build in field
+	CustomField_SYSTEM CustomField_Source = 2
+)
+
+// Enum value maps for CustomField_Source.
+var (
+	CustomField_Source_name = map[int32]string{
+		0: "SOURCE_UNSPECIFIED",
+		1: "CUSTOM",
+		2: "SYSTEM",
+	}
+	CustomField_Source_value = map[string]int32{
+		"SOURCE_UNSPECIFIED": 0,
+		"CUSTOM":             1,
+		"SYSTEM":             2,
+	}
+)
+
+func (x CustomField_Source) Enum() *CustomField_Source {
+	p := new(CustomField_Source)
+	*p = x
+	return p
+}
+
+func (x CustomField_Source) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CustomField_Source) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_setting_v1_customer_proto_enumTypes[2].Descriptor()
+}
+
+func (CustomField_Source) Type() protoreflect.EnumType {
+	return &file_moego_business_setting_v1_customer_proto_enumTypes[2]
+}
+
+func (x CustomField_Source) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CustomField_Source.Descriptor instead.
+func (CustomField_Source) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 2}
+}
+
+// Entity
+type CustomField_Value_Relation_Entity int32
+
+const (
+	// Unspecified
+	CustomField_Value_Relation_ENTITY_UNSPECIFIED CustomField_Value_Relation_Entity = 0
+	// Customer
+	CustomField_Value_Relation_CUSTOMER CustomField_Value_Relation_Entity = 1
+	// Lead
+	CustomField_Value_Relation_LEAD CustomField_Value_Relation_Entity = 2
+)
+
+// Enum value maps for CustomField_Value_Relation_Entity.
+var (
+	CustomField_Value_Relation_Entity_name = map[int32]string{
+		0: "ENTITY_UNSPECIFIED",
+		1: "CUSTOMER",
+		2: "LEAD",
+	}
+	CustomField_Value_Relation_Entity_value = map[string]int32{
+		"ENTITY_UNSPECIFIED": 0,
+		"CUSTOMER":           1,
+		"LEAD":               2,
+	}
+)
+
+func (x CustomField_Value_Relation_Entity) Enum() *CustomField_Value_Relation_Entity {
+	p := new(CustomField_Value_Relation_Entity)
+	*p = x
+	return p
+}
+
+func (x CustomField_Value_Relation_Entity) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (CustomField_Value_Relation_Entity) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_setting_v1_customer_proto_enumTypes[3].Descriptor()
+}
+
+func (CustomField_Value_Relation_Entity) Type() protoreflect.EnumType {
+	return &file_moego_business_setting_v1_customer_proto_enumTypes[3]
+}
+
+func (x CustomField_Value_Relation_Entity) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use CustomField_Value_Relation_Entity.Descriptor instead.
+func (CustomField_Value_Relation_Entity) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 0, 0, 0}
+}
 
 // Tag represents a label that can be applied to customers for categorization
 // and filtering purposes.
@@ -280,11 +534,546 @@ func (x *ActionStatus) GetColor() string {
 	return ""
 }
 
+// Custom Field
+type CustomField struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// ID
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// ID of the company
+	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Associate entity type, customer or lead
+	AssociationType CustomField_AssociationType `protobuf:"varint,3,opt,name=association_type,json=associationType,proto3,enum=moego.business.setting.v1.CustomField_AssociationType" json:"association_type,omitempty"`
+	// Unique key, used when creating lead/customer
+	// Similar to field_123, fill in custom_fields when creating lead or customer
+	Code string `protobuf:"bytes,4,opt,name=code,proto3" json:"code,omitempty"`
+	// Display name
+	Label string `protobuf:"bytes,5,opt,name=label,proto3" json:"label,omitempty"`
+	// Value type
+	Type CustomField_Type `protobuf:"varint,6,opt,name=type,proto3,enum=moego.business.setting.v1.CustomField_Type" json:"type,omitempty"`
+	// Is required
+	IsRequired bool `protobuf:"varint,7,opt,name=is_required,json=isRequired,proto3" json:"is_required,omitempty"`
+	// Default value
+	DefaultValue *CustomField_Value `protobuf:"bytes,8,opt,name=default_value,json=defaultValue,proto3" json:"default_value,omitempty"`
+	// Options
+	Options []*CustomField_Option `protobuf:"bytes,9,rep,name=options,proto3" json:"options,omitempty"`
+	// Source
+	Source CustomField_Source `protobuf:"varint,10,opt,name=source,proto3,enum=moego.business.setting.v1.CustomField_Source" json:"source,omitempty"`
+	// Display order
+	DisplayOrder int32 `protobuf:"varint,11,opt,name=display_order,json=displayOrder,proto3" json:"display_order,omitempty"`
+	// Help text
+	HelpText string `protobuf:"bytes,12,opt,name=help_text,json=helpText,proto3" json:"help_text,omitempty"`
+	// Created time
+	CreateTime *timestamppb.Timestamp `protobuf:"bytes,13,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`
+	// Updated time
+	UpdateTime    *timestamppb.Timestamp `protobuf:"bytes,14,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomField) Reset() {
+	*x = CustomField{}
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomField) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomField) ProtoMessage() {}
+
+func (x *CustomField) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomField.ProtoReflect.Descriptor instead.
+func (*CustomField) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *CustomField) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *CustomField) GetCompanyId() string {
+	if x != nil {
+		return x.CompanyId
+	}
+	return ""
+}
+
+func (x *CustomField) GetAssociationType() CustomField_AssociationType {
+	if x != nil {
+		return x.AssociationType
+	}
+	return CustomField_ASSOCIATION_TYPE_UNSPECIFIED
+}
+
+func (x *CustomField) GetCode() string {
+	if x != nil {
+		return x.Code
+	}
+	return ""
+}
+
+func (x *CustomField) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *CustomField) GetType() CustomField_Type {
+	if x != nil {
+		return x.Type
+	}
+	return CustomField_TYPE_UNSPECIFIED
+}
+
+func (x *CustomField) GetIsRequired() bool {
+	if x != nil {
+		return x.IsRequired
+	}
+	return false
+}
+
+func (x *CustomField) GetDefaultValue() *CustomField_Value {
+	if x != nil {
+		return x.DefaultValue
+	}
+	return nil
+}
+
+func (x *CustomField) GetOptions() []*CustomField_Option {
+	if x != nil {
+		return x.Options
+	}
+	return nil
+}
+
+func (x *CustomField) GetSource() CustomField_Source {
+	if x != nil {
+		return x.Source
+	}
+	return CustomField_SOURCE_UNSPECIFIED
+}
+
+func (x *CustomField) GetDisplayOrder() int32 {
+	if x != nil {
+		return x.DisplayOrder
+	}
+	return 0
+}
+
+func (x *CustomField) GetHelpText() string {
+	if x != nil {
+		return x.HelpText
+	}
+	return ""
+}
+
+func (x *CustomField) GetCreateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreateTime
+	}
+	return nil
+}
+
+func (x *CustomField) GetUpdateTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return nil
+}
+
+// Custom field value, can be of any supported type.
+type CustomField_Value struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Value
+	//
+	// Types that are valid to be assigned to Value:
+	//
+	//	*CustomField_Value_String_
+	//	*CustomField_Value_DoubleValue
+	//	*CustomField_Value_Int64
+	//	*CustomField_Value_Bool
+	//	*CustomField_Value_Money
+	//	*CustomField_Value_TimestampTime
+	//	*CustomField_Value_Relation_
+	//	*CustomField_Value_StringList_
+	//	*CustomField_Value_TimeOfDay
+	Value         isCustomField_Value_Value `protobuf_oneof:"value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomField_Value) Reset() {
+	*x = CustomField_Value{}
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomField_Value) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomField_Value) ProtoMessage() {}
+
+func (x *CustomField_Value) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomField_Value.ProtoReflect.Descriptor instead.
+func (*CustomField_Value) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 0}
+}
+
+func (x *CustomField_Value) GetValue() isCustomField_Value_Value {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *CustomField_Value) GetString_() string {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_String_); ok {
+			return x.String_
+		}
+	}
+	return ""
+}
+
+func (x *CustomField_Value) GetDoubleValue() float64 {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_DoubleValue); ok {
+			return x.DoubleValue
+		}
+	}
+	return 0
+}
+
+func (x *CustomField_Value) GetInt64() int64 {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_Int64); ok {
+			return x.Int64
+		}
+	}
+	return 0
+}
+
+func (x *CustomField_Value) GetBool() bool {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_Bool); ok {
+			return x.Bool
+		}
+	}
+	return false
+}
+
+func (x *CustomField_Value) GetMoney() *money.Money {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_Money); ok {
+			return x.Money
+		}
+	}
+	return nil
+}
+
+func (x *CustomField_Value) GetTimestampTime() *timestamppb.Timestamp {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_TimestampTime); ok {
+			return x.TimestampTime
+		}
+	}
+	return nil
+}
+
+func (x *CustomField_Value) GetRelation() *CustomField_Value_Relation {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_Relation_); ok {
+			return x.Relation
+		}
+	}
+	return nil
+}
+
+func (x *CustomField_Value) GetStringList() *CustomField_Value_StringList {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_StringList_); ok {
+			return x.StringList
+		}
+	}
+	return nil
+}
+
+func (x *CustomField_Value) GetTimeOfDay() *timeofday.TimeOfDay {
+	if x != nil {
+		if x, ok := x.Value.(*CustomField_Value_TimeOfDay); ok {
+			return x.TimeOfDay
+		}
+	}
+	return nil
+}
+
+type isCustomField_Value_Value interface {
+	isCustomField_Value_Value()
+}
+
+type CustomField_Value_String_ struct {
+	// String
+	String_ string `protobuf:"bytes,2,opt,name=string,proto3,oneof"`
+}
+
+type CustomField_Value_DoubleValue struct {
+	// Floating-point type
+	DoubleValue float64 `protobuf:"fixed64,3,opt,name=double_value,json=doubleValue,proto3,oneof"`
+}
+
+type CustomField_Value_Int64 struct {
+	// Integer
+	Int64 int64 `protobuf:"varint,4,opt,name=int64,proto3,oneof"`
+}
+
+type CustomField_Value_Bool struct {
+	// Bool
+	Bool bool `protobuf:"varint,6,opt,name=bool,proto3,oneof"`
+}
+
+type CustomField_Value_Money struct {
+	// Money
+	Money *money.Money `protobuf:"bytes,7,opt,name=money,proto3,oneof"`
+}
+
+type CustomField_Value_TimestampTime struct {
+	// Timestamp
+	TimestampTime *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=timestamp_time,json=timestampTime,proto3,oneof"`
+}
+
+type CustomField_Value_Relation_ struct {
+	// Relation
+	Relation *CustomField_Value_Relation `protobuf:"bytes,9,opt,name=relation,proto3,oneof"`
+}
+
+type CustomField_Value_StringList_ struct {
+	// String list type (for the default value of multi-select)
+	StringList *CustomField_Value_StringList `protobuf:"bytes,10,opt,name=string_list,json=stringList,proto3,oneof"`
+}
+
+type CustomField_Value_TimeOfDay struct {
+	// The time of the day
+	TimeOfDay *timeofday.TimeOfDay `protobuf:"bytes,11,opt,name=time_of_day,json=timeOfDay,proto3,oneof"`
+}
+
+func (*CustomField_Value_String_) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_DoubleValue) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_Int64) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_Bool) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_Money) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_TimestampTime) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_Relation_) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_StringList_) isCustomField_Value_Value() {}
+
+func (*CustomField_Value_TimeOfDay) isCustomField_Value_Value() {}
+
+// Option
+type CustomField_Option struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Field value
+	Value *CustomField_Value `protobuf:"bytes,1,opt,name=value,proto3" json:"value,omitempty"`
+	// Display name
+	Label string `protobuf:"bytes,2,opt,name=label,proto3" json:"label,omitempty"`
+	// Display order
+	SortOrder     int32 `protobuf:"varint,3,opt,name=sort_order,json=sortOrder,proto3" json:"sort_order,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomField_Option) Reset() {
+	*x = CustomField_Option{}
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomField_Option) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomField_Option) ProtoMessage() {}
+
+func (x *CustomField_Option) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomField_Option.ProtoReflect.Descriptor instead.
+func (*CustomField_Option) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 1}
+}
+
+func (x *CustomField_Option) GetValue() *CustomField_Value {
+	if x != nil {
+		return x.Value
+	}
+	return nil
+}
+
+func (x *CustomField_Option) GetLabel() string {
+	if x != nil {
+		return x.Label
+	}
+	return ""
+}
+
+func (x *CustomField_Option) GetSortOrder() int32 {
+	if x != nil {
+		return x.SortOrder
+	}
+	return 0
+}
+
+// Relation to another entity (customer/lead)
+type CustomField_Value_Relation struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Related entity type
+	Entity CustomField_Value_Relation_Entity `protobuf:"varint,1,opt,name=entity,proto3,enum=moego.business.setting.v1.CustomField_Value_Relation_Entity" json:"entity,omitempty"`
+	// Related entity id
+	Id            int64 `protobuf:"varint,2,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomField_Value_Relation) Reset() {
+	*x = CustomField_Value_Relation{}
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomField_Value_Relation) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomField_Value_Relation) ProtoMessage() {}
+
+func (x *CustomField_Value_Relation) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomField_Value_Relation.ProtoReflect.Descriptor instead.
+func (*CustomField_Value_Relation) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 0, 0}
+}
+
+func (x *CustomField_Value_Relation) GetEntity() CustomField_Value_Relation_Entity {
+	if x != nil {
+		return x.Entity
+	}
+	return CustomField_Value_Relation_ENTITY_UNSPECIFIED
+}
+
+func (x *CustomField_Value_Relation) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+// String list for multi-select values
+type CustomField_Value_StringList struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Values
+	Values        []string `protobuf:"bytes,1,rep,name=values,proto3" json:"values,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomField_Value_StringList) Reset() {
+	*x = CustomField_Value_StringList{}
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomField_Value_StringList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomField_Value_StringList) ProtoMessage() {}
+
+func (x *CustomField_Value_StringList) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_setting_v1_customer_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomField_Value_StringList.ProtoReflect.Descriptor instead.
+func (*CustomField_Value_StringList) Descriptor() ([]byte, []int) {
+	return file_moego_business_setting_v1_customer_proto_rawDescGZIP(), []int{4, 0, 1}
+}
+
+func (x *CustomField_Value_StringList) GetValues() []string {
+	if x != nil {
+		return x.Values
+	}
+	return nil
+}
+
 var File_moego_business_setting_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_setting_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	"(moego/business/setting/v1/customer.proto\x12\x19moego.business.setting.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xa1\x01\n" +
+	"(moego/business/setting/v1/customer.proto\x12\x19moego.business.setting.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/timeofday.proto\"\xa1\x01\n" +
 	"\vCustomerTag\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12&\n" +
@@ -301,7 +1090,83 @@ const file_moego_business_setting_v1_customer_proto_rawDesc = "" +
 	"\fActionStatus\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
-	"\x05color\x18\x03 \x01(\tR\x05colorB\x8a\x01\n" +
+	"\x05color\x18\x03 \x01(\tR\x05color\"\xbf\x0e\n" +
+	"\vCustomField\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"company_id\x18\x02 \x01(\tR\tcompanyId\x12a\n" +
+	"\x10association_type\x18\x03 \x01(\x0e26.moego.business.setting.v1.CustomField.AssociationTypeR\x0fassociationType\x12\x12\n" +
+	"\x04code\x18\x04 \x01(\tR\x04code\x12\x14\n" +
+	"\x05label\x18\x05 \x01(\tR\x05label\x12?\n" +
+	"\x04type\x18\x06 \x01(\x0e2+.moego.business.setting.v1.CustomField.TypeR\x04type\x12\x1f\n" +
+	"\vis_required\x18\a \x01(\bR\n" +
+	"isRequired\x12Q\n" +
+	"\rdefault_value\x18\b \x01(\v2,.moego.business.setting.v1.CustomField.ValueR\fdefaultValue\x12G\n" +
+	"\aoptions\x18\t \x03(\v2-.moego.business.setting.v1.CustomField.OptionR\aoptions\x12E\n" +
+	"\x06source\x18\n" +
+	" \x01(\x0e2-.moego.business.setting.v1.CustomField.SourceR\x06source\x12#\n" +
+	"\rdisplay_order\x18\v \x01(\x05R\fdisplayOrder\x12\x1b\n" +
+	"\thelp_text\x18\f \x01(\tR\bhelpText\x12;\n" +
+	"\vcreate_time\x18\r \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"createTime\x12;\n" +
+	"\vupdate_time\x18\x0e \x01(\v2\x1a.google.protobuf.TimestampR\n" +
+	"updateTime\x1a\xac\x05\n" +
+	"\x05Value\x12\x18\n" +
+	"\x06string\x18\x02 \x01(\tH\x00R\x06string\x12#\n" +
+	"\fdouble_value\x18\x03 \x01(\x01H\x00R\vdoubleValue\x12\x16\n" +
+	"\x05int64\x18\x04 \x01(\x03H\x00R\x05int64\x12\x14\n" +
+	"\x04bool\x18\x06 \x01(\bH\x00R\x04bool\x12*\n" +
+	"\x05money\x18\a \x01(\v2\x12.google.type.MoneyH\x00R\x05money\x12C\n" +
+	"\x0etimestamp_time\x18\b \x01(\v2\x1a.google.protobuf.TimestampH\x00R\rtimestampTime\x12S\n" +
+	"\brelation\x18\t \x01(\v25.moego.business.setting.v1.CustomField.Value.RelationH\x00R\brelation\x12Z\n" +
+	"\vstring_list\x18\n" +
+	" \x01(\v27.moego.business.setting.v1.CustomField.Value.StringListH\x00R\n" +
+	"stringList\x128\n" +
+	"\vtime_of_day\x18\v \x01(\v2\x16.google.type.TimeOfDayH\x00R\ttimeOfDay\x1a\xaa\x01\n" +
+	"\bRelation\x12T\n" +
+	"\x06entity\x18\x01 \x01(\x0e2<.moego.business.setting.v1.CustomField.Value.Relation.EntityR\x06entity\x12\x0e\n" +
+	"\x02id\x18\x02 \x01(\x03R\x02id\"8\n" +
+	"\x06Entity\x12\x16\n" +
+	"\x12ENTITY_UNSPECIFIED\x10\x00\x12\f\n" +
+	"\bCUSTOMER\x10\x01\x12\b\n" +
+	"\x04LEAD\x10\x02\x1a$\n" +
+	"\n" +
+	"StringList\x12\x16\n" +
+	"\x06values\x18\x01 \x03(\tR\x06valuesB\a\n" +
+	"\x05value\x1a\x81\x01\n" +
+	"\x06Option\x12B\n" +
+	"\x05value\x18\x01 \x01(\v2,.moego.business.setting.v1.CustomField.ValueR\x05value\x12\x14\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\x12\x1d\n" +
+	"\n" +
+	"sort_order\x18\x03 \x01(\x05R\tsortOrder\"\xb8\x01\n" +
+	"\x04Type\x12\x14\n" +
+	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x0e\n" +
+	"\n" +
+	"SHORT_TEXT\x10\x01\x12\r\n" +
+	"\tLONG_TEXT\x10\x02\x12\n" +
+	"\n" +
+	"\x06NUMBER\x10\x03\x12\b\n" +
+	"\x04DATE\x10\x04\x12\v\n" +
+	"\aBOOLEAN\x10\x05\x12\n" +
+	"\n" +
+	"\x06SELECT\x10\x06\x12\x10\n" +
+	"\fMULTI_SELECT\x10\a\x12\f\n" +
+	"\bRELATION\x10\b\x12\t\n" +
+	"\x05MONEY\x10\t\x12\b\n" +
+	"\x04TIME\x10\n" +
+	"\x12\f\n" +
+	"\bDATETIME\x10\v\x12\t\n" +
+	"\x05GROUP\x10\f\"K\n" +
+	"\x0fAssociationType\x12 \n" +
+	"\x1cASSOCIATION_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
+	"\bCUSTOMER\x10\x01\x12\b\n" +
+	"\x04LEAD\x10\x02\"8\n" +
+	"\x06Source\x12\x16\n" +
+	"\x12SOURCE_UNSPECIFIED\x10\x00\x12\n" +
+	"\n" +
+	"\x06CUSTOM\x10\x01\x12\n" +
+	"\n" +
+	"\x06SYSTEM\x10\x02B\x8a\x01\n" +
 	"!com.moego.api.business.setting.v1B\fSettingProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb;settingpbb\x06proto3"
 
 var (
@@ -316,21 +1181,47 @@ func file_moego_business_setting_v1_customer_proto_rawDescGZIP() []byte {
 	return file_moego_business_setting_v1_customer_proto_rawDescData
 }
 
-var file_moego_business_setting_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_moego_business_setting_v1_customer_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
+var file_moego_business_setting_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_moego_business_setting_v1_customer_proto_goTypes = []any{
-	(*CustomerTag)(nil),           // 0: moego.business.setting.v1.CustomerTag
-	(*ReferralSource)(nil),        // 1: moego.business.setting.v1.ReferralSource
-	(*LifeCycle)(nil),             // 2: moego.business.setting.v1.LifeCycle
-	(*ActionStatus)(nil),          // 3: moego.business.setting.v1.ActionStatus
-	(*timestamppb.Timestamp)(nil), // 4: google.protobuf.Timestamp
+	(CustomField_Type)(0),                  // 0: moego.business.setting.v1.CustomField.Type
+	(CustomField_AssociationType)(0),       // 1: moego.business.setting.v1.CustomField.AssociationType
+	(CustomField_Source)(0),                // 2: moego.business.setting.v1.CustomField.Source
+	(CustomField_Value_Relation_Entity)(0), // 3: moego.business.setting.v1.CustomField.Value.Relation.Entity
+	(*CustomerTag)(nil),                    // 4: moego.business.setting.v1.CustomerTag
+	(*ReferralSource)(nil),                 // 5: moego.business.setting.v1.ReferralSource
+	(*LifeCycle)(nil),                      // 6: moego.business.setting.v1.LifeCycle
+	(*ActionStatus)(nil),                   // 7: moego.business.setting.v1.ActionStatus
+	(*CustomField)(nil),                    // 8: moego.business.setting.v1.CustomField
+	(*CustomField_Value)(nil),              // 9: moego.business.setting.v1.CustomField.Value
+	(*CustomField_Option)(nil),             // 10: moego.business.setting.v1.CustomField.Option
+	(*CustomField_Value_Relation)(nil),     // 11: moego.business.setting.v1.CustomField.Value.Relation
+	(*CustomField_Value_StringList)(nil),   // 12: moego.business.setting.v1.CustomField.Value.StringList
+	(*timestamppb.Timestamp)(nil),          // 13: google.protobuf.Timestamp
+	(*money.Money)(nil),                    // 14: google.type.Money
+	(*timeofday.TimeOfDay)(nil),            // 15: google.type.TimeOfDay
 }
 var file_moego_business_setting_v1_customer_proto_depIdxs = []int32{
-	4, // 0: moego.business.setting.v1.CustomerTag.last_updated_time:type_name -> google.protobuf.Timestamp
-	1, // [1:1] is the sub-list for method output_type
-	1, // [1:1] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	13, // 0: moego.business.setting.v1.CustomerTag.last_updated_time:type_name -> google.protobuf.Timestamp
+	1,  // 1: moego.business.setting.v1.CustomField.association_type:type_name -> moego.business.setting.v1.CustomField.AssociationType
+	0,  // 2: moego.business.setting.v1.CustomField.type:type_name -> moego.business.setting.v1.CustomField.Type
+	9,  // 3: moego.business.setting.v1.CustomField.default_value:type_name -> moego.business.setting.v1.CustomField.Value
+	10, // 4: moego.business.setting.v1.CustomField.options:type_name -> moego.business.setting.v1.CustomField.Option
+	2,  // 5: moego.business.setting.v1.CustomField.source:type_name -> moego.business.setting.v1.CustomField.Source
+	13, // 6: moego.business.setting.v1.CustomField.create_time:type_name -> google.protobuf.Timestamp
+	13, // 7: moego.business.setting.v1.CustomField.update_time:type_name -> google.protobuf.Timestamp
+	14, // 8: moego.business.setting.v1.CustomField.Value.money:type_name -> google.type.Money
+	13, // 9: moego.business.setting.v1.CustomField.Value.timestamp_time:type_name -> google.protobuf.Timestamp
+	11, // 10: moego.business.setting.v1.CustomField.Value.relation:type_name -> moego.business.setting.v1.CustomField.Value.Relation
+	12, // 11: moego.business.setting.v1.CustomField.Value.string_list:type_name -> moego.business.setting.v1.CustomField.Value.StringList
+	15, // 12: moego.business.setting.v1.CustomField.Value.time_of_day:type_name -> google.type.TimeOfDay
+	9,  // 13: moego.business.setting.v1.CustomField.Option.value:type_name -> moego.business.setting.v1.CustomField.Value
+	3,  // 14: moego.business.setting.v1.CustomField.Value.Relation.entity:type_name -> moego.business.setting.v1.CustomField.Value.Relation.Entity
+	15, // [15:15] is the sub-list for method output_type
+	15, // [15:15] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_setting_v1_customer_proto_init() }
@@ -338,18 +1229,30 @@ func file_moego_business_setting_v1_customer_proto_init() {
 	if File_moego_business_setting_v1_customer_proto != nil {
 		return
 	}
+	file_moego_business_setting_v1_customer_proto_msgTypes[5].OneofWrappers = []any{
+		(*CustomField_Value_String_)(nil),
+		(*CustomField_Value_DoubleValue)(nil),
+		(*CustomField_Value_Int64)(nil),
+		(*CustomField_Value_Bool)(nil),
+		(*CustomField_Value_Money)(nil),
+		(*CustomField_Value_TimestampTime)(nil),
+		(*CustomField_Value_Relation_)(nil),
+		(*CustomField_Value_StringList_)(nil),
+		(*CustomField_Value_TimeOfDay)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_setting_v1_customer_proto_rawDesc), len(file_moego_business_setting_v1_customer_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   4,
+			NumEnums:      4,
+			NumMessages:   9,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_moego_business_setting_v1_customer_proto_goTypes,
 		DependencyIndexes: file_moego_business_setting_v1_customer_proto_depIdxs,
+		EnumInfos:         file_moego_business_setting_v1_customer_proto_enumTypes,
 		MessageInfos:      file_moego_business_setting_v1_customer_proto_msgTypes,
 	}.Build()
 	File_moego_business_setting_v1_customer_proto = out.File

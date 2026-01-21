@@ -11,6 +11,7 @@ import (
 	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	structpb "google.golang.org/protobuf/types/known/structpb"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
@@ -205,8 +206,10 @@ type Customer struct {
 	// Customer's compliance configuration for communication channels
 	// Controls which channels can be used for different types of communications
 	ComplianceConfig *CustomerComplianceConfig `protobuf:"bytes,26,opt,name=compliance_config,json=complianceConfig,proto3" json:"compliance_config,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	// custom fields
+	CustomFields  *structpb.Struct `protobuf:"bytes,27,opt,name=custom_fields,json=customFields,proto3,oneof" json:"custom_fields,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Customer) Reset() {
@@ -417,6 +420,13 @@ func (x *Customer) GetDeleted() bool {
 func (x *Customer) GetComplianceConfig() *CustomerComplianceConfig {
 	if x != nil {
 		return x.ComplianceConfig
+	}
+	return nil
+}
+
+func (x *Customer) GetCustomFields() *structpb.Struct {
+	if x != nil {
+		return x.CustomFields
 	}
 	return nil
 }
@@ -818,7 +828,7 @@ var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\xca\r\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a\x1cgoogle/protobuf/struct.proto\"\x9f\x0e\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06raw_id\x18\x19 \x01(\x03R\x05rawId\x12\x1d\n" +
@@ -852,7 +862,8 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"preference\x12:\n" +
 	"\x19upcoming_appointments_url\x18\x17 \x01(\tR\x17upcomingAppointmentsUrl\x12\x18\n" +
 	"\adeleted\x18\x18 \x01(\bR\adeleted\x12a\n" +
-	"\x11compliance_config\x18\x1a \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfig\x1a\x9a\x01\n" +
+	"\x11compliance_config\x18\x1a \x01(\v24.moego.business.customer.v1.CustomerComplianceConfigR\x10complianceConfig\x12A\n" +
+	"\rcustom_fields\x18\x1b \x01(\v2\x17.google.protobuf.StructH\x00R\fcustomFields\x88\x01\x01\x1a\x9a\x01\n" +
 	"\x04Note\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04note\x18\x02 \x01(\tR\x04note\x12&\n" +
@@ -868,7 +879,8 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06ACTIVE\x10\x01\x12\f\n" +
-	"\bINACTIVE\x10\x02\"\x84\x03\n" +
+	"\bINACTIVE\x10\x02B\x10\n" +
+	"\x0e_custom_fields\"\x84\x03\n" +
 	"\x18CustomerComplianceConfig\x12g\n" +
 	"\x18service_related_channels\x18\x02 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x16serviceRelatedChannels\x12o\n" +
 	"\x1cmarketing_campaigns_channels\x18\x03 \x03(\x0e2-.moego.business.customer.v1.ComplianceChannelR\x1amarketingCampaignsChannels\x12.\n" +
@@ -922,6 +934,7 @@ var file_moego_business_customer_v1_customer_proto_goTypes = []any{
 	(*timestamppb.Timestamp)(nil),    // 9: google.protobuf.Timestamp
 	(*settingpb.CustomerTag)(nil),    // 10: moego.business.setting.v1.CustomerTag
 	(*settingpb.ReferralSource)(nil), // 11: moego.business.setting.v1.ReferralSource
+	(*structpb.Struct)(nil),          // 12: google.protobuf.Struct
 }
 var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
 	8,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
@@ -935,17 +948,18 @@ var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
 	11, // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
 	6,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
 	3,  // 10: moego.business.customer.v1.Customer.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
-	0,  // 11: moego.business.customer.v1.CustomerComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	0,  // 12: moego.business.customer.v1.CustomerComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	7,  // 13: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	7,  // 14: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	9,  // 15: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
-	0,  // 16: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	17, // [17:17] is the sub-list for method output_type
-	17, // [17:17] is the sub-list for method input_type
-	17, // [17:17] is the sub-list for extension type_name
-	17, // [17:17] is the sub-list for extension extendee
-	0,  // [0:17] is the sub-list for field type_name
+	12, // 11: moego.business.customer.v1.Customer.custom_fields:type_name -> google.protobuf.Struct
+	0,  // 12: moego.business.customer.v1.CustomerComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	0,  // 13: moego.business.customer.v1.CustomerComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	7,  // 14: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	7,  // 15: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	9,  // 16: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	0,  // 17: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
+	18, // [18:18] is the sub-list for method output_type
+	18, // [18:18] is the sub-list for method input_type
+	18, // [18:18] is the sub-list for extension type_name
+	18, // [18:18] is the sub-list for extension extendee
+	0,  // [0:18] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_customer_proto_init() }
@@ -953,6 +967,7 @@ func file_moego_business_customer_v1_customer_proto_init() {
 	if File_moego_business_customer_v1_customer_proto != nil {
 		return
 	}
+	file_moego_business_customer_v1_customer_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_customer_v1_customer_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
