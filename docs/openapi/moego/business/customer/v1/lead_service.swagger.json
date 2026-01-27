@@ -263,17 +263,6 @@
         "type": "UpdateLeadRequest"
       }
     },
-    "PetEvaluationStatus": {
-      "type": "string",
-      "enum": [
-        "EVALUATION_STATUS_UNSPECIFIED",
-        "PASS",
-        "FAIL"
-      ],
-      "default": "EVALUATION_STATUS_UNSPECIFIED",
-      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
-      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
-    },
     "PetGender": {
       "type": "string",
       "enum": [
@@ -1299,7 +1288,7 @@
           "title": "Primary veterinary care provider\nUsed for emergencies and health verifications"
         },
         "evaluationStatus": {
-          "$ref": "#/definitions/PetEvaluationStatus",
+          "$ref": "#/definitions/v1PetEvaluationStatus",
           "title": "Current evaluation status for services\nDetermines service availability"
         },
         "createdTime": {
@@ -1361,6 +1350,17 @@
         },
         "type": "PetCode"
       }
+    },
+    "v1PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
     },
     "v1PetNote": {
       "type": "object",

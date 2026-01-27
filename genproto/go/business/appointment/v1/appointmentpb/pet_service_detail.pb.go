@@ -25,6 +25,60 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Status of the pet's evaluation for services
+// Determines which services can be provided
+type EvaluationDetail_EvaluationStatus int32
+
+const (
+	// Evaluation status not yet determined
+	EvaluationDetail_EVALUATION_STATUS_UNSPECIFIED EvaluationDetail_EvaluationStatus = 0
+	// Pet has passed evaluation and can receive services
+	EvaluationDetail_PASS EvaluationDetail_EvaluationStatus = 1
+	// Pet requires modifications to receive services
+	EvaluationDetail_FAIL EvaluationDetail_EvaluationStatus = 2
+)
+
+// Enum value maps for EvaluationDetail_EvaluationStatus.
+var (
+	EvaluationDetail_EvaluationStatus_name = map[int32]string{
+		0: "EVALUATION_STATUS_UNSPECIFIED",
+		1: "PASS",
+		2: "FAIL",
+	}
+	EvaluationDetail_EvaluationStatus_value = map[string]int32{
+		"EVALUATION_STATUS_UNSPECIFIED": 0,
+		"PASS":                          1,
+		"FAIL":                          2,
+	}
+)
+
+func (x EvaluationDetail_EvaluationStatus) Enum() *EvaluationDetail_EvaluationStatus {
+	p := new(EvaluationDetail_EvaluationStatus)
+	*p = x
+	return p
+}
+
+func (x EvaluationDetail_EvaluationStatus) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (EvaluationDetail_EvaluationStatus) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes[0].Descriptor()
+}
+
+func (EvaluationDetail_EvaluationStatus) Type() protoreflect.EnumType {
+	return &file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes[0]
+}
+
+func (x EvaluationDetail_EvaluationStatus) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use EvaluationDetail_EvaluationStatus.Descriptor instead.
+func (EvaluationDetail_EvaluationStatus) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{1, 0}
+}
+
 // The pet service detail object represents the services booked for a specific pet in an appointment.
 // Each appointment can include multiple pets, and each pet can receive multiple services.
 // This object links pets with their scheduled services and maintains the service-specific details
@@ -37,8 +91,11 @@ type PetServiceDetail struct {
 	// array(ServiceDetail), List of services scheduled for this pet.
 	// Each service includes timing, pricing, and staff assignments.
 	ServiceDetails []*ServiceDetail `protobuf:"bytes,2,rep,name=service_details,json=serviceDetails,proto3" json:"service_details,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	// array(EvaluationDetail), List of evaluation details for this pet.
+	// Each evaluation detail includes the evaluation result and the evaluation time.
+	EvaluationDetails []*EvaluationDetail `protobuf:"bytes,3,rep,name=evaluation_details,json=evaluationDetails,proto3" json:"evaluation_details,omitempty"`
+	unknownFields     protoimpl.UnknownFields
+	sizeCache         protoimpl.SizeCache
 }
 
 func (x *PetServiceDetail) Reset() {
@@ -83,6 +140,80 @@ func (x *PetServiceDetail) GetServiceDetails() []*ServiceDetail {
 		return x.ServiceDetails
 	}
 	return nil
+}
+
+func (x *PetServiceDetail) GetEvaluationDetails() []*EvaluationDetail {
+	if x != nil {
+		return x.EvaluationDetails
+	}
+	return nil
+}
+
+// The evaluation detail object represents the evaluation result for a specific service.
+// It contains the evaluation result and the evaluation time.
+type EvaluationDetail struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// string, Unique identifier for the evaluation.
+	// Format: "eva_" followed by random characters
+	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// string, Display name of the evaluation.
+	// Example: "Evaluation For Grooming", "Evaluation For Boarding"
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// Status of the pet's evaluation for services
+	Status        EvaluationDetail_EvaluationStatus `protobuf:"varint,3,opt,name=status,proto3,enum=moego.business.appointment.v1.EvaluationDetail_EvaluationStatus" json:"status,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EvaluationDetail) Reset() {
+	*x = EvaluationDetail{}
+	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EvaluationDetail) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EvaluationDetail) ProtoMessage() {}
+
+func (x *EvaluationDetail) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EvaluationDetail.ProtoReflect.Descriptor instead.
+func (*EvaluationDetail) Descriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *EvaluationDetail) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *EvaluationDetail) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EvaluationDetail) GetStatus() EvaluationDetail_EvaluationStatus {
+	if x != nil {
+		return x.Status
+	}
+	return EvaluationDetail_EVALUATION_STATUS_UNSPECIFIED
 }
 
 // The service detail object represents a specific service booked for a pet.
@@ -141,7 +272,7 @@ type ServiceDetail struct {
 
 func (x *ServiceDetail) Reset() {
 	*x = ServiceDetail{}
-	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[1]
+	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -153,7 +284,7 @@ func (x *ServiceDetail) String() string {
 func (*ServiceDetail) ProtoMessage() {}
 
 func (x *ServiceDetail) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[1]
+	mi := &file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -166,7 +297,7 @@ func (x *ServiceDetail) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServiceDetail.ProtoReflect.Descriptor instead.
 func (*ServiceDetail) Descriptor() ([]byte, []int) {
-	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{1}
+	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ServiceDetail) GetId() string {
@@ -264,10 +395,19 @@ var File_moego_business_appointment_v1_pet_service_detail_proto protoreflect.Fil
 
 const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"\n" +
-	"6moego/business/appointment/v1/pet_service_detail.proto\x12\x1dmoego.business.appointment.v1\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\"\x9c\x01\n" +
+	"6moego/business/appointment/v1/pet_service_detail.proto\x12\x1dmoego.business.appointment.v1\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/service.proto\"\xfc\x01\n" +
 	"\x10PetServiceDetail\x121\n" +
 	"\x03pet\x18\x01 \x01(\v2\x1f.moego.business.customer.v1.PetR\x03pet\x12U\n" +
-	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\"\xbb\x04\n" +
+	"\x0fservice_details\x18\x02 \x03(\v2,.moego.business.appointment.v1.ServiceDetailR\x0eserviceDetails\x12^\n" +
+	"\x12evaluation_details\x18\x03 \x03(\v2/.moego.business.appointment.v1.EvaluationDetailR\x11evaluationDetails\"\xdb\x01\n" +
+	"\x10EvaluationDetail\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12X\n" +
+	"\x06status\x18\x03 \x01(\x0e2@.moego.business.appointment.v1.EvaluationDetail.EvaluationStatusR\x06status\"I\n" +
+	"\x10EvaluationStatus\x12!\n" +
+	"\x1dEVALUATION_STATUS_UNSPECIFIED\x10\x00\x12\b\n" +
+	"\x04PASS\x10\x01\x12\b\n" +
+	"\x04FAIL\x10\x02\"\xbb\x04\n" +
 	"\rServiceDetail\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -298,28 +438,33 @@ func file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP() [
 	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescData
 }
 
-var file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_appointment_v1_pet_service_detail_proto_goTypes = []any{
-	(*PetServiceDetail)(nil),        // 0: moego.business.appointment.v1.PetServiceDetail
-	(*ServiceDetail)(nil),           // 1: moego.business.appointment.v1.ServiceDetail
-	(*customerpb.Pet)(nil),          // 2: moego.business.customer.v1.Pet
-	(settingpb.Service_ItemType)(0), // 3: moego.business.setting.v1.Service.ItemType
-	(*money.Money)(nil),             // 4: google.type.Money
-	(*interval.Interval)(nil),       // 5: google.type.Interval
-	(settingpb.Service_Type)(0),     // 6: moego.business.setting.v1.Service.Type
+	(EvaluationDetail_EvaluationStatus)(0), // 0: moego.business.appointment.v1.EvaluationDetail.EvaluationStatus
+	(*PetServiceDetail)(nil),               // 1: moego.business.appointment.v1.PetServiceDetail
+	(*EvaluationDetail)(nil),               // 2: moego.business.appointment.v1.EvaluationDetail
+	(*ServiceDetail)(nil),                  // 3: moego.business.appointment.v1.ServiceDetail
+	(*customerpb.Pet)(nil),                 // 4: moego.business.customer.v1.Pet
+	(settingpb.Service_ItemType)(0),        // 5: moego.business.setting.v1.Service.ItemType
+	(*money.Money)(nil),                    // 6: google.type.Money
+	(*interval.Interval)(nil),              // 7: google.type.Interval
+	(settingpb.Service_Type)(0),            // 8: moego.business.setting.v1.Service.Type
 }
 var file_moego_business_appointment_v1_pet_service_detail_proto_depIdxs = []int32{
-	2, // 0: moego.business.appointment.v1.PetServiceDetail.pet:type_name -> moego.business.customer.v1.Pet
-	1, // 1: moego.business.appointment.v1.PetServiceDetail.service_details:type_name -> moego.business.appointment.v1.ServiceDetail
-	3, // 2: moego.business.appointment.v1.ServiceDetail.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	4, // 3: moego.business.appointment.v1.ServiceDetail.price:type_name -> google.type.Money
-	5, // 4: moego.business.appointment.v1.ServiceDetail.duration:type_name -> google.type.Interval
-	6, // 5: moego.business.appointment.v1.ServiceDetail.service_type:type_name -> moego.business.setting.v1.Service.Type
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	4, // 0: moego.business.appointment.v1.PetServiceDetail.pet:type_name -> moego.business.customer.v1.Pet
+	3, // 1: moego.business.appointment.v1.PetServiceDetail.service_details:type_name -> moego.business.appointment.v1.ServiceDetail
+	2, // 2: moego.business.appointment.v1.PetServiceDetail.evaluation_details:type_name -> moego.business.appointment.v1.EvaluationDetail
+	0, // 3: moego.business.appointment.v1.EvaluationDetail.status:type_name -> moego.business.appointment.v1.EvaluationDetail.EvaluationStatus
+	5, // 4: moego.business.appointment.v1.ServiceDetail.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	6, // 5: moego.business.appointment.v1.ServiceDetail.price:type_name -> google.type.Money
+	7, // 6: moego.business.appointment.v1.ServiceDetail.duration:type_name -> google.type.Interval
+	8, // 7: moego.business.appointment.v1.ServiceDetail.service_type:type_name -> moego.business.setting.v1.Service.Type
+	8, // [8:8] is the sub-list for method output_type
+	8, // [8:8] is the sub-list for method input_type
+	8, // [8:8] is the sub-list for extension type_name
+	8, // [8:8] is the sub-list for extension extendee
+	0, // [0:8] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_pet_service_detail_proto_init() }
@@ -332,13 +477,14 @@ func file_moego_business_appointment_v1_pet_service_detail_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc), len(file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc)),
-			NumEnums:      0,
-			NumMessages:   2,
+			NumEnums:      1,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
 		GoTypes:           file_moego_business_appointment_v1_pet_service_detail_proto_goTypes,
 		DependencyIndexes: file_moego_business_appointment_v1_pet_service_detail_proto_depIdxs,
+		EnumInfos:         file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes,
 		MessageInfos:      file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes,
 	}.Build()
 	File_moego_business_appointment_v1_pet_service_detail_proto = out.File

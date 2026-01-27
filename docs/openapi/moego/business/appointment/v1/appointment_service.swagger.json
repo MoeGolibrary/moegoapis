@@ -711,17 +711,6 @@
       "default": "SEND_TYPE_UNSPECIFIED",
       "description": "Type of send action that triggered the report delivery.\n\n - SEND_TYPE_UNSPECIFIED: Not intended for direct use. Indicates a system anomaly.\n - MANUAL: Report was manually sent by a user.\n - AUTO: Report was automatically sent by the system."
     },
-    "PetEvaluationStatus": {
-      "type": "string",
-      "enum": [
-        "EVALUATION_STATUS_UNSPECIFIED",
-        "PASS",
-        "FAIL"
-      ],
-      "default": "EVALUATION_STATUS_UNSPECIFIED",
-      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
-      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
-    },
     "PetGender": {
       "type": "string",
       "enum": [
@@ -1412,6 +1401,41 @@
         "type": "Service"
       }
     },
+    "v1EvaluationDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "string, Unique identifier for the evaluation.\nFormat: \"eva_\" followed by random characters"
+        },
+        "name": {
+          "type": "string",
+          "title": "string, Display name of the evaluation.\nExample: \"Evaluation For Grooming\", \"Evaluation For Boarding\""
+        },
+        "status": {
+          "$ref": "#/definitions/v1EvaluationDetailEvaluationStatus",
+          "title": "Status of the pet's evaluation for services"
+        }
+      },
+      "description": "The evaluation detail object represents the evaluation result for a specific service.\nIt contains the evaluation result and the evaluation time.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+        },
+        "type": "EvaluationDetail"
+      }
+    },
+    "v1EvaluationDetailEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
     "v1GroomingReport": {
       "type": "object",
       "properties": {
@@ -1928,7 +1952,7 @@
           "title": "Primary veterinary care provider\nUsed for emergencies and health verifications"
         },
         "evaluationStatus": {
-          "$ref": "#/definitions/PetEvaluationStatus",
+          "$ref": "#/definitions/v1PetEvaluationStatus",
           "title": "Current evaluation status for services\nDetermines service availability"
         },
         "createdTime": {
@@ -1991,6 +2015,17 @@
         "type": "PetCode"
       }
     },
+    "v1PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
     "v1PetNote": {
       "type": "object",
       "properties": {
@@ -2034,6 +2069,14 @@
             "$ref": "#/definitions/v1ServiceDetail"
           },
           "description": "array(ServiceDetail), List of services scheduled for this pet.\nEach service includes timing, pricing, and staff assignments."
+        },
+        "evaluationDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1EvaluationDetail"
+          },
+          "description": "array(EvaluationDetail), List of evaluation details for this pet.\nEach evaluation detail includes the evaluation result and the evaluation time."
         }
       },
       "description": "The pet service detail object represents the services booked for a specific pet in an appointment.\nEach appointment can include multiple pets, and each pet can receive multiple services.\nThis object links pets with their scheduled services and maintains the service-specific details\nsuch as pricing, duration, and assigned staff.",
