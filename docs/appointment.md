@@ -49,7 +49,7 @@ lifecycle from creation to completion.
 | `totalAmount`       | Money                   | Total cost for all services                                                             |
 | `paidAmount`        | Money                   | Amount received from customer                                                           |
 | `refundAmount`      | Money                   | Amount returned to customer                                                             |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`,`PARTIAL_REFUNDED`,`FULL_REFUNDED` |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`, `PARTIAL_REFUNDED`, `FULL_REFUNDED` |
 | `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                             |
 | `createdTime`       | timestamp               | When the appointment was created                                                        |
 | `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                                   |
@@ -153,14 +153,36 @@ status, sending methods and logs, and is used for customer communication and int
 Represents the services booked for a specific pet in an appointment. Each appointment can include multiple pets, and
 each pet can receive multiple services.
 
-| Field Name       | Type                 | Description                             |
-|------------------|----------------------|-----------------------------------------|
-| `pet`            | Pet                  | The pet receiving the services          |
-| `serviceDetails` | Array(ServiceDetail) | List of services scheduled for this pet |
+| Field Name           | Type                   | Description                                                  |
+|----------------------|------------------------|--------------------------------------------------------------|
+| `pet`                | Pet                    | The pet receiving the services                               |
+| `serviceDetails`     | Array(ServiceDetail)   | List of services scheduled for this pet                      |
+| `evaluationDetails`  | Array(EvaluationDetail) | List of evaluation results associated with this pet (if any) |
 
 ---
 
-### 4. ServiceDetail
+### 4. EvaluationDetail
+
+Represents an evaluation result associated with a pet in an appointment. This is typically used to indicate whether the
+pet has passed a required evaluation for certain services.
+
+| Field Name | Type                   | Description                                                                 |
+|------------|------------------------|-----------------------------------------------------------------------------|
+| `id`       | string                 | Unique identifier for the evaluation, obfuscated ID string                  |
+| `name`     | string                 | Display name of the evaluation                                              |
+| `status`   | enum(EvaluationStatus) | Evaluation status: `PASS` or `FAIL`                                         |
+
+#### Enum Definitions
+
+##### `EvaluationDetail.EvaluationStatus`
+
+- `EVALUATION_STATUS_UNSPECIFIED`
+- `PASS`: Pet has passed evaluation and can receive services
+- `FAIL`: Pet requires modifications to receive services
+
+---
+
+### 5. ServiceDetail
 
 Represents a specific service booked for a pet. It contains all the information needed to perform the service, including
 timing, pricing, staff assignments, and service-specific parameters.
@@ -183,7 +205,7 @@ timing, pricing, staff assignments, and service-specific parameters.
 
 ---
 
-### 4. AppointmentNote
+### 6. AppointmentNote
 
 Represents notes associated with an appointment, used for internal communication or customer information tracking.
 
@@ -254,7 +276,7 @@ Retrieves a single appointment by its ID.
 | `totalAmount`       | Money                   | Total cost for all services                                                   |
 | `paidAmount`        | Money                   | Amount received from customer                                                 |
 | `refundAmount`      | Money                   | Amount returned to customer                                                   |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`, `PARTIAL_REFUNDED`, `FULL_REFUNDED` |
 | `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
 | `createdTime`       | timestamp               | When the appointment was created                                              |
 | `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
@@ -365,7 +387,7 @@ Creates a new appointment with services for one or more pets.
 | `totalAmount`       | Money                   | Total cost for all services                                                   |
 | `paidAmount`        | Money                   | Amount received from customer                                                 |
 | `refundAmount`      | Money                   | Amount returned to customer                                                   |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`, `PARTIAL_REFUNDED`, `FULL_REFUNDED` |
 | `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
 | `createdTime`       | timestamp               | When the appointment was created                                              |
 | `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
@@ -421,7 +443,7 @@ Updates the appointment's time slot. All services within the appointment will be
 | `totalAmount`       | Money                   | Total cost for all services                                                   |
 | `paidAmount`        | Money                   | Amount received from customer                                                 |
 | `refundAmount`      | Money                   | Amount returned to customer                                                   |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`, `PARTIAL_REFUNDED`, `FULL_REFUNDED` |
 | `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
 | `createdTime`       | timestamp               | When the appointment was created                                              |
 | `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
@@ -476,7 +498,7 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 | `totalAmount`       | Money                   | Total cost for all services                                                   |
 | `paidAmount`        | Money                   | Amount received from customer                                                 |
 | `refundAmount`      | Money                   | Amount returned to customer                                                   |
-| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`                          |
+| `paymentStatus`     | enum(PaymentStatus)     | Payment state: `UNPAID`, `PARTIAL_PAID`, `FULL_PAID`, `PARTIAL_REFUNDED`, `FULL_REFUNDED` |
 | `createdBy`         | string                  | Identifier of the appointment creator, obfuscated ID string                   |
 | `createdTime`       | timestamp               | When the appointment was created                                              |
 | `lastUpdatedBy`     | string                  | Identifier of the last modifier, obfuscated ID string                         |
@@ -624,7 +646,7 @@ the requested time.
 
 ---
 
-### 7. List Grooming Reports (`ListGroomingReports`)
+### 8. List Grooming Reports (`ListGroomingReports`)
 
 - **Method**: `ListGroomingReports`
 - **HTTP Method**: POST
@@ -658,7 +680,7 @@ Lists grooming reports for specified appointments.
 
 ---
 
-### 8. Create Appointment Note (`CreateAppointmentNote`)
+### 9. Create Appointment Note (`CreateAppointmentNote`)
 
 - **Method**: `CreateAppointmentNote`
 - **HTTP Method**: POST
@@ -704,7 +726,7 @@ Creates a new note associated with a specific appointment.
 
 ---
 
-### 9. Update Appointment Note (`UpdateAppointmentNote`)
+### 10. Update Appointment Note (`UpdateAppointmentNote`)
 
 - **Method**: `UpdateAppointmentNote`
 - **HTTP Method**: PUT
@@ -749,7 +771,7 @@ Updates an existing appointment note by its ID.
 
 ---
 
-### 10. List Appointment Notes (`ListAppointmentNotes`)
+### 11. List Appointment Notes (`ListAppointmentNotes`)
 
 - **Method**: `ListAppointmentNotes`
 - **HTTP Method**: POST
@@ -770,7 +792,7 @@ appointment ID.
 | Field Name      | Type                       | Required | Description                       |
 |-----------------|----------------------------|----------|-----------------------------------|
 | `appointmentId` | string                     | Yes      | Appointment ID for access control |
-| `type`          | enum(AppointmentNote.Type) | Yes      | Filter by note type               |
+| `type`          | enum(AppointmentNote.Type) | No       | Filter by note type               |
 
 #### 📌 Return Value:
 
@@ -901,22 +923,12 @@ POST /v1/appointments:check
 {
   "businessId": "biz_001",
   "customerId": "cus_001",
-  "petServices": [
-    {
-      "petId": "pet_001",
-      "services": [
-        {
-          "id": "svc_grooming",
-          "duration": {
-            "startTime": "2024-08-15T10:00:00Z",
-            "endTime": "2024-08-15T11:00:00Z"
-          },
-          "staffIds": [
-            "staff_001"
-          ]
-        }
-      ]
-    }
+  "dateRange": {
+    "startTime": "2024-08-15T10:00:00Z",
+    "endTime": "2024-08-15T11:00:00Z"
+  },
+  "petIds": [
+    "pet_001"
   ]
 }
 ```

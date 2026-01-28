@@ -24,6 +24,35 @@ message PetServiceDetail {
   // array(ServiceDetail), List of services scheduled for this pet.
   // Each service includes timing, pricing, and staff assignments.
   repeated ServiceDetail service_details = 2;
+
+  // array(EvaluationDetail), List of evaluation details for this pet.
+  // Each evaluation detail includes the evaluation result and the evaluation time.
+  repeated EvaluationDetail evaluation_details = 3;
+}
+
+// The evaluation detail object represents the evaluation result for a specific service.
+// It contains the evaluation result and the evaluation time.
+message EvaluationDetail {
+  // string, Unique identifier for the evaluation.
+  // Format: "eva_" followed by random characters
+  string id = 1;
+  // string, Display name of the evaluation.
+  // Example: "Evaluation For Grooming", "Evaluation For Boarding"
+  string name = 2;
+  // Status of the pet's evaluation for services
+  // Determines which services can be provided
+  enum EvaluationStatus {
+    // Evaluation status not yet determined
+    EVALUATION_STATUS_UNSPECIFIED = 0;
+
+    // Pet has passed evaluation and can receive services
+    PASS = 1;
+
+    // Pet requires modifications to receive services
+    FAIL = 2;
+  }
+  // Status of the pet's evaluation for services
+  EvaluationStatus status = 3;
 }
 
 // The service detail object represents a specific service booked for a pet.
