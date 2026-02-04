@@ -15,6 +15,7 @@ Welcome to the official documentation for Moego APIs. This documentation covers 
 | [Staff](./staff.md) | Staff management and scheduling | ✅ Active |
 | [Order](./order.md) | Order processing and management | ✅ Active |
 | [Payment](./payment.md) | Payment processing and transactions | ✅ Active |
+| [Lead](./lead.md) | Sales pipeline management and lead tracking | ✅ Active |
 
 ### Specialized Services
 
@@ -26,6 +27,8 @@ Welcome to the official documentation for Moego APIs. This documentation covers 
 | [Discount](./discount.md) | Discount codes and promotions | ✅ Active |
 | [Review](./review.md) | Customer reviews and ratings | ✅ Active |
 | [Report](./report.md) | Business reporting and analytics | ✅ Active |
+| [Retail](./retail.md) | Retail product and inventory management | ✅ Active |
+| [Agreement](./agreement.md) | Customer agreements and contracts | ✅ Active |
 
 ### Administrative Modules
 
@@ -40,6 +43,9 @@ Welcome to the official documentation for Moego APIs. This documentation covers 
 
 ### Protocol Buffers
 - [Common Types](./common/)
+  - [Address](./common/address.md) - Physical location representation
+  - [Pagination](./common/pagination.md) - Page parameter management
+  - [Weight](./common/weight.md) - Weight unit definitions
 - [Proto Definitions](../moego/)
 
 ### Integration Guides
