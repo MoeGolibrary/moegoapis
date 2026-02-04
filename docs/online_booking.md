@@ -282,6 +282,11 @@ Lists abandoned bookings matching specified criteria including abandon time rang
 Gets available dates and times for online booking based on business hours, staff availability, and other scheduling
 constraints. This endpoint helps customers find suitable time slots when booking services online.
 
+**Important Notes:**
+- For mobile businesses with smart scheduling enabled, location parameters (coordinate or zipcode) are **required**
+- If location parameters are missing for mobile businesses with smart scheduling, the API will return an error
+- For fixed-location businesses, location parameters are optional but recommended for better availability results
+
 #### 🔧 Request Parameters
 
 | Field Name   | Type   | Required | Description                                  |
@@ -300,7 +305,11 @@ constraints. This endpoint helps customers find suitable time slots when booking
 - `staffIds`: Filter by specific staff IDs
 - `customerId`: Filter by specific customer ID
 - `coordinate`: Filter by location coordinates (latitude and longitude)
+  - **Required** for mobile businesses with smart scheduling
+  - Provides precise location-based availability
 - `zipcode`: Filter by postal code
+  - **Required** for mobile businesses with smart scheduling
+  - Used for territory-based routing and service area validation
 - `pets`: Array of pet parameters including:
     - `id`: Pet ID (for existing pets)
     - `name`: Pet name
@@ -357,6 +366,7 @@ When specifying the pet type in the `type` field, use one of the following value
 
 - `PERMISSION_DENIED`: Permission denied
 - `INVALID_ARGUMENT`: Invalid request parameters
+- `FAILED_PRECONDITION`: Missing required location parameters for mobile business with smart scheduling
 
 ---
 
@@ -502,13 +512,33 @@ POST /v1/abandoned_bookings:list
       "id": "abk_12345",
       "businessId": "biz_001",
       "customer": {
-        ...
+        "customerId": "cus_001",
+        "email": "jane.smith@example.com",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "phoneNumber": "+12125555678"
       },
       "pets": [
-        ...
+        {
+          "petServiceDetail": {
+            "pet": {
+              "id": "pet_002",
+              "name": "Luna"
+            },
+            "serviceDetails": [
+              {
+                "id": "svc_456",
+                "name": "Basic Grooming"
+              }
+            ]
+          }
+        }
       ],
       "address": {
-        ...
+        "street": "456 Oak Ave",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zip": "90210"
       },
       "abandonStep": "SELECT_CARE_TYPE",
       "abandonTime": "2024-08-05T14:30:00Z",
