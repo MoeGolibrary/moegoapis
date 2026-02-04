@@ -4,6 +4,12 @@ This repository contains the original interface definitions of public MoeGo APIs
 these definitions helps you better understand the MoeGo APIs and use them more efficiently. You can also use these
 definitions with open-source tools to generate client libraries, documentation, and other artifacts.
 
+## 📚 Documentation
+
+📘 **[View Full API Documentation](https://moegoteam.github.io/moegoapis/)** - Comprehensive documentation hosted on GitHub Pages
+
+The documentation includes detailed guides for all API modules, integration examples, and best practices for using MoeGo APIs.
+
 ## Try it now
 
 [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 96px; height: 24px;">](https://app.getpostman.com/run-collection/30555124-2c27c225-3a6c-4234-bd4f-f818dc0a757c?source=rip_markdown&collection-url=entityId%3D30555124-2c27c225-3a6c-4234-bd4f-f818dc0a757c%26entityType%3Dcollection%26workspaceId%3Ddb8fd53e-fafa-4b5e-bf78-8dd330f46a0b)
