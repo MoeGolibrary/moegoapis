@@ -6,7 +6,7 @@ definitions with open-source tools to generate client libraries, documentation, 
 
 ## 📚 Documentation
 
-📘 **[View Full API Documentation](https://moegoteam.github.io/moegoapis/)** - Comprehensive documentation hosted on GitHub Pages
+📘 **[View Full API Documentation](https://moegolibrary.github.io/moegoapis/)** - Comprehensive documentation hosted on GitHub Pages
 
 The documentation includes detailed guides for all API modules, integration examples, and best practices for using MoeGo APIs.
 
