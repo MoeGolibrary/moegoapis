@@ -4,6 +4,8 @@ This repository contains the original interface definitions of public MoeGo APIs
 these definitions helps you better understand the MoeGo APIs and use them more efficiently. You can also use these
 definitions with open-source tools to generate client libraries, documentation, and other artifacts.
 
+[TOC]
+
 ## 📚 Documentation
 
 📘 **[View Full API Documentation](https://moegolibrary.github.io/moegoapis/)** - Comprehensive documentation hosted on GitHub Pages
