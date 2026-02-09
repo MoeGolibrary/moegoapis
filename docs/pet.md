@@ -52,7 +52,6 @@ information for providing appropriate care.
 | `vet`              | Vet                                          | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
 | `createdTime`      | Timestamp                                    | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
 | `photo`            | string                                       | Photo URL of the pet                               |
 | `deleted`          | bool                                         | Flag indicating if this pet record is deleted      |
 
@@ -210,7 +209,6 @@ Registers a new pet with basic details, health records, and optionally initial n
 | `vet`              | Vet                                          | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
 | `createdTime`      | Timestamp                                    | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
 | `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
@@ -265,7 +263,6 @@ Retrieves detailed information about a specific pet.
 | `vet`              | Vet                                          | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
 | `createdTime`      | Timestamp                                    | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
 | `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
@@ -333,7 +330,6 @@ Updates an existing pet's information.
 | `vet`              | Vet                                          | Primary veterinary care provider                   |
 | `evaluationStatus` | EvaluationStatus                             | Service eligibility status                         |
 | `createdTime`      | Timestamp                                    | When the pet was created                           |
-| `lastUpdatedTime`  | Timestamp                                    | When the pet was last modified                     |
 | `photo`            | string                                       | Photo URL of the pet                               |
 
 #### ⚠️ Error Codes:
