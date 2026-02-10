@@ -593,10 +593,13 @@
         "APPOINTMENT_CANCELED",
         "APPOINTMENT_DELETED",
         "APPOINTMENT_FULLY_PAID",
-        "ONLINE_BOOKING_RECEIVED"
+        "ONLINE_BOOKING_RECEIVED",
+        "CUSTOMER_CREATED",
+        "CUSTOMER_UPDATED",
+        "CUSTOMER_DELETED"
       ],
       "default": "TYPE_UNSPECIFIED",
-      "description": "Type categorizes the event and determines how it should be processed.\nEvent types are grouped by functionality to maintain clear boundaries\nand facilitate routing to appropriate handlers.\n\n - TYPE_UNSPECIFIED: Unknown or invalid event type\nShould not be used when creating new events\n - HEALTH_CHECK: Health check event for system monitoring\nUsed to verify webhook endpoint availability\n - APPOINTMENT_CREATED: New appointment has been created\nTriggers notifications and resource allocation\n - APPOINTMENT_UPDATED: Existing appointment has been modified\nUpdates schedules and notifications\n - APPOINTMENT_FINISHED: Service delivery has been completed\nInitiates payment and review processes\n - APPOINTMENT_CANCELED: Appointment has been canceled\nReleases reserved resources\n - APPOINTMENT_DELETED: Appointment has been permanently removed\nCleans up associated records\n - APPOINTMENT_FULLY_PAID: TODO: implement\nAll payments for the appointment received\nUpdates financial records\n - ONLINE_BOOKING_RECEIVED: TODO: implement\nNew online booking request received\nInitiates booking validation and processing"
+      "description": "Type categorizes the event and determines how it should be processed.\nEvent types are grouped by functionality to maintain clear boundaries\nand facilitate routing to appropriate handlers.\n\n - TYPE_UNSPECIFIED: Unknown or invalid event type\nShould not be used when creating new events\n - HEALTH_CHECK: Health check event for system monitoring\nUsed to verify webhook endpoint availability\n - APPOINTMENT_CREATED: New appointment has been created\nTriggers notifications and resource allocation\n - APPOINTMENT_UPDATED: Existing appointment has been modified\nUpdates schedules and notifications\n - APPOINTMENT_FINISHED: Service delivery has been completed\nInitiates payment and review processes\n - APPOINTMENT_CANCELED: Appointment has been canceled\nReleases reserved resources\n - APPOINTMENT_DELETED: Appointment has been permanently removed\nCleans up associated records\n - APPOINTMENT_FULLY_PAID: TODO: implement\nAll payments for the appointment received\nUpdates financial records\n - ONLINE_BOOKING_RECEIVED: TODO: implement\nNew online booking request received\nInitiates booking validation and processing\n - CUSTOMER_CREATED: New customer has been created\nTriggers welcome notifications and initial setup\n - CUSTOMER_UPDATED: Existing customer has been modified\nUpdates customer profile and preferences\n - CUSTOMER_DELETED: Customer has been permanently removed\nCleans up customer data and dependencies"
     },
     "v1ListWebhookDeliveriesRequest": {
       "type": "object",

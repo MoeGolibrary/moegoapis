@@ -99,7 +99,6 @@ message ListBlocksRequest {
   // array(string), List of business location IDs to include.
   repeated string business_ids = 3 [(google.api.field_behavior) = REQUIRED];
 
-
   // Filter for the request
   message Filter {
     // object(Interval), Filter by blocks start time range.
@@ -108,7 +107,7 @@ message ListBlocksRequest {
     // object(Interval), Filter by blocks end time range.
     google.type.Interval end_time = 2 [(google.api.field_behavior) = OPTIONAL];
   }
-  
+
   // Optional filter criteria
   Filter filter = 4;
 }
@@ -117,7 +116,7 @@ message ListBlocksRequest {
 message ListBlocksResponse {
   // List of blocks matching the filter criteria
   repeated Block blocks = 1;
-  
+
   // Token for retrieving the next page of results.
   // Empty if there are no more results.
   string next_page_token = 2;
