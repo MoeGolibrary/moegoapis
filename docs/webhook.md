@@ -78,6 +78,9 @@ Event types trigger webhook calls. Examples include:
 - `HEALTH_CHECK`
 - `APPOINTMENT_CREATED`
 - `APPOINTMENT_FINISHED`
+- `CUSTOMER_CREATED`
+- `CUSTOMER_UPDATED`
+- `CUSTOMER_DELETED`
 
 Refer to [event.proto](../moego/business/event/v1/event.proto) for supported event types.
 
