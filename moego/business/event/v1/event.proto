@@ -4,6 +4,7 @@ package moego.business.event.v1;
 
 import "google/protobuf/timestamp.proto";
 import "moego/business/appointment/v1/appointment.proto";
+import "moego/business/customer/v1/customer.proto";
 import "moego/business/event/v1/health_check.proto";
 import "moego/business/online_booking/v1/online_booking.proto";
 
@@ -67,6 +68,21 @@ message Event {
     // New online booking request received
     // Initiates booking validation and processing
     ONLINE_BOOKING_RECEIVED = 200;
+
+    // Customer Events (300-399)
+    // Events related to customer data changes
+
+    // New customer has been created
+    // Triggers welcome notifications and initial setup
+    CUSTOMER_CREATED = 300;
+
+    // Existing customer has been modified
+    // Updates customer profile and preferences
+    CUSTOMER_UPDATED = 301;
+
+    // Customer has been permanently removed
+    // Cleans up customer data and dependencies
+    CUSTOMER_DELETED = 302;
   }
 
   // Unique identifier for the event
@@ -99,5 +115,9 @@ message Event {
     // Payload for online booking events
     // Used when type is in the ONLINE_BOOKING range
     moego.business.online_booking.v1.OnlineBooking online_booking = 7;
+
+    // Payload for customer-related events
+    // Used when type is in the CUSTOMER range
+    moego.business.customer.v1.Customer customer = 8;
   }
 }

@@ -86,7 +86,7 @@ These headers are used for **security and idempotency**, especially when you ena
 | Field       | Type   | Description                                               |
 |-------------|--------|-----------------------------------------------------------|
 | `id`        | string | Unique event ID                                           |
-| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`)  |
+| `type`      | string | Event type (e.g., `HEALTH_CHECK`, `APPOINTMENT_CREATED`, `CUSTOMER_CREATED`)  |
 | `timestamp` | string | ISO 8601 formatted timestamp                              |
 | `companyId` | string | Encoded company ID associated with the event              |
 | `payload`   | bytes  | Varies based on event type.  The string encoded in base64 |
@@ -120,7 +120,10 @@ You can register a new Webhook using Moego's RESTful API.
   "endpointUrl": "https://your-service.com/webhook-endpoint",
   "eventTypes": [
     "HEALTH_CHECK",
-    "APPOINTMENT_CREATED"
+    "APPOINTMENT_CREATED",
+    "CUSTOMER_CREATED",
+    "CUSTOMER_UPDATED",
+    "CUSTOMER_DELETED"
   ],
   "secretToken": "your_secure_token_here",
   "isActive": true,

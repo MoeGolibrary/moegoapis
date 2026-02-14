@@ -8,6 +8,7 @@ package eventpb
 
 import (
 	appointmentpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"
+	customerpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
 	onlinebookingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
@@ -59,6 +60,15 @@ const (
 	// New online booking request received
 	// Initiates booking validation and processing
 	Event_ONLINE_BOOKING_RECEIVED Event_Type = 200
+	// New customer has been created
+	// Triggers welcome notifications and initial setup
+	Event_CUSTOMER_CREATED Event_Type = 300
+	// Existing customer has been modified
+	// Updates customer profile and preferences
+	Event_CUSTOMER_UPDATED Event_Type = 301
+	// Customer has been permanently removed
+	// Cleans up customer data and dependencies
+	Event_CUSTOMER_DELETED Event_Type = 302
 )
 
 // Enum value maps for Event_Type.
@@ -73,6 +83,9 @@ var (
 		104: "APPOINTMENT_DELETED",
 		105: "APPOINTMENT_FULLY_PAID",
 		200: "ONLINE_BOOKING_RECEIVED",
+		300: "CUSTOMER_CREATED",
+		301: "CUSTOMER_UPDATED",
+		302: "CUSTOMER_DELETED",
 	}
 	Event_Type_value = map[string]int32{
 		"TYPE_UNSPECIFIED":        0,
@@ -84,6 +97,9 @@ var (
 		"APPOINTMENT_DELETED":     104,
 		"APPOINTMENT_FULLY_PAID":  105,
 		"ONLINE_BOOKING_RECEIVED": 200,
+		"CUSTOMER_CREATED":        300,
+		"CUSTOMER_UPDATED":        301,
+		"CUSTOMER_DELETED":        302,
 	}
 )
 
@@ -140,6 +156,7 @@ type Event struct {
 	//	*Event_HealthCheck
 	//	*Event_Appointment
 	//	*Event_OnlineBooking
+	//	*Event_Customer
 	Payload       isEvent_Payload `protobuf_oneof:"payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -237,6 +254,15 @@ func (x *Event) GetOnlineBooking() *onlinebookingpb.OnlineBooking {
 	return nil
 }
 
+func (x *Event) GetCustomer() *customerpb.Customer {
+	if x != nil {
+		if x, ok := x.Payload.(*Event_Customer); ok {
+			return x.Customer
+		}
+	}
+	return nil
+}
+
 type isEvent_Payload interface {
 	isEvent_Payload()
 }
@@ -259,17 +285,25 @@ type Event_OnlineBooking struct {
 	OnlineBooking *onlinebookingpb.OnlineBooking `protobuf:"bytes,7,opt,name=online_booking,json=onlineBooking,proto3,oneof"`
 }
 
+type Event_Customer struct {
+	// Payload for customer-related events
+	// Used when type is in the CUSTOMER range
+	Customer *customerpb.Customer `protobuf:"bytes,8,opt,name=customer,proto3,oneof"`
+}
+
 func (*Event_HealthCheck) isEvent_Payload() {}
 
 func (*Event_Appointment) isEvent_Payload() {}
 
 func (*Event_OnlineBooking) isEvent_Payload() {}
 
+func (*Event_Customer) isEvent_Payload() {}
+
 var File_moego_business_event_v1_event_proto protoreflect.FileDescriptor
 
 const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\n" +
-	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\x93\x05\n" +
+	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a)moego/business/customer/v1/customer.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\x9c\x06\n" +
 	"\x05Event\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\x04type\x18\x02 \x01(\x0e2#.moego.business.event.v1.Event.TypeR\x04type\x128\n" +
@@ -278,7 +312,8 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"company_id\x18\x04 \x01(\tR\tcompanyId\x12I\n" +
 	"\fhealth_check\x18\x05 \x01(\v2$.moego.business.event.v1.HealthCheckH\x00R\vhealthCheck\x12N\n" +
 	"\vappointment\x18\x06 \x01(\v2*.moego.business.appointment.v1.AppointmentH\x00R\vappointment\x12X\n" +
-	"\x0eonline_booking\x18\a \x01(\v2/.moego.business.online_booking.v1.OnlineBookingH\x00R\ronlineBooking\"\xe7\x01\n" +
+	"\x0eonline_booking\x18\a \x01(\v2/.moego.business.online_booking.v1.OnlineBookingH\x00R\ronlineBooking\x12B\n" +
+	"\bcustomer\x18\b \x01(\v2$.moego.business.customer.v1.CustomerH\x00R\bcustomer\"\xac\x02\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fHEALTH_CHECK\x10\x01\x12\x17\n" +
@@ -288,7 +323,10 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\x14APPOINTMENT_CANCELED\x10g\x12\x17\n" +
 	"\x13APPOINTMENT_DELETED\x10h\x12\x1a\n" +
 	"\x16APPOINTMENT_FULLY_PAID\x10i\x12\x1c\n" +
-	"\x17ONLINE_BOOKING_RECEIVED\x10\xc8\x01B\t\n" +
+	"\x17ONLINE_BOOKING_RECEIVED\x10\xc8\x01\x12\x15\n" +
+	"\x10CUSTOMER_CREATED\x10\xac\x02\x12\x15\n" +
+	"\x10CUSTOMER_UPDATED\x10\xad\x02\x12\x15\n" +
+	"\x10CUSTOMER_DELETED\x10\xae\x02B\t\n" +
 	"\apayloadB\x80\x01\n" +
 	"\x1fcom.moego.api.business.event.v1B\n" +
 	"EventProtoP\x01ZOgithub.com/MoeGolibrary/moegoapis/genproto/go/business/event/v1/eventpb;eventpbb\x06proto3"
@@ -314,6 +352,7 @@ var file_moego_business_event_v1_event_proto_goTypes = []any{
 	(*HealthCheck)(nil),                   // 3: moego.business.event.v1.HealthCheck
 	(*appointmentpb.Appointment)(nil),     // 4: moego.business.appointment.v1.Appointment
 	(*onlinebookingpb.OnlineBooking)(nil), // 5: moego.business.online_booking.v1.OnlineBooking
+	(*customerpb.Customer)(nil),           // 6: moego.business.customer.v1.Customer
 }
 var file_moego_business_event_v1_event_proto_depIdxs = []int32{
 	0, // 0: moego.business.event.v1.Event.type:type_name -> moego.business.event.v1.Event.Type
@@ -321,11 +360,12 @@ var file_moego_business_event_v1_event_proto_depIdxs = []int32{
 	3, // 2: moego.business.event.v1.Event.health_check:type_name -> moego.business.event.v1.HealthCheck
 	4, // 3: moego.business.event.v1.Event.appointment:type_name -> moego.business.appointment.v1.Appointment
 	5, // 4: moego.business.event.v1.Event.online_booking:type_name -> moego.business.online_booking.v1.OnlineBooking
-	5, // [5:5] is the sub-list for method output_type
-	5, // [5:5] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	6, // 5: moego.business.event.v1.Event.customer:type_name -> moego.business.customer.v1.Customer
+	6, // [6:6] is the sub-list for method output_type
+	6, // [6:6] is the sub-list for method input_type
+	6, // [6:6] is the sub-list for extension type_name
+	6, // [6:6] is the sub-list for extension extendee
+	0, // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_event_v1_event_proto_init() }
@@ -338,6 +378,7 @@ func file_moego_business_event_v1_event_proto_init() {
 		(*Event_HealthCheck)(nil),
 		(*Event_Appointment)(nil),
 		(*Event_OnlineBooking)(nil),
+		(*Event_Customer)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

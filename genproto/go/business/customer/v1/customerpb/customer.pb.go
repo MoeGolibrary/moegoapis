@@ -828,7 +828,7 @@ var File_moego_business_customer_v1_customer_proto protoreflect.FileDescriptor
 
 const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\n" +
-	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\x1a\x1cgoogle/protobuf/struct.proto\"\x9f\x0e\n" +
+	")moego/business/customer/v1/customer.proto\x12\x1amoego.business.customer.v1\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1fgoogle/protobuf/timestamp.proto\x1a(moego/business/setting/v1/customer.proto\x1a\x1dmoego/common/v1/address.proto\"\x9f\x0e\n" +
 	"\bCustomer\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
 	"\x06raw_id\x18\x19 \x01(\x03R\x05rawId\x12\x1d\n" +

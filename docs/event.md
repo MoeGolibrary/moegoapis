@@ -8,6 +8,7 @@ notification or processing. It supports:
 - System monitoring through health check events
 - Appointment lifecycle tracking (creation, updates, completion, cancellation)
 - Online booking notifications
+- Customer data changes (creation, updates, deletion)
 - Unified event metadata and payload structure
 
 This service enables reliable event delivery and processing across system components.
@@ -50,6 +51,7 @@ Events are categorized into functional groups with specific ranges:
 | 0-99    | System Events         | Monitoring and infrastructure events        |
 | 100-199 | Appointment Events    | Lifecycle changes for appointments          |
 | 200-299 | Online Booking Events | Customer self-service booking notifications |
+| 300-399 | Customer Events      | Customer data changes                   |
 
 ### 3. Payload Structures
 
@@ -59,6 +61,7 @@ Each event type has an associated payload format:
 |------------------------|--------------|-----------------------------------|
 | `HEALTH_CHECK`         | HealthCheck  | System monitoring verification    |
 | `APPOINTMENT_*` series | Appointment  | Appointment lifecycle information |
+| `CUSTOMER_*` series   | Customer     | Customer data changes        |
 
 ---
 
@@ -81,6 +84,10 @@ message Event {
     APPOINTMENT_CANCELED = 103;
     APPOINTMENT_DELETED = 104;
 
+    // Customer Events (300-399)
+    CUSTOMER_CREATED = 300;
+    CUSTOMER_UPDATED = 301;
+    CUSTOMER_DELETED = 302;
   }
 
   string id = 1;
@@ -92,6 +99,7 @@ message Event {
     HealthCheck health_check = 5;
     moego.business.appointment.v1.Appointment appointment = 6;
     moego.business.online_booking.v1.OnlineBooking online_booking = 7;
+    moego.business.customer.v1.Customer customer = 8;
   }
 }
 ```
@@ -136,6 +144,20 @@ message HealthCheck {
 }
 ```
 
+### Example 3: Customer Created Event
+
+```json
+{
+  "id": "evt_ghi789",
+  "type": "CUSTOMER_CREATED",
+  "timestamp": "2024-08-01T12:10:00Z",
+  "companyId": "cmp_001",
+  "customer": {
+    // Full customer details from moego.business.customer.v1.Customer
+  }
+}
+```
+
 ---
 
 ## ⚠️ 6. Usage Limitations
@@ -150,8 +172,9 @@ TODO
 |---------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | How do I verify webhook endpoint availability?          | Use the `HEALTH_CHECK` event type with the provided validation string                                                                                           |
 | Which event indicates a new appointment?                | The `APPOINTMENT_CREATED` event type                                                                                                                            |
-| How are different event types processed differently?    | Each event type has a specific payload format and processing logic - system events use HealthCheck, appointments use Appointment, etc.                          |
-| Why does my system need to handle multiple event types? | Different business operations require different handling procedures - appointment changes affect scheduling while online bookings initiate validation workflows |
+| Which event indicates a customer update?                | The `CUSTOMER_UPDATED` event type triggers when customer profile is modified                                                                                         |
+| How are different event types processed differently?    | Each event type has a specific payload format and processing logic - system events use HealthCheck, appointments use Appointment, customers use Customer, etc.                          |
+| Why does my system need to handle multiple event types? | Different business operations require different handling procedures - appointment changes affect scheduling while customer updates trigger profile synchronization workflows |
 | How to ensure proper event ordering?                    | Use the `timestamp` field for event sequencing                                                                                                                  |
 
 ---
@@ -173,3 +196,4 @@ TODO
 - [health_check.proto](../moego/business/event/v1/health_check.proto)
 - [appointment.proto](../moego/business/appointment/v1/appointment.proto)
 - [online_booking.proto](../moego/business/online_booking/v1/online_booking.proto)
+- [customer.proto](../moego/business/customer/v1/customer.proto)

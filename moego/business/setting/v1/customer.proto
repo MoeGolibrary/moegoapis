@@ -108,7 +108,7 @@ message CustomField {
         // Unspecified
         ENTITY_UNSPECIFIED = 0;
         // Customer
-        CUSTOMER =  1;
+        CUSTOMER = 1;
         // Lead
         LEAD = 2;
       }
