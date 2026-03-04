@@ -54,6 +54,11 @@ message Staff {
   // ID of the company this staff member belongs to
   // Used for access control and data segregation
   string company_id = 11;
+
+  // Indicates whether this staff member has been soft deleted
+  // If true, the staff member is no longer active but their data is retained
+  // for historical records and reporting purposes
+  bool deleted = 12;
 }
 
 // Role defines a set of permissions and capabilities assigned to staff members.

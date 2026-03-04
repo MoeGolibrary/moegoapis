@@ -281,6 +281,10 @@
         "companyId": {
           "type": "string",
           "title": "ID of the company this staff member belongs to\nUsed for access control and data segregation"
+        },
+        "deleted": {
+          "type": "boolean",
+          "title": "Indicates whether this staff member has been soft deleted\nIf true, the staff member is no longer active but their data is retained\nfor historical records and reporting purposes"
         }
       },
       "description": "Staff represents an employee or contractor who provides services in your business.\nStaff members can be assigned to appointments, manage customer relationships,\nand perform various administrative tasks based on their role and permissions.",
