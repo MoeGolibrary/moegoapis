@@ -4,16 +4,11 @@ package moego.business.customer.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
-import "google/type/date.proto";
 import "google/type/interval.proto";
-import "models/business_customer/v1/business_pet.proto";
-import "models/customer/v1/pet.proto";
-import "models/offering/v1/service.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/setting/v1/customer.proto";
 import "moego/common/v1/address.proto";
 import "moego/common/v1/pagination.proto";
-import "validate/validate.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpb";
 option java_multiple_files = true;
@@ -60,20 +55,6 @@ service CustomerService {
   // Throws NOT_FOUND if the customer ID doesn't exist.
   rpc GetCustomer(GetCustomerRequest) returns (Customer) {
     option (google.api.http) = {get: "/v1/customers/{id}"};
-  }
-
-  // Aggregated customer & pet profile lookup by phone number for AI/receptionist scenarios.
-  //
-  // This is a read-only aggregation API to support third-party AI platforms:
-  // - resolve customer by phone within a business
-  // - return customer minimal profile
-  // - return all pets with feeding / medication / vaccine information
-  // - return last & next appointments with basic service details
-  rpc GetClientPetProfileByPhone(GetClientPetProfileByPhoneParams) returns (GetClientPetProfileByPhoneResult) {
-    option (google.api.http) = {
-      post: "/v1/customers:clientPetProfileByPhone"
-      body: "*"
-    };
   }
 
   // Lists customers matching the specified criteria.
@@ -366,118 +347,3 @@ message ListCustomerTagsResponse {
   // May be empty if the customer has no tags
   repeated moego.business.setting.v1.CustomerTag tags = 2;
 }
-
-// Query client and pet profile by phone for receptionist/AI scenarios.
-message GetClientPetProfileByPhoneParams {
-  // phone number, normalized by caller.
-  string phone_number = 1 [(validate.rules).string = {
-    min_len: 7
-    max_len: 30
-  }];
-
-  // business id, book appointment for this business.
-  int64 business_id = 2 [(validate.rules).int64.gt = 0];
-}
-
-// Query client and pet profile by phone result.
-message GetClientPetProfileByPhoneResult {
-  // minimal customer profile view for receptionist.
-  message CustomerView {
-    // customer id
-    int64 customer_id = 1;
-    // first name
-    string first_name = 2;
-    // last name
-    string last_name = 3;
-    // phone number
-    string phone_number = 4;
-    // email
-    optional string email = 5;
-  }
-
-  // pet profile with care/vaccine details.
-  message PetView {
-    // pet id
-    int64 pet_id = 1;
-    // pet name
-    string pet_name = 2;
-    // pet type
-    models.customer.v1.PetType pet_type = 3;
-    // breed
-    string breed = 4;
-    // breed mixed
-    bool breed_mixed = 5;
-    // gender
-    models.customer.v1.PetGender gender = 6;
-    // weight
-    string weight = 7;
-    // coat type
-    string coat_type = 8;
-    // fixed
-    string fixed = 9;
-    // birthday
-    google.type.Date birthday = 10;
-    // evaluation status
-    models.customer.v1.EvaluationStatus evaluation_status = 11;
-    // feeding schedules
-    repeated models.business_customer.v1.BusinessPetFeedingScheduleView feeding_schedules = 21;
-    // medication schedules
-    repeated models.business_customer.v1.BusinessPetMedicationScheduleView medication_schedules = 22;
-    // vaccine records
-    repeated models.business_customer.v1.BusinessPetVaccineRecordModel vaccine_list = 23;
-  }
-
-  // service detail in one appointment.
-  message ServiceDetailView {
-    // service id
-    int64 service_id = 1;
-    // service name
-    string service_name = 2;
-    // service item type
-    models.offering.v1.ServiceItemType service_item_type = 3;
-    // service duration in minutes
-    int32 service_time = 4;
-    // service price
-    double service_price = 5;
-    // assigned staff
-    optional int64 staff_id = 6;
-    // assigned lodging
-    optional int64 lodging_id = 7;
-  }
-
-  // pet and its services in one appointment.
-  message PetServiceDetailView {
-    // pet id
-    int64 pet_id = 1;
-    // selected services
-    repeated ServiceDetailView services = 3;
-  }
-
-  // minimal appointment summary for recommendation.
-  message AppointmentView {
-    // appointment id
-    int64 appointment_id = 1;
-    // start date
-    google.type.Date start_date = 2;
-    // start time in minutes from midnight
-    int32 start_time = 3;
-    // end date
-    google.type.Date end_date = 4;
-    // end time in minutes from midnight
-    int32 end_time = 5;
-    // main care type
-    models.offering.v1.ServiceItemType main_care_type = 6;
-    // pet + services details
-    repeated PetServiceDetailView pet_service_details = 11;
-  }
-
-  // matched customer profile.
-  optional CustomerView customer = 1;
-  // matched pets under this customer with feeding/medication/vaccine details.
-  repeated PetView pets = 2;
-  // customer's last appointment.
-  optional AppointmentView last_appointment = 3;
-  // customer's next appointment.
-  optional AppointmentView next_appointment = 4;
-}
-

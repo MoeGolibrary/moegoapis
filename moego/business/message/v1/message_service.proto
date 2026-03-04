@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package moego.business.message.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/message/v1/messagepb;messagepb";
+option java_multiple_files = true;
+option java_outer_classname = "MessageServiceProto";
+option java_package = "com.moego.api.business.message.v1";
+
+// MessageService provides customer messaging and conversation thread lifecycle.
+//
+// Sending a message to a customer (SendMessageToCustomer) ensures a conversation thread
+// exists for that customer (creates one if needed), then delivers the message via the
+// specified channel (msg, email, call, app). Callers do not manage threads separately.
+service MessageService {
+  // Sends a message to a customer.
+  //
+  // Creates or reuses a conversation thread for the customer, then sends the message
+  // using the given delivery method (msg / email / call / app). The message body and
+  // type (text or pic) are supplied by the caller; thread creation is handled internally.
+  rpc SendMessageToCustomer(SendMessageToCustomerRequest) returns (SendMessageToCustomerResponse) {
+    option (google.api.http) = {
+      post: "/v1/messages:sendToCustomer"
+      body: "*"
+    };
+  }
+}
+
+// Delivery method (channel) for sending the message to the customer.
+// Numeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).
+enum MessageDeliveryMethod {
+  // Unknown or unspecified delivery method.
+  MESSAGE_DELIVERY_METHOD_UNSPECIFIED = 0;
+  // In-app / internal message (msg).
+  MSG = 1;
+  // Email.
+  EMAIL = 2;
+  // Phone call (call).
+  CALL = 4;
+  // App push or in-app (app).
+  APP = 5;
+}
+
+// Content type of the message body.
+enum MessageType {
+  // Unknown or unspecified message type.
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  // Plain text message.
+  TEXT = 1;
+  // Picture / image message.
+  PIC = 2;
+}
+
+// Request for SendMessageToCustomer.
+message SendMessageToCustomerRequest {
+  // Business id for context (obfuscated id). The business from which the message is sent.
+  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // Customer id to send the message to (obfuscated id).
+  string customer_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // Message body content (e.g. plain text "hello", or reference for PIC type).
+  string message_body = 3 [(google.api.field_behavior) = REQUIRED];
+  // Message content type: TEXT or PIC. Defaults to TEXT if not set.
+  MessageType message_type = 4;
+  // Delivery method (channel): MSG(1), EMAIL(2), CALL(4), or APP(5). Required for sending.
+  MessageDeliveryMethod method = 5 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response for SendMessageToCustomer.
+message SendMessageToCustomerResponse {
+  // Id of the conversation thread used or created for this customer (for reference).
+  optional string thread_id = 1;
+  // Id of the sent message, when the backend returns it.
+  optional string message_id = 2;
+}
