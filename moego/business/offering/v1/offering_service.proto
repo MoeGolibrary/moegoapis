@@ -14,6 +14,7 @@ option java_outer_classname = "OfferingServiceProto";
 option java_package = "com.moego.api.business.offering.v1";
 
 // OfferingService provides APIs for querying available offerings and inventory.
+// (hook test)
 //
 // It returns which services can be booked for given pets at a business (ListServices)
 // and which lodging units have capacity for a given date (ListLodgings). Used by both

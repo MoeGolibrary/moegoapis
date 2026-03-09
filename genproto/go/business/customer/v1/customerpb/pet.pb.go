@@ -548,6 +548,280 @@ func (x *Pet) GetDeleted() bool {
 	return false
 }
 
+// PetScheduleTimeDef defines a schedule time in minutes from midnight.
+// E.g. 09:00 AM = 540, 09:30 AM = 570. Range 0–1440.
+type PetScheduleTimeDef struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Schedule time in minutes from midnight.
+	ScheduleTime int32 `protobuf:"varint,1,opt,name=schedule_time,json=scheduleTime,proto3" json:"schedule_time,omitempty"`
+	// Extra key-value data (e.g. schedule time label).
+	ExtraJson     map[string]string `protobuf:"bytes,2,rep,name=extra_json,json=extraJson,proto3" json:"extra_json,omitempty" protobuf_key:"bytes,1,opt,name=key" protobuf_val:"bytes,2,opt,name=value"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetScheduleTimeDef) Reset() {
+	*x = PetScheduleTimeDef{}
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetScheduleTimeDef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetScheduleTimeDef) ProtoMessage() {}
+
+func (x *PetScheduleTimeDef) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetScheduleTimeDef.ProtoReflect.Descriptor instead.
+func (*PetScheduleTimeDef) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PetScheduleTimeDef) GetScheduleTime() int32 {
+	if x != nil {
+		return x.ScheduleTime
+	}
+	return 0
+}
+
+func (x *PetScheduleTimeDef) GetExtraJson() map[string]string {
+	if x != nil {
+		return x.ExtraJson
+	}
+	return nil
+}
+
+// PetFeedingSchedule represents a pet's feeding schedule for care instructions.
+type PetFeedingSchedule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Feeding record id.
+	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Pet id.
+	PetId int64 `protobuf:"varint,2,opt,name=pet_id,json=petId,proto3" json:"pet_id,omitempty"`
+	// Feeding amount, e.g. "1.2", "1/2", "1".
+	FeedingAmount string `protobuf:"bytes,3,opt,name=feeding_amount,json=feedingAmount,proto3" json:"feeding_amount,omitempty"`
+	// Feeding unit (pet_metadata.metadata_value, metadata_name = 2).
+	FeedingUnit string `protobuf:"bytes,4,opt,name=feeding_unit,json=feedingUnit,proto3" json:"feeding_unit,omitempty"`
+	// Feeding type (pet_metadata.metadata_value, metadata_name = 3).
+	FeedingType string `protobuf:"bytes,5,opt,name=feeding_type,json=feedingType,proto3" json:"feeding_type,omitempty"`
+	// Feeding source (pet_metadata.metadata_value, metadata_name = 4).
+	FeedingSource string `protobuf:"bytes,6,opt,name=feeding_source,json=feedingSource,proto3" json:"feeding_source,omitempty"`
+	// Feeding instruction (pet_metadata.metadata_value, metadata_name = 5).
+	FeedingInstruction *string `protobuf:"bytes,7,opt,name=feeding_instruction,json=feedingInstruction,proto3,oneof" json:"feeding_instruction,omitempty"`
+	// Feeding times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
+	FeedingTimes []*PetScheduleTimeDef `protobuf:"bytes,8,rep,name=feeding_times,json=feedingTimes,proto3" json:"feeding_times,omitempty"`
+	// Feeding note.
+	FeedingNote   *string `protobuf:"bytes,9,opt,name=feeding_note,json=feedingNote,proto3,oneof" json:"feeding_note,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PetFeedingSchedule) Reset() {
+	*x = PetFeedingSchedule{}
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetFeedingSchedule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetFeedingSchedule) ProtoMessage() {}
+
+func (x *PetFeedingSchedule) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetFeedingSchedule.ProtoReflect.Descriptor instead.
+func (*PetFeedingSchedule) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *PetFeedingSchedule) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PetFeedingSchedule) GetPetId() int64 {
+	if x != nil {
+		return x.PetId
+	}
+	return 0
+}
+
+func (x *PetFeedingSchedule) GetFeedingAmount() string {
+	if x != nil {
+		return x.FeedingAmount
+	}
+	return ""
+}
+
+func (x *PetFeedingSchedule) GetFeedingUnit() string {
+	if x != nil {
+		return x.FeedingUnit
+	}
+	return ""
+}
+
+func (x *PetFeedingSchedule) GetFeedingType() string {
+	if x != nil {
+		return x.FeedingType
+	}
+	return ""
+}
+
+func (x *PetFeedingSchedule) GetFeedingSource() string {
+	if x != nil {
+		return x.FeedingSource
+	}
+	return ""
+}
+
+func (x *PetFeedingSchedule) GetFeedingInstruction() string {
+	if x != nil && x.FeedingInstruction != nil {
+		return *x.FeedingInstruction
+	}
+	return ""
+}
+
+func (x *PetFeedingSchedule) GetFeedingTimes() []*PetScheduleTimeDef {
+	if x != nil {
+		return x.FeedingTimes
+	}
+	return nil
+}
+
+func (x *PetFeedingSchedule) GetFeedingNote() string {
+	if x != nil && x.FeedingNote != nil {
+		return *x.FeedingNote
+	}
+	return ""
+}
+
+// PetMedicationSchedule represents a pet's medication schedule for care instructions.
+type PetMedicationSchedule struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Medication record id.
+	Id int64 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Pet id.
+	PetId int64 `protobuf:"varint,2,opt,name=pet_id,json=petId,proto3" json:"pet_id,omitempty"`
+	// Medication amount, e.g. "1.2", "1/2", "1".
+	MedicationAmount string `protobuf:"bytes,3,opt,name=medication_amount,json=medicationAmount,proto3" json:"medication_amount,omitempty"`
+	// Medication unit (pet_metadata.metadata_value, metadata_name = 7).
+	MedicationUnit string `protobuf:"bytes,4,opt,name=medication_unit,json=medicationUnit,proto3" json:"medication_unit,omitempty"`
+	// Medication name (user input).
+	MedicationName string `protobuf:"bytes,5,opt,name=medication_name,json=medicationName,proto3" json:"medication_name,omitempty"`
+	// Medication note (user input).
+	MedicationNote string `protobuf:"bytes,6,opt,name=medication_note,json=medicationNote,proto3" json:"medication_note,omitempty"`
+	// Medication times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
+	MedicationTimes []*PetScheduleTimeDef `protobuf:"bytes,7,rep,name=medication_times,json=medicationTimes,proto3" json:"medication_times,omitempty"`
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
+}
+
+func (x *PetMedicationSchedule) Reset() {
+	*x = PetMedicationSchedule{}
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PetMedicationSchedule) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PetMedicationSchedule) ProtoMessage() {}
+
+func (x *PetMedicationSchedule) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PetMedicationSchedule.ProtoReflect.Descriptor instead.
+func (*PetMedicationSchedule) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_pet_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *PetMedicationSchedule) GetId() int64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *PetMedicationSchedule) GetPetId() int64 {
+	if x != nil {
+		return x.PetId
+	}
+	return 0
+}
+
+func (x *PetMedicationSchedule) GetMedicationAmount() string {
+	if x != nil {
+		return x.MedicationAmount
+	}
+	return ""
+}
+
+func (x *PetMedicationSchedule) GetMedicationUnit() string {
+	if x != nil {
+		return x.MedicationUnit
+	}
+	return ""
+}
+
+func (x *PetMedicationSchedule) GetMedicationName() string {
+	if x != nil {
+		return x.MedicationName
+	}
+	return ""
+}
+
+func (x *PetMedicationSchedule) GetMedicationNote() string {
+	if x != nil {
+		return x.MedicationNote
+	}
+	return ""
+}
+
+func (x *PetMedicationSchedule) GetMedicationTimes() []*PetScheduleTimeDef {
+	if x != nil {
+		return x.MedicationTimes
+	}
+	return nil
+}
+
 // Note contains observations about the pet's behavior,
 // preferences, or special requirements
 type Pet_Note struct {
@@ -566,7 +840,7 @@ type Pet_Note struct {
 
 func (x *Pet_Note) Reset() {
 	*x = Pet_Note{}
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[1]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -578,7 +852,7 @@ func (x *Pet_Note) String() string {
 func (*Pet_Note) ProtoMessage() {}
 
 func (x *Pet_Note) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[1]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -638,7 +912,7 @@ type Pet_Vaccination struct {
 
 func (x *Pet_Vaccination) Reset() {
 	*x = Pet_Vaccination{}
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -650,7 +924,7 @@ func (x *Pet_Vaccination) String() string {
 func (*Pet_Vaccination) ProtoMessage() {}
 
 func (x *Pet_Vaccination) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[2]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -697,7 +971,7 @@ type Pet_Vet struct {
 
 func (x *Pet_Vet) Reset() {
 	*x = Pet_Vet{}
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -709,7 +983,7 @@ func (x *Pet_Vet) String() string {
 func (*Pet_Vet) ProtoMessage() {}
 
 func (x *Pet_Vet) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_pet_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -819,7 +1093,34 @@ const file_moego_business_customer_v1_pet_proto_rawDesc = "" +
 	"\x10EvaluationStatus\x12!\n" +
 	"\x1dEVALUATION_STATUS_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04PASS\x10\x01\x12\b\n" +
-	"\x04FAIL\x10\x02B\x8a\x01\n" +
+	"\x04FAIL\x10\x02\"\xd5\x01\n" +
+	"\x12PetScheduleTimeDef\x12#\n" +
+	"\rschedule_time\x18\x01 \x01(\x05R\fscheduleTime\x12\\\n" +
+	"\n" +
+	"extra_json\x18\x02 \x03(\v2=.moego.business.customer.v1.PetScheduleTimeDef.ExtraJsonEntryR\textraJson\x1a<\n" +
+	"\x0eExtraJsonEntry\x12\x10\n" +
+	"\x03key\x18\x01 \x01(\tR\x03key\x12\x14\n" +
+	"\x05value\x18\x02 \x01(\tR\x05value:\x028\x01\"\xab\x03\n" +
+	"\x12PetFeedingSchedule\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x15\n" +
+	"\x06pet_id\x18\x02 \x01(\x03R\x05petId\x12%\n" +
+	"\x0efeeding_amount\x18\x03 \x01(\tR\rfeedingAmount\x12!\n" +
+	"\ffeeding_unit\x18\x04 \x01(\tR\vfeedingUnit\x12!\n" +
+	"\ffeeding_type\x18\x05 \x01(\tR\vfeedingType\x12%\n" +
+	"\x0efeeding_source\x18\x06 \x01(\tR\rfeedingSource\x124\n" +
+	"\x13feeding_instruction\x18\a \x01(\tH\x00R\x12feedingInstruction\x88\x01\x01\x12S\n" +
+	"\rfeeding_times\x18\b \x03(\v2..moego.business.customer.v1.PetScheduleTimeDefR\ffeedingTimes\x12&\n" +
+	"\ffeeding_note\x18\t \x01(\tH\x01R\vfeedingNote\x88\x01\x01B\x16\n" +
+	"\x14_feeding_instructionB\x0f\n" +
+	"\r_feeding_note\"\xc1\x02\n" +
+	"\x15PetMedicationSchedule\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x03R\x02id\x12\x15\n" +
+	"\x06pet_id\x18\x02 \x01(\x03R\x05petId\x12+\n" +
+	"\x11medication_amount\x18\x03 \x01(\tR\x10medicationAmount\x12'\n" +
+	"\x0fmedication_unit\x18\x04 \x01(\tR\x0emedicationUnit\x12'\n" +
+	"\x0fmedication_name\x18\x05 \x01(\tR\x0emedicationName\x12'\n" +
+	"\x0fmedication_note\x18\x06 \x01(\tR\x0emedicationNote\x12Y\n" +
+	"\x10medication_times\x18\a \x03(\v2..moego.business.customer.v1.PetScheduleTimeDefR\x0fmedicationTimesB\x8a\x01\n" +
 	"\"com.moego.api.business.customer.v1B\bPetProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"
 
 var (
@@ -835,41 +1136,48 @@ func file_moego_business_customer_v1_pet_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_customer_v1_pet_proto_enumTypes = make([]protoimpl.EnumInfo, 4)
-var file_moego_business_customer_v1_pet_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_moego_business_customer_v1_pet_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_moego_business_customer_v1_pet_proto_goTypes = []any{
 	(Pet_Type)(0),                 // 0: moego.business.customer.v1.Pet.Type
 	(Pet_Status)(0),               // 1: moego.business.customer.v1.Pet.Status
 	(Pet_Gender)(0),               // 2: moego.business.customer.v1.Pet.Gender
 	(Pet_EvaluationStatus)(0),     // 3: moego.business.customer.v1.Pet.EvaluationStatus
 	(*Pet)(nil),                   // 4: moego.business.customer.v1.Pet
-	(*Pet_Note)(nil),              // 5: moego.business.customer.v1.Pet.Note
-	(*Pet_Vaccination)(nil),       // 6: moego.business.customer.v1.Pet.Vaccination
-	(*Pet_Vet)(nil),               // 7: moego.business.customer.v1.Pet.Vet
-	(*date.Date)(nil),             // 8: google.type.Date
-	(*commonpb.Weight)(nil),       // 9: moego.common.v1.Weight
-	(*settingpb.PetCode)(nil),     // 10: moego.business.setting.v1.PetCode
-	(*timestamppb.Timestamp)(nil), // 11: google.protobuf.Timestamp
+	(*PetScheduleTimeDef)(nil),    // 5: moego.business.customer.v1.PetScheduleTimeDef
+	(*PetFeedingSchedule)(nil),    // 6: moego.business.customer.v1.PetFeedingSchedule
+	(*PetMedicationSchedule)(nil), // 7: moego.business.customer.v1.PetMedicationSchedule
+	(*Pet_Note)(nil),              // 8: moego.business.customer.v1.Pet.Note
+	(*Pet_Vaccination)(nil),       // 9: moego.business.customer.v1.Pet.Vaccination
+	(*Pet_Vet)(nil),               // 10: moego.business.customer.v1.Pet.Vet
+	nil,                           // 11: moego.business.customer.v1.PetScheduleTimeDef.ExtraJsonEntry
+	(*date.Date)(nil),             // 12: google.type.Date
+	(*commonpb.Weight)(nil),       // 13: moego.common.v1.Weight
+	(*settingpb.PetCode)(nil),     // 14: moego.business.setting.v1.PetCode
+	(*timestamppb.Timestamp)(nil), // 15: google.protobuf.Timestamp
 }
 var file_moego_business_customer_v1_pet_proto_depIdxs = []int32{
-	8,  // 0: moego.business.customer.v1.Pet.birthday:type_name -> google.type.Date
+	12, // 0: moego.business.customer.v1.Pet.birthday:type_name -> google.type.Date
 	1,  // 1: moego.business.customer.v1.Pet.status:type_name -> moego.business.customer.v1.Pet.Status
 	0,  // 2: moego.business.customer.v1.Pet.type:type_name -> moego.business.customer.v1.Pet.Type
 	2,  // 3: moego.business.customer.v1.Pet.gender:type_name -> moego.business.customer.v1.Pet.Gender
-	9,  // 4: moego.business.customer.v1.Pet.weight:type_name -> moego.common.v1.Weight
-	10, // 5: moego.business.customer.v1.Pet.pet_codes:type_name -> moego.business.setting.v1.PetCode
-	5,  // 6: moego.business.customer.v1.Pet.notes:type_name -> moego.business.customer.v1.Pet.Note
-	6,  // 7: moego.business.customer.v1.Pet.vaccinations:type_name -> moego.business.customer.v1.Pet.Vaccination
-	7,  // 8: moego.business.customer.v1.Pet.vet:type_name -> moego.business.customer.v1.Pet.Vet
+	13, // 4: moego.business.customer.v1.Pet.weight:type_name -> moego.common.v1.Weight
+	14, // 5: moego.business.customer.v1.Pet.pet_codes:type_name -> moego.business.setting.v1.PetCode
+	8,  // 6: moego.business.customer.v1.Pet.notes:type_name -> moego.business.customer.v1.Pet.Note
+	9,  // 7: moego.business.customer.v1.Pet.vaccinations:type_name -> moego.business.customer.v1.Pet.Vaccination
+	10, // 8: moego.business.customer.v1.Pet.vet:type_name -> moego.business.customer.v1.Pet.Vet
 	3,  // 9: moego.business.customer.v1.Pet.evaluation_status:type_name -> moego.business.customer.v1.Pet.EvaluationStatus
-	11, // 10: moego.business.customer.v1.Pet.created_time:type_name -> google.protobuf.Timestamp
-	11, // 11: moego.business.customer.v1.Pet.last_updated_time:type_name -> google.protobuf.Timestamp
-	11, // 12: moego.business.customer.v1.Pet.Note.last_updated_time:type_name -> google.protobuf.Timestamp
-	11, // 13: moego.business.customer.v1.Pet.Vaccination.expired_at:type_name -> google.protobuf.Timestamp
-	14, // [14:14] is the sub-list for method output_type
-	14, // [14:14] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	15, // 10: moego.business.customer.v1.Pet.created_time:type_name -> google.protobuf.Timestamp
+	15, // 11: moego.business.customer.v1.Pet.last_updated_time:type_name -> google.protobuf.Timestamp
+	11, // 12: moego.business.customer.v1.PetScheduleTimeDef.extra_json:type_name -> moego.business.customer.v1.PetScheduleTimeDef.ExtraJsonEntry
+	5,  // 13: moego.business.customer.v1.PetFeedingSchedule.feeding_times:type_name -> moego.business.customer.v1.PetScheduleTimeDef
+	5,  // 14: moego.business.customer.v1.PetMedicationSchedule.medication_times:type_name -> moego.business.customer.v1.PetScheduleTimeDef
+	15, // 15: moego.business.customer.v1.Pet.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	15, // 16: moego.business.customer.v1.Pet.Vaccination.expired_at:type_name -> google.protobuf.Timestamp
+	17, // [17:17] is the sub-list for method output_type
+	17, // [17:17] is the sub-list for method input_type
+	17, // [17:17] is the sub-list for extension type_name
+	17, // [17:17] is the sub-list for extension extendee
+	0,  // [0:17] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_customer_v1_pet_proto_init() }
@@ -877,13 +1185,14 @@ func file_moego_business_customer_v1_pet_proto_init() {
 	if File_moego_business_customer_v1_pet_proto != nil {
 		return
 	}
+	file_moego_business_customer_v1_pet_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_pet_proto_rawDesc), len(file_moego_business_customer_v1_pet_proto_rawDesc)),
 			NumEnums:      4,
-			NumMessages:   4,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

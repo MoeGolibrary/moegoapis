@@ -1,0 +1,608 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/aggregation/v1/aggregation_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.aggregation.v1.AggregationService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/aggregation/clients:lookupClientPetProfile": {
+      "post": {
+        "summary": "Looks up client and pet profile by phone number for the given business.",
+        "description": "Resolves customer by phone, returns minimal customer profile, all pets\nwith feeding/medication/vaccine details, and last/next appointment summaries.",
+        "operationId": "AggregationService_LookupClientPetProfile",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1LookupClientPetProfileResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request to lookup client and pet profile by phone (e.g. receptionist or integration scenarios).",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1LookupClientPetProfileRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.aggregation.v1.AggregationService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "LookupClientPetProfileResponseAppointmentView": {
+      "type": "object",
+      "properties": {
+        "appointmentId": {
+          "type": "string",
+          "title": "appointment id"
+        },
+        "startDate": {
+          "$ref": "#/definitions/typeDate",
+          "title": "start date"
+        },
+        "startTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "start time in minutes from midnight"
+        },
+        "endDate": {
+          "$ref": "#/definitions/typeDate",
+          "title": "end date"
+        },
+        "endTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "end time in minutes from midnight"
+        },
+        "mainCareType": {
+          "$ref": "#/definitions/ServiceItemType",
+          "title": "main care type"
+        },
+        "petServiceDetails": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/LookupClientPetProfileResponsePetServiceDetailView"
+          },
+          "title": "pet + services details"
+        }
+      },
+      "description": "Minimal appointment summary.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "AppointmentView"
+      }
+    },
+    "LookupClientPetProfileResponsePetServiceDetailView": {
+      "type": "object",
+      "properties": {
+        "petId": {
+          "type": "string",
+          "title": "pet id"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/LookupClientPetProfileResponseServiceDetailView"
+          },
+          "title": "selected services"
+        }
+      },
+      "description": "Pet and its services in one appointment.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "PetServiceDetailView"
+      }
+    },
+    "LookupClientPetProfileResponsePetView": {
+      "type": "object",
+      "properties": {
+        "petId": {
+          "type": "string",
+          "title": "pet id (obfuscated string in product; raw id for compatibility)"
+        },
+        "petName": {
+          "type": "string",
+          "title": "pet name"
+        },
+        "petType": {
+          "$ref": "#/definitions/v1PetType",
+          "title": "pet type"
+        },
+        "breed": {
+          "type": "string",
+          "title": "breed"
+        },
+        "breedMixed": {
+          "type": "boolean",
+          "title": "breed mixed"
+        },
+        "gender": {
+          "$ref": "#/definitions/PetGender",
+          "title": "gender"
+        },
+        "weight": {
+          "type": "string",
+          "title": "weight (e.g. \"10 kg\")"
+        },
+        "coatType": {
+          "type": "string",
+          "title": "coat type"
+        },
+        "fixed": {
+          "type": "string",
+          "title": "fixed"
+        },
+        "birthday": {
+          "$ref": "#/definitions/typeDate",
+          "title": "birthday"
+        },
+        "evaluationStatus": {
+          "$ref": "#/definitions/v1PetEvaluationStatus",
+          "title": "evaluation status"
+        },
+        "feedingSchedules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetFeedingSchedule"
+          },
+          "title": "feeding schedules"
+        },
+        "medicationSchedules": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetMedicationSchedule"
+          },
+          "title": "medication schedules"
+        },
+        "vaccineList": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/PetVaccination"
+          },
+          "title": "vaccine records (from moego Pet.Vaccination)"
+        }
+      },
+      "description": "Pet profile with care/vaccine details.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "PetView"
+      }
+    },
+    "LookupClientPetProfileResponseServiceDetailView": {
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "type": "string",
+          "title": "service id (obfuscated string in product; raw id for compatibility)"
+        },
+        "serviceName": {
+          "type": "string",
+          "title": "service name"
+        },
+        "serviceItemType": {
+          "$ref": "#/definitions/ServiceItemType",
+          "title": "service item type"
+        },
+        "serviceTime": {
+          "type": "integer",
+          "format": "int32",
+          "title": "service duration in minutes"
+        },
+        "servicePrice": {
+          "type": "number",
+          "format": "double",
+          "title": "service price"
+        },
+        "staffId": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "assigned staff id"
+        },
+        "lodgingId": {
+          "type": "string",
+          "x-nullable": true,
+          "title": "assigned lodging id"
+        }
+      },
+      "description": "Service detail in one appointment.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "ServiceDetailView"
+      }
+    },
+    "PetGender": {
+      "type": "string",
+      "enum": [
+        "GENDER_UNSPECIFIED",
+        "MALE",
+        "FEMALE",
+        "UNKNOWN"
+      ],
+      "default": "GENDER_UNSPECIFIED",
+      "description": "- GENDER_UNSPECIFIED: Unknown or unspecified gender\n - MALE: Male pet\nMay require specific handling or service modifications\n - FEMALE: Female pet\nMay require specific handling or service modifications\n - UNKNOWN: Gender not determined or disclosed",
+      "title": "Gender of the pet\nUsed for appropriate service assignment and medical considerations"
+    },
+    "PetVaccination": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "Name of the vaccination\nExample: \"Rabies\", \"DHPP\", \"Bordetella\""
+        },
+        "expiredAt": {
+          "type": "string",
+          "format": "date-time",
+          "title": "When this vaccination expires\nStaff are notified before expiration"
+        }
+      },
+      "title": "Vaccination record for the pet\nUsed to ensure compliance with service requirements",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "Vaccination"
+      }
+    },
+    "ServiceItemType": {
+      "type": "string",
+      "enum": [
+        "SERVICE_ITEM_TYPE_UNSPECIFIED",
+        "GROOMING",
+        "BOARDING",
+        "DAYCARE",
+        "EVALUATION",
+        "TRAINING"
+      ],
+      "default": "SERVICE_ITEM_TYPE_UNSPECIFIED",
+      "description": "ItemType categorizes the primary type of service being offered.\nThis helps organize services in the system and determines applicable business rules.\n\n - SERVICE_ITEM_TYPE_UNSPECIFIED: Unknown or unspecified service type\nShould not be used when creating new services\n - GROOMING: Pet grooming services\nIncludes bathing, haircuts, nail trimming, etc.\n - BOARDING: Pet boarding services\nOvernight or extended stay care\n - DAYCARE: Daytime pet care services\nSupervised play and care during business hours\n - EVALUATION: Pet evaluation services\nBehavior assessment and service compatibility check\n - TRAINING: Pet training services\nIndividual or group training sessions"
+    },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "typeDate": {
+      "type": "object",
+      "properties": {
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without\na year."
+        },
+        "month": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a\nmonth and day."
+        },
+        "day": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0\nto specify a year by itself or a year and month where the day isn't\nsignificant."
+        }
+      },
+      "description": "* A full date, with non-zero year, month, and day values\n* A month and day value, with a zero year, such as an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, such as a credit card expiration\ndate\n\nRelated types are [google.type.TimeOfDay][google.type.TimeOfDay] and\n`google.protobuf.Timestamp`.",
+      "title": "Represents a whole or partial calendar date, such as a birthday. The time of\nday and time zone are either specified elsewhere or are insignificant. The\ndate is relative to the Gregorian Calendar. This can represent one of the\nfollowing:",
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/type/date"
+        },
+        "type": "Date"
+      }
+    },
+    "v1CustomerSummary": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "x-nullable": true
+        }
+      },
+      "description": "CustomerSummary is a minimal customer profile for aggregation and listing views.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "CustomerSummary"
+      }
+    },
+    "v1LookupClientPetProfileRequest": {
+      "type": "object",
+      "properties": {
+        "phoneNumber": {
+          "type": "string",
+          "description": "Phone number, normalized by caller. Recommended length 7–30 characters."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "Business id for querying last/next appointment context (obfuscated id)."
+        }
+      },
+      "description": "Request to lookup client and pet profile by phone (e.g. receptionist or integration scenarios).",
+      "required": [
+        "phoneNumber",
+        "businessId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "LookupClientPetProfileRequest"
+      }
+    },
+    "v1LookupClientPetProfileResponse": {
+      "type": "object",
+      "properties": {
+        "customer": {
+          "$ref": "#/definitions/v1CustomerSummary",
+          "x-nullable": true,
+          "description": "Matched customer profile."
+        },
+        "pets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/LookupClientPetProfileResponsePetView"
+          },
+          "description": "Matched pets with feeding/medication/vaccine details."
+        },
+        "lastAppointment": {
+          "$ref": "#/definitions/LookupClientPetProfileResponseAppointmentView",
+          "x-nullable": true,
+          "description": "Customer's last appointment."
+        },
+        "nextAppointment": {
+          "$ref": "#/definitions/LookupClientPetProfileResponseAppointmentView",
+          "x-nullable": true,
+          "description": "Customer's next appointment."
+        }
+      },
+      "description": "Response of LookupClientPetProfile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/aggregation/v1/aggregationpb"
+        },
+        "type": "LookupClientPetProfileResponse"
+      }
+    },
+    "v1PetEvaluationStatus": {
+      "type": "string",
+      "enum": [
+        "EVALUATION_STATUS_UNSPECIFIED",
+        "PASS",
+        "FAIL"
+      ],
+      "default": "EVALUATION_STATUS_UNSPECIFIED",
+      "description": "- EVALUATION_STATUS_UNSPECIFIED: Evaluation status not yet determined\n - PASS: Pet has passed evaluation and can receive services\n - FAIL: Pet requires modifications to receive services",
+      "title": "Status of the pet's evaluation for services\nDetermines which services can be provided"
+    },
+    "v1PetFeedingSchedule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "description": "Feeding record id."
+        },
+        "petId": {
+          "type": "string",
+          "format": "int64",
+          "description": "Pet id."
+        },
+        "feedingAmount": {
+          "type": "string",
+          "description": "Feeding amount, e.g. \"1.2\", \"1/2\", \"1\"."
+        },
+        "feedingUnit": {
+          "type": "string",
+          "description": "Feeding unit (pet_metadata.metadata_value, metadata_name = 2)."
+        },
+        "feedingType": {
+          "type": "string",
+          "description": "Feeding type (pet_metadata.metadata_value, metadata_name = 3)."
+        },
+        "feedingSource": {
+          "type": "string",
+          "description": "Feeding source (pet_metadata.metadata_value, metadata_name = 4)."
+        },
+        "feedingInstruction": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "Feeding instruction (pet_metadata.metadata_value, metadata_name = 5)."
+        },
+        "feedingTimes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetScheduleTimeDef"
+          },
+          "description": "Feeding times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc."
+        },
+        "feedingNote": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "Feeding note."
+        }
+      },
+      "description": "PetFeedingSchedule represents a pet's feeding schedule for care instructions.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "PetFeedingSchedule"
+      }
+    },
+    "v1PetMedicationSchedule": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64",
+          "description": "Medication record id."
+        },
+        "petId": {
+          "type": "string",
+          "format": "int64",
+          "description": "Pet id."
+        },
+        "medicationAmount": {
+          "type": "string",
+          "description": "Medication amount, e.g. \"1.2\", \"1/2\", \"1\"."
+        },
+        "medicationUnit": {
+          "type": "string",
+          "description": "Medication unit (pet_metadata.metadata_value, metadata_name = 7)."
+        },
+        "medicationName": {
+          "type": "string",
+          "description": "Medication name (user input)."
+        },
+        "medicationNote": {
+          "type": "string",
+          "description": "Medication note (user input)."
+        },
+        "medicationTimes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1PetScheduleTimeDef"
+          },
+          "description": "Medication times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc."
+        }
+      },
+      "description": "PetMedicationSchedule represents a pet's medication schedule for care instructions.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "PetMedicationSchedule"
+      }
+    },
+    "v1PetScheduleTimeDef": {
+      "type": "object",
+      "properties": {
+        "scheduleTime": {
+          "type": "integer",
+          "format": "int32",
+          "description": "Schedule time in minutes from midnight."
+        },
+        "extraJson": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Extra key-value data (e.g. schedule time label)."
+        }
+      },
+      "description": "PetScheduleTimeDef defines a schedule time in minutes from midnight.\nE.g. 09:00 AM = 540, 09:30 AM = 570. Range 0–1440.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "PetScheduleTimeDef"
+      }
+    },
+    "v1PetType": {
+      "type": "string",
+      "enum": [
+        "TYPE_UNSPECIFIED",
+        "OTHER",
+        "DOG",
+        "CAT",
+        "BIRD",
+        "RABBIT",
+        "GUINEA_PIG",
+        "HORSE",
+        "HAMSTER",
+        "RAT",
+        "MOUSE",
+        "CHINCHILLA"
+      ],
+      "default": "TYPE_UNSPECIFIED",
+      "description": "Type defines the species of the pet.\nThis helps determine appropriate services, care requirements, and pricing.\n\n - TYPE_UNSPECIFIED: Unknown or unspecified pet type\n - OTHER: Pet type not listed in standard categories\nRequires special handling and service customization\n - DOG: Canine companion\nCommon breeds include Labrador, German Shepherd, Golden Retriever\n - CAT: Feline companion\nIncludes all domestic cat breeds\n - BIRD: Avian pet\nIncludes parrots, canaries, finches, etc.\n - RABBIT: Domestic rabbit\nRequires specific grooming and handling techniques\n - GUINEA_PIG: Guinea pig\nSmall rodent requiring gentle handling\n - HORSE: Equine\nRequires specialized facilities and care\n - HAMSTER: Hamster\nSmall rodent with specific handling needs\n - RAT: Rat\nIntelligent rodent requiring social interaction\n - MOUSE: Mouse\nSmall rodent needing careful handling\n - CHINCHILLA: Chinchilla\nRequires special dust baths and temperature control"
+    }
+  }
+}

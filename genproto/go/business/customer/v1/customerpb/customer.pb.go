@@ -625,6 +625,83 @@ func (x *CustomerComplianceConfigUpdateDef) GetIsConsented() bool {
 	return false
 }
 
+// CustomerSummary is a minimal customer profile for aggregation and listing views.
+type CustomerSummary struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	FirstName     string                 `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
+	LastName      string                 `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	Phone         string                 `protobuf:"bytes,4,opt,name=phone,proto3" json:"phone,omitempty"`
+	Email         *string                `protobuf:"bytes,5,opt,name=email,proto3,oneof" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CustomerSummary) Reset() {
+	*x = CustomerSummary{}
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CustomerSummary) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CustomerSummary) ProtoMessage() {}
+
+func (x *CustomerSummary) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CustomerSummary.ProtoReflect.Descriptor instead.
+func (*CustomerSummary) Descriptor() ([]byte, []int) {
+	return file_moego_business_customer_v1_customer_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CustomerSummary) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *CustomerSummary) GetFirstName() string {
+	if x != nil {
+		return x.FirstName
+	}
+	return ""
+}
+
+func (x *CustomerSummary) GetLastName() string {
+	if x != nil {
+		return x.LastName
+	}
+	return ""
+}
+
+func (x *CustomerSummary) GetPhone() string {
+	if x != nil {
+		return x.Phone
+	}
+	return ""
+}
+
+func (x *CustomerSummary) GetEmail() string {
+	if x != nil && x.Email != nil {
+		return *x.Email
+	}
+	return ""
+}
+
 // Note represents a comment or observation about a customer.
 // Notes help track important customer information, preferences, and history.
 type Customer_Note struct {
@@ -643,7 +720,7 @@ type Customer_Note struct {
 
 func (x *Customer_Note) Reset() {
 	*x = Customer_Note{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -655,7 +732,7 @@ func (x *Customer_Note) String() string {
 func (*Customer_Note) ProtoMessage() {}
 
 func (x *Customer_Note) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[3]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -721,7 +798,7 @@ type Customer_Preference struct {
 
 func (x *Customer_Preference) Reset() {
 	*x = Customer_Preference{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -733,7 +810,7 @@ func (x *Customer_Preference) String() string {
 func (*Customer_Preference) ProtoMessage() {}
 
 func (x *Customer_Preference) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[4]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -789,7 +866,7 @@ type CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef struct {
 
 func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Reset() {
 	*x = CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef{}
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -801,7 +878,7 @@ func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) Strin
 func (*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoMessage() {}
 
 func (x *CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef) ProtoReflect() protoreflect.Message {
-	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[5]
+	mi := &file_moego_business_customer_v1_customer_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -899,7 +976,15 @@ const file_moego_business_customer_v1_customer_proto_rawDesc = "" +
 	"\x1d_marketing_campaigns_channelsB\x16\n" +
 	"\x14_branded_app_enabledB\x1d\n" +
 	"\x1b_is_agreed_marketing_policyB\x0f\n" +
-	"\r_is_consented*\x93\x01\n" +
+	"\r_is_consented\"\x98\x01\n" +
+	"\x0fCustomerSummary\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\n" +
+	"first_name\x18\x02 \x01(\tR\tfirstName\x12\x1b\n" +
+	"\tlast_name\x18\x03 \x01(\tR\blastName\x12\x14\n" +
+	"\x05phone\x18\x04 \x01(\tR\x05phone\x12\x19\n" +
+	"\x05email\x18\x05 \x01(\tH\x00R\x05email\x88\x01\x01B\b\n" +
+	"\x06_email*\x93\x01\n" +
 	"\x11ComplianceChannel\x12\"\n" +
 	"\x1eCOMPLIANCE_CHANNEL_UNSPECIFIED\x10\x00\x12\x1a\n" +
 	"\x16COMPLIANCE_CHANNEL_SMS\x10\x01\x12\x1c\n" +
@@ -920,40 +1005,41 @@ func file_moego_business_customer_v1_customer_proto_rawDescGZIP() []byte {
 }
 
 var file_moego_business_customer_v1_customer_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_moego_business_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_moego_business_customer_v1_customer_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_moego_business_customer_v1_customer_proto_goTypes = []any{
 	(ComplianceChannel)(0),                    // 0: moego.business.customer.v1.ComplianceChannel
 	(Customer_Status)(0),                      // 1: moego.business.customer.v1.Customer.Status
 	(*Customer)(nil),                          // 2: moego.business.customer.v1.Customer
 	(*CustomerComplianceConfig)(nil),          // 3: moego.business.customer.v1.CustomerComplianceConfig
 	(*CustomerComplianceConfigUpdateDef)(nil), // 4: moego.business.customer.v1.CustomerComplianceConfigUpdateDef
-	(*Customer_Note)(nil),                     // 5: moego.business.customer.v1.Customer.Note
-	(*Customer_Preference)(nil),               // 6: moego.business.customer.v1.Customer.Preference
-	(*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef)(nil), // 7: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	(*commonpb.Address)(nil),         // 8: moego.common.v1.Address
-	(*timestamppb.Timestamp)(nil),    // 9: google.protobuf.Timestamp
-	(*settingpb.CustomerTag)(nil),    // 10: moego.business.setting.v1.CustomerTag
-	(*settingpb.ReferralSource)(nil), // 11: moego.business.setting.v1.ReferralSource
-	(*structpb.Struct)(nil),          // 12: google.protobuf.Struct
+	(*CustomerSummary)(nil),                   // 5: moego.business.customer.v1.CustomerSummary
+	(*Customer_Note)(nil),                     // 6: moego.business.customer.v1.Customer.Note
+	(*Customer_Preference)(nil),               // 7: moego.business.customer.v1.Customer.Preference
+	(*CustomerComplianceConfigUpdateDef_ComplianceChannelListUpdateDef)(nil), // 8: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	(*commonpb.Address)(nil),         // 9: moego.common.v1.Address
+	(*timestamppb.Timestamp)(nil),    // 10: google.protobuf.Timestamp
+	(*settingpb.CustomerTag)(nil),    // 11: moego.business.setting.v1.CustomerTag
+	(*settingpb.ReferralSource)(nil), // 12: moego.business.setting.v1.ReferralSource
+	(*structpb.Struct)(nil),          // 13: google.protobuf.Struct
 }
 var file_moego_business_customer_v1_customer_proto_depIdxs = []int32{
-	8,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
+	9,  // 0: moego.business.customer.v1.Customer.address:type_name -> moego.common.v1.Address
 	1,  // 1: moego.business.customer.v1.Customer.status:type_name -> moego.business.customer.v1.Customer.Status
-	9,  // 2: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
-	9,  // 3: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
-	9,  // 4: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
-	9,  // 5: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
-	5,  // 6: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
-	10, // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.setting.v1.CustomerTag
-	11, // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
-	6,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
+	10, // 2: moego.business.customer.v1.Customer.last_appointment_date:type_name -> google.protobuf.Timestamp
+	10, // 3: moego.business.customer.v1.Customer.next_appointment_date:type_name -> google.protobuf.Timestamp
+	10, // 4: moego.business.customer.v1.Customer.created_time:type_name -> google.protobuf.Timestamp
+	10, // 5: moego.business.customer.v1.Customer.last_updated_time:type_name -> google.protobuf.Timestamp
+	6,  // 6: moego.business.customer.v1.Customer.notes:type_name -> moego.business.customer.v1.Customer.Note
+	11, // 7: moego.business.customer.v1.Customer.tags:type_name -> moego.business.setting.v1.CustomerTag
+	12, // 8: moego.business.customer.v1.Customer.referral_source:type_name -> moego.business.setting.v1.ReferralSource
+	7,  // 9: moego.business.customer.v1.Customer.preference:type_name -> moego.business.customer.v1.Customer.Preference
 	3,  // 10: moego.business.customer.v1.Customer.compliance_config:type_name -> moego.business.customer.v1.CustomerComplianceConfig
-	12, // 11: moego.business.customer.v1.Customer.custom_fields:type_name -> google.protobuf.Struct
+	13, // 11: moego.business.customer.v1.Customer.custom_fields:type_name -> google.protobuf.Struct
 	0,  // 12: moego.business.customer.v1.CustomerComplianceConfig.service_related_channels:type_name -> moego.business.customer.v1.ComplianceChannel
 	0,  // 13: moego.business.customer.v1.CustomerComplianceConfig.marketing_campaigns_channels:type_name -> moego.business.customer.v1.ComplianceChannel
-	7,  // 14: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	7,  // 15: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
-	9,  // 16: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
+	8,  // 14: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.service_related_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	8,  // 15: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.marketing_campaigns_channels:type_name -> moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef
+	10, // 16: moego.business.customer.v1.Customer.Note.last_updated_time:type_name -> google.protobuf.Timestamp
 	0,  // 17: moego.business.customer.v1.CustomerComplianceConfigUpdateDef.ComplianceChannelListUpdateDef.channels:type_name -> moego.business.customer.v1.ComplianceChannel
 	18, // [18:18] is the sub-list for method output_type
 	18, // [18:18] is the sub-list for method input_type
@@ -969,13 +1055,14 @@ func file_moego_business_customer_v1_customer_proto_init() {
 	}
 	file_moego_business_customer_v1_customer_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_customer_v1_customer_proto_msgTypes[2].OneofWrappers = []any{}
+	file_moego_business_customer_v1_customer_proto_msgTypes[3].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_customer_v1_customer_proto_rawDesc), len(file_moego_business_customer_v1_customer_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   6,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

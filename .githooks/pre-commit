@@ -1,0 +1,16 @@
+#!/bin/sh
+# Auto-run make pb when .proto files are staged, and add generated files to the commit.
+set -e
+
+STAGED_PROTOS=$(git diff --cached --name-only --diff-filter=ACM | grep '\.proto$' || true)
+if [ -z "$STAGED_PROTOS" ]; then
+  exit 0
+fi
+
+echo "Detected staged .proto files. Running 'make pb'..."
+make pb
+
+echo "Adding generated files (genproto, docs/openapi)..."
+git add genproto docs/openapi
+
+exit 0
