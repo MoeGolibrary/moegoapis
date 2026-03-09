@@ -245,6 +245,12 @@ message ListCustomersRequest {
     // Main phone number for filtering customers
     // Optional. If not provided, returns all customers
     string main_phone_number = 2 [(google.api.field_behavior) = OPTIONAL];
+
+    // Filter by deletion status
+    // Optional. If not provided, returns non-deleted customers by default
+    // Set to true to return only deleted customers
+    // Set to false to return only non-deleted customers
+    optional bool deleted = 3 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Optional filters to apply to the customer list
