@@ -236,3 +236,52 @@ message Pet {
   // Flag indicating if this pet record is deleted.
   bool deleted = 21;
 }
+
+// PetScheduleTimeDef defines a schedule time in minutes from midnight.
+// E.g. 09:00 AM = 540, 09:30 AM = 570. Range 0–1440.
+message PetScheduleTimeDef {
+  // Schedule time in minutes from midnight.
+  int32 schedule_time = 1;
+  // Extra key-value data (e.g. schedule time label).
+  map<string, string> extra_json = 2;
+}
+
+// PetFeedingSchedule represents a pet's feeding schedule for care instructions.
+message PetFeedingSchedule {
+  // Feeding record id.
+  int64 id = 1;
+  // Pet id.
+  int64 pet_id = 2;
+  // Feeding amount, e.g. "1.2", "1/2", "1".
+  string feeding_amount = 3;
+  // Feeding unit (pet_metadata.metadata_value, metadata_name = 2).
+  string feeding_unit = 4;
+  // Feeding type (pet_metadata.metadata_value, metadata_name = 3).
+  string feeding_type = 5;
+  // Feeding source (pet_metadata.metadata_value, metadata_name = 4).
+  string feeding_source = 6;
+  // Feeding instruction (pet_metadata.metadata_value, metadata_name = 5).
+  optional string feeding_instruction = 7;
+  // Feeding times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
+  repeated PetScheduleTimeDef feeding_times = 8;
+  // Feeding note.
+  optional string feeding_note = 9;
+}
+
+// PetMedicationSchedule represents a pet's medication schedule for care instructions.
+message PetMedicationSchedule {
+  // Medication record id.
+  int64 id = 1;
+  // Pet id.
+  int64 pet_id = 2;
+  // Medication amount, e.g. "1.2", "1/2", "1".
+  string medication_amount = 3;
+  // Medication unit (pet_metadata.metadata_value, metadata_name = 7).
+  string medication_unit = 4;
+  // Medication name (user input).
+  string medication_name = 5;
+  // Medication note (user input).
+  string medication_note = 6;
+  // Medication times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
+  repeated PetScheduleTimeDef medication_times = 7;
+}

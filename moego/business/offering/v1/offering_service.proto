@@ -15,53 +15,54 @@ option java_package = "com.moego.api.business.offering.v1";
 
 // OfferingService provides APIs for querying available offerings and inventory.
 //
-// It returns which services can be booked for given pets at a business (ListApplicableServices)
-// and which lodging units have capacity for a given date (GetAvailableLodgings). Used by both
+// It returns which services can be booked for given pets at a business (ListServices)
+// and which lodging units have capacity for a given date (ListLodgings). Used by both
 // staff tools and C-end flows (e.g. online booking) to list what is bookable and in stock.
 service OfferingService {
-  // Lists services applicable/available for given pets at a business.
+  // Lists services for given pets at a business.
   //
   // Returns a flat list of services (and effective availability) for the requested care type
   // (grooming/boarding/daycare etc.) and optional date range. When service_type is ADDON,
   // pass selected_service_ids to filter add-ons that apply to the chosen primary services.
   // Response includes an overall service list and optionally a per-pet breakdown (pet_services).
-  rpc ListApplicableServices(ListApplicableServicesRequest) returns (ListApplicableServicesResponse) {
+  rpc ListServices(ListServicesRequest) returns (ListServicesResponse) {
     option (google.api.http) = {
-      post: "/v1/offerings/services:listApplicable"
+      post: "/v1/offerings/services:list"
       body: "*"
     };
   }
 
-  // Returns lodgings with availability (inventory) for the given date.
+  // Lists lodgings with availability (inventory) for the given date.
   //
   // Use when booking boarding or daycare to show which lodging units have capacity.
   // Each entry indicates whether the lodging is available; when not available,
   // unavailable_reason describes the cause (e.g. over capacity, date conflict).
-  rpc GetAvailableLodgings(GetAvailableLodgingsRequest) returns (GetAvailableLodgingsResponse) {
+  rpc ListLodgings(ListLodgingsRequest) returns (ListLodgingsResponse) {
     option (google.api.http) = {
-      post: "/v1/offerings/lodgings:listAvailable"
+      post: "/v1/offerings/lodgings:list"
       body: "*"
     };
   }
 }
 
-// Request for ListApplicableServices.
-// Minimal params: business, pets, service/addon type, care type, optional date range.
-message ListApplicableServicesRequest {
+// Request for ListServices.
+message ListServicesRequest {
+  // Company id (obfuscated id). Tenant context; required.
+  string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // Business id (obfuscated id). The location where the user is booking.
-  string business_id = 1 [(google.api.field_behavior) = REQUIRED];
-  // Pet ids (obfuscated id). At least one; all must be already-created pets under the customer.
-  repeated string pet_ids = 2 [(google.api.field_behavior) = REQUIRED];
+  optional string business_id = 2;
+  // Pet ids (obfuscated id). Must be already-created pets under the customer.
+  repeated string pet_ids = 3;
   // Service type: primary SERVICE (standalone) or ADDON (must be booked with a primary service).
-  moego.business.setting.v1.Service.Type service_type = 3 [(google.api.field_behavior) = REQUIRED];
+  optional moego.business.setting.v1.Service.Type service_type = 4;
   // Care type: grooming, boarding, daycare, evaluation, or training.
-  moego.business.setting.v1.Service.ItemType service_item_type = 4 [(google.api.field_behavior) = REQUIRED];
-  // When service_type is ADDON, the primary service ids already selected; used to filter applicable add-ons.
-  repeated string selected_service_ids = 5;
-  // Optional start date for availability (e.g. boarding check-in date).
-  optional google.type.Date start_date = 6;
-  // Optional end date for availability (e.g. boarding check-out date).
-  optional google.type.Date end_date = 7;
+  optional moego.business.setting.v1.Service.ItemType service_item_type = 5;
+  // When service_type is ADDON, the primary service ids already selected; used to filter add-ons.
+  repeated string selected_service_ids = 6;
+  // Start date for availability (e.g. boarding check-in date).
+  optional google.type.Date start_date = 7;
+  // End date for availability (e.g. boarding check-out date).
+  optional google.type.Date end_date = 8;
 }
 
 // Flat service view for list display or AI consumption (no category nesting).
@@ -82,18 +83,18 @@ message ServiceView {
   string description = 7;
 }
 
-// Applicable/available services for a single pet (flat list per pet).
+// Services for a single pet (flat list per pet).
 message ServicesByPet {
   // Pet id (obfuscated id).
   string pet_id = 1;
-  // Services that are applicable or available for this pet (e.g. by pet type/size/breed).
+  // Services for this pet (e.g. filtered by pet type/size/breed).
   repeated ServiceView services = 2;
 }
 
-// Response for ListApplicableServices.
+// Response for ListServices.
 // Returns a flat list of services and optionally per-pet breakdown; no category hierarchy.
-message ListApplicableServicesResponse {
-  // All applicable/available services in a flat list.
+message ListServicesResponse {
+  // All services in a flat list.
   repeated ServiceView services = 1;
   // Ids of services that are currently available in the requested context (for UI highlighting).
   repeated string available_service_ids = 2;
@@ -101,18 +102,18 @@ message ListApplicableServicesResponse {
   repeated ServicesByPet pet_services = 3;
 }
 
-// Request for GetAvailableLodgings.
+// Request for ListLodgings.
 // Used when booking boarding/daycare to see which lodging units have capacity.
-message GetAvailableLodgingsRequest {
-  // Company id (obfuscated id).
+message ListLodgingsRequest {
+  // Company id (obfuscated id). Tenant context; required.
   string company_id = 1 [(google.api.field_behavior) = REQUIRED];
   // Business id (obfuscated id). The location to check.
-  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  optional string business_id = 2;
   // Date to check lodging availability (inventory).
-  google.type.Date date = 3 [(google.api.field_behavior) = REQUIRED];
-  // Optional pet id when checking for a specific pet (e.g. size-based lodging).
+  optional google.type.Date date = 3;
+  // Pet id when checking for a specific pet (e.g. size-based lodging).
   optional string pet_id = 4;
-  // Optional selected service ids when checking for a specific booking combination.
+  // Selected service ids when checking for a specific booking combination.
   repeated string service_ids = 5;
 }
 
@@ -128,8 +129,8 @@ message LodgingAvailability {
   string unavailable_reason = 4;
 }
 
-// Response for GetAvailableLodgings.
-message GetAvailableLodgingsResponse {
+// Response for ListLodgings.
+message ListLodgingsResponse {
   // List of lodgings with availability (inventory) for the requested date.
   repeated LodgingAvailability lodgings = 1;
 }

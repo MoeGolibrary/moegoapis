@@ -5,6 +5,7 @@ package moego.business.aggregation.v1;
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/date.proto";
+import "moego/business/customer/v1/customer.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/service.proto";
 
@@ -16,92 +17,29 @@ option java_package = "com.moego.api.business.aggregation.v1";
 // AggregationService provides cross-domain aggregation APIs that compose
 // customer, pet, service, and appointment data into unified views.
 service AggregationService {
-  // Returns client and pet profile by phone number for the given business.
+  // Looks up client and pet profile by phone number for the given business.
   //
   // Resolves customer by phone, returns minimal customer profile, all pets
   // with feeding/medication/vaccine details, and last/next appointment summaries.
-  rpc GetClientPetProfileByPhone(GetClientPetProfileByPhoneParams) returns (GetClientPetProfileByPhoneResult) {
+  rpc LookupClientPetProfile(LookupClientPetProfileRequest) returns (LookupClientPetProfileResponse) {
     option (google.api.http) = {
-      post: "/v1/aggregation/clients:clientPetProfileByPhone"
+      post: "/v1/aggregation/clients:lookupClientPetProfile"
       body: "*"
     };
   }
 }
 
-// Query client and pet profile by phone (e.g. receptionist or integration scenarios).
-message GetClientPetProfileByPhoneParams {
+// Request to lookup client and pet profile by phone (e.g. receptionist or integration scenarios).
+message LookupClientPetProfileRequest {
   // Phone number, normalized by caller. Recommended length 7–30 characters.
   string phone_number = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Business id for the context (obfuscated id).
+  // Business id for querying last/next appointment context (obfuscated id).
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
-// Business pet schedule time definition.
-// Schedule time in minutes from midnight (e.g. 09:00 AM = 540, 09:30 AM = 570).
-message BusinessPetScheduleTimeDef {
-  // Schedule time in minutes from midnight. Range 0–1440.
-  int32 schedule_time = 1;
-  // Extra key-value data (e.g. schedule time label).
-  map<string, string> extra_json = 2;
-}
-
-// Business pet feeding schedule view.
-message BusinessPetFeedingScheduleView {
-  // Feeding record id.
-  int64 id = 1;
-  // Pet id.
-  int64 pet_id = 2;
-  // Feeding amount, e.g. "1.2", "1/2", "1".
-  string feeding_amount = 3;
-  // Feeding unit (pet_metadata.metadata_value, metadata_name = 2).
-  string feeding_unit = 4;
-  // Feeding type (pet_metadata.metadata_value, metadata_name = 3).
-  string feeding_type = 5;
-  // Feeding source (pet_metadata.metadata_value, metadata_name = 4).
-  string feeding_source = 6;
-  // Feeding instruction (pet_metadata.metadata_value, metadata_name = 5).
-  optional string feeding_instruction = 7;
-  // Feeding times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
-  repeated BusinessPetScheduleTimeDef feeding_times = 8;
-  // Feeding note.
-  optional string feeding_note = 9;
-}
-
-// Business pet medication schedule view.
-message BusinessPetMedicationScheduleView {
-  // Medication record id.
-  int64 id = 1;
-  // Pet id.
-  int64 pet_id = 2;
-  // Medication amount, e.g. "1.2", "1/2", "1".
-  string medication_amount = 3;
-  // Medication unit (pet_metadata.metadata_value, metadata_name = 7).
-  string medication_unit = 4;
-  // Medication name (user input).
-  string medication_name = 5;
-  // Medication note (user input).
-  string medication_note = 6;
-  // Medication times in minutes from midnight. 09:00 AM = 540, 09:30 AM = 570, etc.
-  repeated BusinessPetScheduleTimeDef medication_times = 7;
-}
-
-// Result of GetClientPetProfileByPhone.
-message GetClientPetProfileByPhoneResult {
-  // Minimal customer profile view.
-  message CustomerView {
-    // customer id (obfuscated)
-    string customer_id = 1;
-    // first name
-    string first_name = 2;
-    // last name
-    string last_name = 3;
-    // phone number
-    string phone_number = 4;
-    // email
-    optional string email = 5;
-  }
-
+// Response of LookupClientPetProfile.
+message LookupClientPetProfileResponse {
   // Pet profile with care/vaccine details.
   message PetView {
     // pet id (obfuscated string in product; raw id for compatibility)
@@ -127,9 +65,9 @@ message GetClientPetProfileByPhoneResult {
     // evaluation status
     moego.business.customer.v1.Pet.EvaluationStatus evaluation_status = 11;
     // feeding schedules
-    repeated BusinessPetFeedingScheduleView feeding_schedules = 21;
+    repeated moego.business.customer.v1.PetFeedingSchedule feeding_schedules = 21;
     // medication schedules
-    repeated BusinessPetMedicationScheduleView medication_schedules = 22;
+    repeated moego.business.customer.v1.PetMedicationSchedule medication_schedules = 22;
     // vaccine records (from moego Pet.Vaccination)
     repeated moego.business.customer.v1.Pet.Vaccination vaccine_list = 23;
   }
@@ -179,7 +117,7 @@ message GetClientPetProfileByPhoneResult {
   }
 
   // Matched customer profile.
-  optional CustomerView customer = 1;
+  optional moego.business.customer.v1.CustomerSummary customer = 1;
   // Matched pets with feeding/medication/vaccine details.
   repeated PetView pets = 2;
   // Customer's last appointment.

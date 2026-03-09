@@ -247,3 +247,12 @@ message CustomerComplianceConfigUpdateDef {
   // consent management features.
   optional bool is_consented = 6;
 }
+
+// CustomerSummary is a minimal customer profile for aggregation and listing views.
+message CustomerSummary {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string phone = 4;
+  optional string email = 5;
+}
