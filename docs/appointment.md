@@ -57,12 +57,14 @@ lifecycle from creation to completion.
 | `checkInTime`       | timestamp               | When the customer arrived with their pet                                                |
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                                    |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string           |
+| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted                                           |
 | `rawId`             | int64 (optional)        | The raw numeric ID. Restricted and only populated for authorized users.                 |
 | `confirmedTime`     | timestamp (optional)    | When the appointment was confirmed                                                      |
 | `readyTime`         | timestamp (optional)    | When the appointment was ready                                                          |
 | `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                                       |
 | `noShow`            | bool                    | bool, Indicates if the appointment was marked as no-show.                               |
 | `noShowFee`         | Money                   | Amount charged for no-show                                                              |
+| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted. When true, the appointment is considered deleted but still accessible via GET API to maintain consistency with client expectations. |
 
 #### Enum Definitions
 
@@ -395,6 +397,7 @@ Creates a new appointment with services for one or more pets.
 | `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
+| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted                                 |
 
 #### ⚠️ Error Codes:
 
@@ -451,6 +454,7 @@ Updates the appointment's time slot. All services within the appointment will be
 | `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
+| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted                                 |
 
 #### ⚠️ Error Codes:
 
@@ -506,6 +510,7 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 | `checkInTime`       | timestamp               | When the customer arrived with their pet                                      |
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
+| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted                                 |
 
 #### ⚠️ Error Codes:
 
@@ -867,7 +872,8 @@ GET /v1/appointments/12345?business_id=biz_001
     "nanos": 0
   },
   "createdTime": "2024-08-10T09:00:00Z",
-  "lastUpdatedTime": "2024-08-12T14:30:00Z"
+  "lastUpdatedTime": "2024-08-12T14:30:00Z",
+  "isDeprecated": false
 }
 ```
 
