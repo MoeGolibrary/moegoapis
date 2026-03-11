@@ -1202,11 +1202,6 @@
         "mainPhoneNumber": {
           "type": "string",
           "title": "Main phone number for filtering customers\nOptional. If not provided, returns all customers"
-        },
-        "deleted": {
-          "type": "boolean",
-          "x-nullable": true,
-          "title": "Filter by deletion status\nOptional. If not provided, returns non-deleted customers by default\nSet to true to return only deleted customers\nSet to false to return only non-deleted customers"
         }
       },
       "title": "Filter parameters for the customer list",

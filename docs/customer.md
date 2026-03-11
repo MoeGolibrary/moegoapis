@@ -404,24 +404,22 @@ on business rules.
 
 #### ✅ Functionality:
 
-Lists customers matching the specified criteria, supporting pagination and filtering by last update time, phone number, and deletion status.
+Lists customers matching the specified criteria, supporting pagination and filtering by last update time.
 
 #### 🎯 Use Cases:
 
 - View all customers under a company.
 - Audit or debug customer configurations.
 - Monitor customer activity over time.
-- Retrieve soft-deleted customers for audit or recovery purposes.
 
 #### 🔧 Request Parameters:
 
-| Field Name               | Type       | Required | Description                                                                                                                          |
-|--------------------------|------------|----------|--------------------------------------------------------------------------------------------------------------------------------------|
-| `pagination`             | Pagination | Yes      | Pagination info: pageSize, pageToken                                                                                                 |
-| `companyId`              | string     | Yes      | ID of the company to list customers for                                                                                              |
-| `filter.lastUpdatedTime` | Interval   | No       | Time range for filtering customers by last update time                                                                               |
-| `filter.mainPhoneNumber` | string     | No       | Filter by customer's main phone number                                                                                               |
-| `filter.deleted`         | bool       | No       | Filter by deletion status. If not provided, returns non-deleted customers by default. Set to `true` to return only deleted customers, `false` to return only non-deleted customers |
+| Field Name               | Type       | Required | Description                                            |
+|--------------------------|------------|----------|--------------------------------------------------------|
+| `pagination`             | Pagination | Yes      | Pagination info: pageSize, pageToken                   |
+| `companyId`              | string     | Yes      | ID of the company to list customers for                |
+| `filter.lastUpdatedTime` | Interval   | No       | Time range for filtering customers by last update time |
+| `filter.mainPhoneNumber` | string     | No       | Filter by customer's main phone number                 |                                                                    
 
 > **Note**:The `pagination` field is used for pagination.
 > The `pageSize` field specifies the number of results to return per page. Maximum value is 500.
@@ -731,7 +729,6 @@ TODO
 | How to verify if a customer exists?                       | Use `GetCustomer` to check if the customer ID returns a valid response                                                         |
 | Can I create multiple customers at once?                  | Currently only single customer creation is supported. Use batch processing if needed                                           |
 | How to filter customers by update time?                   | Use `ListCustomers` with `filter.lastUpdatedTime`                                                                              |
-| How to retrieve deleted customers?                        | Use `ListCustomers` with `filter.deleted` set to `true`. By default (when `filter.deleted` is omitted), only non-deleted customers are returned |
 | Why does creating a customer return "resource exhausted"? | The company may have reached the maximum allowed customer count. Clean up unused customers or contact admin to increase quota. |
 | How to manage customer tags and notes effectively?        | Use `AppendCustomerTags` and `AppendCustomerNotes` to add new entries                                                          |
 | How to control which communication channels can be used to contact a customer? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |

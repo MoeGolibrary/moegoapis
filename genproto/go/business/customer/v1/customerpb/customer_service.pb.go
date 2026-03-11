@@ -1016,13 +1016,8 @@ type ListCustomersRequest_Filter struct {
 	// Main phone number for filtering customers
 	// Optional. If not provided, returns all customers
 	MainPhoneNumber string `protobuf:"bytes,2,opt,name=main_phone_number,json=mainPhoneNumber,proto3" json:"main_phone_number,omitempty"`
-	// Filter by deletion status
-	// Optional. If not provided, returns non-deleted customers by default
-	// Set to true to return only deleted customers
-	// Set to false to return only non-deleted customers
-	Deleted       *bool `protobuf:"varint,3,opt,name=deleted,proto3,oneof" json:"deleted,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	unknownFields   protoimpl.UnknownFields
+	sizeCache       protoimpl.SizeCache
 }
 
 func (x *ListCustomersRequest_Filter) Reset() {
@@ -1067,13 +1062,6 @@ func (x *ListCustomersRequest_Filter) GetMainPhoneNumber() string {
 		return x.MainPhoneNumber
 	}
 	return ""
-}
-
-func (x *ListCustomersRequest_Filter) GetDeleted() bool {
-	if x != nil && x.Deleted != nil {
-		return *x.Deleted
-	}
-	return false
 }
 
 var File_moego_business_customer_v1_customer_service_proto protoreflect.FileDescriptor
@@ -1127,20 +1115,17 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\b_addressB\x14\n" +
 	"\x12_compliance_config\")\n" +
 	"\x12GetCustomerRequest\x12\x13\n" +
-	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\x81\x03\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\"\xd1\x02\n" +
 	"\x14ListCustomersRequest\x12@\n" +
 	"\n" +
 	"pagination\x18\x01 \x01(\v2\x1b.moego.common.v1.PaginationB\x03\xe0A\x02R\n" +
 	"pagination\x12\"\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12O\n" +
-	"\x06filter\x18\x03 \x01(\v27.moego.business.customer.v1.ListCustomersRequest.FilterR\x06filter\x1a\xb1\x01\n" +
+	"\x06filter\x18\x03 \x01(\v27.moego.business.customer.v1.ListCustomersRequest.FilterR\x06filter\x1a\x81\x01\n" +
 	"\x06Filter\x12F\n" +
 	"\x11last_updated_time\x18\x01 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x01R\x0flastUpdatedTime\x12/\n" +
-	"\x11main_phone_number\x18\x02 \x01(\tB\x03\xe0A\x01R\x0fmainPhoneNumber\x12\"\n" +
-	"\adeleted\x18\x03 \x01(\bB\x03\xe0A\x01H\x00R\adeleted\x88\x01\x01B\n" +
-	"\n" +
-	"\b_deleted\"\x83\x01\n" +
+	"\x11main_phone_number\x18\x02 \x01(\tB\x03\xe0A\x01R\x0fmainPhoneNumber\"\x83\x01\n" +
 	"\x15ListCustomersResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12B\n" +
 	"\tcustomers\x18\x02 \x03(\v2$.moego.business.customer.v1.CustomerR\tcustomers\"0\n" +
@@ -1275,7 +1260,6 @@ func file_moego_business_customer_v1_customer_service_proto_init() {
 	file_moego_business_customer_v1_customer_proto_init()
 	file_moego_business_customer_v1_customer_service_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_customer_v1_customer_service_proto_msgTypes[1].OneofWrappers = []any{}
-	file_moego_business_customer_v1_customer_service_proto_msgTypes[15].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
