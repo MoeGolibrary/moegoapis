@@ -64,7 +64,6 @@ lifecycle from creation to completion.
 | `canceledTime`      | timestamp (optional)    | When the appointment was canceled                                                       |
 | `noShow`            | bool                    | bool, Indicates if the appointment was marked as no-show.                               |
 | `noShowFee`         | Money                   | Amount charged for no-show                                                              |
-| `isDeprecated`      | bool                    | Indicates if the appointment has been deleted. When true, the appointment is considered deleted but still accessible via GET API to maintain consistency with client expectations. |
 
 #### Enum Definitions
 
