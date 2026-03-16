@@ -6,6 +6,14 @@ definitions with open-source tools to generate client libraries, documentation, 
 
 [TOC]
 
+- [Prerequisites](#prerequisites)
+- [Getting Started](#getting-started)
+- [Development Workflow](#development-workflow)
+- [API Changelog](#api-changelog)
+- [API Definitions](#api-definitions)
+- [ID Obfuscation](#id-obfuscation)
+- [Configuration](#configuration)
+
 ## 📚 Documentation
 
 📘 **[View Full API Documentation](https://moegolibrary.github.io/moegoapis/)** - Comprehensive documentation hosted on GitHub Pages
@@ -69,6 +77,43 @@ To begin using the MoeGo APIs effectively, follow these steps:
       `APPOINTMENT_UPDATED`. This enables real-time notifications for key business events.
 
 ---
+
+## API Changelog
+
+After completing API changes, update `docs/CHANGELOG.md` to document them.
+
+### AI-Assisted Workflow
+
+Use this prompt to auto-generate changelog entries:
+
+```
+Read the file docs/CHANGELOG.md to understand the format.
+Then analyze this git diff and update the CHANGELOG.md [Unreleased] section:
+
+[PASTE THE GIT DIFF OUTPUT HERE]
+
+Requirements:
+1. Only include API-visible changes (endpoints, fields, error codes)
+2. Classify changes as MAJOR (breaking), MINOR (additions), or PATCH (fixes)
+3. Use existing format with categories: Added/Changed/Deprecated/Removed/Fixed
+4. Be concise and clear
+5. Replace the [Unreleased] N/A entries with actual changes
+6. Write the complete updated [Unreleased] section
+
+Return only the updated [Unreleased] section content.
+```
+
+Copy the AI output and replace the `[Unreleased]` section in `docs/CHANGELOG.md`.
+
+### Version Types
+
+- **MAJOR**: Breaking changes (removed endpoints, renamed fields, new required fields)
+- **MINOR**: New features (new endpoints, optional fields, new enum values)
+- **PATCH**: Bug fixes, performance improvements
+
+---
+
+For full details, see [docs/CHANGELOG.md](docs/CHANGELOG.md) and [docs/versioning/README.md](docs/versioning/README.md).
 
 ## 🌐 Domain Structure
 
