@@ -419,7 +419,7 @@ Lists customers matching the specified criteria, supporting pagination and filte
 | `pagination`             | Pagination | Yes      | Pagination info: pageSize, pageToken                   |
 | `companyId`              | string     | Yes      | ID of the company to list customers for                |
 | `filter.lastUpdatedTime` | Interval   | No       | Time range for filtering customers by last update time |
-| `filter.mainPhoneNumber` | string     | No       | Filter by customer's main phone number                 |
+| `filter.mainPhoneNumber` | string     | No       | Filter by customer's main phone number                 |                                                                    
 
 > **Note**:The `pagination` field is used for pagination.
 > The `pageSize` field specifies the number of results to return per page. Maximum value is 500.

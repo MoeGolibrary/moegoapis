@@ -104,7 +104,11 @@ type Staff struct {
 	MobileVanId string `protobuf:"bytes,10,opt,name=mobile_van_id,json=mobileVanId,proto3" json:"mobile_van_id,omitempty"`
 	// ID of the company this staff member belongs to
 	// Used for access control and data segregation
-	CompanyId     string `protobuf:"bytes,11,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	CompanyId string `protobuf:"bytes,11,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
+	// Indicates whether this staff member has been soft deleted
+	// If true, the staff member is no longer active but their data is retained
+	// for historical records and reporting purposes
+	Deleted       bool `protobuf:"varint,12,opt,name=deleted,proto3" json:"deleted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -216,6 +220,13 @@ func (x *Staff) GetCompanyId() string {
 	return ""
 }
 
+func (x *Staff) GetDeleted() bool {
+	if x != nil {
+		return x.Deleted
+	}
+	return false
+}
+
 // Role defines a set of permissions and capabilities assigned to staff members.
 // Roles help manage access control and determine what actions staff can perform.
 type Role struct {
@@ -288,7 +299,7 @@ var File_moego_business_staff_v1_staff_proto protoreflect.FileDescriptor
 
 const file_moego_business_staff_v1_staff_proto_rawDesc = "" +
 	"\n" +
-	"#moego/business/staff/v1/staff.proto\x12\x17moego.business.staff.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\xfa\x02\n" +
+	"#moego/business/staff/v1/staff.proto\x12\x17moego.business.staff.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"\x94\x03\n" +
 	"\x05Staff\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -304,7 +315,8 @@ const file_moego_business_staff_v1_staff_proto_rawDesc = "" +
 	"\rmobile_van_id\x18\n" +
 	" \x01(\tR\vmobileVanId\x12\x1d\n" +
 	"\n" +
-	"company_id\x18\v \x01(\tR\tcompanyId\"q\n" +
+	"company_id\x18\v \x01(\tR\tcompanyId\x12\x18\n" +
+	"\adeleted\x18\f \x01(\bR\adeleted\"q\n" +
 	"\x04Role\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12E\n" +
