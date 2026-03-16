@@ -152,8 +152,5 @@ message Appointment {
   google.type.Money no_show_fee = 27;
 
   // bool, Indicates if the appointment has been deleted.
-  // When true, the appointment is considered deleted but still accessible via GET API
-  // to maintain consistency with client expectations. This field allows clients to
-  // identify deleted appointments and handle them appropriately.
-  bool is_deprecated = 28;
+  bool is_deleted = 28;
 }
