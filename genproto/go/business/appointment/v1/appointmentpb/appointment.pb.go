@@ -225,7 +225,9 @@ type Appointment struct {
 	// bool, Indicates if the appointment was marked as no-show.
 	NoShow bool `protobuf:"varint,26,opt,name=no_show,json=noShow,proto3" json:"no_show,omitempty"`
 	// object(Money), The no-show fee charged for this appointment.
-	NoShowFee     *money.Money `protobuf:"bytes,27,opt,name=no_show_fee,json=noShowFee,proto3" json:"no_show_fee,omitempty"`
+	NoShowFee *money.Money `protobuf:"bytes,27,opt,name=no_show_fee,json=noShowFee,proto3" json:"no_show_fee,omitempty"`
+	// bool, Indicates if the appointment has been deleted.
+	IsDeleted     bool `protobuf:"varint,28,opt,name=is_deleted,json=isDeleted,proto3" json:"is_deleted,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -449,11 +451,18 @@ func (x *Appointment) GetNoShowFee() *money.Money {
 	return nil
 }
 
+func (x *Appointment) GetIsDeleted() bool {
+	if x != nil {
+		return x.IsDeleted
+	}
+	return false
+}
+
 var File_moego_business_appointment_v1_appointment_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\xea\r\n" +
+	"/moego/business/appointment/v1/appointment.proto\x12\x1dmoego.business.appointment.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a6moego/business/appointment/v1/pet_service_detail.proto\x1a\x1dmoego/common/v1/address.proto\"\x89\x0e\n" +
 	"\vAppointment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -488,7 +497,9 @@ const file_moego_business_appointment_v1_appointment_proto_rawDesc = "" +
 	"ready_time\x18\x18 \x01(\v2\x1a.google.protobuf.TimestampH\x03R\treadyTime\x88\x01\x01\x12D\n" +
 	"\rcanceled_time\x18\x19 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\fcanceledTime\x88\x01\x01\x12\x17\n" +
 	"\ano_show\x18\x1a \x01(\bR\x06noShow\x122\n" +
-	"\vno_show_fee\x18\x1b \x01(\v2\x12.google.type.MoneyR\tnoShowFee\"w\n" +
+	"\vno_show_fee\x18\x1b \x01(\v2\x12.google.type.MoneyR\tnoShowFee\x12\x1d\n" +
+	"\n" +
+	"is_deleted\x18\x1c \x01(\bR\tisDeleted\"w\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\x0f\n" +
 	"\vUNCONFIRMED\x10\x01\x12\r\n" +

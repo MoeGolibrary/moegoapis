@@ -150,4 +150,7 @@ message Appointment {
 
   // object(Money), The no-show fee charged for this appointment.
   google.type.Money no_show_fee = 27;
+
+  // bool, Indicates if the appointment has been deleted.
+  bool is_deleted = 28;
 }
