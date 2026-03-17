@@ -69,6 +69,15 @@ const (
 	// Customer has been permanently removed
 	// Cleans up customer data and dependencies
 	Event_CUSTOMER_DELETED Event_Type = 302
+	// New pet has been created
+	// Triggers pet profile setup
+	Event_PET_CREATED Event_Type = 400
+	// Existing pet has been modified
+	// Updates pet profile and related records
+	Event_PET_UPDATED Event_Type = 401
+	// Pet has been permanently removed
+	// Cleans up pet data and dependencies
+	Event_PET_DELETED Event_Type = 402
 )
 
 // Enum value maps for Event_Type.
@@ -86,6 +95,9 @@ var (
 		300: "CUSTOMER_CREATED",
 		301: "CUSTOMER_UPDATED",
 		302: "CUSTOMER_DELETED",
+		400: "PET_CREATED",
+		401: "PET_UPDATED",
+		402: "PET_DELETED",
 	}
 	Event_Type_value = map[string]int32{
 		"TYPE_UNSPECIFIED":        0,
@@ -100,6 +112,9 @@ var (
 		"CUSTOMER_CREATED":        300,
 		"CUSTOMER_UPDATED":        301,
 		"CUSTOMER_DELETED":        302,
+		"PET_CREATED":             400,
+		"PET_UPDATED":             401,
+		"PET_DELETED":             402,
 	}
 )
 
@@ -157,6 +172,7 @@ type Event struct {
 	//	*Event_Appointment
 	//	*Event_OnlineBooking
 	//	*Event_Customer
+	//	*Event_Pet
 	Payload       isEvent_Payload `protobuf_oneof:"payload"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -263,6 +279,15 @@ func (x *Event) GetCustomer() *customerpb.Customer {
 	return nil
 }
 
+func (x *Event) GetPet() *customerpb.Pet {
+	if x != nil {
+		if x, ok := x.Payload.(*Event_Pet); ok {
+			return x.Pet
+		}
+	}
+	return nil
+}
+
 type isEvent_Payload interface {
 	isEvent_Payload()
 }
@@ -291,6 +316,12 @@ type Event_Customer struct {
 	Customer *customerpb.Customer `protobuf:"bytes,8,opt,name=customer,proto3,oneof"`
 }
 
+type Event_Pet struct {
+	// Payload for pet-related events
+	// Used when type is in the PET range
+	Pet *customerpb.Pet `protobuf:"bytes,9,opt,name=pet,proto3,oneof"`
+}
+
 func (*Event_HealthCheck) isEvent_Payload() {}
 
 func (*Event_Appointment) isEvent_Payload() {}
@@ -299,11 +330,13 @@ func (*Event_OnlineBooking) isEvent_Payload() {}
 
 func (*Event_Customer) isEvent_Payload() {}
 
+func (*Event_Pet) isEvent_Payload() {}
+
 var File_moego_business_event_v1_event_proto protoreflect.FileDescriptor
 
 const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\n" +
-	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a)moego/business/customer/v1/customer.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\x9c\x06\n" +
+	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\x87\a\n" +
 	"\x05Event\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\x04type\x18\x02 \x01(\x0e2#.moego.business.event.v1.Event.TypeR\x04type\x128\n" +
@@ -313,7 +346,8 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\fhealth_check\x18\x05 \x01(\v2$.moego.business.event.v1.HealthCheckH\x00R\vhealthCheck\x12N\n" +
 	"\vappointment\x18\x06 \x01(\v2*.moego.business.appointment.v1.AppointmentH\x00R\vappointment\x12X\n" +
 	"\x0eonline_booking\x18\a \x01(\v2/.moego.business.online_booking.v1.OnlineBookingH\x00R\ronlineBooking\x12B\n" +
-	"\bcustomer\x18\b \x01(\v2$.moego.business.customer.v1.CustomerH\x00R\bcustomer\"\xac\x02\n" +
+	"\bcustomer\x18\b \x01(\v2$.moego.business.customer.v1.CustomerH\x00R\bcustomer\x123\n" +
+	"\x03pet\x18\t \x01(\v2\x1f.moego.business.customer.v1.PetH\x00R\x03pet\"\xe2\x02\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fHEALTH_CHECK\x10\x01\x12\x17\n" +
@@ -326,7 +360,10 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\x17ONLINE_BOOKING_RECEIVED\x10\xc8\x01\x12\x15\n" +
 	"\x10CUSTOMER_CREATED\x10\xac\x02\x12\x15\n" +
 	"\x10CUSTOMER_UPDATED\x10\xad\x02\x12\x15\n" +
-	"\x10CUSTOMER_DELETED\x10\xae\x02B\t\n" +
+	"\x10CUSTOMER_DELETED\x10\xae\x02\x12\x10\n" +
+	"\vPET_CREATED\x10\x90\x03\x12\x10\n" +
+	"\vPET_UPDATED\x10\x91\x03\x12\x10\n" +
+	"\vPET_DELETED\x10\x92\x03B\t\n" +
 	"\apayloadB\x80\x01\n" +
 	"\x1fcom.moego.api.business.event.v1B\n" +
 	"EventProtoP\x01ZOgithub.com/MoeGolibrary/moegoapis/genproto/go/business/event/v1/eventpb;eventpbb\x06proto3"
@@ -353,6 +390,7 @@ var file_moego_business_event_v1_event_proto_goTypes = []any{
 	(*appointmentpb.Appointment)(nil),     // 4: moego.business.appointment.v1.Appointment
 	(*onlinebookingpb.OnlineBooking)(nil), // 5: moego.business.online_booking.v1.OnlineBooking
 	(*customerpb.Customer)(nil),           // 6: moego.business.customer.v1.Customer
+	(*customerpb.Pet)(nil),                // 7: moego.business.customer.v1.Pet
 }
 var file_moego_business_event_v1_event_proto_depIdxs = []int32{
 	0, // 0: moego.business.event.v1.Event.type:type_name -> moego.business.event.v1.Event.Type
@@ -361,11 +399,12 @@ var file_moego_business_event_v1_event_proto_depIdxs = []int32{
 	4, // 3: moego.business.event.v1.Event.appointment:type_name -> moego.business.appointment.v1.Appointment
 	5, // 4: moego.business.event.v1.Event.online_booking:type_name -> moego.business.online_booking.v1.OnlineBooking
 	6, // 5: moego.business.event.v1.Event.customer:type_name -> moego.business.customer.v1.Customer
-	6, // [6:6] is the sub-list for method output_type
-	6, // [6:6] is the sub-list for method input_type
-	6, // [6:6] is the sub-list for extension type_name
-	6, // [6:6] is the sub-list for extension extendee
-	0, // [0:6] is the sub-list for field type_name
+	7, // 6: moego.business.event.v1.Event.pet:type_name -> moego.business.customer.v1.Pet
+	7, // [7:7] is the sub-list for method output_type
+	7, // [7:7] is the sub-list for method input_type
+	7, // [7:7] is the sub-list for extension type_name
+	7, // [7:7] is the sub-list for extension extendee
+	0, // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_event_v1_event_proto_init() }
@@ -379,6 +418,7 @@ func file_moego_business_event_v1_event_proto_init() {
 		(*Event_Appointment)(nil),
 		(*Event_OnlineBooking)(nil),
 		(*Event_Customer)(nil),
+		(*Event_Pet)(nil),
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{

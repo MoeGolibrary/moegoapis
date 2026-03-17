@@ -5,6 +5,7 @@ package moego.business.event.v1;
 import "google/protobuf/timestamp.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/customer/v1/customer.proto";
+import "moego/business/customer/v1/pet.proto";
 import "moego/business/event/v1/health_check.proto";
 import "moego/business/online_booking/v1/online_booking.proto";
 
@@ -83,6 +84,21 @@ message Event {
     // Customer has been permanently removed
     // Cleans up customer data and dependencies
     CUSTOMER_DELETED = 302;
+
+    // Pet Events (400-499)
+    // Events related to pet data changes
+
+    // New pet has been created
+    // Triggers pet profile setup
+    PET_CREATED = 400;
+
+    // Existing pet has been modified
+    // Updates pet profile and related records
+    PET_UPDATED = 401;
+
+    // Pet has been permanently removed
+    // Cleans up pet data and dependencies
+    PET_DELETED = 402;
   }
 
   // Unique identifier for the event
@@ -119,5 +135,9 @@ message Event {
     // Payload for customer-related events
     // Used when type is in the CUSTOMER range
     moego.business.customer.v1.Customer customer = 8;
+
+    // Payload for pet-related events
+    // Used when type is in the PET range
+    moego.business.customer.v1.Pet pet = 9;
   }
 }
