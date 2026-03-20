@@ -15,22 +15,17 @@ When making API changes:
 
 ## [Unreleased]
 
+---
+
+## [1.2.0] - 2026-03-20
+
 ### Added
 - `Staff:List` API now returns deleted staff with `deleted` field to identify deletion status (2026-03-16)
 - `Appointment:Get` API now returns `is_deleted` field (2026-03-16)
-- Webhook events for Pet: `PET_CREATED`, `PET_UPDATED`, `PET_DELETED` (2026-03-17)
+- Webhook events for Pet: `PET_CREATED`, `PET_UPDATED`, `PET_DELETED` with Pet payload (2026-03-20)
 
 ### Changed
 - `Appointment:Get` API no longer returns appointment details when appointment is deleted (consistent with `Appointment:List` behavior) (2026-03-16)
-
-### Deprecated
-- N/A
-
-### Removed
-- N/A
-
-### Fixed
-- N/A
 
 ---
 
