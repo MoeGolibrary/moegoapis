@@ -129,6 +129,11 @@
             "type": "string"
           },
           "description": "Selected service ids when checking for a specific booking combination."
+        },
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "x-nullable": true,
+          "description": "Pagination parameters for the request."
         }
       },
       "description": "Request for ListLodgings.\nUsed when booking boarding/daycare to see which lodging units have capacity.",
@@ -152,6 +157,10 @@
             "$ref": "#/definitions/v1LodgingAvailability"
           },
           "description": "List of lodgings with availability (inventory) for the requested date."
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Token for retrieving the next page of results. Empty if there are no more results."
         }
       },
       "description": "Response for ListLodgings.",
@@ -207,6 +216,11 @@
           "$ref": "#/definitions/typeDate",
           "x-nullable": true,
           "description": "End date for availability (e.g. boarding check-out date)."
+        },
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "x-nullable": true,
+          "description": "Pagination parameters for the request."
         }
       },
       "description": "Request for ListServices.",
@@ -245,6 +259,10 @@
             "$ref": "#/definitions/v1ServicesByPet"
           },
           "description": "Per-pet list of applicable/available services (when multiple pets were requested)."
+        },
+        "nextPageToken": {
+          "type": "string",
+          "description": "Token for retrieving the next page of results. Empty if there are no more results."
         }
       },
       "description": "Response for ListServices.\nReturns a flat list of services and optionally per-pet breakdown; no category hierarchy.",
@@ -375,6 +393,28 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/offering/v1/offeringpb"
         },
         "type": "LodgingAvailability"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
       }
     },
     "v1ServiceType": {

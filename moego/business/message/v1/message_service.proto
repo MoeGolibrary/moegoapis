@@ -4,6 +4,7 @@ package moego.business.message.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "moego/business/message/v1/message.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/message/v1/messagepb;messagepb";
 option java_multiple_files = true;
@@ -27,21 +28,18 @@ service MessageService {
       body: "*"
     };
   }
-}
 
-// Delivery method (channel) for sending the message to the customer.
-// Numeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).
-enum MessageDeliveryMethod {
-  // Unknown or unspecified delivery method.
-  MESSAGE_DELIVERY_METHOD_UNSPECIFIED = 0;
-  // In-app / internal message (msg).
-  MSG = 1;
-  // Email.
-  EMAIL = 2;
-  // Phone call (call).
-  CALL = 4;
-  // App push or in-app (app).
-  APP = 5;
+  // Sends an auto message to a customer.
+  //
+  // Triggers a template-based auto message (e.g. appointment reminder, payment
+  // confirmation) to the customer via the configured delivery channels. The message
+  // content is derived from the template and optional context (e.g. appointment_id).
+  rpc SendAutoMessageToCustomer(SendAutoMessageToCustomerRequest) returns (SendAutoMessageToCustomerResponse) {
+    option (google.api.http) = {
+      post: "/v1/messages:sendAutoMessageToCustomer"
+      body: "*"
+    };
+  }
 }
 
 // Content type of the message body.
@@ -75,4 +73,22 @@ message SendMessageToCustomerResponse {
   optional string thread_id = 1;
   // Id of the sent message, when the backend returns it.
   optional string message_id = 2;
+}
+
+// Request for SendAutoMessageToCustomer.
+message SendAutoMessageToCustomerRequest {
+  // Customer id to send the auto message to (obfuscated id).
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+  // Business id for context and template lookup (obfuscated id).
+  string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // Use case or template type (e.g. appointment reminder, payment confirmation).
+  string use_case = 3 [(google.api.field_behavior) = REQUIRED];
+  // Delivery channels to use: MSG(1), EMAIL(2), CALL(4), APP(5). At least one required.
+  repeated MessageDeliveryMethod methods = 4 [(google.api.field_behavior) = REQUIRED];
+  // Optional context for variable substitution (e.g. appointment_id for reminders).
+  optional string context_id = 5;
+}
+
+// Response for SendAutoMessageToCustomer.
+message SendAutoMessageToCustomerResponse {
 }

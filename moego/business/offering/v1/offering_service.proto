@@ -7,6 +7,7 @@ import "google/api/field_behavior.proto";
 import "google/type/date.proto";
 import "google/type/money.proto";
 import "moego/business/setting/v1/service.proto";
+import "moego/common/v1/pagination.proto";
 
 option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/offering/v1/offeringpb;offeringpb";
 option java_multiple_files = true;
@@ -64,6 +65,8 @@ message ListServicesRequest {
   optional google.type.Date start_date = 7;
   // End date for availability (e.g. boarding check-out date).
   optional google.type.Date end_date = 8;
+  // Pagination parameters for the request.
+  optional moego.common.v1.Pagination pagination = 9;
 }
 
 // Flat service view for list display or AI consumption (no category nesting).
@@ -101,6 +104,8 @@ message ListServicesResponse {
   repeated string available_service_ids = 2;
   // Per-pet list of applicable/available services (when multiple pets were requested).
   repeated ServicesByPet pet_services = 3;
+  // Token for retrieving the next page of results. Empty if there are no more results.
+  string next_page_token = 4;
 }
 
 // Request for ListLodgings.
@@ -116,6 +121,8 @@ message ListLodgingsRequest {
   optional string pet_id = 4;
   // Selected service ids when checking for a specific booking combination.
   repeated string service_ids = 5;
+  // Pagination parameters for the request.
+  optional moego.common.v1.Pagination pagination = 6;
 }
 
 // One lodging unit (or type) with its availability for the requested date.
@@ -134,4 +141,6 @@ message LodgingAvailability {
 message ListLodgingsResponse {
   // List of lodgings with availability (inventory) for the requested date.
   repeated LodgingAvailability lodgings = 1;
+  // Token for retrieving the next page of results. Empty if there are no more results.
+  string next_page_token = 2;
 }
