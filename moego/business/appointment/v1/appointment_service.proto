@@ -8,6 +8,7 @@ import "google/type/date.proto";
 import "google/type/interval.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/appointment_note.proto";
+import "moego/business/message/v1/message.proto";
 import "moego/business/appointment/v1/grooming_report.proto";
 import "moego/business/customer/v1/pet.proto";
 import "moego/business/setting/v1/lodging.proto";
@@ -300,6 +301,16 @@ message CreateAppointmentRequest {
     repeated string staff_ids = 3;
   }
 
+  // Initial note to create for the appointment
+  message AppointmentNoteInput {
+    // string, The note content.
+    string note = 1 [(google.api.field_behavior) = REQUIRED];
+
+    // enum(AppointmentNote.Type), The type of the note.
+    // Only ALERT_NOTES, COMMENT, and ADDITIONAL are supported.
+    AppointmentNote.Type type = 2 [(google.api.field_behavior) = REQUIRED];
+  }
+
   // string, The business location's identifier where services will be provided.
   string business_id = 1 [(google.api.field_behavior) = REQUIRED];
 
@@ -313,6 +324,15 @@ message CreateAppointmentRequest {
   // If true, services will be scheduled even if there are conflicts.
   // Defaults to true.
   optional bool ignore_conflict = 4 [(google.api.field_behavior) = OPTIONAL];
+
+  // array(AppointmentNoteInput), Initial notes for the appointment. Will be created as
+  // appointment notes after the appointment is created.
+  repeated AppointmentNoteInput appointment_notes = 5 [(google.api.field_behavior) = OPTIONAL];
+
+  // array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).
+  // When empty or not set, no auto messages will be sent. When specified, auto messages
+  // will be sent via the given channels.
+  repeated message.v1.MessageDeliveryMethod auto_message_methods = 6 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request to reschedule an existing appointment
@@ -327,6 +347,10 @@ message RescheduleAppointmentRequest {
   // object(Interval), The new time window for the appointment.
   // Must be in the future and within business hours.
   google.type.Interval duration = 3;
+
+  // array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).
+  // When empty or not set, no auto messages will be sent.
+  repeated message.v1.MessageDeliveryMethod auto_message_methods = 4 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request to cancel an appointment
@@ -337,6 +361,10 @@ message CancelAppointmentRequest {
   // string, The business location's identifier.
   // Must match the business_id of the appointment.
   string business_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).
+  // When empty or not set, no auto messages will be sent.
+  repeated message.v1.MessageDeliveryMethod auto_message_methods = 3 [(google.api.field_behavior) = OPTIONAL];
 }
 
 // Request to update appointment status

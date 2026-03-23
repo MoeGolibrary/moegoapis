@@ -16,6 +16,41 @@
     "application/json"
   ],
   "paths": {
+    "/v1/messages:sendAutoMessageToCustomer": {
+      "post": {
+        "summary": "Sends an auto message to a customer.",
+        "description": "Triggers a template-based auto message (e.g. appointment reminder, payment\nconfirmation) to the customer via the configured delivery channels. The message\ncontent is derived from the template and optional context (e.g. appointment_id).",
+        "operationId": "MessageService_SendAutoMessageToCustomer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SendAutoMessageToCustomerResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request for SendAutoMessageToCustomer.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SendAutoMessageToCustomerRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.message.v1.MessageService"
+        ]
+      }
+    },
     "/v1/messages:sendToCustomer": {
       "post": {
         "summary": "Sends a message to a customer.",
@@ -103,7 +138,7 @@
         "APP"
       ],
       "default": "MESSAGE_DELIVERY_METHOD_UNSPECIFIED",
-      "description": "Delivery method (channel) for sending the message to the customer.\nNumeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).\n\n - MESSAGE_DELIVERY_METHOD_UNSPECIFIED: Unknown or unspecified delivery method.\n - MSG: In-app / internal message (msg).\n - EMAIL: Email.\n - CALL: Phone call (call).\n - APP: App push or in-app (app)."
+      "description": "Delivery method (channel) for sending messages to the customer.\nNumeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).\n\n - MESSAGE_DELIVERY_METHOD_UNSPECIFIED: Unknown or unspecified delivery method.\n - MSG: In-app / internal message (msg).\n - EMAIL: Email.\n - CALL: Phone call (call).\n - APP: App push or in-app (app)."
     },
     "v1MessageType": {
       "type": "string",
@@ -114,6 +149,58 @@
       ],
       "default": "MESSAGE_TYPE_UNSPECIFIED",
       "description": "Content type of the message body.\n\n - MESSAGE_TYPE_UNSPECIFIED: Unknown or unspecified message type.\n - TEXT: Plain text message.\n - PIC: Picture / image message."
+    },
+    "v1SendAutoMessageToCustomerRequest": {
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "type": "string",
+          "description": "Customer id to send the auto message to (obfuscated id)."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "Business id for context and template lookup (obfuscated id)."
+        },
+        "useCase": {
+          "type": "string",
+          "description": "Use case or template type (e.g. appointment reminder, payment confirmation)."
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1MessageDeliveryMethod"
+          },
+          "description": "Delivery channels to use: MSG(1), EMAIL(2), CALL(4), APP(5). At least one required."
+        },
+        "contextId": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "Optional context for variable substitution (e.g. appointment_id for reminders)."
+        }
+      },
+      "description": "Request for SendAutoMessageToCustomer.",
+      "required": [
+        "customerId",
+        "businessId",
+        "useCase",
+        "methods"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/message/v1/messagepb"
+        },
+        "type": "SendAutoMessageToCustomerRequest"
+      }
+    },
+    "v1SendAutoMessageToCustomerResponse": {
+      "type": "object",
+      "description": "Response for SendAutoMessageToCustomer.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/message/v1/messagepb"
+        },
+        "type": "SendAutoMessageToCustomerResponse"
+      }
     },
     "v1SendMessageToCustomerRequest": {
       "type": "object",

@@ -8,6 +8,7 @@ package offeringpb
 
 import (
 	settingpb "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+	commonpb "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	date "google.golang.org/genproto/googleapis/type/date"
 	money "google.golang.org/genproto/googleapis/type/money"
@@ -43,7 +44,9 @@ type ListServicesRequest struct {
 	// Start date for availability (e.g. boarding check-in date).
 	StartDate *date.Date `protobuf:"bytes,7,opt,name=start_date,json=startDate,proto3,oneof" json:"start_date,omitempty"`
 	// End date for availability (e.g. boarding check-out date).
-	EndDate       *date.Date `protobuf:"bytes,8,opt,name=end_date,json=endDate,proto3,oneof" json:"end_date,omitempty"`
+	EndDate *date.Date `protobuf:"bytes,8,opt,name=end_date,json=endDate,proto3,oneof" json:"end_date,omitempty"`
+	// Pagination parameters for the request.
+	Pagination    *commonpb.Pagination `protobuf:"bytes,9,opt,name=pagination,proto3,oneof" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -130,6 +133,13 @@ func (x *ListServicesRequest) GetStartDate() *date.Date {
 func (x *ListServicesRequest) GetEndDate() *date.Date {
 	if x != nil {
 		return x.EndDate
+	}
+	return nil
+}
+
+func (x *ListServicesRequest) GetPagination() *commonpb.Pagination {
+	if x != nil {
+		return x.Pagination
 	}
 	return nil
 }
@@ -298,7 +308,9 @@ type ListServicesResponse struct {
 	// Ids of services that are currently available in the requested context (for UI highlighting).
 	AvailableServiceIds []string `protobuf:"bytes,2,rep,name=available_service_ids,json=availableServiceIds,proto3" json:"available_service_ids,omitempty"`
 	// Per-pet list of applicable/available services (when multiple pets were requested).
-	PetServices   []*ServicesByPet `protobuf:"bytes,3,rep,name=pet_services,json=petServices,proto3" json:"pet_services,omitempty"`
+	PetServices []*ServicesByPet `protobuf:"bytes,3,rep,name=pet_services,json=petServices,proto3" json:"pet_services,omitempty"`
+	// Token for retrieving the next page of results. Empty if there are no more results.
+	NextPageToken string `protobuf:"bytes,4,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -354,6 +366,13 @@ func (x *ListServicesResponse) GetPetServices() []*ServicesByPet {
 	return nil
 }
 
+func (x *ListServicesResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
 // Request for ListLodgings.
 // Used when booking boarding/daycare to see which lodging units have capacity.
 type ListLodgingsRequest struct {
@@ -367,7 +386,9 @@ type ListLodgingsRequest struct {
 	// Pet id when checking for a specific pet (e.g. size-based lodging).
 	PetId *string `protobuf:"bytes,4,opt,name=pet_id,json=petId,proto3,oneof" json:"pet_id,omitempty"`
 	// Selected service ids when checking for a specific booking combination.
-	ServiceIds    []string `protobuf:"bytes,5,rep,name=service_ids,json=serviceIds,proto3" json:"service_ids,omitempty"`
+	ServiceIds []string `protobuf:"bytes,5,rep,name=service_ids,json=serviceIds,proto3" json:"service_ids,omitempty"`
+	// Pagination parameters for the request.
+	Pagination    *commonpb.Pagination `protobuf:"bytes,6,opt,name=pagination,proto3,oneof" json:"pagination,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -433,6 +454,13 @@ func (x *ListLodgingsRequest) GetPetId() string {
 func (x *ListLodgingsRequest) GetServiceIds() []string {
 	if x != nil {
 		return x.ServiceIds
+	}
+	return nil
+}
+
+func (x *ListLodgingsRequest) GetPagination() *commonpb.Pagination {
+	if x != nil {
+		return x.Pagination
 	}
 	return nil
 }
@@ -514,7 +542,9 @@ func (x *LodgingAvailability) GetUnavailableReason() string {
 type ListLodgingsResponse struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// List of lodgings with availability (inventory) for the requested date.
-	Lodgings      []*LodgingAvailability `protobuf:"bytes,1,rep,name=lodgings,proto3" json:"lodgings,omitempty"`
+	Lodgings []*LodgingAvailability `protobuf:"bytes,1,rep,name=lodgings,proto3" json:"lodgings,omitempty"`
+	// Token for retrieving the next page of results. Empty if there are no more results.
+	NextPageToken string `protobuf:"bytes,2,opt,name=next_page_token,json=nextPageToken,proto3" json:"next_page_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -556,11 +586,18 @@ func (x *ListLodgingsResponse) GetLodgings() []*LodgingAvailability {
 	return nil
 }
 
+func (x *ListLodgingsResponse) GetNextPageToken() string {
+	if x != nil {
+		return x.NextPageToken
+	}
+	return ""
+}
+
 var File_moego_business_offering_v1_offering_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_offering_v1_offering_service_proto_rawDesc = "" +
 	"\n" +
-	"1moego/business/offering/v1/offering_service.proto\x12\x1amoego.business.offering.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x17google/type/money.proto\x1a'moego/business/setting/v1/service.proto\"\x96\x04\n" +
+	"1moego/business/offering/v1/offering_service.proto\x12\x1amoego.business.offering.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x17google/type/money.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\"\xe7\x04\n" +
 	"\x13ListServicesRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
@@ -572,12 +609,16 @@ const file_moego_business_offering_v1_offering_service_proto_rawDesc = "" +
 	"\x14selected_service_ids\x18\x06 \x03(\tR\x12selectedServiceIds\x125\n" +
 	"\n" +
 	"start_date\x18\a \x01(\v2\x11.google.type.DateH\x03R\tstartDate\x88\x01\x01\x121\n" +
-	"\bend_date\x18\b \x01(\v2\x11.google.type.DateH\x04R\aendDate\x88\x01\x01B\x0e\n" +
+	"\bend_date\x18\b \x01(\v2\x11.google.type.DateH\x04R\aendDate\x88\x01\x01\x12@\n" +
+	"\n" +
+	"pagination\x18\t \x01(\v2\x1b.moego.common.v1.PaginationH\x05R\n" +
+	"pagination\x88\x01\x01B\x0e\n" +
 	"\f_business_idB\x0f\n" +
 	"\r_service_typeB\x14\n" +
 	"\x12_service_item_typeB\r\n" +
 	"\v_start_dateB\v\n" +
-	"\t_end_date\"\xc5\x02\n" +
+	"\t_end_dateB\r\n" +
+	"\v_pagination\"\xc5\x02\n" +
 	"\vServiceView\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -588,11 +629,12 @@ const file_moego_business_offering_v1_offering_service_proto_rawDesc = "" +
 	"\vdescription\x18\a \x01(\tR\vdescription\"k\n" +
 	"\rServicesByPet\x12\x15\n" +
 	"\x06pet_id\x18\x01 \x01(\tR\x05petId\x12C\n" +
-	"\bservices\x18\x02 \x03(\v2'.moego.business.offering.v1.ServiceViewR\bservices\"\xdd\x01\n" +
+	"\bservices\x18\x02 \x03(\v2'.moego.business.offering.v1.ServiceViewR\bservices\"\x85\x02\n" +
 	"\x14ListServicesResponse\x12C\n" +
 	"\bservices\x18\x01 \x03(\v2'.moego.business.offering.v1.ServiceViewR\bservices\x122\n" +
 	"\x15available_service_ids\x18\x02 \x03(\tR\x13availableServiceIds\x12L\n" +
-	"\fpet_services\x18\x03 \x03(\v2).moego.business.offering.v1.ServicesByPetR\vpetServices\"\xec\x01\n" +
+	"\fpet_services\x18\x03 \x03(\v2).moego.business.offering.v1.ServicesByPetR\vpetServices\x12&\n" +
+	"\x0fnext_page_token\x18\x04 \x01(\tR\rnextPageToken\"\xbd\x02\n" +
 	"\x13ListLodgingsRequest\x12\"\n" +
 	"\n" +
 	"company_id\x18\x01 \x01(\tB\x03\xe0A\x02R\tcompanyId\x12$\n" +
@@ -601,18 +643,23 @@ const file_moego_business_offering_v1_offering_service_proto_rawDesc = "" +
 	"\x04date\x18\x03 \x01(\v2\x11.google.type.DateH\x01R\x04date\x88\x01\x01\x12\x1a\n" +
 	"\x06pet_id\x18\x04 \x01(\tH\x02R\x05petId\x88\x01\x01\x12\x1f\n" +
 	"\vservice_ids\x18\x05 \x03(\tR\n" +
-	"serviceIdsB\x0e\n" +
+	"serviceIds\x12@\n" +
+	"\n" +
+	"pagination\x18\x06 \x01(\v2\x1b.moego.common.v1.PaginationH\x03R\n" +
+	"pagination\x88\x01\x01B\x0e\n" +
 	"\f_business_idB\a\n" +
 	"\x05_dateB\t\n" +
-	"\a_pet_id\"\xa4\x01\n" +
+	"\a_pet_idB\r\n" +
+	"\v_pagination\"\xa4\x01\n" +
 	"\x13LodgingAvailability\x12\x1d\n" +
 	"\n" +
 	"lodging_id\x18\x01 \x01(\tR\tlodgingId\x12!\n" +
 	"\flodging_name\x18\x02 \x01(\tR\vlodgingName\x12\x1c\n" +
 	"\tavailable\x18\x03 \x01(\bR\tavailable\x12-\n" +
-	"\x12unavailable_reason\x18\x04 \x01(\tR\x11unavailableReason\"c\n" +
+	"\x12unavailable_reason\x18\x04 \x01(\tR\x11unavailableReason\"\x8b\x01\n" +
 	"\x14ListLodgingsResponse\x12K\n" +
-	"\blodgings\x18\x01 \x03(\v2/.moego.business.offering.v1.LodgingAvailabilityR\blodgings2\xc9\x02\n" +
+	"\blodgings\x18\x01 \x03(\v2/.moego.business.offering.v1.LodgingAvailabilityR\blodgings\x12&\n" +
+	"\x0fnext_page_token\x18\x02 \x01(\tR\rnextPageToken2\xc9\x02\n" +
 	"\x0fOfferingService\x12\x99\x01\n" +
 	"\fListServices\x12/.moego.business.offering.v1.ListServicesRequest\x1a0.moego.business.offering.v1.ListServicesResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/offerings/services:list\x12\x99\x01\n" +
 	"\fListLodgings\x12/.moego.business.offering.v1.ListLodgingsRequest\x1a0.moego.business.offering.v1.ListLodgingsResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/offerings/lodgings:listB\x96\x01\n" +
@@ -642,30 +689,33 @@ var file_moego_business_offering_v1_offering_service_proto_goTypes = []any{
 	(settingpb.Service_Type)(0),     // 7: moego.business.setting.v1.Service.Type
 	(settingpb.Service_ItemType)(0), // 8: moego.business.setting.v1.Service.ItemType
 	(*date.Date)(nil),               // 9: google.type.Date
-	(*money.Money)(nil),             // 10: google.type.Money
+	(*commonpb.Pagination)(nil),     // 10: moego.common.v1.Pagination
+	(*money.Money)(nil),             // 11: google.type.Money
 }
 var file_moego_business_offering_v1_offering_service_proto_depIdxs = []int32{
 	7,  // 0: moego.business.offering.v1.ListServicesRequest.service_type:type_name -> moego.business.setting.v1.Service.Type
 	8,  // 1: moego.business.offering.v1.ListServicesRequest.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
 	9,  // 2: moego.business.offering.v1.ListServicesRequest.start_date:type_name -> google.type.Date
 	9,  // 3: moego.business.offering.v1.ListServicesRequest.end_date:type_name -> google.type.Date
-	8,  // 4: moego.business.offering.v1.ServiceView.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	7,  // 5: moego.business.offering.v1.ServiceView.service_type:type_name -> moego.business.setting.v1.Service.Type
-	10, // 6: moego.business.offering.v1.ServiceView.price:type_name -> google.type.Money
-	1,  // 7: moego.business.offering.v1.ServicesByPet.services:type_name -> moego.business.offering.v1.ServiceView
-	1,  // 8: moego.business.offering.v1.ListServicesResponse.services:type_name -> moego.business.offering.v1.ServiceView
-	2,  // 9: moego.business.offering.v1.ListServicesResponse.pet_services:type_name -> moego.business.offering.v1.ServicesByPet
-	9,  // 10: moego.business.offering.v1.ListLodgingsRequest.date:type_name -> google.type.Date
-	5,  // 11: moego.business.offering.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.offering.v1.LodgingAvailability
-	0,  // 12: moego.business.offering.v1.OfferingService.ListServices:input_type -> moego.business.offering.v1.ListServicesRequest
-	4,  // 13: moego.business.offering.v1.OfferingService.ListLodgings:input_type -> moego.business.offering.v1.ListLodgingsRequest
-	3,  // 14: moego.business.offering.v1.OfferingService.ListServices:output_type -> moego.business.offering.v1.ListServicesResponse
-	6,  // 15: moego.business.offering.v1.OfferingService.ListLodgings:output_type -> moego.business.offering.v1.ListLodgingsResponse
-	14, // [14:16] is the sub-list for method output_type
-	12, // [12:14] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	10, // 4: moego.business.offering.v1.ListServicesRequest.pagination:type_name -> moego.common.v1.Pagination
+	8,  // 5: moego.business.offering.v1.ServiceView.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	7,  // 6: moego.business.offering.v1.ServiceView.service_type:type_name -> moego.business.setting.v1.Service.Type
+	11, // 7: moego.business.offering.v1.ServiceView.price:type_name -> google.type.Money
+	1,  // 8: moego.business.offering.v1.ServicesByPet.services:type_name -> moego.business.offering.v1.ServiceView
+	1,  // 9: moego.business.offering.v1.ListServicesResponse.services:type_name -> moego.business.offering.v1.ServiceView
+	2,  // 10: moego.business.offering.v1.ListServicesResponse.pet_services:type_name -> moego.business.offering.v1.ServicesByPet
+	9,  // 11: moego.business.offering.v1.ListLodgingsRequest.date:type_name -> google.type.Date
+	10, // 12: moego.business.offering.v1.ListLodgingsRequest.pagination:type_name -> moego.common.v1.Pagination
+	5,  // 13: moego.business.offering.v1.ListLodgingsResponse.lodgings:type_name -> moego.business.offering.v1.LodgingAvailability
+	0,  // 14: moego.business.offering.v1.OfferingService.ListServices:input_type -> moego.business.offering.v1.ListServicesRequest
+	4,  // 15: moego.business.offering.v1.OfferingService.ListLodgings:input_type -> moego.business.offering.v1.ListLodgingsRequest
+	3,  // 16: moego.business.offering.v1.OfferingService.ListServices:output_type -> moego.business.offering.v1.ListServicesResponse
+	6,  // 17: moego.business.offering.v1.OfferingService.ListLodgings:output_type -> moego.business.offering.v1.ListLodgingsResponse
+	16, // [16:18] is the sub-list for method output_type
+	14, // [14:16] is the sub-list for method input_type
+	14, // [14:14] is the sub-list for extension type_name
+	14, // [14:14] is the sub-list for extension extendee
+	0,  // [0:14] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_offering_v1_offering_service_proto_init() }
