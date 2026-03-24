@@ -22,68 +22,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// Delivery method (channel) for sending the message to the customer.
-// Numeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).
-type MessageDeliveryMethod int32
-
-const (
-	// Unknown or unspecified delivery method.
-	MessageDeliveryMethod_MESSAGE_DELIVERY_METHOD_UNSPECIFIED MessageDeliveryMethod = 0
-	// In-app / internal message (msg).
-	MessageDeliveryMethod_MSG MessageDeliveryMethod = 1
-	// Email.
-	MessageDeliveryMethod_EMAIL MessageDeliveryMethod = 2
-	// Phone call (call).
-	MessageDeliveryMethod_CALL MessageDeliveryMethod = 4
-	// App push or in-app (app).
-	MessageDeliveryMethod_APP MessageDeliveryMethod = 5
-)
-
-// Enum value maps for MessageDeliveryMethod.
-var (
-	MessageDeliveryMethod_name = map[int32]string{
-		0: "MESSAGE_DELIVERY_METHOD_UNSPECIFIED",
-		1: "MSG",
-		2: "EMAIL",
-		4: "CALL",
-		5: "APP",
-	}
-	MessageDeliveryMethod_value = map[string]int32{
-		"MESSAGE_DELIVERY_METHOD_UNSPECIFIED": 0,
-		"MSG":                                 1,
-		"EMAIL":                               2,
-		"CALL":                                4,
-		"APP":                                 5,
-	}
-)
-
-func (x MessageDeliveryMethod) Enum() *MessageDeliveryMethod {
-	p := new(MessageDeliveryMethod)
-	*p = x
-	return p
-}
-
-func (x MessageDeliveryMethod) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (MessageDeliveryMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_message_v1_message_service_proto_enumTypes[0].Descriptor()
-}
-
-func (MessageDeliveryMethod) Type() protoreflect.EnumType {
-	return &file_moego_business_message_v1_message_service_proto_enumTypes[0]
-}
-
-func (x MessageDeliveryMethod) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use MessageDeliveryMethod.Descriptor instead.
-func (MessageDeliveryMethod) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_message_v1_message_service_proto_rawDescGZIP(), []int{0}
-}
-
 // Content type of the message body.
 type MessageType int32
 
@@ -121,11 +59,11 @@ func (x MessageType) String() string {
 }
 
 func (MessageType) Descriptor() protoreflect.EnumDescriptor {
-	return file_moego_business_message_v1_message_service_proto_enumTypes[1].Descriptor()
+	return file_moego_business_message_v1_message_service_proto_enumTypes[0].Descriptor()
 }
 
 func (MessageType) Type() protoreflect.EnumType {
-	return &file_moego_business_message_v1_message_service_proto_enumTypes[1]
+	return &file_moego_business_message_v1_message_service_proto_enumTypes[0]
 }
 
 func (x MessageType) Number() protoreflect.EnumNumber {
@@ -134,7 +72,7 @@ func (x MessageType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use MessageType.Descriptor instead.
 func (MessageType) EnumDescriptor() ([]byte, []int) {
-	return file_moego_business_message_v1_message_service_proto_rawDescGZIP(), []int{1}
+	return file_moego_business_message_v1_message_service_proto_rawDescGZIP(), []int{0}
 }
 
 // Request for SendMessageToCustomer.
@@ -275,11 +213,130 @@ func (x *SendMessageToCustomerResponse) GetMessageId() string {
 	return ""
 }
 
+// Request for SendAutoMessageToCustomer.
+type SendAutoMessageToCustomerRequest struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Customer id to send the auto message to (obfuscated id).
+	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
+	// Business id for context and template lookup (obfuscated id).
+	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
+	// Use case or template type (e.g. appointment reminder, payment confirmation).
+	UseCase string `protobuf:"bytes,3,opt,name=use_case,json=useCase,proto3" json:"use_case,omitempty"`
+	// Delivery channels to use: MSG(1), EMAIL(2), CALL(4), APP(5). At least one required.
+	Methods []MessageDeliveryMethod `protobuf:"varint,4,rep,packed,name=methods,proto3,enum=moego.business.message.v1.MessageDeliveryMethod" json:"methods,omitempty"`
+	// Optional context for variable substitution (e.g. appointment_id for reminders).
+	ContextId     *string `protobuf:"bytes,5,opt,name=context_id,json=contextId,proto3,oneof" json:"context_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendAutoMessageToCustomerRequest) Reset() {
+	*x = SendAutoMessageToCustomerRequest{}
+	mi := &file_moego_business_message_v1_message_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendAutoMessageToCustomerRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendAutoMessageToCustomerRequest) ProtoMessage() {}
+
+func (x *SendAutoMessageToCustomerRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_message_v1_message_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendAutoMessageToCustomerRequest.ProtoReflect.Descriptor instead.
+func (*SendAutoMessageToCustomerRequest) Descriptor() ([]byte, []int) {
+	return file_moego_business_message_v1_message_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *SendAutoMessageToCustomerRequest) GetCustomerId() string {
+	if x != nil {
+		return x.CustomerId
+	}
+	return ""
+}
+
+func (x *SendAutoMessageToCustomerRequest) GetBusinessId() string {
+	if x != nil {
+		return x.BusinessId
+	}
+	return ""
+}
+
+func (x *SendAutoMessageToCustomerRequest) GetUseCase() string {
+	if x != nil {
+		return x.UseCase
+	}
+	return ""
+}
+
+func (x *SendAutoMessageToCustomerRequest) GetMethods() []MessageDeliveryMethod {
+	if x != nil {
+		return x.Methods
+	}
+	return nil
+}
+
+func (x *SendAutoMessageToCustomerRequest) GetContextId() string {
+	if x != nil && x.ContextId != nil {
+		return *x.ContextId
+	}
+	return ""
+}
+
+// Response for SendAutoMessageToCustomer.
+type SendAutoMessageToCustomerResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SendAutoMessageToCustomerResponse) Reset() {
+	*x = SendAutoMessageToCustomerResponse{}
+	mi := &file_moego_business_message_v1_message_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SendAutoMessageToCustomerResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SendAutoMessageToCustomerResponse) ProtoMessage() {}
+
+func (x *SendAutoMessageToCustomerResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_moego_business_message_v1_message_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SendAutoMessageToCustomerResponse.ProtoReflect.Descriptor instead.
+func (*SendAutoMessageToCustomerResponse) Descriptor() ([]byte, []int) {
+	return file_moego_business_message_v1_message_service_proto_rawDescGZIP(), []int{3}
+}
+
 var File_moego_business_message_v1_message_service_proto protoreflect.FileDescriptor
 
 const file_moego_business_message_v1_message_service_proto_rawDesc = "" +
 	"\n" +
-	"/moego/business/message/v1/message_service.proto\x12\x19moego.business.message.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\"\xc4\x02\n" +
+	"/moego/business/message/v1/message_service.proto\x12\x19moego.business.message.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a'moego/business/message/v1/message.proto\"\xc4\x02\n" +
 	"\x1cSendMessageToCustomerRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"customerId\x12&\n" +
@@ -294,19 +351,25 @@ const file_moego_business_message_v1_message_service_proto_rawDesc = "" +
 	"message_id\x18\x02 \x01(\tH\x01R\tmessageId\x88\x01\x01B\f\n" +
 	"\n" +
 	"_thread_idB\r\n" +
-	"\v_message_id*g\n" +
-	"\x15MessageDeliveryMethod\x12'\n" +
-	"#MESSAGE_DELIVERY_METHOD_UNSPECIFIED\x10\x00\x12\a\n" +
-	"\x03MSG\x10\x01\x12\t\n" +
-	"\x05EMAIL\x10\x02\x12\b\n" +
-	"\x04CALL\x10\x04\x12\a\n" +
-	"\x03APP\x10\x05*>\n" +
+	"\v_message_id\"\x92\x02\n" +
+	" SendAutoMessageToCustomerRequest\x12$\n" +
+	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
+	"customerId\x12$\n" +
+	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
+	"businessId\x12\x1e\n" +
+	"\buse_case\x18\x03 \x01(\tB\x03\xe0A\x02R\auseCase\x12O\n" +
+	"\amethods\x18\x04 \x03(\x0e20.moego.business.message.v1.MessageDeliveryMethodB\x03\xe0A\x02R\amethods\x12\"\n" +
+	"\n" +
+	"context_id\x18\x05 \x01(\tH\x00R\tcontextId\x88\x01\x01B\r\n" +
+	"\v_context_id\"#\n" +
+	"!SendAutoMessageToCustomerResponse*>\n" +
 	"\vMessageType\x12\x1c\n" +
 	"\x18MESSAGE_TYPE_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04TEXT\x10\x01\x12\a\n" +
-	"\x03PIC\x10\x022\xc5\x01\n" +
+	"\x03PIC\x10\x022\x91\x03\n" +
 	"\x0eMessageService\x12\xb2\x01\n" +
-	"\x15SendMessageToCustomer\x127.moego.business.message.v1.SendMessageToCustomerRequest\x1a8.moego.business.message.v1.SendMessageToCustomerResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/messages:sendToCustomerB\x91\x01\n" +
+	"\x15SendMessageToCustomer\x127.moego.business.message.v1.SendMessageToCustomerRequest\x1a8.moego.business.message.v1.SendMessageToCustomerResponse\"&\x82\xd3\xe4\x93\x02 :\x01*\"\x1b/v1/messages:sendToCustomer\x12\xc9\x01\n" +
+	"\x19SendAutoMessageToCustomer\x12;.moego.business.message.v1.SendAutoMessageToCustomerRequest\x1a<.moego.business.message.v1.SendAutoMessageToCustomerResponse\"1\x82\xd3\xe4\x93\x02+:\x01*\"&/v1/messages:sendAutoMessageToCustomerB\x91\x01\n" +
 	"!com.moego.api.business.message.v1B\x13MessageServiceProtoP\x01ZUgithub.com/MoeGolibrary/moegoapis/genproto/go/business/message/v1/messagepb;messagepbb\x06proto3"
 
 var (
@@ -321,24 +384,29 @@ func file_moego_business_message_v1_message_service_proto_rawDescGZIP() []byte {
 	return file_moego_business_message_v1_message_service_proto_rawDescData
 }
 
-var file_moego_business_message_v1_message_service_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_moego_business_message_v1_message_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_moego_business_message_v1_message_service_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_moego_business_message_v1_message_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_moego_business_message_v1_message_service_proto_goTypes = []any{
-	(MessageDeliveryMethod)(0),            // 0: moego.business.message.v1.MessageDeliveryMethod
-	(MessageType)(0),                      // 1: moego.business.message.v1.MessageType
-	(*SendMessageToCustomerRequest)(nil),  // 2: moego.business.message.v1.SendMessageToCustomerRequest
-	(*SendMessageToCustomerResponse)(nil), // 3: moego.business.message.v1.SendMessageToCustomerResponse
+	(MessageType)(0),                          // 0: moego.business.message.v1.MessageType
+	(*SendMessageToCustomerRequest)(nil),      // 1: moego.business.message.v1.SendMessageToCustomerRequest
+	(*SendMessageToCustomerResponse)(nil),     // 2: moego.business.message.v1.SendMessageToCustomerResponse
+	(*SendAutoMessageToCustomerRequest)(nil),  // 3: moego.business.message.v1.SendAutoMessageToCustomerRequest
+	(*SendAutoMessageToCustomerResponse)(nil), // 4: moego.business.message.v1.SendAutoMessageToCustomerResponse
+	(MessageDeliveryMethod)(0),                // 5: moego.business.message.v1.MessageDeliveryMethod
 }
 var file_moego_business_message_v1_message_service_proto_depIdxs = []int32{
-	1, // 0: moego.business.message.v1.SendMessageToCustomerRequest.message_type:type_name -> moego.business.message.v1.MessageType
-	0, // 1: moego.business.message.v1.SendMessageToCustomerRequest.method:type_name -> moego.business.message.v1.MessageDeliveryMethod
-	2, // 2: moego.business.message.v1.MessageService.SendMessageToCustomer:input_type -> moego.business.message.v1.SendMessageToCustomerRequest
-	3, // 3: moego.business.message.v1.MessageService.SendMessageToCustomer:output_type -> moego.business.message.v1.SendMessageToCustomerResponse
-	3, // [3:4] is the sub-list for method output_type
-	2, // [2:3] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0, // 0: moego.business.message.v1.SendMessageToCustomerRequest.message_type:type_name -> moego.business.message.v1.MessageType
+	5, // 1: moego.business.message.v1.SendMessageToCustomerRequest.method:type_name -> moego.business.message.v1.MessageDeliveryMethod
+	5, // 2: moego.business.message.v1.SendAutoMessageToCustomerRequest.methods:type_name -> moego.business.message.v1.MessageDeliveryMethod
+	1, // 3: moego.business.message.v1.MessageService.SendMessageToCustomer:input_type -> moego.business.message.v1.SendMessageToCustomerRequest
+	3, // 4: moego.business.message.v1.MessageService.SendAutoMessageToCustomer:input_type -> moego.business.message.v1.SendAutoMessageToCustomerRequest
+	2, // 5: moego.business.message.v1.MessageService.SendMessageToCustomer:output_type -> moego.business.message.v1.SendMessageToCustomerResponse
+	4, // 6: moego.business.message.v1.MessageService.SendAutoMessageToCustomer:output_type -> moego.business.message.v1.SendAutoMessageToCustomerResponse
+	5, // [5:7] is the sub-list for method output_type
+	3, // [3:5] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_message_v1_message_service_proto_init() }
@@ -346,15 +414,17 @@ func file_moego_business_message_v1_message_service_proto_init() {
 	if File_moego_business_message_v1_message_service_proto != nil {
 		return
 	}
+	file_moego_business_message_v1_message_proto_init()
 	file_moego_business_message_v1_message_service_proto_msgTypes[0].OneofWrappers = []any{}
 	file_moego_business_message_v1_message_service_proto_msgTypes[1].OneofWrappers = []any{}
+	file_moego_business_message_v1_message_service_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_message_v1_message_service_proto_rawDesc), len(file_moego_business_message_v1_message_service_proto_rawDesc)),
-			NumEnums:      2,
-			NumMessages:   2,
+			NumEnums:      1,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

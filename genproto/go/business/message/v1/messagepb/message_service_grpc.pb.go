@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	MessageService_SendMessageToCustomer_FullMethodName = "/moego.business.message.v1.MessageService/SendMessageToCustomer"
+	MessageService_SendMessageToCustomer_FullMethodName     = "/moego.business.message.v1.MessageService/SendMessageToCustomer"
+	MessageService_SendAutoMessageToCustomer_FullMethodName = "/moego.business.message.v1.MessageService/SendAutoMessageToCustomer"
 )
 
 // MessageServiceClient is the client API for MessageService service.
@@ -38,6 +39,12 @@ type MessageServiceClient interface {
 	// using the given delivery method (msg / email / call / app). The message body and
 	// type (text or pic) are supplied by the caller; thread creation is handled internally.
 	SendMessageToCustomer(ctx context.Context, in *SendMessageToCustomerRequest, opts ...grpc.CallOption) (*SendMessageToCustomerResponse, error)
+	// Sends an auto message to a customer.
+	//
+	// Triggers a template-based auto message (e.g. appointment reminder, payment
+	// confirmation) to the customer via the configured delivery channels. The message
+	// content is derived from the template and optional context (e.g. appointment_id).
+	SendAutoMessageToCustomer(ctx context.Context, in *SendAutoMessageToCustomerRequest, opts ...grpc.CallOption) (*SendAutoMessageToCustomerResponse, error)
 }
 
 type messageServiceClient struct {
@@ -52,6 +59,16 @@ func (c *messageServiceClient) SendMessageToCustomer(ctx context.Context, in *Se
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SendMessageToCustomerResponse)
 	err := c.cc.Invoke(ctx, MessageService_SendMessageToCustomer_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *messageServiceClient) SendAutoMessageToCustomer(ctx context.Context, in *SendAutoMessageToCustomerRequest, opts ...grpc.CallOption) (*SendAutoMessageToCustomerResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SendAutoMessageToCustomerResponse)
+	err := c.cc.Invoke(ctx, MessageService_SendAutoMessageToCustomer_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -74,6 +91,12 @@ type MessageServiceServer interface {
 	// using the given delivery method (msg / email / call / app). The message body and
 	// type (text or pic) are supplied by the caller; thread creation is handled internally.
 	SendMessageToCustomer(context.Context, *SendMessageToCustomerRequest) (*SendMessageToCustomerResponse, error)
+	// Sends an auto message to a customer.
+	//
+	// Triggers a template-based auto message (e.g. appointment reminder, payment
+	// confirmation) to the customer via the configured delivery channels. The message
+	// content is derived from the template and optional context (e.g. appointment_id).
+	SendAutoMessageToCustomer(context.Context, *SendAutoMessageToCustomerRequest) (*SendAutoMessageToCustomerResponse, error)
 	mustEmbedUnimplementedMessageServiceServer()
 }
 
@@ -86,6 +109,9 @@ type UnimplementedMessageServiceServer struct{}
 
 func (UnimplementedMessageServiceServer) SendMessageToCustomer(context.Context, *SendMessageToCustomerRequest) (*SendMessageToCustomerResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SendMessageToCustomer not implemented")
+}
+func (UnimplementedMessageServiceServer) SendAutoMessageToCustomer(context.Context, *SendAutoMessageToCustomerRequest) (*SendAutoMessageToCustomerResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method SendAutoMessageToCustomer not implemented")
 }
 func (UnimplementedMessageServiceServer) mustEmbedUnimplementedMessageServiceServer() {}
 func (UnimplementedMessageServiceServer) testEmbeddedByValue()                        {}
@@ -126,6 +152,24 @@ func _MessageService_SendMessageToCustomer_Handler(srv interface{}, ctx context.
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MessageService_SendAutoMessageToCustomer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SendAutoMessageToCustomerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MessageServiceServer).SendAutoMessageToCustomer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: MessageService_SendAutoMessageToCustomer_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MessageServiceServer).SendAutoMessageToCustomer(ctx, req.(*SendAutoMessageToCustomerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // MessageService_ServiceDesc is the grpc.ServiceDesc for MessageService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -136,6 +180,10 @@ var MessageService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SendMessageToCustomer",
 			Handler:    _MessageService_SendMessageToCustomer_Handler,
+		},
+		{
+			MethodName: "SendAutoMessageToCustomer",
+			Handler:    _MessageService_SendAutoMessageToCustomer_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
