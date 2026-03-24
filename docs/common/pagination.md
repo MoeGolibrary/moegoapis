@@ -10,10 +10,12 @@ and efficient data retrieval for large result sets.
 
 | Field Name  | Type   | Required | Description                                                      |
 |-------------|--------|----------|------------------------------------------------------------------|
-| `pageSize`  | int32  | Yes      | Number of items to return per page (1~500)                       |
+| `pageSize`  | int32  | Yes      | Number of items to return per page (1~500, default: 100)         |
 | `pageToken` | string | No       | Token for retrieving the next page (min length 1, max length 64) |
 
 > ⚠️ `pageToken` is optional. Leave empty for the first page. Obtain from previous response for subsequent pages.
+
+> ⚠️ `pageSize` maximum is 500. Requests exceeding 500 will return an `InvalidArgument` error. Default is 100 if not specified.
 
 ## 📦 3. Example JSON
 
