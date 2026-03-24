@@ -52,6 +52,7 @@ Events are categorized into functional groups with specific ranges:
 | 100-199 | Appointment Events    | Lifecycle changes for appointments          |
 | 200-299 | Online Booking Events | Customer self-service booking notifications |
 | 300-399 | Customer Events      | Customer data changes                   |
+| 400-499 | Pet Events           | Pet data changes                        |
 
 ### 3. Payload Structures
 
@@ -62,6 +63,7 @@ Each event type has an associated payload format:
 | `HEALTH_CHECK`         | HealthCheck  | System monitoring verification    |
 | `APPOINTMENT_*` series | Appointment  | Appointment lifecycle information |
 | `CUSTOMER_*` series   | Customer     | Customer data changes        |
+| `PET_*` series        | Pet          | Pet data changes             |
 
 ---
 
@@ -88,6 +90,11 @@ message Event {
     CUSTOMER_CREATED = 300;
     CUSTOMER_UPDATED = 301;
     CUSTOMER_DELETED = 302;
+
+    // Pet Events (400-499)
+    PET_CREATED = 400;
+    PET_UPDATED = 401;
+    PET_DELETED = 402;
   }
 
   string id = 1;
@@ -100,6 +107,7 @@ message Event {
     moego.business.appointment.v1.Appointment appointment = 6;
     moego.business.online_booking.v1.OnlineBooking online_booking = 7;
     moego.business.customer.v1.Customer customer = 8;
+    moego.business.customer.v1.Pet pet = 9;
   }
 }
 ```
@@ -158,6 +166,20 @@ message HealthCheck {
 }
 ```
 
+### Example 4: Pet Updated Event
+
+```json
+{
+  "id": "evt_jkl012",
+  "type": "PET_UPDATED",
+  "timestamp": "2024-08-01T12:15:00Z",
+  "companyId": "cmp_001",
+  "pet": {
+    // Full pet details from moego.business.customer.v1.Pet
+  }
+}
+```
+
 ---
 
 ## ⚠️ 6. Usage Limitations
@@ -197,3 +219,4 @@ TODO
 - [appointment.proto](../moego/business/appointment/v1/appointment.proto)
 - [online_booking.proto](../moego/business/online_booking/v1/online_booking.proto)
 - [customer.proto](../moego/business/customer/v1/customer.proto)
+- [pet.proto](../moego/business/customer/v1/pet.proto)
