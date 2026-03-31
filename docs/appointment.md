@@ -370,6 +370,24 @@ Creates a new appointment with services for one or more pets.
 > mainly used to support mandatory appointments in certain special scenarios (such as manual intervention in the
 > background).
 
+##### PetService Object
+
+| Field Name | Type           | Required | Description                                          |
+|------------|----------------|----------|------------------------------------------------------|
+| `petId`    | string         | Yes      | The unique identifier of the pet receiving services  |
+| `services` | Array(Service) | Yes      | List of services to be provided for this pet         |
+
+##### Service Object
+
+| Field Name  | Type          | Required                   | Description                                                                                                    |
+|-------------|---------------|----------------------------|----------------------------------------------------------------------------------------------------------------|
+| `id`        | string        | Yes                        | The unique identifier of the service. Must be an active service in the business's service list                 |
+| `duration`  | Interval      | Yes                        | The scheduled time window for this service                                                                     |
+| `staffIds`  | Array(string) | GROOMING only              | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
+| `lodgingId` | string        | BOARDING: Yes / DAYCARE: No | Lodging unit ID. Required for boarding, optional for daycare, not applicable for grooming                      |
+
+> Service type (`GROOMING`, `BOARDING`, `DAYCARE`) is determined by the service item itself — pass the correct `id` and the system routes accordingly.
+
 #### 📌 Return Value:
 
 | Field Name          | Type                    | Description                                                                   |
@@ -396,9 +414,18 @@ Creates a new appointment with services for one or more pets.
 | `checkOutTime`      | timestamp               | When the service was completed and the pet picked up                          |
 | `bookingRequestId`  | string (optional)       | The booking request ID associated with this appointment, obfuscated ID string |
 
+#### ⚠️ Important Notes:
+
+> **Service type determines required fields**: The service item type (`GROOMING`, `BOARDING`, `DAYCARE`) is inferred
+> from the service `id` itself.
+>
+> - `GROOMING`: `staffIds` is required. `lodgingId` is not applicable.
+> - `BOARDING`: `staffIds` can be empty. `lodgingId` is required.
+> - `DAYCARE`: `staffIds` can be empty. `lodgingId` is optional.
+
 #### ⚠️ Error Codes:
 
-- `INVALID_ARGUMENT`: Required fields are missing or invalid.
+- `INVALID_ARGUMENT`: Required fields are missing or invalid (e.g., missing `staffIds` in services).
 - `PERMISSION_DENIED`: Permission denied.
 
 ---
@@ -871,7 +898,7 @@ GET /v1/appointments/12345?business_id=biz_001
 }
 ```
 
-### Example 2: Create Appointment
+### Example 2: Create Grooming Appointment
 
 ```
 {
@@ -894,6 +921,60 @@ GET /v1/appointments/12345?business_id=biz_001
       ]
     }
   ]
+}
+```
+
+### Example 2.1: Create Boarding Appointment
+
+> Note: `staffIds` is not required for boarding. `lodgingId` specifies the lodging unit for the pet's stay.
+
+```
+{
+  "businessId": "biz_001",
+  "customerId": "cus_001",
+  "petServices": [
+    {
+      "petId": "pet_001",
+      "services": [
+        {
+          "id": "svc_boarding",
+          "duration": {
+            "startTime": "2024-08-15T10:00:00Z",
+            "endTime": "2024-08-17T10:00:00Z"
+          },
+          "lodgingId": "ldg_001"
+        }
+      ]
+    }
+  ],
+  "ignoreConflict": true
+}
+```
+
+### Example 2.2: Create Daycare Appointment
+
+> Note: `staffIds` is not required for daycare. `lodgingId` is optional.
+
+```
+{
+  "businessId": "biz_001",
+  "customerId": "cus_001",
+  "petServices": [
+    {
+      "petId": "pet_001",
+      "services": [
+        {
+          "id": "svc_daycare",
+          "duration": {
+            "startTime": "2024-08-15T08:00:00Z",
+            "endTime": "2024-08-15T18:00:00Z"
+          },
+          "lodgingId": "ldg_001"
+        }
+      ]
+    }
+  ],
+  "ignoreConflict": true
 }
 ```
 

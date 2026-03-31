@@ -1447,7 +1447,12 @@
           "items": {
             "type": "string"
           },
-          "description": "array(string), Preferred staff member IDs for this service.\nOnly the first staff member will be assigned if available."
+          "description": "array(string), Staff member IDs for this service.\nRequired for GROOMING services. Leave empty for BOARDING/DAYCARE."
+        },
+        "lodgingId": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, The lodging unit identifier for boarding/daycare services.\nRequired for BOARDING services.\nOptional for DAYCARE services.\nNot applicable for GROOMING services."
         }
       },
       "title": "Individual service booking details",

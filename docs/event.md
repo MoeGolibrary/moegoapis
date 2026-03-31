@@ -51,7 +51,8 @@ Events are categorized into functional groups with specific ranges:
 | 0-99    | System Events         | Monitoring and infrastructure events        |
 | 100-199 | Appointment Events    | Lifecycle changes for appointments          |
 | 200-299 | Online Booking Events | Customer self-service booking notifications |
-| 300-399 | Customer Events      | Customer data changes                   |
+| 300-399 | Customer Events       | Customer data changes                       |
+| 400-499 | Pet Events            | Pet profile data changes                    |
 
 ### 3. Payload Structures
 
@@ -61,7 +62,8 @@ Each event type has an associated payload format:
 |------------------------|--------------|-----------------------------------|
 | `HEALTH_CHECK`         | HealthCheck  | System monitoring verification    |
 | `APPOINTMENT_*` series | Appointment  | Appointment lifecycle information |
-| `CUSTOMER_*` series   | Customer     | Customer data changes        |
+| `CUSTOMER_*` series    | Customer     | Customer data changes             |
+| `PET_*` series         | Pet          | Pet profile data changes          |
 
 ---
 
@@ -88,6 +90,11 @@ message Event {
     CUSTOMER_CREATED = 300;
     CUSTOMER_UPDATED = 301;
     CUSTOMER_DELETED = 302;
+
+    // Pet Events (400-499)
+    PET_CREATED = 400;
+    PET_UPDATED = 401;
+    PET_DELETED = 402;
   }
 
   string id = 1;
@@ -100,6 +107,7 @@ message Event {
     moego.business.appointment.v1.Appointment appointment = 6;
     moego.business.online_booking.v1.OnlineBooking online_booking = 7;
     moego.business.customer.v1.Customer customer = 8;
+    moego.business.customer.v1.Pet pet = 9;
   }
 }
 ```
@@ -158,6 +166,56 @@ message HealthCheck {
 }
 ```
 
+### Example 4: Pet Created Event
+
+```json
+{
+  "id": "evt_jkl012",
+  "type": "PET_CREATED",
+  "timestamp": "2024-08-01T12:15:00Z",
+  "companyId": "cmp_001",
+  "pet": {
+    "id": "pet_001",
+    "name": "Buddy",
+    "type": "DOG",
+    "breed": "Golden Retriever",
+    "gender": "MALE",
+    "customerId": "cus_001",
+    "status": "ALIVE",
+    "createdTime": "2024-08-01T12:15:00Z"
+  }
+}
+```
+
+### Example 5: Pet Updated Event
+
+```json
+{
+  "id": "evt_mno345",
+  "type": "PET_UPDATED",
+  "timestamp": "2024-08-02T09:00:00Z",
+  "companyId": "cmp_001",
+  "pet": {
+    // Full pet details from moego.business.customer.v1.Pet
+  }
+}
+```
+
+### Example 6: Pet Deleted Event
+
+```json
+{
+  "id": "evt_pqr678",
+  "type": "PET_DELETED",
+  "timestamp": "2024-08-03T10:00:00Z",
+  "companyId": "cmp_001",
+  "pet": {
+    "id": "pet_001",
+    "deleted": true
+  }
+}
+```
+
 ---
 
 ## ⚠️ 6. Usage Limitations
@@ -172,8 +230,9 @@ TODO
 |---------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | How do I verify webhook endpoint availability?          | Use the `HEALTH_CHECK` event type with the provided validation string                                                                                           |
 | Which event indicates a new appointment?                | The `APPOINTMENT_CREATED` event type                                                                                                                            |
-| Which event indicates a customer update?                | The `CUSTOMER_UPDATED` event type triggers when customer profile is modified                                                                                         |
-| How are different event types processed differently?    | Each event type has a specific payload format and processing logic - system events use HealthCheck, appointments use Appointment, customers use Customer, etc.                          |
+| Which event indicates a customer update?                | The `CUSTOMER_UPDATED` event type triggers when customer profile is modified                                                                                    |
+| Which events are related to pets?                       | `PET_CREATED` (400), `PET_UPDATED` (401), `PET_DELETED` (402) — all carry a `Pet` payload                                                                      |
+| How are different event types processed differently?    | Each event type has a specific payload format and processing logic - system events use HealthCheck, appointments use Appointment, customers use Customer, pets use Pet |
 | Why does my system need to handle multiple event types? | Different business operations require different handling procedures - appointment changes affect scheduling while customer updates trigger profile synchronization workflows |
 | How to ensure proper event ordering?                    | Use the `timestamp` field for event sequencing                                                                                                                  |
 

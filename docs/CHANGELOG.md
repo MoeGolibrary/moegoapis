@@ -15,6 +15,13 @@ When making API changes:
 
 ## [Unreleased]
 
+### Added
+- `Appointment:Create` API: added `lodgingId` field to `CreateAppointmentRequest.Service` to support lodging unit assignment for `BOARDING`/`DAYCARE` appointments (2026-03-31)
+- `Appointment:Create` API: support `BOARDING` and `DAYCARE` service types; `staffIds` is no longer required for boarding/daycare (2026-03-31)
+
+### Documentation
+- `Appointment:Create` API: clarified per-type field requirements for `Service` object; added boarding and daycare examples (2026-03-31)
+
 ---
 
 ## [1.2.0] - 2026-03-20
