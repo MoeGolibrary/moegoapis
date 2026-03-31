@@ -296,9 +296,15 @@ message CreateAppointmentRequest {
     // Must be within business hours and staff availability.
     google.type.Interval duration = 2;
 
-    // array(string), Preferred staff member IDs for this service.
-    // Only the first staff member will be assigned if available.
+    // array(string), Staff member IDs for this service.
+    // Required for GROOMING services. Leave empty for BOARDING/DAYCARE.
     repeated string staff_ids = 3;
+
+    // string, The lodging unit identifier for boarding/daycare services.
+    // Required for BOARDING services.
+    // Optional for DAYCARE services.
+    // Not applicable for GROOMING services.
+    optional string lodging_id = 4 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Initial note to create for the appointment

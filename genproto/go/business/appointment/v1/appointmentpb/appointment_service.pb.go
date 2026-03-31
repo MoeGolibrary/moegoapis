@@ -1457,9 +1457,14 @@ type CreateAppointmentRequest_Service struct {
 	// object(Interval), The scheduled time window for this service.
 	// Must be within business hours and staff availability.
 	Duration *interval.Interval `protobuf:"bytes,2,opt,name=duration,proto3" json:"duration,omitempty"`
-	// array(string), Preferred staff member IDs for this service.
-	// Only the first staff member will be assigned if available.
-	StaffIds      []string `protobuf:"bytes,3,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	// array(string), Staff member IDs for this service.
+	// Required for GROOMING services. Leave empty for BOARDING/DAYCARE.
+	StaffIds []string `protobuf:"bytes,3,rep,name=staff_ids,json=staffIds,proto3" json:"staff_ids,omitempty"`
+	// string, The lodging unit identifier for boarding/daycare services.
+	// Required for BOARDING services.
+	// Optional for DAYCARE services.
+	// Not applicable for GROOMING services.
+	LodgingId     *string `protobuf:"bytes,4,opt,name=lodging_id,json=lodgingId,proto3,oneof" json:"lodging_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1513,6 +1518,13 @@ func (x *CreateAppointmentRequest_Service) GetStaffIds() []string {
 		return x.StaffIds
 	}
 	return nil
+}
+
+func (x *CreateAppointmentRequest_Service) GetLodgingId() string {
+	if x != nil && x.LodgingId != nil {
+		return *x.LodgingId
+	}
+	return ""
 }
 
 // Initial note to create for the appointment
@@ -1674,7 +1686,7 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x1dBusinessClosedDateCheckResult\x124\n" +
 	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\x1a`\n" +
 	"\x1eLodgingOverCapacityCheckResult\x12>\n" +
-	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xf9\x06\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xb2\a\n" +
 	"\x18CreateAppointmentRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12$\n" +
@@ -1687,11 +1699,14 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\n" +
 	"PetService\x12\x1a\n" +
 	"\x06pet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\x05petId\x12`\n" +
-	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1ai\n" +
+	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\xa1\x01\n" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
 	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalR\bduration\x12\x1b\n" +
-	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\x1a}\n" +
+	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\x12'\n" +
+	"\n" +
+	"lodging_id\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\tlodgingId\x88\x01\x01B\r\n" +
+	"\v_lodging_id\x1a}\n" +
 	"\x14AppointmentNoteInput\x12\x17\n" +
 	"\x04note\x18\x01 \x01(\tB\x03\xe0A\x02R\x04note\x12L\n" +
 	"\x04type\x18\x02 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x02R\x04typeB\x12\n" +
@@ -1880,6 +1895,7 @@ func file_moego_business_appointment_v1_appointment_service_proto_init() {
 	file_moego_business_appointment_v1_appointment_note_proto_init()
 	file_moego_business_appointment_v1_grooming_report_proto_init()
 	file_moego_business_appointment_v1_appointment_service_proto_msgTypes[5].OneofWrappers = []any{}
+	file_moego_business_appointment_v1_appointment_service_proto_msgTypes[21].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
