@@ -386,22 +386,22 @@ Creates a new appointment with services for one or more pets.
 | `staffIds`  | Array(string) | GROOMING only               | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
 | `lodgingId` | string        | BOARDING: Yes / DAYCARE: No | Lodging unit ID. Required for boarding, optional for daycare, not applicable for grooming                      |
 | `price`     | Money         | No                          | Custom service price. If not set, the system default price will be used                                        |
-| `dateType`  | enum(DateType) | BOARDING/DAYCARE only      | How the service is scheduled across dates. Required for boarding/daycare, not applicable for grooming          |
+| `dateType`  | int32          | BOARDING/DAYCARE only      | How the service is scheduled across dates. Required for boarding/daycare, not applicable for grooming. See values below |
 
-##### DateType Enum
+##### DateType Values
 
-| Value                          | Description                                                              |
-|--------------------------------|--------------------------------------------------------------------------|
-| `DATE_TYPE_UNSPECIFIED`        | Unknown or unspecified                                                   |
-| `EVERYDAY`                     | Every day excluding checkout day. Common for boarding                    |
-| `SPECIFIC_DATE`                | A specific list of dates                                                 |
-| `DATE_POINT`                   | Single point in time. Used for grooming or single-day daycare            |
-| `EVERYDAY_INCLUDE_CHECKOUT_DAY`| Every day including checkout day                                         |
-| `EVERYDAY_EXCEPT_CHECKIN_DAY`  | Every day excluding checkin day                                          |
-| `LAST_DAY`                     | Checkout day only                                                        |
-| `FIRST_DAY`                    | Checkin day only                                                         |
+| Value | Name                             | Description                                                              |
+|-------|----------------------------------|--------------------------------------------------------------------------|
+| `0`   | UNSPECIFIED                      | Unknown or unspecified                                                   |
+| `1`   | EVERYDAY                         | Every day excluding checkout day. Common for boarding                    |
+| `2`   | SPECIFIC_DATE                    | A specific list of dates                                                 |
+| `3`   | DATE_POINT                       | Single point in time. Used for grooming or single-day daycare            |
+| `4`   | EVERYDAY_INCLUDE_CHECKOUT_DAY    | Every day including checkout day                                         |
+| `5`   | EVERYDAY_EXCEPT_CHECKIN_DAY      | Every day excluding checkin day                                          |
+| `6`   | LAST_DAY                         | Checkout day only                                                        |
+| `7`   | FIRST_DAY                        | Checkin day only                                                         |
 
-> Boarding/daycare commonly use `EVERYDAY`, `EVERYDAY_INCLUDE_CHECKOUT_DAY`, or `EVERYDAY_EXCEPT_CHECKIN_DAY`. Grooming uses `DATE_POINT`.
+> Boarding commonly uses `1`, `4`, or `5`. Grooming/single-day daycare uses `3`.
 
 #### 📌 Return Value:
 
@@ -962,7 +962,7 @@ GET /v1/appointments/12345?business_id=biz_001
             "units": "46",
             "nanos": 500000000
           },
-          "dateType": "EVERYDAY",
+          "dateType": 1,
           "staffIds": ["stfUNfY"],
           "lodgingId": "lodgu3PAP"
         }

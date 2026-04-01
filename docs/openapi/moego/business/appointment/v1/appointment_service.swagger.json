@@ -651,21 +651,6 @@
         "type": "AppointmentNoteInput"
       }
     },
-    "CreateAppointmentRequestDateType": {
-      "type": "string",
-      "enum": [
-        "DATE_TYPE_UNSPECIFIED",
-        "EVERYDAY",
-        "SPECIFIC_DATE",
-        "DATE_POINT",
-        "EVERYDAY_INCLUDE_CHECKOUT_DAY",
-        "EVERYDAY_EXCEPT_CHECKIN_DAY",
-        "LAST_DAY",
-        "FIRST_DAY"
-      ],
-      "default": "DATE_TYPE_UNSPECIFIED",
-      "description": "DateType determines how a service is scheduled across dates.\nUsed for BOARDING and DAYCARE services to define the date range behavior.\n\n - DATE_TYPE_UNSPECIFIED: Unknown or unspecified date type\n - EVERYDAY: Every day excluding checkout day.\nUsed with boarding start/end date to expand across days.\n - SPECIFIC_DATE: A specific list of dates.\n - DATE_POINT: Single point in time. Used for grooming or single-day daycare.\n - EVERYDAY_INCLUDE_CHECKOUT_DAY: Every day including checkout day.\n - EVERYDAY_EXCEPT_CHECKIN_DAY: Every day excluding checkin day.\n - LAST_DAY: Checkout day only.\n - FIRST_DAY: Checkin day only."
-    },
     "CreateAppointmentRequestPetService": {
       "type": "object",
       "properties": {
@@ -1475,9 +1460,10 @@
           "description": "object(Money), Custom service price.\nOptional. If not set, the system default price will be used."
         },
         "dateType": {
-          "$ref": "#/definitions/CreateAppointmentRequestDateType",
+          "type": "integer",
+          "format": "int32",
           "x-nullable": true,
-          "description": "enum(DateType), Determines how the service is scheduled across dates.\nOptional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING."
+          "title": "int32, Determines how the service is scheduled across dates.\nOptional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING.\nMaps to PetDetailDateType: 0=UNSPECIFIED, 1=EVERYDAY, 2=SPECIFIC_DATE,\n3=DATE_POINT, 4=EVERYDAY_INCLUDE_CHECKOUT_DAY, 5=EVERYDAY_EXCEPT_CHECKIN_DAY,\n6=LAST_DAY, 7=FIRST_DAY"
         }
       },
       "title": "Individual service booking details",
