@@ -14,7 +14,6 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	date "google.golang.org/genproto/googleapis/type/date"
 	interval "google.golang.org/genproto/googleapis/type/interval"
-	money "google.golang.org/genproto/googleapis/type/money"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -1466,9 +1465,9 @@ type CreateAppointmentRequest_Service struct {
 	// Optional for DAYCARE services.
 	// Not applicable for GROOMING services.
 	LodgingId *string `protobuf:"bytes,4,opt,name=lodging_id,json=lodgingId,proto3,oneof" json:"lodging_id,omitempty"`
-	// object(Money), Custom service price.
+	// double, Custom service price.
 	// Optional. If not set, the system default price will be used.
-	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3,oneof" json:"price,omitempty"`
+	Price *float64 `protobuf:"fixed64,5,opt,name=price,proto3,oneof" json:"price,omitempty"`
 	// int32, Determines how the service is scheduled across dates.
 	// Optional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING.
 	// Maps to PetDetailDateType: 0=UNSPECIFIED, 1=EVERYDAY, 2=SPECIFIC_DATE,
@@ -1537,11 +1536,11 @@ func (x *CreateAppointmentRequest_Service) GetLodgingId() string {
 	return ""
 }
 
-func (x *CreateAppointmentRequest_Service) GetPrice() *money.Money {
-	if x != nil {
-		return x.Price
+func (x *CreateAppointmentRequest_Service) GetPrice() float64 {
+	if x != nil && x.Price != nil {
+		return *x.Price
 	}
-	return nil
+	return 0
 }
 
 func (x *CreateAppointmentRequest_Service) GetDateType() int32 {
@@ -1658,7 +1657,7 @@ var File_moego_business_appointment_v1_appointment_service_proto protoreflect.Fi
 
 const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" +
 	"\n" +
-	"7moego/business/appointment/v1/appointment_service.proto\x12\x1dmoego.business.appointment.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a4moego/business/appointment/v1/appointment_note.proto\x1a'moego/business/message/v1/message.proto\x1a3moego/business/appointment/v1/grooming_report.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\"R\n" +
+	"7moego/business/appointment/v1/appointment_service.proto\x12\x1dmoego.business.appointment.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x1agoogle/type/interval.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a4moego/business/appointment/v1/appointment_note.proto\x1a'moego/business/message/v1/message.proto\x1a3moego/business/appointment/v1/grooming_report.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\"R\n" +
 	"\x15GetAppointmentRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +
@@ -1710,7 +1709,7 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x1dBusinessClosedDateCheckResult\x124\n" +
 	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\x1a`\n" +
 	"\x1eLodgingOverCapacityCheckResult\x12>\n" +
-	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xa5\b\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\x91\b\n" +
 	"\x18CreateAppointmentRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12$\n" +
@@ -1723,14 +1722,14 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\n" +
 	"PetService\x12\x1a\n" +
 	"\x06pet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\x05petId\x12`\n" +
-	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\x94\x02\n" +
+	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\x80\x02\n" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
 	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalR\bduration\x12\x1b\n" +
 	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\x12'\n" +
 	"\n" +
-	"lodging_id\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\tlodgingId\x88\x01\x01\x122\n" +
-	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x01H\x01R\x05price\x88\x01\x01\x12%\n" +
+	"lodging_id\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\tlodgingId\x88\x01\x01\x12\x1e\n" +
+	"\x05price\x18\x05 \x01(\x01B\x03\xe0A\x01H\x01R\x05price\x88\x01\x01\x12%\n" +
 	"\tdate_type\x18\x06 \x01(\x05B\x03\xe0A\x01H\x02R\bdateType\x88\x01\x01B\r\n" +
 	"\v_lodging_idB\b\n" +
 	"\x06_priceB\f\n" +
@@ -1848,7 +1847,6 @@ var file_moego_business_appointment_v1_appointment_service_proto_goTypes = []any
 	(*customerpb.Pet)(nil),                                                          // 34: moego.business.customer.v1.Pet
 	(*date.Date)(nil),                                                               // 35: google.type.Date
 	(*settingpb.Lodging)(nil),                                                       // 36: moego.business.setting.v1.Lodging
-	(*money.Money)(nil),                                                             // 37: google.type.Money
 }
 var file_moego_business_appointment_v1_appointment_service_proto_depIdxs = []int32{
 	25, // 0: moego.business.appointment.v1.ListAppointmentsRequest.pagination:type_name -> moego.common.v1.Pagination
@@ -1885,36 +1883,35 @@ var file_moego_business_appointment_v1_appointment_service_proto_depIdxs = []int
 	36, // 31: moego.business.appointment.v1.CheckAppointmentAvailabilityResponse.LodgingOverCapacityCheckResult.lodgings:type_name -> moego.business.setting.v1.Lodging
 	22, // 32: moego.business.appointment.v1.CreateAppointmentRequest.PetService.services:type_name -> moego.business.appointment.v1.CreateAppointmentRequest.Service
 	27, // 33: moego.business.appointment.v1.CreateAppointmentRequest.Service.duration:type_name -> google.type.Interval
-	37, // 34: moego.business.appointment.v1.CreateAppointmentRequest.Service.price:type_name -> google.type.Money
-	31, // 35: moego.business.appointment.v1.CreateAppointmentRequest.AppointmentNoteInput.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
-	35, // 36: moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOut.end_date:type_name -> google.type.Date
-	1,  // 37: moego.business.appointment.v1.AppointmentService.GetAppointment:input_type -> moego.business.appointment.v1.GetAppointmentRequest
-	2,  // 38: moego.business.appointment.v1.AppointmentService.ListAppointments:input_type -> moego.business.appointment.v1.ListAppointmentsRequest
-	4,  // 39: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:input_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
-	6,  // 40: moego.business.appointment.v1.AppointmentService.CreateAppointment:input_type -> moego.business.appointment.v1.CreateAppointmentRequest
-	7,  // 41: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:input_type -> moego.business.appointment.v1.RescheduleAppointmentRequest
-	8,  // 42: moego.business.appointment.v1.AppointmentService.CancelAppointment:input_type -> moego.business.appointment.v1.CancelAppointmentRequest
-	9,  // 43: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:input_type -> moego.business.appointment.v1.UpdateAppointmentStatusRequest
-	10, // 44: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
-	12, // 45: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
-	13, // 46: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
-	14, // 47: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
-	26, // 48: moego.business.appointment.v1.AppointmentService.GetAppointment:output_type -> moego.business.appointment.v1.Appointment
-	3,  // 49: moego.business.appointment.v1.AppointmentService.ListAppointments:output_type -> moego.business.appointment.v1.ListAppointmentsResponse
-	5,  // 50: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:output_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
-	26, // 51: moego.business.appointment.v1.AppointmentService.CreateAppointment:output_type -> moego.business.appointment.v1.Appointment
-	26, // 52: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:output_type -> moego.business.appointment.v1.Appointment
-	26, // 53: moego.business.appointment.v1.AppointmentService.CancelAppointment:output_type -> moego.business.appointment.v1.Appointment
-	26, // 54: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:output_type -> moego.business.appointment.v1.Appointment
-	11, // 55: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
-	32, // 56: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	32, // 57: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
-	15, // 58: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
-	48, // [48:59] is the sub-list for method output_type
-	37, // [37:48] is the sub-list for method input_type
-	37, // [37:37] is the sub-list for extension type_name
-	37, // [37:37] is the sub-list for extension extendee
-	0,  // [0:37] is the sub-list for field type_name
+	31, // 34: moego.business.appointment.v1.CreateAppointmentRequest.AppointmentNoteInput.type:type_name -> moego.business.appointment.v1.AppointmentNote.Type
+	35, // 35: moego.business.appointment.v1.UpdateAppointmentStatusRequest.CheckOut.end_date:type_name -> google.type.Date
+	1,  // 36: moego.business.appointment.v1.AppointmentService.GetAppointment:input_type -> moego.business.appointment.v1.GetAppointmentRequest
+	2,  // 37: moego.business.appointment.v1.AppointmentService.ListAppointments:input_type -> moego.business.appointment.v1.ListAppointmentsRequest
+	4,  // 38: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:input_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityRequest
+	6,  // 39: moego.business.appointment.v1.AppointmentService.CreateAppointment:input_type -> moego.business.appointment.v1.CreateAppointmentRequest
+	7,  // 40: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:input_type -> moego.business.appointment.v1.RescheduleAppointmentRequest
+	8,  // 41: moego.business.appointment.v1.AppointmentService.CancelAppointment:input_type -> moego.business.appointment.v1.CancelAppointmentRequest
+	9,  // 42: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:input_type -> moego.business.appointment.v1.UpdateAppointmentStatusRequest
+	10, // 43: moego.business.appointment.v1.AppointmentService.ListGroomingReports:input_type -> moego.business.appointment.v1.ListGroomingReportsRequest
+	12, // 44: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:input_type -> moego.business.appointment.v1.CreateAppointmentNoteRequest
+	13, // 45: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:input_type -> moego.business.appointment.v1.UpdateAppointmentNoteRequest
+	14, // 46: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:input_type -> moego.business.appointment.v1.ListAppointmentNotesRequest
+	26, // 47: moego.business.appointment.v1.AppointmentService.GetAppointment:output_type -> moego.business.appointment.v1.Appointment
+	3,  // 48: moego.business.appointment.v1.AppointmentService.ListAppointments:output_type -> moego.business.appointment.v1.ListAppointmentsResponse
+	5,  // 49: moego.business.appointment.v1.AppointmentService.CheckAppointmentAvailability:output_type -> moego.business.appointment.v1.CheckAppointmentAvailabilityResponse
+	26, // 50: moego.business.appointment.v1.AppointmentService.CreateAppointment:output_type -> moego.business.appointment.v1.Appointment
+	26, // 51: moego.business.appointment.v1.AppointmentService.RescheduleAppointment:output_type -> moego.business.appointment.v1.Appointment
+	26, // 52: moego.business.appointment.v1.AppointmentService.CancelAppointment:output_type -> moego.business.appointment.v1.Appointment
+	26, // 53: moego.business.appointment.v1.AppointmentService.UpdateAppointmentStatus:output_type -> moego.business.appointment.v1.Appointment
+	11, // 54: moego.business.appointment.v1.AppointmentService.ListGroomingReports:output_type -> moego.business.appointment.v1.ListGroomingReportsResponse
+	32, // 55: moego.business.appointment.v1.AppointmentService.CreateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	32, // 56: moego.business.appointment.v1.AppointmentService.UpdateAppointmentNote:output_type -> moego.business.appointment.v1.AppointmentNote
+	15, // 57: moego.business.appointment.v1.AppointmentService.ListAppointmentNotes:output_type -> moego.business.appointment.v1.ListAppointmentNotesResponse
+	47, // [47:58] is the sub-list for method output_type
+	36, // [36:47] is the sub-list for method input_type
+	36, // [36:36] is the sub-list for extension type_name
+	36, // [36:36] is the sub-list for extension extendee
+	0,  // [0:36] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_appointment_service_proto_init() }

@@ -1455,9 +1455,10 @@
           "description": "string, The lodging unit identifier for boarding/daycare services.\nRequired for BOARDING services.\nOptional for DAYCARE services.\nNot applicable for GROOMING services."
         },
         "price": {
-          "$ref": "#/definitions/typeMoney",
+          "type": "number",
+          "format": "double",
           "x-nullable": true,
-          "description": "object(Money), Custom service price.\nOptional. If not set, the system default price will be used."
+          "description": "double, Custom service price.\nOptional. If not set, the system default price will be used."
         },
         "dateType": {
           "type": "integer",
