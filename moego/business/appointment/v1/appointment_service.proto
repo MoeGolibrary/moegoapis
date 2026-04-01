@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/date.proto";
 import "google/type/interval.proto";
+import "google/type/money.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/appointment_note.proto";
 import "moego/business/message/v1/message.proto";
@@ -306,9 +307,9 @@ message CreateAppointmentRequest {
     // Not applicable for GROOMING services.
     optional string lodging_id = 4 [(google.api.field_behavior) = OPTIONAL];
 
-    // double, Custom service price.
+    // object(Money), Custom service price.
     // Optional. If not set, the system default price will be used.
-    optional double price = 5 [(google.api.field_behavior) = OPTIONAL];
+    optional google.type.Money price = 5 [(google.api.field_behavior) = OPTIONAL];
 
     // int32, Determines how the service is scheduled across dates.
     // Optional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING.
