@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/date.proto";
 import "google/type/interval.proto";
+import "google/type/money.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/appointment_note.proto";
 import "moego/business/message/v1/message.proto";
@@ -305,6 +306,43 @@ message CreateAppointmentRequest {
     // Optional for DAYCARE services.
     // Not applicable for GROOMING services.
     optional string lodging_id = 4 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(Money), Custom service price.
+    // Optional. If not set, the system default price will be used.
+    optional google.type.Money price = 5 [(google.api.field_behavior) = OPTIONAL];
+
+    // enum(DateType), Determines how the service is scheduled across dates.
+    // Optional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING.
+    optional DateType date_type = 6 [(google.api.field_behavior) = OPTIONAL];
+  }
+
+  // DateType determines how a service is scheduled across dates.
+  // Used for BOARDING and DAYCARE services to define the date range behavior.
+  enum DateType {
+    // Unknown or unspecified date type
+    DATE_TYPE_UNSPECIFIED = 0;
+
+    // Every day excluding checkout day.
+    // Used with boarding start/end date to expand across days.
+    EVERYDAY = 1;
+
+    // A specific list of dates.
+    SPECIFIC_DATE = 2;
+
+    // Single point in time. Used for grooming or single-day daycare.
+    DATE_POINT = 3;
+
+    // Every day including checkout day.
+    EVERYDAY_INCLUDE_CHECKOUT_DAY = 4;
+
+    // Every day excluding checkin day.
+    EVERYDAY_EXCEPT_CHECKIN_DAY = 5;
+
+    // Checkout day only.
+    LAST_DAY = 6;
+
+    // Checkin day only.
+    FIRST_DAY = 7;
   }
 
   // Initial note to create for the appointment
