@@ -44,7 +44,103 @@ method, etc.
 | `createdTime`   | Timestamp                 | Creation time          |
 | `updatedTime`   | Timestamp                 | Last update time       |
 
-### 2. WebhookDelivery
+### 2. Organization
+
+Represents an organization entity in the MoeGo system. Organizations are the top-level grouping for resources and
+determine available features and capabilities.
+
+| Field Name | Type   | Description                                                                                                                                                                                                                                                                                                  |
+|------------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `id`       | string | Unique identifier for the organization. The prefix should match the organization type:<br>- `BUSINESS`: Format "biz_" + random characters (e.g., "biz_id001")<br>- `COMPANY`: Format "cop_" + random characters (e.g., "cop_id001")<br>- `ENTERPRISE`: Format "ent_" + random characters (e.g., "ent_id001") |
+| `type`     | Type   | Organization's service tier. Determines feature availability and API capabilities. Options:<br>- `BUSINESS`: Single-location business with standard features<br>- `COMPANY`: Multi-location business with advanced features<br>- `ENTERPRISE`: Enterprise organization with full platform access             |
+
+**Example**:
+
+```json
+{
+  "organizations": [
+    {
+      "id": "cop_id001",
+      "type": "COMPANY"
+    },
+    {
+      "id": "biz_id001",
+      "type": "BUSINESS"
+    }
+  ]
+}
+```
+
+**Usage in Webhooks**: When specified in a webhook configuration, the webhook will only receive events from the listed
+organizations. If the `organizations` array is empty, the webhook receives events from all organizations accessible to
+the API key.
+
+### 3. EventType
+
+Event types categorize different kinds of events that can trigger webhook calls. Each event type corresponds to a
+specific business operation or system occurrence.
+
+**Event Type Ranges**:
+
+- **System Events **(1-99): System-level operations and monitoring
+    - `HEALTH_CHECK`: Health check event for system monitoring
+
+- **Appointment Events **(100-199): Appointment lifecycle changes
+    - `APPOINTMENT_CREATED`: New appointment has been created
+    - `APPOINTMENT_UPDATED`: Existing appointment has been modified
+    - `APPOINTMENT_FINISHED`: Service delivery has been completed
+    - `APPOINTMENT_CANCELED`: Appointment has been canceled
+    - `APPOINTMENT_DELETED`: Appointment has been permanently removed
+    - `APPOINTMENT_FULLY_PAID`: All payments for the appointment received (TODO)
+
+- **Online Booking Events **(200-299): Customer self-service booking
+    - `ONLINE_BOOKING_RECEIVED`: New online booking request received (TODO)
+
+- **Customer Events **(300-399): Customer data changes
+    - `CUSTOMER_CREATED`: New customer has been created
+    - `CUSTOMER_UPDATED`: Existing customer has been modified
+    - `CUSTOMER_DELETED`: Customer has been permanently removed
+
+- **Pet Events **(400-499): Pet data changes
+    - `PET_CREATED`: New pet has been created
+    - `PET_UPDATED`: Existing pet has been modified
+    - `PET_DELETED`: Pet has been permanently removed
+
+For detailed event structures and payloads, refer to [event.proto](../moego/business/event/v1/event.proto).
+
+### 4. HeaderValues
+
+Represents a list of values for a custom HTTP header key. This allows webhooks to include multiple values for the same
+header when delivering payloads.
+
+| Field Name | Type          | Description                       |
+|------------|---------------|-----------------------------------|
+| `values`   | Array(string) | List of values for the header key |
+
+**Usage in Webhooks**: Custom HTTP headers can be added to webhook delivery requests for authentication, identification,
+or other purposes. Each header key maps to a `HeaderValues` object containing one or more string values.
+
+**Example**:
+
+```json
+{
+  "headers": {
+    "Authorization": {
+      "values": [
+        "Bearer your_token"
+      ]
+    },
+    "X-Custom-Header": {
+      "values": [
+        "value1",
+        "value2"
+      ]
+    }
+  }
+}
+```
+
+### 5. WebhookDelivery
 
 Represents a specific webhook push record.
 
@@ -54,14 +150,14 @@ Represents a specific webhook push record.
 |-------------------|---------------------------|-------------------------------------|
 | `id`              | string                    | Delivery log ID                     |
 | `webhookId`       | string                    | Associated webhook ID               |
-| `eventType`       | EventType                 | Event type                          |
+| `eventType`       | EventType                 | Event type (see section 3 above)    |
 | `eventId`         | string                    | Unique event ID                     |
 | `requestUrl`      | string                    | Request URL                         |
 | `deliveredTo`     | string                    | Actual destination address          |
-| `requestHeaders`  | map(string, HeaderValues) | Request headers                     |
+| `requestHeaders`  | map(string, HeaderValues) | Request headers (see section 4)     |
 | `requestBody`     | bytes                     | The request body encoded in base64  |
 | `responseStatus`  | int32                     | HTTP status code                    |
-| `responseHeaders` | map(string, HeaderValues) | Response headers                    |
+| `responseHeaders` | map(string, HeaderValues) | Response headers (see section 4)    |
 | `responseBody`    | bytes                     | The Response body encoded in base64 |
 | `deliveredAt`     | Timestamp                 | Delivery timestamp                  |
 | `durationMs`      | int64                     | Duration in milliseconds            |
@@ -71,22 +167,9 @@ Represents a specific webhook push record.
 | `requestFormat`   | ContentType               | Request format                      |
 | `responseFormat`  | ContentType               | Response format                     |
 
-### 3. Event Type
-
-Event types trigger webhook calls. Examples include:
-
-- `HEALTH_CHECK`
-- `APPOINTMENT_CREATED`
-- `APPOINTMENT_FINISHED`
-- `CUSTOMER_CREATED`
-- `CUSTOMER_UPDATED`
-- `CUSTOMER_DELETED`
-
-Refer to [event.proto](../moego/business/event/v1/event.proto) for supported event types.
-
 ---
 
-## 📈 4. Typical Usage Flow
+## 📈 5. Typical Usage Flow
 
 ### ✅ Scenario: User Integrates and Debugs Webhook
 
@@ -114,7 +197,7 @@ Here is a typical integration flow:
 
 ---
 
-## 📦 5. API Interface Descriptions
+## 📦 6. API Interface Descriptions
 
 ### 1. Create Webhook (`CreateWebhook`)
 
@@ -147,17 +230,18 @@ e.g., authentication token, headers).
 
 #### 💡 Example Request:
 
-```json
+```
 {
   "endpointUrl": "https://your-service.com/webhook",
   "organizations": [
     {
-      "id": "org_001"
+      "id": "cop_id001",
+      "type": "COMPANY"
     }
   ],
   "eventTypes": [
-    "ORDER_CREATED",
-    "PAYMENT_SUCCESS"
+    "APPOINTMENT_CREATED",
+    "APPOINTMENT_FINISHED"
   ],
   "secretToken": "my-secret-token",
   "isActive": true,
@@ -503,7 +587,7 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 ---
 
-## 🧪 6. Usage Examples
+## 🧪 7. Usage Examples
 
 ### Example 1: Create Webhook
 
@@ -512,15 +596,17 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
   "endpointUrl": "https://your-service.com/webhook",
   "organizations": [
     {
-      "id": "org_001"
+      "id": "cop_id001",
+      "type": "COMPANY"
     },
     {
-      "id": "org_002"
+      "id": "biz_id001",
+      "type": "BUSINESS"
     }
   ],
   "eventTypes": [
-    "ORDER_CREATED",
-    "PAYMENT_SUCCESS"
+    "APPOINTMENT_CREATED",
+    "CUSTOMER_CREATED"
   ],
   "secretToken": "my-secret-token",
   "isActive": true,
@@ -540,7 +626,7 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 ```json
 {
   "id": "whk_001",
-  "eventType": "PING",
+  "eventType": "HEALTH_CHECK",
   "payload": "{ \"test\": \"hello world\" }"
 }
 ```
@@ -566,7 +652,7 @@ Retries a failed webhook delivery, useful after fixing endpoint issues.
 
 ---
 
-## ⚠️ 7. Usage Limitations
+## ⚠️ 8. Usage Limitations
 
 To ensure system stability and fair resource usage, the following default limits are applied to webhook usage:
 
@@ -591,8 +677,7 @@ To ensure system stability and fair resource usage, the following default limits
 ### 4. Monthly Total Push Count per Webhook
 
 - **Limit**: Up to 1,500,000 times/month
-- **Description**: Long-term resource allocation basis, suitable for multi-tenant SaaS resource management strategies. *
-  *Contact us if you need a higher limit.**
+- **Description**: Long-term resource allocation basis, suitable for multi-tenant SaaS resource management strategies. **Contact us if you need a higher limit.**
 
 ### 5. Delivery Log Retention Period
 
@@ -605,7 +690,7 @@ To ensure system stability and fair resource usage, the following default limits
 
 ---
 
-## 📎 8. FAQ
+## 📎 9. FAQ
 
 | Question                                                        | Answer                                                                                                                                           |
 |-----------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -619,7 +704,7 @@ To ensure system stability and fair resource usage, the following default limits
 
 ---
 
-## 🛡️ 9. Security Recommendations
+## 🛡️ 10. Security Recommendations
 
 - ✅ Enable `verifySsl` to prevent man-in-the-middle attacks.
 - ✅ Use `secretToken` to sign payloads (e.g., HMAC).
@@ -631,7 +716,7 @@ To ensure system stability and fair resource usage, the following default limits
 
 ---
 
-## 📌 10. Common Error Codes
+## 📌 11. Common Error Codes
 
 | Error Code           | Description                                |
 |----------------------|--------------------------------------------|
@@ -644,7 +729,7 @@ To ensure system stability and fair resource usage, the following default limits
 
 ---
 
-## 📎 11. Related File References
+## 📎 12. Related File References
 
 - [webhook_service.proto](../moego/business/webhook/v1/webhook_service.proto)
 - [webhook.proto](../moego/business/webhook/v1/webhook.proto)
