@@ -156,6 +156,54 @@
     }
   },
   "definitions": {
+    "AbandonPreferencePreferredDay": {
+      "type": "string",
+      "enum": [
+        "PREFERRED_DAY_UNSPECIFIED",
+        "TODAY",
+        "TOMORROW",
+        "THIS_WEEK",
+        "FLEXIBLE"
+      ],
+      "default": "PREFERRED_DAY_UNSPECIFIED",
+      "description": "Preferred booking day.\n\n - PREFERRED_DAY_UNSPECIFIED: Default value. This value is unused.\n - TODAY: Today.\n - TOMORROW: Tomorrow.\n - THIS_WEEK: This week.\n - FLEXIBLE: Flexible."
+    },
+    "AbandonPreferencePreferredTime": {
+      "type": "string",
+      "enum": [
+        "PREFERRED_TIME_UNSPECIFIED",
+        "MORNING",
+        "AFTERNOON",
+        "EITHER"
+      ],
+      "default": "PREFERRED_TIME_UNSPECIFIED",
+      "description": "Preferred booking time window.\n\n - PREFERRED_TIME_UNSPECIFIED: Default value. This value is unused.\n - MORNING: Morning.\n - AFTERNOON: Afternoon.\n - EITHER: Either."
+    },
+    "AbandonedBookingAbandonPreference": {
+      "type": "object",
+      "properties": {
+        "preferredDay": {
+          "$ref": "#/definitions/AbandonPreferencePreferredDay",
+          "description": "Preferred booking day."
+        },
+        "preferredTime": {
+          "$ref": "#/definitions/AbandonPreferencePreferredTime",
+          "description": "Preferred booking time window."
+        },
+        "preferenceSubmittedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the preference snapshot was submitted."
+        }
+      },
+      "description": "AbandonPreference captures the preference snapshot submitted in the\nabandon flow and is independent from long-term customer profile settings.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/online_booking/v1/onlinebookingpb"
+        },
+        "type": "AbandonPreference"
+      }
+    },
     "AbandonedBookingLeadType": {
       "type": "string",
       "enum": [
@@ -668,6 +716,10 @@
         "careType": {
           "$ref": "#/definitions/ServiceItemType",
           "description": "Type of service selected by the customer."
+        },
+        "abandonPreference": {
+          "$ref": "#/definitions/AbandonedBookingAbandonPreference",
+          "description": "Preference snapshot captured during the abandon flow."
         }
       },
       "description": "AbandonedBooking represents a booking that was not completed by the customer.\nThis message captures information about the customer, selected services,\nabandonment step, and recovery status for analytics and follow-up actions.",
