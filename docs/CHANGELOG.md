@@ -19,7 +19,7 @@ When making API changes:
 - `Appointment:Create` API: added `lodgingId` field to `CreateAppointmentRequest.Service` to support lodging unit assignment for `BOARDING`/`DAYCARE` appointments (2026-03-31)
 - `Appointment:Create` API: support `BOARDING` and `DAYCARE` service types; `staffIds` is no longer required for boarding/daycare (2026-03-31)
 - `Appointment:Create` API: added optional `price` field to `CreateAppointmentRequest.Service`; if not set, system default price is used (2026-04-01)
-- `Appointment:Create` API: added optional `dateType` field to `CreateAppointmentRequest.Service` for boarding/daycare scheduling; see `DateType` enum for all values (2026-04-01)
+- `Appointment:Create` API: added optional `dateType` field to `CreateAppointmentRequest.Service` for boarding scheduling; see `DateType` enum for all values (2026-04-01)
 
 ### Documentation
 - `Appointment:Create` API: clarified per-type field requirements for `Service` object; added boarding and daycare examples (2026-03-31)
