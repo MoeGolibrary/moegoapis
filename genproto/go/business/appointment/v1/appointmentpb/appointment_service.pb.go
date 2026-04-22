@@ -1470,7 +1470,7 @@ type CreateAppointmentRequest_Service struct {
 	// Optional. If not set, the system default price will be used.
 	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3,oneof" json:"price,omitempty"`
 	// int32, Determines how the service is scheduled across dates.
-	// Optional. Required for BOARDING/DAYCARE services. Not applicable for GROOMING.
+	// Optional. Required for BOARDING services. Not applicable for DAYCARE or GROOMING.
 	// Maps to PetDetailDateType: 0=UNSPECIFIED, 1=EVERYDAY, 2=SPECIFIC_DATE,
 	// 3=DATE_POINT, 4=EVERYDAY_INCLUDE_CHECKOUT_DAY, 5=EVERYDAY_EXCEPT_CHECKIN_DAY,
 	// 6=LAST_DAY, 7=FIRST_DAY

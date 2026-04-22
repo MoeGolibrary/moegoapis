@@ -385,7 +385,7 @@ Creates a new appointment with services for one or more pets.
 | `duration`  | Interval      | Yes                         | The scheduled time window for this service                                                                     |
 | `staffIds`  | Array(string) | GROOMING only               | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
 | `lodgingId` | string        | BOARDING: Yes / DAYCARE: No | Lodging unit ID. Required for boarding, optional for daycare, not applicable for grooming                      |
-| `price`     | double        | No                          | Custom service price. If not set, the system default price will be used                                        |
+| `price`     | Money         | No                          | Custom service price. If not set, the system default price will be used                                        |
 | `dateType`  | int32         | BOARDING only               | How the service is scheduled across dates. Required for boarding. See values below                             |
 
 ##### DateType Values
