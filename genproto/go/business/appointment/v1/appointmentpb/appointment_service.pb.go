@@ -1468,13 +1468,7 @@ type CreateAppointmentRequest_Service struct {
 	LodgingId *string `protobuf:"bytes,4,opt,name=lodging_id,json=lodgingId,proto3,oneof" json:"lodging_id,omitempty"`
 	// object(Money), Custom service price.
 	// Optional. If not set, the system default price will be used.
-	Price *money.Money `protobuf:"bytes,5,opt,name=price,proto3,oneof" json:"price,omitempty"`
-	// int32, Determines how the service is scheduled across dates.
-	// Optional. Required for BOARDING services. Not applicable for DAYCARE or GROOMING.
-	// Maps to PetDetailDateType: 0=UNSPECIFIED, 1=EVERYDAY, 2=SPECIFIC_DATE,
-	// 3=DATE_POINT, 4=EVERYDAY_INCLUDE_CHECKOUT_DAY, 5=EVERYDAY_EXCEPT_CHECKIN_DAY,
-	// 6=LAST_DAY, 7=FIRST_DAY
-	DateType      *int32 `protobuf:"varint,6,opt,name=date_type,json=dateType,proto3,oneof" json:"date_type,omitempty"`
+	Price         *money.Money `protobuf:"bytes,5,opt,name=price,proto3,oneof" json:"price,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1542,13 +1536,6 @@ func (x *CreateAppointmentRequest_Service) GetPrice() *money.Money {
 		return x.Price
 	}
 	return nil
-}
-
-func (x *CreateAppointmentRequest_Service) GetDateType() int32 {
-	if x != nil && x.DateType != nil {
-		return *x.DateType
-	}
-	return 0
 }
 
 // Initial note to create for the appointment
@@ -1710,7 +1697,7 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x1dBusinessClosedDateCheckResult\x124\n" +
 	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\x1a`\n" +
 	"\x1eLodgingOverCapacityCheckResult\x12>\n" +
-	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xa5\b\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xf0\a\n" +
 	"\x18CreateAppointmentRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12$\n" +
@@ -1723,19 +1710,16 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\n" +
 	"PetService\x12\x1a\n" +
 	"\x06pet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\x05petId\x12`\n" +
-	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\x94\x02\n" +
+	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\xdf\x01\n" +
 	"\aService\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
 	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalR\bduration\x12\x1b\n" +
 	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\x12'\n" +
 	"\n" +
 	"lodging_id\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\tlodgingId\x88\x01\x01\x122\n" +
-	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x01H\x01R\x05price\x88\x01\x01\x12%\n" +
-	"\tdate_type\x18\x06 \x01(\x05B\x03\xe0A\x01H\x02R\bdateType\x88\x01\x01B\r\n" +
+	"\x05price\x18\x05 \x01(\v2\x12.google.type.MoneyB\x03\xe0A\x01H\x01R\x05price\x88\x01\x01B\r\n" +
 	"\v_lodging_idB\b\n" +
-	"\x06_priceB\f\n" +
-	"\n" +
-	"_date_type\x1a}\n" +
+	"\x06_price\x1a}\n" +
 	"\x14AppointmentNoteInput\x12\x17\n" +
 	"\x04note\x18\x01 \x01(\tB\x03\xe0A\x02R\x04note\x12L\n" +
 	"\x04type\x18\x02 \x01(\x0e23.moego.business.appointment.v1.AppointmentNote.TypeB\x03\xe0A\x02R\x04typeB\x12\n" +
