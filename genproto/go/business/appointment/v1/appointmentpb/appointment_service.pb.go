@@ -1697,7 +1697,7 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\x1dBusinessClosedDateCheckResult\x124\n" +
 	"\fclosed_dates\x18\x01 \x03(\v2\x11.google.type.DateR\vclosedDates\x1a`\n" +
 	"\x1eLodgingOverCapacityCheckResult\x12>\n" +
-	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xf0\a\n" +
+	"\blodgings\x18\x01 \x03(\v2\".moego.business.setting.v1.LodgingR\blodgings\"\xfa\a\n" +
 	"\x18CreateAppointmentRequest\x12$\n" +
 	"\vbusiness_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
 	"businessId\x12$\n" +
@@ -1710,10 +1710,10 @@ const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" 
 	"\n" +
 	"PetService\x12\x1a\n" +
 	"\x06pet_id\x18\x01 \x01(\tB\x03\xe0A\x02R\x05petId\x12`\n" +
-	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\xdf\x01\n" +
-	"\aService\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x121\n" +
-	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalR\bduration\x12\x1b\n" +
+	"\bservices\x18\x02 \x03(\v2?.moego.business.appointment.v1.CreateAppointmentRequest.ServiceB\x03\xe0A\x02R\bservices\x1a\xe9\x01\n" +
+	"\aService\x12\x13\n" +
+	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x126\n" +
+	"\bduration\x18\x02 \x01(\v2\x15.google.type.IntervalB\x03\xe0A\x02R\bduration\x12\x1b\n" +
 	"\tstaff_ids\x18\x03 \x03(\tR\bstaffIds\x12'\n" +
 	"\n" +
 	"lodging_id\x18\x04 \x01(\tB\x03\xe0A\x01H\x00R\tlodgingId\x88\x01\x01\x122\n" +
