@@ -1453,9 +1453,18 @@
           "type": "string",
           "x-nullable": true,
           "description": "string, The lodging unit identifier for boarding/daycare services.\nRequired for BOARDING services.\nOptional for DAYCARE services.\nNot applicable for GROOMING services."
+        },
+        "price": {
+          "$ref": "#/definitions/typeMoney",
+          "x-nullable": true,
+          "description": "object(Money), Custom service price.\nOptional. If not set, the system default price will be used."
         }
       },
       "title": "Individual service booking details",
+      "required": [
+        "id",
+        "duration"
+      ],
       "x-go-type": {
         "import": {
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb"

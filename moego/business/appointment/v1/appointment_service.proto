@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
 import "google/type/date.proto";
 import "google/type/interval.proto";
+import "google/type/money.proto";
 import "moego/business/appointment/v1/appointment.proto";
 import "moego/business/appointment/v1/appointment_note.proto";
 import "moego/business/message/v1/message.proto";
@@ -290,11 +291,11 @@ message CreateAppointmentRequest {
   message Service {
     // string, The unique identifier of the service to be provided.
     // Must be an active service in the business's service list.
-    string id = 1;
+    string id = 1 [(google.api.field_behavior) = REQUIRED];
 
     // object(Interval), The scheduled time window for this service.
     // Must be within business hours and staff availability.
-    google.type.Interval duration = 2;
+    google.type.Interval duration = 2 [(google.api.field_behavior) = REQUIRED];
 
     // array(string), Staff member IDs for this service.
     // Required for GROOMING services. Leave empty for BOARDING/DAYCARE.
@@ -305,6 +306,10 @@ message CreateAppointmentRequest {
     // Optional for DAYCARE services.
     // Not applicable for GROOMING services.
     optional string lodging_id = 4 [(google.api.field_behavior) = OPTIONAL];
+
+    // object(Money), Custom service price.
+    // Optional. If not set, the system default price will be used.
+    optional google.type.Money price = 5 [(google.api.field_behavior) = OPTIONAL];
   }
 
   // Initial note to create for the appointment

@@ -379,14 +379,13 @@ Creates a new appointment with services for one or more pets.
 
 ##### Service Object
 
-| Field Name  | Type          | Required                   | Description                                                                                                    |
-|-------------|---------------|----------------------------|----------------------------------------------------------------------------------------------------------------|
-| `id`        | string        | Yes                        | The unique identifier of the service. Must be an active service in the business's service list                 |
-| `duration`  | Interval      | Yes                        | The scheduled time window for this service                                                                     |
-| `staffIds`  | Array(string) | GROOMING only              | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
+| Field Name  | Type          | Required                    | Description                                                                                                    |
+|-------------|---------------|-----------------------------|----------------------------------------------------------------------------------------------------------------|
+| `id`        | string        | Yes                         | The unique identifier of the service. Must be an active service in the business's service list                 |
+| `duration`  | Interval      | Yes                         | The scheduled time window for this service                                                                     |
+| `staffIds`  | Array(string) | GROOMING only               | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
 | `lodgingId` | string        | BOARDING: Yes / DAYCARE: No | Lodging unit ID. Required for boarding, optional for daycare, not applicable for grooming                      |
-
-> Service type (`GROOMING`, `BOARDING`, `DAYCARE`) is determined by the service item itself — pass the correct `id` and the system routes accordingly.
+| `price`     | Money         | No                          | Custom service price. If not set, the system default price will be used                                        |
 
 #### 📌 Return Value:
 
@@ -928,7 +927,7 @@ GET /v1/appointments/12345?business_id=biz_001
 
 > Note: `staffIds` is not required for boarding. `lodgingId` specifies the lodging unit for the pet's stay.
 
-```
+```json
 {
   "businessId": "biz_001",
   "customerId": "cus_001",
@@ -941,6 +940,11 @@ GET /v1/appointments/12345?business_id=biz_001
           "duration": {
             "startTime": "2024-08-15T10:00:00Z",
             "endTime": "2024-08-17T10:00:00Z"
+          },
+          "price": {
+            "currencyCode": "USD",
+            "units": "46",
+            "nanos": 500000000
           },
           "lodgingId": "ldg_001"
         }
@@ -955,7 +959,7 @@ GET /v1/appointments/12345?business_id=biz_001
 
 > Note: `staffIds` is not required for daycare. `lodgingId` is optional.
 
-```
+```json
 {
   "businessId": "biz_001",
   "customerId": "cus_001",
