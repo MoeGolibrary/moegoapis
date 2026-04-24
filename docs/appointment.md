@@ -925,29 +925,28 @@ GET /v1/appointments/12345?business_id=biz_001
 
 ### Example 2.1: Create Boarding Appointment
 
-> Note: `staffIds` is optional for boarding. `lodgingId` specifies the lodging unit.
+> Note: `staffIds` is not required for boarding. `lodgingId` specifies the lodging unit for the pet's stay.
 
 ```json
 {
-  "businessId": "bizIT9f",
-  "customerId": "cuxVOTi9O",
+  "businessId": "biz_001",
+  "customerId": "cus_001",
   "petServices": [
     {
-      "petId": "petOvAv9M",
+      "petId": "pet_001",
       "services": [
         {
-          "id": "svcPOX8H",
+          "id": "svc_boarding",
           "duration": {
-            "startTime": "2026-03-30T20:00:00Z",
-            "endTime": "2026-03-31T06:00:00Z"
+            "startTime": "2024-08-15T10:00:00Z",
+            "endTime": "2024-08-17T10:00:00Z"
           },
           "price": {
             "currencyCode": "USD",
             "units": "46",
             "nanos": 500000000
           },
-          "staffIds": ["stfUNfY"],
-          "lodgingId": "lodgu3PAP"
+          "lodgingId": "ldg_001"
         }
       ]
     }
@@ -958,29 +957,23 @@ GET /v1/appointments/12345?business_id=biz_001
 
 ### Example 2.2: Create Daycare Appointment
 
-> Note: `staffIds` is optional for daycare. `lodgingId` is optional.
+> Note: `staffIds` is not required for daycare. `lodgingId` is optional.
 
 ```json
 {
-  "businessId": "bizIT9f",
-  "customerId": "cuxVOTi9O",
+  "businessId": "biz_001",
+  "customerId": "cus_001",
   "petServices": [
     {
-      "petId": "petOvAv9M",
+      "petId": "pet_001",
       "services": [
         {
-          "id": "svcSO0bK",
+          "id": "svc_daycare",
           "duration": {
-            "startTime": "2026-03-29T16:00:00Z",
-            "endTime": "2026-03-30T02:00:00Z"
+            "startTime": "2024-08-15T08:00:00Z",
+            "endTime": "2024-08-15T18:00:00Z"
           },
-          "price": {
-            "currencyCode": "USD",
-            "units": "63",
-            "nanos": 500000000
-          },
-          "staffIds": ["stfUNfY"],
-          "lodgingId": "lodgu3PAP"
+          "lodgingId": "ldg_001"
         }
       ]
     }
