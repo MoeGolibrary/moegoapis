@@ -80,6 +80,32 @@ Captures information about a booking that was not completed by the customer.
 | `lastUpdatedTime` | timestamp                  | When this record was last updated                     |
 | `additionalNote`  | string                     | Notes added by staff or system                        |
 | `careType`        | ItemType                   | Type of service selected by the customer              |
+| `abandonPreference` | AbandonPreference        | Preference snapshot captured during the abandon flow  |
+
+#### AbandonPreference
+
+Preference snapshot submitted during the abandon flow. Independent from long-term customer profile settings.
+
+| Field Name              | Type                  | Description                                              |
+|-------------------------|-----------------------|----------------------------------------------------------|
+| `preferredDay`          | PreferredDay          | Preferred booking day                                    |
+| `preferredTime`         | PreferredTime         | Preferred booking time window                            |
+| `preferenceSubmittedAt` | timestamp             | When the preference snapshot was submitted               |
+
+##### `AbandonPreference.PreferredDay`
+
+- `PREFERRED_DAY_UNSPECIFIED`: Default/invalid value
+- `TODAY`: Today
+- `TOMORROW`: Tomorrow
+- `THIS_WEEK`: This week
+- `FLEXIBLE`: Flexible
+
+##### `AbandonPreference.PreferredTime`
+
+- `PREFERRED_TIME_UNSPECIFIED`: Default/invalid value
+- `MORNING`: Morning
+- `AFTERNOON`: Afternoon
+- `EITHER`: Either
 
 #### Enum Definitions
 
