@@ -386,22 +386,6 @@ Creates a new appointment with services for one or more pets.
 | `staffIds`  | Array(string) | GROOMING only               | Staff member IDs. Required for grooming services. Leave empty for boarding/daycare                             |
 | `lodgingId` | string        | BOARDING: Yes / DAYCARE: No | Lodging unit ID. Required for boarding, optional for daycare, not applicable for grooming                      |
 | `price`     | Money         | No                          | Custom service price. If not set, the system default price will be used                                        |
-| `dateType`  | int32         | BOARDING only               | How the service is scheduled across dates. Required for boarding. See values below                             |
-
-##### DateType Values
-
-| Value | Name                             | Description                                           |
-|-------|----------------------------------|-------------------------------------------------------|
-| `0`   | UNSPECIFIED                      | Unknown or unspecified                                |
-| `1`   | EVERYDAY                         | Every day excluding checkout day                      |
-| `2`   | SPECIFIC_DATE                    | A specific list of dates                              |
-| `3`   | DATE_POINT                       | Single point in time. Grooming or single-day daycare  |
-| `4`   | EVERYDAY_INCLUDE_CHECKOUT_DAY    | Every day including checkout day                      |
-| `5`   | EVERYDAY_EXCEPT_CHECKIN_DAY      | Every day excluding checkin day                       |
-| `6`   | LAST_DAY                         | Checkout day only                                     |
-| `7`   | FIRST_DAY                        | Checkin day only                                      |
-
-> Boarding commonly uses `1`, `4`, or `5`.
 
 #### 📌 Return Value:
 
@@ -941,30 +925,28 @@ GET /v1/appointments/12345?business_id=biz_001
 
 ### Example 2.1: Create Boarding Appointment
 
-> Note: `staffIds` is optional for boarding. `lodgingId` specifies the lodging unit.
+> Note: `staffIds` is not required for boarding. `lodgingId` specifies the lodging unit for the pet's stay.
 
 ```json
 {
-  "businessId": "bizIT9f",
-  "customerId": "cuxVOTi9O",
+  "businessId": "biz_001",
+  "customerId": "cus_001",
   "petServices": [
     {
-      "petId": "petOvAv9M",
+      "petId": "pet_001",
       "services": [
         {
-          "id": "svcPOX8H",
+          "id": "svc_boarding",
           "duration": {
-            "startTime": "2026-03-30T20:00:00Z",
-            "endTime": "2026-03-31T06:00:00Z"
+            "startTime": "2024-08-15T10:00:00Z",
+            "endTime": "2024-08-17T10:00:00Z"
           },
           "price": {
             "currencyCode": "USD",
             "units": "46",
             "nanos": 500000000
           },
-          "dateType": 1,
-          "staffIds": ["stfUNfY"],
-          "lodgingId": "lodgu3PAP"
+          "lodgingId": "ldg_001"
         }
       ]
     }
@@ -975,29 +957,23 @@ GET /v1/appointments/12345?business_id=biz_001
 
 ### Example 2.2: Create Daycare Appointment
 
-> Note: `staffIds` is optional for daycare. `lodgingId` is optional.
+> Note: `staffIds` is not required for daycare. `lodgingId` is optional.
 
 ```json
 {
-  "businessId": "bizIT9f",
-  "customerId": "cuxVOTi9O",
+  "businessId": "biz_001",
+  "customerId": "cus_001",
   "petServices": [
     {
-      "petId": "petOvAv9M",
+      "petId": "pet_001",
       "services": [
         {
-          "id": "svcSO0bK",
+          "id": "svc_daycare",
           "duration": {
-            "startTime": "2026-03-29T16:00:00Z",
-            "endTime": "2026-03-30T02:00:00Z"
+            "startTime": "2024-08-15T08:00:00Z",
+            "endTime": "2024-08-15T18:00:00Z"
           },
-          "price": {
-            "currencyCode": "USD",
-            "units": "63",
-            "nanos": 500000000
-          },
-          "staffIds": ["stfUNfY"],
-          "lodgingId": "lodgu3PAP"
+          "lodgingId": "ldg_001"
         }
       ]
     }
