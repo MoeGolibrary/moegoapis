@@ -133,6 +133,45 @@ message AbandonedBooking {
     string answer = 3;
   }
 
+  // AbandonPreference captures the preference snapshot submitted in the
+  // abandon flow and is independent from long-term customer profile settings.
+  message AbandonPreference {
+    // Preferred booking day.
+    enum PreferredDay {
+      // Default value. This value is unused.
+      PREFERRED_DAY_UNSPECIFIED = 0;
+      // Today.
+      TODAY = 1;
+      // Tomorrow.
+      TOMORROW = 2;
+      // This week.
+      THIS_WEEK = 3;
+      // Flexible.
+      FLEXIBLE = 4;
+    }
+
+    // Preferred booking time window.
+    enum PreferredTime {
+      // Default value. This value is unused.
+      PREFERRED_TIME_UNSPECIFIED = 0;
+      // Morning.
+      MORNING = 1;
+      // Afternoon.
+      AFTERNOON = 2;
+      // Either.
+      EITHER = 3;
+    }
+
+    // Preferred booking day.
+    PreferredDay preferred_day = 1;
+
+    // Preferred booking time window.
+    PreferredTime preferred_time = 2;
+
+    // Timestamp when the preference snapshot was submitted.
+    google.protobuf.Timestamp preference_submitted_at = 3;
+  }
+
   // == Core Fields ==
 
   // Unique identifier for this abandoned booking.
@@ -202,6 +241,9 @@ message AbandonedBooking {
 
   // Type of service selected by the customer.
   setting.v1.Service.ItemType care_type = 20;
+
+  // Preference snapshot captured during the abandon flow.
+  AbandonPreference abandon_preference = 21;
 }
 
 // AbandonedBookingCustomer contains information about the customer associated with an abandoned booking.
