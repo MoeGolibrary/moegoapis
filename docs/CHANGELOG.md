@@ -19,10 +19,12 @@ When making API changes:
 - `Appointment:Create` API: added `lodgingId` field to `CreateAppointmentRequest.Service` to support lodging unit assignment for `BOARDING`/`DAYCARE` appointments (2026-03-31)
 - `Appointment:Create` API: support `BOARDING` and `DAYCARE` service types; `staffIds` is no longer required for boarding/daycare (2026-03-31)
 - `Appointment:Create` API: added optional `price` field to `CreateAppointmentRequest.Service`; if not set, system default price is used (2026-04-01)
+- `AbandonedBooking:Get` and `AbandonedBooking:List` APIs: added optional `abandonPreference` field on `AbandonedBooking` capturing the preference snapshot submitted during the abandon flow; includes `preferredDay` (`TODAY` | `TOMORROW` | `THIS_WEEK` | `FLEXIBLE`), `preferredTime` (`MORNING` | `AFTERNOON` | `EITHER`), and `preferenceSubmittedAt` timestamp; field is omitted when the customer did not submit a preference (2026-05-12)
 
 ### Documentation
 - `Appointment:Create` API: clarified per-type field requirements for `Service` object; added boarding and daycare examples (2026-03-31)
 - `Appointment:Create` API: documented `price` field (2026-04-01)
+- `AbandonedBooking`: documented `abandonPreference` field with nested `AbandonPreference` message, `PreferredDay` and `PreferredTime` enums (2026-05-12)
 
 ---
 
