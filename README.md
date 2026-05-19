@@ -78,6 +78,26 @@ To begin using the MoeGo APIs effectively, follow these steps:
 
 ---
 
+## Development Workflow
+
+### Branch-Based Development
+
+Since this is a public repository, any proto merged to `production` is immediately visible to customers. If your API implementation will NOT be deployed shortly after merging, develop on a feature branch to avoid exposing unimplemented APIs.
+
+```bash
+# 1. Create feature branch in moegoapis, push proto changes (do NOT merge to production)
+git checkout -b feature-your-api-name
+
+# 2. In moego-open-api-v1, depend on the branch
+go get github.com/MoeGolibrary/moegoapis@feature-your-api-name
+
+# 3. After implementation is deployed, merge moegoapis branch to production
+# 4. Update moego-open-api-v1 go.mod to point to production
+go get github.com/MoeGolibrary/moegoapis@latest
+```
+
+---
+
 ## API Changelog
 
 After completing API changes, update `docs/CHANGELOG.md` to document them.
