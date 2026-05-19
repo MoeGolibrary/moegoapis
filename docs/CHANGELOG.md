@@ -15,6 +15,10 @@ When making API changes:
 
 ## [Unreleased]
 
+### Removed
+- `Aggregation:LookupClientPetProfile` API documentation and contract (revert PR #62)
+- `Offering:ListServices` and `Offering:ListLodgings` API documentation and contract (revert PR #62)
+
 ### Added
 - `Appointment:Create` API: added `lodgingId` field to `CreateAppointmentRequest.Service` to support lodging unit assignment for `BOARDING`/`DAYCARE` appointments (2026-03-31)
 - `Appointment:Create` API: support `BOARDING` and `DAYCARE` service types; `staffIds` is no longer required for boarding/daycare (2026-03-31)
