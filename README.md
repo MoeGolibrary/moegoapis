@@ -86,10 +86,10 @@ Since this is a public repository, any proto merged to `production` is immediate
 
 ```bash
 # 1. Create feature branch in moegoapis, push proto changes (do NOT merge to production)
-git checkout -b feature/your-api-name
+git checkout -b feature-your-api-name
 
-# 2. In moego-open-api-v1, depend on the branch commit
-go get github.com/MoeGolibrary/moegoapis@<branch-commit-hash>
+# 2. In moego-open-api-v1, depend on the branch
+go get github.com/MoeGolibrary/moegoapis@feature-your-api-name
 
 # 3. After implementation is deployed, merge moegoapis branch to production
 # 4. Update moego-open-api-v1 go.mod to point to production
