@@ -26,6 +26,8 @@ const (
 	CustomerService_GenCustomerCofLink_FullMethodName  = "/moego.business.customer.v1.CustomerService/GenCustomerCofLink"
 	CustomerService_AppendCustomerNotes_FullMethodName = "/moego.business.customer.v1.CustomerService/AppendCustomerNotes"
 	CustomerService_ListCustomerNotes_FullMethodName   = "/moego.business.customer.v1.CustomerService/ListCustomerNotes"
+	CustomerService_UpdateCustomerNote_FullMethodName  = "/moego.business.customer.v1.CustomerService/UpdateCustomerNote"
+	CustomerService_DeleteCustomerNote_FullMethodName  = "/moego.business.customer.v1.CustomerService/DeleteCustomerNote"
 	CustomerService_AppendCustomerTags_FullMethodName  = "/moego.business.customer.v1.CustomerService/AppendCustomerTags"
 	CustomerService_ListCustomerTags_FullMethodName    = "/moego.business.customer.v1.CustomerService/ListCustomerTags"
 )
@@ -82,6 +84,16 @@ type CustomerServiceClient interface {
 	// Notes are returned in reverse chronological order (newest first).
 	// Returns an empty list if the customer has no notes.
 	ListCustomerNotes(ctx context.Context, in *ListCustomerNotesRequest, opts ...grpc.CallOption) (*ListCustomerNotesResponse, error)
+	// Updates an existing note on a customer's profile.
+	//
+	// Returns the updated note with refreshed metadata.
+	// Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+	UpdateCustomerNote(ctx context.Context, in *UpdateCustomerNoteRequest, opts ...grpc.CallOption) (*UpdateCustomerNoteResponse, error)
+	// Deletes an existing note from a customer's profile.
+	//
+	// Returns successfully if the deletion is completed.
+	// Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+	DeleteCustomerNote(ctx context.Context, in *DeleteCustomerNoteRequest, opts ...grpc.CallOption) (*DeleteCustomerNoteResponse, error)
 	// Adds new tags to a customer's profile.
 	//
 	// Tags help categorize customers and can be used for filtering and reporting.
@@ -173,6 +185,26 @@ func (c *customerServiceClient) ListCustomerNotes(ctx context.Context, in *ListC
 	return out, nil
 }
 
+func (c *customerServiceClient) UpdateCustomerNote(ctx context.Context, in *UpdateCustomerNoteRequest, opts ...grpc.CallOption) (*UpdateCustomerNoteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateCustomerNoteResponse)
+	err := c.cc.Invoke(ctx, CustomerService_UpdateCustomerNote_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) DeleteCustomerNote(ctx context.Context, in *DeleteCustomerNoteRequest, opts ...grpc.CallOption) (*DeleteCustomerNoteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteCustomerNoteResponse)
+	err := c.cc.Invoke(ctx, CustomerService_DeleteCustomerNote_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *customerServiceClient) AppendCustomerTags(ctx context.Context, in *AppendCustomerTagsRequest, opts ...grpc.CallOption) (*AppendCustomerTagsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AppendCustomerTagsResponse)
@@ -245,6 +277,16 @@ type CustomerServiceServer interface {
 	// Notes are returned in reverse chronological order (newest first).
 	// Returns an empty list if the customer has no notes.
 	ListCustomerNotes(context.Context, *ListCustomerNotesRequest) (*ListCustomerNotesResponse, error)
+	// Updates an existing note on a customer's profile.
+	//
+	// Returns the updated note with refreshed metadata.
+	// Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+	UpdateCustomerNote(context.Context, *UpdateCustomerNoteRequest) (*UpdateCustomerNoteResponse, error)
+	// Deletes an existing note from a customer's profile.
+	//
+	// Returns successfully if the deletion is completed.
+	// Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+	DeleteCustomerNote(context.Context, *DeleteCustomerNoteRequest) (*DeleteCustomerNoteResponse, error)
 	// Adds new tags to a customer's profile.
 	//
 	// Tags help categorize customers and can be used for filtering and reporting.
@@ -286,6 +328,12 @@ func (UnimplementedCustomerServiceServer) AppendCustomerNotes(context.Context, *
 }
 func (UnimplementedCustomerServiceServer) ListCustomerNotes(context.Context, *ListCustomerNotesRequest) (*ListCustomerNotesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListCustomerNotes not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateCustomerNote(context.Context, *UpdateCustomerNoteRequest) (*UpdateCustomerNoteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateCustomerNote not implemented")
+}
+func (UnimplementedCustomerServiceServer) DeleteCustomerNote(context.Context, *DeleteCustomerNoteRequest) (*DeleteCustomerNoteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteCustomerNote not implemented")
 }
 func (UnimplementedCustomerServiceServer) AppendCustomerTags(context.Context, *AppendCustomerTagsRequest) (*AppendCustomerTagsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AppendCustomerTags not implemented")
@@ -440,6 +488,42 @@ func _CustomerService_ListCustomerNotes_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomerService_UpdateCustomerNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCustomerNoteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateCustomerNote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_UpdateCustomerNote_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateCustomerNote(ctx, req.(*UpdateCustomerNoteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_DeleteCustomerNote_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCustomerNoteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).DeleteCustomerNote(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_DeleteCustomerNote_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).DeleteCustomerNote(ctx, req.(*DeleteCustomerNoteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _CustomerService_AppendCustomerTags_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AppendCustomerTagsRequest)
 	if err := dec(in); err != nil {
@@ -510,6 +594,14 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListCustomerNotes",
 			Handler:    _CustomerService_ListCustomerNotes_Handler,
+		},
+		{
+			MethodName: "UpdateCustomerNote",
+			Handler:    _CustomerService_UpdateCustomerNote_Handler,
+		},
+		{
+			MethodName: "DeleteCustomerNote",
+			Handler:    _CustomerService_DeleteCustomerNote_Handler,
 		},
 		{
 			MethodName: "AppendCustomerTags",
