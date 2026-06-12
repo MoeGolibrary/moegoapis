@@ -51,7 +51,7 @@
         ]
       }
     },
-    "/v1/customers/{customerId}/notes/{noteId}": {
+    "/v1/customers/{customerId}/notes/{id}": {
       "delete": {
         "summary": "Deletes an existing note from a customer's profile.",
         "description": "Returns successfully if the deletion is completed.\nThrows NOT_FOUND if the customer ID or note ID doesn't exist.",
@@ -79,8 +79,8 @@
             "type": "string"
           },
           {
-            "name": "noteId",
-            "description": "Unique identifier of the customer note to delete\nRequired. Must be a valid note ID returned by notes:list.",
+            "name": "id",
+            "description": "Unique identifier of the customer note to delete\nRequired. Must be a valid customer note ID.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -117,8 +117,8 @@
             "type": "string"
           },
           {
-            "name": "noteId",
-            "description": "Unique identifier of the customer note to update\nRequired. Must be a valid note ID returned by notes:list.",
+            "name": "id",
+            "description": "Unique identifier of the customer note to update\nRequired. Must be a valid customer note ID.",
             "in": "path",
             "required": true,
             "type": "string"

@@ -816,8 +816,8 @@ type UpdateCustomerNoteRequest struct {
 	// Required. Must be a valid customer ID returned by customers:list or GetCustomer.
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// Unique identifier of the customer note to update
-	// Required. Must be a valid note ID returned by notes:list.
-	NoteId string `protobuf:"bytes,2,opt,name=note_id,json=noteId,proto3" json:"note_id,omitempty"`
+	// Required. Must be a valid customer note ID.
+	Id string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	// Updated note content
 	Note          string `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -861,9 +861,9 @@ func (x *UpdateCustomerNoteRequest) GetCustomerId() string {
 	return ""
 }
 
-func (x *UpdateCustomerNoteRequest) GetNoteId() string {
+func (x *UpdateCustomerNoteRequest) GetId() string {
 	if x != nil {
-		return x.NoteId
+		return x.Id
 	}
 	return ""
 }
@@ -928,8 +928,8 @@ type DeleteCustomerNoteRequest struct {
 	// Required. Must be a valid customer ID returned by customers:list or GetCustomer.
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
 	// Unique identifier of the customer note to delete
-	// Required. Must be a valid note ID returned by notes:list.
-	NoteId        string `protobuf:"bytes,2,opt,name=note_id,json=noteId,proto3" json:"note_id,omitempty"`
+	// Required. Must be a valid customer note ID.
+	Id            string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -971,9 +971,9 @@ func (x *DeleteCustomerNoteRequest) GetCustomerId() string {
 	return ""
 }
 
-func (x *DeleteCustomerNoteRequest) GetNoteId() string {
+func (x *DeleteCustomerNoteRequest) GetId() string {
 	if x != nil {
-		return x.NoteId
+		return x.Id
 	}
 	return ""
 }
@@ -1351,18 +1351,18 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\x84\x01\n" +
 	"\x19ListCustomerNotesResponse\x12&\n" +
 	"\x0fnext_page_token\x18\x01 \x01(\tR\rnextPageToken\x12?\n" +
-	"\x05notes\x18\x02 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"x\n" +
+	"\x05notes\x18\x02 \x03(\v2).moego.business.customer.v1.Customer.NoteR\x05notes\"o\n" +
 	"\x19UpdateCustomerNoteRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
-	"customerId\x12\x1c\n" +
-	"\anote_id\x18\x02 \x01(\tB\x03\xe0A\x02R\x06noteId\x12\x17\n" +
+	"customerId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\x12\x17\n" +
 	"\x04note\x18\x03 \x01(\tB\x03\xe0A\x02R\x04note\"[\n" +
 	"\x1aUpdateCustomerNoteResponse\x12=\n" +
-	"\x04note\x18\x01 \x01(\v2).moego.business.customer.v1.Customer.NoteR\x04note\"_\n" +
+	"\x04note\x18\x01 \x01(\v2).moego.business.customer.v1.Customer.NoteR\x04note\"V\n" +
 	"\x19DeleteCustomerNoteRequest\x12$\n" +
 	"\vcustomer_id\x18\x01 \x01(\tB\x03\xe0A\x02R\n" +
-	"customerId\x12\x1c\n" +
-	"\anote_id\x18\x02 \x01(\tB\x03\xe0A\x02R\x06noteId\"\x1c\n" +
+	"customerId\x12\x13\n" +
+	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"\x1c\n" +
 	"\x1aDeleteCustomerNoteResponse\"l\n" +
 	"\x19AppendCustomerTagsRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12:\n" +
@@ -1372,7 +1372,7 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\x17ListCustomerTagsRequest\x12\x13\n" +
 	"\x02id\x18\x02 \x01(\tB\x03\xe0A\x02R\x02id\"V\n" +
 	"\x18ListCustomerTagsResponse\x12:\n" +
-	"\x04tags\x18\x02 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags2\x8b\x0e\n" +
+	"\x04tags\x18\x02 \x03(\v2&.moego.business.setting.v1.CustomerTagR\x04tags2\x81\x0e\n" +
 	"\x0fCustomerService\x12\x83\x01\n" +
 	"\x0eCreateCustomer\x121.moego.business.customer.v1.CreateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/customers\x12\x88\x01\n" +
 	"\x0eUpdateCustomer\x121.moego.business.customer.v1.UpdateCustomerRequest\x1a$.moego.business.customer.v1.Customer\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\x1a\x12/v1/customers/{id}\x12\x7f\n" +
@@ -1380,9 +1380,9 @@ const file_moego_business_customer_v1_customer_service_proto_rawDesc = "" +
 	"\rListCustomers\x120.moego.business.customer.v1.ListCustomersRequest\x1a1.moego.business.customer.v1.ListCustomersResponse\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/customers:list\x12\xa8\x01\n" +
 	"\x12GenCustomerCofLink\x125.moego.business.customer.v1.GenCustomerCofLinkRequest\x1a6.moego.business.customer.v1.GenCustomerCofLinkResponse\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/customers/{id}/cof/link\x12\xab\x01\n" +
 	"\x13AppendCustomerNotes\x126.moego.business.customer.v1.AppendCustomerNotesRequest\x1a7.moego.business.customer.v1.AppendCustomerNotesResponse\"#\x82\xd3\xe4\x93\x02\x1d:\x01*\"\x18/v1/customers/{id}/notes\x12\xaa\x01\n" +
-	"\x11ListCustomerNotes\x124.moego.business.customer.v1.ListCustomerNotesRequest\x1a5.moego.business.customer.v1.ListCustomerNotesResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/customers/{id}/notes:list\x12\xbb\x01\n" +
-	"\x12UpdateCustomerNote\x125.moego.business.customer.v1.UpdateCustomerNoteRequest\x1a6.moego.business.customer.v1.UpdateCustomerNoteResponse\"6\x82\xd3\xe4\x93\x020:\x01*\x1a+/v1/customers/{customer_id}/notes/{note_id}\x12\xb8\x01\n" +
-	"\x12DeleteCustomerNote\x125.moego.business.customer.v1.DeleteCustomerNoteRequest\x1a6.moego.business.customer.v1.DeleteCustomerNoteResponse\"3\x82\xd3\xe4\x93\x02-*+/v1/customers/{customer_id}/notes/{note_id}\x12\xa7\x01\n" +
+	"\x11ListCustomerNotes\x124.moego.business.customer.v1.ListCustomerNotesRequest\x1a5.moego.business.customer.v1.ListCustomerNotesResponse\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/customers/{id}/notes:list\x12\xb6\x01\n" +
+	"\x12UpdateCustomerNote\x125.moego.business.customer.v1.UpdateCustomerNoteRequest\x1a6.moego.business.customer.v1.UpdateCustomerNoteResponse\"1\x82\xd3\xe4\x93\x02+:\x01*\x1a&/v1/customers/{customer_id}/notes/{id}\x12\xb3\x01\n" +
+	"\x12DeleteCustomerNote\x125.moego.business.customer.v1.DeleteCustomerNoteRequest\x1a6.moego.business.customer.v1.DeleteCustomerNoteResponse\".\x82\xd3\xe4\x93\x02(*&/v1/customers/{customer_id}/notes/{id}\x12\xa7\x01\n" +
 	"\x12AppendCustomerTags\x125.moego.business.customer.v1.AppendCustomerTagsRequest\x1a6.moego.business.customer.v1.AppendCustomerTagsResponse\"\"\x82\xd3\xe4\x93\x02\x1c:\x01*\"\x17/v1/customers/{id}/tags\x12\xa6\x01\n" +
 	"\x10ListCustomerTags\x123.moego.business.customer.v1.ListCustomerTagsRequest\x1a4.moego.business.customer.v1.ListCustomerTagsResponse\"'\x82\xd3\xe4\x93\x02!:\x01*\"\x1c/v1/customers/{id}/tags:listB\x96\x01\n" +
 	"\"com.moego.api.business.customer.v1B\x14CustomerServiceProtoP\x01ZXgithub.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb;customerpbb\x06proto3"

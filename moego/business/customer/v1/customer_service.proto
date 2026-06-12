@@ -105,7 +105,7 @@ service CustomerService {
   // Throws NOT_FOUND if the customer ID or note ID doesn't exist.
   rpc UpdateCustomerNote(UpdateCustomerNoteRequest) returns (UpdateCustomerNoteResponse) {
     option (google.api.http) = {
-      put: "/v1/customers/{customer_id}/notes/{note_id}"
+      put: "/v1/customers/{customer_id}/notes/{id}"
       body: "*"
     };
   }
@@ -115,7 +115,7 @@ service CustomerService {
   // Returns successfully if the deletion is completed.
   // Throws NOT_FOUND if the customer ID or note ID doesn't exist.
   rpc DeleteCustomerNote(DeleteCustomerNoteRequest) returns (DeleteCustomerNoteResponse) {
-    option (google.api.http) = {delete: "/v1/customers/{customer_id}/notes/{note_id}"};
+    option (google.api.http) = {delete: "/v1/customers/{customer_id}/notes/{id}"};
   }
 
   // Adds new tags to a customer's profile.
@@ -342,8 +342,8 @@ message UpdateCustomerNoteRequest {
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Unique identifier of the customer note to update
-  // Required. Must be a valid note ID returned by notes:list.
-  string note_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // Required. Must be a valid customer note ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Updated note content
   string note = 3 [(google.api.field_behavior) = REQUIRED];
@@ -362,8 +362,8 @@ message DeleteCustomerNoteRequest {
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
   // Unique identifier of the customer note to delete
-  // Required. Must be a valid note ID returned by notes:list.
-  string note_id = 2 [(google.api.field_behavior) = REQUIRED];
+  // Required. Must be a valid customer note ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 
 // Response message for deleting a customer note.
