@@ -393,8 +393,11 @@ type Membership struct {
 	BillingCycleTimeOfDay *timeofday.TimeOfDay `protobuf:"bytes,30,opt,name=billing_cycle_time_of_day,json=billingCycleTimeOfDay,proto3" json:"billing_cycle_time_of_day,omitempty"`
 	// Allow billing cycle time of day.
 	AllowBillingCycleTimeOfDay bool `protobuf:"varint,31,opt,name=allow_billing_cycle_time_of_day,json=allowBillingCycleTimeOfDay,proto3" json:"allow_billing_cycle_time_of_day,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
+	// Name of the revenue category assigned to this membership plan.
+	// Empty if no revenue category is assigned.
+	RevenueCategoryName string `protobuf:"bytes,32,opt,name=revenue_category_name,json=revenueCategoryName,proto3" json:"revenue_category_name,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *Membership) Reset() {
@@ -635,6 +638,13 @@ func (x *Membership) GetAllowBillingCycleTimeOfDay() bool {
 		return x.AllowBillingCycleTimeOfDay
 	}
 	return false
+}
+
+func (x *Membership) GetRevenueCategoryName() string {
+	if x != nil {
+		return x.RevenueCategoryName
+	}
+	return ""
 }
 
 // Subscription represents a customer's subscription to a membership plan.
@@ -1050,7 +1060,7 @@ var File_moego_business_membership_v1_membership_proto protoreflect.FileDescript
 
 const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!google/type/calendar_period.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/timeofday.proto\x1a'moego/business/setting/v1/service.proto\"\x84\r\n" +
+	"-moego/business/membership/v1/membership.proto\x12\x1cmoego.business.membership.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a!google/type/calendar_period.proto\x1a\x1bgoogle/type/dayofweek.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a\x1bgoogle/type/timeofday.proto\x1a'moego/business/setting/v1/service.proto\"\xb8\r\n" +
 	"\n" +
 	"Membership\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12.\n" +
@@ -1086,7 +1096,8 @@ const file_moego_business_membership_v1_membership_proto_rawDesc = "" +
 	"\x10customized_coats\x18\x1c \x03(\tR\x0fcustomizedCoats\x12G\n" +
 	"\x06source\x18\x1d \x01(\x0e2/.moego.business.membership.v1.Membership.SourceR\x06source\x12P\n" +
 	"\x19billing_cycle_time_of_day\x18\x1e \x01(\v2\x16.google.type.TimeOfDayR\x15billingCycleTimeOfDay\x12C\n" +
-	"\x1fallow_billing_cycle_time_of_day\x18\x1f \x01(\bR\x1aallowBillingCycleTimeOfDay\":\n" +
+	"\x1fallow_billing_cycle_time_of_day\x18\x1f \x01(\bR\x1aallowBillingCycleTimeOfDay\x122\n" +
+	"\x15revenue_category_name\x18  \x01(\tR\x13revenueCategoryName\":\n" +
 	"\x06Status\x12\x16\n" +
 	"\x12STATUS_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +

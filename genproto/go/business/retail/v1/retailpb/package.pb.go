@@ -60,9 +60,12 @@ type Package struct {
 	// Source of the package
 	Source int32 `protobuf:"varint,16,opt,name=source,proto3" json:"source,omitempty"`
 	// Items included in the package
-	Items         []*Item `protobuf:"bytes,17,rep,name=items,proto3" json:"items,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Items []*Item `protobuf:"bytes,17,rep,name=items,proto3" json:"items,omitempty"`
+	// Name of the revenue category assigned to this package
+	// Empty if no revenue category is assigned
+	RevenueCategoryName string `protobuf:"bytes,18,opt,name=revenue_category_name,json=revenueCategoryName,proto3" json:"revenue_category_name,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
 }
 
 func (x *Package) Reset() {
@@ -214,6 +217,13 @@ func (x *Package) GetItems() []*Item {
 	return nil
 }
 
+func (x *Package) GetRevenueCategoryName() string {
+	if x != nil {
+		return x.RevenueCategoryName
+	}
+	return ""
+}
+
 // Item represents an item in a package
 type Item struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
@@ -337,7 +347,7 @@ var File_moego_business_retail_v1_package_proto protoreflect.FileDescriptor
 
 const file_moego_business_retail_v1_package_proto_rawDesc = "" +
 	"\n" +
-	"&moego/business/retail/v1/package.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x87\x05\n" +
+	"&moego/business/retail/v1/package.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xbb\x05\n" +
 	"\aPackage\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
 	"\n" +
@@ -361,7 +371,8 @@ const file_moego_business_retail_v1_package_proto_rawDesc = "" +
 	"\x15enable_online_booking\x18\x0e \x01(\bR\x13enableOnlineBooking\x12'\n" +
 	"\x0fexpiration_days\x18\x0f \x01(\x05R\x0eexpirationDays\x12\x16\n" +
 	"\x06source\x18\x10 \x01(\x05R\x06source\x124\n" +
-	"\x05items\x18\x11 \x03(\v2\x1e.moego.business.retail.v1.ItemR\x05items\"a\n" +
+	"\x05items\x18\x11 \x03(\v2\x1e.moego.business.retail.v1.ItemR\x05items\x122\n" +
+	"\x15revenue_category_name\x18\x12 \x01(\tR\x13revenueCategoryName\"a\n" +
 	"\x04Item\x12\x1a\n" +
 	"\bquantity\x18\x01 \x01(\x05R\bquantity\x12=\n" +
 	"\bservices\x18\x02 \x03(\v2!.moego.business.retail.v1.ServiceR\bservices\"o\n" +

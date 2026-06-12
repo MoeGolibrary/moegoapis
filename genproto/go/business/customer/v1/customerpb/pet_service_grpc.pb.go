@@ -24,6 +24,7 @@ const (
 	PetService_GetPet_FullMethodName         = "/moego.business.customer.v1.PetService/GetPet"
 	PetService_ListPets_FullMethodName       = "/moego.business.customer.v1.PetService/ListPets"
 	PetService_AppendPetCodes_FullMethodName = "/moego.business.customer.v1.PetService/AppendPetCodes"
+	PetService_DeletePetCode_FullMethodName  = "/moego.business.customer.v1.PetService/DeletePetCode"
 	PetService_AppendPetNotes_FullMethodName = "/moego.business.customer.v1.PetService/AppendPetNotes"
 	PetService_ListPetNotes_FullMethodName   = "/moego.business.customer.v1.PetService/ListPetNotes"
 	PetService_ListAllPets_FullMethodName    = "/moego.business.customer.v1.PetService/ListAllPets"
@@ -71,6 +72,11 @@ type PetServiceClient interface {
 	// appropriate handling and care. Returns the newly added codes.
 	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetCodes(ctx context.Context, in *AppendPetCodesRequest, opts ...grpc.CallOption) (*AppendPetCodesResponse, error)
+	// Removes a code from a pet's profile.
+	//
+	// This only removes the association between the pet and the code. It does not
+	// delete or update the business-level code definition.
+	DeletePetCode(ctx context.Context, in *DeletePetCodeRequest, opts ...grpc.CallOption) (*DeletePetCodeResponse, error)
 	// Adds new notes to a pet's profile.
 	//
 	// Notes can include observations about behavior, preferences, or special
@@ -141,6 +147,16 @@ func (c *petServiceClient) AppendPetCodes(ctx context.Context, in *AppendPetCode
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AppendPetCodesResponse)
 	err := c.cc.Invoke(ctx, PetService_AppendPetCodes_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *petServiceClient) DeletePetCode(ctx context.Context, in *DeletePetCodeRequest, opts ...grpc.CallOption) (*DeletePetCodeResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeletePetCodeResponse)
+	err := c.cc.Invoke(ctx, PetService_DeletePetCode_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -219,6 +235,11 @@ type PetServiceServer interface {
 	// appropriate handling and care. Returns the newly added codes.
 	// Throws NOT_FOUND if the pet ID or customer ID doesn't exist.
 	AppendPetCodes(context.Context, *AppendPetCodesRequest) (*AppendPetCodesResponse, error)
+	// Removes a code from a pet's profile.
+	//
+	// This only removes the association between the pet and the code. It does not
+	// delete or update the business-level code definition.
+	DeletePetCode(context.Context, *DeletePetCodeRequest) (*DeletePetCodeResponse, error)
 	// Adds new notes to a pet's profile.
 	//
 	// Notes can include observations about behavior, preferences, or special
@@ -259,6 +280,9 @@ func (UnimplementedPetServiceServer) ListPets(context.Context, *ListPetsRequest)
 }
 func (UnimplementedPetServiceServer) AppendPetCodes(context.Context, *AppendPetCodesRequest) (*AppendPetCodesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AppendPetCodes not implemented")
+}
+func (UnimplementedPetServiceServer) DeletePetCode(context.Context, *DeletePetCodeRequest) (*DeletePetCodeResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeletePetCode not implemented")
 }
 func (UnimplementedPetServiceServer) AppendPetNotes(context.Context, *AppendPetNotesRequest) (*AppendPetNotesResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method AppendPetNotes not implemented")
@@ -380,6 +404,24 @@ func _PetService_AppendPetCodes_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PetService_DeletePetCode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePetCodeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PetServiceServer).DeletePetCode(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: PetService_DeletePetCode_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PetServiceServer).DeletePetCode(ctx, req.(*DeletePetCodeRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _PetService_AppendPetNotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AppendPetNotesRequest)
 	if err := dec(in); err != nil {
@@ -460,6 +502,10 @@ var PetService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AppendPetCodes",
 			Handler:    _PetService_AppendPetCodes_Handler,
+		},
+		{
+			MethodName: "DeletePetCode",
+			Handler:    _PetService_DeletePetCode_Handler,
 		},
 		{
 			MethodName: "AppendPetNotes",

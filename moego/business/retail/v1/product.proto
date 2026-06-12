@@ -36,6 +36,10 @@ message Product {
   // Name of the category the product belongs to
   string category_name = 8;
 
+  // Name of the revenue category assigned to this product
+  // Empty if no revenue category is assigned
+  string revenue_category_name = 22;
+
   // Supplier information associated with the product
   Supplier supplier = 21;
 

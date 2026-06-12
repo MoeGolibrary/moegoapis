@@ -42,6 +42,9 @@ type Product struct {
 	ImageUrl string `protobuf:"bytes,7,opt,name=image_url,json=imageUrl,proto3" json:"image_url,omitempty"`
 	// Name of the category the product belongs to
 	CategoryName string `protobuf:"bytes,8,opt,name=category_name,json=categoryName,proto3" json:"category_name,omitempty"`
+	// Name of the revenue category assigned to this product
+	// Empty if no revenue category is assigned
+	RevenueCategoryName string `protobuf:"bytes,22,opt,name=revenue_category_name,json=revenueCategoryName,proto3" json:"revenue_category_name,omitempty"`
 	// Supplier information associated with the product
 	Supplier *Supplier `protobuf:"bytes,21,opt,name=supplier,proto3" json:"supplier,omitempty"`
 	// Cost price of the product from the supplier
@@ -148,6 +151,13 @@ func (x *Product) GetImageUrl() string {
 func (x *Product) GetCategoryName() string {
 	if x != nil {
 		return x.CategoryName
+	}
+	return ""
+}
+
+func (x *Product) GetRevenueCategoryName() string {
+	if x != nil {
+		return x.RevenueCategoryName
 	}
 	return ""
 }
@@ -344,7 +354,7 @@ var File_moego_business_retail_v1_product_proto protoreflect.FileDescriptor
 
 const file_moego_business_retail_v1_product_proto_rawDesc = "" +
 	"\n" +
-	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xcf\x05\n" +
+	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x83\x06\n" +
 	"\aProduct\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
@@ -354,7 +364,8 @@ const file_moego_business_retail_v1_product_proto_rawDesc = "" +
 	"\x03sku\x18\x05 \x01(\tR\x03sku\x12\x18\n" +
 	"\abarcode\x18\x06 \x01(\tR\abarcode\x12\x1b\n" +
 	"\timage_url\x18\a \x01(\tR\bimageUrl\x12#\n" +
-	"\rcategory_name\x18\b \x01(\tR\fcategoryName\x12>\n" +
+	"\rcategory_name\x18\b \x01(\tR\fcategoryName\x122\n" +
+	"\x15revenue_category_name\x18\x16 \x01(\tR\x13revenueCategoryName\x12>\n" +
 	"\bsupplier\x18\x15 \x01(\v2\".moego.business.retail.v1.SupplierR\bsupplier\x125\n" +
 	"\fsupply_price\x18\t \x01(\v2\x12.google.type.MoneyR\vsupplyPrice\x125\n" +
 	"\fretail_price\x18\v \x01(\v2\x12.google.type.MoneyR\vretailPrice\x127\n" +

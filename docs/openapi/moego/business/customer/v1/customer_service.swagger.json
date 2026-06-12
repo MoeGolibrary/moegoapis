@@ -73,14 +73,14 @@
         "parameters": [
           {
             "name": "customerId",
-            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "description": "Unique identifier of the customer whose note will be deleted\nRequired. Must be a valid customer ID returned by customers:list or GetCustomer.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "noteId",
-            "description": "Unique identifier of the customer note\nRequired. Format: \"cxn_\" followed by random characters",
+            "description": "Unique identifier of the customer note to delete\nRequired. Must be a valid note ID returned by notes:list.",
             "in": "path",
             "required": true,
             "type": "string"
@@ -111,14 +111,14 @@
         "parameters": [
           {
             "name": "customerId",
-            "description": "Unique identifier of the customer\nRequired. Format: \"cus_\" followed by random characters",
+            "description": "Unique identifier of the customer whose note will be updated\nRequired. Must be a valid customer ID returned by customers:list or GetCustomer.",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
             "name": "noteId",
-            "description": "Unique identifier of the customer note\nRequired. Format: \"cxn_\" followed by random characters",
+            "description": "Unique identifier of the customer note to update\nRequired. Must be a valid note ID returned by notes:list.",
             "in": "path",
             "required": true,
             "type": "string"

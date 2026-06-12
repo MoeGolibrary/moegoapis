@@ -133,6 +133,10 @@ message Membership {
 
   // Allow billing cycle time of day.
   bool allow_billing_cycle_time_of_day = 31;
+
+  // Name of the revenue category assigned to this membership plan.
+  // Empty if no revenue category is assigned.
+  string revenue_category_name = 32;
 }
 
 // Subscription represents a customer's subscription to a membership plan.

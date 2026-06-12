@@ -337,12 +337,12 @@ message ListCustomerNotesResponse {
 
 // Request message for updating a customer note.
 message UpdateCustomerNoteRequest {
-  // Unique identifier of the customer
-  // Required. Format: "cus_" followed by random characters
+  // Unique identifier of the customer whose note will be updated
+  // Required. Must be a valid customer ID returned by customers:list or GetCustomer.
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Unique identifier of the customer note
-  // Required. Format: "cxn_" followed by random characters
+  // Unique identifier of the customer note to update
+  // Required. Must be a valid note ID returned by notes:list.
   string note_id = 2 [(google.api.field_behavior) = REQUIRED];
 
   // Updated note content
@@ -357,12 +357,12 @@ message UpdateCustomerNoteResponse {
 
 // Request message for deleting a customer note.
 message DeleteCustomerNoteRequest {
-  // Unique identifier of the customer
-  // Required. Format: "cus_" followed by random characters
+  // Unique identifier of the customer whose note will be deleted
+  // Required. Must be a valid customer ID returned by customers:list or GetCustomer.
   string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
 
-  // Unique identifier of the customer note
-  // Required. Format: "cxn_" followed by random characters
+  // Unique identifier of the customer note to delete
+  // Required. Must be a valid note ID returned by notes:list.
   string note_id = 2 [(google.api.field_behavior) = REQUIRED];
 }
 

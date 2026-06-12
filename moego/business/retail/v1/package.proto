@@ -63,6 +63,10 @@ message Package {
 
   // Items included in the package
   repeated Item items = 17;
+
+  // Name of the revenue category assigned to this package
+  // Empty if no revenue category is assigned
+  string revenue_category_name = 18;
 }
 
 // Item represents an item in a package

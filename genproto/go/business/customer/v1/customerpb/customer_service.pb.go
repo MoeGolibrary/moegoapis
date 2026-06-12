@@ -812,11 +812,11 @@ func (x *ListCustomerNotesResponse) GetNotes() []*Customer_Note {
 // Request message for updating a customer note.
 type UpdateCustomerNoteRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier of the customer
-	// Required. Format: "cus_" followed by random characters
+	// Unique identifier of the customer whose note will be updated
+	// Required. Must be a valid customer ID returned by customers:list or GetCustomer.
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// Unique identifier of the customer note
-	// Required. Format: "cxn_" followed by random characters
+	// Unique identifier of the customer note to update
+	// Required. Must be a valid note ID returned by notes:list.
 	NoteId string `protobuf:"bytes,2,opt,name=note_id,json=noteId,proto3" json:"note_id,omitempty"`
 	// Updated note content
 	Note          string `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
@@ -924,11 +924,11 @@ func (x *UpdateCustomerNoteResponse) GetNote() *Customer_Note {
 // Request message for deleting a customer note.
 type DeleteCustomerNoteRequest struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
-	// Unique identifier of the customer
-	// Required. Format: "cus_" followed by random characters
+	// Unique identifier of the customer whose note will be deleted
+	// Required. Must be a valid customer ID returned by customers:list or GetCustomer.
 	CustomerId string `protobuf:"bytes,1,opt,name=customer_id,json=customerId,proto3" json:"customer_id,omitempty"`
-	// Unique identifier of the customer note
-	// Required. Format: "cxn_" followed by random characters
+	// Unique identifier of the customer note to delete
+	// Required. Must be a valid note ID returned by notes:list.
 	NoteId        string `protobuf:"bytes,2,opt,name=note_id,json=noteId,proto3" json:"note_id,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
