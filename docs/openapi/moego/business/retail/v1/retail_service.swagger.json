@@ -222,6 +222,10 @@
             "$ref": "#/definitions/v1Item"
           },
           "title": "Items included in the package"
+        },
+        "revenueCategoryName": {
+          "type": "string",
+          "title": "Name of the revenue category assigned to this package\nEmpty if no revenue category is assigned"
         }
       },
       "description": "Package represents a package of services that can be sold together.",
@@ -459,6 +463,10 @@
         "categoryName": {
           "type": "string",
           "title": "Name of the category the product belongs to"
+        },
+        "revenueCategoryName": {
+          "type": "string",
+          "title": "Name of the revenue category assigned to this product\nEmpty if no revenue category is assigned"
         },
         "supplier": {
           "$ref": "#/definitions/v1Supplier",

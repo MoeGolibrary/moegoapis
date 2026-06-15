@@ -80,6 +80,15 @@ service PetService {
     };
   }
 
+  // Removes a code from a pet's profile.
+  //
+  // This only removes the association between the pet and the code. It does not
+  // delete or update the business-level code definition.
+  // After deletion, the code is no longer returned in the pet's pet_codes list.
+  rpc DeletePetCode(DeletePetCodeRequest) returns (DeletePetCodeResponse) {
+    option (google.api.http) = {delete: "/v1/customers/{customer_id}/pets/{id}/codes/{pet_code_id}"};
+  }
+
   // Adds new notes to a pet's profile.
   //
   // Notes can include observations about behavior, preferences, or special
@@ -245,6 +254,24 @@ message AppendPetCodesResponse {
   // Includes full code details
   repeated moego.business.setting.v1.PetCode codes = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
+
+// Request message for removing a code from a pet's profile.
+message DeletePetCodeRequest {
+  // ID of the customer who owns the pet
+  // Required. Must be a valid customer ID
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier of the pet
+  // Required. Must be a valid pet ID returned by pets:list or GetPet.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the code to remove from the pet's profile
+  // Required. Must be a valid pet code ID returned in the pet_codes list.
+  string pet_code_id = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for removing a code from a pet's profile.
+message DeletePetCodeResponse {}
 
 // Request message for adding notes to a pet's profile.
 message AppendPetNotesRequest {

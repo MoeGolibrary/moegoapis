@@ -779,6 +779,10 @@
         "allowBillingCycleTimeOfDay": {
           "type": "boolean",
           "description": "Allow billing cycle time of day."
+        },
+        "revenueCategoryName": {
+          "type": "string",
+          "description": "Name of the revenue category assigned to this membership plan.\nEmpty if no revenue category is assigned."
         }
       },
       "description": "Membership represents a membership plan that customers can purchase and use for benefits.",

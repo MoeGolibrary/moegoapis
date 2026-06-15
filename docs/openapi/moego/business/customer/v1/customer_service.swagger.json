@@ -51,6 +51,92 @@
         ]
       }
     },
+    "/v1/customers/{customerId}/notes/{id}": {
+      "delete": {
+        "summary": "Deletes an existing note from a customer's profile.",
+        "description": "Returns successfully if the deletion is completed.\nThrows NOT_FOUND if the customer ID or note ID doesn't exist.",
+        "operationId": "CustomerService_DeleteCustomerNote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteCustomerNoteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "Unique identifier of the customer whose note will be deleted\nRequired. Must be a valid customer ID returned by customers:list or GetCustomer.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer note to delete\nRequired. Must be a valid customer note ID.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      },
+      "put": {
+        "summary": "Updates an existing note on a customer's profile.",
+        "description": "Returns the updated note with refreshed metadata.\nThrows NOT_FOUND if the customer ID or note ID doesn't exist.",
+        "operationId": "CustomerService_UpdateCustomerNote",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1UpdateCustomerNoteResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "Unique identifier of the customer whose note will be updated\nRequired. Must be a valid customer ID returned by customers:list or GetCustomer.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the customer note to update\nRequired. Must be a valid customer note ID.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CustomerServiceUpdateCustomerNoteBody"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.CustomerService"
+        ]
+      }
+    },
     "/v1/customers/{id}": {
       "get": {
         "summary": "Retrieves detailed information about a specific customer.",
@@ -537,6 +623,25 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "UpdateCustomerRequest"
+      }
+    },
+    "CustomerServiceUpdateCustomerNoteBody": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "type": "string",
+          "title": "Updated note content"
+        }
+      },
+      "description": "Request message for updating a customer note.",
+      "required": [
+        "note"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "UpdateCustomerNoteRequest"
       }
     },
     "businesscustomerv1ListCustomerTagsResponse": {
@@ -1124,6 +1229,16 @@
         "type": "CustomerTag"
       }
     },
+    "v1DeleteCustomerNoteResponse": {
+      "type": "object",
+      "description": "Response message for deleting a customer note.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "DeleteCustomerNoteResponse"
+      }
+    },
     "v1GenCustomerCofLinkResponse": {
       "type": "object",
       "properties": {
@@ -1276,6 +1391,22 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ReferralSource"
+      }
+    },
+    "v1UpdateCustomerNoteResponse": {
+      "type": "object",
+      "properties": {
+        "note": {
+          "$ref": "#/definitions/v1CustomerNote",
+          "title": "Updated customer note"
+        }
+      },
+      "description": "Response message for updating a customer note.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "UpdateCustomerNoteResponse"
       }
     }
   }

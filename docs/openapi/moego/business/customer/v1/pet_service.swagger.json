@@ -191,6 +191,53 @@
         ]
       }
     },
+    "/v1/customers/{customerId}/pets/{id}/codes/{petCodeId}": {
+      "delete": {
+        "summary": "Removes a code from a pet's profile.",
+        "description": "This only removes the association between the pet and the code. It does not\ndelete or update the business-level code definition.\nAfter deletion, the code is no longer returned in the pet's pet_codes list.",
+        "operationId": "PetService_DeletePetCode",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeletePetCodeResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "customerId",
+            "description": "ID of the customer who owns the pet\nRequired. Must be a valid customer ID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "description": "Unique identifier of the pet\nRequired. Must be a valid pet ID returned by pets:list or GetPet.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "petCodeId",
+            "description": "ID of the code to remove from the pet's profile\nRequired. Must be a valid pet code ID returned in the pet_codes list.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.customer.v1.PetService"
+        ]
+      }
+    },
     "/v1/customers/{customerId}/pets/{id}/notes": {
       "post": {
         "summary": "Adds new notes to a pet's profile.",
@@ -748,6 +795,16 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
         },
         "type": "CreatePetResponse"
+      }
+    },
+    "v1DeletePetCodeResponse": {
+      "type": "object",
+      "description": "Response message for removing a code from a pet's profile.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/customer/v1/customerpb"
+        },
+        "type": "DeletePetCodeResponse"
       }
     },
     "v1ListAllPetsRequest": {

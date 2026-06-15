@@ -99,6 +99,25 @@ service CustomerService {
     };
   }
 
+  // Updates an existing note on a customer's profile.
+  //
+  // Returns the updated note with refreshed metadata.
+  // Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+  rpc UpdateCustomerNote(UpdateCustomerNoteRequest) returns (UpdateCustomerNoteResponse) {
+    option (google.api.http) = {
+      put: "/v1/customers/{customer_id}/notes/{id}"
+      body: "*"
+    };
+  }
+
+  // Deletes an existing note from a customer's profile.
+  //
+  // Returns successfully if the deletion is completed.
+  // Throws NOT_FOUND if the customer ID or note ID doesn't exist.
+  rpc DeleteCustomerNote(DeleteCustomerNoteRequest) returns (DeleteCustomerNoteResponse) {
+    option (google.api.http) = {delete: "/v1/customers/{customer_id}/notes/{id}"};
+  }
+
   // Adds new tags to a customer's profile.
   //
   // Tags help categorize customers and can be used for filtering and reporting.
@@ -315,6 +334,40 @@ message ListCustomerNotesResponse {
   // May be empty if the customer has no notes
   repeated Customer.Note notes = 2;
 }
+
+// Request message for updating a customer note.
+message UpdateCustomerNoteRequest {
+  // Unique identifier of the customer whose note will be updated
+  // Required. Must be a valid customer ID returned by customers:list or GetCustomer.
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier of the customer note to update
+  // Required. Must be a valid customer note ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Updated note content
+  string note = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for updating a customer note.
+message UpdateCustomerNoteResponse {
+  // Updated customer note
+  Customer.Note note = 1;
+}
+
+// Request message for deleting a customer note.
+message DeleteCustomerNoteRequest {
+  // Unique identifier of the customer whose note will be deleted
+  // Required. Must be a valid customer ID returned by customers:list or GetCustomer.
+  string customer_id = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Unique identifier of the customer note to delete
+  // Required. Must be a valid customer note ID.
+  string id = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for deleting a customer note.
+message DeleteCustomerNoteResponse {}
 
 // Request message for adding tags to a customer.
 message AppendCustomerTagsRequest {
