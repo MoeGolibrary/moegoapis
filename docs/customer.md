@@ -55,7 +55,7 @@ pets, and tracking service history.
 | `notes`                   | Array(Note)                                               | List of notes about this customer                                     |
 | `tags`                    | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                                 |
 | `referralSource`          | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired           |
-| `preference`              | Preference                                                | Customer's communication and marketing preferences                    |
+| `preference`              | Preference                                                | Deprecated. Use `complianceConfig` instead.                          |
 | `upcomingAppointmentsUrl` | string                                                    | URL to a page where the customer can view their upcoming appointments |
 | `deleted`                 | bool                                                      | Flag indicating if this customer record is deleted                    |
 | `complianceConfig`        | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels        |
@@ -72,10 +72,9 @@ history.
 | `lastUpdatedBy`   | string    | ID of the staff member who last modified this note |
 | `lastUpdatedTime` | Timestamp | When this note was last modified                   |
 
-### 3. Preference
+### 3. Preference (Deprecated)
 
-Stores a customer's communication and marketing preferences. These settings determine how and when we can contact the
-customer.
+Deprecated. Use `CustomerComplianceConfig` instead.
 
 | Field Name                   | Type | Description                                                  |
 |------------------------------|------|--------------------------------------------------------------|
@@ -182,7 +181,7 @@ Registers a new customer with basic details, preferences, and optionally initial
 | `phone`               | string                                                    | Yes      | Customer's phone number                               |
 | `email`               | string                                                    | No       | Customer's email address                              |
 | `address`             | Address                                                   | No       | Customer's primary address                            |
-| `preference`          | Preference                                                | No       | Customer's communication and marketing preferences    |
+| `preference`          | Preference                                                | No       | Deprecated. Use `complianceConfig` instead.           |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | No       | Initial tags to apply to the customer                 |
 | `notes`               | Array(Note)                                               | No       | Initial notes about the customer                      |
 | `complianceConfig`    | CustomerComplianceConfig                                  | No       | Customer's compliance configuration for communication channels |
@@ -254,7 +253,7 @@ Registers a new customer with basic details, preferences, and optionally initial
 | `notes`               | Array(Note)                                               | List of notes about this customer                           |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
-| `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `preference`          | Preference                                                | Deprecated. Use `complianceConfig` instead.                |
 | `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
@@ -311,7 +310,7 @@ Retrieves detailed information about a specific customer, including preferences,
 | `notes`               | Array(Note)                                               | List of notes about this customer                           |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
-| `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `preference`          | Preference                                                | Deprecated. Use `complianceConfig` instead.                |
 | `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
@@ -379,7 +378,7 @@ Updates an existing customer's information, including basic details, preferences
 | `notes`               | Array(Note)                                               | List of notes about this customer                           |
 | `tags`                | Array([CustomerTag](./setting_customer.md#1-customertag)) | List of tags applied to this customer                       |
 | `referralSource`      | [ReferralSource](./setting_customer.md#2-referralsource)  | The source or channel through which a customer was acquired |
-| `preference`          | Preference                                                | Customer's communication and marketing preferences          |
+| `preference`          | Preference                                                | Deprecated. Use `complianceConfig` instead.                |
 | `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
 #### ⚠️ Error Codes:
