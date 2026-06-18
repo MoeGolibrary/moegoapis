@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package moego.business.van.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/van/v1/van.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb;vanpb";
+option java_multiple_files = true;
+option java_outer_classname = "VanServiceProto";
+option java_package = "com.moego.api.business.van.v1";
+
+// VanService provides read access to current mobile van configuration.
+service VanService {
+  // Lists vans under a company and optionally narrows the result to specific businesses.
+  rpc ListVans(ListVansRequest) returns (ListVansResponse) {
+    option (google.api.http) = {
+      post: "/v1/vans:list"
+      body: "*"
+    };
+  }
+}
+
+// Request message for listing vans.
+message ListVansRequest {
+  // Pagination parameters for the request.
+  moego.common.v1.Pagination pagination = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // ID of the company that owns the vans.
+  string company_id = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Optional list of business IDs used to narrow the result set.
+  repeated string business_ids = 3 [(google.api.field_behavior) = OPTIONAL];
+}
+
+// Response message for listing vans.
+message ListVansResponse {
+  // Token for retrieving the next page of results.
+  string next_page_token = 1;
+
+  // Vans matching the request.
+  repeated Van vans = 2;
+}

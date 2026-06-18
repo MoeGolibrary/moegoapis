@@ -25,12 +25,15 @@ When making API changes:
 - `Appointment:Create` API: added optional `price` field to `CreateAppointmentRequest.Service`; if not set, system default price is used (2026-04-01)
 - `AbandonedBooking:Get` and `AbandonedBooking:List` APIs: added optional `abandonPreference` field on `AbandonedBooking` capturing the preference snapshot submitted during the abandon flow; includes `preferredDay` (`TODAY` | `TOMORROW` | `THIS_WEEK` | `FLEXIBLE`), `preferredTime` (`MORNING` | `AFTERNOON` | `EITHER`), and `preferenceSubmittedAt` timestamp; field is omitted when the customer did not submit a preference (2026-05-12)
 - `Webhook` events: added `CUSTOMER_COMPLIANCE_CHANGED` for customer communication compliance or consent changes (2026-06-18)
+- `Van:List` API for retrieving the current van and assigned staff snapshot under a company, with optional business filtering and `rawId` mapping fields (2026-06-18)
+- `VanStaffRecord:List` API for retrieving the historical van-to-staff assignment snapshot for a business on a specific date, with `rawId` mapping fields (2026-06-18)
 
 ### Documentation
 - `Appointment:Create` API: clarified per-type field requirements for `Service` object; added boarding and daycare examples (2026-03-31)
 - `Appointment:Create` API: documented `price` field (2026-04-01)
 - `AbandonedBooking`: documented `abandonPreference` field with nested `AbandonPreference` message, `PreferredDay` and `PreferredTime` enums (2026-05-12)
 - `Webhook` and `Customer`: documented `CUSTOMER_COMPLIANCE_CHANGED` and its relationship with `complianceConfig` (2026-06-18)
+- Added external documentation for `Van` and `Van Staff Record` APIs (2026-06-18)
 
 ---
 

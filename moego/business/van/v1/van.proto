@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package moego.business.van.v1;
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb;vanpb";
+option java_multiple_files = true;
+option java_outer_classname = "VanProto";
+option java_package = "com.moego.api.business.van.v1";
+
+// Van represents a mobile service vehicle configured under a business.
+message Van {
+  // Unique identifier for the van.
+  // Format: "van_" followed by random characters.
+  string id = 1;
+
+  // Original raw identifier for the van in product.
+  int64 raw_id = 2;
+
+  // ID of the parent company.
+  string company_id = 3;
+
+  // ID of the business location that owns the van.
+  string business_id = 4;
+
+  // Display name configured for the van.
+  string display_name = 5;
+
+  // License plate configured for the van.
+  string license_plate = 6;
+
+  // Staff members currently assigned to this van.
+  repeated AssignedStaff assigned_staffs = 7;
+}
+
+// AssignedStaff represents a staff member assigned to a van.
+message AssignedStaff {
+  // Unique identifier for the staff member.
+  string id = 1;
+
+  // Original raw identifier for the staff member in product.
+  int64 raw_id = 2;
+
+  // Display name of the staff member.
+  string name = 3;
+}
