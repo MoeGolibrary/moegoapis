@@ -69,6 +69,9 @@ const (
 	// Customer has been permanently removed
 	// Cleans up customer data and dependencies
 	Event_CUSTOMER_DELETED Event_Type = 302
+	// Customer compliance or consent settings have changed
+	// Updates customer communication compliance and consent state
+	Event_CUSTOMER_COMPLIANCE_CHANGED Event_Type = 303
 	// New pet has been created
 	// Triggers pet profile setup
 	Event_PET_CREATED Event_Type = 400
@@ -95,26 +98,28 @@ var (
 		300: "CUSTOMER_CREATED",
 		301: "CUSTOMER_UPDATED",
 		302: "CUSTOMER_DELETED",
+		303: "CUSTOMER_COMPLIANCE_CHANGED",
 		400: "PET_CREATED",
 		401: "PET_UPDATED",
 		402: "PET_DELETED",
 	}
 	Event_Type_value = map[string]int32{
-		"TYPE_UNSPECIFIED":        0,
-		"HEALTH_CHECK":            1,
-		"APPOINTMENT_CREATED":     100,
-		"APPOINTMENT_UPDATED":     101,
-		"APPOINTMENT_FINISHED":    102,
-		"APPOINTMENT_CANCELED":    103,
-		"APPOINTMENT_DELETED":     104,
-		"APPOINTMENT_FULLY_PAID":  105,
-		"ONLINE_BOOKING_RECEIVED": 200,
-		"CUSTOMER_CREATED":        300,
-		"CUSTOMER_UPDATED":        301,
-		"CUSTOMER_DELETED":        302,
-		"PET_CREATED":             400,
-		"PET_UPDATED":             401,
-		"PET_DELETED":             402,
+		"TYPE_UNSPECIFIED":            0,
+		"HEALTH_CHECK":                1,
+		"APPOINTMENT_CREATED":         100,
+		"APPOINTMENT_UPDATED":         101,
+		"APPOINTMENT_FINISHED":        102,
+		"APPOINTMENT_CANCELED":        103,
+		"APPOINTMENT_DELETED":         104,
+		"APPOINTMENT_FULLY_PAID":      105,
+		"ONLINE_BOOKING_RECEIVED":     200,
+		"CUSTOMER_CREATED":            300,
+		"CUSTOMER_UPDATED":            301,
+		"CUSTOMER_DELETED":            302,
+		"CUSTOMER_COMPLIANCE_CHANGED": 303,
+		"PET_CREATED":                 400,
+		"PET_UPDATED":                 401,
+		"PET_DELETED":                 402,
 	}
 )
 
@@ -336,7 +341,7 @@ var File_moego_business_event_v1_event_proto protoreflect.FileDescriptor
 
 const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\n" +
-	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\x87\a\n" +
+	"#moego/business/event/v1/event.proto\x12\x17moego.business.event.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a)moego/business/customer/v1/customer.proto\x1a$moego/business/customer/v1/pet.proto\x1a*moego/business/event/v1/health_check.proto\x1a5moego/business/online_booking/v1/online_booking.proto\"\xa9\a\n" +
 	"\x05Event\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x127\n" +
 	"\x04type\x18\x02 \x01(\x0e2#.moego.business.event.v1.Event.TypeR\x04type\x128\n" +
@@ -347,7 +352,7 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\vappointment\x18\x06 \x01(\v2*.moego.business.appointment.v1.AppointmentH\x00R\vappointment\x12X\n" +
 	"\x0eonline_booking\x18\a \x01(\v2/.moego.business.online_booking.v1.OnlineBookingH\x00R\ronlineBooking\x12B\n" +
 	"\bcustomer\x18\b \x01(\v2$.moego.business.customer.v1.CustomerH\x00R\bcustomer\x123\n" +
-	"\x03pet\x18\t \x01(\v2\x1f.moego.business.customer.v1.PetH\x00R\x03pet\"\xe2\x02\n" +
+	"\x03pet\x18\t \x01(\v2\x1f.moego.business.customer.v1.PetH\x00R\x03pet\"\x84\x03\n" +
 	"\x04Type\x12\x14\n" +
 	"\x10TYPE_UNSPECIFIED\x10\x00\x12\x10\n" +
 	"\fHEALTH_CHECK\x10\x01\x12\x17\n" +
@@ -360,7 +365,8 @@ const file_moego_business_event_v1_event_proto_rawDesc = "" +
 	"\x17ONLINE_BOOKING_RECEIVED\x10\xc8\x01\x12\x15\n" +
 	"\x10CUSTOMER_CREATED\x10\xac\x02\x12\x15\n" +
 	"\x10CUSTOMER_UPDATED\x10\xad\x02\x12\x15\n" +
-	"\x10CUSTOMER_DELETED\x10\xae\x02\x12\x10\n" +
+	"\x10CUSTOMER_DELETED\x10\xae\x02\x12 \n" +
+	"\x1bCUSTOMER_COMPLIANCE_CHANGED\x10\xaf\x02\x12\x10\n" +
 	"\vPET_CREATED\x10\x90\x03\x12\x10\n" +
 	"\vPET_UPDATED\x10\x91\x03\x12\x10\n" +
 	"\vPET_DELETED\x10\x92\x03B\t\n" +

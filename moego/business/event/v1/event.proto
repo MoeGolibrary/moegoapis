@@ -85,6 +85,10 @@ message Event {
     // Cleans up customer data and dependencies
     CUSTOMER_DELETED = 302;
 
+    // Customer compliance or consent settings have changed
+    // Updates customer communication compliance and consent state
+    CUSTOMER_COMPLIANCE_CHANGED = 303;
+
     // Pet Events (400-499)
     // Events related to pet data changes
 

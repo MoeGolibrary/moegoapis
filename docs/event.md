@@ -90,6 +90,7 @@ message Event {
     CUSTOMER_CREATED = 300;
     CUSTOMER_UPDATED = 301;
     CUSTOMER_DELETED = 302;
+    CUSTOMER_COMPLIANCE_CHANGED = 303;
 
     // Pet Events (400-499)
     PET_CREATED = 400;
@@ -231,6 +232,7 @@ TODO
 | How do I verify webhook endpoint availability?          | Use the `HEALTH_CHECK` event type with the provided validation string                                                                                           |
 | Which event indicates a new appointment?                | The `APPOINTMENT_CREATED` event type                                                                                                                            |
 | Which event indicates a customer update?                | The `CUSTOMER_UPDATED` event type triggers when customer profile is modified                                                                                    |
+| Which event indicates a customer compliance update?     | The `CUSTOMER_COMPLIANCE_CHANGED` event type triggers when customer communication compliance or consent settings are modified                                   |
 | Which events are related to pets?                       | `PET_CREATED` (400), `PET_UPDATED` (401), `PET_DELETED` (402) — all carry a `Pet` payload                                                                      |
 | How are different event types processed differently?    | Each event type has a specific payload format and processing logic - system events use HealthCheck, appointments use Appointment, customers use Customer, pets use Pet |
 | Why does my system need to handle multiple event types? | Different business operations require different handling procedures - appointment changes affect scheduling while customer updates trigger profile synchronization workflows |
