@@ -100,6 +100,7 @@ specific business operation or system occurrence.
     - `CUSTOMER_CREATED`: New customer has been created
     - `CUSTOMER_UPDATED`: Existing customer has been modified
     - `CUSTOMER_DELETED`: Customer has been permanently removed
+    - `CUSTOMER_COMPLIANCE_CHANGED`: Customer compliance or consent settings have changed
 
 - **Pet Events **(400-499): Pet data changes
     - `PET_CREATED`: New pet has been created

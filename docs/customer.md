@@ -110,6 +110,8 @@ can use to contact the customer for different types of communications.
 > **Note**: If an empty list is provided when updating channel configurations, the corresponding configuration will be cleared.
 >
 > **Important**: The `isConsented` field indicates explicit customer consent. Organizations modifying this field must comply with all applicable privacy laws and regulations. Consult with legal counsel when implementing consent management features.
+>
+> **Webhook**: Changes to customer communication compliance or consent settings can be delivered through the `CUSTOMER_COMPLIANCE_CHANGED` webhook event.
 
 ### 6. Address
 
@@ -731,6 +733,7 @@ TODO
 | Why does creating a customer return "resource exhausted"? | The company may have reached the maximum allowed customer count. Clean up unused customers or contact admin to increase quota. |
 | How to manage customer tags and notes effectively?        | Use `AppendCustomerTags` and `AppendCustomerNotes` to add new entries                                                          |
 | How to control which communication channels can be used to contact a customer? | Use the `complianceConfig` field to specify allowed channels for service-related and marketing communications. Pass an empty array to clear a channel configuration. |
+| How can I receive webhook notifications for customer compliance changes? | Subscribe to the `CUSTOMER_COMPLIANCE_CHANGED` event type. The webhook event carries the latest customer payload, including `complianceConfig`. |
 
 ---
 
