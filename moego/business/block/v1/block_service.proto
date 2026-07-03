@@ -52,6 +52,18 @@ service BlockService {
       body: "*"
     };
   }
+
+  // DeleteBlock deletes (cancels) a block from a staff member's schedule.
+  // The block is soft-deleted and the time slot becomes available for booking.
+  //
+  // Returns:
+  // - Successfully if the deletion is completed
+  // - NOT_FOUND if the block doesn't exist
+  // - INVALID_ARGUMENT if the block is already canceled
+  // - PERMISSION_DENIED if the caller lacks permission
+  rpc DeleteBlock(DeleteBlockRequest) returns (DeleteBlockResponse) {
+    option (google.api.http) = {delete: "/v1/blocks/{id}"};
+  }
 }
 
 // CreateBlockRequest contains the information needed to create a new block
@@ -121,3 +133,13 @@ message ListBlocksResponse {
   // Empty if there are no more results.
   string next_page_token = 2;
 }
+
+// DeleteBlockRequest contains the ID of the block to delete.
+message DeleteBlockRequest {
+  // Unique identifier of the block to delete.
+  // Must be a valid block ID that exists in the system.
+  string id = 1 [(google.api.field_behavior) = REQUIRED];
+}
+
+// DeleteBlockResponse is empty on success.
+message DeleteBlockResponse {}

@@ -229,7 +229,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/businesssettingv1ListLodgingsResponse"
+              "$ref": "#/definitions/v1ListLodgingsResponse"
             }
           },
           "default": {
@@ -252,7 +252,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1SettingServiceListLodgingsBody"
+              "$ref": "#/definitions/SettingServiceListLodgingsBody"
             }
           }
         ],
@@ -561,7 +561,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/businesssettingv1ListServicesResponse"
+              "$ref": "#/definitions/v1ListServicesResponse"
             }
           },
           "default": {
@@ -584,7 +584,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/v1SettingServiceListServicesBody"
+              "$ref": "#/definitions/SettingServiceListServicesBody"
             }
           }
         ],
@@ -769,6 +769,16 @@
         "type": "ListLeadsLifeCyclesRequest"
       }
     },
+    "SettingServiceListLodgingsBody": {
+      "type": "object",
+      "description": "Request message for listing lodgings.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLodgingsRequest"
+      }
+    },
     "SettingServiceListPetCoatTypesBody": {
       "type": "object",
       "description": "Request message for listing pet coat types.",
@@ -807,6 +817,36 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListPetTypesRequest"
+      }
+    },
+    "SettingServiceListServicesBody": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "List of business locations to filter services by\nOptional. If empty, returns services from all locations"
+        },
+        "filter": {
+          "$ref": "#/definitions/v1ListServicesRequestFilter",
+          "title": "Optional filters to apply to the service list"
+        }
+      },
+      "description": "Request message for listing services.",
+      "required": [
+        "pagination"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListServicesRequest"
       }
     },
     "SettingServiceUpdateServiceBody": {
@@ -939,50 +979,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListCustomerTagsResponse"
-      }
-    },
-    "businesssettingv1ListLodgingsResponse": {
-      "type": "object",
-      "properties": {
-        "lodgings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/v1Lodging"
-          },
-          "title": "List of available lodgings\nMay be empty if no lodgings are defined"
-        }
-      },
-      "description": "Response message for listing lodgings.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
-        },
-        "type": "ListLodgingsResponse"
-      }
-    },
-    "businesssettingv1ListServicesResponse": {
-      "type": "object",
-      "properties": {
-        "nextPageToken": {
-          "type": "string",
-          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
-        },
-        "services": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "$ref": "#/definitions/businesssettingv1Service"
-          },
-          "title": "List of services matching the request criteria\nMay be empty if no services match"
-        }
-      },
-      "description": "Response message for listing services.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
-        },
-        "type": "ListServicesResponse"
       }
     },
     "businesssettingv1Service": {
@@ -1567,6 +1563,26 @@
         "type": "ListLeadsLifeCyclesResponse"
       }
     },
+    "v1ListLodgingsResponse": {
+      "type": "object",
+      "properties": {
+        "lodgings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Lodging"
+          },
+          "title": "List of available lodgings\nMay be empty if no lodgings are defined"
+        }
+      },
+      "description": "Response message for listing lodgings.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListLodgingsResponse"
+      }
+    },
     "v1ListPetCoatTypesResponse": {
       "type": "object",
       "properties": {
@@ -1664,6 +1680,30 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "Filter"
+      }
+    },
+    "v1ListServicesResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "title": "Token for retrieving the next page of results\nEmpty if there are no more results"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/businesssettingv1Service"
+          },
+          "title": "List of services matching the request criteria\nMay be empty if no services match"
+        }
+      },
+      "description": "Response message for listing services.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
+        },
+        "type": "ListServicesResponse"
       }
     },
     "v1Lodging": {
@@ -1972,46 +2012,6 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
         },
         "type": "ListCustomerTagsRequest"
-      }
-    },
-    "v1SettingServiceListLodgingsBody": {
-      "type": "object",
-      "description": "Request message for listing lodgings.",
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
-        },
-        "type": "ListLodgingsRequest"
-      }
-    },
-    "v1SettingServiceListServicesBody": {
-      "type": "object",
-      "properties": {
-        "pagination": {
-          "$ref": "#/definitions/v1Pagination",
-          "title": "Pagination parameters for the request\nRequired. Defines page size and token for continuation"
-        },
-        "businessIds": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "title": "List of business locations to filter services by\nOptional. If empty, returns services from all locations"
-        },
-        "filter": {
-          "$ref": "#/definitions/v1ListServicesRequestFilter",
-          "title": "Optional filters to apply to the service list"
-        }
-      },
-      "description": "Request message for listing services.",
-      "required": [
-        "pagination"
-      ],
-      "x-go-type": {
-        "import": {
-          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/setting/v1/settingpb"
-        },
-        "type": "ListServicesRequest"
       }
     },
     "v1Weight": {
