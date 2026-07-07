@@ -82,6 +82,37 @@
         "tags": [
           "moego.business.block.v1.BlockService"
         ]
+      },
+      "delete": {
+        "summary": "DeleteBlock deletes (cancels) a block from a staff member's schedule.\nThe block is soft-deleted and the time slot becomes available for booking.",
+        "description": "Returns:\n- Successfully if the deletion is completed\n- NOT_FOUND if the block doesn't exist\n- INVALID_ARGUMENT if the block is already canceled\n- PERMISSION_DENIED if the caller lacks permission",
+        "operationId": "BlockService_DeleteBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DeleteBlockResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Unique identifier of the block to delete.\nMust be a valid block ID that exists in the system.",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "moego.business.block.v1.BlockService"
+        ]
       }
     },
     "/v1/blocks:list": {
@@ -254,6 +285,16 @@
           "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
         },
         "type": "CreateBlockRequest"
+      }
+    },
+    "v1DeleteBlockResponse": {
+      "type": "object",
+      "description": "DeleteBlockResponse is empty on success.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/block/v1/blockpb"
+        },
+        "type": "DeleteBlockResponse"
       }
     },
     "v1ListBlocksRequest": {
