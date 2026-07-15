@@ -14,7 +14,7 @@ option java_package = "com.moego.api.business.van_record.v1";
 
 // VanRecordService provides historical van-to-staff assignment snapshots.
 service VanRecordService {
-  // Lists van staff assignment snapshots for a business on a specific date.
+  // Lists historical van staff assignment snapshots for the requested vans on a specific date.
   rpc ListVanStaffRecords(ListVanStaffRecordsRequest) returns (ListVanStaffRecordsResponse) {
     option (google.api.http) = {
       post: "/v1/van_staff_records:list"
@@ -40,6 +40,6 @@ message ListVanStaffRecordsResponse {
   // Token for retrieving the next page of results.
   string next_page_token = 1;
 
-  // Historical records matching the request.
+  // Historical records matching the request, ordered by van_id ascending after pagination is applied.
   repeated VanStaffRecord records = 2;
 }
