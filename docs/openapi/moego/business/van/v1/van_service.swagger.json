@@ -1,0 +1,243 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "moego/business/van/v1/van_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "moego.business.van.v1.VanService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/vans:list": {
+      "post": {
+        "summary": "Lists vans under a company and optionally narrows the result to specific businesses.",
+        "operationId": "VanService_ListVans",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListVansResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "description": "Request message for listing vans.",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ListVansRequest"
+            }
+          }
+        ],
+        "tags": [
+          "moego.business.van.v1.VanService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      },
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/genproto/googleapis/rpc/status"
+        },
+        "type": "Status"
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {},
+      "x-go-type": {
+        "import": {
+          "package": "google.golang.org/protobuf/types/known/anypb"
+        },
+        "type": "Any"
+      }
+    },
+    "v1AssignedStaff": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the staff member."
+        },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "description": "Original raw identifier for the staff member in product."
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the staff member."
+        }
+      },
+      "description": "AssignedStaff represents a staff member assigned to a van.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb"
+        },
+        "type": "AssignedStaff"
+      }
+    },
+    "v1ListVansRequest": {
+      "type": "object",
+      "properties": {
+        "pagination": {
+          "$ref": "#/definitions/v1Pagination",
+          "description": "Pagination parameters for the request."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "ID of the company that owns the vans."
+        },
+        "businessIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Optional list of business IDs used to narrow the result set."
+        }
+      },
+      "description": "Request message for listing vans.",
+      "required": [
+        "pagination",
+        "companyId"
+      ],
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb"
+        },
+        "type": "ListVansRequest"
+      }
+    },
+    "v1ListVansResponse": {
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "type": "string",
+          "description": "Token for retrieving the next page of results."
+        },
+        "vans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Van"
+          },
+          "description": "Vans matching the request."
+        }
+      },
+      "description": "Response message for listing vans.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb"
+        },
+        "type": "ListVansResponse"
+      }
+    },
+    "v1Pagination": {
+      "type": "object",
+      "properties": {
+        "pageSize": {
+          "type": "integer",
+          "format": "int32",
+          "title": "integer, Number of items to return per page.\nMinimum: 1, Maximum: 500"
+        },
+        "pageToken": {
+          "type": "string",
+          "x-nullable": true,
+          "description": "string, Token for retrieving the next page.\nObtained from the previous page's response.\nLeave empty for the first page."
+        }
+      },
+      "description": "The pagination object provides a standardized way to handle paginated results\nacross all API endpoints. It supports both cursor-based and offset-based\npagination, with configurable page sizes and sorting options. This ensures\nconsistent and efficient data retrieval for large result sets.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/common/v1/commonpb"
+        },
+        "type": "Pagination"
+      }
+    },
+    "v1Van": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the van.\nFormat: \"van_\" followed by random characters."
+        },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "description": "Original raw identifier for the van in product."
+        },
+        "companyId": {
+          "type": "string",
+          "description": "ID of the parent company."
+        },
+        "businessId": {
+          "type": "string",
+          "description": "ID of the business location that owns the van."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Display name configured for the van."
+        },
+        "licensePlate": {
+          "type": "string",
+          "description": "License plate configured for the van."
+        },
+        "assignedStaffs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1AssignedStaff"
+          },
+          "description": "Staff members currently assigned to this van."
+        }
+      },
+      "description": "Van represents a mobile service vehicle configured under a business.",
+      "x-go-type": {
+        "import": {
+          "package": "github.com/MoeGolibrary/moegoapis/genproto/go/business/van/v1/vanpb"
+        },
+        "type": "Van"
+      }
+    }
+  }
+}

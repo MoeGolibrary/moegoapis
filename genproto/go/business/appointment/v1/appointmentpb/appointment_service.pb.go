@@ -1645,7 +1645,7 @@ var File_moego_business_appointment_v1_appointment_service_proto protoreflect.Fi
 
 const file_moego_business_appointment_v1_appointment_service_proto_rawDesc = "" +
 	"\n" +
-	"7moego/business/appointment/v1/appointment_service.proto\x12\x1dmoego.business.appointment.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a4moego/business/appointment/v1/appointment_note.proto\x1a'moego/business/message/v1/message.proto\x1a3moego/business/appointment/v1/grooming_report.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\"R\n" +
+	"7moego/business/appointment/v1/appointment_service.proto\x12\x1dmoego.business.appointment.v1\x1a\x1cgoogle/api/annotations.proto\x1a\x1fgoogle/api/field_behavior.proto\x1a\x16google/type/date.proto\x1a\x1agoogle/type/interval.proto\x1a\x17google/type/money.proto\x1a/moego/business/appointment/v1/appointment.proto\x1a4moego/business/appointment/v1/appointment_note.proto\x1a3moego/business/appointment/v1/grooming_report.proto\x1a$moego/business/customer/v1/pet.proto\x1a'moego/business/message/v1/message.proto\x1a'moego/business/setting/v1/lodging.proto\x1a'moego/business/setting/v1/service.proto\x1a moego/common/v1/pagination.proto\"R\n" +
 	"\x15GetAppointmentRequest\x12\x13\n" +
 	"\x02id\x18\x01 \x01(\tB\x03\xe0A\x02R\x02id\x12$\n" +
 	"\vbusiness_id\x18\x02 \x01(\tB\x03\xe0A\x02R\n" +

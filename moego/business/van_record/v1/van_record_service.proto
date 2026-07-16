@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package moego.business.van_record.v1;
+
+import "google/api/annotations.proto";
+import "google/api/field_behavior.proto";
+import "moego/business/van_record/v1/van_record.proto";
+import "moego/common/v1/pagination.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/van_record/v1/vanrecordpb;vanrecordpb";
+option java_multiple_files = true;
+option java_outer_classname = "VanRecordServiceProto";
+option java_package = "com.moego.api.business.van_record.v1";
+
+// VanRecordService provides historical van-to-staff assignment snapshots.
+service VanRecordService {
+  // Lists historical van staff assignment snapshots for the requested vans on a specific date.
+  rpc ListVanStaffRecords(ListVanStaffRecordsRequest) returns (ListVanStaffRecordsResponse) {
+    option (google.api.http) = {
+      post: "/v1/van_staff_records:list"
+      body: "*"
+    };
+  }
+}
+
+// Request message for listing historical van staff records.
+message ListVanStaffRecordsRequest {
+  // Van IDs used to scope the historical records.
+  repeated string van_ids = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Snapshot date in yyyy-MM-dd format.
+  string date = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Pagination parameters for the request.
+  moego.common.v1.Pagination pagination = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Response message for listing historical van staff records.
+message ListVanStaffRecordsResponse {
+  // Token for retrieving the next page of results.
+  string next_page_token = 1;
+
+  // Historical records matching the request, ordered by van_id ascending after pagination is applied.
+  repeated VanStaffRecord records = 2;
+}

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package moego.business.van_record.v1;
+
+import "moego/business/van/v1/van.proto";
+
+option go_package = "github.com/MoeGolibrary/moegoapis/genproto/go/business/van_record/v1/vanrecordpb;vanrecordpb";
+option java_multiple_files = true;
+option java_outer_classname = "VanRecordProto";
+option java_package = "com.moego.api.business.van_record.v1";
+
+// VanStaffRecord represents the staff assignment snapshot for a van on a specific day.
+message VanStaffRecord {
+  // Unique identifier of the van.
+  string van_id = 1;
+
+  // Original raw identifier of the van in product.
+  int64 van_raw_id = 2;
+
+  // ID of the business location that owns the van.
+  string business_id = 3;
+
+  // Snapshot date in yyyy-MM-dd format.
+  string date = 4;
+
+  // Staff members assigned to the van on the snapshot date.
+  repeated moego.business.van.v1.AssignedStaff assigned_staffs = 5;
+}
