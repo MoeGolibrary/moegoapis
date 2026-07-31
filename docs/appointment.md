@@ -198,10 +198,25 @@ timing, pricing, staff assignments, and service-specific parameters.
 | `staffIds`           | Array(string) | IDs of staff members assigned to this service                  |
 | `serviceType`        | Type          | Type of service being provided                                 |
 | `serviceTime`        | integer       | Expected duration of the service in minutes                    |
+| `dateType`          | enum(DateType), optional | Recurring add-on scheduling rule                      |
+| `specificDates`     | Array(string) | Applicable business-local dates in `yyyy-MM-dd` format          |
+| `quantityPerDay`    | integer, optional | Number of service units on each applicable date              |
 | `petServiceDetailId` | string        | Unique identifier for this specific pet's service booking      |
 | `lodgingId`          | string        | Unique identifier for this specific pet's service lodging unit |
 | `lodgingUnitName`    | string        | Name of the lodging unit for this pet's service                |
 | `lodgingTypeName`    | string        | Type of lodging unit for this pet's service                    |
+
+#### Enum Definitions
+
+##### `ServiceDetail.DateType`
+
+- `DATE_TYPE_UNSPECIFIED`: Recurring schedule type is not specified.
+- `EVERYDAY`: Applies every day during the stay, excluding the checkout day.
+- `SPECIFIC_DATE`: Applies only on the dates listed in `specificDates`.
+- `EVERYDAY_INCLUDE_CHECKOUT_DAY`: Applies every day during the stay, including the checkout day.
+- `EVERYDAY_EXCEPT_CHECKIN_DAY`: Applies every day during the stay, excluding the check-in day.
+- `LAST_DAY`: Applies only on the last day of the stay.
+- `FIRST_DAY`: Applies only on the first day of the stay.
 
 ---
 
