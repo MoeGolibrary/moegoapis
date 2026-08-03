@@ -79,6 +79,75 @@ func (EvaluationDetail_EvaluationStatus) EnumDescriptor() ([]byte, []int) {
 	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{1, 0}
 }
 
+// DateType describes how a recurring add-on applies across an appointment stay.
+type ServiceDetail_DateType int32
+
+const (
+	// Date type is not specified.
+	ServiceDetail_DATE_TYPE_UNSPECIFIED ServiceDetail_DateType = 0
+	// Applies every day during the stay, excluding the checkout day.
+	ServiceDetail_EVERYDAY ServiceDetail_DateType = 1
+	// Applies only on the dates listed in specific_dates.
+	ServiceDetail_SPECIFIC_DATE ServiceDetail_DateType = 2
+	// Applies every day during the stay, including the checkout day.
+	ServiceDetail_EVERYDAY_INCLUDE_CHECKOUT_DAY ServiceDetail_DateType = 3
+	// Applies every day during the stay, excluding the check-in day.
+	ServiceDetail_EVERYDAY_EXCEPT_CHECKIN_DAY ServiceDetail_DateType = 4
+	// Applies only on the last day of the stay.
+	ServiceDetail_LAST_DAY ServiceDetail_DateType = 5
+	// Applies only on the first day of the stay.
+	ServiceDetail_FIRST_DAY ServiceDetail_DateType = 6
+)
+
+// Enum value maps for ServiceDetail_DateType.
+var (
+	ServiceDetail_DateType_name = map[int32]string{
+		0: "DATE_TYPE_UNSPECIFIED",
+		1: "EVERYDAY",
+		2: "SPECIFIC_DATE",
+		3: "EVERYDAY_INCLUDE_CHECKOUT_DAY",
+		4: "EVERYDAY_EXCEPT_CHECKIN_DAY",
+		5: "LAST_DAY",
+		6: "FIRST_DAY",
+	}
+	ServiceDetail_DateType_value = map[string]int32{
+		"DATE_TYPE_UNSPECIFIED":         0,
+		"EVERYDAY":                      1,
+		"SPECIFIC_DATE":                 2,
+		"EVERYDAY_INCLUDE_CHECKOUT_DAY": 3,
+		"EVERYDAY_EXCEPT_CHECKIN_DAY":   4,
+		"LAST_DAY":                      5,
+		"FIRST_DAY":                     6,
+	}
+)
+
+func (x ServiceDetail_DateType) Enum() *ServiceDetail_DateType {
+	p := new(ServiceDetail_DateType)
+	*p = x
+	return p
+}
+
+func (x ServiceDetail_DateType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ServiceDetail_DateType) Descriptor() protoreflect.EnumDescriptor {
+	return file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes[1].Descriptor()
+}
+
+func (ServiceDetail_DateType) Type() protoreflect.EnumType {
+	return &file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes[1]
+}
+
+func (x ServiceDetail_DateType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ServiceDetail_DateType.Descriptor instead.
+func (ServiceDetail_DateType) EnumDescriptor() ([]byte, []int) {
+	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP(), []int{2, 0}
+}
+
 // The pet service detail object represents the services booked for a specific pet in an appointment.
 // Each appointment can include multiple pets, and each pet can receive multiple services.
 // This object links pets with their scheduled services and maintains the service-specific details
@@ -266,8 +335,16 @@ type ServiceDetail struct {
 	// string, Name of the lodging type.
 	// Used for display and lodging type name.
 	LodgingTypeName string `protobuf:"bytes,13,opt,name=lodging_type_name,json=lodgingTypeName,proto3" json:"lodging_type_name,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+	// DateType, Scheduling rule for a recurring add-on.
+	// Omitted for services without a public recurring schedule.
+	DateType *ServiceDetail_DateType `protobuf:"varint,14,opt,name=date_type,json=dateType,proto3,enum=moego.business.appointment.v1.ServiceDetail_DateType,oneof" json:"date_type,omitempty"`
+	// array(string), Specific business-local dates on which the add-on applies.
+	// Values use the yyyy-MM-dd format and are populated for SPECIFIC_DATE.
+	SpecificDates []string `protobuf:"bytes,15,rep,name=specific_dates,json=specificDates,proto3" json:"specific_dates,omitempty"`
+	// integer, Number of service units on each applicable date.
+	QuantityPerDay *int32 `protobuf:"varint,16,opt,name=quantity_per_day,json=quantityPerDay,proto3,oneof" json:"quantity_per_day,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *ServiceDetail) Reset() {
@@ -391,6 +468,27 @@ func (x *ServiceDetail) GetLodgingTypeName() string {
 	return ""
 }
 
+func (x *ServiceDetail) GetDateType() ServiceDetail_DateType {
+	if x != nil && x.DateType != nil {
+		return *x.DateType
+	}
+	return ServiceDetail_DATE_TYPE_UNSPECIFIED
+}
+
+func (x *ServiceDetail) GetSpecificDates() []string {
+	if x != nil {
+		return x.SpecificDates
+	}
+	return nil
+}
+
+func (x *ServiceDetail) GetQuantityPerDay() int32 {
+	if x != nil && x.QuantityPerDay != nil {
+		return *x.QuantityPerDay
+	}
+	return 0
+}
+
 var File_moego_business_appointment_v1_pet_service_detail_proto protoreflect.FileDescriptor
 
 const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
@@ -407,7 +505,7 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"\x10EvaluationStatus\x12!\n" +
 	"\x1dEVALUATION_STATUS_UNSPECIFIED\x10\x00\x12\b\n" +
 	"\x04PASS\x10\x01\x12\b\n" +
-	"\x04FAIL\x10\x02\"\xbb\x04\n" +
+	"\x04FAIL\x10\x02\"\xb7\a\n" +
 	"\rServiceDetail\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12W\n" +
@@ -423,7 +521,21 @@ const file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc = "" +
 	"\n" +
 	"lodging_id\x18\v \x01(\tR\tlodgingId\x12*\n" +
 	"\x11lodging_unit_name\x18\f \x01(\tR\x0flodgingUnitName\x12*\n" +
-	"\x11lodging_type_name\x18\r \x01(\tR\x0flodgingTypeNameB\xa3\x01\n" +
+	"\x11lodging_type_name\x18\r \x01(\tR\x0flodgingTypeName\x12W\n" +
+	"\tdate_type\x18\x0e \x01(\x0e25.moego.business.appointment.v1.ServiceDetail.DateTypeH\x00R\bdateType\x88\x01\x01\x12%\n" +
+	"\x0especific_dates\x18\x0f \x03(\tR\rspecificDates\x12-\n" +
+	"\x10quantity_per_day\x18\x10 \x01(\x05H\x01R\x0equantityPerDay\x88\x01\x01\"\xa7\x01\n" +
+	"\bDateType\x12\x19\n" +
+	"\x15DATE_TYPE_UNSPECIFIED\x10\x00\x12\f\n" +
+	"\bEVERYDAY\x10\x01\x12\x11\n" +
+	"\rSPECIFIC_DATE\x10\x02\x12!\n" +
+	"\x1dEVERYDAY_INCLUDE_CHECKOUT_DAY\x10\x03\x12\x1f\n" +
+	"\x1bEVERYDAY_EXCEPT_CHECKIN_DAY\x10\x04\x12\f\n" +
+	"\bLAST_DAY\x10\x05\x12\r\n" +
+	"\tFIRST_DAY\x10\x06B\f\n" +
+	"\n" +
+	"_date_typeB\x13\n" +
+	"\x11_quantity_per_dayB\xa3\x01\n" +
 	"%com.moego.api.business.appointment.v1B\x15PetServiceDetailProtoP\x01Zagithub.com/MoeGolibrary/moegoapis/genproto/go/business/appointment/v1/appointmentpb;appointmentpbb\x06proto3"
 
 var (
@@ -438,33 +550,35 @@ func file_moego_business_appointment_v1_pet_service_detail_proto_rawDescGZIP() [
 	return file_moego_business_appointment_v1_pet_service_detail_proto_rawDescData
 }
 
-var file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_moego_business_appointment_v1_pet_service_detail_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_moego_business_appointment_v1_pet_service_detail_proto_goTypes = []any{
 	(EvaluationDetail_EvaluationStatus)(0), // 0: moego.business.appointment.v1.EvaluationDetail.EvaluationStatus
-	(*PetServiceDetail)(nil),               // 1: moego.business.appointment.v1.PetServiceDetail
-	(*EvaluationDetail)(nil),               // 2: moego.business.appointment.v1.EvaluationDetail
-	(*ServiceDetail)(nil),                  // 3: moego.business.appointment.v1.ServiceDetail
-	(*customerpb.Pet)(nil),                 // 4: moego.business.customer.v1.Pet
-	(settingpb.Service_ItemType)(0),        // 5: moego.business.setting.v1.Service.ItemType
-	(*money.Money)(nil),                    // 6: google.type.Money
-	(*interval.Interval)(nil),              // 7: google.type.Interval
-	(settingpb.Service_Type)(0),            // 8: moego.business.setting.v1.Service.Type
+	(ServiceDetail_DateType)(0),            // 1: moego.business.appointment.v1.ServiceDetail.DateType
+	(*PetServiceDetail)(nil),               // 2: moego.business.appointment.v1.PetServiceDetail
+	(*EvaluationDetail)(nil),               // 3: moego.business.appointment.v1.EvaluationDetail
+	(*ServiceDetail)(nil),                  // 4: moego.business.appointment.v1.ServiceDetail
+	(*customerpb.Pet)(nil),                 // 5: moego.business.customer.v1.Pet
+	(settingpb.Service_ItemType)(0),        // 6: moego.business.setting.v1.Service.ItemType
+	(*money.Money)(nil),                    // 7: google.type.Money
+	(*interval.Interval)(nil),              // 8: google.type.Interval
+	(settingpb.Service_Type)(0),            // 9: moego.business.setting.v1.Service.Type
 }
 var file_moego_business_appointment_v1_pet_service_detail_proto_depIdxs = []int32{
-	4, // 0: moego.business.appointment.v1.PetServiceDetail.pet:type_name -> moego.business.customer.v1.Pet
-	3, // 1: moego.business.appointment.v1.PetServiceDetail.service_details:type_name -> moego.business.appointment.v1.ServiceDetail
-	2, // 2: moego.business.appointment.v1.PetServiceDetail.evaluation_details:type_name -> moego.business.appointment.v1.EvaluationDetail
+	5, // 0: moego.business.appointment.v1.PetServiceDetail.pet:type_name -> moego.business.customer.v1.Pet
+	4, // 1: moego.business.appointment.v1.PetServiceDetail.service_details:type_name -> moego.business.appointment.v1.ServiceDetail
+	3, // 2: moego.business.appointment.v1.PetServiceDetail.evaluation_details:type_name -> moego.business.appointment.v1.EvaluationDetail
 	0, // 3: moego.business.appointment.v1.EvaluationDetail.status:type_name -> moego.business.appointment.v1.EvaluationDetail.EvaluationStatus
-	5, // 4: moego.business.appointment.v1.ServiceDetail.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
-	6, // 5: moego.business.appointment.v1.ServiceDetail.price:type_name -> google.type.Money
-	7, // 6: moego.business.appointment.v1.ServiceDetail.duration:type_name -> google.type.Interval
-	8, // 7: moego.business.appointment.v1.ServiceDetail.service_type:type_name -> moego.business.setting.v1.Service.Type
-	8, // [8:8] is the sub-list for method output_type
-	8, // [8:8] is the sub-list for method input_type
-	8, // [8:8] is the sub-list for extension type_name
-	8, // [8:8] is the sub-list for extension extendee
-	0, // [0:8] is the sub-list for field type_name
+	6, // 4: moego.business.appointment.v1.ServiceDetail.service_item_type:type_name -> moego.business.setting.v1.Service.ItemType
+	7, // 5: moego.business.appointment.v1.ServiceDetail.price:type_name -> google.type.Money
+	8, // 6: moego.business.appointment.v1.ServiceDetail.duration:type_name -> google.type.Interval
+	9, // 7: moego.business.appointment.v1.ServiceDetail.service_type:type_name -> moego.business.setting.v1.Service.Type
+	1, // 8: moego.business.appointment.v1.ServiceDetail.date_type:type_name -> moego.business.appointment.v1.ServiceDetail.DateType
+	9, // [9:9] is the sub-list for method output_type
+	9, // [9:9] is the sub-list for method input_type
+	9, // [9:9] is the sub-list for extension type_name
+	9, // [9:9] is the sub-list for extension extendee
+	0, // [0:9] is the sub-list for field type_name
 }
 
 func init() { file_moego_business_appointment_v1_pet_service_detail_proto_init() }
@@ -472,12 +586,13 @@ func file_moego_business_appointment_v1_pet_service_detail_proto_init() {
 	if File_moego_business_appointment_v1_pet_service_detail_proto != nil {
 		return
 	}
+	file_moego_business_appointment_v1_pet_service_detail_proto_msgTypes[2].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc), len(file_moego_business_appointment_v1_pet_service_detail_proto_rawDesc)),
-			NumEnums:      1,
+			NumEnums:      2,
 			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   0,

@@ -59,6 +59,30 @@ message EvaluationDetail {
 // It contains all the information needed to perform the service, including
 // timing, pricing, staff assignments, and service-specific parameters.
 message ServiceDetail {
+  // DateType describes how a recurring add-on applies across an appointment stay.
+  enum DateType {
+    // Date type is not specified.
+    DATE_TYPE_UNSPECIFIED = 0;
+
+    // Applies every day during the stay, excluding the checkout day.
+    EVERYDAY = 1;
+
+    // Applies only on the dates listed in specific_dates.
+    SPECIFIC_DATE = 2;
+
+    // Applies every day during the stay, including the checkout day.
+    EVERYDAY_INCLUDE_CHECKOUT_DAY = 3;
+
+    // Applies every day during the stay, excluding the check-in day.
+    EVERYDAY_EXCEPT_CHECKIN_DAY = 4;
+
+    // Applies only on the last day of the stay.
+    LAST_DAY = 5;
+
+    // Applies only on the first day of the stay.
+    FIRST_DAY = 6;
+  }
+
   // string, Unique identifier for the service.
   // Format: "svc_" followed by random characters
   // Example: "svc_1234567890abcdef"
@@ -116,4 +140,15 @@ message ServiceDetail {
   // string, Name of the lodging type.
   // Used for display and lodging type name.
   string lodging_type_name = 13;
+
+  // DateType, Scheduling rule for a recurring add-on.
+  // Omitted for services without a public recurring schedule.
+  optional DateType date_type = 14;
+
+  // array(string), Specific business-local dates on which the add-on applies.
+  // Values use the yyyy-MM-dd format and are populated for SPECIFIC_DATE.
+  repeated string specific_dates = 15;
+
+  // integer, Number of service units on each applicable date.
+  optional int32 quantity_per_day = 16;
 }
