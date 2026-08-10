@@ -16,6 +16,7 @@ When making API changes:
 ## [Unreleased]
 
 ### Removed
+- `MessageService:SendMessageToCustomer` and `MessageService:SendAutoMessageToCustomer` API documentation and contract for endpoints that are not currently available in OpenAPI v1 (IFRBE-3938)
 - `Aggregation:LookupClientPetProfile` API documentation and contract (revert PR #62)
 - `Offering:ListServices` and `Offering:ListLodgings` API documentation and contract (revert PR #62)
 
