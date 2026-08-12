@@ -5,7 +5,7 @@
 Order represents a financial transaction for services provided to a customer. This module provides the following
 functions:
 
-- Creating, retrieving, and updating order details
+- Retrieving order details
 - Listing orders with support for filtering (by business ID, status, and update time)
 - Managing order line items representing individual services or products
 - Tracking comprehensive financial details including subtotal, tax, tips, discounts, fees, total amount, paid amount,
@@ -543,6 +543,7 @@ TODO
 
 | Question                                                | Answer                                                                                   |
 |---------------------------------------------------------|------------------------------------------------------------------------------------------|
+| Can I create or update an order through this API?       | No. Orders are created and updated by MoeGo appointment and checkout flows               |
 | How to verify if an order exists?                       | Use `GetOrder` to check if the order ID returns a valid response                         |
 | Can I list orders for multiple companies at once?       | Currently only supports listing orders for one company at a time                         |
 | How to filter orders by business location?              | Use `ListOrders` with `businessIds`                                                      |
