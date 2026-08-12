@@ -16,9 +16,10 @@ option java_multiple_files = true;
 option java_outer_classname = "OrderProto";
 option java_package = "com.moego.api.business.order.v1";
 
-// OrderService provides methods for managing orders and their line items.
-// This service handles the creation, retrieval, and listing of orders and
-// their associated items. It supports filtering and pagination for efficient
+// OrderService provides read-only methods for retrieving orders and listing
+// their associated items.
+// This service handles the retrieval and listing of orders and their
+// associated items. It supports filtering and pagination for efficient
 // data access and reporting.
 service OrderService {
   // Retrieves detailed information about a specific order.
