@@ -53,11 +53,12 @@ type DiscountServiceClient interface {
 	// - NOT_FOUND if the discount code doesn't exist
 	// - PERMISSION_DENIED if the caller lacks access rights
 	GetDiscount(ctx context.Context, in *GetDiscountRequest, opts ...grpc.CallOption) (*Discount, error)
-	// Lists available discounts based on specified criteria.
+	// Lists discounts for the specified company.
 	//
-	// Results are paginated and can be used to display active promotions
-	// or manage existing discounts. Expired discounts are included in
-	// the results for historical reference.
+	// Results are paginated and include discounts with Active, Inactive,
+	// Archived, and Expired statuses. Deleted discounts are excluded.
+	// Use `Discount.status` to determine whether a discount is currently usable
+	// or retained for historical reference.
 	//
 	// Possible errors:
 	// - INVALID_ARGUMENT if pagination parameters are invalid
@@ -132,11 +133,12 @@ type DiscountServiceServer interface {
 	// - NOT_FOUND if the discount code doesn't exist
 	// - PERMISSION_DENIED if the caller lacks access rights
 	GetDiscount(context.Context, *GetDiscountRequest) (*Discount, error)
-	// Lists available discounts based on specified criteria.
+	// Lists discounts for the specified company.
 	//
-	// Results are paginated and can be used to display active promotions
-	// or manage existing discounts. Expired discounts are included in
-	// the results for historical reference.
+	// Results are paginated and include discounts with Active, Inactive,
+	// Archived, and Expired statuses. Deleted discounts are excluded.
+	// Use `Discount.status` to determine whether a discount is currently usable
+	// or retained for historical reference.
 	//
 	// Possible errors:
 	// - INVALID_ARGUMENT if pagination parameters are invalid

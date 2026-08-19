@@ -2,6 +2,7 @@ syntax = "proto3";
 
 package moego.business.discount.v1;
 
+import "google/api/field_behavior.proto";
 import "google/protobuf/timestamp.proto";
 import "google/type/interval.proto";
 import "google/type/money.proto";
@@ -16,6 +17,24 @@ option java_package = "com.moego.api.business.discount.v1";
 // be limited by various criteria such as usage count, validity period, and
 // eligible customers or business locations.
 message Discount {
+  // Status represents the current lifecycle state of a discount.
+  enum Status {
+    // The status could not be determined. Not intended for direct use.
+    STATUS_UNSPECIFIED = 0;
+
+    // The discount is enabled and can currently be used.
+    ACTIVE = 1;
+
+    // The discount is disabled and cannot currently be used.
+    INACTIVE = 2;
+
+    // The discount is archived for historical reference and cannot be used.
+    ARCHIVED = 3;
+
+    // The discount has expired and can no longer be used.
+    EXPIRED = 4;
+  }
+
   // Unique identifier for the discount
   // Format: Alphanumeric code, case-sensitive
   string code = 1;
@@ -51,6 +70,10 @@ message Discount {
   // When this discount becomes invalid
   // Optional. If not set, discount never expires
   google.protobuf.Timestamp expiry_time = 8;
+
+  // Current lifecycle status of the discount.
+  // Output only. Possible values are ACTIVE, INACTIVE, ARCHIVED, and EXPIRED.
+  Status status = 9 [(google.api.field_behavior) = OUTPUT_ONLY];
 }
 
 // DiscountLimitation defines usage restrictions for a discount.

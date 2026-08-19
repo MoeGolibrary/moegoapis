@@ -8,6 +8,7 @@ functions:
 - Creating, retrieving, and managing discount configurations
 - Applying discounts either automatically or manually to appointments
 - Defining various discount types (fixed amount or percentage-based)
+- Exposing each discount's current lifecycle status
 - Setting validity periods and usage limitations
 - Controlling discount eligibility through business locations and customer segments
 - Supporting both online booking integration and staff application scenarios
@@ -43,6 +44,19 @@ business locations.
 | `amount`     | Fixed amount to deduct from the service price (must be in the same currency as the service) |
 | `percentage` | Percentage to deduct from the service price (range: 1-100)                                  |
 
+#### Discount.Status
+
+`status` is output-only and reports the discount's current lifecycle state. It cannot be set in
+`CreateDiscount` requests.
+
+| Value                | Description                                                                  |
+|----------------------|------------------------------------------------------------------------------|
+| `STATUS_UNSPECIFIED` | The status could not be determined. Not intended for direct use.             |
+| `ACTIVE`             | The discount is enabled and can currently be used.                           |
+| `INACTIVE`           | The discount is disabled and cannot currently be used.                       |
+| `ARCHIVED`           | The discount is archived for historical reference and cannot be used.        |
+| `EXPIRED`            | The discount has expired and can no longer be used.                          |
+
 | Field Name    | Type                      | Description                                                                                                |
 |---------------|---------------------------|------------------------------------------------------------------------------------------------------------|
 | `code`        | string                    | Unique identifier for the discount (alphanumeric code, case-sensitive)                                     |
@@ -51,6 +65,7 @@ business locations.
 | `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
 | `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
 | `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| `status`      | Discount.Status           | Output-only current lifecycle status: Active, Inactive, Archived, or Expired                                |
 
 ### 2. DiscountLimitation
 
@@ -92,9 +107,9 @@ Here is a typical integration flow:
     - Verify discount configuration and check current usage statistics.
 
 3. **ListDiscounts**
-    - View all available discounts for a company.
-    - Monitor active promotions or manage existing discounts.
-    - Filter results if needed based on usage or validity criteria.
+    - View all non-deleted discounts for a company.
+    - Distinguish Active, Inactive, Archived, and Expired discounts using each item's `status`.
+    - Manage current promotions while retaining inactive and historical discounts for reference.
 
 4. **Promotion Management & Monitoring**
     - Regularly review discount usage to ensure compliance with business goals.
@@ -139,6 +154,7 @@ Creates a new discount with the specified configuration.
 | `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
 | `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
 | `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| `status`      | Discount.Status           | Output-only current lifecycle status: Active, Inactive, Archived, or Expired                                |
 
 #### ⚠️ Error Codes:
 
@@ -182,6 +198,7 @@ Retrieves detailed information about a specific discount by its code.
 | `limitation`  | DiscountLimitation        | Usage restrictions and eligibility criteria that control who can use the discount and how often            |
 | `settings`    | DiscountSettings          | Configuration options for discount application that control how the discount behaves in different contexts |
 | `expiryTime`  | google.protobuf.Timestamp | Optional field indicating when this discount becomes invalid (if not set, discount never expires)          |
+| `status`      | Discount.Status           | Output-only current lifecycle status: Active, Inactive, Archived, or Expired                                |
 
 #### ⚠️ Error Codes:
 
@@ -198,13 +215,14 @@ Retrieves detailed information about a specific discount by its code.
 
 #### ✅ Functionality:
 
-Retrieves a paginated list of discounts based on specified criteria. Results include both active and expired discounts
-for historical reference.
+Retrieves a paginated list of all non-deleted discounts for the specified company. Results include Active, Inactive,
+Archived, and Expired discounts. Each item exposes its current lifecycle state in `status`.
 
 #### 🎯 Use Cases:
 
-- Viewing all available discounts for a company
-- Managing existing discount inventory
+- Viewing all non-deleted discounts for a company
+- Managing Active and Inactive discount inventory
+- Reviewing Archived and Expired discounts for historical reference
 - Analyzing discount performance across different time periods
 
 #### 🔧 Request Parameters:
@@ -219,7 +237,7 @@ for historical reference.
 | Field Name      | Type            | Description                                                          |
 |-----------------|-----------------|----------------------------------------------------------------------|
 | `nextPageToken` | string          | Token for retrieving the next page of results (empty if none remain) |
-| `discounts`     | Array(Discount) | List of discounts matching the request criteria                      |
+| `discounts`     | Array(Discount) | Non-deleted discounts; each item includes its current `status`        |
 
 #### ⚠️ Error Codes:
 
@@ -283,6 +301,34 @@ for historical reference.
 }
 ```
 
+### Example 4: ListDiscounts Response
+
+The response can contain Active, Inactive, Archived, and Expired discounts. Deleted discounts are excluded.
+
+```json
+{
+  "discounts": [
+    {
+      "code": "WELCOME10",
+      "status": "ACTIVE"
+    },
+    {
+      "code": "PAUSED20",
+      "status": "INACTIVE"
+    },
+    {
+      "code": "LEGACY25",
+      "status": "ARCHIVED"
+    },
+    {
+      "code": "SUMMER25",
+      "status": "EXPIRED"
+    }
+  ],
+  "nextPageToken": ""
+}
+```
+
 ---
 
 ## ⚠️ 7. Usage Limitations
@@ -299,6 +345,7 @@ TODO
 | Can I create multiple discounts with the same code?       | No, each discount code must be unique within a company                                                             |
 | How to limit discount usage to specific customers?        | Use `limitation.customerIds` to specify eligible customers                                                         |
 | Why does creating a discount return "resource exhausted"? | Not applicable — discounts typically don't have hard limits unless configured                                      |
+| Which discount statuses can `ListDiscounts` return?       | Active, Inactive, Archived, and Expired. Deleted discounts are excluded.                                            |
 | How to handle expired discounts?                          | Use `ListDiscounts` to view expired discounts for historical reference; they cannot be applied to new appointments |
 
 ---
