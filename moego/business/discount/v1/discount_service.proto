@@ -46,11 +46,12 @@ service DiscountService {
     option (google.api.http) = {get: "/v1/discounts/{code}"};
   }
 
-  // Lists available discounts based on specified criteria.
+  // Lists discounts for the specified company.
   //
-  // Results are paginated and can be used to display active promotions
-  // or manage existing discounts. Expired discounts are included in
-  // the results for historical reference.
+  // Results are paginated and include discounts with Active, Inactive,
+  // Archived, and Expired statuses. Deleted discounts are excluded.
+  // Use `Discount.status` to determine whether a discount is currently usable
+  // or retained for historical reference.
   //
   // Possible errors:
   // - INVALID_ARGUMENT if pagination parameters are invalid

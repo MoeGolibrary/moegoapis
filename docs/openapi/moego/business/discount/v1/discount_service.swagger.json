@@ -93,8 +93,8 @@
     },
     "/v1/discounts:list": {
       "post": {
-        "summary": "Lists available discounts based on specified criteria.",
-        "description": "Results are paginated and can be used to display active promotions\nor manage existing discounts. Expired discounts are included in\nthe results for historical reference.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
+        "summary": "Lists discounts for the specified company.",
+        "description": "Results are paginated and include discounts with Active, Inactive,\nArchived, and Expired statuses. Deleted discounts are excluded.\nUse `Discount.status` to determine whether a discount is currently usable\nor retained for historical reference.\n\nPossible errors:\n- INVALID_ARGUMENT if pagination parameters are invalid\n- PERMISSION_DENIED if the caller lacks access rights",
         "operationId": "DiscountService_ListDiscounts",
         "responses": {
           "200": {
@@ -276,6 +276,11 @@
           "type": "string",
           "format": "date-time",
           "title": "When this discount becomes invalid\nOptional. If not set, discount never expires"
+        },
+        "status": {
+          "$ref": "#/definitions/v1DiscountStatus",
+          "description": "Current lifecycle status of the discount.\nOutput only. Possible values are ACTIVE, INACTIVE, ARCHIVED, and EXPIRED.",
+          "readOnly": true
         }
       },
       "description": "Discount represents a promotional offer that reduces the price of services.\nDiscounts can be applied automatically or manually to appointments and can\nbe limited by various criteria such as usage count, validity period, and\neligible customers or business locations.",
@@ -340,6 +345,18 @@
         },
         "type": "DiscountSettings"
       }
+    },
+    "v1DiscountStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_UNSPECIFIED",
+        "ACTIVE",
+        "INACTIVE",
+        "ARCHIVED",
+        "EXPIRED"
+      ],
+      "default": "STATUS_UNSPECIFIED",
+      "description": "Status represents the current lifecycle state of a discount.\n\n - STATUS_UNSPECIFIED: The status could not be determined. Not intended for direct use.\n - ACTIVE: The discount is enabled and can currently be used.\n - INACTIVE: The discount is disabled and cannot currently be used.\n - ARCHIVED: The discount is archived for historical reference and cannot be used.\n - EXPIRED: The discount has expired and can no longer be used."
     },
     "v1ListDiscountsRequest": {
       "type": "object",
