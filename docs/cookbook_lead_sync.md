@@ -186,6 +186,7 @@ record of the ad submission** — you will need it for reconciliation, and it is
 | `preferredBusinessId` | This is the multi-location routing key. Omitting it creates a company-level lead with no location. |
 | `referralSource` | Pass `{ "id": "…" }` only. A name without a matching id is not accepted. |
 | `pets`, `address`, `customFields`, `complianceConfig` | All optional. See [lead.md](./lead.md) for the full model. |
+| `complianceConfig` | Applied best-effort on create: if setting it fails, the lead is still created and the failure is only logged server-side — verify with a read-back if consent state matters to you. |
 
 ### ⚠️ Lead creation is not idempotent
 
@@ -267,7 +268,7 @@ POST /v1/webhooks/{id}/test
 | HTTPS | Plain HTTP is rejected. |
 | Method | `POST`, JSON body. |
 | Response | Return `2xx` within **30 seconds**. Acknowledge first, process afterwards. |
-| Retries | MoeGo retries a failed delivery up to **3 times**. Failures can also be replayed manually via `RedeliverWebhookDeliveries`. |
+| Retries | **Do not count on automatic redelivery.** A delivery is attempted once; a failed attempt (non-2xx response or connection error) is recorded in the delivery log and can be replayed with `RedeliverWebhookDeliveries`. Poll `ListWebhookDeliveries` with `filter.success=false` to catch failures. |
 | Idempotency | Deduplicate on the `X-Moe-Delivery-ID` header. |
 | Log retention | Delivery logs are kept **15 days**. |
 
@@ -371,8 +372,9 @@ Hash `email` and `phone` per your ad platform's requirements (Meta's Conversions
 lowercase, trimmed, SHA-256) and send the conversion.
 
 Do this **after** returning `2xx` to MoeGo. Two outbound calls — `GetCustomer` plus the ad
-platform — will not reliably finish inside the 30-second delivery window, and a timeout costs you a
-retry you did not need.
+platform — will not reliably finish inside the 30-second delivery window, and a timed-out delivery
+is recorded as failed with no automatic redelivery to catch it: the conversion is silently lost
+until someone replays it.
 
 ### 🔗 Linking the appointment back to the original lead
 
@@ -414,12 +416,12 @@ background noise rather than a bug, and log them for periodic review.
 
 | Status | Meaning | Recommended action |
 |---|---|---|
-| `INVALID_ARGUMENT` | An id that could not be decoded — a `companyId`, `preferredBusinessId`, `referralSource.id`, or `lead.id` that is malformed or carries the wrong type prefix. Also raised when a `customFields` key does not match a configured field, or its value type does not match the field's type. | **Do not retry.** Log the full response body; this is a data or mapping bug. |
+| `INVALID_ARGUMENT` | An id that could not be decoded — a `companyId`, `preferredBusinessId`, `referralSource.id`, or `lead.id` that is malformed or carries the wrong type prefix. On the lead endpoints this code means exactly that and nothing else. | **Do not retry.** Log the full response body; this is a data or mapping bug. |
 | `PERMISSION_DENIED` | The API key's organization restrictions do not cover this company or business. | **Do not retry.** Configuration issue; alert an admin. |
 | `NOT_FOUND` | The id does not exist, or is outside your key's scope. | Do not retry. |
 | `ALREADY_EXISTS` | For webhooks: an active webhook with the same `endpointUrl` already exists. | Reuse the existing webhook rather than creating another. |
 | `RESOURCE_EXHAUSTED` | Webhook count or delivery rate limit reached. | Back off. Check for orphaned webhooks from earlier setup attempts. |
-| `INTERNAL` / `5xx` | Transient server-side failure. | **Retry with exponential backoff** — the only class worth retrying. One exception: on `CreateLead` *with pets*, the lead may already exist despite the error, so run the phone lookup before retrying. |
+| `INTERNAL` / `5xx` | On most endpoints, a transient server-side failure. **On the lead endpoints it is broader**: every failure past id decoding — including a `customFields` key that matches no configured field, a value of the wrong type, or a duplicate rejected downstream — surfaces as `INTERNAL`, with the cause in the message. | **Read the message before retrying.** A validation or duplicate message will not go away on retry. For genuinely transient failures, retry with exponential backoff — and on `CreateLead` *with pets*, run the phone lookup first, since the lead may already exist despite the error. |
 
 **On the inbound side**, acknowledge the ad platform immediately — return `200` before you attempt
 the MoeGo call — so the platform does not retry on your processing latency. Then create the lead
@@ -441,6 +443,7 @@ lead that never reached the CRM is invisible otherwise.
 - [ ] `X-Moe-Delivery-ID` deduplication in place
 - [ ] Webhook handler returns `2xx` **before** calling `GetCustomer` and the ad platform
 - [ ] Unmatched-conversion logging in place
+- [ ] Failed-delivery sweep in place: poll `ListWebhookDeliveries` for `success=false` and redeliver
 
 ---
 
