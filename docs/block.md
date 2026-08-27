@@ -60,7 +60,7 @@ Here is a typical integration flow:
     - Verify block configuration and check time conflicts
 
 3. **Schedule Management & Monitoring**
-    - Regularly create and update blocks to manage staff availability
+    - Regularly create and delete blocks to manage staff availability
     - Use blocks to prevent scheduling conflicts
     - Monitor staff schedules across multiple business locations
 
@@ -193,6 +193,39 @@ Retrieves a list of blocks based on the provided filter criteria.
 
 ---
 
+### 4. DeleteBlock (`DeleteBlock`)
+
+- **Method**: `DeleteBlock`
+- **HTTP Method**: DELETE
+- **Path**: `/v1/blocks/{id}`
+
+#### ✅ Functionality:
+
+Soft-deletes a block. After deletion, the block no longer appears in `ListBlocks` and no longer blocks that time on the staff member's schedule.
+
+#### 🎯 Use Cases:
+
+- Removing a block that should no longer reserve staff time
+- Releasing blocked time before creating a replacement block at a different time
+
+#### 🔧 Request Parameters:
+
+| Field Name | Type   | Required | Description                               |
+|------------|--------|----------|-------------------------------------------|
+| `id`       | string | Yes      | Unique identifier of the block to delete |
+
+#### 📌 Return Value:
+
+Returns an empty JSON object (`{}`) when the deletion succeeds.
+
+#### ⚠️ Error Codes:
+
+- `NOT_FOUND`: The block does not exist or has already been deleted
+- `INVALID_ARGUMENT`: The block ID format is invalid
+- `PERMISSION_DENIED`: Permission denied
+
+---
+
 ## 🧪 6. Usage Examples
 
 ### Example 1: CreateBlock
@@ -218,11 +251,24 @@ Retrieves a list of blocks based on the provided filter criteria.
 }
 ```
 
+### Example 3: DeleteBlock
+
+```http
+DELETE /v1/blocks/block_001
+```
+
+**Response:**
+
+```json
+{}
+```
+
 ---
 
 ## ⚠️ 7. Usage Limitations
 
-TODO
+- The public API does not provide `UpdateBlock`. To move a block, delete the existing block and create a new one. The newly created block has a new ID.
+- Deletion is soft. The deleted block is removed from `ListBlocks`; `GetBlock` may still return the existing record by ID. Use `ListBlocks` to determine which blocks are active on the schedule.
 
 ---
 
