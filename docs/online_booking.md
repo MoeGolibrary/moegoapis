@@ -312,6 +312,8 @@ constraints. This endpoint helps customers find suitable time slots when booking
 - For mobile businesses with smart scheduling enabled, location parameters (coordinate or zipcode) are **required**
 - If location parameters are missing for mobile businesses with smart scheduling, the API will return an error
 - For fixed-location businesses, location parameters are optional but recommended for better availability results
+- Dates must use the `google.type.Date` JSON format, for example `{ "year": 2026, "month": 8, "day": 28 }`; date strings are invalid
+- `startDate` defaults to today and `endDate` defaults to `startDate`. HTTP 200 may contain empty arrays when no slot matches that day
 
 #### 🔧 Request Parameters
 
@@ -319,13 +321,13 @@ constraints. This endpoint helps customers find suitable time slots when booking
 |--------------|--------|----------|----------------------------------------------|
 | `companyId`  | string | Yes      | Company identifier for multi-tenancy support |
 | `businessId` | string | Yes      | Business location where services provided    |
-| `filter`     | object | No       | Filter parameters for the availability check |
+| `filter`     | object | No       | Optional filters; when omitted, availability is queried for today only |
 
 ##### Filter Options:
 
-- `startDate`: Start date for availability check (defaults to today). Maximum range between startDate and endDate is 3
+- `startDate`: Start date as a `google.type.Date` object (defaults to today). Maximum range between startDate and endDate is 3
   months.
-- `endDate`: End date for availability check (defaults to startDate). Maximum range between startDate and endDate is 3
+- `endDate`: End date as a `google.type.Date` object (defaults to startDate). Maximum range between startDate and endDate is 3
   months.
 - `serviceIds`: Filter by specific service IDs
 - `staffIds`: Filter by specific staff IDs
@@ -336,7 +338,7 @@ constraints. This endpoint helps customers find suitable time slots when booking
 - `zipcode`: Filter by postal code
   - **Required** for mobile businesses with smart scheduling
   - Used for territory-based routing and service area validation
-- `pets`: Array of pet parameters including:
+- `pets`: Optional array of pet parameters. It is not required when `filter.serviceIds` is provided:
     - `id`: Pet ID (for existing pets)
     - `name`: Pet name
     - `type`: Pet type/species (see Pet Types table below)
@@ -588,7 +590,12 @@ POST /v1/online_booking/availability
 ```json
 {
   "companyId": "cmp_001",
-  "businessId": "biz_001"
+  "businessId": "biz_001",
+  "filter": {
+    "startDate": { "year": 2026, "month": 8, "day": 28 },
+    "endDate": { "year": 2026, "month": 9, "day": 4 },
+    "serviceIds": ["svc_123"]
+  }
 }
 ```
 
@@ -597,13 +604,13 @@ POST /v1/online_booking/availability
 ```json
 {
   "availableDates": [
-    "2024-08-20",
-    "2024-08-21",
-    "2024-08-22"
+    { "year": 2026, "month": 8, "day": 28 },
+    { "year": 2026, "month": 8, "day": 29 },
+    { "year": 2026, "month": 8, "day": 30 }
   ],
   "availability": [
     {
-      "date": "2024-08-20",
+      "date": { "year": 2026, "month": 8, "day": 28 },
       "staff": [
         {
           "staffId": "stf_123",
@@ -682,8 +689,8 @@ POST /v1/online_booking/availability
   "companyId": "cmp_001",
   "businessId": "biz_001",
   "filter": {
-    "startDate": "2024-08-20",
-    "endDate": "2024-08-22",
+    "startDate": { "year": 2026, "month": 8, "day": 28 },
+    "endDate": { "year": 2026, "month": 8, "day": 30 },
     "serviceIds": [
       "svc_123"
     ],
@@ -705,12 +712,12 @@ POST /v1/online_booking/availability
 ```json
 {
   "availableDates": [
-    "2024-08-20",
-    "2024-08-21"
+    { "year": 2026, "month": 8, "day": 28 },
+    { "year": 2026, "month": 8, "day": 29 }
   ],
   "availability": [
     {
-      "date": "2024-08-20",
+      "date": { "year": 2026, "month": 8, "day": 28 },
       "staff": [
         {
           "staffId": "stf_123",

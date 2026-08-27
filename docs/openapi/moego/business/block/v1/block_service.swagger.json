@@ -85,7 +85,7 @@
       },
       "delete": {
         "summary": "DeleteBlock deletes (cancels) a block from a staff member's schedule.\nThe block is soft-deleted and the time slot becomes available for booking.",
-        "description": "Returns:\n- Successfully if the deletion is completed\n- NOT_FOUND if the block doesn't exist\n- INVALID_ARGUMENT if the block is already canceled\n- PERMISSION_DENIED if the caller lacks permission",
+        "description": "Returns:\n- Successfully if the deletion is completed\n- NOT_FOUND if the block doesn't exist or has already been deleted\n- INVALID_ARGUMENT if the block ID format is invalid\n- PERMISSION_DENIED if the caller lacks permission",
         "operationId": "BlockService_DeleteBlock",
         "responses": {
           "200": {

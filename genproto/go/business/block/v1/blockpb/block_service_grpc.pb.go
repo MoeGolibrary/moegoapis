@@ -59,8 +59,8 @@ type BlockServiceClient interface {
 	//
 	// Returns:
 	// - Successfully if the deletion is completed
-	// - NOT_FOUND if the block doesn't exist
-	// - INVALID_ARGUMENT if the block is already canceled
+	// - NOT_FOUND if the block doesn't exist or has already been deleted
+	// - INVALID_ARGUMENT if the block ID format is invalid
 	// - PERMISSION_DENIED if the caller lacks permission
 	DeleteBlock(ctx context.Context, in *DeleteBlockRequest, opts ...grpc.CallOption) (*DeleteBlockResponse, error)
 }
@@ -147,8 +147,8 @@ type BlockServiceServer interface {
 	//
 	// Returns:
 	// - Successfully if the deletion is completed
-	// - NOT_FOUND if the block doesn't exist
-	// - INVALID_ARGUMENT if the block is already canceled
+	// - NOT_FOUND if the block doesn't exist or has already been deleted
+	// - INVALID_ARGUMENT if the block ID format is invalid
 	// - PERMISSION_DENIED if the caller lacks permission
 	DeleteBlock(context.Context, *DeleteBlockRequest) (*DeleteBlockResponse, error)
 	mustEmbedUnimplementedBlockServiceServer()
