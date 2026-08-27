@@ -321,13 +321,13 @@ constraints. This endpoint helps customers find suitable time slots when booking
 |--------------|--------|----------|----------------------------------------------|
 | `companyId`  | string | Yes      | Company identifier for multi-tenancy support |
 | `businessId` | string | Yes      | Business location where services provided    |
-| `filter`     | object | No       | Optional filters; when omitted, availability is queried for today only |
+| `filter`     | object | No       | When omitted, availability is queried for today only |
 
 ##### Filter Options:
 
-- `startDate`: Start date as a `google.type.Date` object (defaults to today). Maximum range between startDate and endDate is 3
+- `startDate`: Start date for availability check (defaults to today). Maximum range between startDate and endDate is 3
   months.
-- `endDate`: End date as a `google.type.Date` object (defaults to startDate). Maximum range between startDate and endDate is 3
+- `endDate`: End date for availability check (defaults to startDate). Maximum range between startDate and endDate is 3
   months.
 - `serviceIds`: Filter by specific service IDs
 - `staffIds`: Filter by specific staff IDs
