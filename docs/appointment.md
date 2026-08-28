@@ -380,6 +380,7 @@ Creates a new appointment with services for one or more pets.
 | `customerId`     | string            | Yes      | Customer ID who is booking the appointment                                               |
 | `petServices`    | Array(PetService) | Yes      | List of pets and their associated services                                               |
 | `ignoreConflict` | bool              | No       | Whether to ignore scheduling conflicts when creating an appointment. Defaults to `true`. |
+| `sendAutoMessage` | bool             | No       | Whether to trigger the appointment booked auto-message after creation. Delivery methods follow the business's auto-message settings and the customer's communication preferences. Defaults to `false`. |
 
 > ** Note ** : When set to 'true', the system will ignore time conflicts and directly create reservations. This field is
 > mainly used to support mandatory appointments in certain special scenarios (such as manual intervention in the
@@ -461,11 +462,12 @@ Updates the appointment's time slot. All services within the appointment will be
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type     | Required | Description                         |
-|--------------|----------|----------|-------------------------------------|
-| `id`         | string   | Yes      | Appointment ID to reschedule        |
-| `businessId` | string   | Yes      | Business ID for access control      |
-| `duration`   | Interval | Yes      | New time window for the appointment |
+| Field Name        | Type     | Required | Description                         |
+|-------------------|----------|----------|-------------------------------------|
+| `id`              | string   | Yes      | Appointment ID to reschedule        |
+| `businessId`      | string   | Yes      | Business ID for access control      |
+| `duration`        | Interval | Yes      | New time window for the appointment |
+| `sendAutoMessage` | bool     | No       | Whether to trigger the appointment rescheduled auto-message after rescheduling. Delivery methods follow the business's auto-message settings and the customer's communication preferences. Defaults to `false`. |
 
 #### 📌 Return Value:
 
@@ -517,10 +519,11 @@ Sets the appointment status to `CANCELED`. This action cannot be undone.
 
 #### 🔧 Request Parameters:
 
-| Field Name   | Type   | Required | Description                    |
-|--------------|--------|----------|--------------------------------|
-| `id`         | string | Yes      | Appointment ID to cancel       |
-| `businessId` | string | Yes      | Business ID for access control |
+| Field Name        | Type   | Required | Description                    |
+|-------------------|--------|----------|--------------------------------|
+| `id`              | string | Yes      | Appointment ID to cancel       |
+| `businessId`      | string | Yes      | Business ID for access control |
+| `sendAutoMessage` | bool   | No       | Whether to trigger the appointment cancelled auto-message after cancellation. Delivery methods follow the business's auto-message settings and the customer's communication preferences. Defaults to `false`. |
 
 #### 📌 Return Value:
 
@@ -934,7 +937,8 @@ GET /v1/appointments/12345?business_id=biz_001
         }
       ]
     }
-  ]
+  ],
+  "sendAutoMessage": true
 }
 ```
 
@@ -1009,11 +1013,29 @@ POST /v1/appointments/apt_12345:reschedule
   "duration": {
     "startTime": "2024-08-16T11:00:00Z",
     "endTime": "2024-08-16T13:00:00Z"
-  }
+  },
+  "sendAutoMessage": true
 }
 ```
 
-### Example 4: Check Create Appointment
+### Example 4: Cancel Appointment
+
+```
+POST /v1/appointments/apt_12345:cancel
+```
+
+```json
+{
+  "businessId": "biz_001",
+  "sendAutoMessage": true
+}
+```
+
+For create, reschedule, and cancel, omit `sendAutoMessage` or set it to `false` when no automatic appointment message
+should be triggered. Setting it to `true` does not select SMS or Email directly; delivery follows the business's
+auto-message settings and the customer's communication preferences.
+
+### Example 5: Check Create Appointment
 
 ```
 POST /v1/appointments:check

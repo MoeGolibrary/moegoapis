@@ -16,11 +16,13 @@ When making API changes:
 ## [Unreleased]
 
 ### Removed
+- **Breaking:** `Appointment:Create`, `Appointment:Reschedule`, and `Appointment:Cancel` removed the legacy `autoMessageMethods` request field and the unused `MessageDeliveryMethod` enum (2026-08-28)
 - `MessageService:SendMessageToCustomer` and `MessageService:SendAutoMessageToCustomer` API documentation and contract for endpoints that are not currently available in OpenAPI v1 (IFRBE-3938)
 - `Aggregation:LookupClientPetProfile` API documentation and contract (revert PR #62)
 - `Offering:ListServices` and `Offering:ListLodgings` API documentation and contract (revert PR #62)
 
 ### Added
+- `Appointment:Create`, `Appointment:Reschedule`, and `Appointment:Cancel` now accept optional `sendAutoMessage`; when `true`, MoeGo attempts to trigger the corresponding automatic appointment message using the business's configured delivery channels and the customer's communication preferences (2026-08-28)
 - `Appointment:Create` API: added `lodgingId` field to `CreateAppointmentRequest.Service` to support lodging unit assignment for `BOARDING`/`DAYCARE` appointments (2026-03-31)
 - `Appointment:Create` API: support `BOARDING` and `DAYCARE` service types; `staffIds` is no longer required for boarding/daycare (2026-03-31)
 - `Appointment:Create` API: added optional `price` field to `CreateAppointmentRequest.Service`; if not set, system default price is used (2026-04-01)
@@ -30,6 +32,7 @@ When making API changes:
 - `VanStaffRecord:List` API for retrieving the historical van-to-staff assignment snapshot for a business on a specific date, with `rawId` mapping fields (2026-06-18)
 
 ### Documentation
+- Documented `sendAutoMessage` request behavior and examples for appointment create, reschedule, and cancel (2026-08-28)
 - `Appointment:Create` API: clarified per-type field requirements for `Service` object; added boarding and daycare examples (2026-03-31)
 - `Appointment:Create` API: documented `price` field (2026-04-01)
 - `AbandonedBooking`: documented `abandonPreference` field with nested `AbandonPreference` message, `PreferredDay` and `PreferredTime` enums (2026-05-12)
