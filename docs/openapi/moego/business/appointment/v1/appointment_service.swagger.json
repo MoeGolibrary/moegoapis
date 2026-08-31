@@ -443,12 +443,10 @@
           "type": "string",
           "description": "string, The business location's identifier.\nMust match the business_id of the appointment."
         },
-        "autoMessageMethods": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1MessageDeliveryMethod"
-          },
-          "description": "array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).\nWhen empty or not set, no auto messages will be sent."
+        "sendAutoMessage": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "bool, Whether to send the corresponding auto message for this appointment.\nDelivery methods (e.g. MSG, EMAIL) follow the business's auto-message settings\nand the customer's communication preferences.\nWhen false or not set, no auto message will be sent."
         }
       },
       "title": "Request to cancel an appointment",
@@ -473,12 +471,10 @@
           "$ref": "#/definitions/typeInterval",
           "description": "object(Interval), The new time window for the appointment.\nMust be in the future and within business hours."
         },
-        "autoMessageMethods": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1MessageDeliveryMethod"
-          },
-          "description": "array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).\nWhen empty or not set, no auto messages will be sent."
+        "sendAutoMessage": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "bool, Whether to send the corresponding auto message for this appointment.\nDelivery methods (e.g. MSG, EMAIL) follow the business's auto-message settings\nand the customer's communication preferences.\nWhen false or not set, no auto message will be sent."
         }
       },
       "title": "Request to reschedule an existing appointment",
@@ -1424,12 +1420,10 @@
           },
           "description": "array(AppointmentNoteInput), Initial notes for the appointment. Will be created as\nappointment notes after the appointment is created."
         },
-        "autoMessageMethods": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/v1MessageDeliveryMethod"
-          },
-          "description": "array(MessageDeliveryMethod), Delivery channels for auto messages (e.g. MSG, EMAIL).\nWhen empty or not set, no auto messages will be sent. When specified, auto messages\nwill be sent via the given channels."
+        "sendAutoMessage": {
+          "type": "boolean",
+          "x-nullable": true,
+          "description": "bool, Whether to send the corresponding auto message for this appointment.\nDelivery methods (e.g. MSG, EMAIL) follow the business's auto-message settings\nand the customer's communication preferences.\nWhen false or not set, no auto message will be sent."
         }
       },
       "title": "Request to create a new appointment",
@@ -1928,18 +1922,6 @@
       "default": "LODGING_UNIT_TYPE_UNSPECIFIED",
       "description": "- LODGING_UNIT_TYPE_UNSPECIFIED: Unspecified lodging unit type\n - ROOM: Room/kennel type\n - AREA: Area type",
       "title": "type enum for lodging type\nproperty of all lodging unit under one lodging type"
-    },
-    "v1MessageDeliveryMethod": {
-      "type": "string",
-      "enum": [
-        "MESSAGE_DELIVERY_METHOD_UNSPECIFIED",
-        "MSG",
-        "EMAIL",
-        "CALL",
-        "APP"
-      ],
-      "default": "MESSAGE_DELIVERY_METHOD_UNSPECIFIED",
-      "description": "Delivery method (channel) for sending messages to the customer.\nNumeric values align with product: 1-msg, 2-email, 4-call, 5-app (3 reserved).\n\n - MESSAGE_DELIVERY_METHOD_UNSPECIFIED: Unknown or unspecified delivery method.\n - MSG: In-app / internal message (msg).\n - EMAIL: Email.\n - CALL: Phone call (call).\n - APP: App push or in-app (app)."
     },
     "v1Pagination": {
       "type": "object",
