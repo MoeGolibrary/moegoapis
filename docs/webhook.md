@@ -91,10 +91,6 @@ specific business operation or system occurrence.
     - `APPOINTMENT_FINISHED`: Service delivery has been completed
     - `APPOINTMENT_CANCELED`: Appointment has been canceled
     - `APPOINTMENT_DELETED`: Appointment has been permanently removed
-    - `APPOINTMENT_FULLY_PAID`: All payments for the appointment received (TODO)
-
-- **Online Booking Events **(200-299): Customer self-service booking
-    - `ONLINE_BOOKING_RECEIVED`: New online booking request received (TODO)
 
 - **Customer Events **(300-399): Customer data changes
     - `CUSTOMER_CREATED`: New customer has been created

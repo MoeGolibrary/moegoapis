@@ -16,6 +16,7 @@ When making API changes:
 ## [Unreleased]
 
 ### Removed
+- **Breaking:** Removed the unimplemented webhook event types `APPOINTMENT_FULLY_PAID` and `ONLINE_BOOKING_RECEIVED` (IFRBE-3938)
 - **Breaking:** `Appointment:Create`, `Appointment:Reschedule`, and `Appointment:Cancel` removed the legacy `autoMessageMethods` request field and the unused `MessageDeliveryMethod` enum (2026-08-28)
 - `MessageService:SendMessageToCustomer` and `MessageService:SendAutoMessageToCustomer` API documentation and contract for endpoints that are not currently available in OpenAPI v1 (IFRBE-3938)
 - `Aggregation:LookupClientPetProfile` API documentation and contract (revert PR #62)
