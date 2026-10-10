@@ -315,6 +315,22 @@ Retrieves detailed information about a specific customer, including preferences,
 | `preference`          | Preference                                                | Deprecated. Use `complianceConfig` instead.                |
 | `complianceConfig`    | CustomerComplianceConfig                                  | Customer's compliance configuration for communication channels |
 
+#### 💡 Example Response:
+
+```json
+{
+  "id": "cus_001",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "+12125551234",
+  "email": "john.doe@example.com",
+  "status": "ACTIVE",
+  "colorCode": "#FF0000",
+  "companyId": "cmp_001",
+  "preferredBusinessId": "biz_001"
+}
+```
+
 #### ⚠️ Error Codes:
 
 - `NOT_FOUND`: Specified customer ID does not exist.
@@ -432,6 +448,25 @@ Lists customers matching the specified criteria, supporting pagination and filte
 |-----------------|-----------------|-------------------------------------------------|
 | `nextPageToken` | string          | Token for retrieving the next page of results   |
 | `customers`     | Array(Customer) | List of customers matching the request criteria |
+
+#### 💡 Example Response:
+
+```json
+{
+  "nextPageToken": "2",
+  "customers": [
+    {
+      "id": "cus_001",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phone": "+12125551234",
+      "status": "ACTIVE",
+      "colorCode": "#FF0000",
+      "companyId": "cmp_001"
+    }
+  ]
+}
+```
 
 #### ⚠️ Error Code:
 
