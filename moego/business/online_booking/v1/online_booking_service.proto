@@ -52,6 +52,19 @@ service OnlineBookingService {
     };
   }
 
+  // Gets the union of grooming availability across alternative services.
+  // Without service IDs, evaluate OB-eligible main services as alternatives for
+  // every pet. Explicit service IDs retain the original combination semantics.
+  // A returned slot supports at least one alternative, not every service.
+  // At most 128 combinations are evaluated; larger requests must specify services.
+  // Downstream failures return errors rather than partial successful availability.
+  rpc GetBookingAvailabilityUnion(GetBookingAvailabilityRequest) returns (GetBookingAvailabilityResponse) {
+    option (google.api.http) = {
+      post: "/v1/online_booking/availability/union"
+      body: "*"
+    };
+  }
+
   // Looks up franchise branch based on zipcode for territory routing.
   //
   // This endpoint allows routing customers to the correct franchisee based on

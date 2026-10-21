@@ -19,10 +19,11 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OnlineBookingService_GetAbandonedBooking_FullMethodName      = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
-	OnlineBookingService_ListAbandonedBookings_FullMethodName    = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
-	OnlineBookingService_GetBookingAvailability_FullMethodName   = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailability"
-	OnlineBookingService_LookupFranchiseByZipcode_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/LookupFranchiseByZipcode"
+	OnlineBookingService_GetAbandonedBooking_FullMethodName         = "/moego.business.online_booking.v1.OnlineBookingService/GetAbandonedBooking"
+	OnlineBookingService_ListAbandonedBookings_FullMethodName       = "/moego.business.online_booking.v1.OnlineBookingService/ListAbandonedBookings"
+	OnlineBookingService_GetBookingAvailability_FullMethodName      = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailability"
+	OnlineBookingService_GetBookingAvailabilityUnion_FullMethodName = "/moego.business.online_booking.v1.OnlineBookingService/GetBookingAvailabilityUnion"
+	OnlineBookingService_LookupFranchiseByZipcode_FullMethodName    = "/moego.business.online_booking.v1.OnlineBookingService/LookupFranchiseByZipcode"
 )
 
 // OnlineBookingServiceClient is the client API for OnlineBookingService service.
@@ -50,6 +51,13 @@ type OnlineBookingServiceClient interface {
 	// staff availability, and other scheduling constraints. This endpoint helps
 	// customers find suitable time slots when booking services online.
 	GetBookingAvailability(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error)
+	// Gets the union of grooming availability across alternative services.
+	// Without service IDs, evaluate OB-eligible main services as alternatives for
+	// every pet. Explicit service IDs retain the original combination semantics.
+	// A returned slot supports at least one alternative, not every service.
+	// At most 128 combinations are evaluated; larger requests must specify services.
+	// Downstream failures return errors rather than partial successful availability.
+	GetBookingAvailabilityUnion(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error)
 	// Looks up franchise branch based on zipcode for territory routing.
 	//
 	// This endpoint allows routing customers to the correct franchisee based on
@@ -95,6 +103,16 @@ func (c *onlineBookingServiceClient) GetBookingAvailability(ctx context.Context,
 	return out, nil
 }
 
+func (c *onlineBookingServiceClient) GetBookingAvailabilityUnion(ctx context.Context, in *GetBookingAvailabilityRequest, opts ...grpc.CallOption) (*GetBookingAvailabilityResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetBookingAvailabilityResponse)
+	err := c.cc.Invoke(ctx, OnlineBookingService_GetBookingAvailabilityUnion_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *onlineBookingServiceClient) LookupFranchiseByZipcode(ctx context.Context, in *LookupFranchiseByZipcodeRequest, opts ...grpc.CallOption) (*LookupFranchiseByZipcodeResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LookupFranchiseByZipcodeResponse)
@@ -130,6 +148,13 @@ type OnlineBookingServiceServer interface {
 	// staff availability, and other scheduling constraints. This endpoint helps
 	// customers find suitable time slots when booking services online.
 	GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error)
+	// Gets the union of grooming availability across alternative services.
+	// Without service IDs, evaluate OB-eligible main services as alternatives for
+	// every pet. Explicit service IDs retain the original combination semantics.
+	// A returned slot supports at least one alternative, not every service.
+	// At most 128 combinations are evaluated; larger requests must specify services.
+	// Downstream failures return errors rather than partial successful availability.
+	GetBookingAvailabilityUnion(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error)
 	// Looks up franchise branch based on zipcode for territory routing.
 	//
 	// This endpoint allows routing customers to the correct franchisee based on
@@ -153,6 +178,9 @@ func (UnimplementedOnlineBookingServiceServer) ListAbandonedBookings(context.Con
 }
 func (UnimplementedOnlineBookingServiceServer) GetBookingAvailability(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetBookingAvailability not implemented")
+}
+func (UnimplementedOnlineBookingServiceServer) GetBookingAvailabilityUnion(context.Context, *GetBookingAvailabilityRequest) (*GetBookingAvailabilityResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetBookingAvailabilityUnion not implemented")
 }
 func (UnimplementedOnlineBookingServiceServer) LookupFranchiseByZipcode(context.Context, *LookupFranchiseByZipcodeRequest) (*LookupFranchiseByZipcodeResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method LookupFranchiseByZipcode not implemented")
@@ -232,6 +260,24 @@ func _OnlineBookingService_GetBookingAvailability_Handler(srv interface{}, ctx c
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OnlineBookingService_GetBookingAvailabilityUnion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetBookingAvailabilityRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OnlineBookingServiceServer).GetBookingAvailabilityUnion(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OnlineBookingService_GetBookingAvailabilityUnion_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OnlineBookingServiceServer).GetBookingAvailabilityUnion(ctx, req.(*GetBookingAvailabilityRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OnlineBookingService_LookupFranchiseByZipcode_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LookupFranchiseByZipcodeRequest)
 	if err := dec(in); err != nil {
@@ -268,6 +314,10 @@ var OnlineBookingService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBookingAvailability",
 			Handler:    _OnlineBookingService_GetBookingAvailability_Handler,
+		},
+		{
+			MethodName: "GetBookingAvailabilityUnion",
+			Handler:    _OnlineBookingService_GetBookingAvailabilityUnion_Handler,
 		},
 		{
 			MethodName: "LookupFranchiseByZipcode",
