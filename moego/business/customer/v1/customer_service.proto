@@ -4,6 +4,7 @@ package moego.business.customer.v1;
 
 import "google/api/annotations.proto";
 import "google/api/field_behavior.proto";
+import "google/protobuf/struct.proto";
 import "google/type/interval.proto";
 import "moego/business/customer/v1/customer.proto";
 import "moego/business/setting/v1/customer.proto";
@@ -236,6 +237,12 @@ message UpdateCustomerRequest {
   // Customer's compliance configuration updates
   // Optional. If not provided, current configuration will be retained
   optional CustomerComplianceConfigUpdateDef compliance_config = 12;
+
+  // Color code for visual identification in the UI.
+  // Optional. Use a six-digit hex color such as "#FFD700" (case-insensitive).
+  // Omit to keep the current color. Send null or an empty string to clear it.
+  // Only strings and null are accepted; other values return INVALID_ARGUMENT.
+  google.protobuf.Value color_code = 13;
 }
 
 // Request message for retrieving a specific customer.

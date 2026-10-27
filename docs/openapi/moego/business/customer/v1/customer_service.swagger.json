@@ -611,6 +611,9 @@
           "$ref": "#/definitions/v1CustomerComplianceConfigUpdateDef",
           "x-nullable": true,
           "title": "Customer's compliance configuration updates\nOptional. If not provided, current configuration will be retained"
+        },
+        "colorCode": {
+          "description": "Color code for visual identification in the UI.\nOptional. Use a six-digit hex color such as \"#FFD700\" (case-insensitive).\nOmit to keep the current color. Send null or an empty string to clear it.\nOnly strings and null are accepted; other values return INVALID_ARGUMENT."
         }
       },
       "description": "Request message for updating a customer.",
