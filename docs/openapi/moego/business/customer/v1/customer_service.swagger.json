@@ -613,7 +613,7 @@
           "title": "Customer's compliance configuration updates\nOptional. If not provided, current configuration will be retained"
         },
         "colorCode": {
-          "description": "Color code for visual identification in the UI.\nOptional. Use a six-digit hex color such as \"#FFD700\" (case-insensitive).\nOmit to keep the current color. Send null or an empty string to clear it.\nOnly strings and null are accepted; other values return INVALID_ARGUMENT."
+          "description": "Color code for visual identification in the UI.\nOptional. Use a six-digit hex color such as \"#FFD700\".\nUpper- and lowercase hex digits are accepted and stored as submitted.\nOmit to keep the current color. Send null or an empty string to clear it.\nClearing stores \"#000000\", the same value used when a customer has no chosen color,\nand Get Customer returns \"#000000\".\nOnly strings and null are accepted; other values return INVALID_ARGUMENT."
         }
       },
       "description": "Request message for updating a customer.",
@@ -987,7 +987,7 @@
         },
         "colorCode": {
           "type": "string",
-          "title": "Color code for visual identification in the UI\nFormat: Hex color code (e.g., \"#FF0000\")"
+          "description": "Color code for visual identification in the UI.\nA six-digit hex color, stored as submitted. \"#000000\" means no chosen color."
         },
         "source": {
           "type": "string",
