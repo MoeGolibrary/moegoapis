@@ -211,8 +211,11 @@ type UpdateCustomerRequest struct {
 	// Optional. If not provided, current configuration will be retained
 	ComplianceConfig *CustomerComplianceConfigUpdateDef `protobuf:"bytes,12,opt,name=compliance_config,json=complianceConfig,proto3,oneof" json:"compliance_config,omitempty"`
 	// Color code for visual identification in the UI.
-	// Optional. Use a six-digit hex color such as "#FFD700" (case-insensitive).
+	// Optional. Use a six-digit hex color such as "#FFD700".
+	// Upper- and lowercase hex digits are accepted and stored as submitted.
 	// Omit to keep the current color. Send null or an empty string to clear it.
+	// Clearing stores "#000000", the same value used when a customer has no chosen color,
+	// and Get Customer returns "#000000".
 	// Only strings and null are accepted; other values return INVALID_ARGUMENT.
 	ColorCode     *structpb.Value `protobuf:"bytes,13,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
 	unknownFields protoimpl.UnknownFields

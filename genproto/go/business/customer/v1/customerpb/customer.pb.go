@@ -169,8 +169,8 @@ type Customer struct {
 	Address []*commonpb.Address `protobuf:"bytes,7,rep,name=address,proto3" json:"address,omitempty"`
 	// Current status of the customer's account
 	Status Customer_Status `protobuf:"varint,8,opt,name=status,proto3,enum=moego.business.customer.v1.Customer_Status" json:"status,omitempty"`
-	// Color code for visual identification in the UI
-	// Format: Hex color code (e.g., "#FF0000")
+	// Color code for visual identification in the UI.
+	// A six-digit hex color, stored as submitted. "#000000" means no chosen color.
 	ColorCode string `protobuf:"bytes,9,opt,name=color_code,json=colorCode,proto3" json:"color_code,omitempty"`
 	// How the customer was acquired
 	// Examples: "referral", "website", "walk-in"

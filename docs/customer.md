@@ -739,8 +739,8 @@ Retrieves all tags associated with a specific customer.
 | Input | Result |
 |---|---|
 | Omitted | Keep the current color |
-| `"#FFD700"` | Set a six-digit RGB hex color; upper- and lowercase hex digits are accepted |
-| `null` or `""` | Clear the color; Get Customer returns an empty `colorCode` |
+| `"#FFD700"` | Set a six-digit RGB hex color; upper- and lowercase hex digits are accepted and stored as submitted |
+| `null` or `""` | Clear the color; the stored value and Get Customer `colorCode` are `"#000000"` |
 | Invalid format or a non-string, non-null value | HTTP 400 with an error naming `colorCode` and the `#RRGGBB` format |
 
 For example, send the following body to `/v1/customers/{id}`, using IDs from your customer, company and tag responses:
@@ -754,7 +754,7 @@ For example, send the following body to `/v1/customers/{id}`, using IDs from you
 ```
 
 Include every tag you want to retain: a nonempty `tags` list replaces the customer's tag collection. Clearing the color does not remove tags.
-To clear only the color, send `{"companyId":"<companyId>","colorCode":null}`; an empty string has the same effect.
+To clear only the color, send `{"companyId":"<companyId>","colorCode":null}`; an empty string has the same effect. Get Customer then returns `"#000000"`.
 Use `GET /v1/customers/{id}` to verify the current `colorCode`. Updates can partially complete if a later operation fails; read the customer before retrying a failed request.
 
 ### Example 3: List Customers

@@ -101,8 +101,8 @@ message Customer {
   // Current status of the customer's account
   Status status = 8;
 
-  // Color code for visual identification in the UI
-  // Format: Hex color code (e.g., "#FF0000")
+  // Color code for visual identification in the UI.
+  // A six-digit hex color, stored as submitted. "#000000" means no chosen color.
   string color_code = 9;
 
   // How the customer was acquired
