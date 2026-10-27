@@ -732,6 +732,31 @@ Retrieves all tags associated with a specific customer.
 }
 ```
 
+### Update and verify the customer color
+
+`PUT /v1/customers/{id}` accepts the optional `colorCode` field as a string or null.
+
+| Input | Result |
+|---|---|
+| Omitted | Keep the current color |
+| `"#FFD700"` | Set a six-digit RGB hex color; upper- and lowercase hex digits are accepted |
+| `null` or `""` | Clear the color; Get Customer returns an empty `colorCode` |
+| Invalid format or a non-string, non-null value | HTTP 400 with an error naming `colorCode` and the `#RRGGBB` format |
+
+For example, send the following body to `/v1/customers/{id}`, using IDs from your customer, company and tag responses:
+
+```json
+{
+  "companyId": "<companyId>",
+  "tags": [{"id": "<vipTagId>"}],
+  "colorCode": "#FFD700"
+}
+```
+
+Include every tag you want to retain: a nonempty `tags` list replaces the customer's tag collection. Clearing the color does not remove tags.
+To clear only the color, send `{"companyId":"<companyId>","colorCode":null}`; an empty string has the same effect.
+Use `GET /v1/customers/{id}` to verify the current `colorCode`. Updates can partially complete if a later operation fails; read the customer before retrying a failed request.
+
 ### Example 3: List Customers
 
 ```json
