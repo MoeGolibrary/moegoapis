@@ -801,6 +801,11 @@
           "type": "string",
           "title": "Unique identifier for the line item\nFormat: \"li_\" followed by random characters"
         },
+        "rawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the line item in product"
+        },
         "orderId": {
           "type": "string",
           "title": "ID of the parent order\nRequired. Must be a valid order ID"
@@ -808,6 +813,11 @@
         "objectId": {
           "type": "string",
           "title": "ID of the referenced service, product, or package\nRequired. Must match the object_type"
+        },
+        "objectRawId": {
+          "type": "string",
+          "format": "int64",
+          "title": "Original raw identifier for the referenced object in product"
         },
         "objectType": {
           "$ref": "#/definitions/OrderLineItemObjectType",

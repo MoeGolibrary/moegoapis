@@ -28,6 +28,8 @@ type Package struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the package
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Original raw identifier for the package in product
+	RawId int64 `protobuf:"varint,19,opt,name=raw_id,json=rawId,proto3" json:"raw_id,omitempty"`
 	// ID of the company that owns this package
 	CompanyId string `protobuf:"bytes,2,opt,name=company_id,json=companyId,proto3" json:"company_id,omitempty"`
 	// ID of the business location associated with this package
@@ -103,6 +105,13 @@ func (x *Package) GetId() string {
 		return x.Id
 	}
 	return ""
+}
+
+func (x *Package) GetRawId() int64 {
+	if x != nil {
+		return x.RawId
+	}
+	return 0
 }
 
 func (x *Package) GetCompanyId() string {
@@ -347,9 +356,10 @@ var File_moego_business_retail_v1_package_proto protoreflect.FileDescriptor
 
 const file_moego_business_retail_v1_package_proto_rawDesc = "" +
 	"\n" +
-	"&moego/business/retail/v1/package.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xbb\x05\n" +
+	"&moego/business/retail/v1/package.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xd2\x05\n" +
 	"\aPackage\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1d\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
+	"\x06raw_id\x18\x13 \x01(\x03R\x05rawId\x12\x1d\n" +
 	"\n" +
 	"company_id\x18\x02 \x01(\tR\tcompanyId\x12\x1f\n" +
 	"\vbusiness_id\x18\x03 \x01(\tR\n" +

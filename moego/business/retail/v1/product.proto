@@ -15,6 +15,9 @@ message Product {
   // Unique identifier for the product
   string id = 1;
 
+  // Original raw identifier for the product in product
+  int64 raw_id = 23;
+
   // ID of the business location associated with this product
   string business_id = 2;
 
