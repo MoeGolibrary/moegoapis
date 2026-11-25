@@ -28,6 +28,8 @@ type Product struct {
 	state protoimpl.MessageState `protogen:"open.v1"`
 	// Unique identifier for the product
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Original raw identifier for the product in product
+	RawId int64 `protobuf:"varint,23,opt,name=raw_id,json=rawId,proto3" json:"raw_id,omitempty"`
 	// ID of the business location associated with this product
 	BusinessId string `protobuf:"bytes,2,opt,name=business_id,json=businessId,proto3" json:"business_id,omitempty"`
 	// Name of the product
@@ -104,6 +106,13 @@ func (x *Product) GetId() string {
 		return x.Id
 	}
 	return ""
+}
+
+func (x *Product) GetRawId() int64 {
+	if x != nil {
+		return x.RawId
+	}
+	return 0
 }
 
 func (x *Product) GetBusinessId() string {
@@ -354,9 +363,10 @@ var File_moego_business_retail_v1_product_proto protoreflect.FileDescriptor
 
 const file_moego_business_retail_v1_product_proto_rawDesc = "" +
 	"\n" +
-	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x83\x06\n" +
+	"&moego/business/retail/v1/product.proto\x12\x18moego.business.retail.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\x9a\x06\n" +
 	"\aProduct\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x1f\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
+	"\x06raw_id\x18\x17 \x01(\x03R\x05rawId\x12\x1f\n" +
 	"\vbusiness_id\x18\x02 \x01(\tR\n" +
 	"businessId\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x12 \n" +

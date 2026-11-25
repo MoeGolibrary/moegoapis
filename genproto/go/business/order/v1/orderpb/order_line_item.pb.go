@@ -109,12 +109,16 @@ type OrderLineItem struct {
 	// Unique identifier for the line item
 	// Format: "li_" followed by random characters
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	// Original raw identifier for the line item in product
+	RawId int64 `protobuf:"varint,12,opt,name=raw_id,json=rawId,proto3" json:"raw_id,omitempty"`
 	// ID of the parent order
 	// Required. Must be a valid order ID
 	OrderId string `protobuf:"bytes,2,opt,name=order_id,json=orderId,proto3" json:"order_id,omitempty"`
 	// ID of the referenced service, product, or package
 	// Required. Must match the object_type
 	ObjectId string `protobuf:"bytes,3,opt,name=object_id,json=objectId,proto3" json:"object_id,omitempty"`
+	// Original raw identifier for the referenced object in product
+	ObjectRawId int64 `protobuf:"varint,13,opt,name=object_raw_id,json=objectRawId,proto3" json:"object_raw_id,omitempty"`
 	// Category of the line item
 	// Determines business rules and processing
 	ObjectType OrderLineItem_ObjectType `protobuf:"varint,4,opt,name=object_type,json=objectType,proto3,enum=moego.business.order.v1.OrderLineItem_ObjectType" json:"object_type,omitempty"`
@@ -179,6 +183,13 @@ func (x *OrderLineItem) GetId() string {
 	return ""
 }
 
+func (x *OrderLineItem) GetRawId() int64 {
+	if x != nil {
+		return x.RawId
+	}
+	return 0
+}
+
 func (x *OrderLineItem) GetOrderId() string {
 	if x != nil {
 		return x.OrderId
@@ -191,6 +202,13 @@ func (x *OrderLineItem) GetObjectId() string {
 		return x.ObjectId
 	}
 	return ""
+}
+
+func (x *OrderLineItem) GetObjectRawId() int64 {
+	if x != nil {
+		return x.ObjectRawId
+	}
+	return 0
 }
 
 func (x *OrderLineItem) GetObjectType() OrderLineItem_ObjectType {
@@ -253,11 +271,13 @@ var File_moego_business_order_v1_order_line_item_proto protoreflect.FileDescript
 
 const file_moego_business_order_v1_order_line_item_proto_rawDesc = "" +
 	"\n" +
-	"-moego/business/order/v1/order_line_item.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xf8\x04\n" +
+	"-moego/business/order/v1/order_line_item.proto\x12\x17moego.business.order.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x17google/type/money.proto\"\xb3\x05\n" +
 	"\rOrderLineItem\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x19\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x15\n" +
+	"\x06raw_id\x18\f \x01(\x03R\x05rawId\x12\x19\n" +
 	"\border_id\x18\x02 \x01(\tR\aorderId\x12\x1b\n" +
-	"\tobject_id\x18\x03 \x01(\tR\bobjectId\x12R\n" +
+	"\tobject_id\x18\x03 \x01(\tR\bobjectId\x12\"\n" +
+	"\robject_raw_id\x18\r \x01(\x03R\vobjectRawId\x12R\n" +
 	"\vobject_type\x18\x04 \x01(\x0e21.moego.business.order.v1.OrderLineItem.ObjectTypeR\n" +
 	"objectType\x12\x12\n" +
 	"\x04name\x18\x05 \x01(\tR\x04name\x12 \n" +

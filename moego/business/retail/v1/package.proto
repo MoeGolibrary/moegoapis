@@ -15,6 +15,9 @@ message Package {
   // Unique identifier for the package
   string id = 1;
 
+  // Original raw identifier for the package in product
+  int64 raw_id = 19;
+
   // ID of the company that owns this package
   string company_id = 2;
 

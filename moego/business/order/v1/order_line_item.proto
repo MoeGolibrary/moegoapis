@@ -51,6 +51,9 @@ message OrderLineItem {
   // Format: "li_" followed by random characters
   string id = 1;
 
+  // Original raw identifier for the line item in product
+  int64 raw_id = 12;
+
   // ID of the parent order
   // Required. Must be a valid order ID
   string order_id = 2;
@@ -58,6 +61,9 @@ message OrderLineItem {
   // ID of the referenced service, product, or package
   // Required. Must match the object_type
   string object_id = 3;
+
+  // Original raw identifier for the referenced object in product
+  int64 object_raw_id = 13;
 
   // Category of the line item
   // Determines business rules and processing
