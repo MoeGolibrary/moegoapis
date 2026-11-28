@@ -1562,11 +1562,17 @@
         "value": {
           "type": "integer",
           "format": "int64",
-          "description": "uint32, The numeric value of the weight."
+          "description": "Deprecated for reads in favor of decimal_value, while existing V1 write requests continue to use value."
         },
         "unit": {
           "$ref": "#/definitions/WeightUnit",
           "title": "enum(Unit), The unit of measurement.\nDefault: KILOGRAM if not specified"
+        },
+        "decimalValue": {
+          "type": "number",
+          "format": "double",
+          "x-nullable": true,
+          "description": "Weight in the specified unit, including its fractional portion when available.\nOpenAPI V1 populates this field in responses only."
         }
       },
       "description": "The weight object provides a standardized way to represent and convert\nweight measurements throughout the system. It supports multiple units\nand ensures consistent weight tracking for pets, products, and other\nresources that require weight measurements.",

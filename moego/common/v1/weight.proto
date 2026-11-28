@@ -27,10 +27,14 @@ message Weight {
     POUND = 2;
   }
 
-  // uint32, The numeric value of the weight.
-  uint32 value = 1;
+  // Deprecated for reads in favor of decimal_value, while existing V1 write requests continue to use value.
+  uint32 value = 1 [deprecated = true];
 
   // enum(Unit), The unit of measurement.
   // Default: KILOGRAM if not specified
   Unit unit = 2;
+
+  // Weight in the specified unit, including its fractional portion when available.
+  // OpenAPI V1 populates this field in responses only.
+  optional double decimal_value = 3;
 }
